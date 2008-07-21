@@ -1,0 +1,10 @@
+@charset "UTF-8";
+/* CSS Document */
+
+
+img.chat_icon { 
+    float: left; 
+    clear: left; 
+    margin: 4px; 
+	width: 60px;
+}
