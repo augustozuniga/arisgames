@@ -21,7 +21,7 @@ require_once($FILE_ROOT . '/theme/theme.inc.php');
 $TITLE = 'ARIS Demo';
 
 $WELCOME_MESSAGE = '<h1>Login to the ARIS development site</h1>
-			<p>This site is best viewed on iPhone</p>
+			<p>This site is best viewed on iPhone but may work on other browsers with javascript support</p>
 			<p>Email djgagnon@wisc.edu with any problems or feedback</p>';
 			
 $SPLASH_SCREEN = "<h1>Welcome Back Agent</h1>
