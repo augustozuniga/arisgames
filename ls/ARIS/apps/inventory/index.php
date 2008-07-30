@@ -5,7 +5,7 @@ unset($_SESSION['current_npc_id']);
 page_header();
 
 if (!isset($_REQUEST['item_id'])) {
-	echo '<h1>Current Inventory</h1>';
+	echo '<h1>NAC File Browser</h1>';
 	
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}items JOIN {$GLOBALS['DB_TABLE_PREFIX']}player_items ON {$GLOBALS['DB_TABLE_PREFIX']}items.item_id = {$GLOBALS['DB_TABLE_PREFIX']}player_items.item_id WHERE {$GLOBALS['DB_TABLE_PREFIX']}player_items.player_id = '$_SESSION[player_id]'";
 				
@@ -13,7 +13,7 @@ if (!isset($_REQUEST['item_id'])) {
 	
 	echo '<table cellspacing = "5px">';
 	
-	if (mysql_num_rows($result) == 0) echo "<tr><td>Inventory is Empty</td></tr>";
+	if (mysql_num_rows($result) == 0) echo "<tr><td>No files found.</td></tr>";
 	
 	while ($row = mysql_fetch_array($result)) {
 		echo '<tr>';
