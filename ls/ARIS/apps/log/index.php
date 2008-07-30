@@ -5,14 +5,14 @@ require_once('../../common.php');
 page_header();
 
 
-echo '<h1>Activity Log</h1>';
+echo '<h1>To Do</h1>';
 
 
 //Display the current tasks
 
 echo "<hr/>";
 
-echo '<h2>Current Tasks</h2>';
+echo '<h2>Active</h2>';
 
 $query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}log
 			LEFT OUTER JOIN {$GLOBALS['DB_TABLE_PREFIX']}player_events ON {$GLOBALS['DB_TABLE_PREFIX']}log.require_event_id = {$GLOBALS['DB_TABLE_PREFIX']}player_events.event_id
@@ -39,7 +39,7 @@ echo '</table>';
 
 echo "<hr/>";
 
-echo '<h2>Completed Tasks</h2>';
+echo '<h2>Completed</h2>';
 
 $query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}log
 			WHERE {$GLOBALS['DB_TABLE_PREFIX']}log.complete_if_event_id IN (SELECT event_id FROM {$GLOBALS['DB_TABLE_PREFIX']}player_events WHERE player_id = $_SESSION[player_id])";
