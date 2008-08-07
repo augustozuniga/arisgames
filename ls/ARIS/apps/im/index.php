@@ -129,7 +129,6 @@ if (isset($_REQUEST['node_id']) or isset($_REQUEST['question_node_id'])) {
 		
 		//Display the node information
 		define('IM', true);
-		
 		echo "<h1>Chat with Base</h1>";
 		
 		/*
@@ -186,7 +185,6 @@ if (isset($_REQUEST['node_id']) or isset($_REQUEST['question_node_id'])) {
 		
 		
 		print ('<br/>');
-		echo '<hr/>';
 		
 		// Display the node options
 		if ($row['opt1_text'] or $row['opt2_text'] or $row['opt3_text']) {
@@ -226,7 +224,7 @@ if (isset($_REQUEST['node_id']) or isset($_REQUEST['question_node_id'])) {
 			
 		}
 		
-		echo '<hr id = "bottom"/>';
+		echo '<hr id="bottom" style="clear: left;" />';
 		
 		echo '
 		<script type="application/x-javascript">
@@ -237,9 +235,9 @@ if (isset($_REQUEST['node_id']) or isset($_REQUEST['question_node_id'])) {
 		//Display the question from
 		if ($row['require_answer_string'])
 			echo "<p><form action = '$_SERVER[PHP_SELF]' method = 'get'>
-					<table><tr>
-						<td><input type = 'text' size = '15' name = 'answer_string'></td>
-						<td><input type = 'submit' value = 'Say'/></td>
+					<table style='width: 100%;'><tr>
+						<td><input type = 'text' size = '35' name = 'answer_string'></td>
+						<td><input type = 'submit' value = 'Send'/></td>
 					</tr></table>
 					<input type = 'hidden' name = 'question_node_id' value = '$_REQUEST[node_id]'/>  
 					</form>
@@ -273,7 +271,7 @@ else if (isset($_REQUEST['npc_id'])) {
 	$result = mysql_query($query);
 	$npc = mysql_fetch_array($result);
 	
-	echo "<h1>Chat with $npc[name]</h1><hr/><br/><p>Say:</p>";
+	echo "<h1>$npc[name]</h1><hr/><br/><p>Say:</p>";
 
 	//Find and display any npc_conversations that should be shown here
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}npc_conversations 
@@ -307,8 +305,6 @@ else {
 	//Clear out the last conversation history
 	unset($_SESSION['chat_history']);
 		
-	echo '<hr/>';
-		
 	
 	//Load and display contact list (NPCs at location 0)
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}npcs 
@@ -320,14 +316,22 @@ else {
 	echo '<table width = "100%">';
 	
 	while ($npc = mysql_fetch_array($result)) {
+		$image = (!is_null($npc['media']) && $npc['media'] != '') 
+			? "<img src='$WWW_ROOT/media/{$npc['media']}' height='30px' width='40px'/>"
+			: '';
 	
-		echo "<tr>
-				<td><a href = '{$_SERVER['PHP_SELF']}?npc_id=$npc[npc_id]'>$npc[name]</a><p>$npc[description]</p></td>
-				<td align = 'right'><img src = '$WWW_ROOT/media/$npc[media]' height = '30px' width = '40px'/></td>
-			</tr>";
+		echo <<<CONTACT
+<tr>
+	<td>
+		<h2><a href='{$_SERVER['PHP_SELF']}?npc_id={$npc['npc_id']}'>$npc[name]</a></h2>
+		<p>$npc[description]</p>
+	</td>
+	<td align = 'right'>$image</td>
+</tr>
+
+CONTACT;
 	}
 	echo '</table>';
-	echo '<hr/>';
 }
 
 

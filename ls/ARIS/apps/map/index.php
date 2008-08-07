@@ -122,7 +122,7 @@ else {
 	
 	//Show the map
 	if (mysql_num_rows($result) > 0 and $player_at_location == false) echo "<p><img src = '$map_path'/></p>";
-	else if (mysql_num_rows($result) == 0 and $player_at_location == false) echo '<h1>No Maps Available</h1>';
+	else if (mysql_num_rows($result) == 0 and $player_at_location == false) echo '<h1>No Locations Available</h1>';
 	else if ($player_at_location == true) echo "<h1>Current Location: $row[name] </h1>";
 	
 	
