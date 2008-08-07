@@ -7,13 +7,13 @@
 }
 
 body {
-	background-color:#000;
+	background-color: #000;
 	height: 100%;
-	color:#CCCCCC;
+	color: #ddd;
 }
 
 #container {
-	font-family: verdana, arial, sans-serif;
+	font-family: verdana, helevetica, arial, sans-serif;
 	text-align: left;
 	display: block;
 	min-height: 100%;
@@ -25,23 +25,35 @@ body {
 }
 
 #nav {
-	color: #fff;
-	background-color:#333;
-	clear: both;
+	background-color: #333;
+	background: url("../media/header.png") repeat-x scroll ;
+	
+	clear:    both;
 	position: absolute;
-	width:100%;
-	bottom:0;
-	left:0;
-	margin: 0;
-	padding: 0px;
-	left: 0px;
-	bottom: 0px;
+	width:    100%;
+	height:   45px;
+	bottom:   0;
+	left:     0;
+	
+	margin:  0;
+	padding: 0;
 	display: block;
-	height: 45px;
 	z-index: 999;
 }
 
+#nav img {
+	height: 45 px;
+	width: 45px;
+}
 
+#nav tr {
+	border: 1px solid green;
+}
+
+#nav td {
+	width: 55px;
+	text-align: center;
+}
 	
 #content {
 	font-family: arial;
@@ -58,7 +70,6 @@ body {
 	padding-left: 0.3em;
 	padding-right: 0.3em;
 	padding-bottom: 0.3em;
-	color:#ddd;
 }
 
 #content h1.inventory_list {
@@ -68,7 +79,6 @@ body {
 	padding-left: 0.3em;
 	padding-right: 0.3em;
 	padding-bottom: 0em;
-	color:#ddd;
 }
 
 #content h2 {
@@ -77,12 +87,11 @@ body {
 	padding-top: 0.3em;
 	padding-left: 0.5em;
 	padding-right: 0.3em;
-	color:#fff;
 }
 
 #content p {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: medium;
+	font-size: 0.9em;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
 	padding-bottom: .5em;
@@ -99,11 +108,8 @@ body {
 	
 }
 
-
-
-
 #content p.alert {
-	color: #f00;	
+	color: #f00;
 }
 
 #content img.quest_list {
@@ -129,17 +135,125 @@ body {
 #content a:active {
 	color: #fff;
 	line-height:1em;
-	font-size:x-large;
-	text-decoration:none;
-	padding-left: .3em;
+	/*font-size: x-large;*/
+	text-decoration: none;
+	/*padding-left: .3em;*/
 	padding-bottom: .7em;
 }
 
+#content a:hover {
+	color: #CCCCFF;
+}
 
+#content a:active {
+	color: blue;
+}
 
+img {
+	border: 0;
+}
 
+h1 {
+	border-bottom: 1px solid #5A5D5A;
+	text-align: center;
+	background: url("../media/header.png") repeat-x scroll ;
+}
 
+#content h2.task {
+	padding-left: 0;
+}
 
+#content h3 {
+	font-size: 14px;
+}
 
+p.task {
+	margin-left: 1em;
+}
 
-	
+td.taskimg {
+	vertical-align: top;
+}
+
+hr {
+	border: 0;
+	border-bottom: 1px solid #5A5D5A;
+}
+
+/* Changed from IUI */
+fieldset {
+	border: none;
+}
+
+.fieldcontainer {
+    position: relative;
+    margin: 0 10px 10px 10px;
+    padding: 0;
+    background: #FFFFFF;
+    -webkit-border-radius: 10px;
+    border: 1px solid #999999;
+    text-align: right;
+    font-size: 16px;
+}
+
+.row  {
+    position: relative;
+    min-height: 42px;
+    border-bottom: 1px solid #999999;
+    -webkit-border-radius: 0;
+    text-align: right;
+}
+
+.last {
+    border-bottom: none !important;
+}
+
+.row > input {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    margin: 0;
+    border: none;
+    padding: 12px 10px 0 100px;
+    height: 42px;
+    background: none;
+    font-weight: none;
+    font-size: 16px;
+    width: 293px;
+}
+
+.row > label {
+	color: #557894;
+    position: absolute;
+    margin: 0 0 0 14px;
+    line-height: 42px;
+    font-weight: bold;
+}
+
+.submit {
+    position: relative;
+    min-height: 42px;
+	padding-right: 10px;
+    text-align: right;
+    background: none;
+}
+
+.submit > input {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -webkit-border-radius: 10px;
+    margin: 0;
+    border: 1px solid #999;
+    height: 42px;
+    width: 128px;
+    font-weight: bold;
+    background: white;
+    font-size: 1em;
+    color: #557894
+}
+
+.submit > input:active {
+	border: 1px solid #173F91;
+	background: url("../media/blueBack.png") repeat-x ;
+	color: white;
+}
+

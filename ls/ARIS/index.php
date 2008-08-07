@@ -3,9 +3,28 @@
 require_once('common.php');
 
 function print_form() {
-	echo "<form action = '$_SERVER[PHP_SELF]' method = 'post'>
+	echo <<<FORM
 	
-	<table cellspacing='10'>
+	<form action='{$_SERVER['PHP_SELF']}' method='post'>
+	<fieldset>
+		<div class="fieldcontainer">
+		<div class="row">
+			<label>Username</label>
+			<input type="text" name="user_name" />
+		</div>
+		<div class="row last">
+			<label>Password</label>
+			<input type="password" name="password" />
+		</div>
+		<input type="hidden" name="req" value="login" />
+		<input type="hidden" name="location_detection" value="none" />
+		</div>
+		<div class="submit"><input type="submit" value="Login" /></div>
+	</fieldset>
+<!--	
+	<form action = '$_SERVER[PHP_SELF]' method = 'post'>
+	
+	<table class='inputPanel' cellspacing='10'>
 		<tr>
 			<td>Username</td>
 			<td><input type = 'text' size = '10' name = 'user_name'></td>
@@ -18,9 +37,14 @@ function print_form() {
 			<td>
 				&nbsp;
 			</td>
-			<td><input type = 'hidden' name = 'req' value = 'login'><input type = 'hidden' name = 'location_detection' value = 'none'><input type = 'submit' value = 'login'></td
+			<td><input type = 'hidden' name = 'req' value = 'login'>
+			<input type = 'hidden' name = 'location_detection' value = 'none'>
+			<input type = 'submit' value = 'login'></td
 		</tr>
-	</table>";
+	</table>
+-->
+FORM;
+
 	page_footer_no_nav();
 }
 
