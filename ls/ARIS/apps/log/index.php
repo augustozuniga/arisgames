@@ -29,7 +29,7 @@ while ($row = mysql_fetch_array($result)) {
 	// <!-- <a class='quest_list' href='$WWW_ROOT/node.php?node={$row['start_node_id']}'> -->
 	echo <<<TASK
 	<tr>
-		<td class='taskimg'><img class='quest_list' src='{$GLOBALS['$WWW_ROOT']}/media/{$row['media']}'></td>
+		<td class='taskimg'><img class='quest_list' src='{$GLOBALS['WWW_ROOT']}/media/{$row['media']}'></td>
 		<td>
 			<h3 class='task'>{$row['name']}</h3>
 			<p class='task'>{$row['description']}</p>

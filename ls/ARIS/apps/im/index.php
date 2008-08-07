@@ -317,7 +317,7 @@ else {
 	
 	while ($npc = mysql_fetch_array($result)) {
 		$image = (!is_null($npc['media']) && $npc['media'] != '') 
-			? "<img src='$WWW_ROOT/media/{$npc['media']}' height='30px' width='40px'/>"
+			? "<img src='$WWW_ROOT/media/{$npc['media']}' class='list' />"
 			: '';
 	
 		echo <<<CONTACT

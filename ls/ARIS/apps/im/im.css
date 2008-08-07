@@ -6,5 +6,11 @@ img.chat_icon {
     float: left; 
     clear: left; 
     margin: 4px; 
-	width: 60px;
+	width: 64px;
+	height: 64px;
+}
+
+img.list {
+	width: 32px;
+	height: 32px;
 }
