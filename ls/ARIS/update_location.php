@@ -3,7 +3,7 @@ include ('common.php');
 
 if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude'])) {
 	$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players 
-			SET latitude = '{$_REQUEST['latitude']}', longitude = '-{$_REQUEST['longitude']}' 
+			SET latitude = '{$_REQUEST['latitude']}', longitude = '{$_REQUEST['longitude']}' 
 			WHERE player_id = '{$_SESSION['player_id']}'";
 	mysql_query($query);
 
