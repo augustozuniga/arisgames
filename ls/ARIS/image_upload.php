@@ -50,7 +50,7 @@ closedir($dir_handle);
 
 echo('<h1>Upload New Media</h1>
 	<p>Once uploaded, this file can be used in any area that requires and image or other media</p> 
-<FORM ENCTYPE="multipart/form-data" ACTION="' . $PHP_SELF . '" METHOD="POST"> 
+<FORM ENCTYPE="multipart/form-data" ACTION="' . $_SERVER['PHP_SELF'] . '" METHOD="POST"> 
 <INPUT TYPE="file" NAME="userfile"> 
 <INPUT TYPE="submit" VALUE="Upload"> 
 </FORM>'); 
