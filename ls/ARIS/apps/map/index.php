@@ -19,7 +19,7 @@ if (isset($_REQUEST['location_id'])) {
 	$_SESSION['last_location_id'] = $_REQUEST['location_id'];
 	
 	//Load the loaction data and display the name
-	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations WHERE location_id = $_REQUEST[location_id]";
+	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations WHERE location_id = {$_REQUEST['location_id']}";
 	$result = mysql_query($query);
 	$row = mysql_fetch_array($result);
 	echo "<h1>$row[name]</h1>";
@@ -93,18 +93,21 @@ else {
 	
 	
 	//Set up a player icon and look for a matching location
-	if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) ) {
-		$lat = $_REQUEST['latitude'];
-		$long = $_REQUEST['longitude'];
+	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}players WHERE player_id = '{$_SESSION['player_id']}'";
+	$result = mysql_query($query);
+	$player = mysql_fetch_array($result);
+	
+	if (isset($player['latitude']) and isset($player['longitude']) ) {
+	
 		//add a marker
-		$map_path .= "$lat,$long,yellow";
+		$map_path .= "{$player['latitude']},{$player['longitude']},yellow";
 		
 		//Look for a location match to current player position
-		$gps_error_factor = .001 ;
+		$gps_error_factor = .0005 ;
 		
 		$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations WHERE 
-			latitude < " .  ($_REQUEST['latitude'] + $gps_error_factor) . " AND latitude > " .  ($_REQUEST['latitude'] - $gps_error_factor) . " AND 
-			longitude < " . ($_REQUEST['longitude'] + $gps_error_factor) . " AND longitude > " .  ($_REQUEST['longitude'] - $gps_error_factor);  
+			latitude < " .  ($player['latitude'] + $gps_error_factor) . " AND latitude > " .  ($player['latitude'] - $gps_error_factor) . " AND 
+			longitude < " . ($player['longitude'] + $gps_error_factor) . " AND longitude > " .  ($player['longitude'] - $gps_error_factor);  
 	
 		$result = mysql_query($query);
 		$row = mysql_fetch_array($result);
@@ -120,12 +123,13 @@ else {
 	}
 	
 	
-	//Show the map
-	if (mysql_num_rows($result) > 0 and $player_at_location == false) echo "<p><img src = '$map_path'/></p>";
-	else if (mysql_num_rows($result) == 0 and $player_at_location == false) echo '<h1>No Locations Available</h1>';
-	else if ($player_at_location == true) echo "<h1>Current Location: $row[name] </h1>";
+	//Display current location
+	if ($player_at_location == true) echo "<h1><a href = '{$_SERVER['PHP_SELF']}?location_id=$row[location_id]'>Current Location: $row[name] </a></h1>";
 	
 	
+	//Display the map
+	echo "<p><img src = '$map_path'/></p>";
+
 	
 	//Display the Locatons as links under the map using the same letters as in the map
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations 
@@ -145,8 +149,8 @@ else {
 	$i = 0;
 	
 	while( $location = mysql_fetch_array($locations_dataset) ) {					
-		//Load and display the NPCs for this location
-		echo "<p><a href = '{$_SERVER['PHP_SELF']}?location_id=$location[location_id]'>{$letters[$i]}. {$location['name']}</a></p>";
+		//echo "<p><a href = '{$_SERVER['PHP_SELF']}?location_id=$location[location_id]'>{$letters[$i]}. {$location['name']}</a></p>";
+		echo "<p>{$letters[$i]}. {$location['name']}</p>";
 		$i++;
 		
 	}

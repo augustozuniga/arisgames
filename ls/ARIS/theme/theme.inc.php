@@ -19,13 +19,23 @@ function page_header($additional_layout=null) {
 	
 	if ($additional_layout != null) echo "@import url($additional_layout);";
 	
-	echo '
+	echo "
 		</style>
+		
+		<script type='text/javascript'>
+		var number = 1;
+
+		function update_location(lat, long) {
+ 			frames['utils_frame'].location.href = '{$GLOBALS['WWW_ROOT']}/update_location.php?latitude=' + lat + '&longitude=' + long;
+        	number++;
+		}
+	
+		</script>
 		</head>
 		<body>	
-		<div id="container">
-		<div id="content">
-	';
+		<iframe src='{$GLOBALS['WWW_ROOT']}/update_location.php' id='utils_frame' name='utils_frame'style='width:0px; height:0px; border: 0px'></iframe>
+		<div id='container'>
+		<div id='content'>";
 
 } //end function
 
@@ -40,7 +50,7 @@ function page_footer() {
 	$moduleRoot = "{$GLOBALS['WWW_ROOT']}/apps";
 	
 	
-	echo <<<MODULES
+	echo <<< MODULES
 	</div><!--Close content div-->
 	<table id="nav">
 		<tr>
@@ -51,10 +61,13 @@ function page_footer() {
 				<a href="{$moduleRoot}/im/index.php"><img src="$moduleRoot/im/icon.png" /></a>
 			</td>
 			<td>
-				<a href="{$moduleRoot}/../get_location_combined.php"><img src="$moduleRoot/map/icon.png" /></a>
+				<a href="{$moduleRoot}/map/index.php"><img src="$moduleRoot/map/icon.png" /></a>
 			</td>
 			<td>
 				<a href="{$moduleRoot}/inventory/index.php"><img src="$moduleRoot/inventory/icon.png" /></a>
+			</td>
+			<td>
+				<a href = '$GLOBALS[WWW_ROOT]/logout.php'><img src = '$GLOBALS[WWW_ROOT]/theme/logout_icon.png' width = '50px'/></a>
 			</td>
 		</tr>
 	</table>
