@@ -9,25 +9,35 @@ function run_query($query) {
 	
 	if (mysql_error()) {
 		echo '<h1>There was a problem</h1>';
-		echo '<p>Could it be you have already set up these tables?</p>';
+		echo '<p>Could it be you have already configured these tables?</p>';
 		echo mysql_error();
 	}
 	else {
-		echo '<p>Table Created</p>';
+		echo '<p>Query ran successfully.</p>';
 	}
 }
 
 
 
-if (isset($_REQUEST['confirmed']) == FALSE){
+if (isset($_REQUEST['action']) == FALSE){
 	//Display the form
 	echo '<h1>Create tables for a new game</h1>';
 	echo "<p>You are about to create tables for the prefix: {$prefix}</p>
 			<p>If you would like to change this, edit the common.php file first</p>";
-	echo "<p><a href = '{$_SERVER['PHP_SELF']}?confirmed=TRUE'>Yep, thats right. Go for it</a><p>";
+	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=INSTALL'>Install the MYSQL Tables</a><p>";
+	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE'>Update the MYSQL Tables for Latitude and Longitude (Build 6638 or higher)</a><p>";
 
 }
-else {
+
+else if ($_REQUEST['action'] == "UPDATE") {
+	$query = "ALTER TABLE {$prefix}players 
+			ADD COLUMN latitude FLOAT AFTER last_location_id,
+ 			ADD COLUMN longitude FLOAT AFTER latitude;";
+	run_query($query);
+
+}
+
+else if ($_REQUEST['action'] == "INSTALL") {
 	//Insert the tables
 	$query = "
 	CREATE TABLE {$prefix}events (
@@ -178,6 +188,8 @@ else {
 	  password varchar(32) default NULL,
 	  user_name varchar(30) default NULL,
 	  last_location_id int(11) default NULL,
+	  latitude float default NULL,
+      longitude float default NULL,
 	  PRIMARY KEY  (player_id)
 	) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8";
 	run_query($query);
