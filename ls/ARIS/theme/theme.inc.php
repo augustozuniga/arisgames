@@ -50,46 +50,34 @@ function page_footer() {
 	$moduleRoot = "{$GLOBALS['WWW_ROOT']}/apps";
 	
 	
-	echo <<< MODULES
-	</div><!--Close content div-->
+	echo '</div><!--Close content div-->
 	<table id="nav">
-		<tr>
-			<td>
-				<a href="{$moduleRoot}/log/index.php"><img src="$moduleRoot/log/icon.png" /></a>
-			</td>
-			<td>
-				<a href="{$moduleRoot}/im/index.php"><img src="$moduleRoot/im/icon.png" /></a>
-			</td>
-			<td>
-				<a href="{$moduleRoot}/map/index.php"><img src="$moduleRoot/map/icon.png" /></a>
-			</td>
-			<td>
-				<a href="{$moduleRoot}/inventory/index.php"><img src="$moduleRoot/inventory/icon.png" /></a>
-			</td>
-			<td>
-				<a href = '$GLOBALS[WWW_ROOT]/logout.php'><img src = '$GLOBALS[WWW_ROOT]/theme/logout_icon.png' width = '50px'/></a>
-			</td>
-		</tr>
-	</table>
+			<tr>';
 	
-MODULES;
+	//Query the applications table to determin which should be displayed
+	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}applications 
+		JOIN {$GLOBALS['DB_TABLE_PREFIX']}player_applications 
+		ON {$GLOBALS['DB_TABLE_PREFIX']}applications.application_id = {$GLOBALS['DB_TABLE_PREFIX']}player_applications.application_id 
+		WHERE {$GLOBALS['DB_TABLE_PREFIX']}player_applications.player_id = '$_SESSION[player_id]'";
+				
+	$result = mysql_query($query);	
+	echo mysql_error();
+	while ($app = mysql_fetch_array($result)) {
+		echo "<td><a href='{$moduleRoot}/{$app['directory']}/index.php'><img src='{$moduleRoot}/{$app['directory']}/icon.png'/></a></td>";
+	}
+			
+	echo "
+	<td>
+		<a href = '$GLOBALS[WWW_ROOT]/logout.php'><img src = '$GLOBALS[WWW_ROOT]/theme/logout_icon.png' width = '50px'/></a>
+	</td>
+	</tr>
+		</table>";
 	
-/*	
-	<a href = '$GLOBALS[WWW_ROOT]/apps/im/index.php'><img src = '$GLOBALS[WWW_ROOT]/apps/im/icon.png' /></a>
-	<a href = '$GLOBALS[WWW_ROOT]/get_location_combined.php'><img src = '$GLOBALS[WWW_ROOT]/apps/map/icon.png' /></a>
-	<a href = '$GLOBALS[WWW_ROOT]/apps/inventory/index.php'><img src = '$GLOBALS[WWW_ROOT]/apps/inventory/icon.png' /></a>
-	";
-/*
-	<a href = '$GLOBALS[WWW_ROOT]/apps/scan/index.php'><img src = '$GLOBALS[WWW_ROOT]/apps/scan/icon.png' width = '50px'/></a>
-	<a href = '$GLOBALS[WWW_ROOT]/apps/rotunda_puzzle/index.php'><img src = '$GLOBALS[WWW_ROOT]/apps/rotunda_puzzle/icon.png' width = '50px'/></a>
-	<a href = '$GLOBALS[WWW_ROOT]/logout.php'><img src = '$GLOBALS[WWW_ROOT]/theme/logout_icon.png' width = '50px'/></a>
-	<a href = '$GLOBALS[WWW_ROOT]/apps/dev_tools/index.php'><img src = '$GLOBALS[WWW_ROOT]/apps/dev_tools/icon.png' width = '50px'/></a>
-	";
-*/			
 	echo '
 		<script type="text/javascript">
  		 //<![CDATA[
-		 ';
+	';
+	
 	if (!defined('IM')) {
 			echo 'window.onload = function() {setTimeout(function(){window.scrollTo(0, 1);}, 100);}';
 

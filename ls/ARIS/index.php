@@ -71,7 +71,6 @@ else {
 		
 		page_header();
 		echo $GLOBALS['SPLASH_SCREEN']; 
-		echo "<h2><a href = 'testing/iphone.php'>iphone test</a></h2>";
 		page_footer();
 	}
 	else {

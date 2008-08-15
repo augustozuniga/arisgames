@@ -150,7 +150,8 @@ else {
 	
 	while( $location = mysql_fetch_array($locations_dataset) ) {					
 		//echo "<p><a href = '{$_SERVER['PHP_SELF']}?location_id=$location[location_id]'>{$letters[$i]}. {$location['name']}</a></p>";
-		echo "<p>{$letters[$i]}. {$location['name']}</p>";
+		$letter = strtoupper($letters[$i]);
+		echo "<p>{$letter}. {$location['name']}</p>";
 		$i++;
 		
 	}

@@ -25,17 +25,41 @@ if (isset($_REQUEST['action']) == FALSE){
 	echo "<p>You are about to create tables for the prefix: {$prefix}</p>
 			<p>If you would like to change this, edit the common.php file first</p>";
 	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=INSTALL'>Install the MYSQL Tables</a><p>";
-	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE'>Update the MYSQL Tables for Latitude and Longitude (Build 6638 or higher)</a><p>";
+	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE6638'>Update the MYSQL Tables for Latitude and Longitude (Build 6638 or higher)</a><p>";
+	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE6639'>Update the MYSQL Tables for Dynamic Applications (Build 6639 or higher)</a><p>";
 
 }
 
-else if ($_REQUEST['action'] == "UPDATE") {
+else if ($_REQUEST['action'] == "UPDATE6638") {
 	$query = "ALTER TABLE {$prefix}players 
 			ADD COLUMN latitude FLOAT AFTER last_location_id,
  			ADD COLUMN longitude FLOAT AFTER latitude;";
 	run_query($query);
 
 }
+
+else if ($_REQUEST['action'] == "UPDATE6639") {
+	//Insert the tables that support adding applications
+	$query = "
+	CREATE TABLE {$prefix}applications (
+	  application_id int(10) unsigned NOT NULL auto_increment,
+	  name varchar(25) default NULL,
+	  directory varchar(25) default NULL,
+	  PRIMARY KEY  (application_id)
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+	run_query($query);
+	
+	$query = "
+	CREATE TABLE {$prefix}player_applications (
+	  player_id int(10) unsigned NOT NULL default 0,
+	  application_id int(10) unsigned NOT NULL default 0,
+	  PRIMARY KEY  (player_id,application_id)
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+	run_query($query);
+	
+	
+}
+
 
 else if ($_REQUEST['action'] == "INSTALL") {
 	//Insert the tables
@@ -44,7 +68,7 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  event_id int(10) unsigned NOT NULL auto_increment,
 	  description tinytext COMMENT 'This description is not used anywhere in the game. It is simply for reference.',
 	  PRIMARY KEY  (event_id)
-	) ENGINE=MyISAM AUTO_INCREMENT=905 DEFAULT CHARSET=utf8";
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 	run_query($query);
 	
 	
@@ -72,7 +96,7 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  longitude float NOT NULL default '0',
 	  PRIMARY KEY  (location_id),
 	  KEY require_event_id (require_event_id)
-	) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8";
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 	run_query($query);
 	
 	
@@ -119,7 +143,7 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  media varchar(25) default 'mc_chat_icon.png',
 	  PRIMARY KEY  (node_id),
 	  KEY require_event_id (require_event_id)
-	) ENGINE=MyISAM AUTO_INCREMENT=311 DEFAULT CHARSET=utf8";
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 	run_query($query);
 	
 	
@@ -150,7 +174,7 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  media varchar(30) default NULL,
 	  require_event_id mediumint(9) default NULL,
 	  PRIMARY KEY  (npc_id)
-	) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8";
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 	run_query($query);
 
 	
@@ -191,7 +215,7 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  latitude float default NULL,
       longitude float default NULL,
 	  PRIMARY KEY  (player_id)
-	) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8";
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 	run_query($query);
 	
 	
@@ -204,7 +228,25 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  title varchar(30) NOT NULL default '',
 	  media varchar(30) default NULL,
 	  PRIMARY KEY  (scan_id)
-	) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8";
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+	run_query($query);
+	
+	
+	$query = "
+	CREATE TABLE {$prefix}applications (
+	  application_id int(10) unsigned NOT NULL auto_increment,
+	  name varchar(25) default NULL,
+	  directory varchar(25) default NULL,
+	  PRIMARY KEY  (application_id)
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+	run_query($query);
+	
+	$query = "
+	CREATE TABLE {$prefix}player_applications (
+	  player_id int(10) unsigned NOT NULL default 0,
+	  application_id int(10) unsigned NOT NULL default 0,
+	  PRIMARY KEY  (player_id,application_id)
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 	run_query($query);
 	
 	
