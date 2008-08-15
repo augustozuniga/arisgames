@@ -92,8 +92,8 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  description tinytext,
 	  require_event_id int(10) unsigned default NULL,
 	  remove_if_event_id int(10) unsigned default NULL,
-	  latitude float NOT NULL default '0',
-	  longitude float NOT NULL default '0',
+	  latitude DOUBLE NOT NULL default '0',
+	  longitude DOUBLE NOT NULL default '0',
 	  PRIMARY KEY  (location_id),
 	  KEY require_event_id (require_event_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8";

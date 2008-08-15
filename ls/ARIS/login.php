@@ -7,20 +7,24 @@ function print_form() {
 	
 	<form action='{$_SERVER['PHP_SELF']}' method='post'>
 	<fieldset>
+		<div class="fieldcontainer">
 		<div class="row">
 			<label>Username</label>
 			<input type="text" name="user_name" />
 		</div>
-		<div class="row">
+		<div class="row last">
 			<label>Password</label>
 			<input type="password" name="password" />
 		</div>
 		<input type="hidden" name="req" value="login" />
 		<input type="hidden" name="location_detection" value="none" />
-		<div><input type="submit" value="Login" /></div>
+		</div>
+		<div class="submit"><input type="submit" value="Login" /></div>
 	</fieldset>
 <!--	
-	<table cellspacing='10'>
+	<form action = '$_SERVER[PHP_SELF]' method = 'post'>
+	
+	<table class='inputPanel' cellspacing='10'>
 		<tr>
 			<td>Username</td>
 			<td><input type = 'text' size = '10' name = 'user_name'></td>
@@ -29,25 +33,26 @@ function print_form() {
 			<td>Password</td>
 			<td><input type = 'password' size = '10' name = 'password'></td>
 		</tr>
-		<tr><td>&nbsp;</td></tr>
 		<tr>
 			<td>
 				&nbsp;
 			</td>
-			<td><input type = 'hidden' name = 'req' value = 'login'><input type = 'hidden' name = 'location_detection' value = 'none'><input type = 'submit' value = 'login'></td
+			<td><input type = 'hidden' name = 'req' value = 'login'>
+			<input type = 'hidden' name = 'location_detection' value = 'none'>
+			<input type = 'submit' value = 'login'></td
 		</tr>
 	</table>
 -->
-	
 FORM;
-	page_footer_no_nav();
 }
 
 
 if (!isset($_REQUEST['req'])) {
-	page_header();
+	
+	page_header(null,TRUE);
 	echo $GLOBALS['WELCOME_MESSAGE'];
 	print_form();
+	page_footer_no_nav();
 }
 else {
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}players WHERE user_name = '$_REQUEST[user_name]' and password = '$_REQUEST[password]'";
@@ -55,8 +60,6 @@ else {
 	$row = mysql_fetch_array($result);
 	if ($row) {
 
-
-		$_SESSION['location_detection'] = $_REQUEST['location_detection'];
 		//Login successfull, load data
 		$_SESSION['player_id'] = $row['player_id'];
 		$_SESSION['user_name'] = $row['user_name'];
@@ -65,15 +68,18 @@ else {
 		$_SESSION['player_photo'] = $row['photo'];
 		
 		page_header();
-		echo "<h1>Welcome back $_SESSION[first_name].</h2>";
-		echo "<p>Applications initialized</p>";
+		echo "<h1>Logging On</h2>";
+		echo "<script type='text/javascript'>
+				<!--
+				window.location = '{$GLOBALS['WWW_ROOT']}/index.php'
+				//-->
+				</script>";
 		page_footer();
 	}
 	else {
 		//No matching Username and password
 		page_header();
-		echo "<h1>Login</h2>";
-		echo "<p>Access Denied.</p>";
+		echo "<h1>Access Denied</h1>";
 		print_form();
 		page_footer_no_nav();
 	}
