@@ -21,6 +21,10 @@ if ($player['latitude'] <= $location['latitude'] + $gps_error_factor and $player
 	$player['longitude'] <= $location['longitude'] + $gps_error_factor and $player['longitude'] >= $location['longitude'] - $gps_error_factor ) {
 	
 	$_SESSION['profile_page'] = 2;
+	
+	$query = "DELETE FROM {$GLOBALS['DB_TABLE_PREFIX']}player_applications WHERE player_id = '{$_SESSION['player_id']}' and application_id=  '2' ";
+	mysql_query($query);
+
 	echo '<h1>Task 2</h1>
 		<p>Enter three items you noticed during your trip to Dotty\'s</p>
 		<p>Do not think too long, simply type in the first things that come to mind.		

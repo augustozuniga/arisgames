@@ -46,9 +46,7 @@ FORM;
 
 if (!isset($_REQUEST['req'])) {
 	page_header();
-	echo '<h1>Login to the GLS Tour of Madison</h1>
-			<p>This site is best viewed on iPhone</p>
-			<p>Please pick up your login from the information desk at the conference</p>';
+	echo $GLOBALS['WELCOME_MESSAGE'];
 	print_form();
 }
 else {
