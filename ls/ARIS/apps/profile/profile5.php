@@ -5,7 +5,6 @@ page_header();
 
 $_SESSION['profile_page'] = 5;
 
-mysql_query($query);
 	
 if ($_REQUEST['code'] ==  'correct') {
 	echo '<h1>Assessment Complete</h1>
