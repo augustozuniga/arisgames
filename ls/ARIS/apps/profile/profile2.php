@@ -18,7 +18,7 @@ $gps_error_factor = .0005;
 
 if ($player['latitude'] <= $location['latitude'] + $gps_error_factor and $player['latitude'] >= $location['latitude'] - $gps_error_factor 
 	and
-	$player['longitude'] <= $location['longitude'] + $gps_error_factor and $player['lngitude'] >= $location['longitude'] - $gps_error_factor ) {
+	$player['longitude'] <= $location['longitude'] + $gps_error_factor and $player['longitude'] >= $location['longitude'] - $gps_error_factor ) {
 	
 	$_SESSION['profile_page'] = 2;
 	echo '<h1>Task 2</h1>

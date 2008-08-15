@@ -32,8 +32,8 @@ if (isset($_REQUEST['action']) == FALSE){
 
 else if ($_REQUEST['action'] == "UPDATE6638") {
 	$query = "ALTER TABLE {$prefix}players 
-			ADD COLUMN latitude FLOAT AFTER last_location_id,
- 			ADD COLUMN longitude FLOAT AFTER latitude;";
+			ADD COLUMN latitude DOUBLE AFTER last_location_id,
+ 			ADD COLUMN longitude DOUBLE AFTER latitude;";
 	run_query($query);
 
 }
@@ -212,8 +212,8 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  password varchar(32) default NULL,
 	  user_name varchar(30) default NULL,
 	  last_location_id int(11) default NULL,
-	  latitude float default NULL,
-      longitude float default NULL,
+	  latitude DOUBLE default NULL,
+      longitude DOUBLE default NULL,
 	  PRIMARY KEY  (player_id)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8";
 	run_query($query);
