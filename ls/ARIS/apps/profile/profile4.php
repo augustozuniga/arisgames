@@ -4,6 +4,7 @@ page_header();
 
 
 $_SESSION['profile_page'] = 4;
+
 	echo '<h1>Task 4</h1>
 		<p>Thank you for your telling response. So far you have the attributes of a: </p>';
 	if (!isset($_REQUEST['feelings'])) echo '<h2>Vygot-99 personality</h2>'; 
