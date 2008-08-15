@@ -6,19 +6,22 @@ page_header();
 $_SESSION['profile_page'] = 4;
 	echo '<h1>Task 4</h1>
 		<p>Thank you for your telling response. So far you have the attributes of a: </p>';
-	switch ($_REQUEST['feelings']) {
-		case 1: 
-			echo '<h2>Vygot-7 personality</h2>'; 
-			break;
-		case 2: 
-			echo '<h2>Vygot-34 personality</h2>'; 
-			break;
-		case 3: 
-			echo '<h2>Vygot-9 personality</h2>'; 
-			break;
-		case 4: 
-			echo '<h2>Vygot-53 personality</h2>'; 
-			break;
+	if (!isset($_REQUEST['feelings'])) echo '<h2>Vygot-99 personality</h2>'; 
+	else {
+		switch ($_REQUEST['feelings']) {
+			case 1: 
+				echo '<h2>Vygot-7 personality</h2>'; 
+				break;
+			case 2: 
+				echo '<h2>Vygot-34 personality</h2>'; 
+				break;
+			case 3: 
+				echo '<h2>Vygot-9 personality</h2>'; 
+				break;
+			case 4: 
+				echo '<h2>Vygot-53 personality</h2>'; 
+				break;
+		}
 	}
 	echo '
 		<br/><p>Go inside and talk with the bartender. Tell him you are a NAC recruit and give him a dollar bill. He will give you the code-word to continue.</p>
