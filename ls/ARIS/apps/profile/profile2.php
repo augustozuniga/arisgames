@@ -29,7 +29,7 @@ if ($player['latitude'] <= $location['latitude'] + $gps_error_factor and $player
 		  <p>Thing 1: <input type = "text" name = "item1"></p>
 		  <p>Thing 2: <input type = "text" name = "item2"></p>
 		  <p>Thing 3: <input type = "text" name = "item3"></p>
-		  <input type="submit" name="button" id="button" value="I am at Dotty\'s" />
+		  <input type="submit" name="button" id="button" value="Submit" />
 		</form>';
 
 } 
