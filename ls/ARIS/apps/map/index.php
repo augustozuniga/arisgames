@@ -74,7 +74,7 @@ else {
 	$result = mysql_query($query);
 	
 	 
-	$map_path = 'http://maps.google.com/staticmap?maptype=mobile&size=320x250&key=' . $GLOBALS['GOOGLE_KEY'];
+	$map_path = 'http://maps.google.com/staticmap?maptype=mobile&size=320x200&key=' . $GLOBALS['GOOGLE_KEY'];
 	$map_path .= '&markers=';
 	
 	$colors = array('green', 'purple', 'yellow', 'blue', 'gray', 'orange', 'red', 'white', 'black', 'brown');
