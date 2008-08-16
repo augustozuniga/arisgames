@@ -7,6 +7,8 @@ page_header();
 
 echo '<h1>Developer Tools</h1>';
 
+echo "<p><a href='player_map.php'>Show players' last locations on a map</a></p>";
+echo "<p><a href='install_sql.php'>Install/Maintain SQL</a></p>";
 echo "<p><a href='{$_SERVER['PHP_SELF']}?function=reset_events'>Reset my Events</a></p>";
 echo "<p><a href='{$_SERVER['PHP_SELF']}?function=reset_items'>Reset my Items</a></p>";
 echo "<p><a href='{$_SERVER['PHP_SELF']}?function=clear_session'>Clear the Session</a></p>";
