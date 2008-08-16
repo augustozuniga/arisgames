@@ -92,6 +92,9 @@ else {
 	}
 	
 	
+	// Cache the map_path for later updates
+	$map_path_cache = $map_path;
+	
 	//Set up a player icon and look for a matching location
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}players WHERE player_id = '{$_SESSION['player_id']}'";
 	$result = mysql_query($query);
@@ -128,7 +131,8 @@ else {
 	
 	
 	//Display the map
-	echo "<p><img src = '$map_path'/></p>";
+	echo "<p><img id='mapImg' src = '$map_path'/></p>";
+	echo "<script type='text/javascript'>var map_cache = \"$map_path_cache\";</script>";
 
 	
 	//Display the Locatons as links under the map using the same letters as in the map

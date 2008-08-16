@@ -1,5 +1,5 @@
 <?php
-
-session_start();
-
+if (ini_get('session.auto_start') == 0) {
+	session_start();
+}
 ?>

@@ -31,6 +31,10 @@ function page_header($additional_layout=null, $login_page=null) {
 		function update_location(lat, long) {
  			frames['utils_frame'].location.href = '{$GLOBALS['WWW_ROOT']}/update_location.php?latitude=' + lat + '&longitude=' + long;
         	number++;
+        	img = document.getElementById('mapImg');
+        	if (img && map_cache) {
+        		img.src = map_cache + lat + ',' + long + ',yellow';
+        	}
 		}
 	
 		</script>";
