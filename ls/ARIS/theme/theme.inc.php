@@ -54,10 +54,6 @@ function page_header($additional_layout=null, $login_page=null) {
         	if (img && map_cache) {
         		img.src = map_cache + lat + ',' + long + ',yellow';
         	}
-        	
-        	content = document.getElementById('test');
-			content.innerHTML = lat + ', ' + long;
-		
 		}
 		</script>";
 	
@@ -65,8 +61,6 @@ function page_header($additional_layout=null, $login_page=null) {
 	echo "
 		</head>
 		<body>	
-		<iframe src='{$GLOBALS['WWW_ROOT']}/update_location.php' id='utils_frame' name='utils_frame'style='width:0px; height:0px; border: 0px'></iframe>
-		<h2 id='test'></h2>
 		<div id='container'>
 		<div id='content'>";
 		
