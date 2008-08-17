@@ -29,14 +29,36 @@ function page_header($additional_layout=null, $login_page=null) {
 		var number = 1;
 
 		function update_location(lat, long) {
- 			frames['utils_frame'].location.href = '{$GLOBALS['WWW_ROOT']}/update_location.php?latitude=' + lat + '&longitude=' + long;
+
+			/*
+ 			frames['utils_frame'].location.href = 
+ 				'{$GLOBALS['WWW_ROOT']}/update_location.php?latitude=' 
+ 				+ lat + '&longitude=' + long;
         	number++;
-        	img = document.getElementById('mapImg');
+        	*/
+        	
+        	var request = new XMLHttpRequest();
+        	request.open('GET', '{$GLOBALS['WWW_ROOT']}/update_location.php?latitude=' + 	
+        		lat + '&longitude=' + long, true);        		
+        	request.setRequestHeader('Content-Type', 'application/x-javascript;');        	
+        	request.onreadystatechange = function() {
+        		if (request.readyState == 4 && request.status == 200) {
+        			update_map(lat, long);
+        		}
+        	}
+        	request.send();
+		}
+
+		function update_map(lat, long) {
+			img = document.getElementById('mapImg');
         	if (img && map_cache) {
         		img.src = map_cache + lat + ',' + long + ',yellow';
         	}
+        	
+        	content = document.getElementById('test');
+			content.innerHTML = lat + ', ' + long;
+		
 		}
-	
 		</script>";
 	
 	//Put the location_update in a iframe and start the main divs
@@ -44,6 +66,7 @@ function page_header($additional_layout=null, $login_page=null) {
 		</head>
 		<body>	
 		<iframe src='{$GLOBALS['WWW_ROOT']}/update_location.php' id='utils_frame' name='utils_frame'style='width:0px; height:0px; border: 0px'></iframe>
+		<h2 id='test'></h2>
 		<div id='container'>
 		<div id='content'>";
 		
