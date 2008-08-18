@@ -8,15 +8,14 @@ $query = "INSERT INTO {$GLOBALS['DB_TABLE_PREFIX']}player_applications (player_i
 
 mysql_query($query);
 
-
-?>
-
-<h1>Task 1</h1>
-<p>We have added a custom GPS application to your device. Use it to find and travel to Dotty Dumpling's Dowery.</p>
+echo '<h1>Task 1</h1>
+<p>We have added a custom GPS application to your device. Use it to find and travel to Dotty Dumpling\'s Dowery.</p>
 <p>When you have arrived, return to this application and click the button below to continue. Do NOT press the button below until you have reached your destination.</p>
 <form id="form1" name="form1" method="post" action="profile2.php">
-  <input type="submit" name="button" id="button" value="I am at Dotty's" />
-</form>
-<p>&nbsp;</p>
-<p>
-<?php page_footer(); ?>
+  <input type="submit" name="button" id="button" value="I am at Dotty\'s" />
+</form>';
+
+page_footer();
+?>
+
+

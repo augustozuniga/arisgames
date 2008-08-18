@@ -25,7 +25,8 @@ $_SESSION['profile_page'] = 4;
 		}
 	}
 	echo '
-		<br/><p>Go inside and talk with the bartender. Tell him you are an NAC recruit and give him a dollar bill. He will give you the code-word to enter below.</p>
+		<br/><p>Go inside and talk with the bartender. Tell him you want to know who the "burger princess" is and give him a dollar bill. 
+		He will give you the code-word to enter below.</p>
 		<form id="form1" name="form1" method="post" action="profile5.php">
 		  <p>Code Word: <input name="code" type="text"></p>
 		  <p><input type="submit" name="button" id="button" value="Continue" /></p>
