@@ -26,7 +26,7 @@ body {
 
 #nav {
 	background-color: #333;
-	background: url("../media/header.png") repeat-x scroll ;
+	background: url("header.png") repeat-x scroll ;
 	
 	clear:    both;
 	position: absolute;
@@ -156,7 +156,7 @@ img {
 h1 {
 	border-bottom: 1px solid #5A5D5A;
 	text-align: center;
-	background: url("../media/header.png") repeat-x scroll ;
+	background: url("header.png") repeat-x scroll ;
 }
 
 #content h2.task {
@@ -253,7 +253,7 @@ fieldset {
 
 .submit > input:active {
 	border: 1px solid #173F91;
-	background: url("../media/blueBack.png") repeat-x ;
+	background: url("blueBack.png") repeat-x ;
 	color: white;
 }
 
