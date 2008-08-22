@@ -1,17 +1,18 @@
 <?php
 
 require_once('../../common.php');
-unset($_SESSION['current_npc_id']);
 
 page_header();
 
 echo '<h1>Developer Tools</h1>';
 
-echo "<p><a href='player_map.php'>Show players' last locations on a map</a></p>";
-echo "<p><a href='install_sql.php'>Install/Maintain SQL</a></p>";
-echo "<p><a href='{$_SERVER['PHP_SELF']}?function=reset_events'>Reset my Events</a></p>";
-echo "<p><a href='{$_SERVER['PHP_SELF']}?function=reset_items'>Reset my Items</a></p>";
-echo "<p><a href='{$_SERVER['PHP_SELF']}?function=clear_session'>Clear the Session</a></p>";
+echo "<h2><a href='player_map.php'>Show players' last locations on a map</a></h2>";
+echo "<h2><a href='games.php'>Change Game/Server</a></h2>";
+echo "<h2><a href='install_sql.php'>Install/Maintain SQL</a></h2>";
+echo "<h2><a href='../../admin'>View Editor (Wanring, no way back)</a></h2>";
+echo "<h2><a href='{$_SERVER['PHP_SELF']}?function=reset_events'>Reset my Events</a></h2>";
+echo "<h2><a href='{$_SERVER['PHP_SELF']}?function=reset_items'>Reset my Items</a></h2>";
+echo "<h2><a href='{$_SERVER['PHP_SELF']}?function=clear_session'>Clear the Session</a></h2>";
 
 if (isset($_REQUEST['function'])) {
 
