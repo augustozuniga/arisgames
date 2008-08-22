@@ -30,6 +30,7 @@ if (isset($_REQUEST['action']) == FALSE){
 	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE6638'>Update the MYSQL Tables for Latitude and Longitude (Build 6638 or higher)</a><p>";
 	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE6639'>Update the MYSQL Tables for Dynamic Applications (Build 6639 or higher)</a><p>";
 	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE6731'>Update the MYSQL Tables for Timestamped location updates (Build 6731 or higher)</a><p>";
+	echo "<p><a href = '{$_SERVER['PHP_SELF']}?action=UPDATE6818'>Update the MYSQL Tables for Location Unlocked Events (Build 6818 or higher)</a><p>";
 
 }
 
@@ -70,6 +71,13 @@ else if ($_REQUEST['action'] == "UPDATE6731") {
 	run_query($query);
 }
 
+else if ($_REQUEST['action'] == "UPDATE6818") {
+	//Insert the tables that support adding applications
+	$query = "ALTER TABLE  {$prefix}locations
+				ADD COLUMN add_event_id int(10) unsigned AFTER require_event_id";
+	run_query($query);
+}
+
 
 else if ($_REQUEST['action'] == "INSTALL") {
 	//Insert the tables
@@ -101,6 +109,7 @@ else if ($_REQUEST['action'] == "INSTALL") {
 	  name varchar(50) default NULL,
 	  description tinytext,
 	  require_event_id int(10) unsigned default NULL,
+	  add_event_id int(10) unsigned default NULL,
 	  remove_if_event_id int(10) unsigned default NULL,
 	  latitude DOUBLE NOT NULL default '0',
 	  longitude DOUBLE NOT NULL default '0',
