@@ -95,39 +95,16 @@ else {
 	// Cache the map_path for later updates
 	$map_path_cache = $map_path;
 	
-	//Set up a player icon and look for a matching location
-	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}players WHERE player_id = '{$_SESSION['player_id']}'";
-	$result = mysql_query($query);
-	$player = mysql_fetch_array($result);
-	
-	if (isset($player['latitude']) and isset($player['longitude']) ) {
+	//Set up a player icon
+	if (isset($_SESSION['latitude']) and isset($_SESSION['longitude']) ) {
 	
 		//add a marker
-		$map_path .= "{$player['latitude']},{$player['longitude']},yellow";
-		
-		//Look for a location match to current player position
-		$gps_error_factor = .0005 ;
-		
-		$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations WHERE 
-			latitude < " .  ($player['latitude'] + $gps_error_factor) . " AND latitude > " .  ($player['latitude'] - $gps_error_factor) . " AND 
-			longitude < " . ($player['longitude'] + $gps_error_factor) . " AND longitude > " .  ($player['longitude'] - $gps_error_factor);  
-	
-		$result = mysql_query($query);
-		$row = mysql_fetch_array($result);
-		
-		//Set the current player location in the database
-		if ($row) {
-			$player_at_location = TRUE;
-			$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players SET last_location_id = $row[location_id] WHERE player_id = $_SESSION[player_id]";
-		}
-		else $query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players SET last_location_id = '' WHERE player_id = $_SESSION[player_id]";
-		mysql_query($query);
-		
+		$map_path .= "{$_SESSION['latitude']},{$_SESSION['longitude']},yellow";
+				
 	}
 	
-	
 	//Display current location
-	if ($player_at_location == true) echo "<h1><a href = '{$_SERVER['PHP_SELF']}?location_id=$row[location_id]'>Current Location: $row[name] </a></h1>";
+	if (isset($_SESSION['location_id'])) echo "<h1><a href = '{$_SERVER['PHP_SELF']}?location_id={$_SESSION['location_id']}'>Current Location: {$_SESSION['location_name']} </a></h1>";
 	
 	
 	//Display the map
