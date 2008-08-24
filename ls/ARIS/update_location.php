@@ -17,7 +17,7 @@ if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_S
 	$_SESSION['last_location_timestamp']=time();
 	
 	//Check for a matching location and add event if specified
-	$gps_error_factor = .0005 ;
+	$gps_error_factor = .00005 ;
 		
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations 
 		WHERE 
@@ -45,7 +45,28 @@ if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_S
 			VALUES ('{$_SESSION['player_id']}','{$location['add_event_id']}')"; 		
 			mysql_query($query);
 		}
+	
+	}
+	else {
+		//The player has left a known location
+		//Update player record in db
+		$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players 
+			SET last_location_id = '' 
+			WHERE player_id = '{$_SESSION['player_id']}'";
+		mysql_query($query);
 		
+		//Update the session
+		unset($_SESSION['location_id']);
+		unset($_SESSION['location_name']);
+
+		//Give event to player if specified in location record
+		if (isset($location['add_event_id'])) {
+			$query = "INSERT INTO {$GLOBALS['DB_TABLE_PREFIX']}player_events (player_id, event_id)
+			VALUES ('{$_SESSION['player_id']}','{$location['add_event_id']}')"; 		
+			mysql_query($query);
+		}
+	
+
 	}
 	
 
