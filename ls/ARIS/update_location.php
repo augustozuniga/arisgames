@@ -17,7 +17,7 @@ if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_S
 	$_SESSION['last_location_timestamp']=time();
 	
 	//Check for a matching location and add event if specified
-	$gps_error_factor = .00005 ;
+	$gps_error_factor = .0001 ;
 		
 	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations 
 		WHERE 
