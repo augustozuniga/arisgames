@@ -1,13 +1,12 @@
 <?php
 
 /**
- * PEAR PDO driver for Framework_DB
+ * PHP PDO driver for Framework_DB
  *
  * @author      Joe Stump <joe@joestump.net>
  * @author      Kevin Harris <klharris2@wisc.edu>
  * @package     Framework
  * @subpackage  DB
- * @link        http://pear.php.net/package/DB
  * @filesource
  */
 
@@ -46,7 +45,7 @@ class Framework_DB_PDO extends Framework_DB_Common
     );
 
     /**
-     * Create a singleton of PEAR's DB 
+     * Create a singleton of PDO's DB 
      *
      * @access      public
      * @return      object      Instance of PEAR DB connected to the DB
@@ -111,7 +110,7 @@ class PDOWrapper extends Framework_DB_Common
     		
     		$allRows = array();
     		while ($row = $result->fetch()) {
-    			array_push($allRows, $row);
+    			$allRows[] = $row;
     		}
     		
     		return $allRows;

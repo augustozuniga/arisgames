@@ -11,7 +11,7 @@ configuration stuff here.
         Change this to the appropriate DSN for PEAR's DB class.
     -->
     <db>
-        <type>PDO</type>
+        <type>MySQL</type>
         <dsn>mysql:dbname=aris;host=localhost</dsn>
     </db>
 
