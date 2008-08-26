@@ -12,7 +12,7 @@ configuration stuff here.
     -->
     <db>
         <type>MySQL</type>
-        <dsn>mysql:dbname=aris;host=localhost</dsn>
+        <dsn>mysql:dbname=aris;host=localhost;username=arisuser;password=arispwd</dsn>
     </db>
 
     <!-- 

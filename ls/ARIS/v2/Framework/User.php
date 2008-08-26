@@ -61,7 +61,8 @@ class Framework_User extends Framework_Object_DB
         if (is_array($result)) {
             $this->data = $result;
         } else {
-            throw new Framework_Exception('Could not look up userID');
+        	$session->destroy();
+            throw new Framework_Exception('Could not look up userID', FRAMEWORK_ERROR_AUTH);
         }
     }
 

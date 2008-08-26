@@ -138,9 +138,9 @@ abstract class Framework
             Framework::$log = null; //Log::factory('file', $logFile);
         }
 
-        self::$site->prepare();
-        self::$controller = Framework_Controller::factory($controller);
-        self::$request = Framework_Request::factory(self::$controller->requester);
+        self::$site->prepare();        
+        self::$controller = Framework_Controller::factory($controller);        
+        self::$request = Framework_Request::factory(self::$controller->requester);        
         self::$module = & self::$controller->module();
         self::$module->site = self::$site->name;
 

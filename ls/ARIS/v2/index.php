@@ -25,6 +25,7 @@ define('FRAMEWORK_WWW_BASE_PATH', dirname($_SERVER['PHP_SELF']));
 ini_set("include_path", ".:"  
 	. FRAMEWORK_BASE_PATH . '/Framework:' 
 	. FRAMEWORK_BASE_PATH . '/Framework/Template/Smarty');
+ini_set('display_errors', 1);
 
 $site = null;
 try {
