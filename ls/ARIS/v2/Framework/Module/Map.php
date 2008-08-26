@@ -74,7 +74,7 @@ class Framework_Module_Map extends Framework_Auth_User
 		// Set up a player icon and look for a matching location
 		if (!empty($user->latitude) && !empty($user->longitude)) {
 			// Add the player marker; TODO: put the color in the config file
-			$mapPath .= $player->latitude . ',' . $player->longtitude . ','
+			$mapPath .= $user->latitude . ',' . $user->longtitude . ','
 				. $site->config->aris->map->playerColor;
 		}
 		
