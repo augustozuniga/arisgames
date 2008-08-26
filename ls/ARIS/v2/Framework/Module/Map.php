@@ -34,6 +34,8 @@ class Framework_Module_Map extends Framework_Auth_User
     	$site = Framework::$site;
     	$user = Framework_User::singleton();
 
+    	$this->title = 'Current Location';
+
 		$playerAtLocation = false; // a switch to use if a player is at a defined locaiton
 		
 		// Set up a marker for each location in the locations table
@@ -46,6 +48,7 @@ class Framework_Module_Map extends Framework_Auth_User
 				OR _P_locations.remove_if_event_id NOT IN 
 					(SELECT event_id FROM _P_player_events WHERE player_id = {$user->player_id}))");
 		$rows = Framework::$db->getAll($sql);
+		$this->allLocations = $rows;
 
 		$mapPath = 'http://maps.google.com/staticmap?maptype=mobile&size='
 			. $site->config->aris->map->width . 'x' 
@@ -66,7 +69,7 @@ class Framework_Module_Map extends Framework_Auth_User
 		}
 
 		// Cache the map_path for later updates
-		$mapPathCache = $mapPath;
+		$this->mapPathCache = $mapPath;
 	
 		// Set up a player icon and look for a matching location
 		if (!empty($user->latitude) && !empty($user->longitude)) {
@@ -74,63 +77,39 @@ class Framework_Module_Map extends Framework_Auth_User
 			$mapPath .= $player->latitude . ',' . $player->longtitude . ','
 				. $site->config->aris->map->playerColor;
 		}
-	
-		$errorFactor = $site->config->aris->map->gpsError;
+		
+		$this->mapPath = $mapPath;
+
+		$errorFactor = $site->config->aris->map->error;
 		$sql = Framework::$db->prefix(sprintf("SELECT * FROM _P_locations WHERE 
-			latitude < %d AND latitude > %s AND longitude < %s AND longitude > %s", 
-			$player->latitude + $gps_error_factor,
-			$player->latitude - $gps_error_factor, 
-			$player->longitude + $gps_error_factor, 
-			$player->longitude - $gps_error_factor));
+			latitude <= %s AND latitude >= %s AND longitude <= %s AND longitude >= %s", 
+			(real)$user->latitude + (real)$errorFactor,
+			(real)$user->latitude - (real)$errorFactor, 
+			(real)$user->longitude + (real)$errorFactor, 
+			(real)$user->longitude - (real)$errorFactor));
 		$row = Framework::$db->getRow($sql);
 		
 		// Set the current player location in the database
 		if ($row) {
 			$playerAtLocation = true;
+			$this->player_location_id = $row['location_id'];
+			$this->playerLocationName = $row['name'];
+			$this->title = 'Near ' . $row['name'];
+			
 			$sql = Framework::$db->prefix("UPDATE _P_players 
 				SET last_location_id = {$row['location_id']} 
 				WHERE player_id = {$user->player_id}");
 		}
-		else $sql = Framework::$db->prefix("UPDATE _P_players 
-			SET last_location_id = '' WHERE player_id = {$user->player_id}");
-		Framework::$db->// Query?
-	}
-	
-	
-	//Display current location
-	if ($player_at_location == true) echo "<h1><a href = '{$_SERVER['PHP_SELF']}?location_id=$row[location_id]'>Current Location: $row[name] </a></h1>";
-	
-	
-	//Display the map
-	echo "<p><img id='mapImg' src = '$map_path'/></p>";
-	echo "<script type='text/javascript'>var map_cache = \"$map_path_cache\";</script>";
-
-	
-	//Display the Locatons as links under the map using the same letters as in the map
-	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations 
-				LEFT OUTER JOIN {$GLOBALS['DB_TABLE_PREFIX']}player_events 
-				ON {$GLOBALS['DB_TABLE_PREFIX']}locations.require_event_id = {$GLOBALS['DB_TABLE_PREFIX']}player_events.event_id
-				WHERE 
-				(require_event_id IS NULL OR player_id = $_SESSION[player_id])
-				and
-				({$GLOBALS['DB_TABLE_PREFIX']}locations.remove_if_event_id IS NULL 
-					OR 
-					{$GLOBALS['DB_TABLE_PREFIX']}locations.remove_if_event_id NOT IN 
-					(SELECT event_id FROM {$GLOBALS['DB_TABLE_PREFIX']}player_events WHERE player_id = 	$_SESSION[player_id])
-				)";
-				
-	$locations_dataset = mysql_query($query);
-	
-	$i = 0;
-	
-	while( $location = mysql_fetch_array($locations_dataset) ) {					
-		//echo "<p><a href = '{$_SERVER['PHP_SELF']}?location_id=$location[location_id]'>{$letters[$i]}. {$location['name']}</a></p>";
-		$letter = strtoupper($letters[$i]);
-		echo "<p>{$letter}. {$location['name']}</p>";
-		$i++;
-		
-	}
-	
+		else {
+			$this->player_location_id = -1;
+			$sql = Framework::$db->prefix("UPDATE _P_players 
+				SET last_location_id = '' WHERE player_id = {$user->player_id}");
+		}
+		Framework::$db->exec($sql);
+    }
+    
+    public function displayLocation() {
+    	$this->title = 'In Development';
     }
 }
 

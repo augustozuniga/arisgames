@@ -90,6 +90,10 @@ class PDOWrapper extends Framework_DB_Common
     	$this->fetchMode = $newMode;
     }
     
+    public function exec($sql) {
+    	return $this->pdoDb->exec($sql);
+    }
+    
     public function getRow($sql) {
     	$result = $this->pdoDb->prepare($sql);
     	$result->execute();

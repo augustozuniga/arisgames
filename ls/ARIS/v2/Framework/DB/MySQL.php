@@ -101,6 +101,13 @@ class Framework_DB_MySQL extends Framework_DB_Common
     	$this->fetchMode = $newMode;
     }
     
+    public function exec($sql) {
+    	if (mysql_query($sql)) {
+    		return mysql_affected_rows();
+    	}
+    	throw new Framework_DB_Exception("Query failed: $sql\n" . mysql_error());
+    }
+    
     public function getRow($sql) {
     	$result = mysql_query($sql);
     	
@@ -129,7 +136,7 @@ class Framework_DB_MySQL extends Framework_DB_Common
     }
     
     public function disconnect() {
-    	mysql_close(Framework::$db);
+    	mysql_close();
     	Framework::$db = null;
     }
 }
