@@ -2,6 +2,8 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
+require_once('NodeManager.php');
+
 /**
  * Framework_Module_Main
  *
@@ -16,6 +18,7 @@
  * Framework_Module_NodeViewer
  *
  * @author      Kevin Harris <klharris2@wisc.edu>
+ * @author 		David Gagnon <djgagnon@wisc.edu>
  * @package     Framework
  * @subpackage  Module
  */
@@ -42,11 +45,21 @@ class Framework_Module_NodeViewer extends Framework_Auth_User
 				AND (require_event_id IS NULL or require_event_id IN 
 					(SELECT event_id FROM _P_player_events 
 						WHERE player_id = {$user->player_id}))");
-		$this->npcs = Framework::$db->getAll($sql);
+		$npcs = Framework::$db->getAll($sql);
+		
+		foreach ($npcs as &$npc) {
+			if (!empty($npc['media'])) {
+				$npc['media'] = $this->findMedia($npc['media'], 'defaultUser.png');
+			}
+		}
+		unset($npc);
+		
+		$this->npcs = $npcs;
+		$this->event = 'conversation';
     }
     
     /**
-     * listConversations
+     * conversations
      *
      * List all of the conversations available for the given 
      * NPC and player.
@@ -58,52 +71,70 @@ class Framework_Module_NodeViewer extends Framework_Auth_User
     {
     	$session = Framework_Session::singleton();
     	$user = Framework_User::singleton();
-    
-    	// Ensure that we have an id
-    	if (!$_REQUEST['npc_id']) throw new Framework_Exception('Unauthorized link.', FRAMEWORK_ERROR_AUTH);
-    	$npcID = $_REQUEST['npc_id'];
-    	
-    	$sql = Framework::$db->prefix("SELECT name FROM _P_npcs WHERE npc_id = $npcID");
-    	$npc = Framework::$db->getRow($sql);
-    	
-    	// Relative to the JS file?
-    	$photo = ($user->photo) ? $user->photo : 'defaultUser.png';
-    	
+
+    	$photo = $this->findMedia($user->photo, 'defaultUser.png', '');
     	$site = Framework::$site->name;
-    	$wwwBase = FRAMEWORK_WWW_BASE_PATH;
     	
-    	$this->title = $npc['name'];
-    	$this->scripts = array('im.js');
-    	$this->rawHead = <<<SCRIPT
+		NodeManager::loadNodeConversations($_REQUEST['npc_id']);
+		$this->setVariables();
+				
+		$this->rawHead = <<<SCRIPT
    <script type="application/x-javascript">
    <!--
     var site = "$site";
-    var wwwBase = "$wwwBase";
-   	npcID = $npcID;
+    var wwwBase = "{$this->wwwBase}";
+   	npcID = {$this->npc['npc_id']};
    	messageQueue['player_icon'] = "$photo";
    	messageQueue['options'] = new Array();
    //-->
    </script>
    
 SCRIPT;
+    	$this->scripts = array('im.js');
+    }
+    
+    /**
+     * Loads the initial conversations available.
+     */
+    public function faceConversation() {
+		NodeManager::loadNodeConversations($_REQUEST['npc_id']);
+		$this->setVariables();
+    }
+    
+    /**
+     * Displays the NPC's text and any options.
+     */
+    public function faceTalk() {
+    	if (!isset($_REQUEST['node_id']) 
+    		&& !isset($_REQUEST['question_node_id']))
+    	{
+    		// TODO: Change this to an appropriate exception.
+    		throw new Framework_Exception('Communication terminated.', 
+    			FRAMEWORK_ERROR_AUTH);
+    	}
     	
-    	$sql = Framework::$db->prefix(
-    	"SELECT * FROM _P_npc_conversations 
-			WHERE  
-				(require_event_id IS NULL OR require_event_id IN 
-					(SELECT event_id FROM _P_player_events WHERE player_id = $_SESSION[player_id])) 
-			AND
-				(require_location_id IS NULL OR require_location_id IN 
-					(SELECT last_location_id FROM _P_players WHERE player_id = $_SESSION[player_id])) 
-			AND
-				(_P_npc_conversations.remove_if_event_id IS NULL 
-					OR _P_npc_conversations.remove_if_event_id NOT IN 
-						(SELECT event_id FROM _P_player_events WHERE player_id = $_SESSION[player_id]))
-			AND	npc_id = $npcID
-			ORDER BY node_id DESC"
-    	);
-    	
-    	$this->conversations = Framework::$db->getAll($sql);
+    	$session = Framework_Session::singleton();
+    	$user = Framework_User::singleton();
+    	$this->messages = array();
+		NodeManager::loadNode($_REQUEST['node_id'], $_REQUEST['npc_id']);
+		
+		$this->setVariables();
+    }
+    
+    protected function setVariables() {
+    	$this->conversations = NodeManager::$conversations;
+    	// TODO: Is this needed?
+		$this->wwwBase = FRAMEWORK_WWW_BASE_PATH;
+		
+    	$this->node = NodeManager::$node;
+    	$npc = NodeManager::$npc;
+    	$this->title = $npc['name'];
+
+		if (!empty($npc['media'])) {
+			$npc['media'] = $this->findMedia($npc['media'], 
+				'defaultUser.png');
+		}
+		$this->npc = $npc;
     }
 }
 

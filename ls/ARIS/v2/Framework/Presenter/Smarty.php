@@ -60,6 +60,8 @@ class Framework_Presenter_Smarty extends Framework_Presenter_Common
         $this->template->assign('tplFile',$this->module->tplFile);
         $this->template->assign('user',$this->user);
         $this->template->assign('session',$this->session);
+        $this->template->assign('frameworkModulePath', FRAMEWORK_BASE_PATH 
+        	. '/Framework/Module/Framework/Templates/Default/');
 
         foreach ($this->module->getData() as $var => $val) {
             if (!in_array($var,array('path','tplFile'))) {

@@ -18,10 +18,12 @@
  *         - module = the module to use
  *         - site = the site to use; defaults to the current site
  *		   - event = the event to fire, if any
+ *         - text = the text to display
+ *         - class = the link's class
  *
  * Examples:
  * <pre>
- * {link controller="Web" module="Login" site="Nac1"}
+ * {link controller="Web" module="Login" site="Nac1" text="Log in"}
  * </pre>
  * @version  1.0
  * @author   Kevin Harris <klharris2 at wisc dot edu>

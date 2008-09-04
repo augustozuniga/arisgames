@@ -1,7 +1,7 @@
 <iframe id="chatFrame" src="{$frameworkTplPath}/dialogcontainer.html"></iframe>
 
-<div id="message">&nbsp;</div>
-<input type="button" id="playerMessageSendButton" value="Send" onclick="postPlayerMessage();"/>
+<input id="message" value=" " disabled="true" />
+<input type="button" id="playerMessageSendButton" value="Send" disabled="true" onclick="postPlayerMessage();"/>
 <div id="rawMessage"></div>
 <script language="JavaScript" type="text/javascript">
 <!--

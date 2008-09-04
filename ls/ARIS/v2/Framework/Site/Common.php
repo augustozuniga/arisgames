@@ -145,7 +145,7 @@ abstract class Framework_Site_Common
             $base = '/';
         }
 
-        return $base . 'Framework/Site/' . $this->name . '/Templates/' .
+        return $base . '/Framework/Site/' . $this->name . '/Templates/' .
                $this->template;
     }
 }

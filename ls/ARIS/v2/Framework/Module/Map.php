@@ -108,9 +108,49 @@ class Framework_Module_Map extends Framework_Auth_User
 		Framework::$db->exec($sql);
     }
     
+    /**
+     * Displays the specified location information
+     */
     public function displayLocation() {
-    	$this->title = 'In Development';
+    	if (empty($_REQUEST['location_id'])) {
+    		$this->title = "mDesk Error";
+    		$this->errorMessage = "Location cannot be determined at this time.";
+    		return;
+    	}
+    	$locationID = $_REQUEST['location_id'];
+    
+		$user = Framework_User::singleton();
+		$this->setPlayerLocation($user->player_id, $locationID);
+
+		// Load the loaction data and display the name
+		$sql = Framework::$db->prefix("SELECT * FROM _P_locations WHERE location_id = $locationID");
+		$this->location = Framework::$db->getRow($sql);
+		
+		$sql = Framework::$db->prefix("SELECT * FROM _P_npcs 
+			WHERE location_id = '$locationID' 
+			AND (require_event_id IS NULL or require_event_id IN 
+				(SELECT event_id FROM _P_player_events 
+					WHERE player_id = {$user->player_id}))");
+		$npcs = Framework::$db->getAll($sql);
+		foreach ($npcs as &$npc) {
+			if (!empty($npc['media'])) {
+				$npc['media'] = $this->findMedia($npc['media'], 'defaultUser.png');
+			}
+		}
+		unset($npc);
+		
+		$this->npcs = $npcs;
+    	$this->title = $this->location['name'];
+    	$this->event = 'faceConversation';
+    }
+    
+    /**
+     * Stores the player's location ID in the db.
+     */
+    protected function setPlayerLocation($playerID, $locationID) {
+    	$sql = Framework::$db->prefix("UPDATE _P_players SET last_location_id = $locationID
+			WHERE player_id = $playerID");
+		Framework::$db->exec($sql);
     }
 }
-
 ?>

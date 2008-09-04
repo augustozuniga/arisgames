@@ -42,21 +42,21 @@ body > .appbar {
 	width: 40px;
 	height: 40px;
 	
-	margin: -10px 10px 0 0;
+	margin: -8px 10px 0 0;
 }
 
-.appbar > .application img {
+.appbar > .application > a > img {
 	width: 40px;
 	height: 40px;
 }
 
-.appbar > .application > p {
+.appbar > .application > a > p {
 	color: black;
 	font-size: 11px;
 	text-align: center;
 	
 	height: 11px;
-	margin: -11px 0 0 0;
+	margin: -15px 0 0 0;
 	padding: 0;
 }
 
@@ -130,7 +130,7 @@ p.help {
     box-sizing: border-box;
     border: none;
     padding: 12px 10px 0 100px;
-    font-weight: none;
+    font-weight: normal;
     font-size: 16px;
 
 }
@@ -178,28 +178,115 @@ p.help {
 	color: white;
 }
 
+/***** Quests *****/
+table.questList {
+	clear: left;
+	width: 100%;
+}
+
+table.questList tr td:first-child {
+	vertical-align: top;
+	width: 45px;
+}
+
+table.questList tr td {
+	padding: 0 0 0.5em 0;
+	margin: 0;
+}
+
+table.questList img {
+	width: 45px;
+	height: 45px;
+	margin-left: 1em;
+}
+
+table.questList caption {
+	margin: 0;
+	padding: 1em 0 0 1em;
+	text-align: left;
+	border-bottom: 1px solid #666;
+}
+
+table.questList ul {
+	padding: 0 1em 0 .5em;
+	margin: 0;
+}
+
+table.questList ul > li {
+	list-style-type: none;
+}
+
+table.questList ul > li:first-child {
+	font-weight: bold;
+}
+
+/***** Map *****/
+.mapContainer {
+	margin: 0 auto 0 auto;
+	width: 330px;
+}
+
+#mapImg {
+	margin: 5px;
+	width: 320px;
+	height: 200px;
+}
+
+.locationImg {
+	margin: 5px auto 5px auto;
+	width: 200px;
+}
+
+ol.locations {
+	list-style-type: upper-alpha;
+}
+
+ol.locations > li > a {
+	display: block;
+    margin: -8px 0 -8px -40px;
+    padding: 8px 32px 8px 35px;
+    text-decoration: none;
+    color: inherit;
+
+	background: url(iui/listArrow.png) no-repeat right center;
+}
+
+/***** Chatting *****/
+table.contactList {
+	clear: left;
+	width: 100%;
+}
+
+table.contactList tr td:first-child {
+	width: 45px;
+}
+
 table.contactList img {
 	width: 45px;
 	height: 45px;
 	margin-left: 1em;
 }
 
-table.contactList h2 {
-	font-size: 1.1em;
-	margin: 0 1em 0 1em;
+table.contactList caption {
+	margin-left: 1em;
+	padding: 0;
+	text-align: left;
 }
 
-table.contactList p {
-	font-size: 0.9em;
-	margin: 0 1em 0 1em;
+table.contactList ul > li {
+	list-style-type: none;
 }
 
-/***** Map *****/
-#mapImg {
-	margin: 5px;
+table.contactList ul > li > a {
+	display: block;
+    margin: -8px -8px -8px 0;
+    padding: 8px 32px 8px 0;
+    text-decoration: none;
+    color: white;
+
+	background: url(iui/listArrow.png) no-repeat right center;
 }
 
-/***** Chatting *****/
 #chatFrame {
 	margin: 0 auto 0 auto;
 	padding: 0;
@@ -243,6 +330,28 @@ body.frameBody {
 	border-bottom: 1px solid #666;
 }
 
-ol.locations {
-	list-style-type: upper-alpha;
+/***** Face to Face Chatting *****/
+ul.options {
+	margin: 0;
+	display: block;
+	clear: left;
+}
+
+ul.options > li {
+	border: 0;
+	margin-left: -2em;
+	padding-left: 0.5em;
+	font-size: 1em;
+	padding: 0;
+}
+
+.npcText {
+	margin: 0 1em 0 1em;
+}
+
+.npcImg {
+	float: left;
+	width: 128px;
+	height: 128px;
+	margin: 0 1em 0 0;
 }

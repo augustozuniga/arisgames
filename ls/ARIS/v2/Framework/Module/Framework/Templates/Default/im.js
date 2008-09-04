@@ -8,11 +8,17 @@ var messageNumber = -1;
 var npcID;
 var initialOptions = '';
 
+var userInput = '';
+
 function getMessageQueue(queueId) {
+	if (userInput != '') {
+		userInput = '&answer_string=' + URLEncode(userInput);
+	}
+
 	// Note the queueId is analagous to the nodeId
 	var request = new XMLHttpRequest();
 	request.open('GET', wwwBase + '/index.php?site=' + site + '&module=IMNode&controller=JSON&nodeID='
-		+ queueId + '&npcID=' + npcID, true);
+		+ queueId + '&npcID=' + npcID + userInput, true);
 	request.setRequestHeader('Content-Type', 'application/x-javascript;');        	
 	request.onreadystatechange = function() {
 		if (request.readyState == 4 && request.status == 200) {
@@ -21,7 +27,8 @@ function getMessageQueue(queueId) {
 			callback_getMessageQueue(data);
 		}
 	}
-    request.send();
+    request.send('');
+    userInput = '';
 }
 
 function callback_getMessageQueue(queue) {
@@ -37,13 +44,17 @@ function processCurrentMessage() {
         message = messageQueue['phrases'][messageNumber];
         if (message['isNPC']) setNPCMessage();
         else setTimeout(printPlayerMessage, message['delay']);
+    } else if (messageQueue['requiresInput']) {
+    	prepUserInput();
     } else if (messageQueue['options'].length > 0) {
         setTimeout(makeOptions, messageQueue['optionDelay']);
     }
 }
 
 function prepOptions(id, text) {
-	initialOptions = initialOptions + '<a href="#" onclick="parent.selectOption(' + "'" + id + "'" + ')">' + text + '</a><br/>';
+	initialOptions = initialOptions 
+		+ '<a href="#" onclick="parent.selectOption(' + "'" + id 
+		+ "'" + ')">' + text + '</a><br/>';
 		
 	var opt = new Array();
 	opt['queueId'] = id;
@@ -52,7 +63,7 @@ function prepOptions(id, text) {
 }
 
 function startOptions() {
-	makeRow('left', initialOptions, messageQueue['player_icon']);
+	makeRow('right', initialOptions, messageQueue['player_icon']);
 }
 
 function makeOptions() {
@@ -61,31 +72,59 @@ function makeOptions() {
         option = messageQueue['options'][i];
         msg = msg + '<a href="#" onclick="parent.selectOption(' + "'" + option['queueId'] + "'" + ')">' + option['phrase'] + '</a><br/>';
     }
-    makeRow('left', msg, messageQueue['player_icon']);
+    makeRow('right', msg, messageQueue['player_icon']);
 }    
 
 function selectOption(queueId) {
     for (var i = 0; i < messageQueue['options'].length; i++) {
         if (queueId == messageQueue['options'][i]['queueId']) {
-            setRowMessage('left', messageQueue['options'][i]['phrase'], messageQueue['player_icon']);
+            setRowMessage('right', messageQueue['options'][i]['phrase'], messageQueue['player_icon']);
             break;
         }
     }
     getMessageQueue(queueId);
 }
 
+function prepUserInput() {
+	messageContainer = document.getElementById('message');
+	messageContainer.disabled = false;
+	messageContainer.value = "Enter answer";
+	messageContainer.focus();
+	messageContainer.select();
+	
+	var msgButton = document.getElementById('playerMessageSendButton');
+	msgButton.onclick = processUserInput;
+	msgButton.disabled = false;
+}
+
+function processUserInput() {
+	var msgButton = document.getElementById('playerMessageSendButton');
+	msgButton.disabled = true;
+	msgButton.onclick = playerMessageSendButton;
+	
+	messageContainer = document.getElementById('message');
+	messageContainer.disabled = true;
+	message['phrase'] = messageContainer.value;
+	
+	userInput = messageContainer.value;
+	postPlayerMessage();
+	getMessageQueue(messageQueue['id']);
+}
+
 function setNPCMessage() {
-    makeRow('right', '...', messageQueue['npc_icon']);
+    makeRow('left', '...', messageQueue['npc_icon']);
 	setTimeout(writeNPCMessage, message['delay']);
 }
 
 function writeNPCMessage() {
-    setRowMessage('right', message['phrase'], messageQueue['npc_icon']);
+    setRowMessage('left', message['phrase'], messageQueue['npc_icon']);
     processCurrentMessage();
 }
 
 function printPlayerMessage() {
 	messageContainer = document.getElementById("message");
+	messageContainer.value = " ";
+	
 	intervalObject = setInterval(typeMessage, 75);
 	currentChar = 0;
 	document.getElementById("rawMessage").innerHTML = message['phrase'];
@@ -94,7 +133,8 @@ function printPlayerMessage() {
 
 function typeMessage() {
     if (currentChar < message['phrase'].length) {
-		messageContainer.innerHTML = messageContainer.innerHTML + message['phrase'].charAt(currentChar++);
+		messageContainer.value = 
+			message['phrase'].substring(0, ++currentChar);
 	} else {
 	    clearInterval(intervalObject);
         var button = document.getElementById("playerMessageSendButton");
@@ -105,8 +145,8 @@ function typeMessage() {
 function postPlayerMessage() {
     var button = document.getElementById("playerMessageSendButton");
     button.disabled = true;
-    makeRow('left', message['phrase'], messageQueue['player_icon']);
-    messageContainer.innerHTML = "&nbsp;";
+    makeRow('right', message['phrase'], messageQueue['player_icon']);
+    messageContainer.value = " ";
     processCurrentMessage();
 }
 
@@ -130,4 +170,29 @@ function createIcon(alignment, icon_url) {
         padding = "left";
     }
     return '<img alt="icon" width="48" src="' + icon_url +'" style="float:' + alignment +';padding-' + padding + ':5px;"/>';
+}
+
+function URLEncode(clearString) {
+	var output = '';
+	var x = 0;
+	clearString = clearString.toString();
+	var regex = /(^[a-zA-Z0-9_.]*)/;
+	while (x < clearString.length) {
+		var match = regex.exec(clearString.substr(x));
+		if (match != null && match.length > 1 && match[1] != '') {
+			output += match[1];
+			x += match[1].length;
+		} else {
+			if (clearString[x] == ' ')
+				output += '+';
+			else {
+				var charCode = clearString.charCodeAt(x);
+				var hexVal = charCode.toString(16);
+				output += '%' + ( hexVal.length < 2 ? '0' : '' ) 
+					+ hexVal.toUpperCase();
+			}
+			x++;
+		}
+	}
+	return output;
 }

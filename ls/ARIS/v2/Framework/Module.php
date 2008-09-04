@@ -203,20 +203,43 @@ abstract class Framework_Module extends Framework_Object_Web
      * @access protected
      * @return void
      */
-    protected function loadApplications($userId) {
-    	$sql = sprintf("SELECT name, directory FROM %sapplications, %splayer_applications
-    		WHERE %sapplications.application_id = 	
-    			%splayer_applications.application_id 
-    		AND %splayer_applications.player_id = %d",
-    		Framework::$site->config->aris->tablePrefix,
-    		Framework::$site->config->aris->tablePrefix,
-    		Framework::$site->config->aris->tablePrefix,
-    		Framework::$site->config->aris->tablePrefix,
-    		Framework::$site->config->aris->tablePrefix,
-    		$userId);
+    protected function loadApplications($userID) {
+    	$sql = $this->db->prefix("SELECT name, directory 
+    		FROM _P_applications, _P_player_applications
+    		WHERE _P_applications.application_id = 	
+    			_P_player_applications.application_id 
+    		AND _P_player_applications.player_id = $userID");
     	$rows = $this->db->getAll($sql);
 
 		Framework_Session::singleton()->applications = $rows;
+    }
+    
+    /**
+     * findMedia
+     *
+     * Returns a URI path to the media, if available, or to the
+     * default media located in the Framewrok template path.
+     *
+     * @param		string	$filename
+     * @param		string	$default
+     * @return		string
+     */
+    protected function findMedia($filename, $default, $defaultPath = null) {
+    	$basePath = !is_null($defaultPath) 
+    		? $defaultPath : $this->frameworkTplPath . '/';
+    	if (!empty($filename)) {
+    		$sitePath = Framework::$site->getPath() . '/Templates/' . 	
+    			Framework::$site->template . '/templates';
+    		if (file_exists("$sitePath/$filename")) {
+	    		return Framework::$site->getUriPath() . "/templates/$filename";
+    		}
+    
+    		if (file_exists("{$basePath}{$filename}")) {
+    			return "{$basePath}{$filename}";
+    		}
+    	}
+    	
+    	return "{$basePath}{$default}";
     }
 
     /**

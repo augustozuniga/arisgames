@@ -1,5 +1,7 @@
 <?php
 
+require_once('NodeManager.php');
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
@@ -36,35 +38,29 @@ class Framework_Module_IMNode extends Framework_Auth_No
 
     	$nodeID = $_REQUEST['nodeID'];
     	$npcID = $_REQUEST['npcID'];
-    	
-    	$this->data = $this->createMessage($nodeID, $npcID);
+		NodeManager::loadNode($nodeID, $npcID);
+    
+    	$this->data = $this->formatNode(NodeManager::$node, $npcID);
     }
     
-    /**
-     * Generates messages.
-     */
-    function createMessage($id, $npcID) {
-    	$sql = Framework::$db->prefix("SELECT * FROM _P_nodes WHERE node_id = $id");
-    	$row = Framework::$db->getRow($sql);
+    protected function formatNode($node, $npcID) {
     	$session = Framework_Session::singleton();
     	$user = Framework_User::singleton();
-
+    
     	$messages = new stdClass;
-    	$messages->id = $row['node_id'];
-    	$photo = ($user->photo) ? $user->photo : 'defaultUser.png';
-    	$messages->player_icon = $photo;
+    	$messages->id = $node['node_id'];
+    	$messages->player_icon = $this->findMedia($user->photo, 'defaultUser.png', '');
     	
-    	
-    	$messages->phrases = $this->makePhrases($row);
-    	$messages->options = $this->makeOptions($row, $npcID);
+    	$messages->phrases = $this->makePhrases($node);
+    	$messages->requiresInput = !empty($node['require_answer_string'])
+    		? true : false;
+    	$messages->options = $this->makeOptions($node, $npcID);
     	$messages->optionDelay = 1000;
     	
     	$sql = Framework::$db->prefix("SELECT * FROM _P_npcs WHERE npc_id = $npcID");
     	$row = Framework::$db->getRow($sql);
     	$messages->npc_name = $row['name'];
-    	$messages->npc_icon = empty($row['media']) 
-    		? 'defaultUser.png' 
-    		: FRAMEWORK_WWW_BASE_PATH . '/Framework/Site/' . Framework::$site->name . '/Templates/Default/templates/' . $row['media'];
+    	$messages->npc_icon = $this->findMedia($row['media'], 'defaultUser.png');
     	
     	return $messages;
     }
@@ -72,13 +68,15 @@ class Framework_Module_IMNode extends Framework_Auth_No
     /**
      * Generates phrases from the node.
      */
-    function &makePhrases($dbRow) {
+    protected function &makePhrases($dbRow) {
     	// We have <p>a</p><p>b</p>
     	$lines = explode('</p>', $dbRow['text']);
     	$isNPC = false;
     	$phrases = array();
     	foreach ($lines as $line) {
+    		$line = trim($line);
     		if (empty($line)) continue;
+    		
     		if (stristr($line, 'PC')) {
     			$isNPC = false;
     		}
@@ -91,7 +89,7 @@ class Framework_Module_IMNode extends Framework_Auth_No
     /**
      * Generates all of the options.
      */
-    function &makeOptions($dbRow, $npcID) {
+    protected function &makeOptions($dbRow, $npcID) {
     	$options = array();
     
     	for ($i = 1; $i < 4; ++$i) {
@@ -107,27 +105,14 @@ class Framework_Module_IMNode extends Framework_Auth_No
     }
     
     /**
-     * TODO: Move this and the corresponding section in NodeViewer to an NPC class.
+     * Formats conversations as options.
      */
-    function getConversations($npcID) {
-	    $sql = Framework::$db->prefix(
-    		"SELECT * FROM _P_npc_conversations 
-				WHERE  
-					(require_event_id IS NULL OR require_event_id IN 
-						(SELECT event_id FROM _P_player_events WHERE player_id = $_SESSION[player_id])) 
-				AND
-					(require_location_id IS NULL OR require_location_id IN 
-						(SELECT last_location_id FROM _P_players WHERE player_id = $_SESSION[player_id])) 
-				AND
-					(_P_npc_conversations.remove_if_event_id IS NULL 
-						OR _P_npc_conversations.remove_if_event_id NOT IN 
-							(SELECT event_id FROM _P_player_events WHERE player_id = $_SESSION[player_id]))
-				AND	npc_id = $npcID
-				ORDER BY node_id DESC"
-    		);
-    	
-    	$rows = Framework::$db->getAll($sql);
+    protected function getConversations($npcID) {
+    	$rows = NodeManager::$conversations;
     	$options = Array();
+    	
+    	if (count($rows) < 1) return $options;
+    	
     	foreach ($rows as $row) {
    			$options[] = $this->makeOption($row['text'], $row['node_id']);
    		}
@@ -137,10 +122,10 @@ class Framework_Module_IMNode extends Framework_Auth_No
 	/**
 	 * Generates phrases.
 	 */
-	function makePhrase($isNPC, $phrase, $delay) {
+	protected function makePhrase($isNPC, $phrase, $delay) {
     	$utterance = new stdClass;
 	    $utterance->isNPC = $isNPC;
-    	$utterance->phrase = $phrase;
+    	$utterance->phrase = trim($phrase);
 	    $utterance->delay = $delay;
     	return $utterance;
 	}
@@ -148,9 +133,9 @@ class Framework_Module_IMNode extends Framework_Auth_No
 	/**
 	 * Returns the option list from the node.
 	 */
-	function makeOption($phrase, $queueId) {
+	protected function makeOption($phrase, $queueId) {
     	$option = new stdClass;
-	    $option->phrase = $phrase;
+	    $option->phrase = trim($phrase);
     	$option->queueId = $queueId;
 	    return $option;
 	}
