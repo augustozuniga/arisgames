@@ -81,7 +81,8 @@ class Framework_Module_IMNode extends Framework_Auth_No
     			$isNPC = false;
     		}
     		else $isNPC = true;
-    		$phrases[] = $this->makePhrase($isNPC, $line . "</p>", strlen($line) * mt_rand(10, 20));
+    		$phrases[] = $this->makePhrase($isNPC, $line . "</p>", strlen($line) * 	
+    			mt_rand(40, 50));
     	}
     	return $phrases;
     }
