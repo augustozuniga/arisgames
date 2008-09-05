@@ -24,11 +24,11 @@
 		A7AB7B680E7126AD00DE6902 /* Aris Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AB7A3A0E70F3FA00DE6902 /* Aris Logo.png */; };
 		A7AB7BBA0E7129E200DE6902 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AB7BB90E7129E200DE6902 /* Icon.png */; };
 		A7AB7BC00E712CB900DE6902 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AB7BBF0E712CB900DE6902 /* Default.png */; };
+		D45FA45C0E7193B3001871AF /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = D45FA45B0E7193B3001871AF /* iTunesArtwork */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* Aris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Aris.app; path = "/Users/davidgagnon/Documents/aris/Aris/build/Debug-iphonesimulator/Aris.app"; sourceTree = "<absolute>"; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		A7AB7A280E70F36500DE6902 /* Aris_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Aris_Prefix.pch; sourceTree = "<group>"; };
@@ -54,6 +54,8 @@
 		A7AB7B150E7120DB00DE6902 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A7AB7BB90E7129E200DE6902 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		A7AB7BBF0E712CB900DE6902 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		D406A2700E71899A00B944F5 /* Aris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aris.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D45FA45B0E7193B3001871AF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				D406A2700E71899A00B944F5 /* Aris.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +98,7 @@
 				A7AB7B0F0E7120CF00DE6902 /* MyCLController.h */,
 				A7AB7AF80E7120C100DE6902 /* FlipsideViewController.h */,
 				A7AB7AF90E7120C100DE6902 /* RootViewController.m */,
+				D45FA45B0E7193B3001871AF /* iTunesArtwork */,
 				A7AB7AFA0E7120C100DE6902 /* MainView.h */,
 				A7AB7AFB0E7120C100DE6902 /* RootViewController.h */,
 				A7AB7AFC0E7120C100DE6902 /* MainView.m */,
@@ -160,7 +164,7 @@
 			);
 			name = Aris;
 			productName = Aris;
-			productReference = 1D6058910D05DD3D006BFB54 /* Aris.app */;
+			productReference = D406A2700E71899A00B944F5 /* Aris.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -191,6 +195,7 @@
 				A7AB7B680E7126AD00DE6902 /* Aris Logo.png in Resources */,
 				A7AB7BBA0E7129E200DE6902 /* Icon.png in Resources */,
 				A7AB7BC00E712CB900DE6902 /* Default.png in Resources */,
+				D45FA45C0E7193B3001871AF /* iTunesArtwork in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,13 +250,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: David Gagnon";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Harris";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F4E7D99-4651-42CD-B999-DF3307A92D16";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C160F44C-BF69-4C8C-B6CC-B7784A6B2A0B";
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
