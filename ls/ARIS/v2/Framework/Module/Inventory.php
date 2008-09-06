@@ -58,5 +58,27 @@
 			$this->inventory = $inventory;
 		}
 		
+		public function displayItem(){
+			if (empty($_REQUEST['item_id'])) {
+				$this->title = "Error";
+				$this->errorMessage = "Item cannot be viewed at this time.";
+				return;
 			}
+			$itemID = $_REQUEST['item_id'];
+			
+			// Load the item data
+			$sql = Framework::$db->prefix("SELECT * FROM _P_items WHERE item_id = $itemID");
+			$this->item = Framework::$db->getRow($sql);
+			
+			//Set the title
+			$this->title = $this->item['name'];
+			
+			//Check if an image was specified and can be found, if not, load the default
+			$this->media = $this->findMedia($this->item['media'], DEFAULT_IMAGE);
+						
+			
+		}
+		
+		
+	}
 	?>
