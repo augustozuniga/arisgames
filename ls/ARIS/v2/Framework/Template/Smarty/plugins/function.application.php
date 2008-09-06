@@ -60,7 +60,7 @@ function smarty_function_application($params, &$smarty)
 	echo <<<APP
 	
 	<div class="application">
-		<a href="index.php?module=$module&controller=Web&site={$site}{$event}" target="_self"><img src="$img" /><p>$text</p></a>
+		<a href="index.php?module=$module&controller=Web&site={$site}{$event}" target="_self"><img src="$img" /><div><p>$text</p></div></a>
 	</div>
 	
 APP;
