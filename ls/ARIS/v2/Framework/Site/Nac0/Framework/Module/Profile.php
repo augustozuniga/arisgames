@@ -35,6 +35,12 @@ class Framework_Module_Profile extends Framework_Auth_User
 		
 		//Check if we are returning from a form
 		if (isset($_REQUEST['handler'])) switch ($_REQUEST['handler']){ 
+			case 'part1': 
+				$this->part1();
+				break;
+			case 'part2': 
+				$this->part2();
+				break;
 			case 'part3': 
 				$this->part3();
 				break;

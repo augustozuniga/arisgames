@@ -3,4 +3,7 @@
 <p>Your answers will be kept confidential within the NAC's HR department. By continuing with this activity you waive the right to hold  NAC responsible for any liability incurred during your time as a volunteer.</p>
 <p>When you are ready to continue, click the link below. Answer honestly, there is no way to visit previous activities.</p>
 
-{link text='Continue with Assessment' module=Profile event="Part1"}
+<form method="post" action="{$smarty.server.REQUEST_URI}">
+	<input type="hidden" name="handler" value="part1"/>
+	<input type="submit" name="submit" id="submit" value="Begin Psychological Profile" />
+</form>
