@@ -331,6 +331,12 @@ table.contactList ul > li > a {
 	display: none;
 }
 
+#playerMessageSelection {
+	position: absolute;
+	left: 0;
+	width: 310px;
+}
+
 #playerMessageSendButton {
 	width: 60px;
 	float: left;

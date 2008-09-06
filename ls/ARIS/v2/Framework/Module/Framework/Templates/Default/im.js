@@ -52,6 +52,10 @@ function processCurrentMessage() {
 }
 
 function prepOptions(id, text) {
+	select = document.getElementById('playerMessageSelection');
+	select.innerHTML = select.innerHTML
+		+ '<option value="' + id + '">' + text + "</option>\n";
+
 	initialOptions = initialOptions 
 		+ '<a href="#" onclick="parent.selectOption(' + "'" + id 
 		+ "'" + ')">' + text + '</a><br/>';
@@ -62,17 +66,34 @@ function prepOptions(id, text) {
 	messageQueue['options'].push(opt);
 }
 
+function postSelection() {
+	select = document.getElementById('playerMessageSelection');
+	if (select.selectedIndex == 0) return;
+	
+	selectOption(select.options[select.selectedIndex].value);
+}
+
 function startOptions() {
-	makeRow('right', initialOptions, messageQueue['player_icon']);
+	document.getElementById('message').style.visibility = 'hidden';
+	document.getElementById('playerMessageSendButton').style.visibility = 'hidden';
+	document.getElementById('playerMessageSelection').style.visibility = 'visible';
+
+	makeRow('right', '...', messageQueue['player_icon']);
 }
 
 function makeOptions() {
-    var msg = '';
+	document.getElementById('message').style.visibility = 'hidden';
+	document.getElementById('playerMessageSendButton').style.visibility = 'hidden';
+
+    var msg = '<option value="">Say...</option>';
     for (var i = 0; i < messageQueue['options'].length; i++) {
         option = messageQueue['options'][i];
-        msg = msg + '<a href="#" onclick="parent.selectOption(' + "'" + option['queueId'] + "'" + ')">' + option['phrase'] + '</a><br/>';
+        msg = msg + '<option value="' + option['queueId'] + '">'
+        	+ option['phrase'] + '</option>';
     }
-    makeRow('right', msg, messageQueue['player_icon']);
+    document.getElementById('playerMessageSelection').innerHTML = msg;
+    makeRow('right', '...', messageQueue['player_icon']);
+	document.getElementById('playerMessageSelection').style.visibility = 'visible';
 }    
 
 function selectOption(queueId) {
@@ -82,6 +103,9 @@ function selectOption(queueId) {
             break;
         }
     }
+    document.getElementById('message').style.visibility = 'visible';
+	document.getElementById('playerMessageSendButton').style.visibility = 'visible';
+	document.getElementById('playerMessageSelection').style.visibility = 'hidden';
     getMessageQueue(queueId);
 }
 
