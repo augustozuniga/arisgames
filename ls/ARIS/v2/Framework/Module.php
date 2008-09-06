@@ -250,6 +250,83 @@ abstract class Framework_Module extends Framework_Object_Web
     	return $this->db->getAll($sql);
     }
     
+	/** 
+	 * addEvent
+	 *
+     * Adds the specified event to the user.
+	 *
+	 * @param		string	$userID
+     * @param		string	$eventID
+	 * @access protected
+     * @return void
+     */
+    protected function addEvent($userID, $eventID) {
+	   	$sql = Framework::$db->prefix("INSERT INTO _P_player_events 
+									  (player_id, event_id) VALUES ('$userID','$eventID')
+									  ON duplicate KEY UPDATE event_id = '$eventID'");
+   		Framework::$db->exec($sql);
+    }
+	
+	
+	/** 
+	 * checkForEvent
+	 *
+     * Checks if the specified user has the specified event.
+	 *
+	 * @param		string	$userID
+     * @param		string	$eventID
+	 * @access protected
+     * @return boolean
+     */
+    protected function checkForEvent($userID, $eventID) {
+		$sql = Framework::$db->prefix("SELECT * FROM _P_player_events 
+									  WHERE player_id = '$userID' 
+									  AND event_id = '$eventID'");
+		$row = Framework::$db->getRow($sql);
+		
+		if ($row) return true;
+		else return false;
+    }
+	
+	/** 
+	 * addPlayerApplication
+	 *
+     * Adds the specified application to the user.
+	 *
+	 * @param		string	$userID
+     * @param		string	$applicationID
+	 * @access protected
+     * @return void
+     */
+    protected function addPlayerApplication($userID, $applicationID) {
+		//The ON duplicaite KEY has a performace benefit
+	   	$sql = Framework::$db->prefix("INSERT INTO _P_player_applications 
+									  (player_id, application_id) VALUES ('$userID','$applicationID')
+									  ON duplicate KEY UPDATE application_id = '$applicationID'");
+   		Framework::$db->exec($sql);
+		
+		$this->loadApplications(Framework_User::singleton()->player_id);
+    }	
+
+	/** 
+	 * removePlayerApplication
+	 *
+     * Adds the specified application to the user.
+	 *
+	 * @param		string	$userID
+     * @param		string	$applicationID
+	 * @access protected
+     * @return void
+     */
+    protected function removePlayerApplication($userID, $applicationID) {
+		//The ON duplicaite KEY has a performace benefit
+	   	$sql = Framework::$db->prefix("DELETE FROM _P_player_applications 
+									  WHERE player_id = '$userID' and application_id = '$applicationID'");
+   		Framework::$db->exec($sql);
+		
+		$this->loadApplications(Framework_User::singleton()->player_id);
+    }		
+	
     /**
      * findMedia
      *
@@ -266,15 +343,18 @@ abstract class Framework_Module extends Framework_Object_Web
     	if (!empty($filename)) {
     		$sitePath = Framework::$site->getPath() . '/Templates/' . 	
     			Framework::$site->template . '/templates';
+	
     		if (file_exists("$sitePath/$filename")) {
+				//echo 'File found at sitepath/filename:' . "$sitePath/$filename" . '</br>';
 	    		return Framework::$site->getUriPath() . "/templates/$filename";
     		}
     
     		if (file_exists("{$basePath}{$filename}")) {
-    			return "{$basePath}{$filename}";
+    			//echo 'File found at basepath/filename:' . "{$basePath}{$filename}" . '</br>';
+				return "{$basePath}{$filename}";
     		}
     	}
-    	
+    	//echo "File not found, returning {$basePath}{$default}";
     	return "{$basePath}{$default}";
     }
 
