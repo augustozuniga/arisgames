@@ -48,6 +48,9 @@ configuration stuff here.
 		<quest>
 			<title>To Do</title>
 		</quest>
+		<inventory>
+			<title>Files</title>
+		</inventory>
 	</aris>
 
     <!--
