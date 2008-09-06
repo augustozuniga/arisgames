@@ -60,9 +60,9 @@ class Framework_Module_Login extends Framework_Auth_No
     			
     			// Load Applications
     			$this->loadApplications($row['player_id']);
-		    	header("Location: {$_SERVER['PHP_SELF']}?module=Quest&controller=Web&site="
-		    		. $site);
-    			die;
+				$this->defaultModule = Framework::$site->config->aris->main->defaultModule;
+				header("Location: {$_SERVER['PHP_SELF']}?module={$this->defaultModule}&controller=Web&site=". $site);
+				die;
     		}
     	}
     	header("Location: {$_SERVER['PHP_SELF']}?module=Welcome&controller=Web&event=loginError&site="

@@ -34,6 +34,7 @@ configuration stuff here.
 		<main>
 			<title>Agent %s</title>
 			<body>Welcome to mDesk</body>
+			<defaultModule>Quest</defaultModule>
 		</main>
 		<nodeViewer>
 			<title>Contact List</title>
