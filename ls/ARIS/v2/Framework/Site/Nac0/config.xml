@@ -38,6 +38,15 @@ configuration stuff here.
 			<p align = 'center'>Please begin the volenteer application and psychological profile by selecting the profile application below.</p>
 			]]></body>
 		</main>
+		<profileModule>
+			<gpsApplicationID>2</gpsApplicationID>
+			<part1Event>1</part1Event>
+			<part2Event>2</part2Event>
+			<part3Event>3</part3Event>
+			<part4Event>4</part4Event>
+			<successEvent>5</successEvent>
+			<failureEvent>6</failureEvent>
+		</profileModule>
 	</aris>
 
     <!--

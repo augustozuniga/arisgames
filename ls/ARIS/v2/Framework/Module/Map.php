@@ -126,7 +126,7 @@ class Framework_Module_Map extends Framework_Auth_User
      */
     public function displayLocation() {
     	if (empty($_REQUEST['location_id'])) {
-    		$this->title = "mDesk Error";
+    		$this->title = "Error";
     		$this->errorMessage = "Location cannot be determined at this time.";
     		return;
     	}

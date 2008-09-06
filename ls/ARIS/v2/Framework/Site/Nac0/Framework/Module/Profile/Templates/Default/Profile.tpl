@@ -3,6 +3,4 @@
 <p>Your answers will be kept confidential within the NAC's HR department. By continuing with this activity you waive the right to hold  NAC responsible for any liability incurred during your time as a volunteer.</p>
 <p>When you are ready to continue, click the link below. Answer honestly, there is no way to visit previous activities.</p>
 
-<form id="form1" name="form1" method="post" action="profile1.php">
-  <input type="submit" name="button" id="button" value="Continue with Assessment" />
-</form>
+{link text='Continue with Assessment' module=Profile event="Part1"}
