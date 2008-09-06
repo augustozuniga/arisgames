@@ -1,5 +1,5 @@
 <table class="questList">
-	<caption>Active Items</caption>
+	<caption>Active Tasks</caption>
 	<tbody>
 {if count($activeQuests) > 0}
 {foreach from=$activeQuests item=quest}
@@ -19,7 +19,7 @@
 {/if}
 </table>
 <table class="questList">
-	<caption>Completed Items</caption>
+	<caption>Completed Tasks</caption>
 	<tbody>
 {if count($completedQuests) > 0}
 {foreach from=$completedQuests item=quest}

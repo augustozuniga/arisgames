@@ -35,6 +35,11 @@
 	{foreach from=$session->applications item=app}
 		{application module=$app}
 	{/foreach}
+	{if isset($adminApplications)}
+		{foreach from=$adminApplications item=app}
+			{application module=$app}
+		{/foreach}
+	{/if}
 </div>
 {/if}
 </body>

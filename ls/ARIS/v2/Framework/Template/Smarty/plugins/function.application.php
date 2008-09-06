@@ -14,7 +14,7 @@
  * Date:     August 13, 2008
  * Purpose:  automate creating application links<br>
  * Input:<br>
- *         - module = the (name, directory) pair to use
+ *         - module = the (name, directory[, event]) tuple to use
  *
  * Examples:
  * <pre>
@@ -45,18 +45,22 @@ function smarty_function_application($params, &$smarty)
 		return; // Do we need this?
 	}
 	
-	$img = $root . '/Templates/Default/' . $module . '.png';
+	$eventImg = isset($params['module']['event']) ? '_'. $params['module']['event']
+		: '';
+	$img = $root . '/Templates/Default/' . $module . $eventImg . '.png';
 	// Default image if needed
 	if (!file_exists($img)) {
 		$img = $smarty->get_template_vars('frameworkTplPath') . '/defaultButton.png';
 	}
 
 	$text = $params['module']['name'];
+	$event = isset($params['module']['event']) ? '&event='. $params['module']['event']
+		: '';
 	
 	echo <<<APP
 	
 	<div class="application">
-		<a href="index.php?module=$module&controller=Web&site=$site" target="_self"><img src="$img" /><p>$text</p></a>
+		<a href="index.php?module=$module&controller=Web&site={$site}{$event}" target="_self"><img src="$img" /><p>$text</p></a>
 	</div>
 	
 APP;

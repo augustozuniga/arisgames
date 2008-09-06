@@ -1,5 +1,8 @@
 {if $location.media}
-	<p class="locationImg"><img src="Framework/Site/{$site}/Templates/Default/templates/{$location.media}" /></p>
+<div class="locationImg">
+	<img src="{$location.media}" />
+	<p>{$location.description}</p>
+</div>
 {/if}
 
 {include file="$frameworkModulePath/contactList.tpl"}

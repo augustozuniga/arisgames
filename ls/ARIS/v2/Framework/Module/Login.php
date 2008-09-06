@@ -60,7 +60,7 @@ class Framework_Module_Login extends Framework_Auth_No
     			
     			// Load Applications
     			$this->loadApplications($row['player_id']);
-		    	header("Location: {$_SERVER['PHP_SELF']}?module=Main&controller=Web&site="
+		    	header("Location: {$_SERVER['PHP_SELF']}?module=Quest&controller=Web&site="
 		    		. $site);
     			die;
     		}

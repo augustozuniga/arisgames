@@ -11,6 +11,7 @@ body {
 	color: #ccc;
 	height: 100%;
 	width: 100%;
+	padding-bottom: 45px;
 }
 
 body > .toolbar, black {
@@ -234,7 +235,18 @@ table.questList ul > li:first-child {
 
 .locationImg {
 	margin: 5px auto 5px auto;
+	width: 320px;
+	text-align: center;
+}
+
+.locationImg > img {
+	margin: 5px auto 5px auto;
 	width: 200px;
+}
+
+.locationImg > p {
+	text-align: justify;
+	margin-top: 5px;
 }
 
 ol.locations {
@@ -354,4 +366,21 @@ ul.options > li {
 	width: 128px;
 	height: 128px;
 	margin: 0 1em 0 0;
+}
+
+/***** Forms *****/
+fieldset {
+	padding-right: 2em;
+}
+
+label {
+	clear: left;
+	float: left;
+
+}
+
+label + input, select {
+	float: left;
+	margin-left: 1em;
+	width: 100%;
 }

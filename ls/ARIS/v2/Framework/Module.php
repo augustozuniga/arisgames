@@ -215,6 +215,42 @@ abstract class Framework_Module extends Framework_Object_Web
     }
     
     /**
+     * listSiteMediaFiles
+     *
+     * We currently support png, jp[e]g, and gif
+     *
+     * @access protected
+     * @return array
+     */
+    protected function getSiteMediaFiles() {
+    	$sitePath = Framework::$site->getPath() . '/Templates/'
+    		. Framework::$site->template . '/templates';
+    	$files = array();
+    	$pattern = '/\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[gG][iI][fF])$/';
+    	
+    	if ($handle = opendir($sitePath)) {
+    		while (false !== ($file = readdir($handle))) {
+    			if (preg_match($pattern, $file) > 0) $files[] = $file;
+    		}
+    	}
+    	
+    	return $files;
+    }
+    
+    /**
+     * getEvents
+     *
+     * Returns all events.
+     *
+     * @access protected
+     * @return array
+     */
+    protected function getEvents() {
+    	$sql = $this->db->prefix("SELECT * FROM _P_events ORDER BY event_id");
+    	return $this->db->getAll($sql);
+    }
+    
+    /**
      * findMedia
      *
      * Returns a URI path to the media, if available, or to the

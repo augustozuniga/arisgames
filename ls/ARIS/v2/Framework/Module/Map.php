@@ -17,6 +17,7 @@
  * Framework_Module_Main
  *
  * @author      Kevin Harris <klharris2@wisc.edu>
+ * @author		David Gagnon <djgagnon@wisc.edu>
  * @package     Framework
  * @subpackage  Module
  */
@@ -106,6 +107,18 @@ class Framework_Module_Map extends Framework_Auth_User
 				SET last_location_id = '' WHERE player_id = {$user->player_id}");
 		}
 		Framework::$db->exec($sql);
+		
+		$this->loadLocationAdmin($user);
+    }
+    
+    public function addLocation() {
+    	$site = Framework::$site;
+    
+    	$this->title = 'Add New Location';
+    	$this->mediaFiles = $this->getSiteMediaFiles();
+    
+    	$this->requireEvents = $this->getEvents();
+    	$this->removeEvents = $this->requireEvents;
     }
     
     /**
@@ -124,7 +137,11 @@ class Framework_Module_Map extends Framework_Auth_User
 
 		// Load the loaction data and display the name
 		$sql = Framework::$db->prefix("SELECT * FROM _P_locations WHERE location_id = $locationID");
-		$this->location = Framework::$db->getRow($sql);
+		
+		$location = Framework::$db->getRow($sql);
+		$media = empty($location['media']) ? 'defaultUser.png' : $location['media'];
+		$location['media'] = $this->findMedia($media, 'defaultUser.png');
+		$this->location = $location;
 		
 		$sql = Framework::$db->prefix("SELECT * FROM _P_npcs 
 			WHERE location_id = '$locationID' 
@@ -133,9 +150,8 @@ class Framework_Module_Map extends Framework_Auth_User
 					WHERE player_id = {$user->player_id}))");
 		$npcs = Framework::$db->getAll($sql);
 		foreach ($npcs as &$npc) {
-			if (!empty($npc['media'])) {
-				$npc['media'] = $this->findMedia($npc['media'], 'defaultUser.png');
-			}
+			$media = empty($npc['media']) ? 'defaultUser.png' : $npc['media'];
+			$npc['media'] = $this->findMedia($media, 'defaultUser.png');
 		}
 		unset($npc);
 		
@@ -151,6 +167,19 @@ class Framework_Module_Map extends Framework_Auth_User
     	$sql = Framework::$db->prefix("UPDATE _P_players SET last_location_id = $locationID
 			WHERE player_id = $playerID");
 		Framework::$db->exec($sql);
+    }
+    
+    /**
+     * Loads the administration apps for the default view.
+     */
+    protected function loadLocationAdmin($user) {
+    	if ($user->authorization > 0) {
+    		$applications = array();
+    		$applications[] = array('directory' => 'Map',
+    			'name' => 'New', 'event' => 'addLocation');
+    			
+    		$this->adminApplications = $applications;
+    	}
     }
 }
 ?>
