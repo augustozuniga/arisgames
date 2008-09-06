@@ -6,6 +6,7 @@
  * Framework_Module_Main
  *
  * @author      Kevin Harris <klharris2@wisc.edu>
+ * @author      David Gagnon <djgagnon@wisc.edu>
  * @copyright   Joe Stump <joe@joestump.net>
  * @package     Framework
  * @subpackage  Module
@@ -34,6 +35,8 @@ class Framework_Module_Main extends Framework_Auth_User
     	$this->title = sprintf(Framework::$site->config->aris->main->title, 
     		$user->user_name);
     	$this->company = Framework::$site->config->aris->company;
+		$this->body = Framework::$site->config->aris->main->body;
+		//$this->body = "YO";
     }
 }
 

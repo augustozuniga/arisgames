@@ -1,3 +1,3 @@
 <div class="blackpanel" selected="true">
-	<p>Default news.</p>
+<p>{$body}</p>
 </div>

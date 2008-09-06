@@ -33,6 +33,7 @@ configuration stuff here.
 		<tablePrefix>nac1_</tablePrefix>
 		<main>
 			<title>Agent %s</title>
+			<body>Welcome to mDesk<body>
 		</main>
 		<nodeViewer>
 			<title>Contact List</title>
