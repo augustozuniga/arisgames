@@ -137,10 +137,9 @@ abstract class Framework_Site_Common
      */
     public function getUriPath()
     {
-        $file = str_replace($_SERVER['DOCUMENT_ROOT'], '',
-                            $_SERVER['SCRIPT_FILENAME']);
-
-        $base = dirname($file);
+        //$file = str_replace($_SERVER['DOCUMENT_ROOT'], '',
+        //                    $_SERVER['SCRIPT_FILENAME']);
+        $base = dirname($_SERVER['PHP_SELF']);
         if ($base == '\\') {
             $base = '/';
         }
