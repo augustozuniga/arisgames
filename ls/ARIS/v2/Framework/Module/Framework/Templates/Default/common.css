@@ -352,6 +352,8 @@ body.frameBody {
 	margin: 0 auto 0 auto;
 	padding: 0;
 	width: 295px;
+	
+	font-family: Arial, Helevetica, sans-serif;
 }
 
 #chatWindow td {
