@@ -36,7 +36,7 @@ class Framework_Module_Main extends Framework_Auth_User
     		$user->user_name);
     	$this->company = Framework::$site->config->aris->company;
 		$this->body = Framework::$site->config->aris->main->body;
-		//$this->body = "YO";
+
     }
 }
 

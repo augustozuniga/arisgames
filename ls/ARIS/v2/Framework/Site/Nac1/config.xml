@@ -40,8 +40,8 @@ configuration stuff here.
 			<title>Contact List</title>
 		</nodeViewer>
 		<map>
-			<googleKey>ABQIAAAAWEsa23TM75rkTyUBDmxr2hS2liiReJ1CU3gg7Gof7cpGkm_yhRSRWUw4O4p0QQe_heUc2n8AkqUOsA</googleKey>
-			<!--<googleKey>ABQIAAAA_CE3Nypcp6bilTqyCg-N2hQsvlSBtAWfm4N2P3iTGfWOp-UrmRQgXVI4kOqbJnZJDYqrPvf7deonfw</googleKey>-->
+			<!--<googleKey>ABQIAAAAWEsa23TM75rkTyUBDmxr2hS2liiReJ1CU3gg7Gof7cpGkm_yhRSRWUw4O4p0QQe_heUc2n8AkqUOsA</googleKey>-->
+			<googleKey>ABQIAAAA_CE3Nypcp6bilTqyCg-N2hQsvlSBtAWfm4N2P3iTGfWOp-UrmRQgXVI4kOqbJnZJDYqrPvf7deonfw</googleKey>
 			<width>320</width>
 			<height>200</height>
 			<error>0.0005</error>
