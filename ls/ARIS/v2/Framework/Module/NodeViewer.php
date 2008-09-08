@@ -72,9 +72,8 @@ class Framework_Module_NodeViewer extends Framework_Auth_User
     	$session = Framework_Session::singleton();
     	$user = Framework_User::singleton();
 
-    	$photo = $this->findMedia($user->photo, 'defaultUser.png', '');
+    	$photo = $this->findMedia($user->photo, 'defaultUser.png');
     	$site = Framework::$site->name;
-    	
 		NodeManager::loadNodeConversations($_REQUEST['npc_id']);
 		$this->setVariables();
 				

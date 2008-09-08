@@ -9,7 +9,7 @@
 body {
 	background-color: black;
 	color: #ccc;
-	height: 100%;
+	height: 100%
 	width: 100%;
 	padding-bottom: 45px;
 }
@@ -19,7 +19,7 @@ body > .toolbar, black {
     border-bottom: 1px solid #5A5D5A;
 }
 
-body > .appbar {
+body .appbar {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -31,10 +31,11 @@ body > .appbar {
     min-height: 0px;
     height: 45px;
     background: url(toolbarBlack.png) #6d84a2 repeat-x;
-    
+
     position: fixed;
     bottom: 0;
     left: 0;
+
     width: 100%;
 }
 
@@ -89,13 +90,19 @@ a:active {
 	color: blue;
 }
 
-p.help {
+#footer {
+	width: 100%;
+}
+
+.help {
+	background-color: black;
+
 	position: fixed;
 	bottom: 0px;
-	padding: 10px;
+	padding: 0
 	margin: 0;
 	font-size: .9em;
-	background-color: black;
+	text-align: center;
 	z-index: 999;
 }
 
@@ -127,7 +134,6 @@ p.help {
 
 .blackmain > .row  {
     position: relative;
-    min-height: 42px;
     border-bottom: 1px solid #999999;
     -webkit-border-radius: 0;
     text-align: right;
@@ -143,7 +149,6 @@ p.help {
     padding: 12px 10px 0 100px;
     font-weight: normal;
     font-size: 16px;
-
 }
 
 .blackmain > .row > label {
@@ -157,7 +162,7 @@ p.help {
 .blackpanel .submit {
     position: relative;
     min-height: 42px;
-	padding-right: 10px;
+    margin: 0 10px 10px 10px;
     text-align: right;
     background: none;
 }
@@ -166,21 +171,21 @@ p.help {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -webkit-border-radius: 10px;
-    margin: 0;
+
     border: 1px solid #999;
     height: 42px;
-    width: 128px;
+    
     font-weight: bold;
     background: white;
     font-size: 1em;
     color: #557894;
-    padding: 0;
+    padding: 0
 }
 
 
 .blackpanel .submit > input:active {
 	border: 1px solid #173F91;
-	background: url("../media/blueBack.png") repeat-x ;
+	background: url("../media/blueBack.png") repeat-x;
 	color: white;
 }
 
@@ -313,14 +318,19 @@ table.contactList ul > li > a {
 	margin: 0 auto 0 auto;
 	padding: 0;
 	width: 320px;
-	height: 300px;
+	height: 280px;
+	clear: both;
 	
 	border: 0;
+	z-index: 1000;
+	
+border: 1px solid red;
+	overflow: auto;
 }
 
 #message {
 	border:solid 1px #666;
-	width: 240px;
+	width: 220px;
 	padding:2px;
 	float:left;
 	margin-left: 10px;
@@ -332,15 +342,14 @@ table.contactList ul > li > a {
 }
 
 #playerMessageSelection {
-	position: absolute;
-	left: 0;
 	width: 310px;
 }
 
 #playerMessageSendButton {
-	width: 60px;
-	float: left;
 	margin: 2px;
+	padding: 0;
+	text-align: center;
+	width: 70px;
 }
 
 body.frameBody {
@@ -348,7 +357,7 @@ body.frameBody {
 	padding: 0;
 }
 
-#chatWindow {
+#chatWindow, #chatFrame {
 	margin: 0 auto 0 auto;
 	padding: 0;
 	width: 295px;
@@ -356,7 +365,7 @@ body.frameBody {
 	font-family: Arial, Helevetica, sans-serif;
 }
 
-#chatWindow td {
+#chatWindow, #chatFrame td {
 	border-bottom: 1px solid #666;
 }
 
@@ -397,7 +406,7 @@ label {
 
 }
 
-label + input, select {
+label + input, label + select {
 	float: left;
 	margin-left: 1em;
 	width: 100%;

@@ -49,7 +49,7 @@ class Framework_Module_IMNode extends Framework_Auth_No
     
     	$messages = new stdClass;
     	$messages->id = $node['node_id'];
-    	$messages->player_icon = $this->findMedia($user->photo, 'defaultUser.png', '');
+    	$messages->player_icon = $this->findMedia($user->photo, 'defaultUser.png');
     	
     	$messages->phrases = $this->makePhrases($node);
     	$messages->requiresInput = !empty($node['require_answer_string'])

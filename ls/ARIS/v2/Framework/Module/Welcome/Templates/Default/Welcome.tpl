@@ -16,6 +16,3 @@
 		<div class="submit"><input type="submit" value="Login" /></div>
 	</fieldset>
 </form>
-{if isset($techEmail)}
-<p class="help">Email <a href="mailto:{$techEmail}">{$techEmail}</a> with help requests or feedback.</p>
-{/if}

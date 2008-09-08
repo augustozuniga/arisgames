@@ -280,7 +280,7 @@ abstract class Framework_Module extends Framework_Object_Web
      */
     protected function checkForEvent($userID, $eventID) {
 		$sql = Framework::$db->prefix("SELECT * FROM _P_player_events 
-									  WHERE player_id = '$userID' 
+									  WHERE play35er_id = '$userID' 
 									  AND event_id = '$eventID'");
 		$row = Framework::$db->getRow($sql);
 		
@@ -354,7 +354,6 @@ abstract class Framework_Module extends Framework_Object_Web
 				return "{$basePath}{$filename}";
     		}
     	}
-    	//echo "File not found, returning {$basePath}{$default}";
     	return "{$basePath}{$default}";
     }
 
@@ -398,6 +397,7 @@ abstract class Framework_Module extends Framework_Object_Web
         $module = self::tryModule($request->module, $file, $class);
         $module->frameworkTplPath = 
         	'./Framework/Module/Framework/Templates/Default';
+        $module->isIphone = stristr($_SERVER['HTTP_USER_AGENT'], "iPhone") !== false;
         
         return $module;
     }

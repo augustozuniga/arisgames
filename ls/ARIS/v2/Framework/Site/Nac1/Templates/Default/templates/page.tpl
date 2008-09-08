@@ -14,6 +14,11 @@
 		{/foreach}
 	{/if}
 	<script type="application/x-javascript" src="{$frameworkTplPath}/iui/iui.js"></script>
+	<script type="application/x-javascript" src="{$frameworkTplPath}/location.js"></script>
+	{if $isIphone}
+	<link rel="StyleSheet" href="{$frameworkTplPath}/fixed.css" type="text/css" media="all" />
+	<script type="application/x-javascript" src="{$frameworkTplPath}/fixed.js"></script>
+	{/if}
 	{if isset($scripts)}
 		{foreach from=$scripts item=script}
 <script type="application/x-javascript" src="{$frameworkTplPath}/{$script}"></script>
@@ -24,14 +29,17 @@
 	{/if}
 </head>
 <body orient="portrait" {if isset($onLoad)}onload="{$onLoad}"{/if}>
-<div class="toolbar black">
+<div class="toolbar black" id="header">
 	<h1 id="pageTitle">{$title}</h1>
 	<!-- Back button support? -->
 </div>
+<div id="container">
+	<div id="content">
 {include file="$modulePath/$tplFile"}
-
+	</div>
+</div>
 {if isset($session->applications)}
-<div class="appbar">
+<div class="appbar" id="footer">
 	{foreach from=$session->applications item=app}
 		{application module=$app}
 	{/foreach}
@@ -40,6 +48,10 @@
 			{application module=$app}
 		{/foreach}
 	{/if}
+</div>
+{elseif isset($techEmail)}
+<div class="help" id="footer">
+	<p>Email <a href="mailto:{$techEmail}">{$techEmail}</a> with help requests or feedback.</p>
 </div>
 {/if}
 </body>

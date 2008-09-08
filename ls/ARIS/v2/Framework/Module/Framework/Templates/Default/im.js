@@ -70,20 +70,25 @@ function postSelection() {
 	select = document.getElementById('playerMessageSelection');
 	if (select.selectedIndex == 0) return;
 	
+	if (window.iPhone) {
+		window.iPhone.utils.hideURLBar();
+		document.getElementById('footer').style.top = '220px';
+	}
+	
 	selectOption(select.options[select.selectedIndex].value);
 }
 
 function startOptions() {
-	document.getElementById('message').style.visibility = 'hidden';
-	document.getElementById('playerMessageSendButton').style.visibility = 'hidden';
-	document.getElementById('playerMessageSelection').style.visibility = 'visible';
+	document.getElementById('message').style.display = 'none';
+	document.getElementById('playerMessageSendButton').style.display = 'none';
+	document.getElementById('playerMessageSelection').style.display = 'inline';
 
 	makeRow('right', '...', messageQueue['player_icon']);
 }
 
 function makeOptions() {
-	document.getElementById('message').style.visibility = 'hidden';
-	document.getElementById('playerMessageSendButton').style.visibility = 'hidden';
+	document.getElementById('message').style.display = 'none';
+	document.getElementById('playerMessageSendButton').style.display = 'none';
 
     var msg = '<option value="">Say...</option>';
     for (var i = 0; i < messageQueue['options'].length; i++) {
@@ -93,7 +98,7 @@ function makeOptions() {
     }
     document.getElementById('playerMessageSelection').innerHTML = msg;
     makeRow('right', '...', messageQueue['player_icon']);
-	document.getElementById('playerMessageSelection').style.visibility = 'visible';
+	document.getElementById('playerMessageSelection').style.display = 'inline';
 }    
 
 function selectOption(queueId) {
@@ -103,9 +108,9 @@ function selectOption(queueId) {
             break;
         }
     }
-    document.getElementById('message').style.visibility = 'visible';
-	document.getElementById('playerMessageSendButton').style.visibility = 'visible';
-	document.getElementById('playerMessageSelection').style.visibility = 'hidden';
+    document.getElementById('message').style.display = 'inline';
+	document.getElementById('playerMessageSendButton').style.display = 'inline';
+	document.getElementById('playerMessageSelection').style.display = 'none';
     getMessageQueue(queueId);
 }
 
@@ -176,15 +181,26 @@ function postPlayerMessage() {
 
 function makeRow(alignment, msg, icon_url) {
     rowID++;
-    var container = frames[0].document.getElementById("dialog");
+//    var container = frames[0].document.getElementById("dialog");
+	var container = document.getElementById('dialog');
+
 	container.innerHTML = container.innerHTML +  '<tr><td align="' + alignment + '" id="r' + rowID + '">' + createIcon(alignment, icon_url) + msg + '</td></tr>';
-    frames[0].scrollToBottom();
+//    frames[0].scrollToBottom();
+
+	if (window.iPhone) {
+		window.iPhone.init();
+//		window.iPhone.scrollToY(0);//enableScrollOnContent();
+	}
+	else document.getElementById("viewAnchor").scrollIntoView(true);
 }
 
 function setRowMessage(alignment, msg, icon_url) {
-	var row = frames[0].document.getElementById("r" + rowID);
+//	var row = frames[0].document.getElementById("r" + rowID);
+	var row = document.getElementById('r' + rowID);
+	
+	
 	row.innerHTML = createIcon(alignment, icon_url) + msg;
-    frames[0].scrollToBottom();
+//    frames[0].scrollToBottom();
 }    
 
 function createIcon(alignment, icon_url) {
