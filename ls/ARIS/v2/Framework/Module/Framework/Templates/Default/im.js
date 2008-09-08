@@ -78,11 +78,15 @@ function postSelection() {
 	selectOption(select.options[select.selectedIndex].value);
 }
 
+var startedOptions = false;
 function startOptions() {
+	if (startedOptions) return;
+	
+	startedOptions = true;
 	document.getElementById('message').style.display = 'none';
 	document.getElementById('playerMessageSendButton').style.display = 'none';
 	document.getElementById('playerMessageSelection').style.display = 'inline';
-
+	
 	makeRow('right', '...', messageQueue['player_icon']);
 }
 
@@ -154,6 +158,8 @@ function printPlayerMessage() {
 	messageContainer = document.getElementById("message");
 	messageContainer.value = " ";
 	
+	makeRow('right', '...', messageQueue['player_icon']);
+	
 	intervalObject = setInterval(typeMessage, 75);
 	currentChar = 0;
 	document.getElementById("rawMessage").innerHTML = message['phrase'];
@@ -174,11 +180,15 @@ function typeMessage() {
 function postPlayerMessage() {
     var button = document.getElementById("playerMessageSendButton");
     button.disabled = true;
-    makeRow('right', message['phrase'], messageQueue['player_icon']);
+	setRowMessage('right', message['phrase'], 
+		messageQueue['player_icon']);
+
+    //makeRow('right', message['phrase'], messageQueue['player_icon']);
     messageContainer.value = " ";
     processCurrentMessage();
 }
 
+var currentY = -150;
 function makeRow(alignment, msg, icon_url) {
     rowID++;
 //    var container = frames[0].document.getElementById("dialog");
@@ -187,17 +197,28 @@ function makeRow(alignment, msg, icon_url) {
 	container.innerHTML = container.innerHTML +  '<tr><td align="' + alignment + '" id="r' + rowID + '">' + createIcon(alignment, icon_url) + msg + '</td></tr>';
 //    frames[0].scrollToBottom();
 
-	if (window.iPhone) {
-		window.iPhone.init();
-//		window.iPhone.scrollToY(0);//enableScrollOnContent();
+	if (window.iPhone && rowID > 1) {
+		scrollDown(rowID);
 	}
 	else document.getElementById("viewAnchor").scrollIntoView(true);
+}
+
+function scrollDown(rowID) {
+	var y = getHeight(document.getElementById('r' + (rowID - 1)), true, true);
+	scrollDownBy(y);
+}
+	
+function scrollDownBy(y) {
+	currentY = currentY + y;
+	window.iPhone.utils.scrollToY(-currentY);
+		
+	document.getElementById('header').style.top = '0';
+	document.getElementById('footer').style.top = '368px';
 }
 
 function setRowMessage(alignment, msg, icon_url) {
 //	var row = frames[0].document.getElementById("r" + rowID);
 	var row = document.getElementById('r' + rowID);
-	
 	
 	row.innerHTML = createIcon(alignment, icon_url) + msg;
 //    frames[0].scrollToBottom();
@@ -236,3 +257,104 @@ function URLEncode(clearString) {
 	}
 	return output;
 }
+
+function findPosY(obj) {
+    var curtop = 0;
+    if(obj.offsetParent)
+        while(1)
+        {
+          curtop += obj.offsetTop;
+          if(!obj.offsetParent)
+            break;
+          obj = obj.offsetParent;
+        }
+    else if(obj.y)
+        curtop += obj.y;
+    return curtop;
+  }
+  
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+// USED FOR GETTING THE COMPUTED HEIGHT OF AN ELEMENT IN PIXELS
+///////////////////////////////////////////////////////////////////////////////////////////////////
+var getHeight = function (/* Object */ el, /* boolean */ includePadding, /* boolean */ includeBorder) {
+    var height;
+    el = (typeof(el) === "string") ? document.getElementById(el) : el;
+    
+    if (document.defaultView && window.getComputedStyle) { /* FF, Safari, Opera and others */
+        var style = document.defaultView.getComputedStyle(el, null);
+        if (style.getPropertyValue("display") === "none")
+            return 0;
+        height = parseInt(style.getPropertyValue("height"));
+        
+        if (window.opera && !document.getElementsByClassName) {
+            /* Opera 9.25 includes the padding and border when reporting the width/height - subtract that out */
+            height -= parseInt(style.getPropertyValue("padding-top"));
+            height -= parseInt(style.getPropertyValue("padding-bottom"));
+            height -= parseInt(style.getPropertyValue("border-top-width"));
+            height -= parseInt(style.getPropertyValue("border-bottom-width"));
+        }
+        
+        if (includePadding) {
+            height += parseInt(style.getPropertyValue("padding-top"));
+            height += parseInt(style.getPropertyValue("padding-bottom"));
+        }
+        
+        if (includeBorder) {
+            height += parseInt(style.getPropertyValue("border-top-width"));
+            height += parseInt(style.getPropertyValue("border-bottom-width"));
+        }
+    } else if (el.currentStyle) { /* IE and others */
+        if (el.currentStyle["display"] === "none")
+            return 0;
+        var bRegex = /thin|medium|thick/; /* Regex for css border width keywords */
+        height = el.offsetHeight; /* Currently the height including padding + border */
+    
+        if (!includeBorder) {
+            var borderTopCSS = el.currentStyle["borderTopWidth"];
+            var borderBottomCSS = el.currentStyle["borderBottomWidth"];
+            var temp = document.createElement("DIV");
+            if (el.offsetHeight > el.clientHeight && el.currentStyle["borderTopStyle"] !== "none") {
+                if (!bRegex.test(borderTopCSS)) {
+                    temp.style.width = borderTopCSS;
+                    el.parentNode.appendChild(temp);
+                    height -= temp.offsetWidth;
+                    el.parentNode.removeChild(temp);
+                } else if (bRegex.test(borderTopCSS)) {
+                    temp.style.width = "10px";
+                    temp.style.border = borderTopCSS + " " + el.currentStyle["borderTopStyle"] + " #000000";
+                    el.parentNode.appendChild(temp);
+                    height -= Math.round((temp.offsetWidth-10)/2);
+                    el.parentNode.removeChild(temp);
+                }
+            }
+            if (el.offsetHeight > el.clientHeight && el.currentStyle["borderBottomStyle"] !== "none") {
+                if (!bRegex.test(borderBottomCSS)) {
+                    temp.style.width = borderBottomCSS;
+                    el.parentNode.appendChild(temp);
+                    height -= temp.offsetWidth;
+                    el.parentNode.removeChild(temp);
+                } else if (bRegex.test(borderBottomCSS)) {
+                    temp.style.width = "10px";
+                    temp.style.border = borderBottomCSS + " " + el.currentStyle["borderBottomStyle"] + " #000000";
+                    el.parentNode.appendChild(temp);
+                    height -= Math.round((temp.offsetWidth-10)/2);
+                    el.parentNode.removeChild(temp);
+                }
+            }
+        }
+    
+        if (!includePadding) {
+            var paddingTopCSS = el.currentStyle["paddingTop"];
+            var paddingBottomCSS = el.currentStyle["paddingBottom"];
+            var temp = document.createElement("DIV");
+            temp.style.width = paddingTopCSS;
+            el.parentNode.appendChild(temp);
+            height -= temp.offsetWidth;
+            temp.style.width = paddingBottomCSS;
+            height -= temp.offsetWidth;
+            el.parentNode.removeChild(temp);
+        }
+    }
+    
+    return height;
+};
