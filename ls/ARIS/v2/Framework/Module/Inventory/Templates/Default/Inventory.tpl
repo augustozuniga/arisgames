@@ -5,7 +5,13 @@
 		<td><img src="{$item.media}" width = "50px"></td>
 		<td>
 			<table>
-				<tr><td>{link text=$item.name module=Inventory event="displayItem&item_id=`$item.item_id`"}</td></tr>
+				<tr><td>
+					{if $item.isImage}
+						{link text=$item.name module=Inventory event="displayItem&item_id=`$item.item_id`"}
+					{else}
+						<a href = "{$item.media}" target="_self">{$item.name}</a>
+					{/if}
+				</td></tr>
 				<tr><td>{$item.description}</td></tr>
 			</table>
 		</td>

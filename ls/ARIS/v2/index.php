@@ -37,7 +37,7 @@ try {
     // instance, www.foo.com and foo.com load up Framework_Site_Foo, while
     // www.bar.com, www.baz.com, baz.com, and bar.com load up Bar
     // (Framework_Site_Bar).
-    $site = isset($_GET['site']) ? $_GET['site'] : "Nac0";
+    $site = isset($_GET['site']) ? $_GET['site'] : "Nac1";
     
     // The second argument is the controller. Not all modules will support all
     // controllers. If that's the case an appropriate error will be output. We

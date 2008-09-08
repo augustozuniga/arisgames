@@ -49,9 +49,20 @@
 									 WHERE player_id = $userID");
 			$inventory = $this->db->getAll($sql);
 			
+			//groom media
 			foreach ($inventory as &$item) {
+				//Use defaults if specified media cannot be found
 				$media = empty($item['media']) ? DEFAULT_IMAGE : $item['media'];
 				$item['media'] = $this->findMedia($media, DEFAULT_IMAGE);
+				
+				//Set additional isImage var in array so template knows how to link to it
+				//if isImage var is false, the link go go directly to the media file (used for mp3, mp4, etc) to support iphone
+				$extension = substr(strrchr($item['media'], "."), 1);
+				if (array_search($extension,array("png", "jpg", "gif")) === FALSE) {
+					$item['isImage'] = FALSE;
+					$item['media'] = 'http://' . $_SERVER["SERVER_NAME"] . $item['media'];
+				}
+				else $item['isImage'] = TRUE;
 			}
 			unset($item);
 			
