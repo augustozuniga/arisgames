@@ -52,6 +52,10 @@ configuration stuff here.
 		</quest>
 		<inventory>
 			<title>Files</title>
+			<imageIcon>defaultImageIcon.png</imageIcon>
+			<videoIcon>defaultVideoIcon.png</videoIcon>
+			<audioIcon>defaultAudioIcon.png</audioIcon>
+			<pdfIcon>defaultPdfIcon.png</pdfIcon>
 		</inventory>
 	</aris>
 

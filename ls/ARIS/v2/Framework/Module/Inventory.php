@@ -38,11 +38,13 @@
 			$site = Framework::$site;
 			$user = Framework_User::singleton();
 			
-			$this->title = $site->config->aris->inventory->title;
 			$this->loadInventory($user->player_id);
 		}
 		
 		protected function loadInventory($userID) {
+			//Set the title
+			$this->title = Framework::$site->config->aris->inventory->title;
+			
 			$sql = $this->db->prefix("SELECT * FROM _P_items
 									 JOIN _P_player_items 
 									 ON _P_items.item_id = _P_player_items.item_id
@@ -55,14 +57,37 @@
 				$media = empty($item['media']) ? DEFAULT_IMAGE : $item['media'];
 				$item['media'] = $this->findMedia($media, DEFAULT_IMAGE);
 				
-				//Set additional isImage var in array so template knows how to link to it
-				//if isImage var is false, the link go go directly to the media file (used for mp3, mp4, etc) to support iphone
+				//Support multiple media types by changing the link and the icon
 				$extension = substr(strrchr($item['media'], "."), 1);
-				if (array_search($extension,array("png", "jpg", "gif")) === FALSE) {
-					$item['isImage'] = FALSE;
-					$item['media'] = 'http://' . $_SERVER["SERVER_NAME"] . $item['media'];
+				
+				//Is it an image?
+				if (array_search($extension,array("png", "jpg", "gif")) !== FALSE) {
+					$item['isImage'] = TRUE;
+					$item['icon'] = $this->findMedia(Framework::$site->config->aris->inventory->imageIcon, NULL);
+
 				}
-				else $item['isImage'] = TRUE;
+			
+				//Is it a movie?
+				if (array_search($extension,array("mp4", "mov", "m4v", "3gp")) !== FALSE) {
+					$item['isImage'] = FALSE;
+					$item['icon'] = $this->findMedia(Framework::$site->config->aris->inventory->videoIcon, NULL);
+					$item['link'] = 'http://' . $_SERVER["SERVER_NAME"] . $item['media'];
+				}
+				
+				//Is it audio?
+				if (array_search($extension,array("mp3", "m4a")) !== FALSE) {
+					$item['isImage'] = FALSE;
+					$item['icon'] = $this->findMedia(Framework::$site->config->aris->inventory->audioIcon, NULL);
+					$item['link'] = 'http://' . $_SERVER["SERVER_NAME"] . $item['media'];
+				}
+				
+				//Is it a PDF?
+				if (array_search($extension,array("pdf")) !== FALSE) {
+					$item['isImage'] = FALSE;
+					$item['icon'] = $this->findMedia(Framework::$site->config->aris->inventory->pdfIcon, NULL);
+					$item['link'] = 'http://' . $_SERVER["SERVER_NAME"] . $item['media'];
+				}
+				
 			}
 			unset($item);
 			
