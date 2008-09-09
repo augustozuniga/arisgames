@@ -1,20 +1,29 @@
 <?php
-include ('common.php');
+
 
 if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_SESSION['player_id'])) {
-	
-	echo '<h1>IM HERE</h1>';
-	
-	//Update Player latatide and longitude in players table
-	$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players 
-			SET latitude = '{$_REQUEST['latitude']}', longitude = '{$_REQUEST['longitude']}' 
-			WHERE player_id = '{$_SESSION['player_id']}'";
-	mysql_query($query);
+	echo 'Location Information Available.';
 	
 	//Update Session
 	$_SESSION['latitude']=$_REQUEST['latitude'];
 	$_SESSION['longitude']=$_REQUEST['longitude'];
 	$_SESSION['last_location_timestamp']=time();
+	
+	/*************************************************************
+	 Begin GHETTO code now
+	 ****************************************/
+	
+	$db = 'aris';
+	$user = 'arisuser';
+	$pass = 'arispwd';
+	$host = 'localhost';
+	$GLOBALS['DB_TABLE_PREFIX'] = 'nac1_';
+	
+	//Update Player latatide and longitude in players table
+	$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players 
+	SET latitude = '{$_REQUEST['latitude']}', longitude = '{$_REQUEST['longitude']}' 
+	WHERE player_id = '{$_SESSION['player_id']}'";
+	mysql_query($query);
 	
 	//Check for a matching location and add event if specified
 	$gps_error_factor = .0001 ;
@@ -71,6 +80,10 @@ if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_S
 	
 
 
+}
+else {
+	echo 'Cmon. I need more vars than that.';
+	
 }
 
 ?>
