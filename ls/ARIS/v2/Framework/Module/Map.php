@@ -97,13 +97,13 @@ class Framework_Module_Map extends Framework_Auth_User
 			$this->playerLocationName = $row['name'];
 			$this->title = 'Near ' . $row['name'];
 			
-			$sql = Framework::$db->prefix("UPDATE _P_players 
+			$sql = Framework::$db->prefix("UPDATE players 
 				SET last_location_id = {$row['location_id']} 
 				WHERE player_id = {$user->player_id}");
 		}
 		else {
 			$this->player_location_id = -1;
-			$sql = Framework::$db->prefix("UPDATE _P_players 
+			$sql = Framework::$db->prefix("UPDATE players 
 				SET last_location_id = '' WHERE player_id = {$user->player_id}");
 		}
 		Framework::$db->exec($sql);
@@ -164,7 +164,7 @@ class Framework_Module_Map extends Framework_Auth_User
      * Stores the player's location ID in the db.
      */
     protected function setPlayerLocation($playerID, $locationID) {
-    	$sql = Framework::$db->prefix("UPDATE _P_players SET last_location_id = $locationID
+    	$sql = Framework::$db->prefix("UPDATE players SET last_location_id = $locationID
 			WHERE player_id = $playerID");
 		Framework::$db->exec($sql);
     }
