@@ -20,6 +20,8 @@
 
 
 - (void)viewDidLoad {
+	UIApplication *thisApp = [UIApplication sharedApplication];
+	thisApp.idleTimerDisabled = YES;
 	
 	MainViewController *viewController = [[MainViewController alloc] initWithNibName:@"MainView" bundle:nil];
 	self.mainViewController = viewController;
