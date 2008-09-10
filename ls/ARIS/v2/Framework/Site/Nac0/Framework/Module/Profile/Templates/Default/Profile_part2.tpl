@@ -14,3 +14,4 @@
 	<p>Click the link below when you have reached Dotty's.<p>
 	<h3>{link text="I am now at Dotty's" module=Profile event="part2"}</h3>
 {/if}
+<br/><br/><hr/>

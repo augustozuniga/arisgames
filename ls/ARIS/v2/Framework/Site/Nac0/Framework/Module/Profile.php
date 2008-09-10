@@ -125,6 +125,7 @@ class Framework_Module_Profile extends Framework_Auth_User
 		$this->title = "Profile: Part 4";
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part4Event);
 		
+		if (isset($_REQUEST['feelings'])) {
 		switch ($_REQUEST['feelings']) {
 			case '1':
 				$this->setData('personalityType', 'VyGot 2 Personality Type');
@@ -140,7 +141,9 @@ class Framework_Module_Profile extends Framework_Auth_User
 				break;
 			default:
 				$this->setData('personalityType', 'VyGot 1 Personality Type');
-		}		
+		}
+		}
+		else $this->setData('personalityType', 'VyGot 1 Personality Type');
 		
     }	
 	
@@ -156,7 +159,7 @@ class Framework_Module_Profile extends Framework_Auth_User
 		$this->tplFile = Framework_Template::getPath('Profile_part1.tpl','Profile') . '/Profile_part5.tpl';
 		$this->title = "Assessment Complete";
 		
-		if ($previous_set_event == 'success' or (isset($_REQUEST['code']) and $_REQUEST['code'] == 'correct')) {
+		if ($previous_set_event == 'success' or (isset($_REQUEST['code']) and $_REQUEST['code'] == 'rachael')) {
 				$this->setData('succes', TRUE);
 				$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->successEvent);
 		}

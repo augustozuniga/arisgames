@@ -1,6 +1,6 @@
 {if $success}
 	<p>We believe you will be a great asset to the New America Corporation's work here in Madison.</p>
-	<p>Your account has been put in the queue for creation and a volunteer coordinator will be assigned to you by Friday of next week to give you your orientation and first assignment.</p>
+	<p>Inform your recruiting officer that you are done. They will set up your account to access the rest of mDesk's features</p>
 	<p>We look forward to having you be a part of the NAC family.</p>
 {else}
 	<p>This assessment has indicated that you may be a liability to the NAC.</p>
