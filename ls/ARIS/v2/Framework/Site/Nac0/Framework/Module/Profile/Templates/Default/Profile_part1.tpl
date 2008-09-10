@@ -6,3 +6,4 @@
 	<input type="hidden" name="handler" value="part2"/>
 	<input type="submit" name="submit" id="submit" value="I'm at Dotty's" />
 </form>
+<h1>&nbsp;</h1>
