@@ -280,8 +280,9 @@ abstract class Framework_Module extends Framework_Object_Web
      */
     protected function checkForEvent($userID, $eventID) {
 		$sql = Framework::$db->prefix("SELECT * FROM _P_player_events 
-									  WHERE play35er_id = '$userID' 
+									  WHERE player_id = '$userID' 
 									  AND event_id = '$eventID'");
+		//echo $sql;
 		$row = Framework::$db->getRow($sql);
 		
 		if ($row) return true;

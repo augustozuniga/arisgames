@@ -86,8 +86,7 @@ class Framework_Module_Profile extends Framework_Auth_User
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part2Event);
 	
 		//Check for player location at dotty's
-		//Rigged to use tru for the time being
-		if (TRUE) {
+		if ($this->checkForEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->locationEvent)) {
 			$this->setData('success', TRUE);
 			$this->title = "Profile: Part 2";
 			$this->removePlayerApplication(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->gpsApplicationID);

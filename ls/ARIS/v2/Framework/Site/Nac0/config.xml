@@ -55,6 +55,7 @@ configuration stuff here.
 			<part4Event>4</part4Event>
 			<successEvent>5</successEvent>
 			<failureEvent>6</failureEvent>
+			<locationEvent>7</locationEvent>
 		</profileModule>
 	</aris>
 

@@ -1,6 +1,10 @@
 <?php
 
+//For testing - Cpmment Out in normal use	
+//$_SESSION['player_id'] = $_REQUEST['player_id'];
+	
 session_start();
+	
 
 if (isset($_REQUEST['latitude']) 
 	&& isset($_REQUEST['longitude']) 
@@ -17,10 +21,14 @@ if (isset($_REQUEST['latitude'])
 	 Begin AWESOME GHETTO code now
 	 ****************************************/
 	
-	$db = 'aris';
+	$schema = 'aris';
 	$user = 'arisuser';
 	$pass = 'arispwd';
 	$host = 'localhost';
+	
+	$db = mysql_connect($host, $user, $pass);
+	echo mysql_error();
+	mysql_select_db($schema);
 	
 	//Update Player latatide and longitude in players table
 	$query = "UPDATE players 
@@ -29,7 +37,7 @@ if (isset($_REQUEST['latitude'])
 	mysql_query($query);
 	
 	//Check for a matching location and add event if specified
-	$gps_error_factor = .0001 ;
+	$gps_error_factor = .0005 ;
 
 	$query = "SELECT * FROM {$_GET['site']}locations 
 		WHERE 

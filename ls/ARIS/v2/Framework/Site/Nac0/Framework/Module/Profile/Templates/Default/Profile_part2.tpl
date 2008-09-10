@@ -10,9 +10,9 @@
 	</form>
 
 {else}
-	<h2>You have not gone to the location we asked. </h2>
+	<h3>You have not gone to the location we asked. </h3>
 	<p>This discrepancy was recored in your profile</p>
-	<p>Click the button below when you have reached Dotty's<p>
-	{link text="I am now at Dotty's" module=Profile event="part2"}
+	<p>Click the link below when you have reached Dotty's<p>
+	<h3>{link text="I am now at Dotty's" module=Profile event="part2"}</h3>
 			
 {/if}
