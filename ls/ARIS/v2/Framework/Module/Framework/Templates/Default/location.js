@@ -9,7 +9,7 @@ function update_location(lat, long) {
 	var base = dirname(location.href);
 	
 	request.open('GET', base + 'update_location.php?latitude=' + 	
-		lat + '&longitude=' + long, true);        		
+		lat + '&longitude=' + long + '&site=' + site, true);        		
 	request.setRequestHeader('Content-Type', 'application/x-javascript;');        	
 	request.onreadystatechange = function() {
 			if (request.readyState == 4 && request.status == 200) {

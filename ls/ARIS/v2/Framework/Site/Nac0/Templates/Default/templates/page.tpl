@@ -13,6 +13,12 @@
 			<link rel="stylesheet" href="{$link}" type="text/css" media="all" />		
 		{/foreach}
 	{/if}
+	<script type="application/x-javascript">
+	<!--
+		var site = '{$site}';
+	//-->
+	</script>
+	
 	<script type="application/x-javascript" src="{$frameworkTplPath}/iui/iui.js"></script>
 	<script type="application/x-javascript" src="{$frameworkTplPath}/location.js"></script>
 	{if $isIphone}

@@ -1,45 +1,48 @@
 <?php
 
+session_start();
 
-if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_SESSION['player_id'])) {
-	echo 'Location Information Available.';
-	
-	//Update Session
+if (isset($_REQUEST['latitude']) 
+	&& isset($_REQUEST['longitude']) 
+	&& isset($_SESSION['player_id'])
+	&& isset($_GET['site'])) 
+{	
+	// Update Session
 	$_SESSION['latitude']=$_REQUEST['latitude'];
 	$_SESSION['longitude']=$_REQUEST['longitude'];
 	$_SESSION['last_location_timestamp']=time();
+	$_GET['site'] = $_GET['site'] . '_';
 	
 	/*************************************************************
-	 Begin GHETTO code now
+	 Begin AWESOME GHETTO code now
 	 ****************************************/
 	
 	$db = 'aris';
 	$user = 'arisuser';
 	$pass = 'arispwd';
 	$host = 'localhost';
-	$GLOBALS['DB_TABLE_PREFIX'] = 'nac1_';
 	
 	//Update Player latatide and longitude in players table
-	$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players 
+	$query = "UPDATE players 
 	SET latitude = '{$_REQUEST['latitude']}', longitude = '{$_REQUEST['longitude']}' 
 	WHERE player_id = '{$_SESSION['player_id']}'";
 	mysql_query($query);
 	
 	//Check for a matching location and add event if specified
 	$gps_error_factor = .0001 ;
-		
-	$query = "SELECT * FROM {$GLOBALS['DB_TABLE_PREFIX']}locations 
+
+	$query = "SELECT * FROM {$_GET['site']}locations 
 		WHERE 
 		latitude < " .  ($_REQUEST['latitude'] + $gps_error_factor) . " AND latitude > " .  ($_REQUEST['latitude'] - $gps_error_factor) . 
 		" AND longitude < " . ($_REQUEST['longitude'] + $gps_error_factor) . " AND longitude > " .  ($_REQUEST['longitude'] - $gps_error_factor);  
-	
+
 	$result = mysql_query($query);
 
 	if ($location = mysql_fetch_array($result)) {
 		//The player is at a known location
 		
 		//Update player record in db
-		$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players 
+		$query = "UPDATE players 
 			SET last_location_id = '{$location['location_id']}' 
 			WHERE player_id = '{$_SESSION['player_id']}'";
 		mysql_query($query);
@@ -50,7 +53,7 @@ if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_S
 
 		//Give event to player if specified in location record
 		if (isset($location['add_event_id'])) {
-			$query = "INSERT INTO {$GLOBALS['DB_TABLE_PREFIX']}player_events (player_id, event_id)
+			$query = "INSERT INTO {$_GET['site']}player_events (player_id, event_id)
 			VALUES ('{$_SESSION['player_id']}','{$location['add_event_id']}')"; 		
 			mysql_query($query);
 		}
@@ -59,7 +62,7 @@ if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_S
 	else {
 		//The player has left a known location
 		//Update player record in db
-		$query = "UPDATE {$GLOBALS['DB_TABLE_PREFIX']}players 
+		$query = "UPDATE players 
 			SET last_location_id = '' 
 			WHERE player_id = '{$_SESSION['player_id']}'";
 		mysql_query($query);
@@ -70,19 +73,14 @@ if (isset($_REQUEST['latitude']) and isset($_REQUEST['longitude']) and isset($_S
 
 		//Give event to player if specified in location record
 		if (isset($location['add_event_id'])) {
-			$query = "INSERT INTO {$GLOBALS['DB_TABLE_PREFIX']}player_events (player_id, event_id)
+			$query = "INSERT INTO {$_GET['site']}player_events (player_id, event_id)
 			VALUES ('{$_SESSION['player_id']}','{$location['add_event_id']}')"; 		
 			mysql_query($query);
 		}
-	
-
 	}
-	
-
-
 }
 else {
-	echo 'Cmon. I need more vars than that.';
+	echo 'Seriously? I need more vars than that.';
 	
 }
 

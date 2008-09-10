@@ -29,7 +29,7 @@ configuration stuff here.
 	<aris>
 		<app>mDesk</app>
 		<company>NAC</company>
-		<techEmail>djgagnon@wisc.edu</techEmail>
+		<techEmail>nacrecruiting@gmail.com</techEmail>
 		<tablePrefix>nac1_</tablePrefix>
 		<main>
 			<title>Agent %s</title>

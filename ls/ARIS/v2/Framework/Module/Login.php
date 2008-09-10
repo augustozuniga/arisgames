@@ -37,31 +37,29 @@ class Framework_Module_Login extends Framework_Auth_No
     		$userField = Framework::$site->config->user->userField;
     	
     		// Query the database
-    		$sql = sprintf("SELECT %s, user_name, password FROM %s%s 
+    		$sql = sprintf("SELECT * FROM %s 
     			WHERE user_name='%s' AND password='%s'", 
-    			$userField,
-    			Framework::$site->config->aris->tablePrefix,
     			Framework::$site->config->user->userTable,
     			$_POST['user_name'], $_POST['password']);
-
     		$row = Framework::$db->getRow($sql);
-
     		if ($_POST['user_name'] == $row['user_name']
     			&& $_POST['password'] == $row['password'])
     		{
     			$session->authorization = array('user_name' => $_POST['user_name'],
-    				'player_id' => $row['player_id']);
+    				"$userField" => $row["$userField"]);
     				
     			$session->{$userField} = $row["$userField"];
     			
-    			// Get the next site
-    			$site = Framework::$site->name;
-    			if (isset($row['site']) && !empty($row['site'])) $site = $row['site'];
+    			// Prepare the next site
+    			Framework::$site = Framework_Site::factory($row['site']);
+    			Framework::$site->prepare();
+    			$this->site = Framework::$site->name;
     			
     			// Load Applications
-    			$this->loadApplications($row['player_id']);
+    			$this->loadApplications($row["$userField"]);
 				$this->defaultModule = Framework::$site->config->aris->main->defaultModule;
-				header("Location: {$_SERVER['PHP_SELF']}?module={$this->defaultModule}&controller=Web&site=". $site);
+				header("Location: {$_SERVER['PHP_SELF']}?module={$this->defaultModule}&controller=Web&site="
+					. $this->site);
 				die;
     		}
     	}
