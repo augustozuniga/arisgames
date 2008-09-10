@@ -189,7 +189,7 @@ class NodeManager
 					(SELECT event_id FROM _P_player_events WHERE player_id = $_SESSION[player_id])) 
 			AND
 				(require_location_id IS NULL OR require_location_id IN 
-					(SELECT last_location_id FROM _P_players WHERE player_id = $_SESSION[player_id])) 
+					(SELECT last_location_id FROM players WHERE player_id = $_SESSION[player_id])) 
 			AND
 				(_P_npc_conversations.remove_if_event_id IS NULL 
 					OR _P_npc_conversations.remove_if_event_id NOT IN 

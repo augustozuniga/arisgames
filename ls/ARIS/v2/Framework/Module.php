@@ -289,6 +289,7 @@ abstract class Framework_Module extends Framework_Object_Web
 		else return false;
     }
 	
+	
 	/** 
 	 * addPlayerApplication
 	 *
