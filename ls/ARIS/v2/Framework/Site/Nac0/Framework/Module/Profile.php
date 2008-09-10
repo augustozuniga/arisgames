@@ -82,6 +82,12 @@ class Framework_Module_Profile extends Framework_Auth_User
      */
     protected function part2()
     {
+		if ($_REQUEST['handler']) { 
+			$this->part3(); 
+			return;
+		}
+		
+		
 		$this->tplFile = Framework_Template::getPath('Profile_part2.tpl','Profile') . '/Profile_part2.tpl';
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part2Event);
 	
