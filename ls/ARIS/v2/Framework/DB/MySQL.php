@@ -85,7 +85,7 @@ class Framework_DB_MySQL extends Framework_DB_Common
 	    	$this->db = mysql_connect(
 	    		!empty($parameters['server']) ? $parameters['server'] : 'localhost',
 	    		!empty($parameters['username']) ? $parameters['username'] : 'root',
-	    		!empty($parameters['password']) ? $parameters['password'] : 'root'
+	    		!empty($parameters['password']) ? $parameters['password'] : ''
 	    	);
 	    	if ($this->db) {
 	    		if (!mysql_select_db(!empty($parameters['dbname']) 
