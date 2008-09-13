@@ -22,8 +22,10 @@
 define('FRAMEWORK_BASE_PATH', dirname(__FILE__));
 define('FRAMEWORK_WWW_BASE_PATH', dirname($_SERVER['PHP_SELF']));
 
-ini_set("include_path", ".:"  
-	. FRAMEWORK_BASE_PATH . '/Framework:' 
+$pathSep = strstr(ini_get('include_path'), ';') ? ';' : ':';
+
+ini_set("include_path", ini_get('include_path') . $pathSep  
+	. FRAMEWORK_BASE_PATH . "/Framework{$pathSep}" 
 	. FRAMEWORK_BASE_PATH . '/Framework/Template/Smarty');
 ini_set('display_errors', 1);
 
