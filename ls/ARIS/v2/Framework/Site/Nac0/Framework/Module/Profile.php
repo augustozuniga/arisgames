@@ -64,7 +64,7 @@ class Framework_Module_Profile extends Framework_Auth_User
      */
     protected function part1()
     {
-		$this->tplFile = Framework_Template::getPath('Profile_part1.tpl','Profile') . '/Profile_part1.tpl';
+		$this->tplFile = 'Profile_part1.tpl';
 		$this->title = "Profile: Part 1";
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part1Event);
 		
@@ -88,7 +88,7 @@ class Framework_Module_Profile extends Framework_Auth_User
 		}
 		
 		
-		$this->tplFile = Framework_Template::getPath('Profile_part2.tpl','Profile') . '/Profile_part2.tpl';
+		$this->tplFile = 'Profile_part2.tpl';
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part2Event);
 	
 		//Check for player location at dotty's
@@ -112,7 +112,7 @@ class Framework_Module_Profile extends Framework_Auth_User
      */
     protected function part3()
     {
-		$this->tplFile = Framework_Template::getPath('Profile_part1.tpl','Profile') . '/Profile_part3.tpl';
+		$this->tplFile = 'Profile_part3.tpl';
 		$this->title = "Profile: Part 3";
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part3Event);
 		
@@ -127,7 +127,7 @@ class Framework_Module_Profile extends Framework_Auth_User
      */
     protected function part4()
     {
-		$this->tplFile = Framework_Template::getPath('Profile_part1.tpl','Profile') . '/Profile_part4.tpl';
+		$this->tplFile = 'Profile_part4.tpl';
 		$this->title = "Profile: Part 4";
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part4Event);
 		
@@ -162,7 +162,7 @@ class Framework_Module_Profile extends Framework_Auth_User
      */
     protected function part5($previous_set_event = null)
     {
-		$this->tplFile = Framework_Template::getPath('Profile_part1.tpl','Profile') . '/Profile_part5.tpl';
+		$this->tplFile = 'Profile_part5.tpl';
 		$this->title = "Assessment Complete";
 		
 		if ($previous_set_event == 'success' or (isset($_REQUEST['code']) and $_REQUEST['code'] == 'rachael')) {
