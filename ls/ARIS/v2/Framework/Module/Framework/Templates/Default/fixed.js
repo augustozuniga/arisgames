@@ -313,7 +313,7 @@ window.iPhone = window.iPhone || {};
 				}
 			}
 		},
-		
+/*		
 		// Links need special treatment so as not to interfere with scroll
 		enableLinksOnTap : function() {
 			
@@ -367,6 +367,7 @@ window.iPhone = window.iPhone || {};
 				}, false);
 			}
 		}
+		*/
 	};
 	
 	// Fire on load
