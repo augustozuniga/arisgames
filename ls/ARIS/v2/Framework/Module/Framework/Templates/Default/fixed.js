@@ -11,7 +11,6 @@ window.iPhone = window.iPhone || {};
 
 	// Shared utilities
 	$i.utils = {
-
 		// Adds class name to element
 		addClass : function(element, elClass) {
 			var curr = element.className;
