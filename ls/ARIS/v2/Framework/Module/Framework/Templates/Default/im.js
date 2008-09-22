@@ -62,7 +62,7 @@ function prepOptions(id, text) {
 		
 	var opt = new Array();
 	opt['queueId'] = id;
-	opt['phrase'] = text;
+	opt['phrase'] = '<p class="PC">' + text + '</p>';
 	messageQueue['options'].push(opt);
 }
 
@@ -162,7 +162,7 @@ function printPlayerMessage() {
 	
 	intervalObject = setInterval(typeMessage, 75);
 	currentChar = 0;
-	document.getElementById("rawMessage").innerHTML = message['phrase'];
+	document.getElementById('rawMessage').innerHTML = message['phrase'];
 	message['phrase'] = message['phrase'].replace(/(<([^>]+)>)/ig, "");
 }
 
@@ -180,10 +180,12 @@ function typeMessage() {
 function postPlayerMessage() {
     var button = document.getElementById("playerMessageSendButton");
     button.disabled = true;
-	setRowMessage('right', message['phrase'], 
+    
+    var msg = document.getElementById('rawMessage').innerHTML;
+    
+	setRowMessage('right', /*message['phrase']*/ msg, 
 		messageQueue['player_icon']);
 
-    //makeRow('right', message['phrase'], messageQueue['player_icon']);
     messageContainer.value = " ";
     processCurrentMessage();
 }
@@ -191,11 +193,9 @@ function postPlayerMessage() {
 var currentY = -150;
 function makeRow(alignment, msg, icon_url) {
     rowID++;
-//    var container = frames[0].document.getElementById("dialog");
 	var container = document.getElementById('dialog');
 
 	container.innerHTML = container.innerHTML +  '<tr><td align="' + alignment + '" id="r' + rowID + '">' + createIcon(alignment, icon_url) + msg + '</td></tr>';
-//    frames[0].scrollToBottom();
 
 	if (window.iPhone && rowID > 1) {
 		scrollDown(rowID);
@@ -217,11 +217,9 @@ function scrollDownBy(y) {
 }
 
 function setRowMessage(alignment, msg, icon_url) {
-//	var row = frames[0].document.getElementById("r" + rowID);
 	var row = document.getElementById('r' + rowID);
 	
 	row.innerHTML = createIcon(alignment, icon_url) + msg;
-//    frames[0].scrollToBottom();
 }    
 
 function createIcon(alignment, icon_url) {

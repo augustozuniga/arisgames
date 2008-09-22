@@ -314,6 +314,16 @@ table.contactList ul > li > a {
 	background: url(iui/listArrow.png) no-repeat right center;
 }
 
+table#dialog p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+table#dialog td {
+	padding-bottom: 0.5ex;
+	border-bottom: 1px solid #333;
+}
+
 #chatFrame {
 	margin: 0 auto 0 auto;
 	padding: 0;
@@ -323,8 +333,6 @@ table.contactList ul > li > a {
 	
 	border: 0;
 	z-index: 1000;
-	
-border: 1px solid red;
 	overflow: auto;
 }
 
@@ -335,6 +343,7 @@ border: 1px solid red;
 	float:left;
 	margin-left: 10px;
 	margin-right:10px;
+	display: none;
 }
 
 #rawMessage {
@@ -350,6 +359,7 @@ border: 1px solid red;
 	padding: 0;
 	text-align: center;
 	width: 70px;
+	display: none;
 }
 
 body.frameBody {

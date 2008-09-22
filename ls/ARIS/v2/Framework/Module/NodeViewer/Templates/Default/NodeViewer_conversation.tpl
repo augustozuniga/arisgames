@@ -1,11 +1,8 @@
-<!--
-<iframe id="chatFrame" src="{$frameworkTplPath}/dialogcontainer.html"></iframe>
--->
-<!-- <div id="chatFrame"> -->
-	<table id="dialog" width="295px">
-		<tr><td><div style="padding-top: 10px; font-style: italic;">Chat started.</div></td></tr>
-	</table>
-<!-- </div> -->
+<table id="dialog" width="295px">
+	<tbody>
+	<tr><td><div style="padding-top: 10px; font-style: italic;">Chat started.</div></td></tr>
+	</tbody>
+</table>
 <input id="message" value=" " disabled="true" />
 <select id="playerMessageSelection" onchange="postSelection();">
 	<option value="">Say...</option>
