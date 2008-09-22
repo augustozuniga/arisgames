@@ -23,14 +23,14 @@ body .appbar {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    border-bottom: 1px solid #5A5D5A;
+    border-bottom: 1px solid black;
     border-top: 1px solid #5A5D5A;
 
 	display: block;
     padding: 10px;
     min-height: 0px;
-    height: 45px;
-    background: url(toolbarBlack.png) #6d84a2 repeat-x;
+    height: 49px;
+    background: url(toolbarBlack.png) black repeat-x;
 
     position: fixed;
     bottom: 0;
@@ -64,7 +64,7 @@ body .appbar {
 	text-align: center;
 	
 	height: 11px;
-	margin: -15px 0 0 0;
+	margin: -8px 0 0 0;
 	padding: 0 0 2px 0;
 	
 	opacity: 1.0;
