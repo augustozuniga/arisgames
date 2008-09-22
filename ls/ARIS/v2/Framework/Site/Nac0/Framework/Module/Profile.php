@@ -87,7 +87,6 @@ class Framework_Module_Profile extends Framework_Auth_User
 			return;
 		}
 		
-		echo 'in part 2';
 		
 		$this->tplFile = 'Profile_part2.tpl';
 		$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->part2Event);
@@ -166,7 +165,7 @@ class Framework_Module_Profile extends Framework_Auth_User
 		$this->tplFile = 'Profile_part5.tpl';
 		$this->title = "Assessment Complete";
 		
-		if ($previous_set_event == 'success' or (isset($_REQUEST['code']) and $_REQUEST['code'] == 'rachael')) {
+		if ($previous_set_event == 'success' or (isset($_REQUEST['code']) and ($_REQUEST['code'] == 'rachael' or $_REQUEST['code'] == 'rachel' ))) {
 				$this->setData('succes', TRUE);
 				$this->addEvent(Framework_User::singleton()->player_id, Framework::$site->config->aris->profileModule->successEvent);
 		}
