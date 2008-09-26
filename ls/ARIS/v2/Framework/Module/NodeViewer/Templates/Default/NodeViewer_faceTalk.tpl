@@ -1,9 +1,9 @@
-<div class="npcText">
 {if isset($npc.media)}
 	<div class="npcImg">
-		<img src="Framework/Site/{$site}/Templates/Default/templates/{$npc.media}" />
+		<img src="{$npc.media}" />
 	</div>
 {/if}
+<div class="npcText">
 {$node.text}
 </div>
 <ul class="options">

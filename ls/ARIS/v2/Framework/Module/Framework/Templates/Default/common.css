@@ -10,7 +10,7 @@ body {
 	background-color: black;
 	color: #ccc;
 	height: 100%
-	width: 100%;
+	width: 80%;
 	padding-bottom: 45px;
 }
 
@@ -256,7 +256,14 @@ table.questList ul > li:first-child {
 
 .locationImg > img {
 	margin: 5px auto 5px auto;
-	width: 200px;
+	width: 320px;
+}
+
+.locationCaption {
+	margin: 0;
+	padding: 1em 0 0 1em;
+	text-align: left;
+	border-bottom: 1px solid #666;
 }
 
 .locationImg > p {
@@ -381,28 +388,30 @@ body.frameBody {
 
 /***** Face to Face Chatting *****/
 ul.options {
-	margin: 0;
+	text-align:center;
 	display: block;
-	clear: left;
 }
 
 ul.options > li {
-	border: 0;
-	margin-left: -2em;
-	padding-left: 0.5em;
-	font-size: 1em;
-	padding: 0;
+	display: block;
+    margin: -8px -8px -8px 0;
+    padding: 8px 32px 8px 0;
+    text-decoration: none;
+    color: white;
+
+	background: url(iui/listArrow.png) no-repeat right center;
 }
 
 .npcText {
-	margin: 0 1em 0 1em;
+	text-align:center;
+    padding-bottom:10px;
+	padding-left:5px;
+	padding-right:5px;
 }
 
 .npcImg {
-	float: left;
-	width: 128px;
-	height: 128px;
-	margin: 0 1em 0 0;
+	text-align:center;
+    padding-bottom:10px;
 }
 
 /***** Forms *****/

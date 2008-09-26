@@ -9,7 +9,7 @@
 			{/if}
 		</td>
 		<td>
-			<ul class="options">
+			<ul class="contactList">
 				<li>{link module="NodeViewer" event="`$event`&npc_id=`$npc.npc_id`" text=$npc.name}</li>
 				<li>{$npc.description}</li>
 			</ul>

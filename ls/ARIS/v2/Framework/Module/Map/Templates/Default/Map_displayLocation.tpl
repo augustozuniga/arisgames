@@ -4,5 +4,5 @@
 	<p>{$location.description}</p>
 </div>
 {/if}
-
+<div class="locationCaption">Nearby People or Objects</div>
 {include file="$frameworkModulePath/contactList.tpl"}
