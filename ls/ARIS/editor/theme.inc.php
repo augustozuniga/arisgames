@@ -6,6 +6,10 @@
 		"http://www.w3.org/TR/html4/loose.dtd">
 		<html>
 		<head>
+
+		<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAaBINj42Tz4K8ZaoZWWSnWRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQkcVoUCrdum-UscUMoKinDrDjThQ"
+		type="text/javascript"></script>
+
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
 		
 		echo '<title>' . $title . '</title>';

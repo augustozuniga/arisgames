@@ -2,8 +2,70 @@
 	
 	include_once('common.inc.php');
 	
-	print_header( $_SESSION['current_game_name'] . ' Locations');
+	$query = "SELECT * FROM {$_SESSION['current_game_prefix']}locations";
+	$result = mysql_query($query);
+	$map_points = '';
+
+	while ($row = mysql_fetch_array($result)){
+		   $map_points .= "
+			// Set up our GMarkerOptions object
+			var point = new GLatLng({$row['latitude']}, {$row['longitude']});
+			var customIcon = new GIcon(baseIcon);
+			customIcon.image = \"{$engine_www_root}/{$row['media']}\";
+			var marker = new GMarker(point,  { icon:customIcon });
+			//var marker = new GMarker(point,{draggable: true});
+			map.addOverlay(marker);";
+	}
+
+
+				
+	//Do it manually
+	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Locations</title>
+	<style type="text/css"> @import url("theme.css"); </style> 
+	
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA"
+	type="text/javascript"></script>
+    <script type="text/javascript">
+   	
+	function initialize() {
+		if (GBrowserIsCompatible()) {
+			// Create a base icon for all of our markers that specifies the
+			// shadow, icon dimensions, etc.
+			var baseIcon = new GIcon(G_DEFAULT_ICON);
+			baseIcon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+			baseIcon.iconSize = new GSize(20, 34);
+			baseIcon.shadowSize = new GSize(37, 34);
+			baseIcon.iconAnchor = new GPoint(9, 34);
+			baseIcon.infoWindowAnchor = new GPoint(9, 2);
+	
+	
+			var map = new GMap2(document.getElementById("map_canvas"));
+			map.setCenter(new GLatLng(43.070784, -89.397321), 13); //TODO: We need it to automatically center
+			map.addControl(new GSmallMapControl());
+			map.addControl(new GMapTypeControl());' . 
+	
+			$map_points . '
+			
+		}
+    }
+	
+    </script>
+	</head>
+	
+	<body onload="initialize()" onunload="GUnload()">';
+	
+	
+	
+	echo '<h1>Locations</h1>';
 	print_general_navigation();
+			
+	
+	echo '<div id="map_canvas" style="width: 100%; height: 300px"></div>';
 	
 	
 	/**********************

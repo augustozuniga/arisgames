@@ -33,7 +33,7 @@
 	//Print the login form
 	function print_form(){
 		echo '
-		<form action = "' . $_SERVER['PHP_SELF'] . '" method = "get">
+		<form action = "' . $_SERVER['PHP_SELF'] . '" method = "post">
 		<table class = "login">
 		<tr><th>User Name</th><td><input type = "text" name = "user_name"/></td></tr>
 		<tr><th>Password</th><td><input type = "password" name = "password"/></td></tr>
