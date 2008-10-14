@@ -8,13 +8,33 @@
 
 	while ($row = mysql_fetch_array($result)){
 		   $map_points .= "
-			// Set up our GMarkerOptions object
 			var point = new GLatLng({$row['latitude']}, {$row['longitude']});
 			var customIcon = new GIcon(baseIcon);
-			customIcon.image = \"{$engine_www_root}/{$row['media']}\";
-			var marker = new GMarker(point,  { icon:customIcon });
-			//var marker = new GMarker(point,{draggable: true});
-			map.addOverlay(marker);";
+			//customIcon.image = \"{$engine_www_root}/{$row['media']}\";
+			var marker_{$row['location_id']} = new GMarker(point,  { icon:customIcon, draggable:true });
+			GEvent.addListener(marker_{$row['location_id']}, 'click', function(){ 
+				marker_{$row['location_id']}.openExtInfoWindow(map,
+									'custom_info_window_red',
+									'<div>Loading...</div>',
+									{
+									ajaxUrl: 'locations_infowindow/infoWindow.php?location_id={$row['location_id']}', 
+									beakOffset: 3
+									}
+									); 
+			});
+			GEvent.addListener(marker_{$row['location_id']}, 'dragstart', function() {
+				map.closeInfoWindow();
+			});
+			
+			GEvent.addListener(marker_{$row['location_id']}, 'dragend', function() {
+				//Send update to handler script
+				var update_url = 'locations_infowindow/update.php?req=update_location&location_id={$row['location_id']}&latitude=' + 
+								marker_{$row['location_id']}.getLatLng().lat() + 
+								'&longitude=' + marker_{$row['location_id']}.getLatLng().lng();
+				GDownloadUrl(update_url, function(data){});
+			});
+			
+			map.addOverlay(marker_{$row['location_id']});";
 	}
 
 
@@ -28,8 +48,11 @@
 	<title>Locations</title>
 	<style type="text/css"> @import url("theme.css"); </style> 
 	
+	<link type="text/css" rel="Stylesheet" media="screen" href="locations_infowindow/infoWindow.css"/>
+	
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA"
 	type="text/javascript"></script>
+	<script src="js/extinfowindow.js" type="text/javascript"></script>
     <script type="text/javascript">
    	
 	function initialize() {
@@ -193,26 +216,26 @@
 										'sort'     => true,
 										'options'	=> 'AVCPD'
 	);
-	$opts['fdd']['latitude'] = array(
-									 'name'     => 'Latitude',
-									 'select'   => 'T',
-									 'maxlen'   => 22,
-									 'default'  => '0',
-									 'sort'     => true
-	);
-	$opts['fdd']['longitude'] = array(
-									  'name'     => 'Longitude',
-									  'select'   => 'T',
-									  'maxlen'   => 22,
-									  'default'  => '0',
-									  'sort'     => true
-	);	
 	$opts['fdd']['media'] = array(
 								  'name'     => 'Media',
 								  'select'   => 'T',
 								  'maxlen'   => 30,
 								  'sort'     => true
 	);
+	$opts['fdd']['latitude'] = array(
+										 'name'     => 'Latitude',
+										 'select'   => 'T',
+										 'maxlen'   => 10,
+										 'sort'     => true,
+										 'options'	=> 'AVCPD'
+										 );
+	$opts['fdd']['longitude'] = array(
+											 'name'     => 'Longitude',
+											 'select'   => 'T',
+											 'maxlen'   => 10,
+											 'sort'     => true,
+											 'options'	=> 'AVCPD'		
+									  );
 	$opts['fdd']['add_event_id'] = array(
 										 'name'     => 'Add event ID',
 										 'select'   => 'T',
