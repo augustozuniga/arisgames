@@ -35,7 +35,7 @@ configuration stuff here.
 			<title>New America Corporation</title>
 			<body><![CDATA[
 			<p align = 'center'><img src = "Framework/Site/Nac0/Templates/Default/templates/nac_logo.png" width= "200px"/></p>
-			<p align = 'center'>Please begin the volenteer application and psychological profile by selecting the profile application below.</p>
+			<p align = 'center'>Please begin the volunteer application and psychological profile by selecting the profile application below.</p>
 			]]></body>
 			<defaultModule>Main</defaultModule>
 		</main>

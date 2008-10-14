@@ -106,6 +106,11 @@ a:active {
 	z-index: 999;
 }
 
+p.notification {
+	margin-left: 1em;
+	color: red;
+}
+
 .blackpanel {
 	border: 0;
 }

@@ -35,7 +35,7 @@ class NodeManager
 	static public $conversations = null;
 	static public $messages = array();
 
-	static public function loadNode($nodeID, $npcID) {
+	static public function loadNode($nodeID, $npcID = 0) {
 		$user = Framework_User::singleton();
 		$userID = $user->player_id;
 		
@@ -75,7 +75,7 @@ class NodeManager
 
 		// NOTE: calling methods should check for 'require_answer_string' 
 		// to handle input
-    	if (empty(self::$node['require_answer_string'])) {
+    	if (empty(self::$node['require_answer_string']) && $npcID >= 0) {
     		self::loadNodeConversations($npcID);
     	}
 	}
@@ -129,7 +129,7 @@ class NodeManager
     /**
      * Adds the specified item to the specified player.
      */
-    static protected function addItem($userID, $itemID) {
+    static public function addItem($userID, $itemID) {
     	$sql = Framework::$db->prefix("SELECT * FROM _P_items 
     		WHERE item_id = $itemID");
     	$row = Framework::$db->getRow($sql);
@@ -144,6 +144,8 @@ class NodeManager
     	else {
     		self::$messages[] = "** addItem: $itemID not defined **";
     	}
+    	
+    	return $row['name'];
     }
     
     /**

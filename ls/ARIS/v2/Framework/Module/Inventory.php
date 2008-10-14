@@ -2,6 +2,8 @@
 	
 	/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 	
+	require_once('NodeManager.php');
+	
 	/**
 	 * Framework_Module_Main
 	 *
@@ -110,11 +112,26 @@
 			$this->title = $this->item['name'];
 			
 			//Check if an image was specified and can be found, if not, load the default
-			$this->media = $this->findMedia($this->item['media'], DEFAULT_IMAGE);
-						
-			
+			$this->media = $this->findMedia($this->item['media'], DEFAULT_IMAGE);			
 		}
 		
-		
+		public function addItem() {
+			if (empty($_REQUEST['item_id'])) {
+				$this->title = "Detection Error";
+				$this->message = "No objects detected.";
+				return;
+			}
+			
+			if (isset($_REQUEST['event_id']) && $_REQUEST['event_id'] > 0) {
+				$this->addEvent($_SESSION['player_id'], $_REQUEST['event_id']);
+			}
+			
+			$name = NodeManager::addItem($_SESSION['player_id'], $_REQUEST['item_id']);
+			$this->title = $name;
+			$this->message = implode('<br />', NodeManager::$messages);
+			
+			//Check if an image was specified and can be found, if not, load the default
+			$this->media = $this->findMedia($this->item['media'], DEFAULT_IMAGE);
+		}
 	}
 	?>

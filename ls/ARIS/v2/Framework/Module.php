@@ -238,6 +238,39 @@ abstract class Framework_Module extends Framework_Object_Web
     }
     
     /**
+     * getItems
+     *
+     * Returns all items for a user organized by rows.
+     *
+     * @param	int		$forUserId
+     * @access protected
+     * @return array
+     */
+    protected function getItems($forUserId) {
+    	$sql = $this->db->prefix("SELECT * FROM _P_player_items 
+    		WHERE player_id = $forUserId");
+    	return $this->db->getAll($sql);
+    }
+    
+    /**
+     * getItemsByIds
+     *
+     * Returns all items for a user indexed by item id.
+     *
+     * @param	int		$forUserId
+     * @access protected
+     * @return array
+     */
+    protected function getItemsByIds($forUserId) {
+    	$rows = $this->getItems($forUserId);
+    	$result = array();
+    	foreach($rows as $ignore => $data) {
+    		$result[$data['item_id']] = $data;
+    	}
+    	return $result;
+    }
+    
+    /**
      * getEvents
      *
      * Returns all events.
@@ -248,6 +281,56 @@ abstract class Framework_Module extends Framework_Object_Web
     protected function getEvents() {
     	$sql = $this->db->prefix("SELECT * FROM _P_events ORDER BY event_id");
     	return $this->db->getAll($sql);
+    }
+    
+    /** 
+     * getEventsByIds
+     *
+     * Returns an array of events, indexed by event_id.
+     *
+     * @access protected
+     * @return array
+     */
+    protected function getEventsByIds() {
+    	$rows = $this->getEvents();
+    	$result = array();
+    	
+    	foreach($rows as $ignore => $data) {
+			$result[$data['event_id']] = $data['description'];
+		}
+		return $result;
+    }
+    
+    /**
+     * getPlayerEvents
+     *
+     * Returns all events.
+     *
+     * @access protected
+     * @return array
+     */
+    protected function getPlayerEvents($forPlayerId) {
+    	$sql = $this->db->prefix("SELECT * FROM _P_player_events 
+    		WHERE player_id = {$forPlayerId} ORDER BY event_id");
+    	return $this->db->getAll($sql);
+    }
+    
+    /** 
+     * getPlayerEventsByIds
+     *
+     * Returns an array of events, indexed by event_id.
+     *
+     * @access protected
+     * @return array
+     */
+    protected function getPlayerEventsByIds($forPlayerId) {
+    	$rows = $this->getPlayerEvents($forPlayerId);
+    	$result = array();
+    	
+    	foreach($rows as $ignore => $data) {
+			$result[$data['event_id']] = $data;
+		}
+		return $result;
     }
     
 	/** 
@@ -400,6 +483,7 @@ abstract class Framework_Module extends Framework_Object_Web
         $module->frameworkTplPath = 
         	'./Framework/Module/Framework/Templates/Default';
         $module->isIphone = stristr($_SERVER['HTTP_USER_AGENT'], "iPhone") !== false;
+        if (isset($_REQUEST['notification'])) $module->notification = $_REQUEST['notification'];
         
         return $module;
     }

@@ -40,6 +40,9 @@
 </div>
 <div id="container">
 	<div id="content">
+{if isset($notification)}
+	<p class="notification">{$notification}</p>
+{/if}
 {include file="$modulePath/$tplFile"}
 	</div>
 </div>
@@ -53,6 +56,7 @@
 			{application module=$app}
 		{/foreach}
 	{/if}
+	<div class="application" id="notify"></div>
 </div>
 {elseif isset($techEmail)}
 <div class="help" id="footer">

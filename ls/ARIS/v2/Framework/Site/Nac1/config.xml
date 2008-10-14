@@ -57,6 +57,9 @@ configuration stuff here.
 			<audioIcon>defaultAudioIcon.png</audioIcon>
 			<pdfIcon>defaultPdfIcon.png</pdfIcon>
 		</inventory>
+		<async>
+			<notification>Signal lost.</notification>
+		</async>
 	</aris>
 
     <!--
