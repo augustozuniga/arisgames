@@ -43,6 +43,7 @@ function update_map(lat, long) {
 }
 
 function process_data(text) {
+window.console.log(text);
 	var result = eval('(' + text + ')');
 	if (result['function'] == '') {
 		clearNotify();
@@ -90,8 +91,7 @@ function createNotify(icon, url, label) {
 	if (n) {
 		n.innerHTML = '<a href="index.php?controller=Web&site='
 			+ update_location.site + '&module=' + url 
-			+ '" target="_self"><img src="' + icon + '" /><div><p>'
-			+ label + '</p></div></a>';
+			+ '" target="_self"><img src="' + icon + '" /><div></div></a>';
 	}
 	
 	// bounce it
