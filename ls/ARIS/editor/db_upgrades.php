@@ -60,7 +60,17 @@ include_once('common.inc.php');
 	if (mysql_error() == "Duplicate column name 'id'") echo 'Not Needed';
 	else echo mysql_error();
 	
-
+	echo "<h3>Adding Error to Locaiton Table</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}locations
+	ADD COLUMN error double default '0.0005'";
+	mysql_query($query);
+	if (mysql_error() == "Duplicate column name 'error'") echo 'Not Needed';
+	else echo mysql_error();
 	
+	echo "<h3>Set Location Table Defualts</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}locations 
+	MODIFY COLUMN latitude DOUBLE default '43.0746561' ,
+	MODIFY COLUMN longitude DOUBLE default '-89.384422'";
+	mysql_query($query);
 
 ?>

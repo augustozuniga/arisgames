@@ -159,8 +159,9 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		media varchar(30) default NULL,
 		name varchar(50) default NULL,
 		description tinytext,
-		latitude double default NULL,
-		longitude double default NULL,
+		latitude double default '43.0746561',
+		longitude double default '-89.384422',
+		error double default '0.0005',												
 		type enum('Node','Event','Item','Npc') default NULL,
 		type_id int(11) default NULL,
 		require_event_id int(10) unsigned default NULL,
@@ -171,6 +172,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		)";
 	mysql_query($query);
 	echo mysql_error();
+
 
 	$query = "CREATE TABLE {$new_game_short}_log (
 		   log_id int(11) unsigned NOT NULL auto_increment,

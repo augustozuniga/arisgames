@@ -234,6 +234,7 @@
 										 'select'   => 'T',
 										 'maxlen'   => 10,
 										 'sort'     => true,
+										'default'  => '43.0746561',
 										 'options'	=> 'AVCPD'
 										 );
 	$opts['fdd']['longitude'] = array(
@@ -241,6 +242,7 @@
 											 'select'   => 'T',
 											 'maxlen'   => 10,
 											 'sort'     => true,
+											'default'  => '-89.384422',
 											 'options'	=> 'AVCPD'		
 									  );
 	$opts['fdd']['type'] = array(
@@ -286,6 +288,7 @@
 											   'select'   => 'T',
 											   'maxlen'   => 10,
 											   'sort'     => true,
+												'default'  => '0.0005',
 											   'options'	=> 'AVCPD'
 											   );
 	
