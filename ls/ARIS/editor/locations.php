@@ -285,7 +285,7 @@
 	
 	
 	// Now important call to phpMyEdit
-	echo '<p>NOTICE: You must refresh the page for a new location to appear on the map</p>';
+	echo "<p>NOTICE: After adding a new location, you must <a href = '{$_SERVER['PHP_SELF']}'>update the map</a></p>";
 	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
 	//new phpMyEdit($opts);
 	new phpMyEdit_mce_cal($opts);

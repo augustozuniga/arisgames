@@ -8,7 +8,10 @@
 	$google_key = 'ABQIAAAAaBINj42Tz4K8ZaoZWWSnWRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQkcVoUCrdum-UscUMoKinDrDjThQ';
 	//ABQIAAAAaBINj42Tz4K8ZaoZWWSnWRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQkcVoUCrdum-UscUMoKinDrDjThQ is for localhost
 	
-	$engine_www_root = 'http://localhost/~davidgagnon/Aris/src/Framework/Site/Nac1/Templates/Default/templates';
+	//$engine_www_root = 'http://localhost/~davidgagnon/Aris/src/Framework/Site/Nac1/Templates/Default/templates';
+	$engine_sites_path = '/Users/davidgagnon/Sites/Aris/src/Framework/Site';
+	$default_site = 'Nac1';
+
 	
 	
 ?>

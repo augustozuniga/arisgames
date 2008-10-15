@@ -9,7 +9,7 @@
 	
 	//Navigation
 	echo "<div class = 'nav'>
-		<a href = '{$_SERVER['PHP_SELF']}'>Add a Game</a>
+		<a href = 'games_add.php'>Add a Game</a>
 		<a href = 'logout.php'>Logout</a>
 	</div>";
 	
