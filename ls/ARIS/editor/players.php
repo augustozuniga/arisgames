@@ -136,13 +136,8 @@ $opts['fdd']['photo'] = array(
 							  'name'     => 'Photo',
 							  'select'   => 'T',
 							  'maxlen'   => 25,
+							  'options'  => 'AVCPDR',
 							  'sort'     => true
-);
-$opts['fdd']['password'] = array(
-								 'name'     => 'Password',
-								 'select'   => 'T',
-								 'maxlen'   => 32,
-								 'sort'     => true
 );
 $opts['fdd']['user_name'] = array(
 								  'name'     => 'User name',
@@ -150,26 +145,36 @@ $opts['fdd']['user_name'] = array(
 								  'maxlen'   => 30,
 								  'sort'     => true
 );
+$opts['fdd']['password'] = array(
+								 'name'     => 'Password',
+								 'select'   => 'T',
+								 'maxlen'   => 32,
+								 'sort'     => true
+);
+
 $opts['fdd']['last_location_id'] = array(
 										 'name'     => 'Last location ID',
 										 'select'   => 'T',
 										 'maxlen'   => 11,
+										 'options'  => 'AVCPDR',
 										 'sort'     => true
 );
 $opts['fdd']['latitude'] = array(
-								 'name'     => 'Latitude',
+								 'name'     => 'Last Latitude',
 								 'select'   => 'T',
 								 'maxlen'   => 12,
+								 'options'  => 'AVCPDR',
 								 'sort'     => true
 );
 $opts['fdd']['longitude'] = array(
-								  'name'     => 'Longitude',
+								  'name'     => 'Last Longitude',
 								  'select'   => 'T',
 								  'maxlen'   => 12,
+								  'options'  => 'AVCPDR',
 								  'sort'     => true
 );
 $opts['fdd']['site'] = array(
-							 'name'     => 'Site',
+							 'name'     => 'Game Prefix',
 							 'select'   => 'T',
 							 'maxlen'   => 20,
 							 'sort'     => true
