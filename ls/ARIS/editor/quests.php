@@ -151,18 +151,24 @@
 											 'name'     => 'Require event ID',
 											 'select'   => 'T',
 											 'maxlen'   => 11,
+											 'default'  => null,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											 'sort'     => true
 	);
 	$opts['fdd']['add_event_id'] = array(
 										 'name'     => 'Add event ID',
 										 'select'   => 'T',
 										 'maxlen'   => 10,
+										 'default'  => null,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										 'sort'     => true
 	);
 	$opts['fdd']['complete_if_event_id'] = array(
 												 'name'     => 'Complete if event ID',
 												 'select'   => 'T',
 												 'maxlen'   => 10,
+												 'default'  => null,
+												 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 												 'sort'     => true
 	);
 	

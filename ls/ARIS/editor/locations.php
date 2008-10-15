@@ -227,6 +227,8 @@
 								  'name'     => 'Media',
 								  'select'   => 'T',
 								  'maxlen'   => 30,
+								  'default'  => null,
+								  'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 								  'sort'     => true
 	);
 	$opts['fdd']['latitude'] = array(
@@ -267,6 +269,8 @@
 										 'select'   => 'T',
 										 'maxlen'   => 10,
 										 'sort'     => true,
+										 'default'  => null,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										 'options'	=> 'AVCPD'
 										 );
 	$opts['fdd']['require_event_id'] = array(
@@ -274,6 +278,8 @@
 											 'select'   => 'T',
 											 'maxlen'   => 10,
 											 'sort'     => true,
+											 'default'  => null,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											 'options'	=> 'AVCPD'									
 											 );
 	$opts['fdd']['remove_if_event_id'] = array(
@@ -281,6 +287,8 @@
 											   'select'   => 'T',
 											   'maxlen'   => 10,
 											   'sort'     => true,
+											   'default'  => null,
+											   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											   'options'	=> 'AVCPD'
 											   );
 	$opts['fdd']['error'] = array(

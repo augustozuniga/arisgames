@@ -151,6 +151,8 @@
 											'maxlen'   => 11,
 											'sort'     => true,
 											'tab'		=> 'Requirements',
+											'default'  => null,
+											'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											'options'	=> 'AVCPD'
 											
 											);
@@ -160,6 +162,8 @@
 															   'select'   => 'T',
 															   'maxlen'   => 11,
 															   'sort'     => true,
+															   'default'  => null,
+															   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 															   'options'	=> 'AVCPD'													   
 															   );
 	
@@ -168,6 +172,8 @@
 											 'select'   => 'T',
 											 'maxlen'   => 10,
 											 'sort'     => true	,
+											 'default'  => null,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											 'options'	=> 'AVCPD'									 
 											 );
 	
@@ -176,6 +182,8 @@
 												'select'   => 'T',
 												'maxlen'   => 10,
 												'sort'     => true,
+												'default'  => null,
+												'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 												'options'	=> 'AVCPD'
 												);
 	
@@ -186,6 +194,8 @@
 									  'select'   => 'T',
 									  'maxlen'   => 100,
 									  'sort'     => true,
+									  'default'  => null,
+									  'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 									  'tab'		=> 'Player Choices',
 									  'options'	=> 'AVCPD'
 									  
@@ -196,6 +206,8 @@
 										 'select'   => 'T',
 										 'maxlen'   => 11,
 										 'sort'     => true,
+										 'default'  => null,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										 'options'	=> 'AVCPD'
 										 );
 	
@@ -204,6 +216,8 @@
 									  'select'   => 'T',
 									  'maxlen'   => 100,
 									  'sort'     => true,
+									  'default'  => null,
+									  'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 									  'options'	=> 'AVCPD'
 									  );
 	
@@ -212,6 +226,8 @@
 										 'select'   => 'T',
 										 'maxlen'   => 11,
 										 'sort'     => true,
+										 'default'  => null,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										 'options'	=> 'AVCPD'
 										 );
 	
@@ -220,6 +236,8 @@
 									  'select'   => 'T',
 									  'maxlen'   => 100,
 									  'sort'     => true,
+									  'default'  => null,
+									  'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 									  'options'	=> 'AVCPD'
 									  );
 	
@@ -228,6 +246,8 @@
 										 'select'   => 'T',
 										 'maxlen'   => 11,
 										 'sort'     => true,
+										 'default'  => null,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										 'options'	=> 'AVCPD'
 										 );
 	
@@ -243,7 +263,10 @@
 										'maxlen'   => 11,
 										'sort'     => true,
 										'tab'		=> 'Modily the Player',
+										'default'  => null,
+										'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										'options'	=> 'AVCPD'
+										
 										);
 	
 	$opts['fdd']['remove_item_id'] = array(
@@ -251,6 +274,8 @@
 										   'select'   => 'T',
 										   'maxlen'   => 11,
 										   'sort'     => true,
+										   'default'  => null,
+										   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										   'options'	=> 'AVCPD'
 										   );
 	
@@ -260,6 +285,8 @@
 										 'select'   => 'T',
 										 'maxlen'   => 11,
 										 'sort'     => true,
+										 'default'  => null,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										 'options'	=> 'AVCPD'
 										 );
 	
@@ -271,6 +298,8 @@
 												  'maxlen'   => 50,
 												  'sort'     => true,
 												  'tab'		=> 'Question',
+												  'default'  => null,
+												  'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 												  'options'	=> 'AVCPD'
 												  
 												  );
@@ -280,6 +309,8 @@
 														   'select'   => 'T',
 														   'maxlen'   => 10,
 														   'sort'     => true,
+														   'default'  => null,
+														   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 														   'options'	=> 'AVCPD'												   
 														   );
 	

@@ -142,24 +142,32 @@
 											 'name'     => 'Require event ID',
 											 'select'   => 'T',
 											 'maxlen'   => 10,
+											 'default'  => null,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											 'sort'     => true
 	);
 	$opts['fdd']['require_item_id'] = array(
 											'name'     => 'Require item ID',
 											'select'   => 'T',
 											'maxlen'   => 10,
+											'default'  => null,
+											'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											'sort'     => true
 	);
 	$opts['fdd']['require_location_id'] = array(
 												'name'     => 'Require location ID',
 												'select'   => 'T',
 												'maxlen'   => 10,
+												'default'  => null,
+												'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 												'sort'     => true
 	);
 	$opts['fdd']['remove_if_event_id'] = array(
 											   'name'     => 'Remove if event ID',
 											   'select'   => 'T',
 											   'maxlen'   => 9,
+											   'default'  => null,
+											   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											   'sort'     => true
 	);
 	

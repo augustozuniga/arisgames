@@ -160,6 +160,8 @@
 											 'select'   => 'T',
 											 'options'  => 'AVCPD', // auto increment
 											 'maxlen'   => 9,
+											 'default'  => null,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											 'sort'     => true
 	);	
 	// Now important call to phpMyEdit
