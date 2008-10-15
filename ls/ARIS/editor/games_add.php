@@ -14,7 +14,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	$new_game_name = $_REQUEST['name'];	
 
 	//Check if a game with this prefix has already been created
-	$query = "SELECT * FROM games WHERE prefix = '$new_game_short'";
+	$query = "SELECT * FROM games WHERE prefix = '{$new_game_short}_'";
 	if( mysql_num_rows(mysql_query($query)) > 0) die ('That game name has already been taken');
 
 		
