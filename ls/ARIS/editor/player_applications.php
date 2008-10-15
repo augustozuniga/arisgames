@@ -1,26 +1,24 @@
 <?php
-
+	
 include_once('common.inc.php');
 
-print_header( 'Global Players');
+print_header( 'Players\' Applications');
 print_general_navigation();
-	
-echo "<div class = 'nav'>
-	<a href = 'player_events.php'>Player Events</a>
-	<a href = 'player_items.php'>Player Items</a>	
-	<a href = 'player_applications.php'>Player Applications</a>
+
+	echo "<div class = 'nav'>
+	<a href = 'players.php'>Players</a>
+	<a href = 'applications.php'>Applications</a>
 	</div>";	
-	
 
 /**********************
  PHP My Edit Config
  *********************/
 
 // Select the Table Name
-$opts['tb'] = 'players';
+$opts['tb'] = $_SESSION['current_game_prefix'] . 'player_applications';
 
 // Name of field which is the unique key
-$opts['key'] = 'player_id';
+$opts['key'] = 'id';
 
 // Type of key field (int/real/string/date etc.)
 $opts['key_type'] = 'int';
@@ -115,73 +113,33 @@ $opts['language'] = $_SERVER['HTTP_ACCEPT_LANGUAGE'] . '-UTF8';
 $opts['fdd']['player_id'] = array(
 								  'name'     => 'Player ID',
 								  'select'   => 'T',
-								  'options'  => 'AVCPDR', // auto increment
-								  'maxlen'   => 11,
+								  'maxlen'   => 10,
 								  'default'  => '0',
 								  'sort'     => true
-);
-$opts['fdd']['first_name'] = array(
-								   'name'     => 'First name',
-								   'select'   => 'T',
-								   'maxlen'   => 25,
-								   'sort'     => true
-);
-$opts['fdd']['last_name'] = array(
-								  'name'     => 'Last name',
-								  'select'   => 'T',
-								  'maxlen'   => 25,
-								  'sort'     => true
-);
-$opts['fdd']['photo'] = array(
-							  'name'     => 'Photo',
-							  'select'   => 'T',
-							  'maxlen'   => 25,
-							  'sort'     => true
-);
-$opts['fdd']['password'] = array(
-								 'name'     => 'Password',
-								 'select'   => 'T',
-								 'maxlen'   => 32,
-								 'sort'     => true
-);
-$opts['fdd']['user_name'] = array(
-								  'name'     => 'User name',
-								  'select'   => 'T',
-								  'maxlen'   => 30,
-								  'sort'     => true
-);
-$opts['fdd']['last_location_id'] = array(
-										 'name'     => 'Last location ID',
-										 'select'   => 'T',
-										 'maxlen'   => 11,
-										 'sort'     => true
-);
-$opts['fdd']['latitude'] = array(
-								 'name'     => 'Latitude',
-								 'select'   => 'T',
-								 'maxlen'   => 12,
-								 'sort'     => true
-);
-$opts['fdd']['longitude'] = array(
-								  'name'     => 'Longitude',
-								  'select'   => 'T',
-								  'maxlen'   => 12,
-								  'sort'     => true
-);
-$opts['fdd']['site'] = array(
-							 'name'     => 'Site',
-							 'select'   => 'T',
-							 'maxlen'   => 20,
-							 'sort'     => true
-);
-
+								  );
+$opts['fdd']['application_id'] = array(
+									   'name'     => 'Application ID',
+									   'select'   => 'T',
+									   'maxlen'   => 10,
+									   'default'  => '0',
+									   'sort'     => true
+									   );
+$opts['fdd']['id'] = array(
+						   'name'     => 'ID',
+						   'select'   => 'T',
+						   'options'  => 'AVCPDR', // auto increment
+						   'maxlen'   => 11,
+						   'default'  => '0',
+						   'sort'     => true
+						   );
 
 
 
 // Now important call to phpMyEdit
 require_once 'extensions/phpMyEdit-mce-cal.class.php';		
 //new phpMyEdit($opts);
-new phpMyEdit_mce_cal($opts);
+new phpMyEdit_mce_cal($opts);	
 
 print_footer();
 ?>
+

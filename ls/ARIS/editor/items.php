@@ -2,11 +2,11 @@
 	
 	include_once('common.inc.php');
 	
-	print_header( $_SESSION['current_game_name'] . ' NPCs');
+	print_header( $_SESSION['current_game_name'] . ' Items');
 	print_general_navigation();
-
+	
 	echo "<div class = 'nav'>
-	<a href = 'conversations.php'>Conversations</a>
+	<a href = 'player_items.php'>Player Items</a>
 	</div>";		
 	
 	/**********************
@@ -14,10 +14,10 @@
 	 *********************/
 	
 	// Select the Table Name
-	$opts['tb'] = $_SESSION['current_game_prefix'] . 'npcs';
+	$opts['tb'] = $_SESSION['current_game_prefix'] . 'items';
 	
 	// Name of field which is the unique key
-	$opts['key'] = 'npc_id';
+	$opts['key'] = 'item_id';
 	
 	// Type of key field (int/real/string/date etc.)
 	$opts['key_type'] = 'int';
@@ -109,59 +109,37 @@
 	 descriptions fields are also possible. Check documentation for this.
 	 */
 	
-	
-	$opts['fdd']['npc_id'] = array(
-								   'name'     => 'Npc ID',
-								   'select'   => 'T',
-								   'options'  => 'AVCPD', // auto increment
-								   'maxlen'   => 10,
-								   'default'  => '0',
-								   'sort'     => true
+	$opts['fdd']['item_id'] = array(
+									'name'     => 'Item ID',
+									'select'   => 'T',
+									'options'  => 'AVCPDR', // auto increment
+									'maxlen'   => 11,
+									'default'  => '0',
+									'sort'     => true
 	);
 	$opts['fdd']['name'] = array(
 								 'name'     => 'Name',
 								 'select'   => 'T',
-								 'maxlen'   => 30,
+								 'maxlen'   => 25,
 								 'sort'     => true
 	);
 	$opts['fdd']['description'] = array(
 										'name'     => 'Description',
 										'select'   => 'T',
-										'maxlen'   => 255,
+										'maxlen'   => 65535,
 										'textarea' => array(
 															'rows' => 5,
 															'cols' => 50),
 										'sort'     => true
 	);
-	$opts['fdd']['text'] = array(
-								 'name'     => 'Text this character will say upon greeting',
-								 'select'   => 'T',
-								 'options'  => 'AVCPD', 
-								 'maxlen'   => 255,
-								 'textarea' => array(
-													 'rows' => 5,
-													 'cols' => 50),
-								 'sort'     => true
-	);
-	$opts['fdd']['location_id'] = array(
-										'name'     => 'Location ID (Set to 0 for IM)',
-										'select'   => 'T',
-										'maxlen'   => 10,
-										'sort'     => true
-	);
 	$opts['fdd']['media'] = array(
 								  'name'     => 'Media',
 								  'select'   => 'T',
-								  'maxlen'   => 30,
+								  'maxlen'   => 50,
+								  'default'  => 'item_default.jpg',
 								  'sort'     => true
 	);
-	$opts['fdd']['require_event_id'] = array(
-											 'name'     => 'Require event ID',
-											 'select'   => 'T',
-											 'options'  => 'AVCPD', // auto increment
-											 'maxlen'   => 9,
-											 'sort'     => true
-	);	
+	
 	// Now important call to phpMyEdit
 	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
 	//new phpMyEdit($opts);

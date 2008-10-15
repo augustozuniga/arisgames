@@ -21,19 +21,41 @@
 	<a href = 'logout.php'>Logout</a>
 	</div>";
 	
-	echo "<h3>Tasks for this game</h3>";
-	echo "<table width = '100%'><tr><td>
-		<table class = 'gametasks'>
-			<tr><td><a href = 'locations.php'><img src = 'images/location_icon.png'/></a></td><td><a href = 'locations.php'>Locations</a></td></tr>
-			<tr><td><a href = 'nodes.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'nodes.php'>Nodes</a></td></tr>
-			<tr><td><a href = 'npcs.php'><img src = 'images/npc_icon.png'/></a></td><td><a href = 'npcs.php'>NPCs</a></td></tr>
-		</table></td>
-		<td><table>
+	echo "<h3>Basic Options</h3>";
+	echo "<table width = '75%'><tr><td>
 			<table class = 'gametasks'>
-			<tr><td><a href = 'players.php'><img src = 'images/player_icon.png'/></a></td><td><a href = 'players.php'>Players</a></td></tr>		
-			<tr><td><a href = 'conversations.php'><img src = 'images/conversation_icon.png'/></a></td><td><a href = 'conversations.php'>NPC Conversations</a></td></tr>
-			<tr><td><a href = 'quests.php'><img src = 'images/quest_icon.png'/></a></td><td><a href = 'quests.php'>Quests</a></td></tr>
-		</td></tr></table></table>";
+				<tr><td><a href = 'locations.php'><img src = 'images/location_icon.png'/></a></td><td><a href = 'locations.php'>Locations</a></td></tr>
+				<tr><td><a href = 'nodes.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'nodes.php'>Nodes</a></td></tr>
+			</table>
+		</td><td>
+			<table class = 'gametasks'>
+				<tr><td><a href = 'players.php'><img src = 'images/player_icon.png'/></a></td><td><a href = 'players.php'>Players</a></td></tr>		
+				<tr><td><a href = 'nodes.php'><img src = 'images/item_icon.png'/></a></td><td><a href = 'items.php'>Items</a></td></tr>
+			</table>
+		</td></tr></table>";
+	
+	echo "<h3>Intermediate Options</h3>";
+	echo "<table width = '107%'><tr><td>
+				<table class = 'gametasks'>
+					<tr><td><a href = 'npcs.php'><img src = 'images/npc_icon.png'/></a></td><td><a href = 'npcs.php'>NPCs</a></td></tr>
+					<tr><td><a href = 'npcs.php'><img src = 'images/event_icon.png'/></a></td><td><a href = 'events.php'>Events</a></td></tr>
+				</table>
+		</td><td>
+				<table class = 'gametasks'>
+					<tr><td><a href = 'conversations.php'><img src = 'images/conversation_icon.png'/></a></td><td><a href = 'conversations.php'>NPC Conversations</a></td></tr>
+					<tr><td><a href = 'quests.php'><img src = 'images/quest_icon.png'/></a></td><td><a href = 'quests.php'>Quests</a></td></tr>
+				</table>
+		</td></tr></table>";
+
+	echo "<h3>Advanced Options</h3>";
+	echo "<table width = '75%'><tr><td>
+				<table class = 'gametasks'>
+					<tr><td><a href = 'applications.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'locations.php'>Applications</a></td></tr>
+				</table>
+			</td><td>
+				<table class = 'gametasks'>
+				</table>
+		</td></tr></table>";
 	
 	print_footer();
 	

@@ -28,9 +28,9 @@
 		<a href = 'locations.php'>Locations</a>
 		<a href = 'nodes.php'>Nodes</a>
 		<a href = 'npcs.php'>NPCs</a>
-		<a href = 'players.php'>Players</a>
-		<a href = 'conversations.php'>NPC Conversations</a>
+		<a href = 'items.php'>Items</a>
 		<a href = 'quests.php'>Quests</a>
+		<a href = 'players.php'>Players</a>
 		<a href = 'logout.php'>Logout</a>
 		</div>";	
 	}

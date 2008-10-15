@@ -243,6 +243,23 @@
 											 'sort'     => true,
 											 'options'	=> 'AVCPD'		
 									  );
+	$opts['fdd']['type'] = array(
+								 'name'     => 'What is at this location?',
+								 'select'   => 'T',
+								 'maxlen'   => 5,
+								 'values'   => array(
+													 "Node",
+													 "Event",
+													 "Item",
+													 "Npc"),
+								 'sort'     => true
+	);
+	$opts['fdd']['type_id'] = array(
+									'name'     => 'What is that thing\'s ID?',
+									'select'   => 'T',
+									'maxlen'   => 11,
+									'sort'     => true
+	);
 	$opts['fdd']['add_event_id'] = array(
 										 'name'     => 'Add event ID',
 										 'select'   => 'T',
@@ -268,6 +285,7 @@
 	
 	
 	// Now important call to phpMyEdit
+	echo '<p>NOTICE: You must refresh the page for a new location to appear on the map</p>';
 	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
 	//new phpMyEdit($opts);
 	new phpMyEdit_mce_cal($opts);

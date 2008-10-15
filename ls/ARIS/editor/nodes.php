@@ -4,7 +4,10 @@
 	
 	print_header( $_SESSION['current_game_name'] . ' Nodes');
 	print_general_navigation();
-	
+
+	echo "<div class = 'nav'>
+	<a href = 'conversations.php'>Conversations</a>
+	</div>";	
 	
 	/**********************
 	 PHP My Edit Config

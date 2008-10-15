@@ -35,6 +35,31 @@ include_once('common.inc.php');
 	mysql_query($query);
 	if (mysql_error() == "Duplicate column name 'type'") echo 'Not Needed';
 	else echo mysql_error();	
+	
+	echo "<h3>Dropping dual primary key from player_applications</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}player_applications
+				DROP PRIMARY KEY,
+				ADD COLUMN id INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+	mysql_query($query);
+	if (mysql_error() == "Duplicate column name 'id'") echo 'Not Needed';
+	else echo mysql_error();
+	
+	echo "<h3>Dropping dual primary key from player_items</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}player_items
+	DROP PRIMARY KEY,
+	ADD COLUMN id INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+	mysql_query($query);
+	if (mysql_error() == "Duplicate column name 'id'") echo 'Not Needed';
+	else echo mysql_error();
+	
+	echo "<h3>Dropping dual primary key from player_events</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}player_events
+	DROP PRIMARY KEY,
+	ADD COLUMN id INT NOT NULL AUTO_INCREMENT PRIMARY KEY";
+	mysql_query($query);
+	if (mysql_error() == "Duplicate column name 'id'") echo 'Not Needed';
+	else echo mysql_error();
+	
 
 	
 
