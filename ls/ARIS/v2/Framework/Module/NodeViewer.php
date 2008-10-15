@@ -118,6 +118,12 @@ SCRIPT;
 		NodeManager::loadNode($_REQUEST['node_id'], $_REQUEST['npc_id']);
 		
 		$this->setVariables();
+		$npc = $this->npc;
+		if (!empty($this->node['media'])) {
+			$npc['media'] = $this->findMedia($this->node['media'], 
+				$npc['media']);
+			$this->npc = $npc;
+		}
     }
     
     protected function setVariables() {

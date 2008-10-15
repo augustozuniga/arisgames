@@ -5,11 +5,13 @@ function dirname(path) {
 }
 
 // From http://www.netlobo.com/url_query_string_javascript.html
-function getUrlParam(name) {
+function getUrlParam(name, from) {
+	from = (from == null) ? window.location.href : from;
+
 	name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
 	var regexS = "[\\?&]"+name+"=([^&#]*)";
 	var regex = new RegExp( regexS );
-	var results = regex.exec(window.location.href);
+	var results = regex.exec(from);
 	if( results == null ) return "";
 	else return results[1];
 }
@@ -41,8 +43,6 @@ function update_map(lat, long) {
 }
 
 function process_data(text) {
-	if (window.console) window.console.log(text);
-
 	var result = eval('(' + text + ')');
 	if (result['function'] == '') {
 		clearNotify();
@@ -76,6 +76,15 @@ function createNotify(icon, url, label) {
 	// We're already here, so reload the page
 	if (document.getElementById('asyncList')) return;
 	
+	var npcId = document.getElementById('npcId');
+	if (npcId) {
+		var newId = getUrlParam('npc_id', url);
+		if (newId == npcId.innerHTML) {
+			if (window.console) window.console.log(url + "\n\t" + newId + " == " + npcId.innerHTML);
+			return;
+		}
+	}
+	
 	// Create an icon & link
 	var n = document.getElementById('notify');
 	if (n) {
@@ -100,6 +109,7 @@ function bounce() {
 	bounce.icon = bounce.icon || document.getElementById('notify');
 	bounce.icon.style.top = bounce.top + "px";
 	bounce.top = bounce.top + 2 * bounce.dir;
+	
 	if (bounce.top > 0 || bounce.top < -8) bounce.dir = -bounce.dir;
 }
 

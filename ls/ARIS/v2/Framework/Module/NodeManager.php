@@ -75,8 +75,12 @@ class NodeManager
 
 		// NOTE: calling methods should check for 'require_answer_string' 
 		// to handle input
-    	if (empty(self::$node['require_answer_string']) && $npcID >= 0) {
-    		self::loadNodeConversations($npcID);
+    	if (empty(self::$node['require_answer_string'])) {
+    		if ((!empty(self::$node['opt1_text']) && !empty(self::$node['opt1_node_id']))
+    			|| (!empty(self::$node['opt2_text']) && !empty(self::$node['opt2_node_id']))
+    			|| (!empty(self::$node['opt3_text']) && !empty(self::$node['opt3_node_id'])))
+    		{ self::loadOptions(); }
+    		if ($npcID >= 0) self::loadNodeConversations($npcID);
     	}
 	}
 	
@@ -201,6 +205,24 @@ class NodeManager
     	);
     	
     	self::$conversations = Framework::$db->getAll($sql);    
+    }
+    
+    static public function loadOptions() {
+    	$results = array();
+    	$r = self::loadOption($results, 'opt1_text', 'opt1_node_id');
+    	$r = self::loadOption($results, 'opt2_text', 'opt2_node_id');
+    	$r = self::loadOption($results, 'opt3_text', 'opt3_node_id');  	
+    	
+    	self::$npc = array('name' => self::$node['title'], 'npc_id' => -1,
+    		'media' => self::$node['media']);
+    	self::$conversations = $results;
+    }
+    
+    static public function loadOption(&$target, $text, $id) {
+	    if ((!empty(self::$node[$text]) && !empty(self::$node[$id]))) {
+    		array_push($target, array('text' => self::$node[$text],
+    			'node_id' => self::$node[$id], 'npc_id' => -1));
+    	}
     }
 }
 ?>
