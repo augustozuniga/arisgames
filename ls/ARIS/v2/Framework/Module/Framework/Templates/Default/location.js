@@ -73,6 +73,9 @@ function clearNotify() {
 }
 
 function createNotify(icon, url, label) {
+	// We're already here, so reload the page
+	if (document.getElementById('asyncList')) return;
+	
 	// Create an icon & link
 	var n = document.getElementById('notify');
 	if (n) {
