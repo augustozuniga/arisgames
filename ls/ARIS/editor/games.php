@@ -30,7 +30,7 @@
 		</td><td>
 			<table class = 'gametasks'>
 				<tr><td><a href = 'players.php'><img src = 'images/player_icon.png'/></a></td><td><a href = 'players.php'>Players</a></td></tr>		
-				<tr><td><a href = 'nodes.php'><img src = 'images/item_icon.png'/></a></td><td><a href = 'items.php'>Items</a></td></tr>
+				<tr><td><a href = 'items.php'><img src = 'images/item_icon.png'/></a></td><td><a href = 'items.php'>Items</a></td></tr>
 			</table>
 		</td></tr></table>";
 	
@@ -38,7 +38,7 @@
 	echo "<table width = '107%'><tr><td>
 				<table class = 'gametasks'>
 					<tr><td><a href = 'npcs.php'><img src = 'images/npc_icon.png'/></a></td><td><a href = 'npcs.php'>NPCs</a></td></tr>
-					<tr><td><a href = 'npcs.php'><img src = 'images/event_icon.png'/></a></td><td><a href = 'events.php'>Events</a></td></tr>
+					<tr><td><a href = 'events.php'><img src = 'images/event_icon.png'/></a></td><td><a href = 'events.php'>Events</a></td></tr>
 				</table>
 		</td><td>
 				<table class = 'gametasks'>
@@ -50,7 +50,7 @@
 	echo "<h3>Advanced Options</h3>";
 	echo "<table width = '75%'><tr><td>
 				<table class = 'gametasks'>
-					<tr><td><a href = 'applications.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'locations.php'>Applications</a></td></tr>
+					<tr><td><a href = 'applications.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'applications.php'>Applications</a></td></tr>
 				</table>
 			</td><td>
 				<table class = 'gametasks'>
