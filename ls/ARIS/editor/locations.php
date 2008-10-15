@@ -281,7 +281,13 @@
 											   'sort'     => true,
 											   'options'	=> 'AVCPD'
 											   );
-	
+	$opts['fdd']['error'] = array(
+											   'name'     => 'Margin or Error in GPS',
+											   'select'   => 'T',
+											   'maxlen'   => 10,
+											   'sort'     => true,
+											   'options'	=> 'AVCPD'
+											   );
 	
 	
 	// Now important call to phpMyEdit
