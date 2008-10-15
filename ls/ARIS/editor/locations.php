@@ -9,9 +9,11 @@
 	while ($row = mysql_fetch_array($result)){
 		   $map_points .= "
 			var point = new GLatLng({$row['latitude']}, {$row['longitude']});
+			bounds.extend(point);
 			var customIcon = new GIcon(baseIcon);
 			//customIcon.image = \"{$engine_www_root}/{$row['media']}\";
 			var marker_{$row['location_id']} = new GMarker(point,  { icon:customIcon, draggable:true });
+			
 			GEvent.addListener(marker_{$row['location_id']}, 'click', function(){ 
 				marker_{$row['location_id']}.openExtInfoWindow(map,
 									'custom_info_window_red',
@@ -39,7 +41,7 @@
 
 
 				
-	//Do it manually
+	//Begin HTML
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
@@ -50,7 +52,7 @@
 	
 	<link type="text/css" rel="Stylesheet" media="screen" href="locations_infowindow/infoWindow.css"/>
 	
-	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAzr2EBOXUKnm_jVnk0OJI7xSosDVG8KKPE1-m51RBrvYughuyMxQ-i1QfUnH94QxWIa6N4U6MouMmBA"
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $google_key . '"
 	type="text/javascript"></script>
 	<script src="js/extinfowindow.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -65,15 +67,20 @@
 			baseIcon.shadowSize = new GSize(37, 34);
 			baseIcon.iconAnchor = new GPoint(9, 34);
 			baseIcon.infoWindowAnchor = new GPoint(9, 2);
+			
+			//Bounds will be used to calculate the center and zoom
+			var bounds = new GLatLngBounds();
 	
-	
+			//Define the map and basic qualities
 			var map = new GMap2(document.getElementById("map_canvas"));
-			map.setCenter(new GLatLng(43.070784, -89.397321), 13); //TODO: We need it to automatically center
+			map.setCenter(new GLatLng(0, 0), 0); 
 			map.addControl(new GSmallMapControl());
 			map.addControl(new GMapTypeControl());' . 
-	
 			$map_points . '
 			
+			//Use the GLatLngBounds object that contains all the points to center and zoom
+			map.setZoom(map.getBoundsZoomLevel(bounds)-1);
+			map.setCenter(bounds.getCenter());
 		}
     }
 	

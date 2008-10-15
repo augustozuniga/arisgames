@@ -9,7 +9,6 @@ include_once('common.inc.php');
 	<a href = 'logout.php'>Logout</a>
 	</div>";	
 	
-	
 	echo "<h3>Dropping dual primary key from npc_conversations</h3>";
 	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}npc_conversations DROP PRIMARY KEY";
 	mysql_query($query);
@@ -22,14 +21,20 @@ include_once('common.inc.php');
 	mysql_query($query);
 	if (mysql_error() == "Duplicate column name 'conversation_id'") echo 'Not Needed';
 	else echo mysql_error();	
-
 	
-	
-	echo "<h3>Converting Lat/Long to doubles in Locations</h3>";
+	echo "<h3>Ensure Lat/Long are doubles in the Locations Table</h3>";
 	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}locations 
-			MODIFY COLUMN latitude DOUBLE NOT NULL DEFAULT 0,
-			MODIFY COLUMN longitude DOUBLE NOT NULL DEFAULT 0";
+			MODIFY COLUMN latitude DOUBLE ,
+			MODIFY COLUMN longitude DOUBLE ";
 	mysql_query($query);
+
+	echo "<h3>Add support for locations refering to items,npcs,nodes</h3>";
+	$query ="ALTER TABLE {$_SESSION['current_game_prefix']}locations 
+		ADD COLUMN type enum('Node','Event','Item','Npc') AFTER longitude,
+		ADD COLUMN type_id INT AFTER type;";
+	mysql_query($query);
+	if (mysql_error() == "Duplicate column name 'type'") echo 'Not Needed';
+	else echo mysql_error();	
 
 	
 
