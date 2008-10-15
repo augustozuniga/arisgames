@@ -5,6 +5,10 @@
 	print_header( 'Applications');
 	print_general_navigation();
 	
+	//Navigation
+	echo "<div class = 'nav'>
+	<a href = 'player_applications.php'>Player Applications</a>
+	</div>";
 	
 	
 	/**********************
@@ -110,7 +114,7 @@
 	$opts['fdd']['application_id'] = array(
 										   'name'     => 'Application ID',
 										   'select'   => 'T',
-										   'options'  => 'AVCPDR', // auto increment
+										   'options'  => 'LAVCPDR', // auto increment
 										   'maxlen'   => 10,
 										   'default'  => '0',
 										   'sort'     => true

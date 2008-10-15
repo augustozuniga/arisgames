@@ -113,7 +113,7 @@
 	$opts['fdd']['npc_id'] = array(
 								   'name'     => 'Npc ID',
 								   'select'   => 'T',
-								   'options'  => 'AVCPD', // auto increment
+								   'options'  => 'LAVCPD', // auto increment
 								   'maxlen'   => 10,
 								   'default'  => '0',
 								   'sort'     => true

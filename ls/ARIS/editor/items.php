@@ -112,7 +112,7 @@
 	$opts['fdd']['item_id'] = array(
 									'name'     => 'Item ID',
 									'select'   => 'T',
-									'options'  => 'AVCPDR', // auto increment
+									'options'  => 'LAVCPDR', // auto increment
 									'maxlen'   => 11,
 									'default'  => '0',
 									'sort'     => true
