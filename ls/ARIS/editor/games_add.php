@@ -113,6 +113,17 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	echo mysql_error();
 
 	$query = "
+	INSERT INTO {$new_game_short}_applications (application_id, name, directory) VALUES
+		(2, 'GPS', 'Map'),
+		(3, 'IM', 'NodeViewer'),
+		(4, 'To Do', 'Quest'),
+		(5, 'Files', 'Inventory'),
+		(6, 'Logout', 'logout')
+	)";
+	mysql_query($query);
+	echo mysql_error();
+
+	$query = "
 		CREATE TABLE {$new_game_short}_events (
 		event_id int(10) unsigned NOT NULL auto_increment,
 		description tinytext COMMENT 'This description is not used anywhere in the game. It is simply for reference.',
