@@ -110,6 +110,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		PRIMARY KEY  (application_id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "
 		CREATE TABLE {$new_game_short}_events (
@@ -118,6 +119,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		PRIMARY KEY  (event_id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_items (
 		item_id int(11) unsigned NOT NULL auto_increment,
@@ -127,6 +129,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		PRIMARY KEY  (item_id)
 		) ";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_locations (
 		location_id int(11) NOT NULL auto_increment,
@@ -144,6 +147,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		KEY require_event_id (require_event_id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_log (
 		   log_id int(11) unsigned NOT NULL auto_increment,
@@ -159,6 +163,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		   KEY complete_if_event_id (complete_if_event_id)
 			)";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_nodes (
 		 node_id int(11) unsigned NOT NULL auto_increment,
@@ -186,6 +191,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		 KEY require_event_id (require_event_id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_npc_conversations (
 		 conversation_id int(11) NOT NULL auto_increment,
@@ -199,6 +205,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		 PRIMARY KEY  (conversation_id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_npcs (
 		npc_id int(10) unsigned NOT NULL auto_increment,
@@ -211,14 +218,16 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		PRIMARY KEY  (npc_id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
-	$query = "CREATE TABLE {$new_game_short}_applications (
+	$query = "CREATE TABLE {$new_game_short}_player_applications (
 		id int(11) NOT NULL auto_increment,
 		player_id int(10) unsigned NOT NULL default '0',
 		application_id int(10) unsigned NOT NULL default '0',
 		PRIMARY KEY  (id)
 		) ";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_player_events (
 		id int(11) NOT NULL auto_increment,
@@ -228,6 +237,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		PRIMARY KEY  (id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
 	$query = "CREATE TABLE {$new_game_short}_player_items (
 		id int(11) NOT NULL auto_increment,
@@ -239,6 +249,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		KEY item_id (item_id)
 		)";
 	mysql_query($query);
+	echo mysql_error();
 
 
 	echo "<h3>This script has:</h3>
