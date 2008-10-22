@@ -25,10 +25,15 @@
 	$result = mysql_query($query);
 	
 	echo '<table class = "games">
-			<tr><th>Game Name</th><th>Database Prefix</th></tr>';
+			<tr><th>Game Name</th><th>Prefix</th></tr>';
 	
 	while ($row=mysql_fetch_array($result)) 
-		echo "<tr><td><a href = 'games.php?game_id={$row['game_id']}'>{$row['name']}</a></td><td>{$row['prefix']}</td></tr>";
+		echo "<tr>
+				<td><a href = 'games.php?game_id={$row['game_id']}'>{$row['name']}</a></td><td>{$row['prefix']}</td>
+				<td><a href = 'games_delete.php?game_id={$row['game_id']}'>Delete</a></td>
+				<td><a href = ''>Download</a></td>
+				<td><a href = ''>Copy</a></td>
+			</tr>";
 	
 	
 	echo '</table>';
