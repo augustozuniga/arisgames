@@ -12,6 +12,7 @@
 	$row=mysql_fetch_array($result);
 	print_header($row['name']);
 	$_SESSION['current_game_prefix'] = $row['prefix'];
+	$_SESSION['current_game_short_name'] = substr($row['prefix'],0,strlen($row['prefix']) -1);
 	$_SESSION['current_game_name'] = $row['name'];
 	
 	//Navigation
@@ -48,12 +49,13 @@
 		</td></tr></table>";
 
 	echo "<h3>Advanced Options</h3>";
-	echo "<table width = '75%'><tr><td>
+	echo "<table width = '85%'><tr><td>
 				<table class = 'gametasks'>
 					<tr><td><a href = 'applications.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'applications.php'>Applications</a></td></tr>
 				</table>
 			</td><td>
 				<table class = 'gametasks'>
+					<tr><td><a href = 'games_edit_xml.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'games_edit_xml.php'>Edit XML Config</a></td></tr>
 				</table>
 		</td></tr></table>";
 	
