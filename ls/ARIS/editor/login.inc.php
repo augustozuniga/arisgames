@@ -21,11 +21,13 @@
 		else {
 			echo '<h3>Username / Password not valid</h3>';
 			print_form();
+			print_footer();
 		}	
 	}
 	
 	else {	
 		print_form();
+		print_footer();
 	}
 	
 	

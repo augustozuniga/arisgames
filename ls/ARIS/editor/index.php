@@ -7,6 +7,10 @@
 	
 	print_header('Your ARIS Games');
 	
+	echo '<!--Editor revision: ';
+	include ('version');
+	echo '-->';
+	
 	//Navigation
 	echo "<div class = 'nav'>
 		<a href = 'games_add.php'>Add a Game</a>
@@ -28,4 +32,6 @@
 	
 	
 	echo '</table>';
+	
+	
 ?>

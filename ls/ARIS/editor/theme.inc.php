@@ -33,9 +33,8 @@
 	}
 	
 	function print_footer(){
-		echo '
-		</body>
-	</html>';
+		echo'</body>
+			</html>';
 	}
 	
 	

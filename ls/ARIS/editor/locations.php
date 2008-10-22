@@ -101,6 +101,10 @@
 	/**********************
 	 PHP My Edit Config
 	 *********************/
+	//Trigger a page refresh after a new location or a save to map is updated
+	$opts['triggers']['insert']['after']  = 'refresh.inc.php';
+	$opts['triggers']['update']['after']  = 'refresh.inc.php';
+	$opts['triggers']['delete']['after']  = 'refresh.inc.php';
 	
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'locations';
@@ -302,7 +306,6 @@
 	
 	
 	// Now important call to phpMyEdit
-	echo "<p>NOTICE: After adding a new location, you must <a href = '{$_SERVER['PHP_SELF']}'>update the map</a></p>";
 	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
 	//new phpMyEdit($opts);
 	new phpMyEdit_mce_cal($opts);
