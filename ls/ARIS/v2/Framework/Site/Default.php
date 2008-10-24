@@ -24,7 +24,7 @@
  * @package     Framework
  * @filesource
  */
-class Framework_Site_Nac0 extends Framework_Site_Common
+class Framework_Site_Default extends Framework_Site_Common
 {
     /**
      * $name
@@ -32,7 +32,7 @@ class Framework_Site_Nac0 extends Framework_Site_Common
      * @access      public
      * @var         string      $name       Name of site driver
      */
-    public $name = 'Nac0';
+    public $name = 'Default';
 
     /**
      * prepare
