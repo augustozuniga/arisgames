@@ -30,16 +30,6 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	"<?php
 
 	/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-	/**
-	* Framework_Site_Aris
-	*
-	* @author      Joe Stump <joe@joestump.net>
-	* @copyright   Joe Stump <joe@joestump.net>
-	* @package     Framework
-	* @filesource
-	*/
-
 	/**
 	* Framework_Site_Aris
 	*
@@ -47,7 +37,8 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	* modules. Each site needs it's own site driver. You can use this to house
 	* centrally located/needed information and such.
 	*
-	* @author      Kevin Harris <joe@joestump.net>
+	* @author      Kevin Harris <klharris2@wisc.edu>
+	* @author      David Gagnon <djgagnon@wisc.edu>
 	* @copyright   Joe Stump <joe@joestump.net>
 	* @package     Framework
 	* @filesource
@@ -80,15 +71,6 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 
 	fwrite($file_handle, $file_data);
 	fclose($file_handle);
-
-	/*
-	This returns a really messy string full of bad characters that freak things out
-	Let's get to this later
-
-	$xml_file = "{$engine_sites_path}/{$new_game_short}/config.xml";
-	$xml_contents = urlencode(file_get_contents($xml_file));
-	echo $xml_contents;
-	*/
 
 
 	//Create the game record in SQL

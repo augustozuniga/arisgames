@@ -98,4 +98,6 @@
 		mysql_query($query);
 		echo '<p>' . $query . '</p>';
 		echo mysql_error();
+		
+		echo '<h3>Done! Review the messages above for errors.</h3>';
 	}

@@ -14,6 +14,7 @@
 	//Navigation
 	echo "<div class = 'nav'>
 		<a href = 'games_add.php'>Add a Game</a>
+		<a href = ''>Upload a Game</a>
 		<a href = 'logout.php'>Logout</a>
 	</div>";
 	
