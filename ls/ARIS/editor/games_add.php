@@ -23,9 +23,94 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	echo exec("cp -R -v -n {$engine_sites_path}/{$default_site} {$engine_sites_path}/{$new_game_short}");
 	echo '</p>';
 
-	$phpFile = "{$engine_sites_path}/{$new_game_short}.php";
-	$file_handle = fopen($phpFile, 'w') or die("Can't open file");
+	
+	//Build XML file
+	$file_data = '
+	<?xml version="1.0" ?>
+	<!--
 
+	Each Framework_Site must have a config.xml. This is loaded up by Framework_Site
+	and can be accessed via Framework::$site->config. Feel free to add your own
+	configuration stuff here.
+
+	-->
+	<framework>
+	<db>
+	<type>MySQL</type>
+	<dsn>mysql:dbname=aris;host=localhost;username=arisuser;password=arispwd</dsn>
+	</db>
+
+	<!-- 
+	This MUST be readable/writeable by your web servers user (this is
+	normally nobody/nogroup or www-data/www-data).
+	-->
+	<logFile>/tmp/framework.log</logFile>
+
+	<!--
+	app				-	The name of the ARIS application
+	company			-	The "company" that created the application
+	techEmail		-	The email address of technical support/help 
+	tablePrefix		-	The tables to use in SQL
+	-->
+	<aris>
+	<app>ARIS</app>
+	<company>ARIS</company>
+	<techEmail>techsupport@gmail.com</techEmail>
+	<tablePrefix>' . $new_game_short . '_</tablePrefix>
+	<main>
+	<title>Player %s</title>
+	<body>Welcome to ARIS</body>
+	<defaultModule>Main</defaultModule>
+	</main>
+	<nodeViewer>
+	<title>Contact List</title>
+	</nodeViewer>
+	<map>
+	<!--ABQIAAAAaBINj42Tz4K8ZaoZWWSnWRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQkcVoUCrdum-UscUMoKinDrDjThQ is for localhost-->
+	<!--ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRQsvlSBtAWfm4N2P3iTGfWOp-UrmRRwG9t9N2_fCbAVKXjr59p56Fx_zA is for atsosxdev-->
+	<!--ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRRloMOfjiI7F4SM41AgXh_4cb6l9xTntP3tXw4zMbRaLS6TOMA3-jBOlw is for arisgames.org-->
+	<googleKey>ABQIAAAA_CE3Nypcp6bilTqyCg-N2hQsvlSBtAWfm4N2P3iTGfWOp-UrmRQgXVI4kOqbJnZJDYqrPvf7deonfw</googleKey>
+	<width>320</width>
+	<height>200</height>
+	<error>0.0005</error>
+	<playerColor>yellow</playerColor>
+	</map>
+	<quest>
+	<title>Quests</title>
+	</quest>
+	<inventory>
+	<title>Inventory</title>
+	<imageIcon>defaultImageIcon.png</imageIcon>
+	<videoIcon>defaultVideoIcon.png</videoIcon>
+	<audioIcon>defaultAudioIcon.png</audioIcon>
+	<pdfIcon>defaultPdfIcon.png</pdfIcon>
+	</inventory>
+	<async>
+	<notification>Signal lost.</notification>
+	</async>
+	</aris>
+
+	<!--
+	userTable       -   The users table to draw user data from 
+	userField       -   The primary key for userTable
+	defaultUser     -   Create a dummy record and put its primary key here
+	-->
+	<user>
+	<userTable>players</userTable>
+	<userField>player_id</userField> 
+	<defaultUser>0</defaultUser>
+	</user>
+
+	</framework>
+	';
+	
+	$xmlFile = "{$engine_sites_path}/{$new_game_short}/Config.xml";
+	$file_handle = fopen($xmlFile, 'w') or die("Can't open file");
+	fwrite($file_handle, $file_data);
+	fclose($file_handle);
+	
+	
+	//Build PHP file
 	$file_data = 
 	"<?php
 
@@ -68,9 +153,12 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	}
 
 	?>";
-
+	
+	$phpFile = "{$engine_sites_path}/{$new_game_short}.php";
+	$file_handle = fopen($phpFile, 'w') or die("Can't open file");
 	fwrite($file_handle, $file_data);
 	fclose($file_handle);
+
 
 
 	//Create the game record in SQL
@@ -78,12 +166,16 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	mysql_query($query);
 	$game_id = mysql_insert_id();
 
+
+
 	//Make the creator an editor of the game
 	$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('$game_id','{$_SESSION[user_id]}')";
 	mysql_query($query);
 
-	//Create the SQL tables
 
+
+
+	//Create the SQL tables
 	$query = "
 		CREATE TABLE {$new_game_short}_applications (
 		application_id int(10) unsigned NOT NULL auto_increment,
@@ -94,7 +186,6 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	mysql_query($query);
 	echo mysql_error();
 
-	
 	//Insert default data into the new game applicaiton table
 	$query = "INSERT INTO {$new_game_short}_applications (application_id, name, directory) VALUES (2, 'GPS', 'Map')";
 	mysql_query($query);
@@ -115,7 +206,6 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	$query = "INSERT INTO {$new_game_short}_applications (application_id, name, directory) VALUES 	(6, 'Logout', 'logout')";
 	mysql_query($query);
 	echo mysql_error();
-
 
 	$query = "
 		CREATE TABLE {$new_game_short}_events (
@@ -259,12 +349,15 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	echo mysql_error();
 
 
+
+
 	echo "<h3>This script has:</h3>
-		<li>Created a site php and directory</li>
-		<li>added the game to the games table</li>
-		<li>made you an editor</li>
+		<li>Created the files</li>
+		<li>Added the game to the games table</li>
+		<li>Made you an editor</li>
 		<li>Created appropiate tables for your new game</ll>
-		<h3>You still need to go edit: {$engine_sites_path}/{$new_game_short}/config.xml manually </h3>";
+		<li>Created a generic config.xml file</ll>
+		<h3>Done.</h3>";
 
 }
 else {
