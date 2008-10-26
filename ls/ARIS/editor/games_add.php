@@ -11,7 +11,7 @@ print_header('Create a new ARIS Game');
 if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		
 	$new_game_short = $_REQUEST['short'];
-	$new_game_name = $_REQUEST['name'];	
+	$new_game_name = addslashes($_REQUEST['name']);	
 
 	//Check if a game with this prefix has already been created
 	$query = "SELECT * FROM games WHERE prefix = '{$new_game_short}_'";
