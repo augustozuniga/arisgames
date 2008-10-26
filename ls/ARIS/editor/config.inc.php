@@ -10,10 +10,16 @@
 	//ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRQsvlSBtAWfm4N2P3iTGfWOp-UrmRRwG9t9N2_fCbAVKXjr59p56Fx_zA is for atsosxdev
 	//ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRRloMOfjiI7F4SM41AgXh_4cb6l9xTntP3tXw4zMbRaLS6TOMA3-jBOlw is for arisgames.org
 	
-	$engine_sites_path = '/Users/davidgagnon/Sites/Aris/src/Framework/Site';
-	// /Users/davidgagnon/Sites/Aris/src/Framework/Site for Dave's Laptop
-	// /Groups/web/aris/dev/Framework/Site for atsosxdev
+	$engine_www_path = 'http://localhost/~davidgagnon/aris/src';
 	
+	$engine_path = '/Users/davidgagnon/Sites/aris/src';
+	// /Users/davidgagnon/Sites/aris/src for Dave's Laptop
+	// /Groups/web/aris/dev for atsosxdev
+	
+	$engine_sites_path = $engine_path . '/Framework/Site';
+	$engine_sites_www_path = $engine_www_path . '/Framework/Site';
+	
+	$mysql_bin_path = '/usr/local/mysql/bin';
 	$default_site = 'Default';
 
 	

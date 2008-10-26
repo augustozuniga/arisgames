@@ -14,7 +14,7 @@
 	//Navigation
 	echo "<div class = 'nav'>
 		<a href = 'games_add.php'>Add a Game</a>
-		<a href = ''>Upload a Game</a>
+		<a href = 'games_restore.php'>Restore a Game</a>
 		<a href = 'logout.php'>Logout</a>
 	</div>";
 	
@@ -32,8 +32,8 @@
 		echo "<tr>
 				<td><a href = 'games.php?game_id={$row['game_id']}'>{$row['name']}</a></td><td>{$row['prefix']}</td>
 				<td><a href = 'games_delete.php?game_id={$row['game_id']}'>Delete</a></td>
-				<td><a href = ''>Download</a></td>
-				<td><a href = ''>Copy</a></td>
+				<td><a href = 'games_backup.php?prefix={$row['prefix']}'>Backup</a></td>
+				<td><a href = 'games.php?game_id={$row['game_id']}'>Edit</a></td>
 			</tr>";
 	
 	
