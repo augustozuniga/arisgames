@@ -25,19 +25,22 @@
 		WHERE game_editors.editor_id = {$_SESSION['user_id']}";
 	$result = mysql_query($query);
 	
-	echo '<table class = "games">
-			<tr><th>Game Name</th><th>Prefix</th></tr>';
-	
-	while ($row=mysql_fetch_array($result)) 
-		echo "<tr>
-				<td><a href = 'games.php?game_id={$row['game_id']}'>{$row['name']}</a></td><td>{$row['prefix']}</td>
-				<td><a href = 'games_delete.php?game_id={$row['game_id']}'>Delete</a></td>
-				<td><a href = 'games_backup.php?prefix={$row['prefix']}'>Backup</a></td>
-				<td><a href = 'games.php?game_id={$row['game_id']}'>Edit</a></td>
-			</tr>";
-	
-	
-	echo '</table>';
+	if (mysql_num_rows($result) == 0) echo 'No games are currently set up for your user. Please add or restore a game';
+	else {
+		echo '<table class = "games">
+		<tr><th>Game Name</th><th>Prefix</th></tr>';
+
+		while ($row=mysql_fetch_array($result)) 
+			echo "<tr>
+					<td><a href = 'games.php?game_id={$row['game_id']}'>{$row['name']}</a></td><td>{$row['prefix']}</td>
+					<td><a href = 'games_delete.php?game_id={$row['game_id']}'>Delete</a></td>
+					<td><a href = 'games_backup.php?prefix={$row['prefix']}'>Backup</a></td>
+					<td><a href = 'games.php?game_id={$row['game_id']}'>Edit</a></td>
+				</tr>";
+		
+		
+		echo '</table>';
+	}
 	
 	
 ?>
