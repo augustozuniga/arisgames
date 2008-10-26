@@ -18,13 +18,13 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	if( mysql_num_rows(mysql_query($query)) > 0) die ('That game name has already been taken');
 
 		
-		
-	echo '<p>Trying to create the game folder:';
-	echo exec("cp -R -v -n {$engine_sites_path}/{$default_site} {$engine_sites_path}/{$new_game_short}");
-	echo '</p>';
+	//Copy the default site to the new name	
+	echo '<p>Creating Game files</p>';
+	exec("cp -R -v -n {$engine_sites_path}/{$default_site} {$engine_sites_path}/{$new_game_short}");
 
 	
 	//Build XML file
+	echo '<p>Creating config.xml</p>';
 	$file_data = '<?xml version="1.0" ?>
 <!--
 
@@ -116,6 +116,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 	
 	
 	//Build PHP file
+	echo "<p>Creating {$new_game_short}.xml</p>";
 	$file_data = 
 	"<?php
 
@@ -165,21 +166,21 @@ defaultUser     -   Create a dummy record and put its primary key here
 	fclose($file_handle);
 
 
-
+	echo '<p>Creating a record for this game in the editor</p>';
 	//Create the game record in SQL
 	$query = "INSERT INTO games (prefix,name) VALUES ('{$new_game_short}_','{$new_game_name}')";
 	mysql_query($query);
 	$game_id = mysql_insert_id();
 
 
-
+	echo '<p>Granting your user editing rights for the new game</p>';
 	//Make the creator an editor of the game
 	$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('$game_id','{$_SESSION[user_id]}')";
 	mysql_query($query);
 
 
 
-
+	echo '<p>Constructing default data for the new game in SQL</p>';
 	//Create the SQL tables
 	$query = "
 		CREATE TABLE {$new_game_short}_applications (
@@ -353,16 +354,31 @@ defaultUser     -   Create a dummy record and put its primary key here
 	mysql_query($query);
 	echo mysql_error();
 
+	//Create a test player for this game and give them all applications
+	echo "<p>Creating a test player for this game and give them default applicaitons</p>";
+	$query = "INSERT INTO players (first_name,last_name,user_name,password,site) 
+				VALUES 	('{$new_game_short}', 'Tester', '{$new_game_short}', '{$new_game_short}','{$new_game_short}_')";
+	mysql_query($query);
+	echo mysql_error();
+	$test_player_id = mysql_insert_id();
+
+	$query = "SELECT * FROM {$new_game_short}_applications";
+	$result = mysql_query($query);
+	echo mysql_error();
+	while ($application = mysql_fetch_array($result)) {
+			$new_player_application_query = "INSERT INTO {$new_game_short}_player_applications (player_id,application_id)
+			VALUES ('{$test_player_id}','{$application['application_id']}')";
+			mysql_query($new_player_application_query);
+			echo mysql_error();
+	}
 
 
 
-	echo "<h3>This script has:</h3>
-		<li>Created the files</li>
-		<li>Added the game to the games table</li>
-		<li>Made you an editor</li>
-		<li>Created appropiate tables for your new game</ll>
-		<li>Created a generic config.xml file</ll>
-		<h3>Done.</h3>";
+
+	echo "<h3>Game Created!</h3>
+		<h3>Test player login info:</h3> 
+		<p>username: {$new_game_short} </p>
+		<p>password: {$new_game_short} </p>";
 
 }
 else {
