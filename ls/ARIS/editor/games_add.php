@@ -357,7 +357,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 	//Create a test player for this game and give them all applications
 	echo "<p>Creating a test player for this game and give them default applicaitons</p>";
 	$query = "INSERT INTO players (first_name,last_name,user_name,password,site) 
-				VALUES 	('{$new_game_short}', 'Tester', '{$new_game_short}', '{$new_game_short}','{$new_game_short}_')";
+				VALUES 	('{$new_game_short}', 'Tester', '{$new_game_short}', '{$new_game_short}','{$new_game_short}')";
 	mysql_query($query);
 	echo mysql_error();
 	$test_player_id = mysql_insert_id();
