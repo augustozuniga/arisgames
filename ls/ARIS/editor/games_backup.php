@@ -19,7 +19,7 @@
 	$sqlFile = 'database.sql';
 	$tables = "{$prefix}_applications {$prefix}_events {$prefix}_items {$prefix}_locations {$prefix}_log {$prefix}_nodes {$prefix}_npcs {$prefix}_npc_conversations {$prefix}_player_applications {$prefix}_player_events {$prefix}_player_items";
 	$createSQLCommand = "{$mysql_bin_path}/mysqldump -u {$opts['un']} --password={$opts['pw']} {$opts['db']} $tables > {$engine_sites_path}/Backups/{$tmpDir}/{$sqlFile}";
-	echo $createSQLCommand;
+	//echo $createSQLCommand;
 	exec($createSQLCommand);
 	echo "<p>SQL Data Dumped</p>";
 	
