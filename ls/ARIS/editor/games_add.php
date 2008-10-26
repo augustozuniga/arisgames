@@ -25,8 +25,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 
 	
 	//Build XML file
-	$file_data = '
-	<?xml version="1.0" ?>
+	$file_data = '<?xml version="1.0" ?>
 	<!--
 
 	Each Framework_Site must have a config.xml. This is loaded up by Framework_Site
