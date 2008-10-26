@@ -170,6 +170,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 	//Create the game record in SQL
 	$query = "INSERT INTO games (prefix,name) VALUES ('{$new_game_short}_','{$new_game_name}')";
 	mysql_query($query);
+	echo mysql_error();
 	$game_id = mysql_insert_id();
 
 
@@ -177,6 +178,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 	//Make the creator an editor of the game
 	$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('$game_id','{$_SESSION[user_id]}')";
 	mysql_query($query);
+	echo mysql_error();
 
 
 
