@@ -177,15 +177,6 @@
 											 'options'	=> 'AVCPD'									 
 											 );
 	
-	$opts['fdd']['require_location_id'] = array(
-												'name'     => 'Player Needs to Currently be at the Location',
-												'select'   => 'T',
-												'maxlen'   => 10,
-												'sort'     => true,
-												'default'  => null,
-												'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-												'options'	=> 'AVCPD'
-												);
 	
 	
 	//Choices

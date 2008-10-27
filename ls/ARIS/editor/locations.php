@@ -217,40 +217,7 @@
 								 'maxlen'   => 50,
 								 'sort'     => true
 	);
-	$opts['fdd']['description'] = array(
-										'name'     => 'Description',
-										'select'   => 'T',
-										'maxlen'   => 255,
-										'textarea' => array(
-															'rows' => 5,
-															'cols' => 50),
-										'sort'     => true,
-										'options'	=> 'AVCPD'
-	);
-	$opts['fdd']['media'] = array(
-								  'name'     => 'Media',
-								  'select'   => 'T',
-								  'maxlen'   => 30,
-								  'default'  => null,
-								  'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-								  'sort'     => true
-	);
-	$opts['fdd']['latitude'] = array(
-										 'name'     => 'Latitude',
-										 'select'   => 'T',
-										 'maxlen'   => 10,
-										 'sort'     => true,
-										'default'  => '43.0746561',
-										 'options'	=> 'AVCPD'
-										 );
-	$opts['fdd']['longitude'] = array(
-											 'name'     => 'Longitude',
-											 'select'   => 'T',
-											 'maxlen'   => 10,
-											 'sort'     => true,
-											'default'  => '-89.384422',
-											 'options'	=> 'AVCPD'		
-									  );
+
 	$opts['fdd']['type'] = array(
 								 'name'     => 'What is at this location?',
 								 'select'   => 'T',
@@ -263,22 +230,14 @@
 								 'sort'     => true
 	);
 	$opts['fdd']['type_id'] = array(
-									'name'     => 'What is that thing\'s ID?',
+									'name'     => 'ID for the Node/Item/Event/NPC',
 									'select'   => 'T',
 									'maxlen'   => 11,
 									'sort'     => true
 	);
-	$opts['fdd']['add_event_id'] = array(
-										 'name'     => 'Add event ID',
-										 'select'   => 'T',
-										 'maxlen'   => 10,
-										 'sort'     => true,
-										 'default'  => null,
-										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										 'options'	=> 'AVCPD'
-										 );
+
 	$opts['fdd']['require_event_id'] = array(
-											 'name'     => 'Require event ID',
+											 'name'     => 'Show if event ID (Leave blank to always show)',
 											 'select'   => 'T',
 											 'maxlen'   => 10,
 											 'sort'     => true,
@@ -287,7 +246,7 @@
 											 'options'	=> 'AVCPD'									
 											 );
 	$opts['fdd']['remove_if_event_id'] = array(
-											   'name'     => 'Remove if event ID',
+											   'name'     => 'Hide if event ID',
 											   'select'   => 'T',
 											   'maxlen'   => 10,
 											   'sort'     => true,
@@ -295,6 +254,23 @@
 											   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 											   'options'	=> 'AVCPD'
 											   );
+	$opts['fdd']['latitude'] = array(
+									 'name'     => 'Latitude',
+									 'select'   => 'T',
+									 'maxlen'   => 10,
+									 'sort'     => true,
+									 'default'  => '43.0746561',
+									 'options'	=> 'AVCPD'
+									 );
+	$opts['fdd']['longitude'] = array(
+									  'name'     => 'Longitude',
+									  'select'   => 'T',
+									  'maxlen'   => 10,
+									  'sort'     => true,
+									  'default'  => '-89.384422',
+									  'options'	=> 'AVCPD'		
+									  );	
+	
 	$opts['fdd']['error'] = array(
 											   'name'     => 'Margin or Error in GPS',
 											   'select'   => 'T',
