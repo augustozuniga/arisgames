@@ -14,8 +14,8 @@
 		
 		if ($row = mysql_fetch_array($result)) {
 			echo '<h3>Login Successfull</h3>';
-			$_SESSION[user_name] = $row['name'];
-			$_SESSION[user_id] = $row['editor_id'];
+			$_SESSION['user_name'] = $row['name'];
+			$_SESSION['user_id'] = $row['editor_id'];
 			echo '<script language="javascript">window.location = \'index.php\';</script>';
 		}
 		else {
