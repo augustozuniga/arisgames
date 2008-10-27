@@ -45,5 +45,12 @@ class Framework_Module_Developer extends Framework_Auth_User
 		$this->locations = $locations;
 	}
 
+	//Clear out all events for this player
+	protected function deleteAllEvents() {
+		$this->title = Framework::$site->config->aris->developer->title;
+		$player_id = $this->user->player_id;
+		$sql = $this->db->prefix("DELETE FROM _P_player_events WHERE player_id = '$player_id'");
+		$this->db->exec($sql);
+	}
 }
 ?>

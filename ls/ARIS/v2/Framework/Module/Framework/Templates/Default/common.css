@@ -242,14 +242,13 @@ table.questList ul > li:first-child {
 }
 
 /***** Developer *****/
-ul.locations {	
+ul.developer {	
 }
 
-ol.locations > li > a {
+ul.developer > li > a {
 	display: block;
-    text-decoration: none;
+	padding-bottom:0px;
     color: inherit;
-
 	background: url(iui/listArrow.png) no-repeat right center;
 }
 

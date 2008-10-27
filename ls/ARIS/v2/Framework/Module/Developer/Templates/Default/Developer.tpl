@@ -8,3 +8,5 @@
 {else}
 	<p>No Locations defined in this game.<p>
 {/if}
+
+<p>{link text='Delete All Player Events' module=Developer event="deleteAllEvents"}</p>
