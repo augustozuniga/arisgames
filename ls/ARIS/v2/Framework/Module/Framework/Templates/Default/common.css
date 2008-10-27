@@ -241,6 +241,22 @@ table.questList ul > li:first-child {
 	font-weight: bold;
 }
 
+/***** Developer *****/
+ul.locations {	
+}
+
+ol.locations > li > a {
+	display: block;
+    text-decoration: none;
+    color: inherit;
+
+	background: url(iui/listArrow.png) no-repeat right center;
+}
+
+
+
+
+
 /***** Map *****/
 .mapContainer {
 	margin: 0 auto 0 auto;
