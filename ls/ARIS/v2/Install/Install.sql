@@ -39,5 +39,4 @@ CREATE TABLE IF NOT EXISTS `players` (
 --
 
 INSERT INTO `players` (`player_id`, `first_name`, `last_name`, `photo`, `password`, `user_name`, `last_location_id`, `latitude`, `longitude`, `authorization`, `site`) VALUES
-(1, NULL, NULL, NULL, 'default', 'default', NULL, NULL, NULL, 0, 'default'),
 (0, '', '', NULL, '', 'Anonymous', NULL, NULL, NULL, 0, 'default');
