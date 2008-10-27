@@ -43,7 +43,6 @@ function update_map(lat, long) {
 }
 
 function process_data(text) {
-window.console.log(text);
 	var result = eval('(' + text + ')');
 	if (result['function'] == '') {
 		clearNotify();

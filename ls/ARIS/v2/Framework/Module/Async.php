@@ -18,6 +18,7 @@ define('TYPE_NODE', 'Node');
 define('TYPE_EVENT', 'Event');
 define('TYPE_ITEM', 'Item');
 define('TYPE_NPC', 'Npc');
+define('TYPE_JS', 'JS');
 
 /**
  * Framework_Module_Async
@@ -45,8 +46,8 @@ class Framework_Module_Async extends Framework_Auth_User
 		if (count($links) == 1) {
 			$this->icon = $links[0]['icon'];
 			$this->url = $links[0]['url'];
-			$this->isRawFunction = false;
-			$this->function = 'notify';
+			$this->isRawFunction = $links[0]['type'] == TYPE_JS;
+			$this->function = ($links[0]['type'] == TYPE_JS) ? 'raw' : 'notify';
 			$this->label = $links[0]['label'];
 		}
 		else if (count($links) > 1) {
@@ -142,6 +143,9 @@ class Framework_Module_Async extends Framework_Auth_User
     		case TYPE_NPC:
     			$this->processNpc($location, $links);
     			break;
+    		case TYPE_JS:
+    			$this->processJS($location, $links);
+    			break;
     		default:
     			throw new Framework_Exception("Unknown location type: " . $location['type']);
     	}
@@ -198,6 +202,10 @@ class Framework_Module_Async extends Framework_Auth_User
     	array_push($links, $this->makeLink(TYPE_NPC,
     		"NodeViewer&event=faceConversation&npc_id=" . $location['type_id'],
     		$npcName, $npcMedia));
+    }
+    
+    protected function processJS($location, &$links) {
+    	array_push($links, $this->makeLink(TYPE_JS, "", "", ""));
     }
 }
 
