@@ -93,6 +93,11 @@ tablePrefix		-	The tables to use in SQL
 	<async>
 		<notification>Signal lost.</notification>
 	</async>
+
+	<developer>
+		<title>Developer</title>
+	</developer>
+
 </aris>
 
 <!--
@@ -212,6 +217,11 @@ defaultUser     -   Create a dummy record and put its primary key here
 	echo mysql_error();
 
 	$query = "INSERT INTO {$new_game_short}_applications (application_id, name, directory) VALUES 	(6, 'Logout', 'logout')";
+	mysql_query($query);
+	echo mysql_error();
+
+
+	$query = "INSERT INTO {$new_game_short}_applications (application_id, name, directory) VALUES 	(7, 'Dev', 'Developer')";
 	mysql_query($query);
 	echo mysql_error();
 
