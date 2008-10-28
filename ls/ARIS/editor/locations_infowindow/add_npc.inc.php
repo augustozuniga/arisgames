@@ -9,7 +9,9 @@ include_once('../common.inc.php');
 	$new_id = mysql_insert_id();
 		
 	//modify the location to point to this node
-	$query = "UPDATE {$_SESSION['current_game_prefix']}locations SET type = 'npc', type_id = '$new_id'";
+	$query = "UPDATE {$_SESSION['current_game_prefix']}locations 
+					SET type = 'npc', type_id = '$new_id' 
+					WHERE location_id = '{$_REQUEST['location_id']}'";
 	mysql_query($query);
 
 	//open the node using its id
