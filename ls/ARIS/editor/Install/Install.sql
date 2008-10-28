@@ -41,8 +41,8 @@ INSERT INTO `editors` (`editor_id`, `name`, `password`) VALUES
 
 CREATE TABLE IF NOT EXISTS `games` (
   `game_id` int(11) NOT NULL auto_increment,
-  `prefix` varchar(10) default NULL,
-  `name` varchar(50) default NULL,
+  `prefix` varchar(50) default NULL,
+  `name` varchar(100) default NULL,
   PRIMARY KEY  (`game_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
 
