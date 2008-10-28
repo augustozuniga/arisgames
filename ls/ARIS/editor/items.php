@@ -16,6 +16,10 @@
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'items';
 	
+	//Triggers
+	$opts['triggers']['insert']['after'] = 'triggers/uploader.php';
+	$opts['triggers']['update']['before'] = 'triggers/uploader.php';	
+	
 	// Name of field which is the unique key
 	$opts['key'] = 'item_id';
 	
@@ -132,18 +136,29 @@
 															'cols' => 50),
 										'sort'     => true
 	);
+	
 	$opts['fdd']['media'] = array(
-								  'name'     => 'Media',
-								  'select'   => 'T',
-								  'maxlen'   => 50,
-								  'default'  => 'item_default.jpg',
-								  'sort'     => true
+								  //  'colattrs|LF'   => '',
+								  //  'escape'     => false,
+								  
+								  'input'      => 'F',
+								  'imagepath'  =>  $image_path,
+								  'URL'        => $image_www_path .'$key.$value',
+								  'URLtarget'  => '_blank',
+								  'maxlen'     => 128,
+								  'name'       => 'Image',
+								  'options'    => 'ACPVDFL',
+								  'required'   => false,
+								  'select'     => 'T',
+								  'size|ACP'   => 60,
+								  'sqlw'       => 'TRIM("$val_as")',
+								  //  'tab'        => 'File',
+								  'sort'       => true
 	);
 	
 	// Now important call to phpMyEdit
-	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
-	//new phpMyEdit($opts);
-	new phpMyEdit_mce_cal($opts);
+	require_once('phpMyEdit.class.php');
+	new phpMyEdit($opts);
 	
 	print_footer();
 	?>

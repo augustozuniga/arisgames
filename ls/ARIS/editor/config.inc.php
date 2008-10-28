@@ -22,6 +22,11 @@
 	$mysql_bin_path = '/usr/local/mysql/bin';
 	$default_site = 'Default';
 
+	//Image Paths
+	$image_path = $engine_sites_path . '/' . substr($_SESSION['current_game_prefix'],0,strlen($_SESSION['current_game_prefix'])-1) . '/Templates/Default/templates/';
+	//echo "IMAGE PATH: $image_path";
+	$image_www_path = $engine_sites_www_path  . '/' .  substr($_SESSION['current_game_prefix'],0,strlen($_SESSION['current_game_prefix'])-1) . '/Templates/Default/templates/';
+	//echo "IMAGE WWW PATH: $image_www_path";
 	
 	
 ?>

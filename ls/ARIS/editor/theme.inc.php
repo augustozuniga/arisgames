@@ -11,7 +11,11 @@
 		
 		echo '<title>' . $title . '</title>';
 		
-		echo '<style type="text/css"> @import url("theme.css"); </style> </head>
+		echo '
+		<style type="text/css"> @import url("theme.css"); </style> 
+		<script type="text/javascript" src="js/popwindow.js"></script>
+		<script type="text/javascript" src="js/fileupload.js"></script>
+		</head>
 		<body>';
 		
 		echo '<h1>' . $title . '</h1>';

@@ -16,6 +16,12 @@
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'nodes';
 	
+	
+	//Triggers
+	$opts['triggers']['insert']['after'] = 'triggers/uploader.php';
+	$opts['triggers']['update']['before'] = 'triggers/uploader.php';
+
+	
 	// Name of field which is the unique key
 	$opts['key'] = 'node_id';
 	
@@ -118,6 +124,7 @@
 									'sort'     => true
 									);
 	
+	
 	//Main Fields
 	
 	$opts['fdd']['text'] = array(
@@ -136,14 +143,26 @@
 								  'options'	=> 'AVCPD'
 								  );
 	
-	$opts['fdd']['media'] = array(
-								  'name'     => 'Image URL',
-								  'select'   => 'T',
-								  'maxlen'   => 25,
-								  'default'  => 'mc_chat_icon.png',
-								  'sort'     => true
-								  );
 	
+	$opts['fdd']['media'] = array(
+								 //  'colattrs|LF'   => '',
+								 //  'escape'     => false,
+
+								 'input'      => 'F',
+								  'imagepath'  =>  $image_path,
+								 'URL'        => $image_www_path .'$key.$value',
+								 'URLtarget'  => '_blank',
+								 'maxlen'     => 128,
+								 'name'       => 'Image',
+								 'options'    => 'ACPVDFL',
+								 'required'   => false,
+								 'select'     => 'T',
+								 'size|ACP'   => 60,
+								 'sqlw'       => 'TRIM("$val_as")',
+								 //  'tab'        => 'File',
+								 'sort'       => true
+	);
+
 	//Requirements
 	$opts['fdd']['require_item_id'] = array(
 											'name'     => 'Require item ID',
@@ -313,9 +332,9 @@
 	
 	
 	// Now important call to phpMyEdit
-	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
-	//new phpMyEdit($opts);
-	new phpMyEdit_mce_cal($opts);
+	require_once('phpMyEdit.class.php');
+	new phpMyEdit($opts);
+
 	
 	print_footer();
 ?>

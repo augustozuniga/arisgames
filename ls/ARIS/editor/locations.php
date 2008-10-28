@@ -102,9 +102,9 @@
 	 PHP My Edit Config
 	 *********************/
 	//Trigger a page refresh after a new location or a save to map is updated
-	$opts['triggers']['insert']['after']  = 'refresh.inc.php';
-	$opts['triggers']['update']['after']  = 'refresh.inc.php';
-	$opts['triggers']['delete']['after']  = 'refresh.inc.php';
+	$opts['triggers']['insert']['after']  = 'triggers/refresh.inc.php';
+	$opts['triggers']['update']['after']  = 'triggers/refresh.inc.php';
+	$opts['triggers']['delete']['after']  = 'triggers/refresh.inc.php';
 	
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'locations';
