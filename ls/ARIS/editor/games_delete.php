@@ -36,6 +36,12 @@
 		echo '<p>' . $query . '</p>';
 		echo mysql_error();
 		
+		//Delete the game record
+		$query = "DELETE FROM players WHERE first_name = '{$prefix}' and last_name = 'Tester' and user_name = '{$prefix}'";
+		mysql_query($query);
+		echo '<p>' . $query . '</p>';
+		echo mysql_error();
+		
 		//Delete the files
 		echo "<p>rm -rf {$path}/{$prefix}</p>";
 		echo exec("rm -rf {$path}/{$prefix}");
