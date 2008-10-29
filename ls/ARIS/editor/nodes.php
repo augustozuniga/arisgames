@@ -159,7 +159,6 @@
 								 'select'     => 'T',
 								 'size|ACP'   => 60,
 								 'sqlw'       => 'TRIM("$val_as")',
-								 //  'tab'        => 'File',
 								 'sort'       => true
 	);
 
