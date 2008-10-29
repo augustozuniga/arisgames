@@ -153,6 +153,8 @@
 										'name'     => 'Location ID (Set to 0 for IM)',
 										'select'   => 'T',
 										'maxlen'   => 10,
+										'default'  => 0,
+										'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
 										'sort'     => true
 	);
 	$opts['fdd']['media'] = array(
