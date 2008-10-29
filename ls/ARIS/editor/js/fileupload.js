@@ -6,7 +6,7 @@ function extract(what,where) {
     }
     else {
         answer = what.substring(what.lastIndexOf('\\')+1,what.length);
-        where.value = answer;
     }
+    where.value = answer;
 }
 //-->
