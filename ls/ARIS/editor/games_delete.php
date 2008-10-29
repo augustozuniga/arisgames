@@ -30,6 +30,12 @@
 
 	function delete($prefix,$path) {
 		echo '<h3>Start Delete...</h3>';
+		//Delete the editor_games record
+		$query = "DELETE FROM game_editors WHERE game_id IN (SELECT game_id FROM games WHERE prefix = '{$prefix}_')";
+		mysql_query($query);
+		echo '<p>' . $query . '</p>';
+		echo mysql_error();
+		
 		//Delete the game record
 		$query = "DELETE FROM games WHERE prefix = '{$prefix}_'";
 		mysql_query($query);
