@@ -11,11 +11,14 @@
 	//ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRRloMOfjiI7F4SM41AgXh_4cb6l9xTntP3tXw4zMbRaLS6TOMA3-jBOlw is for arisgames.org
 	
 	$engine_www_path = 'http://localhost/~davidgagnon/aris/src';
+	// http://localhost/~davidgagnon/aris/src for Dave's laptop
+	// http://atsosxdev.doit.wisc.edu/aris/games for dev
+	// http://arisgames.org/games for arisgames.org
 	
-	$engine_path = '/Users/kevinharris/Documents/Development/ARIS/v2/';
-	// '/Users/davidgagnon/Sites/aris/src';
+	$engine_path = '/Users/davidgagnon/Sites/aris/src';
 	// /Users/davidgagnon/Sites/aris/src for Dave's Laptop
-	// /Groups/web/aris/dev for atsosxdev
+	// /Groups/web/aris/games for atsosxdev
+	// /Groups/web/arisgames/games for arisgames.org
 	
 	$engine_sites_path = $engine_path . '/Framework/Site';
 	$engine_sites_www_path = $engine_www_path . '/Framework/Site';
