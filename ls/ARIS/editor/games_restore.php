@@ -89,10 +89,38 @@
 		mysql_query($query);
 		echo ("<p>You have been made an editor for {$prefix}</p>");
 		
+		
+		
+		//Delete all records from the stored player_applications table
+		echo "<p>Clearning original player_applications</p>";
+		$query = "DELETE FROM {$prefix}_player_applications";
+		mysql_query($query);
+		echo mysql_error();
+		
+		
+		
+		
+		//Create a test player for this game and give them all applications
+		echo "<p>Creating a test player for this game and give them default applicaitons</p>";
+		$query = "INSERT INTO players (first_name,last_name,user_name,password,site) 
+		VALUES 	('{$prefix}', 'Tester', '{$prefix}', '{$prefix}','{$prefix}')";
+		mysql_query($query);
+		echo mysql_error();
+		$test_player_id = mysql_insert_id();
+		
+		$query = "SELECT * FROM {$prefix}_applications";
+		$result = mysql_query($query);
+		echo mysql_error();
+		while ($application = mysql_fetch_array($result)) {
+			$new_player_application_query = "INSERT INTO {$prefix}_player_applications (player_id,application_id)
+			VALUES ('{$test_player_id}','{$application['application_id']}')";
+			mysql_query($new_player_application_query);
+			echo mysql_error();
+		}
+		
+		
+		
 		echo ("<h3>Upload Complete! {$prefix} restored.</h3>");
-		
-		
-		
 		
 	}
 	
