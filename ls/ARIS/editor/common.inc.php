@@ -1,4 +1,6 @@
 <?php
+	$HTTP_GET_VARS = $_GET;
+	$HTTP_POST_VARS = $_POST;
 
 	session_start();
 	include_once('config.inc.php');

@@ -12,7 +12,8 @@
 	
 	$engine_www_path = 'http://localhost/~davidgagnon/aris/src';
 	
-	$engine_path = '/Users/davidgagnon/Sites/aris/src';
+	$engine_path = '/Users/kevinharris/Documents/Development/ARIS/v2/';
+	// '/Users/davidgagnon/Sites/aris/src';
 	// /Users/davidgagnon/Sites/aris/src for Dave's Laptop
 	// /Groups/web/aris/dev for atsosxdev
 	

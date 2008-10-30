@@ -1559,11 +1559,11 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		if ($magic_quotes_gpc === null) {
 			$magic_quotes_gpc = get_magic_quotes_gpc();
 		}
-		global $HTTP_GET_VARS;
-		$var = @$HTTP_GET_VARS[$name];
+		
+		$var = @$_GET[$name];
 		if (! isset($var)) {
-			global $HTTP_POST_VARS;
-			$var = @$HTTP_POST_VARS[$name];
+			
+			$var = @$_POST[$name];
 		}
 		if (isset($var)) {
 			if ($magic_quotes_gpc) {
@@ -1607,20 +1607,20 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 
 	function print_get_vars ($miss = 'No GET variables found') // debug only /* {{{ */
 	{
-		global $HTTP_GET_VARS;
+		
 
 		// we parse form GET variables
-		if (is_array($HTTP_GET_VARS)) {
+		if (is_array($_GET)) {
 			echo "<p> Variables per GET ";
-			foreach ($HTTP_GET_VARS as $k => $v) {
+			foreach ($_GET as $k => $v) {
 				if (is_array($v)) {
 					foreach ($v as $akey => $aval) {
-						// $HTTP_GET_VARS[$k][$akey] = strip_tags($aval);
+						// $_GET[$k][$akey] = strip_tags($aval);
 						// $$k[$akey] = strip_tags($aval);
 						echo "$k\[$akey\]=$aval   ";
 					}
 				} else {
-					// $HTTP_GET_VARS[$k] = strip_tags($val);
+					// $_GET[$k] = strip_tags($val);
 					// $$k = strip_tags($val);
 					echo "$k=$v   ";
 				}
@@ -1635,19 +1635,19 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 
 	function print_post_vars($miss = 'No POST variables found')  // debug only /* {{{ */
 	{
-		global $HTTP_POST_VARS;
+		
 		// we parse form POST variables
-		if (is_array($HTTP_POST_VARS)) {
+		if (is_array($_POST)) {
 			echo "<p>Variables per POST ";
-			foreach ($HTTP_POST_VARS as $k => $v) {
+			foreach ($_POST as $k => $v) {
 				if (is_array($v)) {
 					foreach ($v as $akey => $aval) {
-						// $HTTP_POST_VARS[$k][$akey] = strip_tags($aval);
+						// $_POST[$k][$akey] = strip_tags($aval);
 						// $$k[$akey] = strip_tags($aval);
 						echo "$k\[$akey\]=$aval   ";
 					}
 				} else {
-					// $HTTP_POST_VARS[$k] = strip_tags($val);
+					// $_POST[$k] = strip_tags($val);
 					// $$k = strip_tags($val);
 					echo "$k=$v   ";
 				}
@@ -2572,6 +2572,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		@mysql_free_result($res);
 		// Creating array of changed keys ($changed)
 		$changed = array();
+
 		foreach ($newvals as $fd => $value) {
 			if ($value != $oldvals[$fd])
 				$changed[] = $fd;
@@ -2951,7 +2952,7 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
 		echo "<pre>get vars:\n";
 		echo print_r($this->get_opts);
 		echo "</pre>\n";
-		 */
+		// */
 
 		// Let's do explicit quoting - it's safer
 		set_magic_quotes_runtime(0);
@@ -3153,8 +3154,8 @@ function '.$this->js['prefix'].'filter_handler(theForm, theEvent)
                // Childs
                $this->parent = null;
                if(isset($opts['childs'])) {
-                       global $HTTP_POST_VARS, $HTTP_GET_VARS;
-                       $all_CGI = array_merge(Array(), @$HTTP_POST_VARS, @$HTTP_GET_VARS);
+                       global $_POST, $_GET;
+                       $all_CGI = array_merge(Array(), @$_POST, @$_GET);
                        $cgi_parent = Array();
                        foreach($all_CGI as $key => $val) {
                                if(preg_match('/^('.$this->cgi['prefix']['sys'].'.*)/', $key, $parts)) {
