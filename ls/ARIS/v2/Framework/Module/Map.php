@@ -13,14 +13,7 @@
  * @filesource
  */
 
-/**
- * Framework_Module_Main
- *
- * @author      Kevin Harris <klharris2@wisc.edu>
- * @author		David Gagnon <djgagnon@wisc.edu>
- * @package     Framework
- * @subpackage  Module
- */
+
 class Framework_Module_Map extends Framework_Auth_User
 {
     /**
@@ -35,9 +28,7 @@ class Framework_Module_Map extends Framework_Auth_User
     	$site = Framework::$site;
     	$user = Framework_User::singleton();
 
-    	$this->title = 'Current Location';
-
-		$playerAtLocation = false; // a switch to use if a player is at a defined locaiton
+		$this->title = 'Current Location';
 		
 		// Set up a marker for each location in the locations table
 		$sql = Framework::$db->prefix("SELECT * FROM _P_locations 
@@ -74,100 +65,15 @@ class Framework_Module_Map extends Framework_Auth_User
 	
 		// Set up a player icon and look for a matching location
 		if (!empty($user->latitude) && !empty($user->longitude)) {
-			// Add the player marker; TODO: put the color in the config file
 			$mapPath .= $user->latitude . ',' . $user->longtitude . ','
 				. $site->config->aris->map->playerColor;
 		}
 		
 		$this->mapPath = $mapPath;
-
-		$errorFactor = $site->config->aris->map->error;
-		$sql = Framework::$db->prefix(sprintf("SELECT * FROM _P_locations WHERE 
-			latitude <= %s AND latitude >= %s AND longitude <= %s AND longitude >= %s", 
-			(real)$user->latitude + (real)$errorFactor,
-			(real)$user->latitude - (real)$errorFactor, 
-			(real)$user->longitude + (real)$errorFactor, 
-			(real)$user->longitude - (real)$errorFactor));
-		$row = Framework::$db->getRow($sql);
-		
-		// Set the current player location in the database
-		if ($row) {
-			$playerAtLocation = true;
-			$this->player_location_id = $row['location_id'];
-			$this->playerLocationName = $row['name'];
-			$this->title = 'Near ' . $row['name'];
-			
-			$sql = Framework::$db->prefix("UPDATE players 
-				SET last_location_id = {$row['location_id']} 
-				WHERE player_id = {$user->player_id}");
-		}
-		else {
-			$this->player_location_id = -1;
-			$sql = Framework::$db->prefix("UPDATE players 
-				SET last_location_id = '' WHERE player_id = {$user->player_id}");
-		}
-		Framework::$db->exec($sql);
 		
 		$this->loadLocationAdmin($user);
     }
     
-    public function addLocation() {
-    	$site = Framework::$site;
-    
-    	$this->title = 'Add New Location';
-    	$this->mediaFiles = $this->getSiteMediaFiles();
-    
-    	$this->requireEvents = $this->getEvents();
-    	$this->removeEvents = $this->requireEvents;
-    }
-    
-    /**
-     * Displays the specified location information
-     */
-    public function displayLocation() {
-    	if (empty($_REQUEST['location_id'])) {
-    		$this->title = "Error";
-    		$this->errorMessage = "Location cannot be determined at this time.";
-    		return;
-    	}
-    	$locationID = $_REQUEST['location_id'];
-    
-		$user = Framework_User::singleton();
-		$this->setPlayerLocation($user->player_id, $locationID);
-
-		// Load the loaction data and display the name
-		$sql = Framework::$db->prefix("SELECT * FROM _P_locations WHERE location_id = $locationID");
-		
-		$location = Framework::$db->getRow($sql);
-		$media = empty($location['media']) ? 'defaultUser.png' : $location['media'];
-		$location['media'] = $this->findMedia($media, 'defaultUser.png');
-		$this->location = $location;
-		
-		$sql = Framework::$db->prefix("SELECT * FROM _P_npcs 
-			WHERE location_id = '$locationID' 
-			AND (require_event_id IS NULL or require_event_id IN 
-				(SELECT event_id FROM _P_player_events 
-					WHERE player_id = {$user->player_id}))");
-		$npcs = Framework::$db->getAll($sql);
-		foreach ($npcs as &$npc) {
-			$media = empty($npc['media']) ? 'defaultUser.png' : $npc['media'];
-			$npc['media'] = $this->findMedia($media, 'defaultUser.png');
-		}
-		unset($npc);
-		
-		$this->npcs = $npcs;
-    	$this->title = $this->location['name'];
-    	$this->event = 'faceConversation';
-    }
-    
-    /**
-     * Stores the player's location ID in the db.
-     */
-    protected function setPlayerLocation($playerID, $locationID) {
-    	$sql = Framework::$db->prefix("UPDATE players SET last_location_id = $locationID
-			WHERE player_id = $playerID");
-		Framework::$db->exec($sql);
-    }
     
     /**
      * Loads the administration apps for the default view.
@@ -181,5 +87,18 @@ class Framework_Module_Map extends Framework_Auth_User
     		$this->adminApplications = $applications;
     	}
     }
-}
+	
+	
+    public function addLocation() {
+    	$site = Framework::$site;
+		
+    	$this->title = 'Add New Location';
+    	$this->mediaFiles = $this->getSiteMediaFiles();
+		
+    	$this->requireEvents = $this->getEvents();
+    	$this->removeEvents = $this->requireEvents;
+    }
+	
+	
+}//class
 ?>

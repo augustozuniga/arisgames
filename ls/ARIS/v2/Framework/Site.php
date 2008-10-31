@@ -2,17 +2,6 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
-/**
- * Base class for Site framework
- *
- * @author      Joe Stump <joe@joestump.net>
- * @copyright   Joe Stump <joe@joestump.net>
- * @license     http://www.opensource.org/licenses/bsd-license.php
- * @package     Framework
- * @subpackage  Site
- * @filesource
- */
-
 //require_once 'PEAR.php';
 
 /**
@@ -23,6 +12,7 @@
  * various templates. It also resets the include_path so modules in the site's
  * directory will override standard modules.
  *
+ * @author      David Gagnon <djgagnon@wisc.edu>
  * @author      Joe Stump <joe@joestump.net>
  * @package     Framework
  * @subpackage  Site
