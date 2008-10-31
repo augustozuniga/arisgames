@@ -344,10 +344,12 @@ abstract class Framework_Module extends Framework_Object_Web
      * @return void
      */
     protected function addEvent($userID, $eventID) {
-	   	$sql = Framework::$db->prefix("INSERT INTO _P_player_events 
+	   	if (!checkForEvent($userID, $eventID)) {
+			$sql = Framework::$db->prefix("INSERT INTO _P_player_events 
 									  (player_id, event_id) VALUES ('$userID','$eventID')
 									  ON duplicate KEY UPDATE event_id = '$eventID'");
-   		Framework::$db->exec($sql);
+			Framework::$db->exec($sql);
+		}
     }
 	
 	
