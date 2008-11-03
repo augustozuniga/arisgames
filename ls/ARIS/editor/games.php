@@ -27,8 +27,9 @@
 			<table class = 'gametasks'>
 				<tr><td><a href = 'locations.php'><img src = 'images/location_icon.png'/></a></td><td><a href = 'locations.php'>Locations</a></td></tr>
 				<tr><td><a href = 'nodes.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'nodes.php'>Nodes</a></td></tr>
+				<tr><td><a href = '../games' target='_blank'><img src = 'images/node_icon.png'/></a></td><td><a href = '../games' target='_blank'>Play</a></td></tr>
 			</table>
-		</td><td>
+		</td><td style='vertical-align: top;'>
 			<table class = 'gametasks'>
 				<tr><td><a href = 'players.php'><img src = 'images/player_icon.png'/></a></td><td><a href = 'players.php'>Players</a></td></tr>		
 				<tr><td><a href = 'items.php'><img src = 'images/item_icon.png'/></a></td><td><a href = 'items.php'>Items</a></td></tr>
