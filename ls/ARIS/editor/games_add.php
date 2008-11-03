@@ -71,7 +71,7 @@ tablePrefix		-	The tables to use in SQL
 		<!--ABQIAAAAaBINj42Tz4K8ZaoZWWSnWRT2yXp_ZAY8_ufC3CFXhHIE1NvwkxQkcVoUCrdum-UscUMoKinDrDjThQ is for localhost-->
 		<!--ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRQsvlSBtAWfm4N2P3iTGfWOp-UrmRRwG9t9N2_fCbAVKXjr59p56Fx_zA is for atsosxdev-->
 		<!--ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRRloMOfjiI7F4SM41AgXh_4cb6l9xTntP3tXw4zMbRaLS6TOMA3-jBOlw is for arisgames.org-->
-		<googleKey>ABQIAAAA_CE3Nypcp6bilTqyCg-N2hQsvlSBtAWfm4N2P3iTGfWOp-UrmRQgXVI4kOqbJnZJDYqrPvf7deonfw</googleKey>
+		<googleKey>' . $google_key . '</googleKey>
 		<width>320</width>
 		<height>200</height>
 		<error>0.0005</error>
