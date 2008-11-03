@@ -176,7 +176,7 @@
 											);
 	
 	$opts['fdd']['required_condition_not_met_node_id'] = array(
-															   'name'     => 'One of the conditions was not met, goto node ID',
+															   'name'     => 'Condition not met node ID',
 															   'select'   => 'T',
 															   'maxlen'   => 11,
 															   'sort'     => true,
