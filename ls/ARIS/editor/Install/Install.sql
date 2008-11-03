@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `editors` (
   `editor_id` int(11) NOT NULL auto_increment,
   `name` varchar(25) default NULL,
   `password` varchar(32) default NULL,
+  `super_admin` enum('0','1') NOT NULL default '0',
   PRIMARY KEY  (`editor_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
@@ -31,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `editors` (
 --
 
 INSERT INTO `editors` (`editor_id`, `name`, `password`) VALUES
-(1, 'editor', '1234');
+(1, 'editor', 'aris');
 
 -- --------------------------------------------------------
 

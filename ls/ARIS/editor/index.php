@@ -19,10 +19,15 @@
 	</div>";
 	
 	
-	
 	//Display a list of games this user can administrate
-	$query = "SELECT * FROM games JOIN game_editors ON (games.game_id = game_editors.game_id) 
+	$query = "SELECT * FROM editors WHERE editor_id = {$_SESSION['user_id']}";
+	$result = mysql_query($query);
+	$row = mysql_fetch_array($result);
+	
+	if (isset($row['super_admin']) and $row['super_admin']) $query = "SELECT * FROM games JOIN game_editors ON (games.game_id = game_editors.game_id)";
+	else 	$query = "SELECT * FROM games JOIN game_editors ON (games.game_id = game_editors.game_id) 
 		WHERE game_editors.editor_id = {$_SESSION['user_id']}";
+	
 	$result = mysql_query($query);
 	
 	if (mysql_num_rows($result) == 0) echo 'No games are currently set up for your user. Please add or restore a game';
