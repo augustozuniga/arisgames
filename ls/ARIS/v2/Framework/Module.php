@@ -340,11 +340,11 @@ abstract class Framework_Module extends Framework_Object_Web
 	 *
 	 * @param		string	$userID
      * @param		string	$eventID
-	 * @access protected
+	 * @access public
      * @return void
      */
-    protected function addEvent($userID, $eventID) {
-	   	if (!checkForEvent($userID, $eventID)) {
+    public function addEvent($userID, $eventID) {
+	   	if (!self::checkForEvent($userID, $eventID)) {
 			$sql = Framework::$db->prefix("INSERT INTO _P_player_events 
 									  (player_id, event_id) VALUES ('$userID','$eventID')
 									  ON duplicate KEY UPDATE event_id = '$eventID'");
@@ -360,10 +360,10 @@ abstract class Framework_Module extends Framework_Object_Web
 	 *
 	 * @param		string	$userID
      * @param		string	$eventID
-	 * @access protected
+	 * @access public
      * @return boolean
      */
-    protected function checkForEvent($userID, $eventID) {
+    public function checkForEvent($userID, $eventID) {
 		$sql = Framework::$db->prefix("SELECT * FROM _P_player_events 
 									  WHERE player_id = '$userID' 
 									  AND event_id = '$eventID'");
@@ -382,10 +382,10 @@ abstract class Framework_Module extends Framework_Object_Web
 	 *
 	 * @param		string	$userID
      * @param		string	$applicationID
-	 * @access protected
+	 * @access public
      * @return void
      */
-    protected function addPlayerApplication($userID, $applicationID) {
+    public function addPlayerApplication($userID, $applicationID) {
 		//The ON duplicaite KEY has a performace benefit
 	   	$sql = Framework::$db->prefix("INSERT INTO _P_player_applications 
 									  (player_id, application_id) VALUES ('$userID','$applicationID')
@@ -402,10 +402,10 @@ abstract class Framework_Module extends Framework_Object_Web
 	 *
 	 * @param		string	$userID
      * @param		string	$applicationID
-	 * @access protected
+	 * @access public
      * @return void
      */
-    protected function removePlayerApplication($userID, $applicationID) {
+    public function removePlayerApplication($userID, $applicationID) {
 		//The ON duplicaite KEY has a performace benefit
 	   	$sql = Framework::$db->prefix("DELETE FROM _P_player_applications 
 									  WHERE player_id = '$userID' and application_id = '$applicationID'");
@@ -424,7 +424,7 @@ abstract class Framework_Module extends Framework_Object_Web
      * @param		string	$default
      * @return		string
      */
-    protected function findMedia($filename, $default, $defaultPath = null) {
+    public function findMedia($filename, $default, $defaultPath = null) {
     	$basePath = !is_null($defaultPath) 
     		? $defaultPath : $this->frameworkTplPath . '/';
     	if (!empty($filename)) {

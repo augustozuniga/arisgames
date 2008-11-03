@@ -60,7 +60,7 @@ class NodeManager
 	    }
 
     	if (self::$node['add_item_id']) {
-    		self::addItem($userID, self::$node['add_item_id']);
+    		Framework_Module::addItem($userID, self::$node['add_item_id']);
     	}
 
     	if (self::$node['remove_item_id']) {
@@ -68,7 +68,7 @@ class NodeManager
     	}
 
     	if (self::$node['add_event_id']) {
-    		self::addEvent($userID, self::$node['add_event_id']);
+			Framework_Module::addEvent($userID, self::$node['add_event_id']);
     	}
 
        	// TODO: Check for a remove event_id
@@ -168,17 +168,7 @@ class NodeManager
 		}
 		else self::$messages[] =  "** removeItem: Item $itemID not defined **";
     }
-    
-    /** 
-     * Adds the specified event to the user.
-     */
-    static protected function addEvent($userID, $eventID) {
-	   	$sql = Framework::$db->prefix("INSERT INTO _P_player_events 
-	    		(player_id, event_id) VALUES ('$userID','$eventID')
-	    		ON duplicate KEY UPDATE event_id = '$eventID'");
-   		Framework::$db->exec($sql);
-    }
-    
+
     static public function loadNodeConversations($npcID) {
     	// Ensure that we have an id
     	// TODO: Change to an appropriate exception
