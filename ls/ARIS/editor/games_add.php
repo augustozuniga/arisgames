@@ -10,6 +10,15 @@ print_header('Create a new ARIS Game');
 	
 if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		
+	if (empty($_REQUEST['short'])) {
+		displayForm('Please enter a short name.', $_REQUEST['short'], $_REQUEST['name']);
+		die;
+	}
+	else if (empty($_REQUEST['name'])) {
+		displayForm('Please enter a full game name.', $_REQUEST['short'], $_REQUEST['name']);
+		die;
+	}
+		
 	$new_game_short = $_REQUEST['short'];
 	$new_game_name = addslashes($_REQUEST['name']);	
 
@@ -393,16 +402,18 @@ defaultUser     -   Create a dummy record and put its primary key here
 		<p>password: {$new_game_short} </p>";
 
 }
-else {
+else displayForm();
+
+function displayForm($msg = '', $short = '', $long = '') {
 	$form = "<form action = '{$_SERVER['PHP_SELF']}' method = 'get'>
 			<table>
-				<tr><td>Full Game Name</td><td><input type = 'text' name = 'name'/></td></tr>
-				<tr><td>Short version (No spaces allowed)</td><td><input type = 'text' name = 'short'/></td></tr>
+				<tr><td style='color: red;'>$msg</td><td></td></tr>
+				<tr><td>Full Game Name</td><td><input type = 'text' name = 'name' value='$long' /></td></tr>
+				<tr><td>Short version (No spaces allowed)</td><td><input type = 'text' name = 'short' value='$short'/></td></tr>
 				<tr><td>&nbsp;</td><td><input type = 'submit'/></td></tr>
 			</table>
 			</form>";
 	echo $form;
-
 }
 	
 ?>
