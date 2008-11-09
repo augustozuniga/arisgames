@@ -24,8 +24,8 @@
 	$result = mysql_query($query);
 	$row = mysql_fetch_array($result);
 	
-	if (isset($row['super_admin']) and $row['super_admin']) $query = "SELECT * FROM games JOIN game_editors ON (games.game_id = game_editors.game_id)";
-	else 	$query = "SELECT * FROM games JOIN game_editors ON (games.game_id = game_editors.game_id) 
+	if (isset($row['super_admin']) and $row['super_admin']) $query = "SELECT * FROM games JOIN game_editors WHERE games.game_id = game_editors.game_id GROUP BY games.game_id";
+	else $query = "SELECT * FROM games JOIN game_editors ON (games.game_id = game_editors.game_id) 
 		WHERE game_editors.editor_id = {$_SESSION['user_id']}";
 	
 	$result = mysql_query($query);
