@@ -51,12 +51,27 @@
 		//unzip the file
 		chdir("/tmp");
 		$unzipCommand = "tar xvf $file_name";
-		exec($unzipCommand);
+		exec($unzipCommand, $output, $return);
+		if ($return) die ("<h3>There was an error unzipping you file</h3>
+						   <p>Check you Config file for the tar command binary path. Check that the web user can read and write in /tmp. It could also be a corrupt file<p>");
+		else echo "<p>File Unzipped</p>";	
+		
 		
 		//Find the game prefix by finding the prefix.php file
-		chdir("/tmp/$unzipped_folder_name");
+		$temp_unzipped_folder = "/tmp/$unzipped_folder_name";
+		if (!is_dir($temp_unzipped_folder)) die ("<h3>There was an error accessing your unzipped files</h3>
+												 <p>Is the filename exactly the same as the one created by ARIS?<p>");
+		chdir($temp_unzipped_folder);
 		$glob = glob("*.php");
 		$prefix = substr($glob[0],0,strlen($glob[0])-4);
+
+		
+		//Check if a game with this prefix has already been created
+		$query = "SELECT * FROM games WHERE prefix = '{$prefix}_'";
+		if( mysql_num_rows(mysql_query($query)) > 0) die ("<h3>The game '{$prefix}' Already exists.</h3>
+														  <p>The existing game must be deleted or this package must be modified<p>");
+		
+		
 		
 		//If it wasn't found, this is not an ARIS file
 		if (strlen($prefix) == 0) die ("<p>Your file was not a valid ARIS game package: No [game].php file found</p>");
@@ -64,10 +79,17 @@
 		
 		//move the files
 		$moveCommand = "mv $prefix {$engine_sites_path}/";
-		exec($moveCommand);
+		exec($moveCommand, $output, $return);
+		if ($return) die ("<h3>There was an error moving files to the Sites directory</h3>
+						  <p>Check your config file paths and that the Framework/Site directoy is writrable by the web server<p>");
+		else echo "<p>Files Moved</p>";	
+		
 		$moveCommand = "mv {$prefix}.php {$engine_sites_path}/";
-		exec($moveCommand);
-		echo ('<p>File move attempted</p>');
+		exec($moveCommand, $output, $return);
+		if ($return) die ("<h3>There was an error moving a file to the Sites directory</h3>
+						  <p>Check your config file paths and that the Framework/Site directoy is writrable by the web server<p>");
+		else echo "<p>Game PHP File Moved</p>";			
+
 		
 		//check for, then run the sql
 		$SQLglob = glob("database.sql");

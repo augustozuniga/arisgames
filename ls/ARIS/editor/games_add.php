@@ -29,7 +29,14 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		
 	//Copy the default site to the new name	
 	echo '<p>Creating Game files</p>';
-	exec("cp -R -v -n {$engine_sites_path}/{$default_site} {$engine_sites_path}/{$new_game_short}");
+	$from = "{$engine_sites_path}/{$default_site}";
+	$to = "{$engine_sites_path}/{$new_game_short}";
+	exec("cp -R -v -n $from $to", $output, $return);
+	if ($return) die ("<h3>There was an error copying the default site into a new game directory</h3>
+					  <p>From: {$from}</p>
+					  <p>To: {$to}</p>
+					  <p>Check your config file paths and that the Site directory is writable by the web server user<p>");
+	else echo "<p>Compressed Files</p>";
 
 	
 	//Build XML file
@@ -399,6 +406,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 
 
 	echo "<h3>Game Created!</h3>
+		<h3>&nbsp;</h3>
 		<h3>Test player login info:</h3> 
 		<p>username: {$new_game_short} </p>
 		<p>password: {$new_game_short} </p>";

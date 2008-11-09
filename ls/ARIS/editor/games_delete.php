@@ -28,8 +28,23 @@
 	
 	
 
-	function delete($prefix,$path) {
+	function delete($prefix,$path) {		
+	
 		echo '<h3>Start Delete...</h3>';
+	
+		//Delete the files
+		echo exec("rm -rf {$path}/{$prefix}", $output, $return);
+		if ($return) echo ("<h3>There was an error deleting your files</h3>
+						  <p>Check the paths in your config file and ensure that the Sites directory is writable by the web server<p>");
+		else echo "<p>Deleted game directory</p>";		
+		
+
+		echo exec("rm {$path}/{$prefix}.php", $output, $return);
+		if ($return) echo ("<h3>There was an error deleting your files</h3>
+						  <p>Check the paths in your config file and ensure that the Sites directory is writable by the web server<p>");
+		else echo "<p>Deleted game php file</p>";		
+		
+		
 		//Delete the editor_games record
 		$query = "DELETE FROM game_editors WHERE game_id IN (SELECT game_id FROM games WHERE prefix = '{$prefix}_')";
 		mysql_query($query);
@@ -47,13 +62,6 @@
 		mysql_query($query);
 		echo '<p>' . $query . '</p>';
 		echo mysql_error();
-		
-		//Delete the files
-		echo "<p>rm -rf {$path}/{$prefix}</p>";
-		echo exec("rm -rf {$path}/{$prefix}");
-		
-		echo "<p>rm {$path}/{$prefix}.php</p>";
-		echo exec("rm {$path}/{$prefix}.php");
 		
 		//Delete each table with this prefix
 		$query = "DROP TABLE {$prefix}_applications";
