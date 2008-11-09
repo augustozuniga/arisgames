@@ -30,6 +30,11 @@
 	exec($copyCommand);
 	echo "<p>File Data Dumped</p>";
 	
+	//Create a version file
+	$versionCommand = "{$svn_bin_path}/svnversion {$engine_path} > {$engine_sites_path}/Backups/{$tmpDir}/version";
+	exec($versionCommand);
+	echo "<p>Version Recorded</p>";
+	
 	//Zip up the whole directory
 	$zipFile = "{$prefix}_backup_" . date('Y_m_d') . ".tar";
 	chdir("/{$engine_sites_path}/Backups");

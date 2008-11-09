@@ -24,6 +24,7 @@
 	$engine_sites_www_path = $engine_www_path . '/Framework/Site';
 	
 	$mysql_bin_path = '/usr/local/mysql/bin';
+	$svn_bin_path = '/usr/local/bin';
 	$default_site = 'Default';
 
 	//Image Paths
