@@ -72,5 +72,22 @@ include_once('common.inc.php');
 	MODIFY COLUMN latitude DOUBLE default '43.0746561' ,
 	MODIFY COLUMN longitude DOUBLE default '-89.384422'";
 	mysql_query($query);
+	echo mysql_error();
+	
+	echo "<h3>Unique game_editors</h3>";
+	$query = "ALTER TABLE  game_editors ADD UNIQUE `unique` (game_id, editor_id)";
+	mysql_query($query);
+	echo mysql_error();
+	
+	echo "<h3>Unique player_events</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}player_events ADD UNIQUE `unique` (player_id, event_id)";
+	mysql_query($query);
+	echo mysql_error();
+	
+	echo "<h3>Unique player_items</h3>";
+	$query = "ALTER TABLE  {$_SESSION['current_game_prefix']}player_items ADD UNIQUE `unique` (player_id,item_id)";
+	mysql_query($query);
+	echo mysql_error();
+	
 
 ?>

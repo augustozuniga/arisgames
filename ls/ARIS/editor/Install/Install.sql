@@ -60,7 +60,8 @@ CREATE TABLE IF NOT EXISTS `games` (
 
 CREATE TABLE IF NOT EXISTS `game_editors` (
   `game_id` int(11) default NULL,
-  `editor_id` int(11) default NULL
+  `editor_id` int(11) default NULL,
+  UNIQUE KEY `unique` (`game_id`,`editor_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

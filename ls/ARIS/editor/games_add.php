@@ -358,6 +358,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 		player_id int(10) unsigned NOT NULL default '0',
 		event_id int(10) unsigned NOT NULL default '0',
 		timestamp timestamp NOT NULL default CURRENT_TIMESTAMP,
+		UNIQUE KEY `unique` (`player_id`,`event_id`),
 		PRIMARY KEY  (id)
 		)";
 	mysql_query($query);
@@ -370,7 +371,8 @@ defaultUser     -   Create a dummy record and put its primary key here
 		timestamp timestamp NOT NULL default CURRENT_TIMESTAMP,
 		PRIMARY KEY  (id),
 		KEY player_id (player_id),
-		KEY item_id (item_id)
+		KEY item_id (item_id),
+		UNIQUE KEY `unique` (`player_id`,`item_id`)
 		)";
 	mysql_query($query);
 	echo mysql_error();
