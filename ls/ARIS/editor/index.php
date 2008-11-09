@@ -33,17 +33,33 @@
 	if (mysql_num_rows($result) == 0) echo 'No games are currently set up for your user. Please add or restore a game';
 	else {
 		echo '<table class = "games">
-		<tr><th>Game Name</th><th>Prefix</th></tr>';
+		<tr><th>Game Name</th><th>Prefix</th><th>Editors</th></tr>';
 
-		while ($row=mysql_fetch_array($result)) 
+		while ($row=mysql_fetch_array($result)) {
+			
+			$editors = '';
+			$first = TRUE;
+			$editor_query = "SELECT * FROM editors JOIN game_editors ON editors.editor_id = game_editors.editor_id 
+				WHERE game_editors.game_id = {$row['game_id']}";
+			$editor_result = mysql_query($editor_query);
+			while ($editor_row = mysql_fetch_array($editor_result)) {
+				if ($first) {
+					$editors.= $editor_row['name'];
+					$first = FALSE;
+				}
+				else $editors.= ', ' . $editor_row['name'];
+			}
+			 
 			echo "<tr>
-					<td><a href = 'games.php?game_id={$row['game_id']}'>{$row['name']}</a></td><td>{$row['prefix']}</td>
+					<td><a href = 'games.php?game_id={$row['game_id']}'>{$row['name']}</a></td>
+					<td>{$row['prefix']}</td>
+					<td>{$editors}</td>
 					<td><a href = 'games_delete.php?game_id={$row['game_id']}'>Delete</a></td>
 					<td><a href = 'games_backup.php?prefix={$row['prefix']}'>Backup</a></td>
 					<td><a href = 'games.php?game_id={$row['game_id']}'>Edit</a></td>
 				</tr>";
 		
-		
+		}
 		echo '</table>';
 	}
 	
