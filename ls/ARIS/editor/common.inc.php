@@ -1,7 +1,7 @@
 <?php
 	$HTTP_GET_VARS = $_GET;
 	$HTTP_POST_VARS = $_POST;
-
+	session_name('aris_editor');
 	session_start();
 	include_once('config.inc.php');
 	include_once('theme.inc.php');
