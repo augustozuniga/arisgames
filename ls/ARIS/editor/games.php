@@ -18,7 +18,7 @@
 	//Navigation
 	echo "<div class = 'nav'>
 	<a href = 'index.php'>Select a Different Game</a>
-	<a href = 'db_upgrades.php'>DB Upgrades</a>
+	<a href = 'http://arisdocumentation.pbwiki.com' target = '_blank'>Help</a>
 	<a href = 'logout.php'>Logout</a>
 	</div>";
 	
@@ -31,7 +31,6 @@
 			</table>
 		</td><td style='vertical-align: top;'>
 			<table class = 'gametasks'>
-				<tr><td><a href = 'players.php'><img src = 'images/player_icon.png'/></a></td><td><a href = 'players.php'>Players</a></td></tr>		
 				<tr><td><a href = 'items.php'><img src = 'images/item_icon.png'/></a></td><td><a href = 'items.php'>Items</a></td></tr>
 			</table>
 		</td></tr></table>";
@@ -53,9 +52,11 @@
 	echo "<table width = '85%'><tr><td>
 				<table class = 'gametasks'>
 					<tr><td><a href = 'applications.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'applications.php'>Applications</a></td></tr>
+					<tr><td><a href = 'db_upgrades.phpp'><img src = 'images/node_icon.png'/></a></td><td><a href = 'db_upgrades.php'>DB Upgrades</a></td></tr>
 				</table>
 			</td><td>
 				<table class = 'gametasks'>
+					<tr><td><a href = 'players.php'><img src = 'images/player_icon.png'/></a></td><td><a href = 'players.php'>Players</a></td></tr>		
 					<tr><td><a href = 'games_edit_xml.php'><img src = 'images/node_icon.png'/></a></td><td><a href = 'games_edit_xml.php'>Edit XML Config</a></td></tr>
 				</table>
 		</td></tr></table>";

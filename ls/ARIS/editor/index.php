@@ -15,6 +15,7 @@
 	echo "<div class = 'nav'>
 		<a href = 'games_add.php'>Add a Game</a>
 		<a href = 'games_restore.php'>Restore a Game</a>
+		<a href = 'http://arisdocumentation.pbwiki.com' target = '_blank'>Help</a>
 		<a href = 'logout.php'>Logout</a>
 	</div>";
 	
