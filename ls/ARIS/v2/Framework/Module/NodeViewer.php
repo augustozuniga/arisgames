@@ -77,6 +77,7 @@ class Framework_Module_NodeViewer extends Framework_Auth_User
     	
 		NodeManager::loadNodeConversations($_REQUEST['npc_id']);
 		$this->setVariables();
+		$this->time = date('g:i a');
 				
 		$this->rawHead = <<<SCRIPT
    <script type="application/x-javascript">
