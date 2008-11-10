@@ -1,6 +1,7 @@
 <table id="dialog" width="295px">
 	<tbody>
 	<tr><td><div style="padding-top: 10px; font-style: italic;">Chat started.</div></td></tr>
+	<tr><td><div>{$npc.media}{$npc.text}</div></td></tr>
 	</tbody>
 </table>
 <input id="message" value=" " disabled="true" />

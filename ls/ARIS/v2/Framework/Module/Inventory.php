@@ -127,6 +127,7 @@
 			}
 			
 			$name = NodeManager::addItem($_SESSION['player_id'], $_REQUEST['item_id']);
+			$this->tplFile = "Inventory_displayItem";
 			$this->title = $name;
 			$this->message = implode('<br />', NodeManager::$messages);
 			

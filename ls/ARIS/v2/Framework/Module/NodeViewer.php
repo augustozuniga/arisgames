@@ -74,6 +74,7 @@ class Framework_Module_NodeViewer extends Framework_Auth_User
 
     	$photo = $this->findMedia($user->photo, 'defaultUser.png');
     	$site = Framework::$site->name;
+    	
 		NodeManager::loadNodeConversations($_REQUEST['npc_id']);
 		$this->setVariables();
 				
@@ -133,7 +134,7 @@ SCRIPT;
 		
     	$this->node = NodeManager::$node;
     	$npc = NodeManager::$npc;
-    	$this->title = $npc['name'];
+    	$this->title = 'Chat with ' . $npc['name'];
 
 		if (!empty($npc['media'])) {
 			$npc['media'] = $this->findMedia($npc['media'], 
