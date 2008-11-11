@@ -5,7 +5,8 @@
 	print_header( 'Players\' Items');
 	print_general_navigation();
 	
-		
+	$short_name = substr($_SESSION['current_game_prefix'], 0, strlen($_SESSION['current_game_prefix']) - 1);	
+
 	
 	/**********************
 	 PHP My Edit Config
@@ -107,28 +108,61 @@
 	 descriptions fields are also possible. Check documentation for this.
 	 */
 	
-	$opts['fdd']['player_id'] = array(
-									  'name'     => 'Player ID',
-									  'select'   => 'T',
-									  'maxlen'   => 10,
-									  'default'  => '0',
-									  'sort'     => true
-									  );
-	$opts['fdd']['item_id'] = array(
-										   'name'     => 'Item ID',
-										   'select'   => 'T',
-										   'maxlen'   => 10,
-										   'default'  => '0',
-										   'sort'     => true
-										   );
 	$opts['fdd']['id'] = array(
-							   'name'     => 'ID',
-							   'select'   => 'T',
-							   'options'  => 'AVCPDR', // auto increment
-							   'maxlen'   => 11,
-							   'default'  => '0',
-							   'sort'     => true
-							   );
+				   'name'     => 'ID',
+				   'select'   => 'T',
+				   'options'  => 'AVCPDR', // auto increment
+				   'maxlen'   => 11,
+				   'default'  => '0',
+				   'sort'     => true
+				   );
+
+	$opts['fdd']['player_id'] = array(
+  					'default'    => '',
+  					'maxlen'     => 20,
+  					'name'       => 'Player',
+  					'options'    => 'ACPVDFL',
+  					'required'   => true,
+  					'select'     => 'T',
+  					'size|ACP'   => 20,
+  					'sort'       => true,
+  					'values'     => array(
+    								'db'          	=> $opts['db'],
+    								'table'       	=> 'players',
+    								'column'      	=> 'player_id',
+    								'description'	=> array(
+       											'columns' => array(
+													'0' => 'user_name', 
+													'1' => 'first_name',
+													'2' => 'last_name'),
+       								'divs'    => array('0' => ' - ', '1' => ' ')
+     								),
+					'filters'     => "site = '{$short_name}'",
+    					'orderby'     => 'player_id')
+	);
+	
+
+	$opts['fdd']['item_id'] = array(
+  					'default'    => '',
+  					'maxlen'     => 20,
+  					'name'       => 'Item',
+  					'options'    => 'ACPVDFL',
+  					'required'   => true,
+  					'select'     => 'T',
+  					'size|ACP'   => 20,
+  					'sort'       => true,
+  					'values'     => array(
+    								'db'          	=> $opts['db'],
+    								'table'       	=> $_SESSION['current_game_prefix'] . 'items',
+    								'column'      	=> 'item_id',
+    								'description'	=> array(
+       											'columns' => array('0' => 'name')
+       								
+     								),
+    					'orderby'     => 'item_id')
+	);
+
+
 	
 	
 	
