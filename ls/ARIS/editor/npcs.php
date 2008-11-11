@@ -150,12 +150,13 @@
 								 'sort'     => true
 	);
 	$opts['fdd']['location_id'] = array(
-										'name'     => 'Location ID (Set to 0 for IM)',
+										'name'     => 'Is this NPC in IM or at a physical location?',
 										'select'   => 'T',
 										'maxlen'   => 10,
 										'default'  => 0,
 										'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										'sort'     => true
+										'sort'     => true,
+										'values2'    => array('1' => 'Physical Location','0' => 'IM')
 	);
 	$opts['fdd']['media'] = array(
 								  //  'colattrs|LF'   => '',
