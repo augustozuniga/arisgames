@@ -62,7 +62,18 @@ class Framework_Controller_Web extends Framework_Controller_Common
      */
     public function authenticate()
     {
-	    Framework::$module->authenticate();
+	    try { Framework::$module->authenticate(); }
+		
+		catch(Exception $e)
+		{
+			$_SESSION = array();
+			session_destroy();
+			header("Location: {$_SERVER['PHP_SELF']}?module=Welcome&controller=Web&site="
+				   . Framework::$site->name);
+			die();
+			
+		}
+		
     }
 
     /**
