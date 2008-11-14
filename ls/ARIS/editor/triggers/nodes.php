@@ -12,9 +12,7 @@
 	 $changed - array of keys with changed values
 	 */
 	
-	//var_dump ($newvals);
 	
-	echo $newvals['opt1_text'];
 	
 	//If any of the optX_node_id fields are set to 'add'
 	for ($i = 1; $i <= 3; $i++){
@@ -24,7 +22,9 @@
 			$new_id = new_node($this->tb, "New Node from " . $this->rec .  " - " . $newvals["opt{$i}_text"]);
 	
 			//store new id here, replacing 'add'
-			$newvals["opt{$i}_node_id"] = $new_id;
+			$query = "UPDATE $this->tb SET opt{$i}_node_id = '{$new_id}' WHERE node_id = '{$this->rec}'";
+			mysql_query($query); //for add
+			$newvals["opt{$i}_node_id"] = $new_id; //for update
 	
 			//launch form for new node in a new window
 			//echo "<script type='text/javascript'>
