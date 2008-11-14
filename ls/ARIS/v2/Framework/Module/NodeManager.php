@@ -79,8 +79,11 @@ class NodeManager
     		if ((!empty(self::$node['opt1_text']) && !empty(self::$node['opt1_node_id']))
     			|| (!empty(self::$node['opt2_text']) && !empty(self::$node['opt2_node_id']))
     			|| (!empty(self::$node['opt3_text']) && !empty(self::$node['opt3_node_id'])))
-    		{ self::loadOptions(); }
-    		if ($npcID >= 0) self::loadNodeConversations($npcID);
+    		{ self::loadOptions($npcID); }
+    		
+    		if ($npcID >= 0 && is_null(self::$conversations)) {
+    			self::loadNodeConversations($npcID);
+    		}
     	}
 	}
 	
@@ -197,14 +200,22 @@ class NodeManager
     	self::$conversations = Framework::$db->getAll($sql);    
     }
     
-    static public function loadOptions() {
+    static public function loadOptions($npcID) {
+    	if (!empty($npcID)) {
+	    	$sql = Framework::$db->prefix("SELECT * FROM _P_npcs WHERE npc_id = $npcID");
+    		self::$npc = Framework::$db->getRow($sql);
+    	}
+    	else {
+    		self::$npc = array('name' => self::$node['title'], 'npc_id' => -1,
+    		'media' => self::$node['media']);
+    	}
+    
+    
     	$results = array();
     	$r = self::loadOption($results, 'opt1_text', 'opt1_node_id');
     	$r = self::loadOption($results, 'opt2_text', 'opt2_node_id');
-    	$r = self::loadOption($results, 'opt3_text', 'opt3_node_id');  	
+    	$r = self::loadOption($results, 'opt3_text', 'opt3_node_id');
     	
-    	self::$npc = array('name' => self::$node['title'], 'npc_id' => -1,
-    		'media' => self::$node['media']);
     	self::$conversations = $results;
     }
     
