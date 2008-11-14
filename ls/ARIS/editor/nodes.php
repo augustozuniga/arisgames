@@ -18,8 +18,12 @@
 	
 	
 	//Triggers
-	$opts['triggers']['insert']['after'] = 'triggers/uploader.php';
-	$opts['triggers']['update']['before'] = 'triggers/uploader.php';
+	$opts['triggers']['insert']['before'][0] = 'triggers/nodes.php';
+	
+	$opts['triggers']['insert']['after'][0] = 'triggers/uploader.php';
+
+	$opts['triggers']['update']['before'][0] = 'triggers/nodes.php';
+	$opts['triggers']['update']['before'][1] = 'triggers/uploader.php';
 
 	
 	// Name of field which is the unique key
@@ -150,7 +154,7 @@
 
 								 'input'      => 'F',
 								  'imagepath'  =>  $image_path,
-								 'URL'        => $image_www_path .'$key.$value',
+								 'URL'        => $image_www_path .'$value',
 								 'URLtarget'  => '_blank',
 								 'maxlen'     => 128,
 								 'name'       => 'Image',
@@ -209,16 +213,40 @@
 									  'options'	=> 'AVCPD'
 									  
 									  );
+
 	
 	$opts['fdd']['opt1_node_id'] = array(
-										 'name'     => 'Choice 1 Node ID',
-										 'select'   => 'T',
-										 'maxlen'   => 11,
-										 'sort'     => true,
-										 'default'  => null,
-										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										 'options'	=> 'AVCPD'
-										 );
+									'default'    => '',
+									'maxlen'     => 20,
+									'name'       => 'Choice 1 Node',
+									'options'    => 'AVCPD',
+									'required'   => false,
+									'select'     => 'T',
+									'size|ACP'   => 20,
+									'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+									'sort'       => true,
+									'values'     => array(
+														  'db'          	=> $opts['db'],
+														  'table'       	=> $_SESSION['current_game_prefix'] . 'nodes',
+														  'column'      	=> 'node_id',
+														  'description'	=> array(
+																				 'columns' => array('0' => 'text')
+			
+																				 ),
+														  'orderby'     => 'node_id')
+									);	
+	
+	$opts['fdd']['opt1_node_id']['values2'] = array(
+													null => '-Not Used-',
+													'ADD' => '-Add a new Node-'
+	);
+	
+	
+	
+	
+	
+	
+	
 	
 	$opts['fdd']['opt2_text'] = array(
 									  'name'     => 'Choice 2 Text',
@@ -231,14 +259,30 @@
 									  );
 	
 	$opts['fdd']['opt2_node_id'] = array(
-										 'name'     => 'Choice 2 Node ID',
-										 'select'   => 'T',
-										 'maxlen'   => 11,
-										 'sort'     => true,
-										 'default'  => null,
-										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										 'options'	=> 'AVCPD'
-										 );
+										 'default'    => '',
+										 'maxlen'     => 20,
+										 'name'       => 'Choice 2 Node',
+										 'options'    => 'AVCPD',
+										 'required'   => false,
+										 'select'     => 'T',
+										 'size|ACP'   => 20,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+										 'sort'       => true,
+										 'values'     => array(
+															   'db'          	=> $opts['db'],
+															   'table'       	=> $_SESSION['current_game_prefix'] . 'nodes',
+															   'column'      	=> 'node_id',
+															   'description'	=> array(
+																						 'columns' => array('0' => 'text')
+																						 
+																						 ),
+															   'orderby'     => 'node_id')
+										 );	
+	
+	$opts['fdd']['opt2_node_id']['values2'] = array(
+													null => '-Not Used-',
+													'ADD' => '-Add a new Node-'
+													);
 	
 	$opts['fdd']['opt3_text'] = array(
 									  'name'     => 'Choce 3 Text',
@@ -251,14 +295,30 @@
 									  );
 	
 	$opts['fdd']['opt3_node_id'] = array(
-										 'name'     => 'Choice 3 Node ID',
-										 'select'   => 'T',
-										 'maxlen'   => 11,
-										 'sort'     => true,
-										 'default'  => null,
-										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										 'options'	=> 'AVCPD'
-										 );
+										 'default'    => '',
+										 'maxlen'     => 20,
+										 'name'       => 'Choice 3 Node',
+										 'options'    => 'AVCPD',
+										 'required'   => false,
+										 'select'     => 'T',
+										 'size|ACP'   => 20,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+										 'sort'       => true,
+										 'values'     => array(
+															   'db'          	=> $opts['db'],
+															   'table'       	=> $_SESSION['current_game_prefix'] . 'nodes',
+															   'column'      	=> 'node_id',
+															   'description'	=> array(
+																						 'columns' => array('0' => 'text')
+																						 
+																						 ),
+															   'orderby'     => 'node_id')
+										 );	
+	
+	$opts['fdd']['opt3_node_id']['values2'] = array(
+													null => '-Not Used-',
+													'ADD' => '-Add a new Node-'
+													);
 	
 	
 	
