@@ -252,7 +252,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 
 	$query = "CREATE TABLE {$new_game_short}_items (
 		item_id int(11) unsigned NOT NULL auto_increment,
-		name varchar(25) default NULL,
+		name varchar(100) default NULL,
 		description text,
 		media varchar(50) NOT NULL default 'item_default.jpg',
 		PRIMARY KEY  (item_id)

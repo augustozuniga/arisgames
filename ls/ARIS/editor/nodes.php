@@ -168,36 +168,80 @@
 
 	//Requirements
 	$opts['fdd']['require_item_id'] = array(
-											'name'     => 'Require item ID',
-											'select'   => 'T',
-											'maxlen'   => 11,
-											'sort'     => true,
-											'tab'		=> 'Requirements',
-											'default'  => null,
-											'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											'options'	=> 'AVCPD'
-											
-											);
+										 'tab'		=> 'Requirements',
+										'default'    => '',
+										 'maxlen'     => 20,
+										 'name'       => 'Require player to have item',
+										 'options'    => 'AVCPD',
+										 'required'   => false,
+										 'select'     => 'T',
+										 'size|ACP'   => 20,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+										 'sort'       => true,
+										 'values'     => array(
+															   'db'          	=> $opts['db'],
+															   'table'       	=> $_SESSION['current_game_prefix'] . 'items',
+															   'column'      	=> 'item_id',
+															   'description'	=> array('columns' => array('0' => 'name')),
+															   'orderby'     => 'item_id')
+										 );	
+	$opts['fdd']['require_item_id']['values2'] = array(
+													null => '-Not Used-',
+													'ADD' => '-Add a new Item-'
+													);	
+	
+	
+
 	
 	$opts['fdd']['required_condition_not_met_node_id'] = array(
-															   'name'     => 'Condition not met node ID',
-															   'select'   => 'T',
-															   'maxlen'   => 11,
-															   'sort'     => true,
-															   'default'  => null,
-															   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-															   'options'	=> 'AVCPD'													   
-															   );
+											'default'    => '',
+											'maxlen'     => 20,
+											'name'       => 'Requirements failed, goto node',
+											'options'    => 'AVCPD',
+											'required'   => false,
+											'select'     => 'T',
+											'size|ACP'   => 20,
+											'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											'sort'       => true,
+											'values'     => array(
+																  'db'          	=> $opts['db'],
+																  'table'       	=> $_SESSION['current_game_prefix'] . 'nodes',
+																  'column'      	=> 'node_id',
+																  'description'	=> array('columns' => array('0' => 'text')),
+																  'orderby'     => 'node_id')
+											);	
+	$opts['fdd']['required_condition_not_met_node_id']['values2'] = array(
+													   null => '-Not Used-',
+													   'ADD' => '-Add a new Node-'
+													   );		
+	
+	
+
 	
 	$opts['fdd']['require_event_id'] = array(
-											 'name'     => 'Player needs to have this Event',
-											 'select'   => 'T',
-											 'maxlen'   => 10,
-											 'sort'     => true	,
-											 'default'  => null,
-											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											 'options'	=> 'AVCPD'									 
-											 );
+															   'default'    => '',
+															   'maxlen'     => 20,
+															   'name'       => 'Require player to have event',
+															   'options'    => 'AVCPD',
+															   'required'   => false,
+															   'select'     => 'T',
+															   'size|ACP'   => 20,
+															   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+															   'sort'       => true,
+															   'values'     => array(
+																					 'db'          	=> $opts['db'],
+																					 'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																					 'column'      	=> 'event_id',
+																					 'description'	=> array('columns' => array('0' => 'description')),
+																					 'orderby'     => 'event_id')
+															   );	
+	$opts['fdd']['require_event_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Event-'
+														);		
+	
+	
+	
 	
 	
 	
@@ -274,7 +318,6 @@
 															   'column'      	=> 'node_id',
 															   'description'	=> array(
 																						 'columns' => array('0' => 'text')
-																						 
 																						 ),
 															   'orderby'     => 'node_id')
 										 );	
@@ -285,7 +328,7 @@
 													);
 	
 	$opts['fdd']['opt3_text'] = array(
-									  'name'     => 'Choce 3 Text',
+									  'name'     => 'Choice 3 Text',
 									  'select'   => 'T',
 									  'maxlen'   => 100,
 									  'sort'     => true,
@@ -325,39 +368,84 @@
 	
 		
 	//Add to Player
-	
+
 	$opts['fdd']['add_item_id'] = array(
-										'name'     => 'Give the player this Item ID',
-										'select'   => 'T',
-										'maxlen'   => 11,
-										'sort'     => true,
-										'tab'		=> 'Modily the Player',
-										'default'  => null,
-										'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										'options'	=> 'AVCPD'
-										
-										);
+											 'tab'		=> 'Modily the Player',
+											 'default'    => '',
+											 'maxlen'     => 20,
+											 'name'       => 'Give the player this Item',
+											 'options'    => 'AVCPD',
+											 'required'   => false,
+											 'select'     => 'T',
+											 'size|ACP'   => 20,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											 'sort'       => true,
+											 'values'     => array(
+																   'db'          	=> $opts['db'],
+																   'table'       	=> $_SESSION['current_game_prefix'] . 'items',
+																   'column'      	=> 'item_id',
+																   'description'	=> array('columns' => array('0' => 'name')),
+																   'orderby'     => 'item_id')
+											 );	
+	$opts['fdd']['add_item_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Item-'
+														);			
+	
+	
+	
+	
+	
 	
 	$opts['fdd']['remove_item_id'] = array(
-										   'name'     => 'Take an Item ID from the Player',
-										   'select'   => 'T',
-										   'maxlen'   => 11,
-										   'sort'     => true,
-										   'default'  => null,
-										   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										   'options'	=> 'AVCPD'
-										   );
+										'default'    => '',
+										'maxlen'     => 20,
+										'name'       => 'Take this Item from the Player',
+										'options'    => 'AVCPD',
+										'required'   => false,
+										'select'     => 'T',
+										'size|ACP'   => 20,
+										'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+										'sort'       => true,
+										'values'     => array(
+															  'db'          	=> $opts['db'],
+															  'table'       	=> $_SESSION['current_game_prefix'] . 'items',
+															  'column'      	=> 'item_id',
+															  'description'	=> array('columns' => array('0' => 'name')),
+															  'orderby'     => 'item_id')
+										);	
+	$opts['fdd']['remove_item_id']['values2'] = array(
+												   null => '-Not Used-',
+													  'ADD' => '-Add a new Item-'  
+												   );			
+	
+	
 	
 	
 	$opts['fdd']['add_event_id'] = array(
-										 'name'     => 'Give the Player an Event ID',
-										 'select'   => 'T',
-										 'maxlen'   => 11,
-										 'sort'     => true,
-										 'default'  => null,
-										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										 'options'	=> 'AVCPD'
-										 );
+										'default'    => '',
+										'maxlen'     => 20,
+										'name'       => 'Give the Player an Event',
+										'options'    => 'AVCPD',
+										'required'   => false,
+										'select'     => 'T',
+										'size|ACP'   => 20,
+										'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+										'sort'       => true,
+										'values'     => array(
+															   'db'          	=> $opts['db'],
+															   'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+															   'column'      	=> 'event_id',
+															   'description'	=> array('columns' => array('0' => 'description')),
+															   'orderby'     => 'event_id')
+										 );	
+	$opts['fdd']['add_event_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Event-'
+														);		
+	
+	
+	
 	
 	
 	//Ask a question
@@ -373,16 +461,33 @@
 												  
 												  );
 	
-	$opts['fdd']['require_answer_correct_node_id'] = array(
-														   'name'     => 'If correct, goto Node ID',
-														   'select'   => 'T',
-														   'maxlen'   => 10,
-														   'sort'     => true,
-														   'default'  => null,
-														   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-														   'options'	=> 'AVCPD'												   
-														   );
+
 	
+	$opts['fdd']['require_answer_correct_node_id'] = array(
+										 'default'    => '',
+										 'maxlen'     => 20,
+										 'name'       => 'If correct, goto Node',
+										 'options'    => 'AVCPD',
+										 'required'   => false,
+										 'select'     => 'T',
+										 'size|ACP'   => 20,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+										 'sort'       => true,
+										 'values'     => array(
+															   'db'          	=> $opts['db'],
+															   'table'       	=> $_SESSION['current_game_prefix'] . 'nodes',
+															   'column'      	=> 'node_id',
+															   'description'	=> array(
+																						 'columns' => array('0' => 'text')
+																						 
+																						 ),
+															   'orderby'     => 'node_id')
+										 );	
+	
+	$opts['fdd']['require_answer_correct_node_id']['values2'] = array(
+													null => '-Not Used-',
+													'ADD' => '-Add a new Node-'
+													);
 	
 	
 	

@@ -89,5 +89,9 @@ include_once('common.inc.php');
 	mysql_query($query);
 	echo mysql_error();
 	
-
+	echo "<h3>Extended name for items</h3>";
+	$query = "ALTER TABLE  {$_SESSION['current_game_prefix']}items 
+		CHANGE  name  name VARCHAR( 100 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL";
+	mysql_query($query);
+	echo mysql_error();
 ?>
