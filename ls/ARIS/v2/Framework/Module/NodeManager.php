@@ -60,7 +60,7 @@ class NodeManager
 	    }
 
     	if (self::$node['add_item_id']) {
-    		Framework_Module::addItem($userID, self::$node['add_item_id']);
+    		self::addItem($userID, self::$node['add_item_id']);
     	}
 
     	if (self::$node['remove_item_id']) {
