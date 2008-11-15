@@ -9,12 +9,15 @@
 	/**********************
 	 PHP My Edit Config
 	 *********************/
+	$opts['triggers']['insert']['after'][0] = 'triggers/quests.php';
+	$opts['triggers']['update']['before'][0] = 'triggers/quests.php';	
+	
 	
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'log';
 	
 	// Name of field which is the unique key
-	$opts['key'] = 'node_id';
+	$opts['key'] = 'log_id';
 	
 	// Type of key field (int/real/string/date etc.)
 	$opts['key_type'] = 'int';
@@ -147,31 +150,52 @@
 								  'default'  => 'quest_default.jpg',
 								  'sort'     => true
 	);
+
 	$opts['fdd']['require_event_id'] = array(
-											 'name'     => 'Require event ID',
-											 'select'   => 'T',
-											 'maxlen'   => 11,
-											 'default'  => null,
-											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											 'sort'     => true
-	);
-	$opts['fdd']['add_event_id'] = array(
-										 'name'     => 'Add event ID',
-										 'select'   => 'T',
-										 'maxlen'   => 10,
-										 'default'  => null,
-										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-										 'sort'     => true
-	);
-	$opts['fdd']['complete_if_event_id'] = array(
-												 'name'     => 'Complete if event ID',
-												 'select'   => 'T',
-												 'maxlen'   => 10,
-												 'default'  => null,
-												 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-												 'sort'     => true
-	);
+											 'default'    => '',
+											 'maxlen'     => 20,
+											 'name'       => 'Hide unless player has event',
+											 'options'    => 'AVCPD',
+											 'required'   => false,
+											 'select'     => 'T',
+											 'size|ACP'   => 20,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											 'sort'       => true,
+											 'values'     => array(
+																   'db'          	=> $opts['db'],
+																   'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																   'column'      	=> 'event_id',
+																   'description'	=> array('columns' => array('0' => 'description')),
+																   'orderby'     => 'event_id')
+											 );	
+	$opts['fdd']['require_event_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Event-'
+														);		
 	
+	
+	
+	$opts['fdd']['complete_if_event_id'] = array(
+											   'default'    => '',
+											   'maxlen'     => 20,
+											   'name'       => 'Complete if player has event',
+											   'options'    => 'AVCPD',
+											   'required'   => false,
+											   'select'     => 'T',
+											   'size|ACP'   => 20,
+											   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											   'sort'       => true,
+											   'values'     => array(
+																	 'db'          	=> $opts['db'],
+																	 'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																	 'column'      	=> 'event_id',
+																	 'description'	=> array('columns' => array('0' => 'description')),
+																	 'orderby'     => 'event_id')
+											   );	
+	$opts['fdd']['complete_if_event_id']['values2'] = array(
+														  null => '-Not Used-',
+														  'ADD' => '-Add a new Event-'
+														  );			
 	
 	
 	// Now important call to phpMyEdit

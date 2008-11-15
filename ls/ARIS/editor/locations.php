@@ -102,9 +102,12 @@
 	 PHP My Edit Config
 	 *********************/
 	//Trigger a page refresh after a new location or a save to map is updated
-	$opts['triggers']['insert']['after']  = 'triggers/refresh.inc.php';
-	$opts['triggers']['update']['after']  = 'triggers/refresh.inc.php';
-	$opts['triggers']['delete']['after']  = 'triggers/refresh.inc.php';
+	$opts['triggers']['insert']['after'][0]  = 'triggers/refresh.inc.php';
+	$opts['triggers']['update']['after'][0]  = 'triggers/refresh.inc.php';
+	$opts['triggers']['delete']['after'][0]  = 'triggers/refresh.inc.php';
+	
+	$opts['triggers']['insert']['after'][1] = 'triggers/locations.php';
+	$opts['triggers']['update']['before'][0] = 'triggers/locations.php';	
 	
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'locations';
@@ -237,23 +240,53 @@
 	);
 
 	$opts['fdd']['require_event_id'] = array(
-											 'name'     => 'Show if event ID (Leave blank to always show)',
-											 'select'   => 'T',
-											 'maxlen'   => 10,
-											 'sort'     => true,
-											 'default'  => null,
-											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											 'options'	=> 'AVCPD'									
-											 );
+											 'default'    => '',
+											 'maxlen'     => 20,
+											 'name'       => 'Hide unless player has event',
+											 'options'    => 'AVCPD',
+											 'required'   => false,
+											 'select'     => 'T',
+											 'size|ACP'   => 20,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											 'sort'       => true,
+											 'values'     => array(
+																   'db'          	=> $opts['db'],
+																   'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																   'column'      	=> 'event_id',
+																   'description'	=> array('columns' => array('0' => 'description')),
+																   'orderby'     => 'event_id')
+											 );	
+	$opts['fdd']['require_event_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Event-'
+														);	
+	
+	
 	$opts['fdd']['remove_if_event_id'] = array(
-											   'name'     => 'Hide if event ID',
-											   'select'   => 'T',
-											   'maxlen'   => 10,
-											   'sort'     => true,
-											   'default'  => null,
-											   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											   'options'	=> 'AVCPD'
-											   );
+											   'default'    => '',
+											   'maxlen'     => 20,
+											   'name'       => 'Hide if player has event',
+											   'options'    => 'AVCPD',
+											   'required'   => false,
+											   'select'     => 'T',
+											   'size|ACP'   => 20,
+											   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											   'sort'       => true,
+											   'values'     => array(
+																	 'db'          	=> $opts['db'],
+																	 'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																	 'column'      	=> 'event_id',
+																	 'description'	=> array('columns' => array('0' => 'description')),
+																	 'orderby'     => 'event_id')
+											   );	
+	$opts['fdd']['remove_if_event_id']['values2'] = array(
+														  null => '-Not Used-',
+														  'ADD' => '-Add a new Event-'
+														  );	
+	
+	
+	
+	
 	$opts['fdd']['latitude'] = array(
 									 'name'     => 'Latitude',
 									 'select'   => 'T',

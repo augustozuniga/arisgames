@@ -9,12 +9,15 @@
 	/**********************
 	 PHP My Edit Config
 	 *********************/
+	$opts['triggers']['insert']['after'][0] = 'triggers/conversations.php';
+	$opts['triggers']['update']['before'][0] = 'triggers/conversations.php';	
+	
 	
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'npc_conversations';
 	
 	// Name of field which is the unique key
-	$opts['key'] = 'node_id';
+	$opts['key'] = 'conversation_id';
 	
 	// Type of key field (int/real/string/date etc.)
 	$opts['key_type'] = 'int';
@@ -115,20 +118,49 @@
 											);
 	
 	
-	$opts['fdd']['npc_id'] = array(
-								   'name'     => 'Npc ID',
-								   'select'   => 'T',
-								   'maxlen'   => 10,
-								   'default'  => '0',
-								   'sort'     => true
-	);
+	
+	$opts['fdd']['npc_id'] = array(						'maxlen'     => 20,
+														   'name'       => 'NPC',
+														   'options'    => 'LAVCPD',
+														   'required'   => true,
+														   'select'     => 'T',
+														   'size|ACP'   => 20,
+														   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+														   'sort'       => true,
+														   'values'     => array(
+																				 'db'          	=> $opts['db'],
+																				 'table'       	=> $_SESSION['current_game_prefix'] . 'npcs',
+																				 'column'      	=> 'npc_id',
+																				 'description'	=> array('columns' => array('0' => 'name')),
+																				 'orderby'     => 'npc_id')
+														   );	
+		$opts['fdd']['npc_id']['values2'] = array('ADD' => '-Add a new NPC-');	
+	
+	
+
+	
+	
 	$opts['fdd']['node_id'] = array(
-									'name'     => 'Node ID',
-									'select'   => 'T',
-									'maxlen'   => 10,
-									'default'  => '0',
-									'sort'     => true
-	);
+										'maxlen'     => 20,
+										 'name'       => 'Starting Node',
+										 'options'    => 'AVCPD',
+										 'required'   => true,
+										 'select'     => 'T',
+										 'size|ACP'   => 20,
+										 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+										 'sort'       => true,
+										 'values'     => array(
+															   'db'          	=> $opts['db'],
+															   'table'       	=> $_SESSION['current_game_prefix'] . 'nodes',
+															   'column'      	=> 'node_id',
+															   'description'	=> array('columns' => array('0' => 'text')),
+															   'orderby'     => 'node_id')
+										 );	
+	
+	$opts['fdd']['node_id']['values2'] = array('ADD' => '-Add a new Node-');
+	
+	
+	
 	$opts['fdd']['text'] = array(
 								 'name'     => 'Text',
 								 'select'   => 'T',
@@ -138,45 +170,86 @@
 													 'cols' => 50),
 								 'sort'     => true
 	);
-	$opts['fdd']['require_event_id'] = array(
-											 'name'     => 'Require event ID',
-											 'select'   => 'T',
-											 'maxlen'   => 10,
-											 'default'  => null,
-											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											 'sort'     => true
-	);
-	$opts['fdd']['require_item_id'] = array(
-											'name'     => 'Require item ID',
-											'select'   => 'T',
-											'maxlen'   => 10,
-											'default'  => null,
-											'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											'sort'     => true
-	);
-	$opts['fdd']['require_location_id'] = array(
-												'name'     => 'Require location ID',
-												'select'   => 'T',
-												'maxlen'   => 10,
-												'default'  => null,
-												'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-												'sort'     => true
-	);
-	$opts['fdd']['remove_if_event_id'] = array(
-											   'name'     => 'Remove if event ID',
-											   'select'   => 'T',
-											   'maxlen'   => 9,
-											   'default'  => null,
-											   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											   'sort'     => true
-	);
 	
+	
+	$opts['fdd']['require_item_id'] = array(
+											'tab'		=> 'Requirements',
+											'default'    => '',
+											'maxlen'     => 20,
+											'name'       => 'Hide unless player has item',
+											'options'    => 'AVCPD',
+											'required'   => false,
+											'select'     => 'T',
+											'size|ACP'   => 20,
+											'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											'sort'       => true,
+											'values'     => array(
+																  'db'          	=> $opts['db'],
+																  'table'       	=> $_SESSION['current_game_prefix'] . 'items',
+																  'column'      	=> 'item_id',
+																  'description'	=> array('columns' => array('0' => 'name')),
+																  'orderby'     => 'item_id')
+											);	
+	$opts['fdd']['require_item_id']['values2'] = array(
+													   null => '-Not Used-',
+													   'ADD' => '-Add a new Item-'
+													   );	
+	
+	
+	$opts['fdd']['require_event_id'] = array(
+											 'default'    => '',
+											 'maxlen'     => 20,
+											 'name'       => 'Hide unless player has event',
+											 'options'    => 'AVCPD',
+											 'required'   => false,
+											 'select'     => 'T',
+											 'size|ACP'   => 20,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											 'sort'       => true,
+											 'values'     => array(
+																   'db'          	=> $opts['db'],
+																   'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																   'column'      	=> 'event_id',
+																   'description'	=> array('columns' => array('0' => 'description')),
+																   'orderby'     => 'event_id')
+											 );	
+	$opts['fdd']['require_event_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Event-'
+														);		
+	
+	
+	
+	$opts['fdd']['remove_if_event_id'] = array(
+											 'default'    => '',
+											 'maxlen'     => 20,
+											 'name'       => 'Hide if player has event',
+											 'options'    => 'AVCPD',
+											 'required'   => false,
+											 'select'     => 'T',
+											 'size|ACP'   => 20,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											 'sort'       => true,
+											 'values'     => array(
+																   'db'          	=> $opts['db'],
+																   'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																   'column'      	=> 'event_id',
+																   'description'	=> array('columns' => array('0' => 'description')),
+																   'orderby'     => 'event_id')
+											 );	
+	$opts['fdd']['remove_if_event_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Event-'
+														);			
+	
+	
+
 	
 	
 	// Now important call to phpMyEdit
-	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
-	//new phpMyEdit($opts);
-	new phpMyEdit_mce_cal($opts);
+	require_once('phpMyEdit.class.php');
+	new phpMyEdit($opts);
+
 	
 	print_footer();
 	?>

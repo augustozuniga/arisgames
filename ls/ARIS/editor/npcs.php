@@ -12,14 +12,19 @@
 	/**********************
 	 PHP My Edit Config
 	 *********************/
+	//Triggers
+	$opts['triggers']['insert']['after'][0] = 'triggers/uploader.php';
+	$opts['triggers']['update']['before'][0] = 'triggers/uploader.php';	
+	$opts['triggers']['insert']['after'][1] = './triggers/npcs.php';
+	$opts['triggers']['update']['before'][1] = './triggers/npcs.php';	
+
+	
 	
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'npcs';
 
 	
-	//Triggers
-	$opts['triggers']['insert']['after'] = 'triggers/uploader.php';
-	$opts['triggers']['update']['before'] = 'triggers/uploader.php';
+
 	
 	
 	// Name of field which is the unique key
@@ -179,14 +184,27 @@
 	
 	
 	$opts['fdd']['require_event_id'] = array(
-											 'name'     => 'Require event ID',
-											 'select'   => 'T',
-											 'options'  => 'AVCPD', // auto increment
-											 'maxlen'   => 9,
-											 'default'  => null,
-											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',
-											 'sort'     => true
-	);	
+											 'default'    => '',
+											 'maxlen'     => 20,
+											 'name'       => 'Hide unless player has event',
+											 'options'    => 'AVCPD',
+											 'required'   => false,
+											 'select'     => 'T',
+											 'size|ACP'   => 20,
+											 'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+											 'sort'       => true,
+											 'values'     => array(
+																   'db'          	=> $opts['db'],
+																   'table'       	=> $_SESSION['current_game_prefix'] . 'events',
+																   'column'      	=> 'event_id',
+																   'description'	=> array('columns' => array('0' => 'description')),
+																   'orderby'     => 'event_id')
+											 );	
+	$opts['fdd']['require_event_id']['values2'] = array(
+														null => '-Not Used-',
+														'ADD' => '-Add a new Event-'
+														);		
+	
 	
 	// Now important call to phpMyEdit
 	require_once('phpMyEdit.class.php');

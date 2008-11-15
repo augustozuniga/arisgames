@@ -19,10 +19,8 @@
 	
 	//Triggers
 	$opts['triggers']['insert']['after'][0] = 'triggers/nodes.php';
-	
-	$opts['triggers']['insert']['after'][1] = 'triggers/uploader.php';
-
 	$opts['triggers']['update']['before'][0] = 'triggers/nodes.php';
+	$opts['triggers']['insert']['after'][1] = 'triggers/uploader.php';
 	$opts['triggers']['update']['before'][1] = 'triggers/uploader.php';
 
 	
