@@ -237,7 +237,8 @@
 									'name'     => 'ID for the Node/Item/Event/NPC',
 									'select'   => 'T',
 									'maxlen'   => 11,
-									'sort'     => true
+									'sort'     => true,
+									'help'		=> 'If this is not set, the location (or any others in range) will not tripper properly. '
 	);
 
 	$opts['fdd']['require_event_id'] = array(
