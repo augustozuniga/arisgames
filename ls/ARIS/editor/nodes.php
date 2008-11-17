@@ -130,11 +130,12 @@
 	//Main Fields
 	
 	$opts['fdd']['text'] = array(
-								 'name'     => 'Text',
+								 'name'     => 'Text for the node',
 								 'select'   => 'T',
 								 'maxlen'   => 65535,
 								 'textarea' => array('rows' => 5,'cols' => 50),
-								 'sort'     => true
+								 'sort'     => true,
+								 'help'		=> 'Use &lt;p&gt; and &lt;/p&gt; tags to break your text into paragraphs'
 								 );		
 	
 	$opts['fdd']['title'] = array(
