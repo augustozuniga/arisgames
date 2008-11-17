@@ -9,8 +9,10 @@
 	/**********************
 	 PHP My Edit Config
 	 *********************/
-	$opts['triggers']['insert']['after'][0] = 'triggers/quests.php';
-	$opts['triggers']['update']['before'][0] = 'triggers/quests.php';	
+	$opts['triggers']['insert']['after'][0] = 'triggers/uploader.php';
+	$opts['triggers']['update']['before'][0] = 'triggers/uploader.php';	
+	$opts['triggers']['insert']['after'][1] = './triggers/quests.php';
+	$opts['triggers']['update']['before'][1] = './triggers/quests.php';	
 	
 	
 	// Select the Table Name
@@ -27,12 +29,12 @@
 	
 	// Number of records to display on the screen
 	// Value of -1 lists all records in a table
-	$opts['inc'] = 15;
+	$opts['inc'] = -1;
 	
 	// Options you wish to give the users
 	// A - add,  C - change, P - copy, V - view, D - delete,
 	// F - filter, I - initial sort suppressed
-	$opts['options'] = 'ACPVDF';
+	$opts['options'] = 'ACPDF';
 	
 	// Number of lines to display on multiple selection filters
 	$opts['multiple'] = '4';
@@ -144,12 +146,23 @@
 											   'sort'     => true
 	);
 	$opts['fdd']['media'] = array(
-								  'name'     => 'Media',
-								  'select'   => 'T',
-								  'maxlen'   => 50,
-								  'default'  => 'quest_default.jpg',
-								  'sort'     => true
-	);
+								  //  'colattrs|LF'   => '',
+								  //  'escape'     => false,
+								  
+								  'input'      => 'F',
+								  'imagepath'  =>  $image_path,
+								  'URL'        => $image_www_path . '$value',
+								  'URLtarget'  => '_blank',
+								  'maxlen'     => 128,
+								  'name'       => 'Image',
+								  'options'    => 'ACPVDFL',
+								  'required'   => false,
+								  'select'     => 'T',
+								  'size|ACP'   => 60,
+								  'sqlw'       => 'TRIM("$val_as")',
+								  //  'tab'        => 'File',
+								  'sort'       => true
+								  );
 
 	$opts['fdd']['require_event_id'] = array(
 											 'default'    => '',
@@ -199,9 +212,8 @@
 	
 	
 	// Now important call to phpMyEdit
-	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
-	//new phpMyEdit($opts);
-	new phpMyEdit_mce_cal($opts);
+	require_once('phpMyEdit.class.php');
+	new phpMyEdit($opts);
 	
 	print_footer();
 	?>

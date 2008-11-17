@@ -38,12 +38,12 @@
 	
 	// Number of records to display on the screen
 	// Value of -1 lists all records in a table
-	$opts['inc'] = 15;
+	$opts['inc'] = -1;
 	
 	// Options you wish to give the users
 	// A - add,  C - change, P - copy, V - view, D - delete,
 	// F - filter, I - initial sort suppressed
-	$opts['options'] = 'ACPVDF';
+	$opts['options'] = 'ACPDF';
 	
 	// Number of lines to display on multiple selection filters
 	$opts['multiple'] = '4';
@@ -169,7 +169,7 @@
 								  
 								  'input'      => 'F',
 								  'imagepath'  =>  $image_path,
-								  'URL'        => $image_www_path .'$key.$value',
+								  'URL'        => $image_www_path .'$value',
 								  'URLtarget'  => '_blank',
 								  'maxlen'     => 128,
 								  'name'       => 'Image',
