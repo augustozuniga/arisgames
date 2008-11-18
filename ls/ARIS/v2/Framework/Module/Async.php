@@ -129,6 +129,8 @@ class Framework_Module_Async extends Framework_Auth_User
 		{
 			$this->addEvent($_SESSION['player_id'], $location['add_event_id']);
 		}
+		
+		if ($location['type_id'] < 1) return;
     
     	switch($location['type']) {
     		case TYPE_NODE:
