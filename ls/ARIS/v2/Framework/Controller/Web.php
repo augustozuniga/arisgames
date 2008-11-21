@@ -71,9 +71,7 @@ class Framework_Controller_Web extends Framework_Controller_Common
 			header("Location: {$_SERVER['PHP_SELF']}?module=Welcome&controller=Web&site="
 				   . Framework::$site->name);
 			die();
-			
 		}
-		
     }
 
     /**
