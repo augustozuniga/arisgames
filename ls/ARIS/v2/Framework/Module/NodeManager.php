@@ -49,7 +49,7 @@ class NodeManager
 
     	if (!$row) {
     		// TODO: Change this to an appropriate exception.
-			throw new Framework_Exception('Communication terminated.', 
+			throw new Framework_Exception('Communication disrupted.', 
 	    		FRAMEWORK_ERROR_AUTH);
     	}
 
@@ -201,7 +201,7 @@ class NodeManager
     }
     
     static public function loadOptions($npcID) {
-    	if (!empty($npcID)) {
+    	if (!empty($npcID) && $npcID > 0) {
 	    	$sql = Framework::$db->prefix("SELECT * FROM _P_npcs WHERE npc_id = $npcID");
     		self::$npc = Framework::$db->getRow($sql);
     	}
