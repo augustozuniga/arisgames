@@ -135,7 +135,8 @@ SCRIPT;
 		
     	$this->node = NodeManager::$node;
     	$npc = NodeManager::$npc;
-    	$this->title = 'Chat with ' . $npc['name'];
+    	if ($npc['npc_id'] > 0) $this->title = 'Chat with ' . $npc['name'];
+    	else $this->title = $this->node['title'];
 
 		if (!empty($npc['media'])) {
 			$npc['media'] = $this->findMedia($npc['media'], 
