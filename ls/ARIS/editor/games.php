@@ -62,6 +62,9 @@
 				<td><a href = 'players.php'><img src = 'images/players.png'/></a></td><td><a href = 'players.php'>Players</a></td>
 				<td><a href = 'games_edit_xml.php'><img src = 'images/gears.png'/></a></td><td><a href = 'games_edit_xml.php'>Edit XML Config</a></td>
 			</tr>
+			<tr>
+				<td><a href = 'games_edit_page.php'><img src = 'images/gears.png'/></a></td><td><a href = 'games_edit_page.php'>Edit Visual Template</a></td>
+			</tr>
 			</table>";
 	
 	print_footer();
