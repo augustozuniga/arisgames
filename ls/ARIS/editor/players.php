@@ -190,7 +190,7 @@ if (isset($_SESSION['current_game_prefix'])) {
 								 'name'     => 'Game Prefix',
 								 'select'   => 'T',
 								 'maxlen'   => 20,
-								 'options'  => 'PDR',
+								 'options'  => 'APDR',
 								 'sort'     => true,
 								 'default'	=> "$short_name"
 								 );
