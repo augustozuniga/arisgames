@@ -148,7 +148,19 @@ abstract class Framework
             throw new Framework_Exception('Invalid controller requested', FRAMEWORK_MODULE_ERROR_INVALID_CONTROLLER);
         }
 
+       try {self::$controller->authenticate(); }
+
+        catch(Exception $e)
+        {
+            $_SESSION = array();
+            session_destroy();
+            header("Location: {$_SERVER['PHP_SELF']}?module=Welcome"
+                   . Framework::$site->name);
+            die();
+        }
+
         self::$controller->authenticate();
+        
         $result = self::$controller->start();
         return self::$controller->display();
     }
