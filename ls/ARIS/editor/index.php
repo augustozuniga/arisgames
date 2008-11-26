@@ -2,8 +2,10 @@
 
 	include_once('common.inc.php');
 
-	//Clear Session variable for current game
+	//Clear Session variables for current game
 	unset($_SESSION['current_game_prefix']);
+	unset($_SESSION['current_game_short_name']);
+	unset($_SESSION['current_game_name']);
 	
 	print_header('Your ARIS Games');
 	
@@ -15,6 +17,7 @@
 	echo "<div class = 'nav'>
 		<a href = 'games_add.php'>Add a Game</a>
 		<a href = 'games_restore.php'>Restore a Game</a>
+		<a href = 'players.php'>Global Players</a>
 		<a href = 'http://arisdocumentation.pbwiki.com' target = '_blank'>Help</a>
 		<a href = 'logout.php'>Logout</a>
 	</div>";

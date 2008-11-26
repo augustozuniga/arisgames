@@ -55,7 +55,7 @@
 	$opts['cgi']['prefix']['operation'] = 'PME_op_';
 	$opts['cgi']['prefix']['sys']       = 'PME_sys_';
 	$opts['cgi']['prefix']['data']      = 'PME_data_';
-	
+
 	/* Get the user's default language and use it if possible or you can
 	 specify particular one you want to use. Refer to official documentation
 	 for list of available languages. */
@@ -111,7 +111,7 @@
 	$opts['fdd']['id'] = array(
 				   'name'     => 'ID',
 				   'select'   => 'T',
-				   'options'  => 'AVCPDR', // auto increment
+				   'options'  => 'VPDR', // auto increment
 				   'maxlen'   => 11,
 				   'default'  => '0',
 				   'sort'     => true

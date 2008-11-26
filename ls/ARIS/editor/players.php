@@ -2,16 +2,27 @@
 
 include_once('common.inc.php');
 
-print_header( 'Global Players');
-print_general_navigation();
-	
-echo "<div class = 'nav'>
+
+if (isset($_SESSION['current_game_prefix'])) {	
+	$short_name = substr($_SESSION['current_game_prefix'], 0, strlen($_SESSION['current_game_prefix']) - 1);
+	print_header( "$short_name Players");
+	$opts['filters'] = "site = '{$short_name}'";
+	print_general_navigation();
+	echo "<div class = 'nav'>
 	<a href = 'player_events.php'>Player Events</a>
 	<a href = 'player_items.php'>Player Items</a>	
 	<a href = 'player_applications.php'>Player Applications</a>
+	</div>";
+}
+else {
+	print_header( 'Global Players');
+	echo "<div class = 'nav'>
+	<a href = 'index.php'>Back to Game Selection</a>
+	<a href = 'http://arisdocumentation.pbwiki.com' target = '_blank'>Help</a>
+	<a href = 'logout.php'>Logout</a>
 	</div>";	
+}	
 	
-
 /**********************
  PHP My Edit Config
  *********************/
@@ -59,7 +70,7 @@ $opts['dhtml']['prefix']            = 'PME_dhtml_';
 $opts['cgi']['prefix']['operation'] = 'PME_op_';
 $opts['cgi']['prefix']['sys']       = 'PME_sys_';
 $opts['cgi']['prefix']['data']      = 'PME_data_';
-
+	
 /* Get the user's default language and use it if possible or you can
  specify particular one you want to use. Refer to official documentation
  for list of available languages. */
@@ -115,7 +126,7 @@ $opts['language'] = $_SERVER['HTTP_ACCEPT_LANGUAGE'] . '-UTF8';
 $opts['fdd']['player_id'] = array(
 								  'name'     => 'Player ID',
 								  'select'   => 'T',
-								  'options'  => 'LAVCPDR', // auto increment
+								  'options'  => 'LVCPDR', // auto increment
 								  'maxlen'   => 11,
 								  'default'  => '0',
 								  'sort'     => true
@@ -136,7 +147,7 @@ $opts['fdd']['photo'] = array(
 							  'name'     => 'Photo',
 							  'select'   => 'T',
 							  'maxlen'   => 25,
-							  'options'  => 'AVCPDR',
+							  'options'  => 'VPDR',
 							  'sort'     => true
 );
 $opts['fdd']['user_name'] = array(
@@ -156,29 +167,52 @@ $opts['fdd']['last_location_id'] = array(
 										 'name'     => 'Last location ID',
 										 'select'   => 'T',
 										 'maxlen'   => 11,
-										 'options'  => 'AVCPDR',
+										 'options'  => 'VCPDR',
 										 'sort'     => true
 );
 $opts['fdd']['latitude'] = array(
 								 'name'     => 'Last Latitude',
 								 'select'   => 'T',
 								 'maxlen'   => 12,
-								 'options'  => 'AVCPDR',
+								 'options'  => 'VCPDR',
 								 'sort'     => true
 );
 $opts['fdd']['longitude'] = array(
 								  'name'     => 'Last Longitude',
 								  'select'   => 'T',
 								  'maxlen'   => 12,
-								  'options'  => 'AVCPDR',
+								  'options'  => 'VCPDR',
 								  'sort'     => true
 );
-$opts['fdd']['site'] = array(
-							 'name'     => 'Game Prefix',
-							 'select'   => 'T',
-							 'maxlen'   => 20,
-							 'sort'     => true
-);
+
+if (isset($_SESSION['current_game_prefix'])) {	
+	$opts['fdd']['site'] = array(
+								 'name'     => 'Game Prefix',
+								 'select'   => 'T',
+								 'maxlen'   => 20,
+								 'options'  => 'PDR',
+								 'sort'     => true,
+								 'default'	=> "$short_name"
+								 );
+}
+else {
+	$opts['fdd']['site'] = array(
+								 'name'     => 'Game',
+								 'select'   => 'T',
+								 'maxlen'   => 20,
+								 'options'  => 'ALVCPD',
+								 'sort'     => true,
+								 'default'    => '',
+								 'values'     => array(
+													   'db'          	=> $opts['db'],
+													   'table'       	=> 'games',
+													   'column'      	=> 'prefix',
+													   'description'	=> array('columns' => array('0' => 'name')),
+													   'orderby'     => 'name')
+								 
+								 );
+	
+}
 
 
 
