@@ -104,6 +104,7 @@
 		if ($newvals["opt{$i}_node_id"] == 'ADD') {	
 	
 			//insert a new node
+			$newvals["opt{$i}_text"] = addslashes($newvals["opt{$i}_text"]);
 			$new_id = new_node("New Node from " . $this->rec .  " - " . $newvals["opt{$i}_text"]);
 	
 			//store new id here, replacing 'add'
