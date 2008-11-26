@@ -10,3 +10,4 @@
 {/if}
 
 <p>{link text='Delete All Player Events' module=Developer event="deleteAllEvents"}</p>
+<p>{link text='Delete All Player Items' module=Developer event="deleteAllItems"}</p>
