@@ -179,7 +179,8 @@
 								  'size|ACP'   => 60,
 								  'sqlw'       => 'TRIM("$val_as")',
 								  //  'tab'        => 'File',
-								  'sort'       => true
+								  'sort'       => true,
+								  'help'		=> 'Use .png .gif or .jpg files with a width of no more than 300px'
 								  );
 	
 	

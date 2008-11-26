@@ -162,7 +162,8 @@
 								 'select'     => 'T',
 								 'size|ACP'   => 60,
 								 'sqlw'       => 'TRIM("$val_as")',
-								 'sort'       => true
+								 'sort'       => true,
+								  'help'		=> 'Use .png .gif or .jpg files with a width of no more than 300px'
 	);
 
 	//Requirements

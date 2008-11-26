@@ -153,7 +153,8 @@
 								  'size|ACP'   => 60,
 								  'sqlw'       => 'TRIM("$val_as")',
 								  //  'tab'        => 'File',
-								  'sort'       => true
+								  'sort'       => true,
+								  'help'		=> 'Use images (.gif .png .jpg), audio (.mp3 .aac) or video (.mp4 h.264) files'
 	);
 	
 	// Now important call to phpMyEdit
