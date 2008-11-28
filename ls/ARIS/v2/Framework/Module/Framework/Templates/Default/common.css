@@ -190,7 +190,7 @@ p.notification {
 
 .blackpanel .submit > input:active {
 	border: 1px solid #173F91;
-	background: url("../media/blueBack.png") repeat-x;
+	background: url("../media/blueBack.jpg") repeat-x;
 	color: white;
 }
 
