@@ -152,7 +152,7 @@ class NodeManager
     		self::$messages[] = "** addItem: $itemID not defined **";
     	}
     	
-    	return $row['name'];
+    	return $row;
     }
     
     /**

@@ -51,6 +51,10 @@ class Framework_Module_Developer extends Framework_Auth_User
 		$player_id = $this->user->player_id;
 		$sql = $this->db->prefix("DELETE FROM _P_player_events WHERE player_id = '$player_id'");
 		$this->db->exec($sql);
+		
+		$this->__default();
+		$this->tplFile = 'Developer.tpl';
+		$this->message = 'Deleted all events.';
 	}
 	
 	//Clear out all items for this player
@@ -59,6 +63,10 @@ class Framework_Module_Developer extends Framework_Auth_User
 		$player_id = $this->user->player_id;
 		$sql = $this->db->prefix("DELETE FROM _P_player_items WHERE player_id = '$player_id'");
 		$this->db->exec($sql);
+		
+		$this->__default();
+		$this->tplFile = 'Developer.tpl';
+		$this->message = 'Deleted all items.';
 	}
 	
 }

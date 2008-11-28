@@ -1,8 +1,11 @@
+{if isset($message)}
+<p class="notification">{$message}</p>
+{/if}
 <p>Set current location to:</p>
 {if count($locations) > 0}
 <ul class = 'developer'>
 {foreach from=$locations item=location}
-	<li><a href = 'javascript:update_location({$location.latitude},{$location.longitude});'>{$location.name}</a></li>
+	<li><a target="_self" href='javascript:update_location({$location.latitude},{$location.longitude});'>{$location.name}</a></li>
 {/foreach}
 </ul>
 {else}
