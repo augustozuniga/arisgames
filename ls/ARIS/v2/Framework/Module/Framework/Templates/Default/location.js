@@ -73,6 +73,8 @@ function clearNotify() {
 }
 
 function createNotify(icon, url, label) {
+	createNotify.id = createNotify.id || -1;
+
 	// We're already here, so reload the page
 	if (document.getElementById('asyncList')) return;
 	
@@ -88,10 +90,12 @@ function createNotify(icon, url, label) {
 	// Create an icon & link
 	var n = document.getElementById('notify');
 	if (n) {
-		n.innerHTML = '<a href="index.php?controller=Web&site='
+		n.innerHTML = '<a id="bouncing" href="index.php?controller=Web&site='
 			+ update_location.site + '&module=' + url 
 			+ '" target="_self"><img src="' + icon + '" /><div></div></a>';
 	}
+
+	if (createNotify.id > 0) return;
 	
 	// bounce it
 	var i = document.getElementById('notify');
@@ -101,7 +105,7 @@ function createNotify(icon, url, label) {
 	bounce.angle = 0;
 	bounce.rotDir = -1;
 	
-	setInterval("bounce();", 65);
+	createNotify.id = setInterval("bounce();", 65);
 }
 
 function bounce() {

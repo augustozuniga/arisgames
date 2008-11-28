@@ -1,6 +1,5 @@
 // Set a namespace for our code
 window.iPhone = window.iPhone || {};
-
 (function() {
 
 	// Local shorthand variable
@@ -41,25 +40,20 @@ window.iPhone = window.iPhone || {};
 		// updateOrientation checks the current orientation, sets the body's class attribute to portrait,
 		updateOrientation : function() {
 			var orientation = window.orientation;
-			
 			switch (orientation) {
-				
 				// If we're horizontal
 				case 90:
 				case -90:
-				
 				// Set orient to landscape
 				document.body.setAttribute("orient", "landscape");
 				break;	
-				
+			
 				// If we're vertical
 				default:
-				
 				// Set orient to portrait
 				document.body.setAttribute("orient", "portrait");
 				break;
 			}
-			
 		},
 		
 		scrollToY : function(y) {
@@ -92,12 +86,10 @@ window.iPhone = window.iPhone || {};
 				content.style.webkitTransition = "none";
 			}, totalTime);
 		}
-		
 	};
 	
 	// Initialize
 	$i.init = function() {
-		
 		// Sniff for orientation property
 		if (typeof window.orientation !== "undefined") {
 			
@@ -128,7 +120,6 @@ window.iPhone = window.iPhone || {};
 	};
 	
 	$i.onload = {
-		
 		// Disable flick events
 		disableScrollOnBody : function() {
 			document.body.addEventListener("touchmove", function(e) {
@@ -162,7 +153,6 @@ window.iPhone = window.iPhone || {};
 		
 		// Enable area for scrolling
 		enableScrollOnContent : function() {
-			
 			// Grab elements
 			var content = document.querySelector("#content");
 			var container = document.querySelector("#container");
@@ -267,7 +257,6 @@ window.iPhone = window.iPhone || {};
 							// Flicks should go farther
 							y = y + (y * 0.2);
 						}
-
 						
 						// Set boundary
 						var boundary = (container.offsetHeight - this.offsetHeight);
@@ -288,7 +277,6 @@ window.iPhone = window.iPhone || {};
 		
 		// Mimic native footer UI
 		nativeFooter : function() {
-			
 			// Target element
 			var footer = document.querySelector("#footer");
 			if (footer) {
@@ -311,11 +299,9 @@ window.iPhone = window.iPhone || {};
 					}, false);
 				}
 			}
-		},
-/*		
+		},		
 		// Links need special treatment so as not to interfere with scroll
 		enableLinksOnTap : function() {
-			
 			// Target nodes
 			var items = document.querySelectorAll("#content ul li");
 			for (var i = 0, j = items.length; i < j; i++) {
@@ -366,7 +352,6 @@ window.iPhone = window.iPhone || {};
 				}, false);
 			}
 		}
-		*/
 	};
 	
 	// Fire on load
