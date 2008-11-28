@@ -200,6 +200,7 @@ addEventListener("click", function(event)
 
 function checkOrientAndLocation()
 {
+/*
     if (window.innerWidth != currentWidth)
     {   
         currentWidth = window.innerWidth;
@@ -213,6 +214,7 @@ function checkOrientAndLocation()
         var pageId = location.hash.substr(hashPrefix.length)
         iui.showPageById(pageId);
     }
+*/
 }
 
 function showDialog(page)
