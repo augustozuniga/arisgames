@@ -302,6 +302,7 @@ window.iPhone = window.iPhone || {};
 		},		
 		// Links need special treatment so as not to interfere with scroll
 		enableLinksOnTap : function() {
+/*
 			// Target nodes
 			var items = document.querySelectorAll("#content ul li");
 			for (var i = 0, j = items.length; i < j; i++) {
@@ -351,6 +352,7 @@ window.iPhone = window.iPhone || {};
 					this.cancel = false;
 				}, false);
 			}
+*/
 		}
 	};
 	
