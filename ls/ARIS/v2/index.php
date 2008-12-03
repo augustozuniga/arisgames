@@ -50,8 +50,10 @@ try {
 
     // Run shutdown functions and stop the Framework
     Framework::stop();
-} catch (Framework_Exception $error) {
+} 
+catch (Framework_Exception $error) {
     switch ($error->getCode()) {
+    
     case FRAMEWORK_ERROR_AUTH:
         // Redirect to your login page here?
         $pg = urlencode($_SERVER['REQUEST_URI']);
@@ -64,7 +66,8 @@ try {
         echo $error->getMessage();
     }
 
-} catch (Exception $error) {
+} 
+catch (Exception $error) {
     echo $error->getMessage();
 }
 

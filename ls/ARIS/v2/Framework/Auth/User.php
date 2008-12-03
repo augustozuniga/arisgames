@@ -38,14 +38,7 @@ abstract class Framework_Auth_User extends Framework_Auth
     	if (is_array($session->authorization)) return true;
 
     	throw new Framework_Exception('User must be logged in for this request', 				
-            	FRAMEWORK_ERROR_AUTH);
-    
-    	/*
-        if ($this->user->isDefault() == false) {
-            throw new Framework_Exception('User must be logged in for this request', 				
-            	FRAMEWORK_ERROR_AUTH);
-        }
-        */
+            FRAMEWORK_ERROR_AUTH);
     }
 }
 
