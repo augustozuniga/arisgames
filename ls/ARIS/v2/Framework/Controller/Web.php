@@ -68,7 +68,7 @@ class Framework_Controller_Web extends Framework_Controller_Common
 		catch (Framework_Exception $e) {
 			$_SESSION = array();
 			session_destroy();
-			header("Location: {$_SERVER['PHP_SELF']}?module=Welcome&controller=Web&site="
+			header("Location: {$_SERVER['PHP_SELF']}?module=Welcome"
 				. Framework::$site->name);
 			die();
 		}
