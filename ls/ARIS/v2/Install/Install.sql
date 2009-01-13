@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `authorization` smallint(6) NOT NULL default '0' COMMENT 'This is used to give the player editor rights',
   `site` varchar(64) NOT NULL default 'default',
   PRIMARY KEY  (`player_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `players`
