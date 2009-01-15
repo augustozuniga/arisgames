@@ -104,6 +104,8 @@ tablePrefix		-	The tables to use in SQL
 		<videoIcon>defaultVideoIcon.png</videoIcon>
 		<audioIcon>defaultAudioIcon.png</audioIcon>
 		<pdfIcon>defaultPdfIcon.png</pdfIcon>
+		<startingIDs>
+		</startingIDs>
 	</inventory>
 	
 	<async>
@@ -113,6 +115,22 @@ tablePrefix		-	The tables to use in SQL
 	<developer>
 		<title>Developer</title>
 	</developer>
+
+	<applications>
+		<startingIDs>
+			<id>2</id>
+			<id>3</id>
+			<id>4</id>
+			<id>5</id>
+			<id>6</id>
+			<id>7</id>
+		</startingIDs>
+	</applications>
+
+	<events>
+		<startingIDs>
+		</startingIDs>
+	</events>
 
 </aris>
 
@@ -200,6 +218,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 	$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('$game_id','{$_SESSION[user_id]}')";
 	mysql_query($query);
 	echo mysql_error();
+
 
 
 
@@ -385,22 +404,19 @@ defaultUser     -   Create a dummy record and put its primary key here
 	echo mysql_error();
 
 	//Create a test player for this game and give them all applications
-	echo "<p>Creating a test player for this game and give them default applicaitons</p>";
+	echo '<p>Regster a Test Player</p>';
 	$query = "INSERT INTO players (first_name,last_name,user_name,password,site) 
 				VALUES 	('{$new_game_short}', 'Tester', '{$new_game_short}', '{$new_game_short}','{$new_game_short}')";
 	mysql_query($query);
 	echo mysql_error();
 	$test_player_id = mysql_insert_id();
 
-	$query = "SELECT * FROM {$new_game_short}_applications";
-	$result = mysql_query($query);
+	$query = "INSERT INTO game_players (game_id,player_id) VALUES ('$game_id','$test_player_id')";
+	mysql_query($query);
 	echo mysql_error();
-	while ($application = mysql_fetch_array($result)) {
-			$new_player_application_query = "INSERT INTO {$new_game_short}_player_applications (player_id,application_id)
-			VALUES ('{$test_player_id}','{$application['application_id']}')";
-			mysql_query($new_player_application_query);
-			echo mysql_error();
-	}
+
+	echo '<p>Setting up Starting Assets for new Player</p>';
+	new_player_setup($new_game_short,$game_id, $test_player_id);
 
 
 

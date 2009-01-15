@@ -31,7 +31,7 @@
 		<a href = 'npcs.php'>NPCs</a>
 		<a href = 'items.php'>Items</a>
 		<a href = 'quests.php'>Quests</a>
-		<a href = 'players.php'>Players</a>
+		<a href = 'game_players.php'>Registered Players</a>
 		<a href = 'http://arisdocumentation.pbwiki.com' target = '_blank'>Help</a>
 		<a href = 'logout.php'>Logout</a>
 		</div>";	

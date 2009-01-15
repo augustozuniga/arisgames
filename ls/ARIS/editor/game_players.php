@@ -2,23 +2,36 @@
 	
 	include_once('common.inc.php');
 	
-	print_header( 'Players\' Items');
-	print_general_navigation();
+	if ($_SESSION['current_game_name']) {
+		print_header('Players Registered for ' . $_SESSION['current_game_name']);
+		print_general_navigation();
+		echo "<div class = 'nav'>
+		<a href = 'player_items.php'>Player Items</a>
+		<a href = 'player_events.php'>Player Events</a>
+		<a href = 'player_applications.php'>Player Applications</a>
 
-	echo "<div class = 'nav'>
-	<a href = 'game_players.php'>Players</a>
-	<a href = 'itmes.php'>Items</a>
-	</div>";
+		</div>";		
+	}
+	else {
+		print_header('Player Registrations');
+		echo "<div class = 'nav'>
+		<a href = 'index.php'>Back to Game Selection</a>
+		<a href = 'http://arisdocumentation.pbwiki.com' target = '_blank'>Help</a>
+		<a href = 'logout.php'>Logout</a>
+		</div>";	
+	}
 	
-	$short_name = substr($_SESSION['current_game_prefix'], 0, strlen($_SESSION['current_game_prefix']) - 1);	
-
 	
 	/**********************
 	 PHP My Edit Config
 	 *********************/
 	
+	$opts['triggers']['insert']['after'][0] = 'triggers/game_players_insert.php';
+	$opts['triggers']['delete']['after'][0] = 'triggers/game_players_delete.php';
+
+	
 	// Select the Table Name
-	$opts['tb'] = $_SESSION['current_game_prefix'] . 'player_items';
+	$opts['tb'] = 'game_players';
 	
 	// Name of field which is the unique key
 	$opts['key'] = 'id';
@@ -37,6 +50,7 @@
 	// A - add,  C - change, P - copy, V - view, D - delete,
 	// F - filter, I - initial sort suppressed
 	$opts['options'] = 'ACPDF';
+	
 	
 	// Number of lines to display on multiple selection filters
 	$opts['multiple'] = '4';
@@ -60,7 +74,7 @@
 	$opts['cgi']['prefix']['operation'] = 'PME_op_';
 	$opts['cgi']['prefix']['sys']       = 'PME_sys_';
 	$opts['cgi']['prefix']['data']      = 'PME_data_';
-
+	
 	/* Get the user's default language and use it if possible or you can
 	 specify particular one you want to use. Refer to official documentation
 	 for list of available languages. */
@@ -74,6 +88,8 @@
 	 $opts['filters'] = "section_id = 9";
 	 $opts['filters'] = "PMEtable0.sessions_count > 200";
 	 */
+	if ($_SESSION['current_game_id']) $opts['filters'] = "game_id = {$_SESSION['current_game_id']}";
+	
 	
 	/* Field definitions
 	 
@@ -112,70 +128,70 @@
 	 This is useful for giving more meaning to column values. Multiple
 	 descriptions fields are also possible. Check documentation for this.
 	 */
-	
 	$opts['fdd']['id'] = array(
-				   'name'     => 'ID',
-				   'select'   => 'T',
-				   'options'  => 'VPDR', // auto increment
-				   'maxlen'   => 11,
-				   'default'  => '0',
-				   'sort'     => true
-				   );
-
-	$opts['fdd']['player_id'] = array(
-  					'default'    => '',
-  					'maxlen'     => 20,
-  					'name'       => 'Player',
-  					'options'    => 'ACPVDFL',
-  					'required'   => true,
-  					'select'     => 'T',
-  					'size|ACP'   => 20,
-  					'sort'       => true,
-  					'values'     => array(
-    								'db'          	=> $opts['db'],
-    								'table'       	=> 'players',
-    								'column'      	=> 'player_id',
-    								'description'	=> array(
-       											'columns' => array(
-													'0' => 'user_name', 
-													'1' => 'first_name',
-													'2' => 'last_name'),
-       								'divs'    => array('0' => ' - ', '1' => ' ')
-     								),
-					'filters'     => "site = '{$short_name}'",
-    					'orderby'     => 'player_id')
-	);
+											'name'     => 'ID',
+											'select'   => 'T',
+											'options'  => 'AVCPDR', // auto increment
+											'maxlen'   => 11,
+											'default'  => '0',
+											'sort'     => true
+											);
 	
-
-	$opts['fdd']['item_id'] = array(
-  					'default'    => '',
-  					'maxlen'     => 20,
-  					'name'       => 'Item',
-  					'options'    => 'ACPVDFL',
-  					'required'   => true,
-  					'select'     => 'T',
-  					'size|ACP'   => 20,
-  					'sort'       => true,
-  					'values'     => array(
-    								'db'          	=> $opts['db'],
-    								'table'       	=> $_SESSION['current_game_prefix'] . 'items',
-    								'column'      	=> 'item_id',
-    								'description'	=> array(
-       											'columns' => array('0' => 'name')
-       								
-     								),
-    					'orderby'     => 'item_id')
-	);
-
-
+if (isset($_SESSION['current_game_prefix'])) {	
+		$opts['fdd']['game_id'] = array(
+									 'name'     => 'Game',
+									 'select'   => 'T',
+									 'maxlen'   => 20,
+									 'options'  => 'APDR',
+									 'sort'     => true,
+									 'default'	=> $_SESSION['current_game_id']
+									 );
+}
+else {	
+	
+	$opts['fdd']['game_id'] = array('maxlen'     => 20,
+								   'name'       => 'Game',
+								   'options'    => 'LAVCPD',
+								   'required'   => true,
+								   'select'     => 'T',
+								   'size|ACP'   => 20,
+								   'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+								   'sort'       => true,
+								   'values'     => array(
+														 'db'          	=> $opts['db'],
+														 'table'       	=> 'games',
+														 'column'      	=> 'game_id',
+														 'description'	=> array('columns' => array('0' => 'name')),
+														 'orderby'     => 'game_id')
+								   );	
+}
+	
+	
+	
+	
+	$opts['fdd']['player_id'] = array(
+									'maxlen'     => 20,
+									'name'       => 'Player',
+									'options'    => 'LAVCPD',
+									'required'   => true,
+									'select'     => 'T',
+									'size|ACP'   => 20,
+									'sqlw'		=>'IF($val_qas = "", NULL, $val_qas)',	 
+									'sort'       => true,
+									'values'     => array(
+														  'db'          	=> $opts['db'],
+														  'table'       	=> 'players',
+														  'column'      	=> 'player_id',
+														  'description'	=> array('columns' => array('0' => 'user_name')),
+														  'orderby'     => 'player_id')
+									);	
 	
 	
 	
 	// Now important call to phpMyEdit
-	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
-	//new phpMyEdit($opts);
-	new phpMyEdit_mce_cal($opts);	
+	require_once('phpMyEdit.class.php');
+	new phpMyEdit($opts);
+	
 	
 	print_footer();
 	?>
-

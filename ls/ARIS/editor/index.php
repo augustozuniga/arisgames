@@ -6,6 +6,7 @@
 	unset($_SESSION['current_game_prefix']);
 	unset($_SESSION['current_game_short_name']);
 	unset($_SESSION['current_game_name']);
+	unset($_SESSION['current_game_id']);
 	
 	print_header('Your ARIS Games');
 	

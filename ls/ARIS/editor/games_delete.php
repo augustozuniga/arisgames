@@ -11,7 +11,7 @@
 	
 	if (isset($_REQUEST['prefix']) and isset($_REQUEST['confirmed'])) {
 		//Go ahead and delete the data
-		delete($_REQUEST['prefix'],$engine_sites_path);
+		delete($_REQUEST['prefix'],$engine_sites_path, $_REQUEST['game_id']);
 		//echo $_REQUEST['prefix'];
 		
 	}
@@ -23,12 +23,12 @@
 		$prefix = substr($row['prefix'],0,strlen($row['prefix'])-1);
 
 		echo "<h3>Are you sure you want to delete {$row['name']}?</h3><h3>This cannot be undone!</h3>";
-		echo "<a href = 'index.php'>Cancel</a> / <a href = '{$_SERVER['PHP_SELF']}?prefix={$prefix}&confirmed=true'>Continue Delete</a>";
+		echo "<a href = 'index.php'>Cancel</a> / <a href = '{$_SERVER['PHP_SELF']}?prefix={$prefix}&game_id={$_REQUEST['game_id']}&confirmed=true'>Continue Delete</a>";
 	}
 	
 	
 
-	function delete($prefix,$path) {		
+	function delete($prefix,$path,$game_id) {		
 	
 		echo '<h3>Start Delete...</h3>';
 	
@@ -57,7 +57,13 @@
 		echo '<p>' . $query . '</p>';
 		echo mysql_error();
 		
-		//Delete the game record
+		//Delete the player registrations
+		$query = "DELETE FROM game_players WHERE game_id = $game_id";
+		mysql_query($query);
+		echo '<p>' . $query . '</p>';
+		echo mysql_error();		
+		
+		//Delete the test players
 		$query = "DELETE FROM players WHERE first_name = '{$prefix}' and last_name = 'Tester' and user_name = '{$prefix}'";
 		mysql_query($query);
 		echo '<p>' . $query . '</p>';

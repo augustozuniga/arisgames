@@ -1,6 +1,6 @@
 <?php
 	
-	if (isset($_REQUEST['user_name']) and isset($_REQUEST['password'])) {
+	if (isset($_REQUEST['req']) and $_REQUEST['req'] == 'login') {
 		
 		//Try to login
 		$query = "SELECT * FROM editors WHERE
@@ -34,12 +34,15 @@
 	
 	//Print the login form
 	function print_form(){
+		echo '<p>Enter your login information below or <a href = "index.php?req=register">Create a New Account</a></p>';
 		echo '
 		<form action = "' . $_SERVER['PHP_SELF'] . '" method = "post">
+		<input type = "hidden" name = "req" value = "login"/>
 		<table class = "login">
 		<tr><th>User Name</th><td><input type = "text" name = "user_name"/></td></tr>
 		<tr><th>Password</th><td><input type = "password" name = "password"/></td></tr>
 		<tr><th>&nbsp;</th><td><input type = "submit"/></td></tr>
 		</table></form>';
+		
 	}
 ?>

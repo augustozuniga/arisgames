@@ -59,7 +59,7 @@
 				<td width = '50px'><a href = 'db_upgrades.php'><img src = 'images/gears.png'/></a></td><td width = '250px'><a href = 'db_upgrades.php'>DB Upgrades</a></td>
 			</tr>
 			<tr>
-				<td><a href = 'players.php'><img src = 'images/players.png'/></a></td><td><a href = 'players.php'>Players</a></td>
+				<td><a href = 'game_players.php'><img src = 'images/players.png'/></a></td><td><a href = 'game_players.php'>Registered Players</a></td>
 				<td><a href = 'games_edit_xml.php'><img src = 'images/gears.png'/></a></td><td><a href = 'games_edit_xml.php'>Edit XML Config</a></td>
 			</tr>
 			<tr>
