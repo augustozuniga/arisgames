@@ -6,7 +6,7 @@
 		$query = "SELECT * FROM editors WHERE
 		name = '{$_REQUEST['user_name']}'
 		AND
-		password = '{$_REQUEST['password']}'";
+		password = md5('{$_REQUEST['password']}')";
 		
 		$result = mysql_query($query);
 		
@@ -19,7 +19,7 @@
 			echo '<script language="javascript">window.location = \'index.php\';</script>';
 		}
 		else {
-			echo '<h3>Username / Password not valid</h3>';
+			echo '<h3>Email / Password not valid</h3>';
 			print_form();
 			print_footer();
 		}	
@@ -39,7 +39,7 @@
 		<form action = "' . $_SERVER['PHP_SELF'] . '" method = "post">
 		<input type = "hidden" name = "req" value = "login"/>
 		<table class = "login">
-		<tr><th>User Name</th><td><input type = "text" name = "user_name"/></td></tr>
+		<tr><th>Email Address (your ARIS username)</th><td><input type = "text" name = "user_name"/></td></tr>
 		<tr><th>Password</th><td><input type = "password" name = "password"/></td></tr>
 		<tr><th>&nbsp;</th><td><input type = "submit"/></td></tr>
 		</table></form>';

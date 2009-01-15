@@ -13,7 +13,7 @@
 	
 	
 	//See if we have requested a new account
-	if (isset($_REQUEST['req']) and $_REQUEST['req'] == 'register' ) {
+	if (isset($_REQUEST['req']) and $_REQUEST['req'] == 'register' or $_REQUEST['req'] == 'register2') {
 		print_header('Register for ARIS Editor');
 		include_once('register.inc.php');
 		die();

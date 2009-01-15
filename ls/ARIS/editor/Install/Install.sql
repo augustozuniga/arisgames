@@ -19,13 +19,15 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `editors`
 --
 
+
 CREATE TABLE IF NOT EXISTS `editors` (
   `editor_id` int(11) NOT NULL auto_increment,
   `name` varchar(25) default NULL,
   `password` varchar(32) default NULL,
   `super_admin` enum('0','1') NOT NULL default '0',
+  `comments` tinytext,
   PRIMARY KEY  (`editor_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `editors`
@@ -67,3 +69,20 @@ CREATE TABLE IF NOT EXISTS `game_editors` (
 --
 -- Dumping data for table `game_editors`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `game_players`
+--
+
+CREATE TABLE `game_players` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `game_id` int(10) unsigned NOT NULL,
+  `player_id` int(10) unsigned NOT NULL,
+  `registered` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `unique` (`game_id`,`player_id`),
+  KEY `game_id` (`game_id`),
+  KEY `player_id` (`player_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;

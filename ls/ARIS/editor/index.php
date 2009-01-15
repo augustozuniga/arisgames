@@ -18,24 +18,31 @@
 	echo "<div class = 'nav'>
 		<a href = 'games_add.php'>Add a Game</a>
 		<a href = 'games_restore.php'>Restore a Game</a>
-		<a href = 'players.php'>Global Players</a>
 		<a href = 'http://arisdocumentation.pbwiki.com' target = '_blank'>Help</a>
 		<a href = 'logout.php'>Logout</a>
 	</div>";
 	
 	
-	//Display a list of games this user can administrate
+	//Load Editor Info
 	$query = "SELECT * FROM editors WHERE editor_id = {$_SESSION['user_id']}";
 	$result = mysql_query($query);
 	$row = mysql_fetch_array($result);
 	
+	//Superuser Navigation
+	if (isset($row['super_admin']) and $row['super_admin']) {
+		echo "<div class = 'nav'>
+		<a href = 'players.php'>Global Players</a>
+		</div>";
+	}
+	
+	//Display Games they can admin
 	if (isset($row['super_admin']) and $row['super_admin']) $query = "SELECT * FROM games JOIN game_editors WHERE games.game_id = game_editors.game_id GROUP BY games.game_id";
 	else $query = "SELECT * FROM games JOIN game_editors ON (games.game_id = game_editors.game_id) 
 		WHERE game_editors.editor_id = {$_SESSION['user_id']}";
 	
 	$result = mysql_query($query);
 	
-	if (mysql_num_rows($result) == 0) echo 'No games are currently set up for your user. Please add or restore a game';
+	if (mysql_num_rows($result) == 0) echo 'No games are currently set up for your user. Add or restore a game to get started';
 	else {
 		echo '<table class = "games">
 		<tr><th>Game Name</th><th>Prefix</th><th>Editors</th></tr>';
