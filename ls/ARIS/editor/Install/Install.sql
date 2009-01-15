@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `editors` (
 -- Dumping data for table `editors`
 --
 
-INSERT INTO `editors` (`editor_id`, `name`, `password`) VALUES
-(1, 'editor', 'aris');
+INSERT INTO `editors` (`editor_id`, `name`, `password`,   `super_admin`,  `comments`) VALUES
+(1, 'editor', md5('aris'), '1', 'Default Administrator');
 
 -- --------------------------------------------------------
 
