@@ -49,17 +49,9 @@ class Framework_Module_Login extends Framework_Auth_No
     				"$userField" => $row["$userField"]);
     				
     			$session->{$userField} = $row["$userField"];
-    			
-    			// Prepare the next site
-    			Framework::$site = Framework_Site::factory($row['site']);
-    			Framework::$site->prepare();
-    			$this->site = Framework::$site->name;
-    			
-    			// Load Applications
-    			$this->loadApplications($row["$userField"]);
-				$this->defaultModule = Framework::$site->config->aris->main->defaultModule;
-				header("Location: {$_SERVER['PHP_SELF']}?module={$this->defaultModule}&controller=Web&site="
-					. $this->site);
+
+				header("Location: {$_SERVER['PHP_SELF']}?module=SelectGame&controller=Web&site="
+					. Framework::$site->name);
 				die;
     		}
     	}
