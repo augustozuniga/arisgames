@@ -29,8 +29,8 @@
 	<property name="config.dir" value="${project.root}/config" />
 	<property name="tests.dir" value="${project.root}/tests" />
 	
-	<property name="editor.dir" value="${install.root}/src"/>
-	<property name="games.dir" value="${install.root}/src"/>
+	<property name="editor.dir" value="${install.root}/editor"/>
+	<property name="games.dir" value="${install.root}/games"/>
 	
 	<property name="svn.url" value="https://atsvn.doit.wisc.edu/default/ls" />
 	
