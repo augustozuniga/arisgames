@@ -62,7 +62,12 @@
 		<!-- copy games config -->
 		<copy file="${config.dir}/config.xml" filtering="true" overwrite="true" todir="${games.dir}" />
 		
-		<chmod dir="${gamesSite.dir}" perm="777" includes="**/*"/>
+		<exec executable="chmod">
+			<arg line="-R"/>
+			<arg line="777"/>
+			<arg line="${gamesSite.dir}"/>
+		</exec>
+		
 	</target>
 	
 	
