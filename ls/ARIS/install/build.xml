@@ -70,6 +70,13 @@
 		
 	</target>
 	
+	<!-- :::::: unit tests :::::: -->
+	<target name="phpunit">
+		<exec executable="phpunit" dir="${basedir}" failonerror="on">
+			<arg line=" --log-xml log.xml ${tests.dir}/AllTests.php" />
+		</exec>
+	</target>
 	
-	<target name="build" depends="clean,export,assemble"/>
+	
+	<target name="build" depends="clean,export,assemble,phpunit"/>
 </project>
