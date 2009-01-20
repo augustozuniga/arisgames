@@ -31,6 +31,7 @@
 	
 	<property name="editor.dir" value="${install.root}/editor"/>
 	<property name="games.dir" value="${install.root}/games"/>
+	<property name="gamesSite.dir" value="${games.dir}/Framework/Site"/>
 	
 	<property name="svn.url" value="https://atsvn.doit.wisc.edu/default/ls" />
 	
@@ -60,6 +61,8 @@
 		
 		<!-- copy games config -->
 		<copy file="${config.dir}/config.xml" filtering="true" overwrite="true" todir="${games.dir}" />
+		
+		<chmod dir="${gamesSite.dir}" perm="777" includes="**/*"/>
 	</target>
 	
 	
