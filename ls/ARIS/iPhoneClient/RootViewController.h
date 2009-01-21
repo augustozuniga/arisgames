@@ -25,5 +25,8 @@
 
 - (IBAction)toggleView;
 - (IBAction)returnHome;
+- (IBAction)returnDevHome;
+
+- (void)flipAndGoto:(NSString *)url;
 
 @end

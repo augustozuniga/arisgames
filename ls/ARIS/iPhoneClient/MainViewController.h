@@ -19,5 +19,6 @@
 
 - (void)goToURL:(NSString *)URL;
 - (NSString *)homeURL;
+- (NSString *)homeDevURL;
 
 @end

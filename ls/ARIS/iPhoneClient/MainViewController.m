@@ -123,4 +123,8 @@
 	 //return @"http://atsosxdev.doit.wisc.edu/aris/dev/login.php";
 }
 
+- (NSString *)homeDevURL {
+	return @"http://atsosxdev.doit.wisc.edu/aris/games/";
+}
+
 @end

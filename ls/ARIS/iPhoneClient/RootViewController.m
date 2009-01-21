@@ -114,8 +114,16 @@
 }
 
 -(IBAction)returnHome {
+	[self flipAndGoto:[mainViewController homeURL]];
+}
+
+-(IBAction)returnDevHome {
+	[self flipAndGoto:[mainViewController homeDevURL]];
+}
+
+-(void)flipAndGoto:(NSString *)url {
 	[self toggleView];
-	[mainViewController goToURL:[mainViewController homeURL]];
+	[mainViewController goToURL:url];
 }
 
 @end

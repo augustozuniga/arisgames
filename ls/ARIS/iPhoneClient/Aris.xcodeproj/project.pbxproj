@@ -24,6 +24,7 @@
 		A7AB7B680E7126AD00DE6902 /* Aris Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AB7A3A0E70F3FA00DE6902 /* Aris Logo.png */; };
 		A7AB7BBA0E7129E200DE6902 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AB7BB90E7129E200DE6902 /* Icon.png */; };
 		A7AB7BC00E712CB900DE6902 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A7AB7BBF0E712CB900DE6902 /* Default.png */; };
+		D454763B0F27820700A8B683 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D454763A0F27820700A8B683 /* Icon.png */; };
 		D4579BA70E71AE8E004939AD /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = D4579BA60E71AE8E004939AD /* Icon.icns */; };
 		D45FA45C0E7193B3001871AF /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = D45FA45B0E7193B3001871AF /* iTunesArtwork */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		A7AB7BB90E7129E200DE6902 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		A7AB7BBF0E712CB900DE6902 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D406A2700E71899A00B944F5 /* Aris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aris.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D454763A0F27820700A8B683 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D4579BA60E71AE8E004939AD /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		D45FA45B0E7193B3001871AF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				A7AB7B0A0E7120CE00DE6902 /* MainView.xib */,
+				D454763A0F27820700A8B683 /* Icon.png */,
 				A7AB7B0B0E7120CE00DE6902 /* main.m */,
 				A7AB7B0C0E7120CE00DE6902 /* MainWindow.xib */,
 				A7AB7B0D0E7120CF00DE6902 /* FlipsideView.xib */,
@@ -200,6 +203,7 @@
 				A7AB7BC00E712CB900DE6902 /* Default.png in Resources */,
 				D45FA45C0E7193B3001871AF /* iTunesArtwork in Resources */,
 				D4579BA70E71AE8E004939AD /* Icon.icns in Resources */,
+				D454763B0F27820700A8B683 /* Icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
