@@ -127,4 +127,8 @@
 	return @"http://atsosxdev.doit.wisc.edu/aris/games/";
 }
 
+- (NSString *)homeTestURL {
+	return @"http://atsosxdev.doit.wisc.edu/arislive/games/";
+}
+
 @end
