@@ -37,8 +37,8 @@ class Framework_Module_Map extends Framework_Auth_User
 			WHERE latitude != '' AND longitude != ''
 				AND (require_event_id IS NULL OR player_id = {$user->player_id})
 				AND (_P_locations.remove_if_event_id IS NULL 
-				OR _P_locations.remove_if_event_id NOT IN 
-					(SELECT event_id FROM _P_player_events WHERE player_id = {$user->player_id}))");
+									  OR _P_locations.remove_if_event_id NOT IN (SELECT event_id FROM _P_player_events WHERE player_id = {$user->player_id}))
+				AND hidden != '1'");
 		$rows = Framework::$db->getAll($sql);
 		$this->allLocations = $rows;
 
