@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		A71F5FFA0F29819400EB83FD /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A71F5FF90F29819400EB83FD /* Entitlements.plist */; };
 		A7AB7B040E7120C100DE6902 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7AB7AF90E7120C100DE6902 /* RootViewController.m */; };
 		A7AB7B050E7120C100DE6902 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7AB7AFC0E7120C100DE6902 /* MainView.m */; };
 		A7AB7B060E7120C100DE6902 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7AB7AFD0E7120C100DE6902 /* MainViewController.m */; };
@@ -33,6 +34,7 @@
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
+		A71F5FF90F29819400EB83FD /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		A7AB7A280E70F36500DE6902 /* Aris_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Aris_Prefix.pch; sourceTree = "<group>"; };
 		A7AB7A3A0E70F3FA00DE6902 /* Aris Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Aris Logo.png"; sourceTree = "<group>"; };
 		A7AB7AF80E7120C100DE6902 /* FlipsideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlipsideViewController.h; sourceTree = "<group>"; };
@@ -59,7 +61,7 @@
 		D406A2700E71899A00B944F5 /* Aris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aris.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D454763A0F27820700A8B683 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		D4579BA60E71AE8E004939AD /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
-		D45FA45B0E7193B3001871AF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		D45FA45B0E7193B3001871AF /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = text; path = iTunesArtwork; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				D406A2700E71899A00B944F5 /* Aris.app */,
+				A71F5FF90F29819400EB83FD /* Entitlements.plist */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				D45FA45C0E7193B3001871AF /* iTunesArtwork in Resources */,
 				D4579BA70E71AE8E004939AD /* Icon.icns in Resources */,
 				D454763B0F27820700A8B683 /* Icon.png in Resources */,
+				A71F5FFA0F29819400EB83FD /* Entitlements.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +236,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -254,17 +259,44 @@
 			};
 			name = Release;
 		};
+		A71DBCF50F297BDD00DA14DE /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: UW Division of Information Technology";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EC131F5A-3568-4E52-BB26-7115EF91A6A4";
+				SDKROOT = iphoneos2.0;
+			};
+			name = Distribution;
+		};
+		A71DBCF60F297BDD00DA14DE /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Aris_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				PRODUCT_NAME = Aris;
+			};
+			name = Distribution;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kevin Harris";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C160F44C-BF69-4C8C-B6CC-B7784A6B2A0B";
 				SDKROOT = iphoneos2.0;
 			};
 			name = Debug;
@@ -290,6 +322,7 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				A71DBCF60F297BDD00DA14DE /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -299,6 +332,7 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				A71DBCF50F297BDD00DA14DE /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -120,7 +120,6 @@
 
 - (NSString *)homeURL {
 	return @"http://arisgames.org/games";
-	 //return @"http://atsosxdev.doit.wisc.edu/aris/dev/login.php";
 }
 
 - (NSString *)homeDevURL {
