@@ -222,6 +222,14 @@
 								 'sort'     => true
 	);
 
+	$opts['fdd']['hidden'] = array(
+								 'name'     => 'Is this location Invisible?',
+								   'select'   => 'C', 
+								   'maxlen'   => 1, 
+								   'values2'  => array("No","Yes"), 
+								   'sort'     => true 
+	);	
+	
 	$opts['fdd']['type'] = array(
 								 'name'     => 'What is at this location?',
 								 'select'   => 'T',

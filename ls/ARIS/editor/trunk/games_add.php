@@ -292,6 +292,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 		require_event_id int(10) unsigned default NULL,
 		remove_if_event_id int(10) unsigned default NULL,
 		add_event_id int(10) unsigned default NULL,
+		hidden enum('0','1') default '0',
 		PRIMARY KEY  (location_id),
 		KEY require_event_id (require_event_id)
 		)";

@@ -94,4 +94,13 @@ include_once('common.inc.php');
 		CHANGE  name  name VARCHAR( 100 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL";
 	mysql_query($query);
 	echo mysql_error();
+	
+	echo "<h3>Hidden Locations Support</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}locations
+					ADD COLUMN hidden enum('0','1') default '0'";
+	mysql_query($query);
+	if (mysql_error() == "Duplicate column name 'hidden'") echo 'Not Needed';
+	else echo mysql_error();
+
+	
 ?>
