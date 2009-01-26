@@ -375,7 +375,7 @@
 	//Add to Player
 
 	$opts['fdd']['add_item_id'] = array(
-											 'tab'		=> 'Modily the Player',
+											 'tab'		=> 'Modify the Player',
 											 'default'    => '',
 											 'maxlen'     => 20,
 											 'name'       => 'Give the player this Item',
