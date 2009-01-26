@@ -117,15 +117,15 @@ SCRIPT;
     	$session = Framework_Session::singleton();
     	$user = Framework_User::singleton();
     	$this->messages = array();
-		NodeManager::loadNode($_REQUEST['node_id'], $_REQUEST['npc_id']);
+	NodeManager::loadNode($_REQUEST['node_id'], $_REQUEST['npc_id']);
 		
-		$this->setVariables();
-		$npc = $this->npc;
-		if (!empty($this->node['media'])) {
-			$npc['media'] = $this->findMedia($this->node['media'], 
-				$npc['media']);
-			$this->npc = $npc;
-		}
+	$this->setVariables();
+	$npc = $this->npc;
+	if (!empty($this->node['media'])) {
+	    $npc['media'] = $this->findMedia($this->node['media'], 
+		$npc['media']);
+	    $this->npc = $npc;
+	}
     }
     
     protected function setVariables() {

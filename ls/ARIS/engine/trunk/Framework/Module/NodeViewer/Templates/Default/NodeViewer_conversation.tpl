@@ -9,7 +9,7 @@
 	<option value="">Say...</option>
 </select>
 <input type="button" id="playerMessageSendButton" value="Send" disabled="true" onclick="postPlayerMessage();"/>
-	<div id="viewAnchor" style="height: 20px;"></div>
+<div id="viewAnchor" style="height: 20px;"></div>
 <div id="rawMessage"></div>
 <script language="JavaScript" type="text/javascript">
 <!--
