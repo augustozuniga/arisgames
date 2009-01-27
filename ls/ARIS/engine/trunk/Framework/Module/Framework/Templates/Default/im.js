@@ -140,6 +140,9 @@ function processUserInput() {
 	message['phrase'] = messageContainer.value;
 	
 	userInput = messageContainer.value;
+
+	makeRow('right', userInput, messageQueue['player_icon']);
+	document.getElementById('rawMessage').innerHTML = userInput;
 	postPlayerMessage();
 	getMessageQueue(messageQueue['id']);
 }
@@ -183,8 +186,8 @@ function postPlayerMessage() {
     
     var msg = document.getElementById('rawMessage').innerHTML;
     
-	setRowMessage('right', /*message['phrase']*/ msg, 
-		messageQueue['player_icon']);
+    setRowMessage('right', /*message['phrase']*/ msg, 
+	messageQueue['player_icon']);
 
     messageContainer.value = " ";
     processCurrentMessage();
