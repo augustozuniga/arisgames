@@ -50,11 +50,26 @@ class Framework_Module_Map extends Framework_Auth_User
 			$pointsString  .= "	// Create our player marker icon
 								var icon = new GIcon(G_DEFAULT_ICON);
 								icon.image = 'http://maps.google.com/mapfiles/ms/micons/flag.png';
+								
 								// Set up our GMarkerOptions object
-								markerOptions = { icon:icon };
-								marker = new GMarker(new GLatLng($lat, $long),markerOptions);
+								var markerOptions = { icon:icon };
+								var latlng = new GLatLng($lat, $long)
+								var marker = new GMarker(latlng,markerOptions);
+								
+								// Add it to the map
 								map.addOverlay(marker);
-								bounds.extend(marker.getPoint());";
+								
+								//Add it to the bounds (for auto scaling and centering)
+								bounds.extend(marker.getPoint());
+			
+								//Make the Callout
+								GEvent.addListener(marker,'click', function() {
+										var myHtml = '<p>{$name}</p>';
+										map.openInfoWindowHtml(latlng, myHtml);
+								});			
+			
+			
+			";
 		}
 		
 		// Set up a player marker
@@ -62,13 +77,24 @@ class Framework_Module_Map extends Framework_Auth_User
 			$pointsString  .= "	// Create our player marker icon
 								var playerIcon = new GIcon(G_DEFAULT_ICON);
 								playerIcon.image = 'http://maps.google.com/mapfiles/ms/micons/man.png';
+								
 								// Set up our GMarkerOptions object
-								playerMarkerOptions = { icon:playerIcon };
-								playerMarker = new GMarker(new GLatLng($user->latitude, $user->longitude),playerMarkerOptions);
+								var playerMarkerOptions = { icon:playerIcon };
+								var latlng = new GLatLng($user->latitude, $user->longitude)
+								playerMarker = new GMarker(latlng, playerMarkerOptions);
 								map.addOverlay(playerMarker);
-								bounds.extend(playerMarker.getPoint());";		
+								bounds.extend(playerMarker.getPoint());
+								
+								//Make the Callout
+								GEvent.addListener(playerMarker,'click', function() {
+									var myHtml = '<p>$user->user_name</p>';
+									map.openInfoWindowHtml(latlng, myHtml);
+								});";		
 		}
 		
+		
+		
+	
 		
 		$this->rawHead = '<script src="http://www.google.com/jsapi?key=' . $site->config->aris->map->googleKey . '"></script>
 						<script type="text/javascript">
@@ -78,7 +104,7 @@ class Framework_Module_Map extends Framework_Auth_User
 							var playerMarker;
 								function initialize() {
 									map = new GMap2(document.getElementById("map_canvas"));
-									map.addControl(new GSmallMapControl());
+									map.addControl(new GSmallZoomControl());
 									map.addControl(new GMapTypeControl());
 									bounds = new GLatLngBounds();
 									map.setCenter(new GLatLng(0,0),0);
