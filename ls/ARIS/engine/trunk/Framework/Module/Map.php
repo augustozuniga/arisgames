@@ -27,50 +27,75 @@ class Framework_Module_Map extends Framework_Auth_User
     {
     	$site = Framework::$site;
     	$user = Framework_User::singleton();
-
-		$this->title = 'Current Location';
 		
 		// Set up a marker for each location in the locations table
+		$pointsString = '';
 		$sql = Framework::$db->prefix("SELECT * FROM _P_locations 
-			LEFT OUTER JOIN _P_player_events ON 
-				_P_locations.require_event_id = _P_player_events.event_id
-			WHERE latitude != '' AND longitude != ''
-				AND (require_event_id IS NULL OR player_id = {$user->player_id})
-				AND (_P_locations.remove_if_event_id IS NULL 
+									  LEFT OUTER JOIN _P_player_events ON 
+									  _P_locations.require_event_id = _P_player_events.event_id
+									  WHERE latitude != '' AND longitude != ''
+									  AND (require_event_id IS NULL OR player_id = {$user->player_id})
+									  AND (_P_locations.remove_if_event_id IS NULL 
 									  OR _P_locations.remove_if_event_id NOT IN (SELECT event_id FROM _P_player_events WHERE player_id = {$user->player_id}))
-				AND hidden != '1'");
+									  AND hidden != '1'");
 		$rows = Framework::$db->getAll($sql);
 		$this->allLocations = $rows;
-
-		$mapPath = 'http://maps.google.com/staticmap?maptype=mobile&size='
-			. $site->config->aris->map->width . 'x' 
-			. $site->config->aris->map->height . '&key=' 
-			. $site->config->aris->map->googleKey . '&markers=';
-	 	$colors = array('green', 'purple', 'yellow', 'blue', 'gray', 'orange', 'red', 'white', 'black', 'brown');
-		$letters = array('a','b','c','d','e','f','g','h','i','j','k');
 		
-		$i = 0;
+		//Set up all the markers
 		foreach ($rows as $row) {
 			$lat = $row['latitude'];
 			$long = $row['longitude'];
 			$name = $row['name'];
 			$lid = $row['location_id'];
-			// add a marker (google seems to forgive the trailing | if it exists)
-			$mapPath .= "$lat,$long,{$colors[$i]}{$letters[$i]}|";
-			$i++;
+			$pointsString  .= "	// Create our player marker icon
+								var icon = new GIcon(G_DEFAULT_ICON);
+								icon.image = 'http://maps.google.com/mapfiles/ms/micons/flag.png';
+								// Set up our GMarkerOptions object
+								markerOptions = { icon:icon };
+								marker = new GMarker(new GLatLng($lat, $long),markerOptions);
+								map.addOverlay(marker);
+								bounds.extend(marker.getPoint());";
 		}
-
-		// Cache the map_path for later updates
-		$this->mapPathCache = $mapPath;
-	
-		// Set up a player icon and look for a matching location
+		
+		// Set up a player marker
 		if (!empty($user->latitude) && !empty($user->longitude)) {
-			$mapPath .= $user->latitude . ',' . $user->longtitude . ','
-				. $site->config->aris->map->playerColor;
+			$pointsString  .= "	// Create our player marker icon
+								var playerIcon = new GIcon(G_DEFAULT_ICON);
+								playerIcon.image = 'http://maps.google.com/mapfiles/ms/micons/man.png';
+								// Set up our GMarkerOptions object
+								playerMarkerOptions = { icon:playerIcon };
+								playerMarker = new GMarker(new GLatLng($user->latitude, $user->longitude),playerMarkerOptions);
+								map.addOverlay(playerMarker);
+								bounds.extend(playerMarker.getPoint());";		
 		}
 		
-		$this->mapPath = $mapPath;
 		
+		$this->rawHead = '<script src="http://www.google.com/jsapi?key=' . $site->config->aris->map->googleKey . '"></script>
+						<script type="text/javascript">
+							google.load("maps", "2");
+							var map;
+							var bounds;
+							var playerMarker;
+								function initialize() {
+									map = new GMap2(document.getElementById("map_canvas"));
+									map.addControl(new GSmallMapControl());
+									map.addControl(new GMapTypeControl());
+									bounds = new GLatLngBounds();
+									map.setCenter(new GLatLng(0,0),0);
+									bounds = new GLatLngBounds();
+									
+		
+									' . $pointsString . '
+									map.setZoom(map.getBoundsZoomLevel(bounds) -1);
+									map.setCenter(bounds.getCenter());
+									return true;
+							}
+						</script>';
+		
+		$this->mapWidth = $site->config->aris->map->width;
+		$this->mapHeight = $site->config->aris->map->height;
+		$this->title = 'Current Location';
+		$this->onLoad = 'initialize()';
 		$this->loadLocationAdmin($user);
     }
     

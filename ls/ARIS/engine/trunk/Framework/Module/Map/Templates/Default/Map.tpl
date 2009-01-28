@@ -1,5 +1,5 @@
-<p class="mapContainer"><img id="mapImg" src="{$mapPath}" /></p>
-<script type="text/javascript">var map_cache = "{$mapPathCache}";</script>
+<div id="map_canvas" style="width: {$mapWidth}px; height: {$mapHeight}px"></div>
+
 <ol class="locations">
 	{foreach from=$allLocations item=location}
 		<li>{$location.name}</li>

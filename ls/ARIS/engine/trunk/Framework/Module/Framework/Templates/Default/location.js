@@ -36,10 +36,13 @@ function update_location(lat, long) {
 }
 
 function update_map(lat, long) {
-	img = document.getElementById('mapImg');
-	if (img && map_cache) {
-		img.src = map_cache + lat + ',' + long + ',yellow';
-	}
+	//Destroy Old Marker
+						  
+	//Create New Marker
+	playerMarker.setLatLng(new GLatLng(lat, long));
+	bounds.extend(playerMarker.getPoint());
+	map.setZoom(map.getBoundsZoomLevel(bounds)-1);
+	map.setCenter(bounds.getCenter());	
 }
 
 function process_data(text) {
