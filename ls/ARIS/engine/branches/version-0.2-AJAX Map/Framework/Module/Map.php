@@ -41,40 +41,54 @@ class Framework_Module_Map extends Framework_Auth_User
 		$rows = Framework::$db->getAll($sql);
 		$this->allLocations = $rows;
 		
+		//Set up all the markers
 		foreach ($rows as $row) {
 			$lat = $row['latitude'];
 			$long = $row['longitude'];
 			$name = $row['name'];
 			$lid = $row['location_id'];
-			// add a marker (google seems to forgive the trailing | if it exists)
-			$pointsString  .= "marker = new GMarker(new GLatLng($lat, $long));
+			$pointsString  .= "	// Create our player marker icon
+								var icon = new GIcon(G_DEFAULT_ICON);
+								icon.image = 'http://maps.google.com/mapfiles/ms/micons/flag.png';
+								// Set up our GMarkerOptions object
+								markerOptions = { icon:icon };
+								marker = new GMarker(new GLatLng($lat, $long),markerOptions);
 								map.addOverlay(marker);
 								bounds.extend(marker.getPoint());";
 		}
 		
-		// Set up a player icon and look for a matching location
+		// Set up a player marker
 		if (!empty($user->latitude) && !empty($user->longitude)) {
-			$pointsString  .= "marker = new GMarker(new GLatLng($user->latitude, $user->longitude));
-								map.addOverlay(marker);
-								bounds.extend(marker.getPoint());";		
+			$pointsString  .= "	// Create our player marker icon
+								var playerIcon = new GIcon(G_DEFAULT_ICON);
+								playerIcon.image = 'http://maps.google.com/mapfiles/ms/micons/man.png';
+								// Set up our GMarkerOptions object
+								playerMarkerOptions = { icon:playerIcon };
+								playerMarker = new GMarker(new GLatLng($user->latitude, $user->longitude),playerMarkerOptions);
+								map.addOverlay(playerMarker);
+								bounds.extend(playerMarker.getPoint());";		
 		}
 		
 		
 		$this->rawHead = '<script src="http://www.google.com/jsapi?key=' . $site->config->aris->map->googleKey . '"></script>
-							<script type="text/javascript">
-							google.load("maps", "2");
-						</script>
 						<script type="text/javascript">
-							function initialize() {
-									var map = new GMap2(document.getElementById("map_canvas"));
+							google.load("maps", "2");
+							var map;
+							var bounds;
+							var playerMarker;
+								function initialize() {
+									map = new GMap2(document.getElementById("map_canvas"));
 									map.addControl(new GSmallMapControl());
 									map.addControl(new GMapTypeControl());
-									var bounds = new GLatLngBounds();
+									bounds = new GLatLngBounds();
 									map.setCenter(new GLatLng(0,0),0);
-									var bounds = new GLatLngBounds();
+									bounds = new GLatLngBounds();
+									
+		
 									' . $pointsString . '
-									map.setZoom(map.getBoundsZoomLevel(bounds));
+									map.setZoom(map.getBoundsZoomLevel(bounds) -1);
 									map.setCenter(bounds.getCenter());
+									return true;
 							}
 						</script>';
 		
