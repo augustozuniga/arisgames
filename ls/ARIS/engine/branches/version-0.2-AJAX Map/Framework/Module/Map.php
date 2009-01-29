@@ -43,44 +43,22 @@ class Framework_Module_Map extends Framework_Auth_User
 		
 		//Set up all the markers
 		foreach ($rows as $row) {
-			$lat = $row['latitude'];
-			$long = $row['longitude'];
-			$name = $row['name'];
-			$lid = $row['location_id'];
-			$pointsString  .= "	// Create our player marker icon
-								var icon = new GIcon(G_DEFAULT_ICON);
-								icon.image = 'http://maps.google.com/mapfiles/ms/micons/flag.png';
-								
-								// Set up our GMarkerOptions object
-								var markerOptions = { icon:icon };
-								var latlng = new GLatLng($lat, $long)
-								var marker = new GMarker(latlng,markerOptions);
-								
-								// Add it to the map
-								map.addOverlay(marker);
-								
-								//Add it to the bounds (for auto scaling and centering)
-								bounds.extend(marker.getPoint());
+			if (isset($row['icon'])) $icon = $site->getUriPath() . '/templates/' . $row['icon'];
+			else  $icon = $site->getUriPath() . '/templates/' . $site->config->aris->map->defaultLocationIcon;
 			
-								//Make the Callout
-								GEvent.addListener(marker,'click', function() {
-										var myHtml = '<p>{$name}</p>';
-										map.openInfoWindowHtml(latlng, myHtml);
-								});			
-			
-			
-			";
+			$pointsString  .= "createMarker({$row['latitude']}, {$row['longitude']}, '{$row['name']}', '{$icon}');\n";
 		}
 		
 		// Set up a player marker
 		if (!empty($user->latitude) && !empty($user->longitude)) {
+			$playerIcon = $site->getUriPath() . '/templates/' . $site->config->aris->map->defaultPlayerIcon;
 			$pointsString  .= "	// Create our player marker icon
 								var playerIcon = new GIcon(G_DEFAULT_ICON);
-								playerIcon.image = 'http://maps.google.com/mapfiles/ms/micons/man.png';
+								playerIcon.image = '{$playerIcon}';
 								
 								// Set up our GMarkerOptions object
 								var playerMarkerOptions = { icon:playerIcon };
-								var latlng = new GLatLng($user->latitude, $user->longitude)
+								var latlng = new GLatLng($user->latitude, $user->longitude);
 								playerMarker = new GMarker(latlng, playerMarkerOptions);
 								map.addOverlay(playerMarker);
 								bounds.extend(playerMarker.getPoint());
@@ -97,26 +75,47 @@ class Framework_Module_Map extends Framework_Auth_User
 	
 		
 		$this->rawHead = '<script src="http://www.google.com/jsapi?key=' . $site->config->aris->map->googleKey . '"></script>
-						<script type="text/javascript">
-							google.load("maps", "2");
-							var map;
-							var bounds;
-							var playerMarker;
-								function initialize() {
-									map = new GMap2(document.getElementById("map_canvas"));
-									map.addControl(new GSmallZoomControl());
-									map.addControl(new GMapTypeControl());
-									bounds = new GLatLngBounds();
-									map.setCenter(new GLatLng(0,0),0);
-									bounds = new GLatLngBounds();
-									
+		<script type="text/javascript">
+		google.load("maps", "2");
+		var map;
+		var bounds;
+		var playerMarker;
+							
+		function createMarker(lat, lng, html, iconPath) {
+			// Create our player marker icon
+			var icon = new GIcon(G_DEFAULT_ICON);
+			icon.image = iconPath;
 		
-									' . $pointsString . '
-									map.setZoom(map.getBoundsZoomLevel(bounds) -1);
-									map.setCenter(bounds.getCenter());
-									return true;
-							}
-						</script>';
+			// Set up our GMarkerOptions object
+			var markerOptions = { icon:icon };
+			var latlng = new GLatLng(lat, lng);
+			var marker = new GMarker(latlng,markerOptions);
+		
+			// Add it to the map
+			map.addOverlay(marker);
+		
+			//Add it to the bounds (for auto scaling and centering)
+			bounds.extend(marker.getPoint());
+		
+			//Make the Callout
+			GEvent.addListener(marker,"click", function() {
+						   map.openInfoWindowHtml(latlng, html);});	
+		}
+		
+		function initialize() {
+			map = new GMap2(document.getElementById("map_canvas"));
+			map.addControl(new GSmallZoomControl());
+			map.addControl(new GMapTypeControl());
+			bounds = new GLatLngBounds();
+			map.setCenter(new GLatLng(0,0),0);
+			bounds = new GLatLngBounds();
+									
+			' . $pointsString . '
+			map.setZoom(map.getBoundsZoomLevel(bounds) -1);
+			map.setCenter(bounds.getCenter());
+			return true;
+		}
+		</script>';
 		
 		$this->mapWidth = $site->config->aris->map->width;
 		$this->mapHeight = $site->config->aris->map->height;
