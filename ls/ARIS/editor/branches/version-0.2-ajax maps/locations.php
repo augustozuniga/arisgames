@@ -106,9 +106,9 @@
 	$opts['triggers']['insert']['after'][0] = 'triggers/uploader.php';
 	$opts['triggers']['update']['before'][0] = 'triggers/uploader.php';	
 	
-	//$opts['triggers']['insert']['after'][1]  = 'triggers/refresh.inc.php';
-	//$opts['triggers']['update']['after'][0]  = 'triggers/refresh.inc.php';
-	//$opts['triggers']['delete']['after'][0]  = 'triggers/refresh.inc.php';
+	$opts['triggers']['insert']['after'][1]  = 'triggers/refresh.inc.php';
+	$opts['triggers']['update']['after'][0]  = 'triggers/refresh.inc.php';
+	$opts['triggers']['delete']['after'][0]  = 'triggers/refresh.inc.php';
 	
 	$opts['triggers']['insert']['after'][2] = 'triggers/locations.php';
 	$opts['triggers']['update']['before'][1] = 'triggers/locations.php';	
