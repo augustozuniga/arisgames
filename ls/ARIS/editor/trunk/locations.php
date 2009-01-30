@@ -55,6 +55,7 @@
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $google_key . '"
 	type="text/javascript"></script>
 	<script src="js/extinfowindow.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/fileupload.js"></script>
     <script type="text/javascript">
    	
 	function initialize() {
@@ -101,16 +102,22 @@
 	/**********************
 	 PHP My Edit Config
 	 *********************/
-	//Trigger a page refresh after a new location or a save to map is updated
-	$opts['triggers']['insert']['after'][0]  = 'triggers/refresh.inc.php';
+	
+	$opts['triggers']['insert']['after'][0] = 'triggers/uploader.php';
+	$opts['triggers']['update']['before'][0] = 'triggers/uploader.php';	
+	
+	$opts['triggers']['insert']['after'][1]  = 'triggers/refresh.inc.php';
 	$opts['triggers']['update']['after'][0]  = 'triggers/refresh.inc.php';
 	$opts['triggers']['delete']['after'][0]  = 'triggers/refresh.inc.php';
 	
-	$opts['triggers']['insert']['after'][1] = 'triggers/locations.php';
-	$opts['triggers']['update']['before'][0] = 'triggers/locations.php';	
+	$opts['triggers']['insert']['after'][2] = 'triggers/locations.php';
+	$opts['triggers']['update']['before'][1] = 'triggers/locations.php';	
+
 	
 	// Select the Table Name
 	$opts['tb'] = $_SESSION['current_game_prefix'] . 'locations';
+	
+	
 		
 	// Name of field which is the unique key
 	$opts['key'] = 'location_id';
@@ -215,12 +222,36 @@
 										'default'  => '0',
 										'sort'     => true
 	);
+	
 	$opts['fdd']['name'] = array(
 								 'name'     => 'Name',
 								 'select'   => 'T',
 								 'maxlen'   => 50,
 								 'sort'     => true
-	);
+								 );
+	
+	
+	
+	$opts['fdd']['icon'] = array(
+								  //  'colattrs|LF'   => '',
+								  //  'escape'     => false,
+								  
+								  'input'      => 'F',
+								  'imagepath'  =>  $image_path,
+								  'URL'        => $image_www_path .'$value',
+								  'URLtarget'  => '_blank',
+								  'maxlen'     => 128,
+								  'name'       => 'Image',
+								  'options'    => 'ACPVDFL',
+								  'required'   => false,
+								  'select'     => 'T',
+								  'size|ACP'   => 60,
+								  'sqlw'       => 'TRIM("$val_as")',
+								  //  'tab'        => 'File',
+								  'sort'       => true,
+								  'help'		=> 'Use an optimized .png for best results'
+								  );
+	
 
 	$opts['fdd']['hidden'] = array(
 								 'name'     => 'Is this location Invisible?',
@@ -325,9 +356,8 @@
 	
 	
 	// Now important call to phpMyEdit
-	require_once 'extensions/phpMyEdit-mce-cal.class.php';		
-	//new phpMyEdit($opts);
-	new phpMyEdit_mce_cal($opts);
+	require_once('phpMyEdit.class.php');
+	new phpMyEdit($opts);
 	
 	print_footer();
 	?>

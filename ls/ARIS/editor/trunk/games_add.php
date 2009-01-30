@@ -88,10 +88,8 @@ tablePrefix		-	The tables to use in SQL
 		<!--ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRQsvlSBtAWfm4N2P3iTGfWOp-UrmRRwG9t9N2_fCbAVKXjr59p56Fx_zA is for atsosxdev-->
 		<!--ABQIAAAAKdhUzwbl5RsEXD6h2Ua_HRRloMOfjiI7F4SM41AgXh_4cb6l9xTntP3tXw4zMbRaLS6TOMA3-jBOlw is for arisgames.org-->
 		<googleKey>' . $google_key . '</googleKey>
-		<width>320</width>
-		<height>200</height>
-		<error>0.0005</error>
-		<playerColor>yellow</playerColor>
+		<defaultLocationIcon>defaultLocationIcon.png</defaultLocationIcon>
+		<defaultPlayerIcon>defaultPlayerIcon.png</defaultPlayerIcon>
 	</map>
 	
 	<quest>
@@ -281,7 +279,7 @@ defaultUser     -   Create a dummy record and put its primary key here
 
 	$query = "CREATE TABLE {$new_game_short}_locations (
 		location_id int(11) NOT NULL auto_increment,
-		media varchar(30) default NULL,
+		icon varchar(30) default NULL,
 		name varchar(50) default NULL,
 		description tinytext,
 		latitude double default '43.0746561',

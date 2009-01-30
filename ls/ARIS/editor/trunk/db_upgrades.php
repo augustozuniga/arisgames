@@ -77,17 +77,20 @@ include_once('common.inc.php');
 	echo "<h3>Unique game_editors</h3>";
 	$query = "ALTER TABLE  game_editors ADD UNIQUE `unique` (game_id, editor_id)";
 	mysql_query($query);
-	echo mysql_error();
+	if (mysql_error() == "Duplicate key name 'unique'") echo 'Not Needed';
+	else echo mysql_error();
 	
 	echo "<h3>Unique player_events</h3>";
 	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}player_events ADD UNIQUE `unique` (player_id, event_id)";
 	mysql_query($query);
-	echo mysql_error();
+	if (mysql_error() == "Duplicate key name 'unique'") echo 'Not Needed';
+	else echo mysql_error();
 	
 	echo "<h3>Unique player_items</h3>";
 	$query = "ALTER TABLE  {$_SESSION['current_game_prefix']}player_items ADD UNIQUE `unique` (player_id,item_id)";
 	mysql_query($query);
-	echo mysql_error();
+	if (mysql_error() == "Duplicate key name 'unique'") echo 'Not Needed';
+	else echo mysql_error();
 	
 	echo "<h3>Extended name for items</h3>";
 	$query = "ALTER TABLE  {$_SESSION['current_game_prefix']}items 
@@ -102,5 +105,11 @@ include_once('common.inc.php');
 	if (mysql_error() == "Duplicate column name 'hidden'") echo 'Not Needed';
 	else echo mysql_error();
 
+	echo "<h3>AJAX Map Support</h3>";
+	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}locations
+					CHANGE `media` `icon` VARCHAR( 30 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL";
+	mysql_query($query);
+	if (mysql_error() == "Unknown column 'media' in '{$_SESSION['current_game_prefix']}locations'") echo 'Not Needed';
+	else echo mysql_error();
 	
 ?>
