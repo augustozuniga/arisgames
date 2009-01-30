@@ -55,6 +55,7 @@
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $google_key . '"
 	type="text/javascript"></script>
 	<script src="js/extinfowindow.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/fileupload.js"></script>
     <script type="text/javascript">
    	
 	function initialize() {
@@ -101,14 +102,13 @@
 	/**********************
 	 PHP My Edit Config
 	 *********************/
-	//Trigger a page refresh after a new location or a save to map is updated
 	
 	$opts['triggers']['insert']['after'][0] = 'triggers/uploader.php';
 	$opts['triggers']['update']['before'][0] = 'triggers/uploader.php';	
 	
-	$opts['triggers']['insert']['after'][1]  = 'triggers/refresh.inc.php';
-	$opts['triggers']['update']['after'][0]  = 'triggers/refresh.inc.php';
-	$opts['triggers']['delete']['after'][0]  = 'triggers/refresh.inc.php';
+	//$opts['triggers']['insert']['after'][1]  = 'triggers/refresh.inc.php';
+	//$opts['triggers']['update']['after'][0]  = 'triggers/refresh.inc.php';
+	//$opts['triggers']['delete']['after'][0]  = 'triggers/refresh.inc.php';
 	
 	$opts['triggers']['insert']['after'][2] = 'triggers/locations.php';
 	$opts['triggers']['update']['before'][1] = 'triggers/locations.php';	
@@ -238,7 +238,7 @@
 								  
 								  'input'      => 'F',
 								  'imagepath'  =>  $image_path,
-								  'URL'        => $image_www_path .'$key.$value',
+								  'URL'        => $image_www_path .'$value',
 								  'URLtarget'  => '_blank',
 								  'maxlen'     => 128,
 								  'name'       => 'Image',
