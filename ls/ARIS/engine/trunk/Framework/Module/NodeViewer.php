@@ -122,25 +122,24 @@ SCRIPT;
 	$this->setVariables();
 	$npc = $this->npc;
 	if (!empty($this->node['media'])) {
-	    if (!$npc) $npc = array();
 	    $npc['media'] = $this->findMedia($this->node['media'], 
-		array_key_exists('media', $npc) ? $npc['media'] : null);
+		$npc['media']);
 	    $this->npc = $npc;
 	}
     }
-
+    
     protected function setVariables() {
-	$this->conversations = NodeManager::$conversations;
-	// TODO: Is this needed?
-	$this->wwwBase = FRAMEWORK_WWW_BASE_PATH;
+    	$this->conversations = NodeManager::$conversations;
+    	// TODO: Is this needed?
+		$this->wwwBase = FRAMEWORK_WWW_BASE_PATH;
+		
+    	$this->node = NodeManager::$node;
+    	$npc = NodeManager::$npc;
+    	if ($npc['npc_id'] > 0) $this->title = 'Chat with ' . $npc['name'];
+    	else $this->title = $this->node['title'];
 
-	$this->node = NodeManager::$node;
-	$npc = NodeManager::$npc;
-	if ($npc['npc_id'] > 0) $this->title = 'Chat with ' . $npc['name'];
-	else $this->title = $this->node['title'];
-
-	if (!empty($npc['media'])) {
-	    $npc['media'] = $this->findMedia($npc['media'], 
+		if (!empty($npc['media'])) {
+			$npc['media'] = $this->findMedia($npc['media'], 
 				'defaultUser.png');
 		}
 		$this->npc = $npc;

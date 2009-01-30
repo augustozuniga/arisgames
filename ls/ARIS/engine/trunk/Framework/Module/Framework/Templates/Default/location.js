@@ -36,13 +36,11 @@ function update_location(lat, long) {
 }
 
 function update_map(lat, long) {
-	//Destroy Old Marker
-						  
-	//Create New Marker
+	//Move playerMarker					  
 	playerMarker.setLatLng(new GLatLng(lat, long));
-	bounds.extend(playerMarker.getPoint());
-	map.setZoom(map.getBoundsZoomLevel(bounds)-1);
-	map.setCenter(bounds.getCenter());	
+	//bounds.extend(playerMarker.getPoint());
+	//map.setZoom(map.getBoundsZoomLevel(bounds)-1);
+	//map.setCenter(bounds.getCenter());	
 }
 
 function process_data(text) {
