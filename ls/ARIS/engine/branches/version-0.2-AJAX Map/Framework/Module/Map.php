@@ -43,7 +43,7 @@ class Framework_Module_Map extends Framework_Auth_User
 		
 		//Set up all the markers
 		foreach ($rows as $row) {
-			if (isset($row['icon'])) $icon = $site->getUriPath() . '/templates/' . $row['icon'];
+			if (isset($row['icon']) and strlen($row['icon'])>0) $icon = $site->getUriPath() . '/templates/' . $row['icon'];
 			else  $icon = $site->getUriPath() . '/templates/' . $site->config->aris->map->defaultLocationIcon;
 			
 			$pointsString  .= "createMarker({$row['latitude']}, {$row['longitude']}, '{$row['name']}', '{$icon}');\n";
