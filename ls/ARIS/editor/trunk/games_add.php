@@ -76,7 +76,7 @@ tablePrefix		-	The tables to use in SQL
 	<main>
 		<title>Player %s</title>
 		<body>Welcome to ARIS</body>
-		<defaultModule>Main</defaultModule>
+		<defaultModule>Quest</defaultModule>
 	</main>
 	
 	<nodeViewer>
