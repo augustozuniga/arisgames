@@ -55,11 +55,21 @@ catch (Framework_Exception $error) {
     switch ($error->getCode()) {
     
     case FRAMEWORK_ERROR_AUTH:
-        //Check for a cookie
-		
+        
+		//Check for a cookie
 		if (isset($_COOKIE["ARISUserField"])) {	
 			//log them in and redirect
-			echo "WE HAVE A COOKIE";
+			$session = Framework_Session::singleton();
+			$userField = Framework::$site->config->user->userField;
+			
+			$session->authorization = array('user_name' => $_COOKIE["ARISUserField"],
+											"$userField" => $_COOKIE["ARISUserField"]);
+			
+			$session->{$userField} = $_COOKIE["ARISUserField"];
+			
+			header("Location: {$_SERVER['PHP_SELF']}?module=SelectGame&controller=Web&site="
+				   . Framework::$site->name);
+			die;
 		}
 		
 			
