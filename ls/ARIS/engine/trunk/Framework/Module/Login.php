@@ -49,6 +49,11 @@ class Framework_Module_Login extends Framework_Auth_No
     				"$userField" => $row["$userField"]);
     				
     			$session->{$userField} = $row["$userField"];
+				
+				//Set cookie
+				$expire=time()+60*60*24*30;
+				setcookie("ARISUserField", $row["$userField"], $expire);
+				
 
 				header("Location: {$_SERVER['PHP_SELF']}?module=SelectGame&controller=Web&site="
 					. Framework::$site->name);
