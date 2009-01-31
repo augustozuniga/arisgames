@@ -37,7 +37,7 @@ function update_location(lat, long) {
 
 function update_map(lat, long) {
 	//Move playerMarker					  
-	playerMarker.setLatLng(new GLatLng(lat, long));
+	if (typeof playerMarker != 'undefined') playerMarker.setLatLng(new GLatLng(lat, long));
 	//bounds.extend(playerMarker.getPoint());
 	//map.setZoom(map.getBoundsZoomLevel(bounds)-1);
 	//map.setCenter(bounds.getCenter());	
