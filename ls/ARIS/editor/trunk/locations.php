@@ -43,6 +43,7 @@
 	$result = mysql_query($query);
 	
 	while ($row = mysql_fetch_array($result)){
+		if ($row['latitude'] and $row['longitude'])
 		$map_points .= "
 		var playerIcon = new GIcon(G_DEFAULT_ICON);
 		playerIcon.image= 'images/defaultPlayerIcon.png'; 
