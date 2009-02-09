@@ -39,6 +39,28 @@
 			map.addOverlay(marker_{$row['location_id']});";
 	}
 
+	$query = "SELECT * FROM players WHERE site = '{$_SESSION['current_game_short_name']}'";
+	$result = mysql_query($query);
+	
+	while ($row = mysql_fetch_array($result)){
+		$map_points .= "
+		var playerIcon = new GIcon(G_DEFAULT_ICON);
+		playerIcon.image= 'images/defaultPlayerIcon.png'; 
+		
+		// Set up our GMarkerOptions object
+		var playerMarkerOptions = { icon:playerIcon };
+		var latlng = new GLatLng({$row['latitude']}, {$row['longitude']});
+		playerMarker = new GMarker(latlng, playerMarkerOptions);
+		map.addOverlay(playerMarker);
+		
+		//Make the Callout
+		GEvent.addListener(playerMarker,'click', function() {
+						   var myHtml = '<p>Last Known Position for: {$row['first_name']} {$row['last_name']}</p>';
+						   map.openInfoWindowHtml(latlng, myHtml);
+						   });";	
+		
+	}
+	
 
 				
 	//Begin HTML
