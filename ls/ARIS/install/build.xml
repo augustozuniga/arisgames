@@ -45,11 +45,11 @@
 	<target name="export">
 		<exec executable="/usr/bin/svn">
 			<arg line="-q"/>
-			<arg line="export ${svn.url}/ARIS/editor ${editor.dir}"/>
+			<arg line="export ${svn.url}/ARIS/editor/trunk ${editor.dir}"/>
 		</exec>
 		<exec executable="/usr/bin/svn">
 			<arg line="-q"/>
-			<arg line="export ${svn.url}/ARIS/v2 ${games.dir}"/>
+			<arg line="export ${svn.url}/ARIS/engine/trunk ${games.dir}"/>
 		</exec>
 	</target>
 	
