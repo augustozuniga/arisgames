@@ -28,7 +28,7 @@ configuration stuff here.
 		<app>ARIS</app>
 		<company>ARIS</company>
 		<techEmail>techsupport@gmail.com</techEmail>
-		<tablePrefix>default_</tablePrefix>
+		<tablePrefix>%tablePrefix%</tablePrefix>
 		<main>
 			<title>Player %s</title>
 			<body>Welcome to ARIS</body>
