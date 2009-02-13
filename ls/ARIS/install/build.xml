@@ -10,8 +10,8 @@
 	<property name="dbpass" value="arispwd"/>
 	<property name="dbhost" value="localhost"/>
 	<property name="googleMapsKey" value="ABQIAAAAfdZ9Azvb5igK5sNf5UCmHxT6o893zRLLR1hye7TfaY4kp60RIxT0Ts5HoVsHjhK0Imf4POFwYzq5aA"/>
-	<property name="gamesWWWPath" value="http://atsosxdev.doit.wisc.edu/arislive/games"/>
-	<property name="gamesSystemPath" value="/Groups/web/arislive/games"/>
+	<property name="gamesWWWPath" value="http://localhost/aris/games"/>
+	<property name="gamesSystemPath" value="/Library/WebServer/Documents/aris/games"/>
 	<property name="mysqlBinPath" value="/usr/local/mysql/bin"/>
 	<property name="svnBinPath" value="/usr/local/mysql/bin"/>
 	
@@ -65,7 +65,7 @@
 		<exec executable="chmod">
 			<arg line="-R"/>
 			<arg line="777"/>
-			<arg line="${gamesSite.dir}"/>
+			<arg line="${games.dir}"/>
 		</exec>
 		
 	</target>

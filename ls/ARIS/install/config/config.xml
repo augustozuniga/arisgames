@@ -56,10 +56,32 @@ configuration stuff here.
 			<videoIcon>defaultVideoIcon.png</videoIcon>
 			<audioIcon>defaultAudioIcon.png</audioIcon>
 			<pdfIcon>defaultPdfIcon.png</pdfIcon>
+			<startingIDs>
+			</startingIDs>
 		</inventory>
 		<async>
 			<notification>Signal lost.</notification>
 		</async>
+		
+		<developer>
+			<title>Developer</title>
+		</developer>
+		
+		<applications>
+			<startingIDs>
+			<id>2</id>
+			<id>3</id>
+			<id>4</id>
+			<id>5</id>
+			<id>6</id>
+			<id>7</id>
+			</startingIDs>
+		</applications>
+		
+		<events>
+			<startingIDs>
+			</startingIDs>
+		</events>
 	</aris>
 
     <!--
