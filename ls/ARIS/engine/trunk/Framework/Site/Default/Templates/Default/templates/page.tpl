@@ -34,10 +34,12 @@
 	{/if}
 </head>
 <body orient="portrait" {if isset($onLoad)}onload="{$onLoad}"{/if}>
+{if !isset($chromeless)}
 <div class="toolbar black" id="header">
 	<h1 id="pageTitle">{$title}</h1>
 	<!-- Back button support? -->
 </div>
+{/if}
 <div id="container">
 	<div id="content">
 {if isset($notification)}
@@ -47,6 +49,7 @@
 	</div>
 </div>
 {if isset($session->applications)}
+{if !isset($chromeless)}
 <div class="appbar" id="footer">
 	{foreach from=$session->applications item=app}
 		{application module=$app}
@@ -58,10 +61,13 @@
 	{/if}
 	<div class="application" id="notify"></div>
 </div>
+{/if}
 {elseif isset($techEmail)}
+{if !isset($chromeless)}
 <div class="help" id="footer">
 	<p>Email <a href="mailto:{$techEmail}">{$techEmail}</a> with help requests or feedback.</p>
 </div>
+{/if}
 {/if}
 </body>
 </html>
