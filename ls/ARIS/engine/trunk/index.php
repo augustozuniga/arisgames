@@ -57,7 +57,7 @@ catch (Framework_Exception $error) {
     case FRAMEWORK_ERROR_AUTH:
         
 		//Check for a cookie
-		if (isset($_COOKIE["ARISUserField"])) {	
+		if (isset($_COOKIE["ARISUserField"]) && !isset($_GET["user_name"])) {	
 			//log them in and redirect
 			$session = Framework_Session::singleton();
 			$userField = Framework::$site->config->user->userField;
@@ -72,10 +72,14 @@ catch (Framework_Exception $error) {
 			die;
 		}
 		
-			
-		// Redirect to your login page here?
-        $pg = urlencode($_SERVER['REQUEST_URI']);
-        header("Location: index.php?module=Welcome&controller=Web&site=$site&event=error");
+		if(!isset($_GET["user_name"])) {
+			// Redirect to your login page here?
+        	$pg = urlencode($_SERVER['REQUEST_URI']);
+        	header("Location: index.php?module=Welcome&controller=Web&site=$site&event=error");
+		} else {
+			header("Location: {$_SERVER['PHP_SELF']}?module=RESTError&controller=Web&event=loginError&site=" . Framework::$site->name);
+		}
+		
         break;
     default:
         // If a PEAR error is returned usually something catastrophic
