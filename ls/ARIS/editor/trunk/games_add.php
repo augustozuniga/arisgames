@@ -43,7 +43,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	$defaultConfigFile = "{$engine_sites_path}/{$default_site}/config.xml";
 	$defaultConfigHandle = fopen($defaultConfigFile, 'r') or die("Can't open config file");
 	$defaultConfigContent = fread($defaultConfigHandle, filesize($defaultConfigFile));
-	$defaultConfigContent = str_replace("%tablePrefix%", $new_game_short . "_", $defaultConfigContent);
+	//$defaultConfigContent = str_replace("%tablePrefix%", $new_game_short . "_", $defaultConfigContent);
 	fclose($defaultConfigHandle);
 	
 	
