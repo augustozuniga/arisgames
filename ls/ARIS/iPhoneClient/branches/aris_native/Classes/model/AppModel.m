@@ -47,7 +47,7 @@
 									baseAppURL, moduleName, site, username, password];
 	
 	NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-	
+	NSLog(urlString);
 	return urlRequest;
 }
 
