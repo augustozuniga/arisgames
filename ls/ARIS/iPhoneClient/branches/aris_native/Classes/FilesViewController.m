@@ -11,6 +11,7 @@
 
 @implementation FilesViewController
 
+@synthesize webview;
 @synthesize moduleName;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -19,7 +20,11 @@
 	
 	moduleName = @"RESTInventory";
 	
-	NSLog(@"Files View");
+	NSLog(@"Inventory View");
+}
+
+- (void)viewDidAppear {
+	[webview loadRequest:[appModel getURLForModule:moduleName]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -28,10 +33,18 @@
 }
 
 -(void) setModel:(AppModel *)model {
+	if(appModel != model) {
+		[appModel release];
+		appModel = model;
+		[appModel retain];
+	}
+	[webview loadRequest:[appModel getURLForModule:moduleName]];
+	
 	NSLog(@"model set for FILES");
 }
 
 - (void)dealloc {
+	[appModel release];
 	[moduleName release];
     [super dealloc];
 }

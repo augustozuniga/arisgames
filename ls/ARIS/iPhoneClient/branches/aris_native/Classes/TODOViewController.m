@@ -39,7 +39,7 @@
 		[appModel retain];
 	}
 	[webview loadRequest:[appModel getURLForModule:moduleName]];
-	NSLog(@"model set for QUEST");
+	NSLog(@"model set for QUEST" );
 }
 
 - (void)dealloc {
