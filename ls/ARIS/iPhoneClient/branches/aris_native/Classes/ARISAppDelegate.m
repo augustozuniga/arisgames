@@ -29,7 +29,7 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	//init app model
 	appModel = [[AppModel alloc] init];
-	appModel.baseAppURL = @"http://localhost/aris/games/index.php";
+	appModel.baseAppURL = @"http://localhost/aris/src/index.php";
 	appModel.site = @"Default";
 	[appModel retain];
 	
@@ -159,6 +159,8 @@
 	//change tab bar selected index
 	tabBarController.selectedIndex = 0;
 	
+	//Set the model to this game
+	appModel.site = selectedGame.name;
 }
 
 - (void)setGameList:(NSNotification *)notification {
