@@ -11,14 +11,16 @@
 #import "ToolbarViewController.h";
 #import "GamePickerViewController.h";
 #import "model/AppModel.h";
+#import "MyCLController.h"
 
-@interface ARISAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate, UINavigationControllerDelegate> {
+@interface ARISAppDelegate : NSObject <UIApplicationDelegate, UITabBarControllerDelegate, UINavigationControllerDelegate, MyCLControllerDelegate> {
     UIWindow *window;
     UITabBarController *tabBarController;
 	LoginViewController *loginViewController;
 	ToolbarViewController *toolbarViewController;
 	GamePickerViewController *gamePickerViewController;
 	AppModel *appModel;
+	UIWebView *webView;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

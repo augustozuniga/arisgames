@@ -17,6 +17,8 @@
 @synthesize currentModule;
 @synthesize site;
 @synthesize gameList;
+@synthesize lastLatitude;
+@synthesize lastLongitude;
 
 - (BOOL)login {
 	BOOL loginSuccessful = NO;

@@ -16,6 +16,8 @@
 	NSString *currentModule;
 	NSString *site;
 	NSMutableArray *gameList;
+	NSString *lastLatitude;
+	NSString *lastLongitude;
 }
 
 @property(copy, readwrite) NSString *baseAppURL;
@@ -23,7 +25,9 @@
 @property(copy, readwrite) NSString *password;
 @property(copy, readwrite) NSString *currentModule;
 @property(copy, readwrite) NSString *site;
-@property(copy, readwrite) NSMutableArray *gameList;
+@property(copy, readwrite) NSMutableArray *gameList;	
+@property(copy, readwrite) NSString *lastLatitude;
+@property(copy, readwrite) NSString *lastLongitude;
 
 -(BOOL)login;
 -(void)fetchGameList;

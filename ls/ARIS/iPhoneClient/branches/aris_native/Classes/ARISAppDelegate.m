@@ -59,6 +59,12 @@
 	//make sure first view controller in tab has model set
 	UIViewController *selViewController = [tabBarController selectedViewController];
 	[selViewController performSelector:@selector(setModel:) withObject:appModel];
+	
+	//Setup MyCLController
+	[MyCLController sharedInstance].delegate = self;
+	if ([MyCLController sharedInstance].locationManager.locationServicesEnabled) {
+		[[MyCLController sharedInstance].locationManager startUpdatingLocation];
+	}
 }
 
 // Optional UITabBarControllerDelegate method
@@ -161,6 +167,9 @@
 	
 	//Set the model to this game
 	appModel.site = selectedGame.name;
+	
+	//Load the default module, TODO
+	appModel.currentModule = @"TODO";
 }
 
 - (void)setGameList:(NSNotification *)notification {
@@ -180,6 +189,30 @@
 	[gamePickerViewController release];
     [window release];
     [super dealloc];
+}
+
+#pragma mark --- Delegate methods for MyCLController ---
+- (void)updateLatitude: (NSString *)latitude andLongitude:(NSString *) longitude {
+	// Check if we're updating locations, and then update the label, too.
+	if (appModel.lastLatitude != nil) [appModel.lastLatitude dealloc];
+	if (appModel.lastLongitude != nil) [appModel.lastLongitude dealloc];
+	appModel.lastLatitude = [latitude copy];
+	appModel.lastLongitude = [longitude copy];
+	
+	
+	//Call the update_location() js function on the game
+	NSLog(@"Updating location: %@, %@", appModel.lastLatitude, appModel.lastLongitude);
+	if ([webView stringByEvaluatingJavaScriptFromString:
+		 [NSString stringWithFormat:@"%@/update_location(%@, %@);", appModel.baseAppURL, appModel.lastLatitude, appModel.lastLongitude]] == nil)
+	{
+		NSLog(@"Couldn't execute script!");
+	}
+	else NSLog(@"update_location() executed successfully.");
+
+}
+
+- (void)newError: (NSString *)text {
+	NSLog(text);
 }
 
 @end
