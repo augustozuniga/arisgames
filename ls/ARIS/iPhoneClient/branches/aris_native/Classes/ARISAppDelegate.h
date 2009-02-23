@@ -21,6 +21,7 @@
 	GamePickerViewController *gamePickerViewController;
 	AppModel *appModel;
 	UIWebView *webView;
+	MyCLController *myCLController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

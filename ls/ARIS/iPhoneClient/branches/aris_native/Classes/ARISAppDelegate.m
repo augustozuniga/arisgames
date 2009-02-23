@@ -32,7 +32,7 @@
 	appModel.baseAppURL = @"http://localhost/aris/src/index.php";
 	appModel.site = @"Default";
 	[appModel retain];
-	
+
 	//register for notifications from views
 	NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
 	[dispatcher addObserver:self selector:@selector(performUserLogin:) name:@"PerformUserLogin" object:nil];
@@ -61,10 +61,9 @@
 	[selViewController performSelector:@selector(setModel:) withObject:appModel];
 	
 	//Setup MyCLController
-	[MyCLController sharedInstance].delegate = self;
-	if ([MyCLController sharedInstance].locationManager.locationServicesEnabled) {
-		[[MyCLController sharedInstance].locationManager startUpdatingLocation];
-	}
+	myCLController = [[MyCLController alloc] init];
+	myCLController.delegate = self;
+	[myCLController.locationManager startUpdatingLocation];
 }
 
 // Optional UITabBarControllerDelegate method
@@ -183,6 +182,8 @@
 
 - (void)dealloc {
 	[appModel release];
+	[webView release];
+	[myCLController release];
 	[toolbarViewController release];
     [tabBarController release];
 	[loginViewController release];
