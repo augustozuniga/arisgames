@@ -29,7 +29,7 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	//init app model
 	appModel = [[AppModel alloc] init];
-	appModel.baseAppURL = @"http://localhost/aris/src/index.php";
+	appModel.baseAppURL = @"http://davembp.local/aris/src/index.php";
 	appModel.site = @"Default";
 	[appModel retain];
 
@@ -194,12 +194,9 @@
 
 #pragma mark --- Delegate methods for MyCLController ---
 - (void)updateLatitude: (NSString *)latitude andLongitude:(NSString *) longitude {
-	// Check if we're updating locations, and then update the label, too.
-	if (appModel.lastLatitude != nil) [appModel.lastLatitude dealloc];
-	if (appModel.lastLongitude != nil) [appModel.lastLongitude dealloc];
+	
 	appModel.lastLatitude = [latitude copy];
 	appModel.lastLongitude = [longitude copy];
-	
 	
 	//Call the update_location() js function on the game
 	NSLog(@"Updating location: %@, %@", appModel.lastLatitude, appModel.lastLongitude);
@@ -209,7 +206,7 @@
 		NSLog(@"Couldn't execute script!");
 	}
 	else NSLog(@"update_location() executed successfully.");
-
+	 
 }
 
 - (void)newError: (NSString *)text {
