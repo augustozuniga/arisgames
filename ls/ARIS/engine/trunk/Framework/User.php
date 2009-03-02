@@ -41,7 +41,7 @@ class Framework_User extends Framework_Object_DB
      */
     public function __construct($userID=null)
     {
-        parent::__construct();
+		parent::__construct();
         if (is_null($userID)) {
             $session = Framework_Session::singleton();
             $userID = $session->{Framework::$site->config->user->userField};
