@@ -7,7 +7,7 @@
 			<table>
 				<tr><td>
 					{if $item.isImage}
-						{link text=$item.name module=Inventory event="displayItem&item_id=`$item.item_id`"}
+						{link text=$item.name module=RESTInventory event="displayItem&item_id=`$item.item_id`"}
 					{else}
 						<a href = "{$item.link}" target="_self">{$item.name}</a>
 					{/if}
