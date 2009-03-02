@@ -289,7 +289,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* SimpleMap */ = {
+		1D6058900D05DD3D006BFB54 /* ARIS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "ARIS" */;
 			buildPhases = (
@@ -324,7 +324,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* SimpleMap */,
+				1D6058900D05DD3D006BFB54 /* ARIS */,
 			);
 		};
 /* End PBXProject section */

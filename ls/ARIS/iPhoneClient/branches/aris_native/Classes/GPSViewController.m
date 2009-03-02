@@ -101,6 +101,14 @@
 - (void)setMarkersFromLocationList:(NSNotification *)notification {
 	NSDictionary *userInfo = notification.userInfo;
 	NSMutableArray *locationList = [userInfo objectForKey:@"locationList"];
+	
+	//Blow away the old markers in the markerManager
+	[markerManager removeMarkers];
+	
+	//Add the player marker back in
+	[markerManager addMarker:playerMarker];
+	
+	//Add the freshly loaded locations from the notification
 	for ( Location* location in locationList ) {
 		CLLocationCoordinate2D locationLatLong;
 		locationLatLong.latitude = [location.latitude floatValue];
