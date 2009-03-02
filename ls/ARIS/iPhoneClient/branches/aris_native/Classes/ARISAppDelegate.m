@@ -180,6 +180,7 @@
 	[gamePickerViewController slideIn];
 }
 
+
 - (void)dealloc {
 	[appModel release];
 	[webView release];
@@ -198,7 +199,7 @@
 	appModel.lastLatitude = [latitude copy];
 	appModel.lastLongitude = [longitude copy];
 	
-	//Call the update_location() js function on the game
+	//Tell the Server - Call the update_location() js function on the game
 	NSLog(@"Updating location: %@, %@", appModel.lastLatitude, appModel.lastLongitude);
 	if ([webView stringByEvaluatingJavaScriptFromString:
 		 [NSString stringWithFormat:@"%@/update_location(%@, %@);", appModel.baseAppURL, appModel.lastLatitude, appModel.lastLongitude]] == nil)
@@ -206,7 +207,10 @@
 		NSLog(@"Couldn't execute script!");
 	}
 	else NSLog(@"update_location() executed successfully.");
-	 
+	
+	//Tell the client
+	NSNotification *updatedLocationNotification = [NSNotification notificationWithName:@"PlayerMoved" object:self];
+	[[NSNotificationCenter defaultCenter] postNotification:updatedLocationNotification];
 }
 
 - (void)newError: (NSString *)text {

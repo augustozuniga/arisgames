@@ -8,17 +8,26 @@
 
 #import <UIKit/UIKit.h>
 #import "model/AppModel.h";
+#import "RMMapView.h"
+#import "RMMarker.h"
+#import "RMMarkerManager.h"
+
 
 @interface GPSViewController : UIViewController {
 	NSString *moduleName;
-	UIWebView *webview;
 	AppModel *appModel;
+	RMMapView *mapView;
+	IBOutlet UIWebView *webView;
+	RMMarker *playerMarker;
+	RMMarkerManager *markerManager;
 }
 
 -(void) setModel:(AppModel *)model;
+-(void) drawMap;
+
 
 @property(copy, readwrite) NSString *moduleName;
-@property (nonatomic, retain) IBOutlet UIWebView *webview;
+@property (nonatomic, retain) RMMapView *mapView;
 
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "AppModel.h"
+#import "GameListParserDelegate.h"
+#import "LocationListParserDelegate.h"
 
 
 @implementation AppModel
@@ -17,6 +19,7 @@
 @synthesize currentModule;
 @synthesize site;
 @synthesize gameList;
+@synthesize locationList;
 @synthesize lastLatitude;
 @synthesize lastLongitude;
 
@@ -54,67 +57,53 @@
 }
 
 - (void)fetchGameList {
-	//init url
-	NSString *urlString = [NSString stringWithFormat:@"%@?module=RESTSelectGame&site=%@&user_name=%@&password=%@",
-									baseAppURL, site, username, password];
-
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
-	// Set self as the delegate of the parser so that it will receive the parser delegate methods callbacks.
-	[parser setDelegate:self];
-	//init parser
-	[parser setShouldProcessNamespaces:NO];
-	[parser setShouldReportNamespacePrefixes:NO];
-	[parser setShouldResolveExternalEntities:NO];
-
-	[parser parse];
-
-	[parser release];
-}
-
-#pragma mark NSXMLParser delegate methods
-
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName 
-		namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName 
-		attributes:(NSDictionary *)attributeDict {
-	if(qName) {
-		elementName = qName;
-	}
-
-	if ([elementName isEqualToString:@"game"]) {
-		//ok, new game
-		NSLog(@"NEW GAME!!");
-		Game *game = [[Game alloc] init];
-		game.gameId = [[attributeDict objectForKey:@"id"] intValue];
-		game.name = [attributeDict objectForKey:@"name"];
-		NSLog(game.name);
-		[gameList addObject:game];
-	}
-}
-
-- (void)parserDidStartDocument:(NSXMLParser *)parser {
-	//init game list array
+	//init location list array
 	if(gameList != nil) {
 		[gameList release];
 	}
 	gameList = [NSMutableArray array];
 	[gameList retain];
+	
+	//init url
+	NSString *urlString = [NSString stringWithFormat:@"%@?module=RESTSelectGame&site=%@&user_name=%@&password=%@",
+									baseAppURL, site, username, password];
+
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
+	GameListParserDelegate *gameListParserDelegate = [[GameListParserDelegate alloc] initWithGameList:gameList];
+	[parser setDelegate:gameListParserDelegate];
+	
+	//init parser
+	[parser setShouldProcessNamespaces:NO];
+	[parser setShouldReportNamespacePrefixes:NO];
+	[parser setShouldResolveExternalEntities:NO];
+	[parser parse];
+	[parser release];
 }
 
-- (void)parserDidEndDocument:(NSXMLParser *)parser {
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:gameList forKey:@"gameList"];
-	NSLog(@"DONE WITH XML!!");
-	NSNotification *gameListNotification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
-	[[NSNotificationCenter defaultCenter] postNotification:gameListNotification];
+- (void)fetchLocationList {
+	//init location list array
+	if(locationList != nil) {
+		[locationList release];
+	}
+	locationList = [NSMutableArray array];
+	[locationList retain];
+	
+	//init url
+	NSString *urlString = [NSString stringWithFormat:@"%@?module=RESTMap&site=%@&user_name=%@&password=%@",
+						   baseAppURL, site, username, password];
+	
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
+	LocationListParserDelegate *locationListParserDelegate = [[LocationListParserDelegate alloc] initWithLocationList:locationList];
+	[parser setDelegate:locationListParserDelegate];
+	
+	//init parser
+	[parser setShouldProcessNamespaces:NO];
+	[parser setShouldReportNamespacePrefixes:NO];
+	[parser setShouldResolveExternalEntities:NO];
+	[parser parse];
+	[parser release];
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName 
-		namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
-	//nada
-}
-
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-   //nada
-}
 
 - (void)dealloc {
 	[gameList release];
