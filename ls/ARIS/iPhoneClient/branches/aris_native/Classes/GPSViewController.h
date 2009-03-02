@@ -23,7 +23,7 @@
 }
 
 -(void) setModel:(AppModel *)model;
--(void) drawMap;
+-(void) refreshMap;
 
 
 @property(copy, readwrite) NSString *moduleName;

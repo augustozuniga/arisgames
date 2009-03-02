@@ -24,9 +24,11 @@
 	
 	//register for notifications
 	NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
-	[dispatcher addObserver:self selector:@selector(setMarkersFromLocationList:) name:@"ReceivedLocationList" object:nil];
-	[dispatcher addObserver:self selector:@selector(movePlayerMarker:) name:@"PlayerMoved" object:nil];
+	[dispatcher addObserver:self selector:@selector(refreshPlayerMarker:) name:@"PlayerMoved" object:nil];
+	[dispatcher addObserver:self selector:@selector(refreshMarkersFromLocationList:) name:@"ReceivedLocationList" object:nil];
 
+
+	//Setup the Map
 	CGFloat tableViewHeight = 416; // todo: get this from const
 	CGRect mainViewBounds = self.view.bounds;
 	CGRect tableFrame;
@@ -54,10 +56,7 @@
 
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
-    // Release anything that's not essential, such as cached data
-}
+
 
 -(void) setModel:(AppModel *)model {
 	if(appModel != model) {
@@ -67,14 +66,16 @@
 	}
 	NSLog(@"model set for GPS");
 	
-	[self updateLocations];
+	[self refreshMap];
 }
 
 
 
 
-// Sets up the map with markers and centering.
-- (void) updateLocations {
+// Updates the map to current data for player and locations from the server
+- (void) refreshMap {
+	NSLog(@"GPS refreshMap requested");
+	
 	//Move the player marker
 	CLLocationCoordinate2D playerPosition;
 	playerPosition.latitude = [appModel.lastLatitude floatValue];
@@ -87,7 +88,24 @@
 	[appModel fetchLocationList];
 }
 
-- (void)movePlayerMarker:(NSNotification *)notification {
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
+    // Release anything that's not essential, such as cached data
+}
+
+- (void)dealloc {
+	[appModel release];
+	[moduleName release];
+    [super dealloc];
+}
+
+
+#pragma mark Notification handlers
+
+
+- (void)refreshPlayerMarker:(NSNotification *)notification {
+	NSLog(@"PlayerMoved notification recieved by GPS controller, running refreshPlayerMarker");
+	
 	//Move the player marker
 	CLLocationCoordinate2D playerPosition;
 	playerPosition.latitude = [appModel.lastLatitude floatValue];
@@ -95,10 +113,11 @@
 	
 	[markerManager moveMarker:playerMarker AtLatLon: playerPosition];
 	[[mapView contents] moveToLatLong:playerPosition];
-	
 }
 
-- (void)setMarkersFromLocationList:(NSNotification *)notification {
+- (void)refreshMarkersFromLocationList:(NSNotification *)notification {
+	NSLog(@"ReceivedLocationList notification recieved by GPS controller, running refreshMarkersFromLocationList");
+	
 	NSDictionary *userInfo = notification.userInfo;
 	NSMutableArray *locationList = [userInfo objectForKey:@"locationList"];
 	
@@ -120,14 +139,10 @@
 		[locationMarker release];
 		
 	}
-	NSLog(@"Recieved Location List on GPS controller!!");
+	
 }
 
-- (void)dealloc {
-	[appModel release];
-	[moduleName release];
-    [super dealloc];
-}
+
 
 
 @end

@@ -34,10 +34,10 @@
 	}
 	
 	if ([elementName isEqualToString:@"location"]) {
-		//ok, new game
+		//Found a location element 
 		NSLog(@"NEW Location!!");
 		Location *location = [[Location alloc] init];
-		location.locationId = [[attributeDict objectForKey:@"locaiton_id"] intValue];
+		location.locationId = [[attributeDict objectForKey:@"location_id"] intValue];
 		location.name = [attributeDict objectForKey:@"name"];
 		location.latitude = [attributeDict objectForKey:@"latitude"];
 		location.longitude = [attributeDict objectForKey:@"longitude"];
@@ -52,7 +52,7 @@
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
 	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:locationList forKey:@"locationList"];
-	NSLog(@"DONE WITH LOCATION XML!!");
+	NSLog(@"Finished Parsing Location XML");
 	NSNotification *locationListNotification = [NSNotification notificationWithName:@"ReceivedLocationList" object:self userInfo:dictionary];
 	[[NSNotificationCenter defaultCenter] postNotification:locationListNotification];
 }
