@@ -26,7 +26,7 @@ class Framework_Module_RESTMap extends Framework_Auth_User
      * @return      mixed
      */
     public function __default() {
-    	
+    	$this->pageTemplateFile = 'empty.tpl';
     	$user = loginUser();
     	
     	if(!$user) {
@@ -49,118 +49,8 @@ class Framework_Module_RESTMap extends Framework_Auth_User
 									  OR _P_locations.remove_if_event_id NOT IN (SELECT event_id FROM _P_player_events WHERE player_id = {$user['player_id']}))
 									  AND hidden != '1'");
 		$rows = Framework::$db->getAll($sql);
-		$this->allLocations = $rows;
+		$this->locations = $rows;
+	}
 		
-		//Set up all the markers
-		foreach ($rows as $row) {
-			if (isset($row['icon']) and strlen($row['icon'])>0) $icon = $site->getUriPath() . '/templates/' . $row['icon'];
-			else  $icon = $site->getUriPath() . '/templates/' . $site->config->aris->map->defaultLocationIcon;
-			
-			$pointsString  .= "createMarker({$row['latitude']}, {$row['longitude']}, '{$row['name']}', '{$icon}');\n";
-		}
-		
-		// Set up a player marker
-		if (!isset($user['latitude']) or !isset($user['longitude'])) {
-			$user['latitude'] = 1;
-			$user['longitude'] = 1;
-		}
-			$playerIcon = $site->getUriPath() . '/templates/' . $site->config->aris->map->defaultPlayerIcon;
-			$pointsString  .= "	// Create our player marker icon
-								var playerIcon = new GIcon(G_DEFAULT_ICON);
-								playerIcon.image = '{$playerIcon}';
-								
-								// Set up our GMarkerOptions object
-								var playerMarkerOptions = { icon:playerIcon };
-								var latlng = new GLatLng({$user['latitude']}, {$user['longitude']});
-								playerMarker = new GMarker(latlng, playerMarkerOptions);
-								map.addOverlay(playerMarker);
-								bounds.extend(playerMarker.getPoint());
-								
-								//Make the Callout
-								GEvent.addListener(playerMarker,'click', function() {
-									var myHtml = '<p>{$user['user_name']}</p>';
-									map.openInfoWindowHtml(latlng, myHtml);
-								});";		
-		
-		
-		
-	
-		
-		$this->rawHead = '<script src="http://www.google.com/jsapi?key=' . $site->config->aris->map->googleKey . '"></script>
-		<script type="text/javascript">
-		google.load("maps", "2");
-		var map;
-		var bounds;
-		var playerMarker;
-							
-		function createMarker(lat, lng, html, iconPath) {
-			// Create our player marker icon
-			var icon = new GIcon(G_DEFAULT_ICON);
-			icon.image = iconPath;
-		
-			// Set up our GMarkerOptions object
-			var markerOptions = { icon:icon };
-			var latlng = new GLatLng(lat, lng);
-			var marker = new GMarker(latlng,markerOptions);
-		
-			// Add it to the map
-			map.addOverlay(marker);
-		
-			//Add it to the bounds (for auto scaling and centering)
-			bounds.extend(marker.getPoint());
-		
-			//Make the Callout
-			GEvent.addListener(marker,"click", function() {
-						   map.openInfoWindowHtml(latlng, html);});	
-		}
-		
-		function initialize() {
-			map = new GMap2(document.getElementById("map_canvas"));
-			map.addControl(new GSmallZoomControl());
-			map.addControl(new GMapTypeControl());
-			bounds = new GLatLngBounds();
-			map.setCenter(new GLatLng(0,0),0);
-			bounds = new GLatLngBounds();
-									
-			' . $pointsString . '
-			map.setZoom(map.getBoundsZoomLevel(bounds) -1);
-			map.setCenter(bounds.getCenter());
-			return true;
-		}
-		</script>';
-		
-		$this->mapWidth = $site->config->aris->map->width;
-		$this->mapHeight = $site->config->aris->map->height;
-		$this->title = 'Current Location';
-		$this->onLoad = 'initialize()';
-		$this->loadLocationAdmin($user);
-    }
-    
-    
-    /**
-     * Loads the administration apps for the default view.
-     */
-    protected function loadLocationAdmin($user) {
-    	if ($user['authorization'] > 0) {
-    		$applications = array();
-    		$applications[] = array('directory' => 'Map',
-    			'name' => 'New', 'event' => 'addLocation');
-    			
-    		$this->adminApplications = $applications;
-    	}
-    }
-	
-	
-    public function addLocation() {
-    	$site = Framework::$site;
-		
-    	$this->title = 'Add New Location';
-    	$this->mediaFiles = $this->getSiteMediaFiles();
-		
-    	$this->requireEvents = $this->getEvents();
-    	$this->removeEvents = $this->requireEvents;
-    }
-	
-	
 }//class
 ?>
