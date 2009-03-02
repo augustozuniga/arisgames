@@ -1,1 +1,1 @@
-{include file="$frameworkModulePath/contactList.tpl"}
+{include file="$frameworkModulePath/RESTcontactList.tpl"}

@@ -8,7 +8,7 @@
 </div>
 {if !empty($node.require_answer_string)}
 <form method="GET" action="index.php">
-    <input name="module" type="hidden" value="NodeViewer" />
+    <input name="module" type="hidden" value="RESTNodeViewer" />
     <input name="event" type="hidden" value="faceTalk" />
     <input name="site" type="hidden" value="{$site}" />
     <input name="node_id" type="hidden" value="{$node.node_id}" />
@@ -19,7 +19,7 @@
 {else}
 <ul class="options">
 {foreach from=$conversations item=msg}
-	<li>{link text=$msg.text module="NodeViewer" event="faceTalk&node_id=`$msg.node_id`&npc_id=`$npc.npc_id`"}</li>
+	<li>{link text=$msg.text module="RESTNodeViewer" event="faceTalk&node_id=`$msg.node_id`&npc_id=`$npc.npc_id`"}</li>
 {/foreach}
 </ul>
 {/if}

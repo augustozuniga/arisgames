@@ -66,6 +66,8 @@ class Framework_Module_RESTNodeViewer extends Framework_Auth_User
 		
 		$this->npcs = $npcs;
 		$this->event = 'conversation';
+		$this->username = $user['user_name'];
+		$this->password = $user['password'];
     }
     
     /**
@@ -79,8 +81,16 @@ class Framework_Module_RESTNodeViewer extends Framework_Auth_User
      */
     public function conversation()
     {
+		$user = loginUser();
+    	
+    	if(!$user) {
+    		header("Location: {$_SERVER['PHP_SELF']}?module=RESTError&controller=Web&event=loginError&site=" . Framework::$site->name);
+    		die;
+    	}
+		$this->chromeless = true;
+		
     	$session = Framework_Session::singleton();
-    	$user = $this->restUser;
+		$user = $this->restUser;
 
     	$photo = $this->findMedia($user['photo'], 'defaultUser.png');
     	$site = Framework::$site->name;
@@ -108,6 +118,13 @@ SCRIPT;
      * Loads the initial conversations available.
      */
     public function faceConversation() {
+		$user = loginUser();
+    	
+    	if(!$user) {
+    		header("Location: {$_SERVER['PHP_SELF']}?module=RESTError&controller=Web&event=loginError&site=" . Framework::$site->name);
+    		die;
+    	}
+		
 		NodeManager::loadNodeConversations($_REQUEST['npc_id']);
 		$this->setVariables();
     }
@@ -116,6 +133,13 @@ SCRIPT;
      * Displays the NPC's text and any options.
      */
     public function faceTalk() {
+		$user = loginUser();
+    	
+    	if(!$user) {
+    		header("Location: {$_SERVER['PHP_SELF']}?module=RESTError&controller=Web&event=loginError&site=" . Framework::$site->name);
+    		die;
+    	}
+		
     	if (!isset($_REQUEST['node_id']) 
     		&& !isset($_REQUEST['question_node_id']))
     	{

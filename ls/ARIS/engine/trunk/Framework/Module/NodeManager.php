@@ -178,6 +178,10 @@ class NodeManager
     	if (empty($npcID)) throw new Framework_Exception('Unauthorized link.',
     		FRAMEWORK_ERROR_AUTH);
     	
+		$session = Framework_Session::singleton();
+		//var_dump($session);
+		
+		
     	$sql = Framework::$db->prefix("SELECT * FROM _P_npcs WHERE npc_id = $npcID");
     	self::$npc = Framework::$db->getRow($sql);
 
@@ -185,14 +189,14 @@ class NodeManager
     	"SELECT * FROM _P_npc_conversations 
 			WHERE  
 				(require_event_id IS NULL OR require_event_id IN 
-					(SELECT event_id FROM _P_player_events WHERE player_id = $_SESSION[player_id])) 
+					(SELECT event_id FROM _P_player_events WHERE player_id = {$session->player_id})) 
 			AND
 				(require_location_id IS NULL OR require_location_id IN 
-					(SELECT last_location_id FROM players WHERE player_id = $_SESSION[player_id])) 
+					(SELECT last_location_id FROM players WHERE player_id = {$session->player_id})) 
 			AND
 				(_P_npc_conversations.remove_if_event_id IS NULL 
 					OR _P_npc_conversations.remove_if_event_id NOT IN 
-						(SELECT event_id FROM _P_player_events WHERE player_id = $_SESSION[player_id]))
+						(SELECT event_id FROM _P_player_events WHERE player_id = {$session->player_id}))
 			AND	npc_id = $npcID
 			ORDER BY node_id DESC"
     	);
