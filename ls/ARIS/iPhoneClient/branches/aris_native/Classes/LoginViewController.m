@@ -75,16 +75,9 @@
 	NSArray *keys = [NSArray arrayWithObjects:@"username", @"password", nil];
 	NSArray *objects = [NSArray arrayWithObjects:username.text, password.text, nil];
 	NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
-	
 	NSNotification *loginNotification = [NSNotification notificationWithName:@"PerformUserLogin" object:self userInfo:dictionary];
-	
 	[[NSNotificationCenter defaultCenter] postNotification:loginNotification];
 	
-	/*
-	 [UIView beginAnimations:nil context:nil];
-	 self.view.alpha = 0;
-	 [UIView commitAnimations];
-	 */
 	[username resignFirstResponder];
 	[password resignFirstResponder];
 }

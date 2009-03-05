@@ -15,10 +15,21 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-    [super viewDidLoad];
-	
-	NSLog(@"Updates View");
+    [super viewDidLoad];	
+	NSLog(@"Logout View Controller Loaded");
 }
+
+
+- (IBAction)logoutButtonPressed: (id) sender {
+	NSLog(@"Logout Requested");
+	
+	NSNotification *logoutRequestNotification = [NSNotification notificationWithName:@"LogoutRequested" object:self];
+	[[NSNotificationCenter defaultCenter] postNotification:logoutRequestNotification];
+
+	
+	
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview

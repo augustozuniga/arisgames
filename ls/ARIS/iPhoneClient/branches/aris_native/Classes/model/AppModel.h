@@ -11,6 +11,7 @@
 
 @interface AppModel : NSObject {
 	NSString *baseAppURL;
+	BOOL loggedIn;
 	NSString *username;
 	NSString *password;
 	NSString *currentModule;
@@ -22,6 +23,7 @@
 }
 
 @property(copy, readwrite) NSString *baseAppURL;
+@property(readwrite) BOOL loggedIn;
 @property(copy, readwrite) NSString *username;
 @property(copy, readwrite) NSString *password;
 @property(copy, readwrite) NSString *currentModule;
@@ -31,6 +33,7 @@
 @property(copy, readwrite) NSString *lastLatitude;
 @property(copy, readwrite) NSString *lastLongitude;
 
+-(void)loadUserDefaults;
 -(BOOL)login;
 -(void)fetchGameList;
 -(void)fetchLocationList;

@@ -11,8 +11,11 @@
 
 @interface LogoutViewController : UIViewController {
 	NSString *moduleName;
+	IBOutlet UIButton *logoutButton;
 }
 
 @property(copy, readwrite) NSString *moduleName;
+
+-(IBAction)logoutButtonPressed: (id) sender;
 
 @end

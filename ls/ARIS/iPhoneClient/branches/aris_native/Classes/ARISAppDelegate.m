@@ -31,6 +31,7 @@
 	appModel = [[AppModel alloc] init];
 	appModel.baseAppURL = @"http://davembp.local/aris/src/index.php";
 	appModel.site = @"Default";
+	[appModel loadUserDefaults];
 	[appModel retain];
 
 	//register for notifications from views
@@ -38,6 +39,7 @@
 	[dispatcher addObserver:self selector:@selector(performUserLogin:) name:@"PerformUserLogin" object:nil];
 	[dispatcher addObserver:self selector:@selector(selectGame:) name:@"SelectGame" object:nil];
 	[dispatcher addObserver:self selector:@selector(setGameList:) name:@"ReceivedGameList" object:nil];
+	[dispatcher addObserver:self selector:@selector(performLogout:) name:@"LogoutRequested" object:nil];
 	
 	//set frame rect of Tabbar view to sit below title/nav bar
 	[self contractTabBar];
@@ -47,9 +49,24 @@
 	
     // Add the tab bar controller's current view as a subview of the window
 	[window addSubview:toolbarViewController.view];
-	[window addSubview:tabBarController.view];
-	[window addSubview:loginViewController.view];
-	[window addSubview:gamePickerViewController.view];
+	[window addSubview:tabBarController.view];	
+
+	
+	//Display the login screen if this user is not logged in
+	if (appModel.loggedIn == YES) {
+		[appModel fetchGameList];
+		if (appModel.site == @"Default") {
+			NSLog(@"Player already logged in, but a site has not been selected. Display site picker");
+			[window addSubview:gamePickerViewController.view];
+		}
+		else NSLog(@"Player already logged in and they have a site selected. Go into the defualt module");
+	}
+	else {
+		NSLog(@"Player not logged in, display login");
+		[window addSubview:loginViewController.view];
+	}
+	
+	
 	
 	UINavigationController *moreNavController = tabBarController.moreNavigationController;
 	//customize the more nav controller
@@ -85,11 +102,6 @@
 	navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 }
 
-/*
-// Optional UITabBarControllerDelegate method
-- (void)tabBarController:(UITabBarController *)tabBarController didEndCustomizingViewControllers:(NSArray *)viewControllers changed:(BOOL)changed {
-}
-*/
 
 #pragma mark navigation controller delegate
 - (void)navigationController:(UINavigationController *)navigationController 
@@ -133,10 +145,10 @@
 	//handle login response
 	if(loginSuccessful) {
 		NSLog(@"login success");
-		[loginViewController setNavigationTitle:@"Select a Game"];
-		gamePickerViewController.view.hidden = NO;
+		[loginViewController setNavigationTitle:@"Select a Game"];	
+		[loginViewController.view removeFromSuperview];
+		[window addSubview:gamePickerViewController.view];
 		[appModel fetchGameList];
-		//[gamePickerViewController slideIn];
 	} else {
 		NSLog(@"login fail");
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"Invalid username or password."
@@ -154,18 +166,20 @@
 	
 	NSLog(@"CAUGHT Select game, game name:");
 	NSLog(selectedGame.name);
-	
-	//do different depending on where we're coming from
-	if(loginViewController.view.hidden == NO) {
-		[gamePickerViewController slideOut];
-		loginViewController.view.hidden = YES;
-	}
+
+	[gamePickerViewController.view removeFromSuperview];
 	
 	//change tab bar selected index
 	tabBarController.selectedIndex = 0;
 	
 	//Set the model to this game
 	appModel.site = selectedGame.name;
+	
+	//Set User Defaults for next Load
+	NSLog(@"Saving Site Info in User Defaults");
+	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+	[defaults setObject:appModel.site forKey:@"site"];
+	[defaults release];
 	
 	//Load the default module, TODO
 	appModel.currentModule = @"TODO";
@@ -180,17 +194,18 @@
 	[gamePickerViewController slideIn];
 }
 
-
-- (void)dealloc {
-	[appModel release];
-	[webView release];
-	[myCLController release];
-	[toolbarViewController release];
-    [tabBarController release];
-	[loginViewController release];
-	[gamePickerViewController release];
-    [window release];
-    [super dealloc];
+- (void)performLogout:(NSNotification *)notification {
+    NSLog(@"Performing Logout: Clearing NSUserDefaults and Displaying Login Screen");
+	
+	//Clear NSUserDefaults
+	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+	[defaults removeObjectForKey:@"loggedIn"];	
+	[defaults release];
+	
+	
+	//(re)load the login view
+	[window addSubview:loginViewController.view];
+	loginViewController.view.hidden == NO;
 }
 
 #pragma mark --- Delegate methods for MyCLController ---
@@ -217,5 +232,9 @@
 	NSLog(text);
 }
 
+- (void)dealloc {
+	[appModel release];
+	[super dealloc];
+}
 @end
 

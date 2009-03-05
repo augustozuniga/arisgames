@@ -14,6 +14,7 @@
 @implementation AppModel
 
 @synthesize baseAppURL;
+@synthesize loggedIn;
 @synthesize username;
 @synthesize password;
 @synthesize currentModule;
@@ -23,12 +24,33 @@
 @synthesize lastLatitude;
 @synthesize lastLongitude;
 
+
+-(void)loadUserDefaults {
+	//Load user settings
+	NSLog(@"Loading User Defaults");
+	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+	loggedIn = [defaults boolForKey:@"loggedIn"];
+	if (loggedIn == YES) {
+		username = [defaults stringForKey:@"username"];
+		NSLog(@"Username:"); NSLog(username);
+		password = [defaults stringForKey:@"password"];
+		NSLog(@"Password:");NSLog(password);
+		site = [defaults stringForKey:@"site"];
+		NSLog(@"Site:");NSLog(site);
+	}
+	else NSLog(@"No Data to Load");
+	[defaults release];
+	
+	
+}
+
 - (BOOL)login {
 	BOOL loginSuccessful = NO;
 	//piece together URL
 	NSString *urlString = [NSString stringWithFormat:@"%@?module=RESTLogin&site=%@&user_name=%@&password=%@",
 						   baseAppURL, site, username, password];
 	
+	NSLog(urlString);
 	//try login
 	NSURLRequest *keyRequest = [NSURLRequest requestWithURL: [NSURL URLWithString:urlString]
 												cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -43,6 +65,18 @@
 	if([loginResponse isEqual:@"1"]) {
 		loginSuccessful = YES;
 	}
+	
+	loggedIn = loginSuccessful;
+	
+	//Set User Defaults for next Load
+	NSLog(@"Saving Login Info in User Defaults");
+	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+	[defaults setBool:loggedIn forKey:@"loggedIn"];
+	[defaults setObject:username forKey:@"username"];
+	[defaults setObject:password forKey:@"password"];
+	[defaults release];
+	
+	
 	
 	return loginSuccessful;
 }
