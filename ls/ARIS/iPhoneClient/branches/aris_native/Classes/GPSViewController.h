@@ -17,7 +17,6 @@
 	NSString *moduleName;
 	AppModel *appModel;
 	RMMapView *mapView;
-	IBOutlet UIWebView *webView;
 	RMMarker *playerMarker;
 	RMMarkerManager *markerManager;
 }

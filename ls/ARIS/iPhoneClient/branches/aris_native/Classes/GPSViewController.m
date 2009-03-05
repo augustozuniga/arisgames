@@ -37,7 +37,7 @@
 							CGRectGetWidth(mainViewBounds),
 							tableViewHeight);
 	mapView = [[RMMapView alloc] initWithFrame:tableFrame];    
-	[webView addSubview:mapView];
+	[self.view addSubview:mapView];
 	
 	markerManager = [mapView markerManager];
 	
