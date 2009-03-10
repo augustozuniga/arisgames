@@ -16,13 +16,16 @@
 	
 	IBOutlet UIButton *takePhotoButton;
 	IBOutlet UIButton *viewLibraryButton;
+	IBOutlet UIButton *uploadPhotoButton;
     IBOutlet UIImageView *image;
     UIImagePickerController *imagePickerController;
 }
 
 
 - (void) setModel:(AppModel *)model;
-- (IBAction)grabImage;
+- (IBAction)cameraButtonTouchAction;
+- (IBAction)libraryButtonTouchAction;
+- (IBAction)uploadButtonTouchAction;
 
 @property(copy, readwrite) NSString *moduleName;
 @property (nonatomic, retain) UIImagePickerController *imagePickerController;
