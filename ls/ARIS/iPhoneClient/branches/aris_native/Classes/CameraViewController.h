@@ -14,7 +14,8 @@
 	NSString *moduleName;
 	AppModel *appModel;
 	
-	IBOutlet UIButton *button;
+	IBOutlet UIButton *takePhotoButton;
+	IBOutlet UIButton *viewLibraryButton;
     IBOutlet UIImageView *image;
     UIImagePickerController *imagePickerController;
 }

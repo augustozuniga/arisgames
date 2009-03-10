@@ -8,7 +8,7 @@
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="185"/>
+			<integer value="182"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -53,14 +53,18 @@
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
 					<int key="IBUIStatusBarStyle">2</int>
 				</object>
-				<object class="IBUIViewController" key="IBUISelectedViewController" id="3499265">
-					<string key="IBUITitle">Camera</string>
-					<object class="IBUITabBarItem" key="IBUITabBarItem" id="386082656">
-						<string key="IBUITitle">Camera</string>
+				<object class="IBUIViewController" key="IBUISelectedViewController" id="933123533">
+					<string key="IBUITitle">Change Game</string>
+					<object class="IBUITabBarItem" key="IBUITabBarItem" id="917496152">
+						<string key="IBUITitle">Change Game</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">Game.png</string>
+						</object>
 						<reference key="IBUITabBar"/>
 					</object>
 					<reference key="IBUIParentViewController" ref="1034742383"/>
-					<string key="IBUINibName">Camera</string>
+					<string key="IBUINibName">GamePicker</string>
 				</object>
 				<object class="NSMutableArray" key="IBUIViewControllers">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -68,6 +72,10 @@
 						<string key="IBUITitle">Quests</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="907338255">
 							<string key="IBUITitle">Quests</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">Quest.png</string>
+							</object>
 							<reference key="IBUITabBar"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
@@ -77,6 +85,10 @@
 						<string key="IBUITitle">GPS</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="765670903">
 							<string key="IBUITitle">GPS</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">GPS.png</string>
+							</object>
 							<reference key="IBUITabBar"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
@@ -86,6 +98,10 @@
 						<string key="IBUITitle">IM</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="807309489">
 							<string key="IBUITitle">IM</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">IM.png</string>
+							</object>
 							<reference key="IBUITabBar"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
@@ -95,34 +111,50 @@
 						<string key="IBUITitle">Files</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="25534783">
 							<string key="IBUITitle">Files</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">Inventory.png</string>
+							</object>
 							<reference key="IBUITabBar"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
 						<string key="IBUINibName">Files</string>
 					</object>
-					<object class="IBUIViewController" id="933123533">
-						<string key="IBUITitle">Change Game</string>
-						<object class="IBUITabBarItem" key="IBUITabBarItem" id="917496152">
-							<string key="IBUITitle">Change Game</string>
-							<reference key="IBUITabBar"/>
-						</object>
-						<reference key="IBUIParentViewController" ref="1034742383"/>
-						<string key="IBUINibName">GamePicker</string>
-					</object>
+					<reference ref="933123533"/>
 					<object class="IBUIViewController" id="594852780">
 						<string key="IBUITitle">Logout</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="519474447">
 							<string key="IBUITitle">Logout</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">Logout.png</string>
+							</object>
 							<reference key="IBUITabBar"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
 						<string key="IBUINibName">Logout</string>
 					</object>
-					<reference ref="3499265"/>
+					<object class="IBUIViewController" id="3499265">
+						<string key="IBUITitle">Camera</string>
+						<object class="IBUITabBarItem" key="IBUITabBarItem" id="386082656">
+							<string key="IBUITitle">Camera</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">camera.png</string>
+							</object>
+							<reference key="IBUITabBar"/>
+						</object>
+						<reference key="IBUIParentViewController" ref="1034742383"/>
+						<string key="IBUINibName">Camera</string>
+					</object>
 					<object class="IBUIViewController" id="860404949">
 						<string key="IBUITitle">Developer</string>
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="598627835">
 							<string key="IBUITitle">Developer</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">Developer.png</string>
+							</object>
 							<reference key="IBUITabBar"/>
 						</object>
 						<reference key="IBUIParentViewController" ref="1034742383"/>
@@ -571,6 +603,23 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">CameraViewController</string>
 					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">grabImage</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSMutableArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>button</string>
+							<string>image</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIButton</string>
+							<string>UIImageView</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/CameraViewController.h</string>
@@ -603,10 +652,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">GPSViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">webView</string>
-						<string key="NS.object.0">UIWebView</string>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">Classes/GPSViewController.h</string>
