@@ -8,6 +8,7 @@
 
 #import "ARISAppDelegate.h"
 #import "model/Game.h"
+#import "NearbyLocation.h"
 
 //private
 @interface ARISAppDelegate (hidden)
@@ -59,14 +60,12 @@
 			NSLog(@"Player already logged in, but a site has not been selected. Display site picker");
 			[window addSubview:gamePickerViewController.view];
 		}
-		else NSLog(@"Player already logged in and they have a site selected. Go into the defualt module");
+		else NSLog(@"Player already logged in and they have a site selected. Go into the default module");
 	}
 	else {
 		NSLog(@"Player not logged in, display login");
 		[window addSubview:loginViewController.view];
 	}
-	
-	
 	
 	UINavigationController *moreNavController = tabBarController.moreNavigationController;
 	//customize the more nav controller
@@ -85,7 +84,6 @@
 
 // Optional UITabBarControllerDelegate method
 - (void)tabBarController:(UITabBarController *)tabController didSelectViewController:(UIViewController *)viewController {
-	//NSLog(@"GOT TAB DELEGATE");
 	if(tabBarController.selectedIndex == 4) {
 		[self expandTabBar];
 	} else if(tabBarController.selectedIndex < 4) {
@@ -103,19 +101,7 @@
 }
 
 
-#pragma mark navigation controller delegate
-- (void)navigationController:(UINavigationController *)navigationController 
-		didShowViewController:(UIViewController *)viewController 
-		animated:(BOOL)animated {
-	
-	if([viewController class] == [gamePickerViewController class]) {
-		[viewController performSelector:@selector(setGameList:) withObject:appModel.gameList];
-	}
-	
-	if([viewController respondsToSelector:@selector(setModel:)]) {
-		[viewController performSelector:@selector(setModel:) withObject:appModel];
-	}
-}
+
 
 # pragma mark custom methods, notification handlers
 
@@ -130,27 +116,22 @@
 }
 
 - (void)performUserLogin:(NSNotification *)notification {
-    //NSDictionary *loginObject = [notification object];
 	NSDictionary *userInfo = notification.userInfo;
 	
-	NSLog(@"CAUGHT PERFORM LOGIN, username:");
-	NSLog([userInfo objectForKey:@"username"]);
-	NSLog(@"password:");
-	NSLog([userInfo objectForKey:@"password"]);
-	
+	NSLog([NSString stringWithFormat:@"Perform Login for: %@ Paswword: %@", [userInfo objectForKey:@"username"], [userInfo objectForKey:@"password"]] );
 	appModel.username = [userInfo objectForKey:@"username"];
 	appModel.password = [userInfo objectForKey:@"password"];
 	BOOL loginSuccessful = [appModel login];
 	NSLog([appModel description]);
 	//handle login response
 	if(loginSuccessful) {
-		NSLog(@"login success");
+		NSLog(@"Login Success");
 		[loginViewController setNavigationTitle:@"Select a Game"];	
 		[loginViewController.view removeFromSuperview];
 		[window addSubview:gamePickerViewController.view];
 		[appModel fetchGameList];
 	} else {
-		NSLog(@"login fail");
+		NSLog(@"Login Failed");
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"Invalid username or password."
 													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];	
@@ -164,8 +145,7 @@
 	NSDictionary *userInfo = notification.userInfo;
 	Game *selectedGame = [userInfo objectForKey:@"game"];
 	
-	NSLog(@"CAUGHT Select game, game name:");
-	NSLog(selectedGame.name);
+	NSLog([NSString stringWithFormat:@"Game Selected: %@", selectedGame.name]);
 
 	[gamePickerViewController.view removeFromSuperview];
 	
@@ -189,7 +169,7 @@
     //NSDictionary *loginObject = [notification object];
 	NSDictionary *userInfo = notification.userInfo;
 	NSMutableArray *gameList = [userInfo objectForKey:@"gameList"];
-	NSLog(@"SETTING Game List on controller!!");
+	NSLog(@"SETTING Game List on controller");
 	[gamePickerViewController setGameList:gameList];
 	[gamePickerViewController slideIn];
 }
@@ -209,23 +189,31 @@
 }
 
 #pragma mark --- Delegate methods for MyCLController ---
-- (void)updateLatitude: (NSString *)latitude andLongitude:(NSString *) longitude {
-	
+- (void)updateLatitude: (NSString *)latitude andLongitude:(NSString *) longitude  {	
+	//Update the Model
 	appModel.lastLatitude = [latitude copy];
 	appModel.lastLongitude = [longitude copy];
 	
-	//Tell the Server - Call the update_location() js function on the game
-	NSLog(@"Updating location: %@, %@", appModel.lastLatitude, appModel.lastLongitude);
-	if ([webView stringByEvaluatingJavaScriptFromString:
-		 [NSString stringWithFormat:@"%@/update_location(%@, %@);", appModel.baseAppURL, appModel.lastLatitude, appModel.lastLongitude]] == nil)
-	{
-		NSLog(@"Couldn't execute script!");
-	}
-	else NSLog(@"update_location() executed successfully.");
-	
-	//Tell the client
+	//Tell the other parts of the client
 	NSNotification *updatedLocationNotification = [NSNotification notificationWithName:@"PlayerMoved" object:self];
 	[[NSNotificationCenter defaultCenter] postNotification:updatedLocationNotification];
+
+	//Tell the model to update the server and fetch any nearby locations
+	[appModel updateServerLocationAndfetchNearbyLocationList];
+}
+
+#pragma mark navigation controller delegate
+- (void)navigationController:(UINavigationController *)navigationController 
+	   didShowViewController:(UIViewController *)viewController 
+					animated:(BOOL)animated {
+	
+	if([viewController class] == [gamePickerViewController class]) {
+		[viewController performSelector:@selector(setGameList:) withObject:appModel.gameList];
+	}
+	
+	if([viewController respondsToSelector:@selector(setModel:)]) {
+		[viewController performSelector:@selector(setModel:) withObject:appModel];
+	}
 }
 
 - (void)newError: (NSString *)text {

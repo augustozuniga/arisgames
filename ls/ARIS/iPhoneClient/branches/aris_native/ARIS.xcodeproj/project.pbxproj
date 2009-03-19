@@ -34,6 +34,8 @@
 		A722E6E70F573174004B04D2 /* GameListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E6E60F573174004B04D2 /* GameListParserDelegate.m */; };
 		A722E7150F57425B004B04D2 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7140F57425B004B04D2 /* Location.m */; };
 		A722E73A0F57431B004B04D2 /* LocationListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */; };
+		A72F04A00F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A72F049F0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m */; };
+		A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = A72F04AD0F6ED8620089B90F /* NearbyLocation.m */; };
 		A763B5250F4E283100FDCC55 /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = A763B5240F4E283100FDCC55 /* MyCLController.m */; };
 		A78FD8B00F4B7E9400820FEA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78FD8AF0F4B7E9400820FEA /* Foundation.framework */; };
 		A78FD8B20F4B7EA200820FEA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78FD8B10F4B7EA200820FEA /* CoreGraphics.framework */; };
@@ -125,6 +127,10 @@
 		A722E7140F57425B004B04D2 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		A722E7380F57431B004B04D2 /* LocationListParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationListParserDelegate.h; sourceTree = "<group>"; };
 		A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationListParserDelegate.m; sourceTree = "<group>"; };
+		A72F049E0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyLocationsListParserDelegate.h; sourceTree = "<group>"; };
+		A72F049F0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyLocationsListParserDelegate.m; sourceTree = "<group>"; };
+		A72F04AC0F6ED8620089B90F /* NearbyLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyLocation.h; sourceTree = "<group>"; };
+		A72F04AD0F6ED8620089B90F /* NearbyLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyLocation.m; sourceTree = "<group>"; };
 		A763B5230F4E283100FDCC55 /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
 		A763B5240F4E283100FDCC55 /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
 		A78FD8AF0F4B7E9400820FEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -277,8 +283,12 @@
 		2B3D17040F49C9920067FD3A /* model */ = {
 			isa = PBXGroup;
 			children = (
+				A72F04AC0F6ED8620089B90F /* NearbyLocation.h */,
+				A72F04AD0F6ED8620089B90F /* NearbyLocation.m */,
 				A722E7380F57431B004B04D2 /* LocationListParserDelegate.h */,
 				A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */,
+				A72F049E0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.h */,
+				A72F049F0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m */,
 				2B3D18D40F4B25720067FD3A /* AppModel.h */,
 				2B3D18D50F4B25720067FD3A /* AppModel.m */,
 				A722E6E50F573174004B04D2 /* GameListParserDelegate.h */,
@@ -443,6 +453,8 @@
 				A722E7150F57425B004B04D2 /* Location.m in Sources */,
 				A722E73A0F57431B004B04D2 /* LocationListParserDelegate.m in Sources */,
 				A7E39EAD0F5F60D000826198 /* CameraViewController.m in Sources */,
+				A72F04A00F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m in Sources */,
+				A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

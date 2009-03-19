@@ -7,14 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NearbyLocation.h"
 
 
 @interface ToolbarViewController : UIViewController {
 	UILabel *titleLabel;
+	UINavigationItem *navigationItem;
 }
 
 -(void) setToolbarTitle:(NSString *)title;
+-(void) nearbyButtonAction:(id)sender;
 
 @property (nonatomic, retain) IBOutlet UILabel *titleLabel;
+@property (nonatomic, retain) IBOutlet UINavigationItem *navigationItem;
+
 
 @end

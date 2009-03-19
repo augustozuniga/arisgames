@@ -9,6 +9,7 @@
 #import "AppModel.h"
 #import "GameListParserDelegate.h"
 #import "LocationListParserDelegate.h"
+#import "NearbyLocationsListParserDelegate.h"
 
 
 @implementation AppModel
@@ -21,6 +22,7 @@
 @synthesize site;
 @synthesize gameList;
 @synthesize locationList;
+@synthesize nearbyLocationsList;
 @synthesize lastLatitude;
 @synthesize lastLongitude;
 
@@ -32,11 +34,9 @@
 	loggedIn = [defaults boolForKey:@"loggedIn"];
 	if (loggedIn == YES) {
 		username = [defaults stringForKey:@"username"];
-		NSLog(@"Username:"); NSLog(username);
 		password = [defaults stringForKey:@"password"];
-		NSLog(@"Password:");NSLog(password);
 		site = [defaults stringForKey:@"site"];
-		NSLog(@"Site:");NSLog(site);
+		NSLog([NSString stringWithFormat:@"Defaults Found. User: %@ Password: %@ Site: %@", username, password, site]);
 	}
 	else NSLog(@"No Data to Load");
 	[defaults release];
@@ -104,6 +104,7 @@
 
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
 	GameListParserDelegate *gameListParserDelegate = [[GameListParserDelegate alloc] initWithGameList:gameList];
+	
 	[parser setDelegate:gameListParserDelegate];
 	
 	//init parser
@@ -137,6 +138,32 @@
 	[parser parse];
 	[parser release];
 }
+
+- (void)updateServerLocationAndfetchNearbyLocationList {
+	//init a fresh nearby location list array
+	if(locationList != nil) {
+		[locationList release];
+	}
+	nearbyLocationsList = [NSMutableArray array];
+	[nearbyLocationsList retain];
+	
+	//init url
+	NSString *urlString = [NSString stringWithFormat:@"%@?module=RESTAsync&site=%@&user_name=%@&password=%@&latitude=%@&longitude=%@",
+						   baseAppURL, site, username, password, self.lastLatitude, self.lastLongitude];
+	
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
+	
+	NearbyLocationsListParserDelegate *nearbyLocationsListParserDelegate = [[NearbyLocationsListParserDelegate alloc] initWithNearbyLocationsList:nearbyLocationsList];
+	[parser setDelegate:nearbyLocationsListParserDelegate];
+	
+	//init parser
+	[parser setShouldProcessNamespaces:NO];
+	[parser setShouldReportNamespacePrefixes:NO];
+	[parser setShouldResolveExternalEntities:NO];
+	[parser parse];
+	[parser release];
+}
+
 
 
 - (void)dealloc {

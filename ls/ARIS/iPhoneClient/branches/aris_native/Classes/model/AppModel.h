@@ -14,10 +14,11 @@
 	BOOL loggedIn;
 	NSString *username;
 	NSString *password;
-	NSString *currentModule;
+	UIViewController *currentModule;
 	NSString *site;
 	NSMutableArray *gameList;
 	NSMutableArray *locationList;
+	NSMutableArray *nearbyLocationsList;
 	NSString *lastLatitude;
 	NSString *lastLongitude;
 }
@@ -26,10 +27,11 @@
 @property(readwrite) BOOL loggedIn;
 @property(copy, readwrite) NSString *username;
 @property(copy, readwrite) NSString *password;
-@property(copy, readwrite) NSString *currentModule;
+@property(copy, readwrite) UIViewController *currentModule;
 @property(copy, readwrite) NSString *site;
 @property(copy, readwrite) NSMutableArray *gameList;	
 @property(copy, readwrite) NSMutableArray *locationList;	
+@property(copy, readwrite) NSMutableArray *nearbyLocationsList;	
 @property(copy, readwrite) NSString *lastLatitude;
 @property(copy, readwrite) NSString *lastLongitude;
 
@@ -37,6 +39,7 @@
 -(BOOL)login;
 -(void)fetchGameList;
 -(void)fetchLocationList;
+-(void)updateServerLocationAndfetchNearbyLocationList;
 -(NSURLRequest *) getURLForModule:(NSString *)moduleName;
 
 @end

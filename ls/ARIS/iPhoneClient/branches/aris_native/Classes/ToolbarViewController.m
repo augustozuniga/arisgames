@@ -8,22 +8,65 @@
 
 #import "ToolbarViewController.h"
 
-
 @implementation ToolbarViewController
 
 @synthesize titleLabel;
+@synthesize navigationItem;
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
+    [super viewDidLoad];
+	
+	//register for notifications from views
+	NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
+	[dispatcher addObserver:self selector:@selector(processNearbyLocationsList:) name:@"ReceivedNearbyLocationList" object:nil];
+	
+	NSLog(@"Top Toolbar Loaded");
+}
 
 -(void) setToolbarTitle:(NSString *)title {
 	//NSLog(@"setToolbarTitle");
 	titleLabel.text = title;
 }
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-    [super viewDidLoad];
-	
-	NSLog(@"TOOLBAR VIEW LOADED");
+
+- (void)processNearbyLocationsList:(NSNotification *)notification {
+    NSLog(@"Toolbar recieved Nearby Locations List Notification");
+		
+	if ([notification.object count] > 0) {
+		
+		NSString *label;
+		if ([notification.object count] == 1) {
+			NearbyLocation *loc = [notification.object objectAtIndex:0];
+			label = loc.label; 
+		}
+		else label = @"Nearby"; 
+		
+		UIBarButtonItem *nearbyButton = [[UIBarButtonItem alloc] initWithTitle: label style:UIBarButtonSystemItemEdit target:self action:@selector(nearbyButtonAction:)];
+		navigationItem.rightBarButtonItem = nearbyButton;
+		[nearbyButton release];
+		
+		
+		
+		
+		
+		 //NearbyLocation *loc = [appModel.nearbyLocationsList objectAtIndex:0];
+		 //NSString *text = loc.label; 
+		 //UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Something Nearby" message:text delegate:self cancelButtonTitle:@"OK"otherButtonTitles:@"No", nil];
+		 //[myAlertView show];
+		//[myAlertView release];
+	 
+	}//if
 }
+
+- (void)nearbyButtonAction:(id)sender {
+	NSLog(@"Nearby Button Touched");
+	//Load the Model View, something like:
+	//[self presentModalViewController:myViewController animated:YES];
+}
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
