@@ -68,8 +68,9 @@
 // Called when the location is updated
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation: (CLLocation *)newLocation fromLocation: (CLLocation *)oldLocation
 {
-	NSLog(@"Read %lf, %lf from CLLocationManager", newLocation.coordinate.latitude,
-		  newLocation.coordinate.longitude);
+	NSLog(@"Read %lf, %lf from CLLocationManager with Accuracy of %gm,%gm", newLocation.coordinate.latitude,
+		  newLocation.coordinate.longitude,  newLocation.horizontalAccuracy, newLocation.verticalAccuracy );
+	
 	
 	[self.delegate updateLatitude:[NSString stringWithFormat: @"%lf",newLocation.coordinate.latitude]
 					andLongitude: [NSString stringWithFormat:@"%lf",newLocation.coordinate.longitude]];
