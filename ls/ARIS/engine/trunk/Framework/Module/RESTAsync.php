@@ -43,7 +43,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
      * @return      mixed
      */
     public function __default() {
-    	
+    	$this->pageTemplateFile = 'empty.tpl';
     	$user = loginUser();
     	
     	if(!$user) {
@@ -53,25 +53,10 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     	
     	$this->chromeless = true;
     	
-		$links = $this->process();
-		if (count($links) == 1) {
-			$this->icon = $links[0]['icon'];
-			$this->url = $links[0]['url'];
-			$this->isRawFunction = $links[0]['type'] == TYPE_JS;
-			$this->function = ($links[0]['type'] == TYPE_JS) ? 'raw' : 'notify';
-			$this->label = $links[0]['label'];
-		}
-		else if (count($links) > 1) {
-			$this->icon = $this->findMedia('asyncMixed.png', 'defaultAsync.png');
-			$this->url = 'Async&event=displayList&latitude=' . $_REQUEST['latitude']
-				. '&longitude=' . $_REQUEST['longitude'];
-			$this->isRawFunction = false;
-			$this->function = 'notify';
-			$this->label = 'Mixed';
-		}
-		else $this->function = '';
-    }
+		$this->links = $this->processLocationRequest();
+	}
     
+	
     public function displayList() {
     	$this->title = 'Things of Interest';
     	$this->things = $this->process();
@@ -87,7 +72,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
 		return $item;
 	}
     
-    protected function process() {
+    protected function processLocationRequest() {
 	    if (isset($_REQUEST['latitude']) 
 			&& isset($_REQUEST['longitude']) 
 			&& isset($_SESSION['player_id']))
@@ -120,10 +105,14 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
 			}
 			return $links;
 		}
+		
+		//return a blank array, not enough information to process
 		return array();
     }
     
     protected function processLocation($location, &$links) {
+		
+		//Check for required events
 		if (array_key_exists('require_event_id', $location) 
 			&& $location['require_event_id'] > 0)
 		{
@@ -134,6 +123,8 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
 		{
 			if (array_key_exists($location['remove_if_event_id'], $this->events)) return;
 		}
+		
+		//Check if an event should be added
 		if (array_key_exists($location['add_event_id'], $location)
 			&& $location['add_event_id'] > 0
 			&& !array_key_exists($location['add_event_id'], $this->events)) 
@@ -143,6 +134,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
 		
 		if ($location['type_id'] < 1) return;
     
+		//Process based on type
     	switch($location['type']) {
     		case TYPE_NODE:
     			$this->processNode($location, $links);
