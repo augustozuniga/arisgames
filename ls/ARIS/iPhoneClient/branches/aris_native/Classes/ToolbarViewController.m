@@ -6,6 +6,7 @@
 //  Copyright 2009 University of Wisconsin. All rights reserved.
 //
 
+#import "AudioToolbox/AudioToolbox.h"
 #import "ToolbarViewController.h"
 
 
@@ -48,6 +49,10 @@
 		UIBarButtonItem *nearbyButton = [[UIBarButtonItem alloc] initWithTitle: label style:UIBarButtonSystemItemEdit target:self action:@selector(nearbyButtonAction:)];
 		navigationItem.rightBarButtonItem = nearbyButton;
 		[nearbyButton release];
+		
+		//Vibrate
+		AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+		
 	}//if
 }
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NearbyLocation.h"
-#import "GenericWebViewController.h"
+
 
 
 @interface ToolbarViewController : UIViewController {
