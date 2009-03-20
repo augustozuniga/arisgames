@@ -18,7 +18,6 @@
 
 @end
 
-//impl
 @implementation ARISAppDelegate
 
 @synthesize window;
@@ -26,6 +25,7 @@
 @synthesize loginViewController;
 @synthesize toolbarViewController;
 @synthesize gamePickerViewController;
+@synthesize genericWebViewController;
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	//init app model
@@ -41,6 +41,8 @@
 	[dispatcher addObserver:self selector:@selector(selectGame:) name:@"SelectGame" object:nil];
 	[dispatcher addObserver:self selector:@selector(setGameList:) name:@"ReceivedGameList" object:nil];
 	[dispatcher addObserver:self selector:@selector(performLogout:) name:@"LogoutRequested" object:nil];
+	[dispatcher addObserver:self selector:@selector(displayNearbyObjects:) name:@"NearbyButtonTouched" object:nil];
+	[dispatcher addObserver:self selector:@selector(destroyNearbyObjectsView:) name:@"BackButtonTouched" object:nil];
 	
 	//set frame rect of Tabbar view to sit below title/nav bar
 	[self contractTabBar];
@@ -188,6 +190,40 @@
 	loginViewController.view.hidden == NO;
 }
 
+- (void)displayNearbyObjects:(NSNotification *)notification {
+	NSLog(@"Nearby Button Notification recieved by App Delegate");
+	//We should have the nearbyLocationList aray in the model that tells us what is nearby
+	//If only one object exists (a single NPC, Node or Item) launch it in a modal UIWebView
+	//Otherwise, create a list
+	
+	if ([appModel.nearbyLocationsList count] == 1) {
+		//Take them to the item
+		NearbyLocation *loc = [appModel.nearbyLocationsList objectAtIndex: 0 ];
+		NSString *moduleName;
+		NSLog(loc.type);
+		if ([loc.type isEqualToString: @"Item"]) moduleName = @"RESTInventory";
+		else moduleName = @"RESTNodeViewer";
+		NSString *baseURL = [appModel getURLStringForModule:moduleName];
+		NSString *URLparams = loc.URL;
+		NSString *fullURL = [ NSString stringWithFormat:@"%@%@", baseURL, URLparams];
+		
+		NSLog([NSString stringWithFormat:@"Loading genericWebView for: %@", fullURL ]);
+		[genericWebViewController setModel:appModel];
+		[genericWebViewController setURL: fullURL];
+		[genericWebViewController setToolbarTitle:loc.label];
+		[window addSubview:genericWebViewController.view];
+	}
+	else {
+		//Take them to a list 
+	}
+	
+}
+
+- (void)destroyNearbyObjectsView:(NSNotification *)notification {
+	NSLog(@"Removing View: Nearby Objects");
+	[genericWebViewController.view removeFromSuperview];
+}
+
 #pragma mark --- Delegate methods for MyCLController ---
 - (void)updateLatitude: (NSString *)latitude andLongitude:(NSString *) longitude  {	
 	//Update the Model
@@ -218,6 +254,13 @@
 
 - (void)newError: (NSString *)text {
 	NSLog(text);
+}
+
+-(void) applicationWillTerminate:(UIApplication *)application {
+	NSLog(@"Begin Application Termination");
+	
+	//TODO: Move the user default saving stuff in this place only
+	
 }
 
 - (void)dealloc {

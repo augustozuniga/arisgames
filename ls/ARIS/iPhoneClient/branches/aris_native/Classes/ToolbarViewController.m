@@ -8,6 +8,7 @@
 
 #import "ToolbarViewController.h"
 
+
 @implementation ToolbarViewController
 
 @synthesize titleLabel;
@@ -35,6 +36,7 @@
 		
 	if ([notification.object count] > 0) {
 		
+		//Determine the Label
 		NSString *label;
 		if ([notification.object count] == 1) {
 			NearbyLocation *loc = [notification.object objectAtIndex:0];
@@ -42,31 +44,24 @@
 		}
 		else label = @"Nearby"; 
 		
+		//Create the Button
 		UIBarButtonItem *nearbyButton = [[UIBarButtonItem alloc] initWithTitle: label style:UIBarButtonSystemItemEdit target:self action:@selector(nearbyButtonAction:)];
 		navigationItem.rightBarButtonItem = nearbyButton;
 		[nearbyButton release];
-		
-		
-		
-		
-		
-		 //NearbyLocation *loc = [appModel.nearbyLocationsList objectAtIndex:0];
-		 //NSString *text = loc.label; 
-		 //UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Something Nearby" message:text delegate:self cancelButtonTitle:@"OK"otherButtonTitles:@"No", nil];
-		 //[myAlertView show];
-		//[myAlertView release];
-	 
 	}//if
 }
 
 - (void)nearbyButtonAction:(id)sender {
 	NSLog(@"Nearby Button Touched");
-	//Load the Model View, something like:
-	//[self presentModalViewController:myViewController animated:YES];
+	NSNotification *loginNotification = [NSNotification notificationWithName:@"NearbyButtonTouched" object:self];
+	[[NSNotificationCenter defaultCenter] postNotification:loginNotification];
 }
 
-
-
+- (void)nearbyViewBackButtonAction:(id)sender {
+	NSLog(@"Nearby View Back Button Touched");
+	NSNotification *loginNotification = [NSNotification notificationWithName:@"NearbyViewBackButtonTouched" object:self];
+	[[NSNotificationCenter defaultCenter] postNotification:loginNotification];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview

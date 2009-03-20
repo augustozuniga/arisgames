@@ -63,6 +63,8 @@
 		A7E4C8900F54C4E800C6D9E8 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E4C88F0F54C4E800C6D9E8 /* libsqlite3.dylib */; };
 		A7E4C8990F54C5E300C6D9E8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E4C8980F54C5E300C6D9E8 /* CoreLocation.framework */; };
 		A7E4C9A30F55DC6200C6D9E8 /* libMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E4C9910F55DC3300C6D9E8 /* libMapView.a */; };
+		A7F0EE3F0F71CFEF008F7BAD /* GenericWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */; };
+		A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +163,9 @@
 		A7E4C88B0F54C4D000C6D9E8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A7E4C88F0F54C4E800C6D9E8 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A7E4C8980F54C5E300C6D9E8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericWebView.xib; sourceTree = "<group>"; };
+		A7F0EE5F0F71D0C5008F7BAD /* GenericWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericWebViewController.h; sourceTree = "<group>"; };
+		A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericWebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +189,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A7F0EE5F0F71D0C5008F7BAD /* GenericWebViewController.h */,
+				A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */,
 				A763B5230F4E283100FDCC55 /* MyCLController.h */,
 				A763B5240F4E283100FDCC55 /* MyCLController.m */,
 				2B3D11AF0F4361940067FD3A /* LoginViewController.h */,
@@ -246,6 +253,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */,
 				A7E39EC90F5F655E00826198 /* Camera.xib */,
 				A7A172940F4F273B0017E865 /* Icon.icns */,
 				A7A1728A0F4F27120017E865 /* Icon.png */,
@@ -425,6 +433,7 @@
 				A7E39FCA0F60456200826198 /* IM.png in Resources */,
 				A7E39FDB0F61759700826198 /* camera.png in Resources */,
 				A7E39FDC0F61759700826198 /* Game.png in Resources */,
+				A7F0EE3F0F71CFEF008F7BAD /* GenericWebView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +464,7 @@
 				A7E39EAD0F5F60D000826198 /* CameraViewController.m in Sources */,
 				A72F04A00F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m in Sources */,
 				A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */,
+				A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
