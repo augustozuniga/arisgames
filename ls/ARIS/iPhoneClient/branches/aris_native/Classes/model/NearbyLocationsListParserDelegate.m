@@ -39,7 +39,8 @@
 		nearbyLocation.iconURL = [attributeDict objectForKey:@"iconURL"];
 		nearbyLocation.URL = [attributeDict objectForKey:@"URL"];
 		[nearbyLocationList addObject:nearbyLocation];
-		NSLog([NSString stringWithFormat:@"Nearby Location added to Model: %@ Type: %@", nearbyLocation.label, nearbyLocation.type]);
+		NSLog([NSString stringWithFormat:@"Nearby Location added to Model: %@ Type: %@ URL: %@", 
+			   nearbyLocation.label, nearbyLocation.type, nearbyLocation.URL]);
 	}
 }
 

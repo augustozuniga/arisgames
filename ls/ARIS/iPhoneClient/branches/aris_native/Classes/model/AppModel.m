@@ -86,8 +86,13 @@
 									baseAppURL, moduleName, site, username, password];
 	
 	NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-	NSLog(urlString);
 	return urlRequest;
+}
+
+-(NSString *)getURLStringForModule:(NSString *)moduleName {
+	NSString *urlString = [NSString stringWithFormat:@"%@?module=%@&site=%@&user_name=%@&password=%@",
+						   baseAppURL, moduleName, site, username, password];
+	return urlString;
 }
 
 - (void)fetchGameList {
@@ -150,6 +155,8 @@
 	//init url
 	NSString *urlString = [NSString stringWithFormat:@"%@?module=RESTAsync&site=%@&user_name=%@&password=%@&latitude=%@&longitude=%@",
 						   baseAppURL, site, username, password, self.lastLatitude, self.lastLongitude];
+	
+	NSLog([NSString stringWithFormat:@"Fetching Nearby Locations from : %@", urlString]);
 	
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
 	

@@ -41,5 +41,6 @@
 -(void)fetchLocationList;
 -(void)updateServerLocationAndfetchNearbyLocationList;
 -(NSURLRequest *) getURLForModule:(NSString *)moduleName;
+-(NSString *)getURLStringForModule:(NSString *)moduleName;
 
 @end

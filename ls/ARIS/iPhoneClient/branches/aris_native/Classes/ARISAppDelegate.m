@@ -30,7 +30,8 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	//init app model
 	appModel = [[AppModel alloc] init];
-	appModel.baseAppURL = @"http://davembp.local/aris/src/index.php";
+	//appModel.baseAppURL = @"http://davembp.local/aris/src/index.php";
+	appModel.baseAppURL = @"http://atsosxdev.doit.wisc.edu/aris/games/index.php";
 	appModel.site = @"Default";
 	[appModel loadUserDefaults];
 	[appModel retain];
