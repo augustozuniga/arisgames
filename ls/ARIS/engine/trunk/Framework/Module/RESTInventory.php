@@ -105,6 +105,8 @@
 		}
 		
 		public function displayItem(){
+			$this->chromeless = true;
+			
 			if (empty($_REQUEST['item_id'])) {
 				$this->title = "Error";
 				$this->errorMessage = "Item cannot be viewed at this time.";
@@ -124,6 +126,8 @@
 		}
 		
 		public function addItem() {
+			$this->chromeless = true;
+			
 			if (empty($_REQUEST['item_id'])) {
 				$this->title = "Detection Error";
 				$this->message = "No objects detected.";

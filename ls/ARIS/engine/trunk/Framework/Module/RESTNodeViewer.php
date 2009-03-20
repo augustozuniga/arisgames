@@ -87,8 +87,8 @@ class Framework_Module_RESTNodeViewer extends Framework_Auth_User
     		header("Location: {$_SERVER['PHP_SELF']}?module=RESTError&controller=Web&event=loginError&site=" . Framework::$site->name);
     		die;
     	}
-		$this->chromeless = true;
 		
+		$this->chromeless = true;
     	$session = Framework_Session::singleton();
 		$user = $this->restUser;
 
@@ -115,7 +115,7 @@ SCRIPT;
     }
     
     /**
-     * Loads the initial conversations available.
+     * Face to Face Initial Conversation
      */
     public function faceConversation() {
 		$user = loginUser();
@@ -125,12 +125,18 @@ SCRIPT;
     		die;
     	}
 		
+		$this->chromeless = true;
+    	$session = Framework_Session::singleton();
+		//$user = $this->restUser;
+		
 		NodeManager::loadNodeConversations($_REQUEST['npc_id']);
 		$this->setVariables();
+		$this->username = $user['user_name'];
+		$this->password = $user['password'];
     }
     
     /**
-     * Displays the NPC's text and any options.
+     * F2F Ongoing Conversation
      */
     public function faceTalk() {
 		$user = loginUser();
@@ -148,18 +154,23 @@ SCRIPT;
     			FRAMEWORK_ERROR_AUTH);
     	}
     	
+		$this->chromeless = true;
+		//$user = $this->restUser;
     	$session = Framework_Session::singleton();
-    	$user = $this->restUser;
     	$this->messages = array();
-	NodeManager::loadNode($_REQUEST['node_id'], $_REQUEST['npc_id']);
 		
-	$this->setVariables();
-	$npc = $this->npc;
-	if (!empty($this->node['media'])) {
-	    $npc['media'] = $this->findMedia($this->node['media'], 
-		$npc['media']);
-	    $this->npc = $npc;
-	}
+		NodeManager::loadNode($_REQUEST['node_id'], $_REQUEST['npc_id']);
+		
+		$this->setVariables();
+		$npc = $this->npc;
+		$this->username = $user['user_name'];
+		$this->password = $user['password'];
+		
+		if (!empty($this->node['media'])) {
+			$npc['media'] = $this->findMedia($this->node['media'], 
+			$npc['media']);
+			$this->npc = $npc;
+		}
     }
     
     protected function setVariables() {

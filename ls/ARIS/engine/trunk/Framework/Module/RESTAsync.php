@@ -148,9 +148,6 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     		case TYPE_NPC:
     			$this->processNpc($location, $links);
     			break;
-    		case TYPE_JS:
-    			$this->processJS($location, $links);
-    			break;
     		default:
     			throw new Framework_Exception("Unknown location type: " . $location['type']);
     	}
@@ -164,7 +161,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     			&& !empty(NodeManager::$node['media']))
     				? $this->findMedia(NodeManager::$node['media'], 'defaultAsync.png') : null;
     		array_push($links, 
-    			$this->makeLink(TYPE_NODE, "NodeViewer&event=faceTalk&npc_id=-1&node_id=" 
+    			$this->makeLink(TYPE_NODE, "&amp;event=faceTalk&amp;npc_id=-1&amp;node_id=" 
     				. NodeManager::$node['node_id'], NodeManager::$node['title'], $media));
     	}
     }
@@ -190,7 +187,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     				? $this->findMedia($item['media'], 'defaultInventory.png') : null;
     
     	array_push($links, 
-    		$this->makeLink(TYPE_ITEM, "Inventory&event=addItem&item_id={$location['type_id']}", 
+    		$this->makeLink(TYPE_ITEM, "&amp;event=addItem&amp;item_id={$location['type_id']}", 
     			$itemName, $media));
     }
     
@@ -205,13 +202,10 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     		? $this->findMedia($npc['media'], 'defaultUser.png') : null;
     
     	array_push($links, $this->makeLink(TYPE_NPC,
-    		"NodeViewer&event=faceConversation&npc_id=" . $location['type_id'],
+    		"&amp;event=faceConversation&amp;npc_id=" . $location['type_id'],
     		$npcName, $npcMedia));
     }
-    
-    protected function processJS($location, &$links) {
-    	array_push($links, $this->makeLink(TYPE_JS, "", "", ""));
-    }
+
 }
 
 ?>
