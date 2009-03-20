@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "NearbyLocation.h"
+#import "GenericWebViewController.h"
 
 
 @interface ToolbarViewController : UIViewController {
 	UILabel *titleLabel;
 	UINavigationItem *navigationItem;
+	UIView *sv;
 }
 
 -(void) setToolbarTitle:(NSString *)title;
