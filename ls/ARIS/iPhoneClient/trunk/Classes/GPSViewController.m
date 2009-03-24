@@ -129,6 +129,7 @@
 	
 	//Add the freshly loaded locations from the notification
 	for ( Location* location in locationList ) {
+		if (location.hidden == YES) continue;
 		CLLocationCoordinate2D locationLatLong;
 		locationLatLong.latitude = [location.latitude floatValue];
 		locationLatLong.longitude = [location.longitude floatValue];

@@ -12,13 +12,13 @@
 @implementation NearbyLocation
 
 @synthesize locationId;
-@synthesize label;
+@synthesize name;
 @synthesize type;
 @synthesize iconURL;
 @synthesize URL;
 
 - (void)dealloc {
-	[label release];
+	[name release];
 	[type release];
 	[iconURL release];
 	[URL release];

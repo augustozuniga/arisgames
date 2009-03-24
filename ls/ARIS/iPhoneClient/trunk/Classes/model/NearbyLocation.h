@@ -11,14 +11,14 @@
 
 @interface NearbyLocation : NSObject {
 	int locationId;
-	NSString *label;
+	NSString *name;
 	NSString *type;
 	NSString *iconURL;
 	NSString *URL;
 }
 
 @property(readwrite, assign) int locationId;
-@property(copy, readwrite) NSString *label;
+@property(copy, readwrite) NSString *name;
 @property(copy, readwrite) NSString *type;
 @property(copy, readwrite) NSString *iconURL;
 @property(copy, readwrite) NSString *URL;

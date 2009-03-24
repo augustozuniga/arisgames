@@ -34,13 +34,13 @@
 	if ([elementName isEqualToString:@"nearbyLocation"]) {
 		NearbyLocation *nearbyLocation = [[NearbyLocation alloc] init];
 		nearbyLocation.locationId = [[attributeDict objectForKey:@"id"] intValue];
-		nearbyLocation.label = [attributeDict objectForKey:@"label"];
+		nearbyLocation.name = [attributeDict objectForKey:@"label"];
 		nearbyLocation.type = [attributeDict objectForKey:@"type"];
 		nearbyLocation.iconURL = [attributeDict objectForKey:@"iconURL"];
 		nearbyLocation.URL = [attributeDict objectForKey:@"URL"];
 		[nearbyLocationList addObject:nearbyLocation];
 		NSLog([NSString stringWithFormat:@"Nearby Location added to Model: %@ Type: %@ URL: %@", 
-			   nearbyLocation.label, nearbyLocation.type, nearbyLocation.URL]);
+			   nearbyLocation.name, nearbyLocation.type, nearbyLocation.URL]);
 	}
 }
 

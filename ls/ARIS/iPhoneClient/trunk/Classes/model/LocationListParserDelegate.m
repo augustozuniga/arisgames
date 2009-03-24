@@ -35,19 +35,21 @@
 	
 	if ([elementName isEqualToString:@"location"]) {
 		//Found a location element 
-		NSLog(@"NEW Location!!");
 		Location *location = [[Location alloc] init];
 		location.locationId = [[attributeDict objectForKey:@"location_id"] intValue];
 		location.name = [attributeDict objectForKey:@"name"];
 		location.latitude = [attributeDict objectForKey:@"latitude"];
 		location.longitude = [attributeDict objectForKey:@"longitude"];
-		NSLog(location.name);
+		if ([[attributeDict objectForKey:@"hidden"] isEqualToString: @"1"]) location.hidden = YES;
+		else location.hidden = NO;
+		
 		[locationList addObject:location];
+		NSLog([NSString stringWithFormat:@"Adding Location: %@", location.name]);
 	}
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser {
-	//nada
+	NSLog(@"Begin Parsing Location XML");
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser {

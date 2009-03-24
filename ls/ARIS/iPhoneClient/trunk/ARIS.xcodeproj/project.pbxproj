@@ -152,10 +152,10 @@
 		A7E39FAB0F5F930E00826198 /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Inventory.png; sourceTree = "<group>"; };
 		A7E39FAC0F5F930E00826198 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
 		A7E39FAD0F5F930E00826198 /* Logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logout.png; sourceTree = "<group>"; };
-		A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-blue-withletter.png"; sourceTree = "<group>"; };
-		A7E39FAF0F5F930E00826198 /* marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-blue.png"; sourceTree = "<group>"; };
-		A7E39FB00F5F930E00826198 /* marker-red-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-red-withletter.png"; sourceTree = "<group>"; };
-		A7E39FB10F5F930E00826198 /* marker-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-red.png"; sourceTree = "<group>"; };
+		A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-blue-withletter.png"; path = "images/marker-blue-withletter.png"; sourceTree = "<group>"; };
+		A7E39FAF0F5F930E00826198 /* marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-blue.png"; path = "images/marker-blue.png"; sourceTree = "<group>"; };
+		A7E39FB00F5F930E00826198 /* marker-red-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-red-withletter.png"; path = "images/marker-red-withletter.png"; sourceTree = "<group>"; };
+		A7E39FB10F5F930E00826198 /* marker-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-red.png"; path = "images/marker-red.png"; sourceTree = "<group>"; };
 		A7E39FB20F5F930E00826198 /* NodeViewer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NodeViewer.png; sourceTree = "<group>"; };
 		A7E39FB30F5F930E00826198 /* Quest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Quest.png; sourceTree = "<group>"; };
 		A7E39FC90F60456200826198 /* IM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IM.png; sourceTree = "<group>"; };
@@ -234,7 +234,6 @@
 		29B97314FDCFA39411CA2CEA /* ARIS */ = {
 			isa = PBXGroup;
 			children = (
-				A7E39FA80F5F930E00826198 /* images */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -256,21 +255,10 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */,
-				A7E39EC90F5F655E00826198 /* Camera.xib */,
-				A7A172940F4F273B0017E865 /* Icon.icns */,
-				A7A1728A0F4F27120017E865 /* Icon.png */,
-				A7A1728B0F4F27120017E865 /* Default.png */,
-				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
-				2B3D11AC0F4361380067FD3A /* Login.xib */,
-				2B3D12C10F4377E50067FD3A /* IM.xib */,
-				2B3D12CF0F437AF90067FD3A /* TODO.xib */,
-				2B3D12DA0F437E690067FD3A /* Files.xib */,
-				2B3D12E10F4380E00067FD3A /* GPS.xib */,
-				2B3D12ED0F4382A00067FD3A /* Logout.xib */,
-				2B3D17790F49D3F90067FD3A /* Developer.xib */,
-				2B3D16650F4628C70067FD3A /* GamePicker.xib */,
-				2B3D15A40F461AD10067FD3A /* Toolbar.xib */,
+				A77B06EF0F78374E005945D3 /* Application Icon */,
+				A77B06EE0F783744005945D3 /* Interface Builder Views */,
+				A77B06ED0F78372F005945D3 /* Map Icons */,
+				A7E39FA80F5F930E00826198 /* Toolbar Icons */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				A7A172820F4F26A60017E865 /* Entitlements.plist */,
 			);
@@ -313,7 +301,47 @@
 			path = model;
 			sourceTree = "<group>";
 		};
-		A7E39FA80F5F930E00826198 /* images */ = {
+		A77B06ED0F78372F005945D3 /* Map Icons */ = {
+			isa = PBXGroup;
+			children = (
+				A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */,
+				A7E39FAF0F5F930E00826198 /* marker-blue.png */,
+				A7E39FB00F5F930E00826198 /* marker-red-withletter.png */,
+				A7E39FB10F5F930E00826198 /* marker-red.png */,
+			);
+			name = "Map Icons";
+			sourceTree = "<group>";
+		};
+		A77B06EE0F783744005945D3 /* Interface Builder Views */ = {
+			isa = PBXGroup;
+			children = (
+				A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */,
+				A7E39EC90F5F655E00826198 /* Camera.xib */,
+				A7A1728B0F4F27120017E865 /* Default.png */,
+				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
+				2B3D11AC0F4361380067FD3A /* Login.xib */,
+				2B3D12C10F4377E50067FD3A /* IM.xib */,
+				2B3D12CF0F437AF90067FD3A /* TODO.xib */,
+				2B3D12DA0F437E690067FD3A /* Files.xib */,
+				2B3D12E10F4380E00067FD3A /* GPS.xib */,
+				2B3D12ED0F4382A00067FD3A /* Logout.xib */,
+				2B3D17790F49D3F90067FD3A /* Developer.xib */,
+				2B3D16650F4628C70067FD3A /* GamePicker.xib */,
+				2B3D15A40F461AD10067FD3A /* Toolbar.xib */,
+			);
+			name = "Interface Builder Views";
+			sourceTree = "<group>";
+		};
+		A77B06EF0F78374E005945D3 /* Application Icon */ = {
+			isa = PBXGroup;
+			children = (
+				A7A172940F4F273B0017E865 /* Icon.icns */,
+				A7A1728A0F4F27120017E865 /* Icon.png */,
+			);
+			name = "Application Icon";
+			sourceTree = "<group>";
+		};
+		A7E39FA80F5F930E00826198 /* Toolbar Icons */ = {
 			isa = PBXGroup;
 			children = (
 				A7E39FD90F61759700826198 /* camera.png */,
@@ -324,13 +352,10 @@
 				A7E39FAB0F5F930E00826198 /* Inventory.png */,
 				A7E39FAC0F5F930E00826198 /* loading.png */,
 				A7E39FAD0F5F930E00826198 /* Logout.png */,
-				A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */,
-				A7E39FAF0F5F930E00826198 /* marker-blue.png */,
-				A7E39FB00F5F930E00826198 /* marker-red-withletter.png */,
-				A7E39FB10F5F930E00826198 /* marker-red.png */,
 				A7E39FB20F5F930E00826198 /* NodeViewer.png */,
 				A7E39FB30F5F930E00826198 /* Quest.png */,
 			);
+			name = "Toolbar Icons";
 			path = images;
 			sourceTree = "<group>";
 		};

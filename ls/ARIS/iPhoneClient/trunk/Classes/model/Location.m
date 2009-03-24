@@ -15,6 +15,7 @@
 @synthesize name;
 @synthesize latitude;
 @synthesize longitude;
+@synthesize hidden;
 
 - (void)dealloc {
 	[name release];

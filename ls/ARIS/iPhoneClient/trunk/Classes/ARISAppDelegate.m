@@ -30,8 +30,8 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	//init app model
 	appModel = [[AppModel alloc] init];
-	//appModel.baseAppURL = @"http://davembp.local/aris/src/index.php";
-	appModel.baseAppURL = @"http://atsosxdev.doit.wisc.edu/aris/games/index.php";
+	appModel.baseAppURL = @"http://davembp.local/aris/src/index.php";
+	//appModel.baseAppURL = @"http://atsosxdev.doit.wisc.edu/aris/games/index.php";
 	appModel.site = @"Default";
 	[appModel loadUserDefaults];
 	[appModel retain];
@@ -201,17 +201,16 @@
 		//Take them to the item
 		NearbyLocation *loc = [appModel.nearbyLocationsList objectAtIndex: 0 ];
 		NSString *moduleName;
-		NSLog(loc.type);
 		if ([loc.type isEqualToString: @"Item"]) moduleName = @"RESTInventory";
 		else moduleName = @"RESTNodeViewer";
 		NSString *baseURL = [appModel getURLStringForModule:moduleName];
 		NSString *URLparams = loc.URL;
 		NSString *fullURL = [ NSString stringWithFormat:@"%@%@", baseURL, URLparams];
 		
-		NSLog([NSString stringWithFormat:@"Loading genericWebView for: %@", fullURL ]);
+		NSLog([NSString stringWithFormat:@"Loading genericWebView for: %@ at %@", loc.name, fullURL ]);
 		[genericWebViewController setModel:appModel];
 		[genericWebViewController setURL: fullURL];
-		[genericWebViewController setToolbarTitle:loc.label];
+		[genericWebViewController setToolbarTitle:loc.name];
 		[window addSubview:genericWebViewController.view];
 	}
 	else {

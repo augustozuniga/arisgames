@@ -14,11 +14,13 @@
 	NSString *name;
 	NSString *latitude;
 	NSString *longitude;
+	bool hidden;
 }
 
 @property(readwrite, assign) int locationId;
 @property(copy, readwrite) NSString *name;
 @property(copy, readwrite) NSString *latitude;
 @property(copy, readwrite) NSString *longitude;
+@property(readwrite) bool hidden;
 
 @end

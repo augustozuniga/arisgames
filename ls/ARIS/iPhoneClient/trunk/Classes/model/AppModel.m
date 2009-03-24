@@ -131,8 +131,10 @@
 	//init url
 	NSString *urlString = [NSString stringWithFormat:@"%@?module=RESTMap&site=%@&user_name=%@&password=%@",
 						   baseAppURL, site, username, password];
+	NSLog([NSString stringWithFormat:@"Fetching All Locations from : %@", urlString]);
 	
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:urlString]];
+	
 	LocationListParserDelegate *locationListParserDelegate = [[LocationListParserDelegate alloc] initWithLocationList:locationList];
 	[parser setDelegate:locationListParserDelegate];
 	
@@ -146,8 +148,8 @@
 
 - (void)updateServerLocationAndfetchNearbyLocationList {
 	//init a fresh nearby location list array
-	if(locationList != nil) {
-		[locationList release];
+	if(nearbyLocationsList != nil) {
+		[nearbyLocationsList release];
 	}
 	nearbyLocationsList = [NSMutableArray array];
 	[nearbyLocationsList retain];

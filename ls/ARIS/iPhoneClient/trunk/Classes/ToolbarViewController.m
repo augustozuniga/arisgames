@@ -37,11 +37,11 @@
 		
 	if ([notification.object count] > 0) {
 		
-		//Determine the Label
+		//Determine the Button Label
 		NSString *label;
 		if ([notification.object count] == 1) {
 			NearbyLocation *loc = [notification.object objectAtIndex:0];
-			label = loc.label; 
+			label = loc.name; 
 		}
 		else label = @"Nearby"; 
 		
@@ -58,14 +58,14 @@
 
 - (void)nearbyButtonAction:(id)sender {
 	NSLog(@"Nearby Button Touched");
-	NSNotification *loginNotification = [NSNotification notificationWithName:@"NearbyButtonTouched" object:self];
-	[[NSNotificationCenter defaultCenter] postNotification:loginNotification];
+	NSNotification *notification = [NSNotification notificationWithName:@"NearbyButtonTouched" object:self];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (void)nearbyViewBackButtonAction:(id)sender {
 	NSLog(@"Nearby View Back Button Touched");
-	NSNotification *loginNotification = [NSNotification notificationWithName:@"NearbyViewBackButtonTouched" object:self];
-	[[NSNotificationCenter defaultCenter] postNotification:loginNotification];
+	NSNotification *notification = [NSNotification notificationWithName:@"NearbyViewBackButtonTouched" object:self];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (void)didReceiveMemoryWarning {
