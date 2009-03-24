@@ -10,7 +10,7 @@
 #import "model/AppModel.h";
 
 
-@interface CameraViewController : UIViewController {
+@interface CameraViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
 	NSString *moduleName;
 	AppModel *appModel;
 	

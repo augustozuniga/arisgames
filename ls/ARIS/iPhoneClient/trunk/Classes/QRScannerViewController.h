@@ -10,7 +10,7 @@
 #import "model/AppModel.h";
 
 
-@interface QRScannerViewController : UIViewController {
+@interface QRScannerViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate> {
 	NSString *moduleName;
 	AppModel *appModel;
 	UIButton *scanButton;

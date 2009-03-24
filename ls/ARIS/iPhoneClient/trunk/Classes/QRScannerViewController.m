@@ -9,7 +9,7 @@
 #import "QRScannerViewController.h"
 
 
-@implementation QRScannerViewController
+@implementation QRScannerViewController 
 
 @synthesize moduleName;
 @synthesize imagePickerController;
@@ -46,13 +46,27 @@
 	 
 }
 
+#pragma mark UIImagePickerControllerDelegate Protocol Methods
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editInfo {
 	//img is now available to us
-	
 	[[picker parentViewController] dismissModalViewControllerAnimated:YES];
-	 
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+	[[picker parentViewController] dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark UINavigationControllerDelegate Protocol Methods
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+	//nada
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+	//nada
+}
+
+
+#pragma mark Memory Management
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data

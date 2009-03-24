@@ -10,7 +10,7 @@
 #import "model/AppModel.h";
 #import "Location.h";
 
-@interface DeveloperViewController : UIViewController  {
+@interface DeveloperViewController : UIViewController {
 	NSString *moduleName;
 	AppModel *appModel;	
 	
