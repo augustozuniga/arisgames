@@ -46,8 +46,8 @@
 	playerPosition.latitude = [appModel.lastLatitude floatValue];
 	playerPosition.longitude = [appModel.lastLongitude floatValue];
 	
-	playerMarker = [[RMMarker alloc]initWithCGImage:[RMMarker loadPNGFromBundle:@"marker-blue"]];
-	[playerMarker setTextLabel:@"You"];
+	playerMarker = [[RMMarker alloc]initWithCGImage:[RMMarker loadPNGFromBundle:@"marker-player"]];
+	//[playerMarker setTextLabel:@"You"];
 	[markerManager addMarker:playerMarker AtLatLong:playerPosition];
 	[[mapView contents] moveToLatLong:playerPosition];
 	
