@@ -24,7 +24,9 @@ class Framework_Module_RESTDeveloper extends Framework_Auth_User
      * @return      mixed
      */
     public function __default() {
-    	$user = loginUser();
+    	$this->pageTemplateFile = 'empty.tpl';
+		
+		$user = loginUser();
     	
     	if(!$user) {
     		header("Location: {$_SERVER['PHP_SELF']}?module=RESTError&controller=Web&event=loginError&site=" . Framework::$site->name);
@@ -32,32 +34,16 @@ class Framework_Module_RESTDeveloper extends Framework_Auth_User
     	}
     	
     	$site = Framework::$site;
-    	$this->restUser = $user;
-    	
     	$this->chromeless = true;
-    	$this->title = $site->config->aris->developer->title;
-    	$this->loadLocations();
-
-	}
-	
-	protected function loadLocations() {
-		$sql = $this->db->prefix("SELECT * FROM _P_locations");
-		$locations = $this->db->getAll($sql);
 		
-		foreach ($locations as &$location) {
-			$name = $location['name'];
-			$latitude = $location['latitude'];
-			$longitude = $location['longitude'];
-		}
-		unset($location);
-		
-		$this->locations = $locations;
 	}
 
 	//Clear out all events for this player
 	protected function deleteAllEvents() {
+		$user = loginUser();
+		
 		$this->title = Framework::$site->config->aris->developer->title;
-		$player_id = $this->restUser["player_id"];
+		$player_id = $user['player_id'];
 		$sql = $this->db->prefix("DELETE FROM _P_player_events WHERE player_id = '$player_id'");
 		$this->db->exec($sql);
 		
@@ -68,8 +54,10 @@ class Framework_Module_RESTDeveloper extends Framework_Auth_User
 	
 	//Clear out all items for this player
 	protected function deleteAllItems() {
+		$user = loginUser();
+		
 		$this->title = Framework::$site->config->aris->developer->title;
-		$player_id = $this->restUser["player_id"];
+		$player_id = $user['player_id'];
 		$sql = $this->db->prefix("DELETE FROM _P_player_items WHERE player_id = '$player_id'");
 		$this->db->exec($sql);
 		

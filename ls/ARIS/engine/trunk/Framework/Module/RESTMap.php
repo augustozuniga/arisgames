@@ -46,8 +46,7 @@ class Framework_Module_RESTMap extends Framework_Auth_User
 									  WHERE latitude != '' AND longitude != ''
 									  AND (require_event_id IS NULL OR player_id = {$user['player_id']})
 									  AND (_P_locations.remove_if_event_id IS NULL 
-									  OR _P_locations.remove_if_event_id NOT IN (SELECT event_id FROM _P_player_events WHERE player_id = {$user['player_id']}))
-									  AND hidden != '1'");
+									  OR _P_locations.remove_if_event_id NOT IN (SELECT event_id FROM _P_player_events WHERE player_id = {$user['player_id']}))");
 		$rows = Framework::$db->getAll($sql);
 		$this->locations = $rows;
 	}

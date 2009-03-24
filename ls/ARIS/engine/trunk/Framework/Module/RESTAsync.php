@@ -110,8 +110,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
 		return array();
     }
     
-    protected function processLocation($location, &$links) {
-		
+    protected function processLocation($location, &$links) {		
 		//Check for required events
 		if (array_key_exists('require_event_id', $location) 
 			&& $location['require_event_id'] > 0)
@@ -143,7 +142,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     			$this->processEvent($location);
     			break;
     		case TYPE_ITEM:
-    			$this->processItem($location, $links);
+				$this->processItem($location, $links);
     			break;
     		case TYPE_NPC:
     			$this->processNpc($location, $links);
@@ -174,8 +173,6 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     }
     
     protected function processItem($location, &$links) {
-    	if (array_key_exists($location['type_id'], $this->items)) return;
-
     	$sql = $this->db->prefix("SELECT * FROM _P_items 
     		WHERE item_id={$location['type_id']}");
     	$item = $this->db->getRow($sql);
