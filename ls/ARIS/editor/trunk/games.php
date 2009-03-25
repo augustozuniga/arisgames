@@ -30,8 +30,8 @@
 				<td width = '50px'><a href = 'nodes.php'><img src = 'images/nodes.png'/></a></td><td width = '250px'><a href = 'nodes.php'>Nodes</a></td>
 			</tr>
 			<tr>
+				<td width = '50px'><a href = 'qrcodes.php'><img src = 'images/qrcode_icon.png'/></a></td><td width = '250px'><a href = 'qrcodes.php'>QR Codes</a></td>
 				<td><a href = '{$engine_www_path}' target='_blank'><img src = 'images/play.png'/></a></td><td><a href = '{$engine_www_path}' target='_blank'>Playtest your game<br/>Login: {$_SESSION['current_game_short_name']}<br/>Pass: {$_SESSION['current_game_short_name']}</a></td>
-				<td>&nbsp;</td><td>&nbsp;</td>
 			</tr>
 			
 			</table>

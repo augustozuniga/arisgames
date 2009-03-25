@@ -303,6 +303,16 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 	mysql_query($query);
 	echo mysql_error();
 
+
+	$query = "CREATE TABLE IF NOT EXISTS `{$new_game_short}_qrcodes` (
+		`qrcode_id` int(11) NOT NULL auto_increment,
+		`type` enum('Node','Event','Item','Npc') NOT NULL,
+		`type_id` int(11) NOT NULL,
+		PRIMARY KEY  (`qrcode_id`)
+		)";
+	mysql_query($query);
+	echo mysql_error();
+
 	//Create a test player for this game and give them all applications
 	echo '<p>Regster a Test Player</p>';
 	$query = "INSERT INTO players (first_name,last_name,user_name,password,site) 
