@@ -53,12 +53,11 @@
 	
 	
 	//turning the image in the UIView into a NSData JPEG object at 90% quality
-	NSData *imageData = UIImageJPEGRepresentation(image.image, .9);
+	NSData *imageData = UIImageJPEGRepresentation(img, .9);
 	
 	
 	// setting up the request object now
 	NSURL* url = [[NSURL alloc] initWithString:appModel.baseAppURL];
-	//NSURL* url = [[NSURL alloc] initWithString:@"http://davembp.local/aris/CameraTest.php"];
 	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL: url];
 	[request setHTTPMethod: @"POST"];
 	

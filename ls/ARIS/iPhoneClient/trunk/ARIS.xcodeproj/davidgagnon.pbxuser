@@ -100,7 +100,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					908,
+					822,
 					20,
 					48,
 					43,
@@ -318,6 +318,15 @@
 			A703EFAF0F7C36CF008A12E2 /* PBXTextBookmark */ = A703EFAF0F7C36CF008A12E2 /* PBXTextBookmark */;
 			A703EFB20F7C374C008A12E2 /* PBXTextBookmark */ = A703EFB20F7C374C008A12E2 /* PBXTextBookmark */;
 			A703EFB30F7C374C008A12E2 /* PBXTextBookmark */ = A703EFB30F7C374C008A12E2 /* PBXTextBookmark */;
+			A703EFB70F7C391C008A12E2 /* PBXTextBookmark */ = A703EFB70F7C391C008A12E2 /* PBXTextBookmark */;
+			A703EFB80F7C391C008A12E2 /* PBXTextBookmark */ = A703EFB80F7C391C008A12E2 /* PBXTextBookmark */;
+			A703EFB90F7C391C008A12E2 /* PBXTextBookmark */ = A703EFB90F7C391C008A12E2 /* PBXTextBookmark */;
+			A703EFBA0F7C391C008A12E2 /* PBXTextBookmark */ = A703EFBA0F7C391C008A12E2 /* PBXTextBookmark */;
+			A703EFBB0F7C391C008A12E2 /* PBXTextBookmark */ = A703EFBB0F7C391C008A12E2 /* PBXTextBookmark */;
+			A703EFBF0F7C3A59008A12E2 /* PBXTextBookmark */ = A703EFBF0F7C3A59008A12E2 /* PBXTextBookmark */;
+			A703EFC00F7C3A59008A12E2 /* PBXTextBookmark */ = A703EFC00F7C3A59008A12E2 /* PBXTextBookmark */;
+			A703EFC50F7C3AC8008A12E2 /* PBXTextBookmark */ = A703EFC50F7C3AC8008A12E2 /* PBXTextBookmark */;
+			A703EFC60F7C3AC8008A12E2 /* PBXTextBookmark */ = A703EFC60F7C3AC8008A12E2 /* PBXTextBookmark */;
 			A70A92D00F4CA57D0046F532 = A70A92D00F4CA57D0046F532 /* PBXTextBookmark */;
 			A70A92D30F4CA57D0046F532 = A70A92D30F4CA57D0046F532 /* PBXTextBookmark */;
 			A70A92EA0F4CA8C70046F532 = A70A92EA0F4CA8C70046F532 /* PBXTextBookmark */;
@@ -725,7 +734,7 @@
 		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
 		name = "CameraViewController.m: 110";
 		rLen = 0;
-		rLoc = 5512;
+		rLoc = 5412;
 		rType = 0;
 		vrLen = 814;
 		vrLoc = 1366;
@@ -2233,7 +2242,7 @@
 		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
 		name = "CameraViewController.m: 61";
 		rLen = 0;
-		rLoc = 1779;
+		rLoc = 1768;
 		rType = 0;
 		vrLen = 3288;
 		vrLoc = 690;
@@ -2247,6 +2256,96 @@
 		rType = 0;
 		vrLen = 93;
 		vrLoc = 332;
+	};
+	A703EFB70F7C391C008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
+		name = "CameraViewController.m: 10";
+		rLen = 0;
+		rLoc = 177;
+		rType = 0;
+		vrLen = 856;
+		vrLoc = 0;
+	};
+	A703EFB80F7C391C008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A72C01620F79604F00D00602 /* AppModel.m */;
+		name = "AppModel.m: 33";
+		rLen = 0;
+		rLoc = 719;
+		rType = 0;
+		vrLen = 626;
+		vrLoc = 307;
+	};
+	A703EFB90F7C391C008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A72C01280F7959B600D00602 /* ARISAppDelegate.m */;
+		name = "ARISAppDelegate.m: 234";
+		rLen = 0;
+		rLoc = 8370;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 7684;
+	};
+	A703EFBA0F7C391C008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A72C01620F79604F00D00602 /* AppModel.m */;
+		name = "AppModel.m: 33";
+		rLen = 0;
+		rLoc = 719;
+		rType = 0;
+		vrLen = 626;
+		vrLoc = 307;
+	};
+	A703EFBB0F7C391C008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A72C01280F7959B600D00602 /* ARISAppDelegate.m */;
+		name = "ARISAppDelegate.m: 33";
+		rLen = 0;
+		rLoc = 678;
+		rType = 0;
+		vrLen = 1066;
+		vrLoc = 357;
+	};
+	A703EFBF0F7C3A59008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
+		name = "CameraViewController.m: 57";
+		rLen = 0;
+		rLoc = 1661;
+		rType = 0;
+		vrLen = 1537;
+		vrLoc = 652;
+	};
+	A703EFC00F7C3A59008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A72C01280F7959B600D00602 /* ARISAppDelegate.m */;
+		name = "ARISAppDelegate.m: 33";
+		rLen = 0;
+		rLoc = 678;
+		rType = 0;
+		vrLen = 1066;
+		vrLoc = 357;
+	};
+	A703EFC50F7C3AC8008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
+		name = "CameraViewController.m: 57";
+		rLen = 0;
+		rLoc = 1661;
+		rType = 0;
+		vrLen = 1537;
+		vrLoc = 652;
+	};
+	A703EFC60F7C3AC8008A12E2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A72C01280F7959B600D00602 /* ARISAppDelegate.m */;
+		name = "ARISAppDelegate.m: 33";
+		rLen = 0;
+		rLoc = 678;
+		rType = 0;
+		vrLen = 1066;
+		vrLoc = 357;
 	};
 	A70A92D00F4CA57D0046F532 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2818,9 +2917,9 @@
 		path = /Users/davidgagnon/Documents/Aris/iPhoneClient/Classes/ARISAppDelegate.m;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1086, 3738}}";
-			sepNavSelRange = "{747, 0}";
-			sepNavVisRange = "{1536, 1911}";
+			sepNavIntBoundsRect = "{{0, 0}, {1000, 3780}}";
+			sepNavSelRange = "{678, 0}";
+			sepNavVisRange = "{357, 1066}";
 		};
 	};
 	A72C01310F795DFF00D00602 /* PBXTextBookmark */ = {
@@ -2850,9 +2949,9 @@
 		path = /Users/davidgagnon/Documents/Aris/iPhoneClient/Classes/model/AppModel.m;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1086, 2660}}";
-			sepNavSelRange = "{576, 0}";
-			sepNavVisRange = "{332, 93}";
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 2674}}";
+			sepNavSelRange = "{719, 0}";
+			sepNavVisRange = "{307, 626}";
 		};
 	};
 	A72C01B70F7978A600D00602 /* PBXBookmark */ = {
@@ -2934,7 +3033,7 @@
 		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
 		name = "CameraViewController.m: 60";
 		rLen = 0;
-		rLoc = 5512;
+		rLoc = 5412;
 		rType = 0;
 		vrLen = 1254;
 		vrLoc = 890;
@@ -3335,7 +3434,7 @@
 		isa = PBXTextBookmark;
 		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
 		name = "CameraViewController.m: 52";
-		rLen = 3848;
+		rLen = 3748;
 		rLoc = 1113;
 		rType = 0;
 		vrLen = 1326;
@@ -3476,7 +3575,7 @@
 		fRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */;
 		name = "CameraViewController.m: 102";
 		rLen = 0;
-		rLoc = 5113;
+		rLoc = 5013;
 		rType = 0;
 		vrLen = 554;
 		vrLoc = 3614;
@@ -3490,9 +3589,9 @@
 	};
 	A7E39EAC0F5F60D000826198 /* CameraViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1086, 1932}}";
-			sepNavSelRange = "{1779, 0}";
-			sepNavVisRange = "{690, 3288}";
+			sepNavIntBoundsRect = "{{0, 0}, {1000, 2142}}";
+			sepNavSelRange = "{1661, 0}";
+			sepNavVisRange = "{652, 1537}";
 		};
 	};
 	A7E39ED30F5F65AF00826198 /* PlistBookmark */ = {
