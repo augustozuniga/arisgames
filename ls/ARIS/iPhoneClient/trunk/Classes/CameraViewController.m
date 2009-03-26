@@ -25,7 +25,7 @@
 	self.imagePickerController.allowsImageEditing = YES;
 	self.imagePickerController.delegate = self;
 	
-	NSLog(@"IMView Loaded");
+	NSLog(@"Camera Loaded");
 }
 
 -(void) setModel:(AppModel *)model {
@@ -43,57 +43,70 @@
 	[self presentModalViewController:self.imagePickerController animated:YES];
 }
 
-- (IBAction)libraryButtonTouchAction {
-	NSLog(@"Library Button Pressed");
-	self.imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-	[self presentModalViewController:self.imagePickerController animated:YES];
-}
-
-- (IBAction)uploadButtonTouchAction {
-	
-	// setting up the URL to post to
-	NSString *urlString= [NSString stringWithFormat: @"%@%@", [appModel getURLStringForModule:moduleName],"&event=upload"];
-	NSLog([NSString stringWithFormat: @"Preparing to send file from camera to: %@", urlString] );
-	
-	/*
-	 
-	 //turning the image in the UIView into a NSData JPEG object at 90% quality
-	 NSData *imageData = UIImageJPEGRepresentation(image.image, .9);
-	 
-	 
-	 // setting up the request object now
-	 NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
-	 [request setURL:[NSURL URLWithString:urlString]];
-	 [request setHTTPMethod:@"POST"];
-	 
-	 //Add headers
-	 NSString *boundary = [NSString stringWithString:@"---------------------------14737809831466499882746641449"];
-	 NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-	 [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-	 
-	 //body
-	 NSMutableData *body = [NSMutableData data];
-	 [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	 [body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"userfile\"; filename=\"ipodfile.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	 [body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	 [body appendData:[NSData dataWithData:imageData]];
-	 [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	 
-	 // setting the body of the post to the reqeust
-	 [request setHTTPBody:body];
-	 
-	 // post it
-	 NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-	 NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-	 NSLog([NSString stringWithFormat: @"Camera file posted. Result from Server: %@", returnString]);
-	 */
-}
-
-
 #pragma mark UIImagePickerControllerDelegate Protocol Methods
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editInfo {
-	image.image = img;
 	[[picker parentViewController] dismissModalViewControllerAnimated:YES];
+	
+	NSLog(@"Preparing to send file from camera to Server");
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	
+	
+	//turning the image in the UIView into a NSData JPEG object at 90% quality
+	NSData *imageData = UIImageJPEGRepresentation(image.image, .9);
+	
+	
+	// setting up the request object now
+	NSURL* url = [[NSURL alloc] initWithString:appModel.baseAppURL];
+	//NSURL* url = [[NSURL alloc] initWithString:@"http://davembp.local/aris/CameraTest.php"];
+	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL: url];
+	[request setHTTPMethod: @"POST"];
+	
+	//Add headers
+	NSString *boundary = [NSString stringWithString:@"---------------------------14737809831466499882746641449"];
+	NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+	[request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+	
+	//body
+	NSMutableData *body = [NSMutableData data];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	//other post vars
+	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"user_name\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", appModel.username] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"password\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", appModel.password] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"site\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", appModel.site] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"module\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", self.moduleName] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	//image
+	
+	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"image\"; filename=\"ipodfile.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[NSData dataWithData:imageData]];
+	[body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	
+	
+	// setting the body of the post to the reqeust
+	[request setHTTPBody:body];
+	
+	// post it
+	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSLog([NSString stringWithFormat: @"Camera file posted. Result from Server: %@", returnString]);
+	
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [pool release];
+	
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

@@ -15,7 +15,6 @@
 	AppModel *appModel;
 	
 	IBOutlet UIButton *takePhotoButton;
-	IBOutlet UIButton *viewLibraryButton;
 	IBOutlet UIButton *uploadPhotoButton;
     IBOutlet UIImageView *image;
     UIImagePickerController *imagePickerController;
@@ -24,7 +23,6 @@
 
 - (void) setModel:(AppModel *)model;
 - (IBAction)cameraButtonTouchAction;
-- (IBAction)libraryButtonTouchAction;
 - (IBAction)uploadButtonTouchAction;
 
 @property(copy, readwrite) NSString *moduleName;
