@@ -9,13 +9,13 @@ session_start();
 if (isset($_REQUEST['latitude']) 
 	&& isset($_REQUEST['longitude']) 
 	&& isset($_SESSION['player_id'])
-	&& isset($_GET['site'])) 
+	&& isset($_REQUEST['site'])) 
 {	
 	// Update Session
 	$_SESSION['latitude']=$_REQUEST['latitude'];
 	$_SESSION['longitude']=$_REQUEST['longitude'];
 	$_SESSION['last_location_timestamp']=time();
-	$_GET['site'] = $_GET['site'] . '_';
+	$_REQUEST['site'] = $_REQUEST['site'] . '_';
 	
 	/*************************************************************
 	 Begin AWESOME GHETTO code now

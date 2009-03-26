@@ -196,7 +196,46 @@ abstract class Framework_Module extends Framework_Object_Web
 
         return $this->data[$var];
     }
+
+    /**
+     * Adds the specified item to the specified player.
+	 *
+	 * @access protected
+     * @return void
+     */
+     protected function giveItemToPlayer($itemID, $userID) {
+    	$sql = Framework::$db->prefix("SELECT * FROM _P_items 
+									  WHERE item_id = $itemID");
+    	$row = Framework::$db->getRow($sql);
+    	
+    	if ($row) {    	
+    		$sql = Framework::$db->prefix("INSERT INTO _P_player_items 
+										  (player_id, item_id) VALUES ($userID, $itemID)
+										  ON duplicate KEY UPDATE item_id = $itemID");
+    		Framework::$db->exec($sql);
+    	}
+    	else {
+    		//Throw exception
+    	}
+    }
     
+    /**
+     * Creates a new Item for the game and returns its itemID
+	 *
+	 * name and description are strings, image is the name of an image file, assumed to be in the Site Template or UserFiles
+	 *
+	 * @access protected
+     * @return int
+     */
+	protected function createItem($name, $description, $image = null) {
+   		$sql = Framework::$db->prefix("INSERT INTO _P_items 
+										  (name, description, media) 
+										VALUES ('{$name}', '{$description}', '{$image}')");
+    	Framework::$db->exec($sql);
+		return mysql_insert_id();
+	}	
+	
+	
     /**
      * loadApplications
      *

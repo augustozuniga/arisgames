@@ -39,7 +39,7 @@ abstract class Framework_Auth_User extends Framework_Auth
     	$session = Framework_Session::singleton();
     	
     	//if REST, then check that too
-    	if(isset($_GET["user_name"])) {
+    	if(isset($_REQUEST["user_name"])) {
     		$user = loginUser();
     		if($user) {
     			return true;

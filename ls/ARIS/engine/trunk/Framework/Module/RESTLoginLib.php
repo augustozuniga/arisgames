@@ -8,7 +8,8 @@
 function loginUser() {
 	$loggedIn = false;
 	
-	if(!empty($_GET['user_name'])) {
+	if(!empty($_REQUEST['user_name'])) {
+		
 		$userField = Framework::$site->config->user->userField;
 		$session = Framework_Session::singleton();
 		
@@ -16,12 +17,12 @@ function loginUser() {
 		$sql = sprintf("SELECT * FROM %s 
 			WHERE user_name='%s' AND password='%s'", 
 			Framework::$site->config->user->userTable,
-			$_GET['user_name'], $_GET['password']);
+			$_REQUEST['user_name'], $_REQUEST['password']);
 		
 		$row = Framework::$db->getRow($sql);
 		
-		if($_GET['user_name'] == $row['user_name'] && $_GET['password'] == $row['password']) {
-				$session->authorization = array('user_name' => $_GET['user_name'], "$userField" => $row["$userField"]);
+		if($_REQUEST['user_name'] == $row['user_name'] && $_REQUEST['password'] == $row['password']) {
+				$session->authorization = array('user_name' => $_REQUEST['user_name'], "$userField" => $row["$userField"]);
 			
 			$session->{$userField} = $row["$userField"];
 			

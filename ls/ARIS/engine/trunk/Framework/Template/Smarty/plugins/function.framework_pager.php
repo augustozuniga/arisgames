@@ -46,7 +46,7 @@ function smarty_function_framework_pager($params, &$smarty)
     }
 
     $sets = array();
-    foreach ($_GET as $key => $val) {
+    foreach ($_REQUEST as $key => $val) {
         if ($key == 'start') {
             continue;
         }
