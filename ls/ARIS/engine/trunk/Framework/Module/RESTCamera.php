@@ -62,14 +62,18 @@ class Framework_Module_RESTCamera extends Framework_Auth_User
 				
 		
 			//Create an item for the file
-			if (strlen($_REQUEST['name']) > 0) $name = $_REQUEST['name']; else $name = "Camera Image";
-			if (strlen($_REQUEST['description']) > 0) $description = $_REQUEST['description']; else $description = "Taken " . date("l F d, Y");
+			if (isset ($_REQUEST['name']) && strlen($_REQUEST['name']) > 0) $name = $_REQUEST['name']; else $name = "Camera Image";
+			if (isset ($_REQUEST['name']) && strlen($_REQUEST['description']) > 0) $description = $_REQUEST['description']; else $description = "Taken " . date("l F d, Y");
 			$newItemID = $this->createItem($name, $description, $newName);
 			
 			//Give the player this item
 			$this->giveItemToPlayer($newItemID, $_SESSION['player_id']);
-		}
 			
+			$this->message = "Image Upload Sucessfull";
+		}
+		
+		$this->message = "No file was present in POST";
+		
 	}//default
 
 }//class

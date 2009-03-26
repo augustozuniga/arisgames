@@ -1,1 +1,1 @@
-No Response from Server
+{$message}
