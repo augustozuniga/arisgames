@@ -62,8 +62,8 @@ class Framework_Module_RESTCamera extends Framework_Auth_User
 				
 		
 			//Create an item for the file
-			$name = "Camera Image";
-			$description = "Taken " . date("l F d, Y");
+			if (strlen($_REQUEST['name']) > 0) $name = $_REQUEST['name']; else $name = "Camera Image";
+			if (strlen($_REQUEST['description']) > 0) $description = $_REQUEST['description']; else $description = "Taken " . date("l F d, Y");
 			$newItemID = $this->createItem($name, $description, $newName);
 			
 			//Give the player this item
