@@ -35,6 +35,9 @@
 - (void)processNearbyLocationsList:(NSNotification *)notification {
     NSLog(@"Toolbar recieved Nearby Locations List Notification");
 		
+	//Clear a button if it exists
+	navigationItem.rightBarButtonItem = nil;
+	
 	if ([notification.object count] > 0) {
 		
 		//Determine the Button Label
