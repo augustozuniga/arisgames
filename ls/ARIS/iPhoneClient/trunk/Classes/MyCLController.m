@@ -60,20 +60,24 @@
 	if (self != nil) {
 		self.locationManager = [[[CLLocationManager alloc] init] autorelease];
 		self.locationManager.delegate = self; // Tells the location manager to send updates to this object
+		self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+		self.locationManager.distanceFilter = 2.0; //Minimum change of 2 meters for update
 	}
 	return self;
+		
 }
 
 
 // Called when the location is updated
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation: (CLLocation *)newLocation fromLocation: (CLLocation *)oldLocation
-{
+	- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+
 	NSLog(@"Read %lf, %lf from CLLocationManager with Accuracy of %gm,%gm", newLocation.coordinate.latitude,
 		  newLocation.coordinate.longitude,  newLocation.horizontalAccuracy, newLocation.verticalAccuracy );
 	
 	
-	[self.delegate updateLatitude:[NSString stringWithFormat: @"%lf",newLocation.coordinate.latitude]
-					andLongitude: [NSString stringWithFormat:@"%lf",newLocation.coordinate.longitude]];
+	[self.delegate updateLatitude:[NSString stringWithFormat: @"%lf", newLocation.coordinate.latitude]
+					andLongitude: [NSString stringWithFormat:@"%lf",newLocation.coordinate.longitude]
+					andAccuracy: newLocation.horizontalAccuracy];
 	
 }
 /*

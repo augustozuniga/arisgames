@@ -13,17 +13,33 @@
 @synthesize moduleName;
 @synthesize locationTable;
 @synthesize locationTableData;
+@synthesize serverTable;
+@synthesize serverTableData;
 @synthesize clearEventsButton;
 @synthesize clearItemsButton;
+@synthesize accuracyLabelValue;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
 	moduleName = @"RESTDeveloper";
+	
+	//register for notifications
+	NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
+	[dispatcher addObserver:self selector:@selector(updateAccuracy) name:@"PlayerMoved" object:nil];	
+	
+	//Populate server array
+	serverTableData = [[NSMutableArray alloc] init];
+    [self.serverTableData addObject: @"http://davembp.local/aris/src/index.php"];
+    [self.serverTableData addObject: @"http://atsosxdev.doit.wisc.edu/aris/games/index.php"];
+	//Add more debugging servers here
+	[self.serverTable reloadData];	
+	
 	NSLog(@"Developer loaded");
 }
 
-- (void)viewDidAppear {
+- (void)viewDidAppear {	
+	
 }
 
 
@@ -34,13 +50,19 @@
 		[appModel retain];
 	}
 	
+	//Populate locations array
 	[appModel fetchLocationList];
 	locationTableData = appModel.locationList;
-	
-	//refresh the picker now that we have Model data available
 	[locationTable reloadData];
 	
+	//Init Accuracy Label
+	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters", appModel.lastLocationAccuracy]; 
+		
 	NSLog(@"model set for DEV");
+}
+
+-(void) updateAccuracy{
+	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters", appModel.lastLocationAccuracy]; 
 }
 
 #pragma mark IB Button Actions
@@ -57,7 +79,6 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Success" message: result delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	
 	[alert show];
-	
 	[result release];
 	[alert release];
 	
@@ -75,7 +96,6 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Success" message: result delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	
 	[alert show];
-	
 	[result release];
 	[alert release];
 
@@ -84,46 +104,54 @@
 
 #pragma mark PickerViewDelegate selectors
 
-//See http://www.iphonedevcentral.org/tutorials.php?page=ViewTutorial&id=36&uid=48763428 for a tutorial
-
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 // returns the # of rows in each component..
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [locationTableData count];
+	if (tableView == locationTable) return [locationTableData count];
+	else if (tableView == serverTable) return [serverTableData count];
+	else return 0;
 }
+
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+	//Set up the cell
     static NSString *CellIdentifier = @"Cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
     }
-	
-	Location *loc = [locationTableData objectAtIndex: [indexPath row]];
-	cell.text = loc.name;
 	cell.textColor = [[UIColor alloc] initWithWhite:1.0 alpha:1.0]; 	
+
+	//Set the text based on who's asking
+	if (tableView == locationTable) cell.text = [[locationTableData objectAtIndex: [indexPath row]] name];
+	else if (tableView == serverTable) cell.text = [self.serverTableData objectAtIndex: [indexPath row]];
+	
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	Location *selectedLocation = [locationTableData objectAtIndex:[indexPath row]];
 	
-	NSLog([NSString stringWithFormat:@"Location Selected. Forcing appModel to Latitude: %@ Longitude: %@", selectedLocation.latitude, selectedLocation.longitude]);
-	appModel.lastLatitude = selectedLocation.latitude;
-	appModel.lastLongitude = selectedLocation.longitude;
+	if (tableView == locationTable) {
+		Location *selectedLocation = [locationTableData objectAtIndex:[indexPath row]];
+		NSLog([NSString stringWithFormat:@"Location Selected. Forcing appModel to Latitude: %@ Longitude: %@", selectedLocation.latitude, selectedLocation.longitude]);
+		appModel.lastLatitude = selectedLocation.latitude;
+		appModel.lastLongitude = selectedLocation.longitude;
+		NSLog(@"Updating Server Location and Fetching Nearby Location List");
+		[appModel updateServerLocationAndfetchNearbyLocationList];
+	}
 	
-	NSLog(@"Updating Server Location and Fetching Nearby Location List");
-	[appModel updateServerLocationAndfetchNearbyLocationList];
-	
-	//refresh?
-	[locationTable reloadData];
+	else if (tableView == serverTable) {
+		//change model's URL
+		appModel.baseAppURL = [serverTableData objectAtIndex:[indexPath row]];
+		//Logout the user
+		NSNotification *logoutRequestNotification = [NSNotification notificationWithName:@"LogoutRequested" object:self];
+		[[NSNotificationCenter defaultCenter] postNotification:logoutRequestNotification];
+	}
 }
 
 

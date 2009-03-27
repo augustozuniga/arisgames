@@ -31,6 +31,7 @@
 		2B3D175A0F49D18D0067FD3A /* DeveloperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D17590F49D18D0067FD3A /* DeveloperViewController.m */; };
 		2B3D177A0F49D3F90067FD3A /* Developer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D17790F49D3F90067FD3A /* Developer.xib */; };
 		2B3D18D60F4B25720067FD3A /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D18D50F4B25720067FD3A /* AppModel.m */; };
+		A703EFE30F7C5C39008A12E2 /* marker-player-lqgps.png in Resources */ = {isa = PBXBuildFile; fileRef = A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */; };
 		A722E6E70F573174004B04D2 /* GameListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E6E60F573174004B04D2 /* GameListParserDelegate.m */; };
 		A722E7150F57425B004B04D2 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7140F57425B004B04D2 /* Location.m */; };
 		A722E73A0F57431B004B04D2 /* LocationListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */; };
@@ -128,13 +129,14 @@
 		2B3D18D40F4B25720067FD3A /* AppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppModel.h; sourceTree = "<group>"; };
 		2B3D18D50F4B25720067FD3A /* AppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppModel.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-player-lqgps.png"; path = "images/marker-player-lqgps.png"; sourceTree = "<group>"; };
 		A722E6E50F573174004B04D2 /* GameListParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListParserDelegate.h; sourceTree = "<group>"; };
 		A722E6E60F573174004B04D2 /* GameListParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListParserDelegate.m; sourceTree = "<group>"; };
 		A722E7130F57425B004B04D2 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		A722E7140F57425B004B04D2 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		A722E7380F57431B004B04D2 /* LocationListParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationListParserDelegate.h; sourceTree = "<group>"; };
 		A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationListParserDelegate.m; sourceTree = "<group>"; };
-		A72C01B00F7977A600D00602 /* marker-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-player.png"; sourceTree = "<group>"; };
+		A72C01B00F7977A600D00602 /* marker-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-player.png"; path = "images/marker-player.png"; sourceTree = "<group>"; };
 		A72C02130F7985EF00D00602 /* QRScanner.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRScanner.xib; sourceTree = "<group>"; };
 		A72C02150F7985FF00D00602 /* QRScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRScannerViewController.h; sourceTree = "<group>"; };
 		A72C02160F7985FF00D00602 /* QRScannerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRScannerViewController.m; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 		A77B06ED0F78372F005945D3 /* Map Icons */ = {
 			isa = PBXGroup;
 			children = (
+				A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */,
 				A72C01B00F7977A600D00602 /* marker-player.png */,
 				A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */,
 				A7E39FAF0F5F930E00826198 /* marker-blue.png */,
@@ -480,6 +483,7 @@
 				A72C01B10F7977A600D00602 /* marker-player.png in Resources */,
 				A72C02140F7985EF00D00602 /* QRScanner.xib in Resources */,
 				A72C021D0F798B0500D00602 /* QRScanner.png in Resources */,
+				A703EFE30F7C5C39008A12E2 /* marker-player-lqgps.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

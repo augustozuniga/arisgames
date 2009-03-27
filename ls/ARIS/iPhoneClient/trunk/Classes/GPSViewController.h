@@ -23,6 +23,7 @@
 
 -(void) setModel:(AppModel *)model;
 -(void) refreshMap;
+-(void) refreshPlayerMarker;
 
 
 @property(copy, readwrite) NSString *moduleName;

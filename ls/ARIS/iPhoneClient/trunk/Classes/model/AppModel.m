@@ -25,12 +25,14 @@
 @synthesize nearbyLocationsList;
 @synthesize lastLatitude;
 @synthesize lastLongitude;
+@synthesize lastLocationAccuracy;
 
 
 -(void)loadUserDefaults {
 	//Load user settings
 	NSLog(@"Loading User Defaults");
 	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+	if ([defaults stringForKey:@"baseAppURL"]) baseAppURL = [defaults stringForKey:@"baseAppURL"];
 	loggedIn = [defaults boolForKey:@"loggedIn"];
 	if (loggedIn == YES) {
 		username = [defaults stringForKey:@"username"];
@@ -67,16 +69,6 @@
 	}
 	
 	loggedIn = loginSuccessful;
-	
-	//Set User Defaults for next Load
-	NSLog(@"Saving Login Info in User Defaults");
-	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
-	[defaults setBool:loggedIn forKey:@"loggedIn"];
-	[defaults setObject:username forKey:@"username"];
-	[defaults setObject:password forKey:@"password"];
-	[defaults release];
-	
-	
 	
 	return loginSuccessful;
 }

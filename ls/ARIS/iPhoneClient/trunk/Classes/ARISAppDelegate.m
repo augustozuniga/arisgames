@@ -30,7 +30,6 @@
 - (void)applicationDidFinishLaunching:(UIApplication *)application {
 	//init app model
 	appModel = [[AppModel alloc] init];
-	//appModel.baseAppURL = @"http://davembp.local/aris/src/index.php";
 	appModel.baseAppURL = @"http://atsosxdev.doit.wisc.edu/aris/games/index.php";
 	appModel.site = @"Default";
 	[appModel loadUserDefaults];
@@ -157,13 +156,7 @@
 	
 	//Set the model to this game
 	appModel.site = selectedGame.name;
-	
-	//Set User Defaults for next Load
-	NSLog(@"Saving Site Info in User Defaults");
-	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
-	[defaults setObject:appModel.site forKey:@"site"];
-	[defaults release];
-	
+		
 	//Load the default module, TODO
 	appModel.currentModule = @"TODO";
 }
@@ -225,10 +218,11 @@
 }
 
 #pragma mark --- Delegate methods for MyCLController ---
-- (void)updateLatitude: (NSString *)latitude andLongitude:(NSString *) longitude  {	
+- (void)updateLatitude: (NSString *)latitude andLongitude:(NSString *)longitude andAccuracy:(float)accuracy  {	
 	//Update the Model
 	appModel.lastLatitude = [latitude copy];
 	appModel.lastLongitude = [longitude copy];
+	appModel.lastLocationAccuracy = accuracy;
 	
 	//Tell the other parts of the client
 	NSNotification *updatedLocationNotification = [NSNotification notificationWithName:@"PlayerMoved" object:self];
@@ -259,7 +253,17 @@
 -(void) applicationWillTerminate:(UIApplication *)application {
 	NSLog(@"Begin Application Termination");
 	
-	//TODO: Move the user default saving stuff in this place only
+	//Set User Defaults for next Load
+	NSLog(@"Saving Settings in User Defaults");
+	NSUserDefaults *defaults = [[NSUserDefaults alloc] init];
+	[defaults setObject:appModel.site forKey:@"site"];
+	[defaults setBool:appModel.loggedIn forKey:@"loggedIn"];
+	[defaults setObject:appModel.username forKey:@"username"];
+	[defaults setObject:appModel.password forKey:@"password"];
+	[defaults setObject:appModel.baseAppURL forKey:@"baseAppURL"];
+	
+	[defaults release];
+	
 	
 }
 

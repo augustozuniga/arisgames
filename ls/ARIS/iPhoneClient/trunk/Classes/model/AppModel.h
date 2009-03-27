@@ -21,6 +21,7 @@
 	NSMutableArray *nearbyLocationsList;
 	NSString *lastLatitude;
 	NSString *lastLongitude;
+	float lastLocationAccuracy;
 }
 
 @property(copy, readwrite) NSString *baseAppURL;
@@ -34,6 +35,7 @@
 @property(copy, readwrite) NSMutableArray *nearbyLocationsList;	
 @property(copy, readwrite) NSString *lastLatitude;
 @property(copy, readwrite) NSString *lastLongitude;
+@property(readwrite) float lastLocationAccuracy;
 
 -(void)loadUserDefaults;
 -(BOOL)login;
