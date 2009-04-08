@@ -218,6 +218,47 @@ abstract class Framework_Module extends Framework_Object_Web
     		//Throw exception
     	}
     }
+	
+	
+	/**
+     * Removes the specified item from the user.
+     */ 
+    static protected function takeItemFromPlayer($itemID, $userID) {
+    	$sql = Framework::$db->prefix("SELECT * FROM _P_items
+									  WHERE item_id = $itemID");
+    	$row = Framework::$db->getRow($sql);
+    	
+    	if ($row) {
+    		$sql = Framework::$db->prefix("DELETE FROM _P_player_items 
+										  WHERE player_id = $userID AND item_id = $itemID");
+    		Framework::$db->exec($sql);
+    		return TRUE;
+		}
+		else return FALSE;
+    }
+	
+	/**
+     * Adds an item to Locations at the specified latitude, longitude
+     */ 
+    static protected function giveItemToWorld($itemID, $lat, $long, $hidden = FALSE) {
+    	
+		//Check that the items exists
+		$sql = Framework::$db->prefix("SELECT * FROM _P_items
+									  WHERE item_id = $itemID");
+    	$row = Framework::$db->getRow($sql);
+    	
+    	if ($row) {
+			//Create a location that points to this item
+    		$sql = Framework::$db->prefix("INSERT INTO _P_locations (type,type_id,latitude,longitude,hidden)
+										  VALUES ('Item','{$itemID}','{$lat}','{$long}','{$hidden}')");
+    		Framework::$db->exec($sql);
+    		return TRUE;
+		}
+		else return FALSE;
+    }
+	
+	
+	
     
     /**
      * Creates a new Item for the game and returns its itemID
@@ -227,10 +268,10 @@ abstract class Framework_Module extends Framework_Object_Web
 	 * @access protected
      * @return int
      */
-	protected function createItem($name, $description, $image = null) {
+	protected function createItem($name, $description, $type, $image = null) {
    		$sql = Framework::$db->prefix("INSERT INTO _P_items 
-										  (name, description, media) 
-										VALUES ('{$name}', '{$description}', '{$image}')");
+										  (name, description, type, media) 
+										VALUES ('{$name}', '{$description}', '{$type}' , '{$image}')");
     	Framework::$db->exec($sql);
 		return mysql_insert_id();
 	}	
