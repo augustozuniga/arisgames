@@ -222,6 +222,17 @@
 			A702FC530F8E8C1F00BE6549 /* PBXTextBookmark */ = A702FC530F8E8C1F00BE6549 /* PBXTextBookmark */;
 			A702FC570F8E8C4B00BE6549 /* PBXTextBookmark */ = A702FC570F8E8C4B00BE6549 /* PBXTextBookmark */;
 			A702FC580F8E8C4B00BE6549 /* PBXTextBookmark */ = A702FC580F8E8C4B00BE6549 /* PBXTextBookmark */;
+			A702FC5D0F8E8DED00BE6549 /* PBXTextBookmark */ = A702FC5D0F8E8DED00BE6549 /* PBXTextBookmark */;
+			A702FC5E0F8E8DED00BE6549 /* PBXTextBookmark */ = A702FC5E0F8E8DED00BE6549 /* PBXTextBookmark */;
+			A702FC600F8E8E7900BE6549 /* PBXTextBookmark */ = A702FC600F8E8E7900BE6549 /* PBXTextBookmark */;
+			A702FC610F8E8E7900BE6549 /* PBXTextBookmark */ = A702FC610F8E8E7900BE6549 /* PBXTextBookmark */;
+			A702FC630F8E8F7D00BE6549 /* PBXTextBookmark */ = A702FC630F8E8F7D00BE6549 /* PBXTextBookmark */;
+			A702FC640F8E8F7D00BE6549 /* PBXTextBookmark */ = A702FC640F8E8F7D00BE6549 /* PBXTextBookmark */;
+			A702FC6A0F8E903400BE6549 /* PBXTextBookmark */ = A702FC6A0F8E903400BE6549 /* PBXTextBookmark */;
+			A702FC6B0F8E903400BE6549 /* PBXTextBookmark */ = A702FC6B0F8E903400BE6549 /* PBXTextBookmark */;
+			A702FC6C0F8E903400BE6549 /* PBXTextBookmark */ = A702FC6C0F8E903400BE6549 /* PBXTextBookmark */;
+			A702FC6D0F8E903400BE6549 /* PBXTextBookmark */ = A702FC6D0F8E903400BE6549 /* PBXTextBookmark */;
+			A702FC6E0F8E903400BE6549 /* PBXTextBookmark */ = A702FC6E0F8E903400BE6549 /* PBXTextBookmark */;
 			A703ED9B0F7BFE36008A12E2 = A703ED9B0F7BFE36008A12E2 /* PBXTextBookmark */;
 			A703EF4B0F7C30FB008A12E2 = A703EF4B0F7C30FB008A12E2 /* PBXTextBookmark */;
 			A703EFCB0F7C5718008A12E2 = A703EFCB0F7C5718008A12E2 /* PBXTextBookmark */;
@@ -452,9 +463,9 @@
 	};
 	2B3D12D80F437D6E0067FD3A /* FilesViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {969, 2450}}";
-			sepNavSelRange = "{4821, 0}";
-			sepNavVisRange = "{2926, 1145}";
+			sepNavIntBoundsRect = "{{0, 0}, {1048, 2506}}";
+			sepNavSelRange = "{4781, 0}";
+			sepNavVisRange = "{3330, 984}";
 		};
 	};
 	2B3D12DE0F4380B70067FD3A /* GPSViewController.h */ = {
@@ -566,7 +577,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 89";
 		rLen = 0;
-		rLoc = 3061;
+		rLoc = 3070;
 		rType = 0;
 		vrLen = 2139;
 		vrLoc = 1544;
@@ -703,7 +714,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4358;
+		rLoc = 4367;
 		rType = 0;
 		vrLen = 1097;
 		vrLoc = 4902;
@@ -723,7 +734,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 89";
 		rLen = 0;
-		rLoc = 3061;
+		rLoc = 3070;
 		rType = 0;
 		vrLen = 2140;
 		vrLoc = 1546;
@@ -917,7 +928,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4358;
+		rLoc = 4367;
 		rType = 0;
 		vrLen = 1097;
 		vrLoc = 4902;
@@ -947,7 +958,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 90";
 		rLen = 0;
-		rLoc = 3018;
+		rLoc = 3027;
 		rType = 0;
 		vrLen = 1579;
 		vrLoc = 1887;
@@ -967,7 +978,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 78";
 		rLen = 0;
-		rLoc = 2268;
+		rLoc = 2274;
 		rType = 0;
 		vrLen = 703;
 		vrLoc = 4047;
@@ -997,7 +1008,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 222";
 		rLen = 0;
-		rLoc = 5507;
+		rLoc = 5515;
 		rType = 0;
 		vrLen = 924;
 		vrLoc = 7100;
@@ -1037,7 +1048,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 232";
 		rLen = 0;
-		rLoc = 5767;
+		rLoc = 5778;
 		rType = 0;
 		vrLen = 634;
 		vrLoc = 6961;
@@ -1057,7 +1068,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4358;
+		rLoc = 4367;
 		rType = 0;
 		vrLen = 961;
 		vrLoc = 4902;
@@ -1077,7 +1088,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4358;
+		rLoc = 4367;
 		rType = 0;
 		vrLen = 961;
 		vrLoc = 4902;
@@ -1097,7 +1108,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 206";
 		rLen = 0;
-		rLoc = 5507;
+		rLoc = 5515;
 		rType = 0;
 		vrLen = 432;
 		vrLoc = 188;
@@ -1107,7 +1118,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 112";
 		rLen = 0;
-		rLoc = 3432;
+		rLoc = 3441;
 		rType = 0;
 		vrLen = 307;
 		vrLoc = 6374;
@@ -1137,7 +1148,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 79";
 		rLen = 0;
-		rLoc = 2352;
+		rLoc = 2358;
 		rType = 0;
 		vrLen = 1807;
 		vrLoc = 1498;
@@ -1157,7 +1168,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 181";
 		rLen = 0;
-		rLoc = 5823;
+		rLoc = 5834;
 		rType = 0;
 		vrLen = 690;
 		vrLoc = 5159;
@@ -1177,7 +1188,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 158";
 		rLen = 0;
-		rLoc = 5441;
+		rLoc = 5450;
 		rType = 0;
 		vrLen = 1038;
 		vrLoc = 4681;
@@ -1197,7 +1208,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 158";
 		rLen = 0;
-		rLoc = 5441;
+		rLoc = 5450;
 		rType = 0;
 		vrLen = 637;
 		vrLoc = 5229;
@@ -1217,10 +1228,120 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 157";
 		rLen = 0;
-		rLoc = 5441;
+		rLoc = 5450;
 		rType = 0;
 		vrLen = 652;
 		vrLoc = 5197;
+	};
+	A702FC5D0F8E8DED00BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */;
+		name = "ItemDetailsViewController.h: 38";
+		rLen = 0;
+		rLoc = 1112;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 315;
+	};
+	A702FC5E0F8E8DED00BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
+		name = "ItemDetailsViewController.m: 81";
+		rLen = 0;
+		rLoc = 2738;
+		rType = 0;
+		vrLen = 1783;
+		vrLoc = 1376;
+	};
+	A702FC600F8E8E7900BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */;
+		name = "ItemDetailsViewController.h: 38";
+		rLen = 0;
+		rLoc = 1112;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 315;
+	};
+	A702FC610F8E8E7900BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
+		name = "ItemDetailsViewController.m: 44";
+		rLen = 0;
+		rLoc = 819;
+		rType = 0;
+		vrLen = 1043;
+		vrLoc = 459;
+	};
+	A702FC630F8E8F7D00BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */;
+		name = "ItemDetailsViewController.h: 38";
+		rLen = 0;
+		rLoc = 1112;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 315;
+	};
+	A702FC640F8E8F7D00BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
+		name = "ItemDetailsViewController.m: 47";
+		rLen = 0;
+		rLoc = 819;
+		rType = 0;
+		vrLen = 1067;
+		vrLoc = 459;
+	};
+	A702FC6A0F8E903400BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */;
+		name = "ItemDetailsViewController.h: 20";
+		rLen = 0;
+		rLoc = 490;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 315;
+	};
+	A702FC6B0F8E903400BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* FilesViewController.m */;
+		name = "FilesViewController.m: 58";
+		rLen = 0;
+		rLoc = 1350;
+		rType = 0;
+		vrLen = 887;
+		vrLoc = 1052;
+	};
+	A702FC6C0F8E903400BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */;
+		name = "ItemDetailsViewController.h: 20";
+		rLen = 0;
+		rLoc = 490;
+		rType = 0;
+		vrLen = 804;
+		vrLoc = 315;
+	};
+	A702FC6D0F8E903400BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* FilesViewController.m */;
+		name = "FilesViewController.m: 154";
+		rLen = 0;
+		rLoc = 4781;
+		rType = 0;
+		vrLen = 984;
+		vrLoc = 3330;
+	};
+	A702FC6E0F8E903400BE6549 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
+		name = "ItemDetailsViewController.m: 172";
+		rLen = 0;
+		rLoc = 5708;
+		rType = 0;
+		vrLen = 710;
+		vrLoc = 5150;
 	};
 	A703ED9B0F7BFE36008A12E2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1838,15 +1959,15 @@
 	A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1048, 574}}";
-			sepNavSelRange = "{1112, 0}";
+			sepNavSelRange = "{490, 0}";
 			sepNavVisRange = "{315, 804}";
 		};
 	};
 	A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1218, 2604}}";
-			sepNavSelRange = "{5441, 0}";
-			sepNavVisRange = "{5197, 652}";
+			sepNavIntBoundsRect = "{{0, 0}, {1218, 2590}}";
+			sepNavSelRange = "{5708, 0}";
+			sepNavVisRange = "{5150, 710}";
 		};
 	};
 	A75AF2FE0F86AA4800F15535 /* PBXTextBookmark */ = {
@@ -2187,7 +2308,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 88";
 		rLen = 0;
-		rLoc = 3022;
+		rLoc = 3031;
 		rType = 0;
 		vrLen = 2080;
 		vrLoc = 1471;
@@ -2214,7 +2335,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 88";
 		rLen = 8;
-		rLoc = 2978;
+		rLoc = 2987;
 		rType = 0;
 		vrLen = 1589;
 		vrLoc = 1885;
@@ -2224,7 +2345,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 88";
 		rLen = 0;
-		rLoc = 3022;
+		rLoc = 3031;
 		rType = 0;
 		vrLen = 1587;
 		vrLoc = 1885;
@@ -2268,7 +2389,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 88";
 		rLen = 0;
-		rLoc = 3018;
+		rLoc = 3027;
 		rType = 0;
 		vrLen = 1583;
 		vrLoc = 1885;
@@ -2282,7 +2403,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 88";
 		rLen = 0;
-		rLoc = 3018;
+		rLoc = 3027;
 		rType = 0;
 		vrLen = 1583;
 		vrLoc = 1885;
@@ -2292,7 +2413,7 @@
 		fRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */;
 		name = "ItemDetailsViewController.m: 88";
 		rLen = 0;
-		rLoc = 3018;
+		rLoc = 3027;
 		rType = 0;
 		vrLen = 2112;
 		vrLoc = 1544;

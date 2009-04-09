@@ -151,7 +151,7 @@
 	[itemDetailsViewController setModel:appModel];
 	[itemDetailsViewController setItem:selectedItem];
 	[self presentModalViewController:itemDetailsViewController animated:NO];
-	[ItemDetailsViewController release];
+	[itemDetailsViewController release];
 }
 
 

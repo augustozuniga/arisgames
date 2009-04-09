@@ -66,6 +66,8 @@
 	if ([item.type isEqualToString: @"AV"]) {
 		NSLog(@"Item Detail View: Video Layout Selected");
 		
+		
+		
 		//Create movie player object
 		NSString* videoURL = [item.mediaURL stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 		mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:videoURL]];
@@ -78,7 +80,7 @@
 		//Configure Movie Player
 		mMoviePlayer.scalingMode = MPMovieScalingModeFill; // Movie scaling mode can be one of: MPMovieScalingModeNone, MPMovieScalingModeAspectFit,MPMovieScalingModeAspectFill, MPMovieScalingModeFill.
 		mMoviePlayer.movieControlMode = MPMovieControlModeDefault; //Movie control mode can be one of: MPMovieControlModeDefault, MPMovieControlModeVolumeOnly, MPMovieControlModeHidden.
-		mMoviePlayer.backgroundColor = [UIColor blackColor];
+		mMoviePlayer.backgroundColor = [UIColor darkGrayColor];
 		
 		//Add a button
 		
@@ -163,9 +165,6 @@
 }
 
 
-
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
     // Release anything that's not essential, such as cached data
@@ -173,7 +172,7 @@
 
 
 - (void)dealloc {
-    NSLog(@"Item Details View: dealloc");
+    NSLog(@"Item Details View: Deallocating");
 	
 	// free our movie player
     [mMoviePlayer release];
