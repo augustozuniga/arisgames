@@ -173,7 +173,7 @@ if (isSet($_REQUEST['short']) and isSet($_REQUEST['name'])) {
 		name varchar(100) default NULL,
 		description text,
 		media varchar(50) NOT NULL default 'item_default.jpg',
-		type enum('Audio','Video','Image') NOT NULL,
+		type enum('AV','Image') NOT NULL default 'Image',
 		PRIMARY KEY  (item_id)
 		) ";
 	mysql_query($query);
