@@ -7,7 +7,7 @@
 
 	echo "<div class = 'nav'>
 	<a href = 'game_players.php'>Players</a>
-	<a href = 'itmes.php'>Items</a>
+	<a href = 'items.php'>Items</a>
 	</div>";
 	
 	$short_name = substr($_SESSION['current_game_prefix'], 0, strlen($_SESSION['current_game_prefix']) - 1);	
