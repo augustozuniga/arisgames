@@ -30,7 +30,7 @@
 	
 	//Populate server array
 	serverTableData = [[NSMutableArray alloc] init];
-    [self.serverTableData addObject: @"http://davembp.local/aris/src/index.php"];
+    [self.serverTableData addObject: @"http://davembp.local/engine/index.php"];
     [self.serverTableData addObject: @"http://atsosxdev.doit.wisc.edu/aris/games/index.php"];
 	//Add more debugging servers here
 	[self.serverTable reloadData];	
