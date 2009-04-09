@@ -137,6 +137,17 @@
 										'sort'     => true
 	);
 	
+	$opts['fdd']['type'] = array(
+								 'name'     => 'Item Type',
+								 'select'   => 'T',
+								 'maxlen'   => 5,
+								 'values'   => array(
+													 "Image",
+													 "Video",
+													 "Audio"),
+								 'sort'     => true
+								 );
+	
 	$opts['fdd']['media'] = array(
 								  //  'colattrs|LF'   => '',
 								  //  'escape'     => false,
