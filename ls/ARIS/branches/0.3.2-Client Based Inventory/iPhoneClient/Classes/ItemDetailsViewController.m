@@ -80,7 +80,7 @@
 		//Configure Movie Player
 		mMoviePlayer.scalingMode = MPMovieScalingModeFill; // Movie scaling mode can be one of: MPMovieScalingModeNone, MPMovieScalingModeAspectFit,MPMovieScalingModeAspectFill, MPMovieScalingModeFill.
 		mMoviePlayer.movieControlMode = MPMovieControlModeDefault; //Movie control mode can be one of: MPMovieControlModeDefault, MPMovieControlModeVolumeOnly, MPMovieControlModeHidden.
-		mMoviePlayer.backgroundColor = [UIColor darkGrayColor];
+		mMoviePlayer.backgroundColor = [UIColor blackColor];
 		
 		//Add a button
 		
