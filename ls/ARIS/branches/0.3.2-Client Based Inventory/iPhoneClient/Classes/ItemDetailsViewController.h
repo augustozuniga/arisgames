@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "model/AppModel.h";
 #import "Item.h";
+#import <MediaPlayer/MediaPlayer.h>
 
 
 @interface ItemDetailsViewController : UIViewController {
 	AppModel *appModel;
 	Item *item;
-	IBOutlet UIImageView *imageView;
+	MPMoviePlayerController *mMoviePlayer; //only used if item is a video
 	IBOutlet UITextView *descriptionView;
 	IBOutlet UIButton *dropButton;
 	IBOutlet UIButton *deleteButton;
@@ -23,7 +24,6 @@
 
 @property(copy, readwrite) AppModel *appModel;
 @property(copy, readwrite) Item *item;
-@property (nonatomic, retain) UIImageView *imageView;
 @property (nonatomic, retain) UITextView *descriptionView;
 @property (nonatomic, retain) UIButton *dropButton;
 @property (nonatomic, retain) UIButton *deleteButton;
@@ -34,5 +34,7 @@
 - (IBAction)dropButtonTouchAction: (id) sender;
 - (IBAction)deleteButtonTouchAction: (id) sender;
 - (IBAction)backButtonTouchAction: (id) sender;
+- (IBAction)playMovie:(id)sender;
+
 
 @end

@@ -114,9 +114,12 @@ include_once('common.inc.php');
 	
 	echo "<h3>Item Type Support</h3>";
 	$query = "ALTER TABLE {$_SESSION['current_game_prefix']}items
-	ADD `type` ENUM(  'Audio',  'Video',  'Image' ) NOT NULL";
+	ADD `type` ENUM(  'AV','Image' ) NOT NULL DEFAULT 'Image'";
 	mysql_query($query);
 	if (mysql_error() == "Duplicate column name 'type'") echo 'Not Needed';
 	else echo mysql_error();	
+
+	
+	
 	
 ?>

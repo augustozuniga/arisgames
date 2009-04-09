@@ -250,7 +250,8 @@
 								 'name'     => 'Name',
 								 'select'   => 'T',
 								 'maxlen'   => 50,
-								 'sort'     => true
+								 'sort'     => true,
+								 'help'		=> 'Do NOT use double quotes!'
 								 );
 	
 	

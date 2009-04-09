@@ -8,12 +8,10 @@
 
 #import "ItemDetailsViewController.h"
 
-
 @implementation ItemDetailsViewController
 
 @synthesize appModel;
 @synthesize item;
-@synthesize imageView;
 @synthesize descriptionView;
 @synthesize dropButton;
 @synthesize deleteButton;
@@ -26,7 +24,7 @@
 		appModel = model;
 		[appModel retain];
 	}
-	NSLog(@"model set for ItemDetailsViewController");
+	NSLog(@"Item Detail View: Model set");
 }
 
 -(void) setItem:(Item *)newItem{
@@ -36,8 +34,77 @@
 		[item retain];
 	}
 	
-	NSLog(@"item set for ItemDetailsViewController");
+	NSLog(@"Item Detail View: Item set");
 }
+
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad {
+	
+	descriptionView.text = item.description;
+	
+	if ([item.type isEqualToString: @"Image"]) {
+		NSLog(@"Item Detail View: Image Layout Selected");
+		
+		//Setup the image view
+		NSString* imageURL = [item.mediaURL stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:imageURL]];
+		UIImage* image = [[UIImage alloc] initWithData:imageData];
+		UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 360,300)];
+		[imageView setImage: image];
+		
+		//Add the image view
+		[[self view] addSubview:imageView];
+		
+		//clean up
+		[imageURL release];
+		[imageData release];
+		[image release];
+		[imageView release];
+	}
+	
+	if ([item.type isEqualToString: @"AV"]) {
+		NSLog(@"Item Detail View: Video Layout Selected");
+		
+		//Create movie player object
+		NSString* videoURL = [item.mediaURL stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+		mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:videoURL]];
+		
+		// Register to receive a notifications
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePreloadDidFinish:) name:MPMoviePlayerContentPreloadDidFinishNotification object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayBackDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:mMoviePlayer];
+				
+		
+		//Configure Movie Player
+		mMoviePlayer.scalingMode = MPMovieScalingModeFill; // Movie scaling mode can be one of: MPMovieScalingModeNone, MPMovieScalingModeAspectFit,MPMovieScalingModeAspectFill, MPMovieScalingModeFill.
+		mMoviePlayer.movieControlMode = MPMovieControlModeDefault; //Movie control mode can be one of: MPMovieControlModeDefault, MPMovieControlModeVolumeOnly, MPMovieControlModeHidden.
+		mMoviePlayer.backgroundColor = [UIColor blackColor];
+		
+		//Add a button
+		
+		UIButton *button = [[UIButton buttonWithType:UIButtonTypeCustom] initWithFrame:CGRectMake(120, 120, 80, 80)];
+		[button addTarget:self action:@selector(playMovie:) forControlEvents:UIControlEventTouchUpInside];
+		[button setImage:[UIImage imageNamed:@"playArrow.png"] forState:UIControlStateNormal];
+		//[button setBackgroundColor:[UIColor whiteColor]];
+		[[self view] addSubview:button];
+
+		
+	}	
+	
+	[super viewDidLoad];
+}
+
+
+//  Notification called when the movie finished preloading.
+- (void) moviePreloadDidFinish:(NSNotification*)notification
+{
+}
+
+//  Notification called when the movie finished playing.
+- (void) moviePlayBackDidFinish:(NSNotification*)notification
+{ 
+}
+
 
 
 - (IBAction)dropButtonTouchAction: (id) sender{
@@ -62,6 +129,7 @@
 	[self dismissModalViewControllerAnimated:NO];
 	
 }
+
 - (IBAction)deleteButtonTouchAction: (id) sender{
 	//Fire off a request to the REST Module and display an alert when it is successfull
 	NSString *baseURL = [appModel getURLStringForModule:@"RESTInventory"];
@@ -89,25 +157,11 @@
 	[self dismissModalViewControllerAnimated:NO];
 }
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-	
-	descriptionView.text = item.description;
-	
-	//if ([item.type isEqualToString: @"Image"]) {
-		//Load Image
-		
-		NSString* imageURL = [item.mediaURL stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:imageURL]];
-		UIImage* image = [[UIImage alloc] initWithData:imageData];
-		[imageView setImage:image];
-		[imageData release];
-		[image release];
-		 
-	//}
-	
-	[super viewDidLoad];
+-(IBAction)playMovie:(id)sender
+{
+    [mMoviePlayer play];
 }
+
 
 
 
@@ -119,7 +173,12 @@
 
 
 - (void)dealloc {
-    [super dealloc];
+    NSLog(@"Item Details View: dealloc");
+	
+	// free our movie player
+    [mMoviePlayer release];
+	
+	[super dealloc];
 }
 
 

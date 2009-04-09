@@ -31,6 +31,7 @@
 		2B3D175A0F49D18D0067FD3A /* DeveloperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D17590F49D18D0067FD3A /* DeveloperViewController.m */; };
 		2B3D177A0F49D3F90067FD3A /* Developer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D17790F49D3F90067FD3A /* Developer.xib */; };
 		2B3D18D60F4B25720067FD3A /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D18D50F4B25720067FD3A /* AppModel.m */; };
+		A702FBBE0F8E804A00BE6549 /* playArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A702FBBD0F8E804A00BE6549 /* playArrow.png */; };
 		A703EFE30F7C5C39008A12E2 /* marker-player-lqgps.png in Resources */ = {isa = PBXBuildFile; fileRef = A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */; };
 		A722E6E70F573174004B04D2 /* GameListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E6E60F573174004B04D2 /* GameListParserDelegate.m */; };
 		A722E7150F57425B004B04D2 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7140F57425B004B04D2 /* Location.m */; };
@@ -45,6 +46,7 @@
 		A763B5250F4E283100FDCC55 /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = A763B5240F4E283100FDCC55 /* MyCLController.m */; };
 		A78FD8B00F4B7E9400820FEA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78FD8AF0F4B7E9400820FEA /* Foundation.framework */; };
 		A78FD8B20F4B7EA200820FEA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78FD8B10F4B7EA200820FEA /* CoreGraphics.framework */; };
+		A79202640F8E717C0049F990 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A79202630F8E717C0049F990 /* MediaPlayer.framework */; };
 		A7955B930F73E095005148E4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7955B920F73E095005148E4 /* AudioToolbox.framework */; };
 		A7A172830F4F26A60017E865 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7A172820F4F26A60017E865 /* Entitlements.plist */; };
 		A7A1728C0F4F27120017E865 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A1728A0F4F27120017E865 /* Icon.png */; };
@@ -133,6 +135,7 @@
 		2B3D18D40F4B25720067FD3A /* AppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppModel.h; sourceTree = "<group>"; };
 		2B3D18D50F4B25720067FD3A /* AppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppModel.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A702FBBD0F8E804A00BE6549 /* playArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playArrow.png; sourceTree = "<group>"; };
 		A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-player-lqgps.png"; path = "images/marker-player-lqgps.png"; sourceTree = "<group>"; };
 		A722E6E50F573174004B04D2 /* GameListParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListParserDelegate.h; sourceTree = "<group>"; };
 		A722E6E60F573174004B04D2 /* GameListParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListParserDelegate.m; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 		A763B5240F4E283100FDCC55 /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
 		A78FD8AF0F4B7E9400820FEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A78FD8B10F4B7EA200820FEA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A79202630F8E717C0049F990 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		A7955B920F73E095005148E4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		A7A172720F4F26280017E865 /* ARIS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARIS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7A172820F4F26A60017E865 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 				A7E4C8990F54C5E300C6D9E8 /* CoreLocation.framework in Frameworks */,
 				A7E4C9A30F55DC6200C6D9E8 /* libMapView.a in Frameworks */,
 				A7955B930F73E095005148E4 /* AudioToolbox.framework in Frameworks */,
+				A79202640F8E717C0049F990 /* MediaPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,12 +286,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A77B06EF0F78374E005945D3 /* Application Icon */,
+				A792026F0F8E77490049F990 /* Item Icons */,
+				A77B06EF0F78374E005945D3 /* Application Icons and Settings */,
 				A77B06EE0F783744005945D3 /* Interface Builder Views */,
 				A77B06ED0F78372F005945D3 /* Map Icons */,
 				A7E39FA80F5F930E00826198 /* Toolbar Icons */,
-				8D1107310486CEB800E47090 /* Info.plist */,
-				A7A172820F4F26A60017E865 /* Entitlements.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -294,6 +298,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A79202630F8E717C0049F990 /* MediaPlayer.framework */,
 				A7955B920F73E095005148E4 /* AudioToolbox.framework */,
 				A7E4C88F0F54C4E800C6D9E8 /* libsqlite3.dylib */,
 				A7E4C88B0F54C4D000C6D9E8 /* QuartzCore.framework */,
@@ -351,7 +356,6 @@
 				A72C02130F7985EF00D00602 /* QRScanner.xib */,
 				A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */,
 				A7E39EC90F5F655E00826198 /* Camera.xib */,
-				A7A1728B0F4F27120017E865 /* Default.png */,
 				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
 				2B3D11AC0F4361380067FD3A /* Login.xib */,
 				2B3D12C10F4377E50067FD3A /* IM.xib */,
@@ -366,13 +370,24 @@
 			name = "Interface Builder Views";
 			sourceTree = "<group>";
 		};
-		A77B06EF0F78374E005945D3 /* Application Icon */ = {
+		A77B06EF0F78374E005945D3 /* Application Icons and Settings */ = {
 			isa = PBXGroup;
 			children = (
+				A7A1728B0F4F27120017E865 /* Default.png */,
 				A7A172940F4F273B0017E865 /* Icon.icns */,
 				A7A1728A0F4F27120017E865 /* Icon.png */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				A7A172820F4F26A60017E865 /* Entitlements.plist */,
 			);
-			name = "Application Icon";
+			name = "Application Icons and Settings";
+			sourceTree = "<group>";
+		};
+		A792026F0F8E77490049F990 /* Item Icons */ = {
+			isa = PBXGroup;
+			children = (
+				A702FBBD0F8E804A00BE6549 /* playArrow.png */,
+			);
+			name = "Item Icons";
 			sourceTree = "<group>";
 		};
 		A7E39FA80F5F930E00826198 /* Toolbar Icons */ = {
@@ -503,6 +518,7 @@
 				A72C021D0F798B0500D00602 /* QRScanner.png in Resources */,
 				A703EFE30F7C5C39008A12E2 /* marker-player-lqgps.png in Resources */,
 				A7BCBB3F0F8C236900C7A36C /* ItemDetailsView.xib in Resources */,
+				A702FBBE0F8E804A00BE6549 /* playArrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

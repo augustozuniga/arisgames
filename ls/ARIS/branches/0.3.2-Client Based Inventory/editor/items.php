@@ -125,7 +125,8 @@
 								 'name'     => 'Name',
 								 'select'   => 'T',
 								 'maxlen'   => 25,
-								 'sort'     => true
+								 'sort'     => true,
+								 'help'		=> 'Do NOT use double quotes!'
 	);
 	$opts['fdd']['description'] = array(
 										'name'     => 'Description',
@@ -134,7 +135,8 @@
 										'textarea' => array(
 															'rows' => 5,
 															'cols' => 50),
-										'sort'     => true
+										'sort'     => true,
+										'help'		=> 'Do NOT use double quotes!'
 	);
 	
 	$opts['fdd']['type'] = array(
@@ -143,8 +145,7 @@
 								 'maxlen'   => 5,
 								 'values'   => array(
 													 "Image",
-													 "Video",
-													 "Audio"),
+													 "AV"),
 								 'sort'     => true
 								 );
 	
