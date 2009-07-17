@@ -1,6 +1,7 @@
 package org.arisgames.editor.view
 {
 	import com.google.maps.InfoWindowOptions;
+	import com.google.maps.Map;
 	import com.google.maps.overlays.Marker;
 	
 	import flash.display.BitmapData;
@@ -26,10 +27,12 @@ package org.arisgames.editor.view
 		private var url:String;
 		private var xOffset:Number;
 		private var marker:Marker;
+		private var map:Map;
 		
-		public function GameObjectMarker(sourceInstance:InstanceProperties)
+		public function GameObjectMarker(sourceInstance:InstanceProperties, map:Map)
 		{
 			this.sourceInstance = sourceInstance;
+			this.map = map;
 			this.loader = new Loader();
 			url = "assets/editor icons/";
 			var type:String = getSourceObject().getType();
@@ -63,17 +66,29 @@ package org.arisgames.editor.view
 			this.marker = null;
 		}
 		
-		public function getMarker():Marker
+		public function deleteMe():void
+		{
+			this.marker.closeInfoWindow();
+			this.map.removeOverlay(this.marker);
+			this.marker = null;
+		}
+		
+		public function getGoogleMapsMarker():Marker
 		{
 			return this.marker;
 		}
 		
-		public function setMarker(newMarker:Marker):void
+		public function setGoogleMapsMarker(newMarker:Marker):void
 		{
 			if(this.marker == null)
 			{
 				this.marker = newMarker;
 			}
+		}
+		
+		public function setFocus():void
+		{
+			this.map.setFocus();
 		}
 		
 		public function getSourceInstance():InstanceProperties
@@ -110,9 +125,8 @@ package org.arisgames.editor.view
         	Alert.show("Unable to load image: " + url);
         }
         
-        private function showInfoWindow(event:Event):void
+        public function showInfoWindow(event:Event = null):void
         {
-//			var options:InfoWindowOptions = new InfoWindowOptions({content: "Hi, I'm an info window!  As you can see, I can contain text.",	pointOffset: new Point(0, -38)});
 			var contentDisplay:Sprite = sourceInstance.getContentDisplay();
 			var options:InfoWindowOptions = new InfoWindowOptions({customContent: contentDisplay, 
 																   drawDefaultFrame: true, 

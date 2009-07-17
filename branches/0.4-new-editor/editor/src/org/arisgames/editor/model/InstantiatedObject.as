@@ -1,5 +1,7 @@
 package org.arisgames.editor.model
 {
+	import mx.controls.Alert;
+	
 	[Bindable]
 	public class InstantiatedObject extends GameObject
 	{
@@ -18,9 +20,15 @@ package org.arisgames.editor.model
 			this.instances.push(instanceProperties);
 		}
 		
-		public function removeInstance(instanceIndex:int):void
+		public function removeInstance(instanceToRemove:InstanceProperties):void
 		{
-			this.instances.splice(instanceIndex, 1);
+			removeInstanceByIndex(this.instances.indexOf(instanceToRemove));
+		}
+		
+		public function removeInstanceByIndex(instanceIndex:int):void
+		{
+			var removedInstance:InstanceProperties = this.instances.splice(instanceIndex, 1)[0];
+			removedInstance = null;
 		}
 		
 		public function getInstanceByIndex(instanceIndex:int):InstanceProperties

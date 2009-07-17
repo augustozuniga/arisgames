@@ -104,6 +104,8 @@
 				map.addControl(new PositionControl());
 				map.addControl(new MapTypeControl());
 				map.addControl(new ScaleControl());
+				map.enableControlByKeyboard();
+				map.enableScrollWheelZoom();
 	    	}
 			
 			private function init():void {
@@ -153,11 +155,11 @@
 													  northWest.lng() +      xFrac  * (southEast.lng() - northWest.lng()));
 					var sourceObject:InstantiatedObject = currentModel.getGameObject(dragXML) as InstantiatedObject;
 					var newProps:InstanceProperties = new InstanceProperties(sourceObject);
-					var toolMarker:GameObjectMarker = new GameObjectMarker(newProps);
+					var toolMarker:GameObjectMarker = new GameObjectMarker(newProps, map);
 					sourceObject.addInstance(newProps);
-					newProps.setGPSMarker(toolMarker);
-					toolMarker.setMarker(new Marker(markerPos, new MarkerOptions({icon: toolMarker, draggable: true, hasShadow: true})));
-					map.addOverlay(toolMarker.getMarker());
+					newProps.setGameMarker(toolMarker);
+					toolMarker.setGoogleMapsMarker(new Marker(markerPos, new MarkerOptions({icon: toolMarker, draggable: true, hasShadow: true})));
+					map.addOverlay(toolMarker.getGoogleMapsMarker());
 				}
 				revertBorder();		
 			}
@@ -328,6 +330,24 @@
 				}
 				return null;
 			}
+			
+			private function centerOnPreviousInstance(event:Event):void
+			{
+				var gameMarker:GameObjectMarker = (currentGameObject as InstantiatedObject).getPreviousInstance().getGameMarker();
+				centerOnGameMarker(gameMarker);
+			}
+
+			private function centerOnNextInstance(event:Event):void
+			{
+				var gameMarker:GameObjectMarker = (currentGameObject as InstantiatedObject).getNextInstance().getGameMarker();
+				centerOnGameMarker(gameMarker);
+			}
+			
+			private function centerOnGameMarker(gameMarker:GameObjectMarker):void
+			{
+				map.setCenter(gameMarker.getGoogleMapsMarker().getLatLng());
+				gameMarker.showInfoWindow();			
+			}
 
 		]]>
 	</mx:Script>
@@ -424,7 +444,8 @@
 								</mx:htmlText>
 							</mx:Text>
 							<mx:Image width="60" height="60" 
-								source="@Embed('assets/editor icons/previous.png')"/>
+								source="@Embed('assets/editor icons/previous.png')"
+								click="centerOnPreviousInstance(event)"/>
 						</mx:VBox>
 					</mx:Canvas>
 					<mx:Canvas  width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
@@ -435,7 +456,8 @@
 								</mx:htmlText>
 							</mx:Text>
 							<mx:Image width="60" height="60" 
-								source="@Embed('assets/editor icons/next.png')"/>
+								source="@Embed('assets/editor icons/next.png')"
+								click="centerOnNextInstance(event)"/>
 						</mx:VBox>
 					</mx:Canvas>
 				</mx:HBox>
