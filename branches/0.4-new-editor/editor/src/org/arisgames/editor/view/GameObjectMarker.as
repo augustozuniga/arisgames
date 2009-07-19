@@ -17,6 +17,7 @@ package org.arisgames.editor.view
 	import mx.controls.Alert;
 	
 	import org.arisgames.editor.model.GameObject;
+	import org.arisgames.editor.model.GameObjectEvent;
 	import org.arisgames.editor.model.InstanceProperties;
 	import org.arisgames.editor.model.InstantiatedObject;
 
@@ -108,6 +109,18 @@ package org.arisgames.editor.view
         	transform.tx = xOffset - 12;
         	transform.ty = -35;
             myBitmap.draw(loader);
+            
+            var shadowAlpha:Number = 0.25;
+            for(var i:int = 1; i < 4; i++)
+            {
+	            graphics.lineStyle(1 + i, 0x000000, shadowAlpha);
+	            graphics.moveTo(0,0);
+	            graphics.lineTo(2.3, -4.5);
+	            graphics.lineStyle(0, 0, 0);
+	            graphics.beginFill(0x000000, shadowAlpha);
+	            graphics.drawCircle(7.5, -13, 7 + i);
+	            graphics.endFill();
+	        }
 
 			graphics.lineStyle(1, 0x000000);
 			graphics.beginBitmapFill(myBitmap, transform, false, false);
@@ -116,8 +129,8 @@ package org.arisgames.editor.view
 			graphics.beginFill(0x000000);
 			graphics.drawRect(-0.5, -13, 1, 13);
 			graphics.endFill();
- 
- 			this.addEventListener(MouseEvent.CLICK, showInfoWindow); 
+			
+ 			this.addEventListener(MouseEvent.CLICK, showInfoWindow);
         }
  
         private function ioErrorHandler(event:IOErrorEvent):void
@@ -133,7 +146,8 @@ package org.arisgames.editor.view
 																   pointOffset: new Point(0, -38),
 																   height: contentDisplay.height,
 																   width: contentDisplay.width});
-			marker.openInfoWindow(options);        	
+			marker.openInfoWindow(options);
+			dispatchEvent(new GameObjectEvent(GameObjectEvent.CHANGE));        	
         }
 		
 	}

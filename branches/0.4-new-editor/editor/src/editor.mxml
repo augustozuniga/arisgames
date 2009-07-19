@@ -7,11 +7,13 @@
 	applicationComplete="init()" xmlns:maps="com.google.maps.*">
 	<mx:Script>
 		<![CDATA[
-			import org.arisgames.editor.model.InstanceProperties;
-			import org.arisgames.editor.model.InstantiatedObject;
+			import mx.core.UIComponent;
 			import mx.controls.Image;
 			import mx.core.DragSource;
-			import org.arisgames.editor.model.Item;
+			import mx.events.DragEvent;
+			import mx.managers.DragManager;
+			import mx.collections.XMLListCollection;
+			import mx.controls.Alert;
 		    import com.google.maps.LatLng;
 		    import com.google.maps.Map;
 	    	import com.google.maps.MapEvent;
@@ -24,20 +26,21 @@
 			import com.google.maps.controls.ScaleControl;
 			import com.google.maps.overlays.Marker;
 			import com.google.maps.overlays.MarkerOptions;	
-			import mx.events.DragEvent;
-			import mx.managers.DragManager;
-			import mx.collections.XMLListCollection;
-			import mx.controls.Alert;
-			import org.arisgames.editor.view.Tool;
 			import org.arisgames.editor.model.Model;
 			import org.arisgames.editor.model.GameObject;
+			import org.arisgames.editor.model.GameObjectEvent;
 			import org.arisgames.editor.model.Media;
+			import org.arisgames.editor.model.GPSInstanceProperties;
+			import org.arisgames.editor.model.QRCodeInstanceProperties;
+			import org.arisgames.editor.model.InstanceProperties;
+			import org.arisgames.editor.model.InstantiatedObject;
+			import org.arisgames.editor.model.Item;
 			import org.arisgames.editor.view.GameObjectMarker;
+
 			
 			[Bindable]
 			public var currentModel:Model = new Model();
-			
-			[Bindable]
+
 			public var currentGameObject:GameObject;
 			
 			[Bindable]
@@ -115,9 +118,18 @@
 					objectNavigator.expandItem(currentModel.XMLDataProvider.getItemAt(i), true);
 				}
 				currentGameObject = null;
+				propertiesView.removeChild(leftView);
+				propertiesView.removeChild(middleView);
+				propertiesView.removeChild(rightView);
 				middleView.removeChild(instanceNavigatorView);
 				middleView.removeChild(itemSpecificPropertiesView);
 				middleView.removeChild(choicesView);
+				this.addEventListener(GameObjectEvent.CHANGE, updateCurrentGameObject);
+			}
+			
+			private function updateCurrentGameObject(event:GameObjectEvent):void
+			{
+				changePropertiesView((event.target as GameObjectMarker).getSourceObject());
 			}
 						
 			private function canvasDragEnterHandler(event:DragEvent):void
@@ -125,22 +137,83 @@
 				var targetCanvas:Canvas = event.target.parent as Canvas;
 				var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
 				var idNum:int = dragXML.attribute("id");
-                if (dragXML.name() != "folder" 
+                if (dragXML.name() == "object"
                 	&& idNum >= 0
                 	&& dragXML.attribute("type") != GameObject.QUEST
                 	&& targetCanvas is Canvas) 
                 {
 					targetCanvas.setStyle("borderColor", "#008800");
                     DragManager.acceptDragDrop(targetCanvas);
+                    DragManager.showFeedback(DragManager.COPY);
                 }
-
-			}
-
-			private function mapDragExitHandler(event:DragEvent):void
-			{
-				revertBorder();
 			}
 			
+			private function mediaDragEnterHandler(event:DragEvent):void
+			{
+				var targetCanvas:Canvas = event.target.parent as Canvas;
+				var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+				var idNum:int = dragXML.attribute("id");
+                if (dragXML.name() == "media"
+                	&& idNum >= 0
+                	&& targetCanvas is Canvas) 
+                {
+					targetCanvas.setStyle("borderColor", "#008800");
+					targetCanvas.setStyle("borderThickness", "2");
+                    DragManager.acceptDragDrop(targetCanvas);
+                    DragManager.showFeedback(DragManager.COPY);
+                }
+			}
+
+			private function qrCodeDragEnterHandler(event:DragEvent):void
+			{
+				var targetCanvas:Canvas = event.target.parent as Canvas;
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					var idNum:int = dragXML.attribute("id");
+	                if (dragXML.name() != "folder"
+	                	&& idNum >= 0
+	                	&& dragXML.attribute("type") != GameObject.QUEST
+	                	&& dragXML.attribute("type") != Media.SOUND
+	                	&& dragXML.attribute("type") != Media.VIDEO
+	                	&& targetCanvas is Canvas) 
+	                {
+						targetCanvas.setStyle("borderColor", "#008800");
+	                    DragManager.acceptDragDrop(targetCanvas);
+	                    DragManager.showFeedback(DragManager.COPY);
+	                }
+	   			}
+	   			else if(event.dragSource.hasFormat(InstanceProperties.QR_CODE))
+	   			{
+                    DragManager.acceptDragDrop(targetCanvas);
+                    DragManager.showFeedback(DragManager.MOVE);	   				
+	   			}
+			}
+			
+			private function qrCodeDragOverHandler(event:DragEvent):void
+			{
+               if(event.dragSource.hasFormat(InstanceProperties.QR_CODE))
+               {
+                    DragManager.acceptDragDrop(qrCodeContainer);
+                    DragManager.showFeedback(DragManager.MOVE);	   				
+               }
+			}
+			
+			private function mapDragExitHandler(event:DragEvent):void
+			{
+				revertMapBorder();
+			}
+			
+			private function mediaDragExitHandler(event:DragEvent):void
+			{
+				revertMediaBorder();
+			}
+			
+			private function qrCodeDragExitHandler(event:DragEvent):void
+			{
+				revertQRCodeBorder();
+			}
+
 			private function mapDragDropHandler(event:DragEvent):void
 			{
 				var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
@@ -154,19 +227,86 @@
 					var markerPos:LatLng = new LatLng(southEast.lat() + (1 - yFrac) * (northWest.lat() - southEast.lat()),
 													  northWest.lng() +      xFrac  * (southEast.lng() - northWest.lng()));
 					var sourceObject:InstantiatedObject = currentModel.getGameObject(dragXML) as InstantiatedObject;
-					var newProps:InstanceProperties = new InstanceProperties(sourceObject);
+					var newProps:GPSInstanceProperties = new GPSInstanceProperties(sourceObject);
 					var toolMarker:GameObjectMarker = new GameObjectMarker(newProps, map);
 					sourceObject.addInstance(newProps);
 					newProps.setGameMarker(toolMarker);
 					toolMarker.setGoogleMapsMarker(new Marker(markerPos, new MarkerOptions({icon: toolMarker, draggable: true, hasShadow: true})));
 					map.addOverlay(toolMarker.getGoogleMapsMarker());
 				}
-				revertBorder();		
+				revertMapBorder();		
+			}
+			
+			private function mediaDragDropHandler(event:DragEvent):void
+			{
+				var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+				mediaFileNameLabel.text = dragXML.attribute("label");
+				currentGameObject.setMedia(currentModel.getMedia(dragXML));
+				revertMediaBorder();				
 			}
 						
-			private function revertBorder():void
+			private function qrCodeDragDropHandler(event:DragEvent):void
+			{
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					if(dragXML.name() == "object") //if we are dropping an InstantiatedObject
+					{
+						//make sure object is dropped inside container (adjusting for border)
+						var border:Number = 4;
+						if(   event.localX >= border && event.localX <= qrCodeContainer.width - border 
+						   && event.localY >= border && event.localY <= qrCodeContainer.height - border)
+						{
+							var sourceObject:InstantiatedObject = currentModel.getGameObject(dragXML) as InstantiatedObject;
+							var newProps:QRCodeInstanceProperties = new QRCodeInstanceProperties(sourceObject);
+							sourceObject.addInstance(newProps);
+							var instanceView:UIComponent = new UIComponent();
+							newProps.setContentDisplayWrapper(instanceView);
+							instanceView.addEventListener(MouseEvent.MOUSE_DOWN, centerOnQRCode);
+							instanceView.addEventListener(MouseEvent.CLICK, centerOnQRCode);
+							instanceView.name = dragXML.toXMLString();
+							instanceView.x = event.localX;
+							instanceView.y = event.localY;
+							qrCodeContainer.addChild(instanceView);
+						}	
+					}
+					else if(dragXML.name() == "media") //if we are dropping a new background image
+					{
+						
+					}		
+				}
+	            else if (event.dragSource.hasFormat(InstanceProperties.QR_CODE)) 
+	            {
+	            	var draggedCode:UIComponent = event.dragSource.dataForFormat(InstanceProperties.QR_CODE) as UIComponent;
+	                draggedCode.x = qrCodeContainer.mouseX;
+	                draggedCode.y = qrCodeContainer.mouseY;
+	            }
+				revertQRCodeBorder();		
+			}
+			
+			private function revertMapBorder():void
 			{
 				mapContainer.setStyle("borderColor", "#000000");
+			}
+			
+			private function revertMediaBorder():void
+			{
+				mediaCanvas.setStyle("borderColor", "#000000");
+				mediaCanvas.setStyle("borderThickness", "1");
+			}
+			
+			private function revertQRCodeBorder():void
+			{
+				qrCodeContainer.setStyle("borderColor", "#000000");
+			}
+			
+			private function centerOnQRCode(event:Event = null):void
+			{
+				var newObject:GameObject = currentModel.getGameObject(XML(event.currentTarget.name));
+				if(newObject != null)
+				{
+					changePropertiesView(newObject);
+				}
 			}
 			
 			private function onTreeDragComplete(event:DragEvent):void
@@ -194,7 +334,12 @@
 			
 			private function changePropertiesView(newObj:GameObject):void
 			{
-				saveCurrentGameObject();
+				if(currentGameObject == null)
+				{
+					propertiesView.addChild(leftView);
+					propertiesView.addChild(middleView);
+					propertiesView.addChild(rightView);
+				}
 				currentGameObject = newObj;
 				objectNameField.text = currentGameObject.getName();
 				descriptionTextArea.text = currentGameObject.getDescription();
@@ -202,6 +347,10 @@
 				if(currentGameObject.hasMedia())
 				{
 					mediaFileNameLabel.text = currentGameObject.getMedia().getFileName();				
+				}
+				else
+				{
+					mediaFileNameLabel.text = "";
 				}
 				var type:String = currentGameObject.getType();
 				displayPropertiesView.visible = (type != GameObject.SECRET_EVENT);
@@ -250,28 +399,7 @@
 					}
 				}
 			}
-			
-			private function saveCurrentGameObject():void
-			{
-				if(currentGameObject != null)
-				{
-					currentModel.changeName(currentGameObject.getType(), currentGameObject.getID(), objectNameField.text);
-					currentGameObject.setName(objectNameField.text);				
-					currentGameObject.setNotes(notesTextArea.text);
-					var type:String = currentGameObject.getType();
-					if(type != GameObject.SECRET_EVENT)
-					{
-						currentGameObject.setDescription(descriptionTextArea.text);					
-					}
-					if(type == GameObject.ITEM)
-					{
-						(currentGameObject as Item).setDroppable(droppableCheckBox.selected);
-						(currentGameObject as Item).setDestroyable(destroyableCheckBox.selected);
-					}
-				}
-			}
-			
-			
+						
 			private function getTreeIcon(node:Object):Object
 			{
 				var name:String = (node as XML).name().toString();
@@ -333,22 +461,60 @@
 			
 			private function centerOnPreviousInstance(event:Event):void
 			{
-				var gameMarker:GameObjectMarker = (currentGameObject as InstantiatedObject).getPreviousInstance().getGameMarker();
-				centerOnGameMarker(gameMarker);
+				var gameInstance:InstanceProperties = (currentGameObject as InstantiatedObject).getPreviousInstance();
+				centerOnGameMarker(gameInstance);
 			}
 
 			private function centerOnNextInstance(event:Event):void
 			{
-				var gameMarker:GameObjectMarker = (currentGameObject as InstantiatedObject).getNextInstance().getGameMarker();
-				centerOnGameMarker(gameMarker);
+				var gameInstance:InstanceProperties = (currentGameObject as InstantiatedObject).getNextInstance();
+				centerOnGameMarker(gameInstance);
 			}
 			
-			private function centerOnGameMarker(gameMarker:GameObjectMarker):void
+			private function centerOnGameMarker(gameInstance:InstanceProperties):void
 			{
-				map.setCenter(gameMarker.getGoogleMapsMarker().getLatLng());
-				gameMarker.showInfoWindow();			
+				if(gameInstance.getType() == InstanceProperties.GPS)
+				{
+					tabNavigator.selectedChild = mapContainer;
+					var gameMarker:GameObjectMarker = (gameInstance as GPSInstanceProperties).getGameMarker();
+					map.setCenter(gameMarker.getGoogleMapsMarker().getLatLng());
+					gameMarker.showInfoWindow();								
+				}
+				else if(gameInstance.getType() == InstanceProperties.QR_CODE)
+				{
+					tabNavigator.selectedChild = qrCodeContainer;
+				}
 			}
-
+			
+			private function updateName(event:Event):void
+			{
+				currentModel.changeName(currentGameObject.getType(), currentGameObject.getID(), objectNameField.text);
+				if(currentGameObject is InstantiatedObject)
+				{
+					(currentGameObject as InstantiatedObject).updateAllInstances();
+				}
+			}
+			
+			private function updateDescription(event:Event):void
+			{
+				currentGameObject.setDescription(descriptionTextArea.text);
+			}
+			
+			private function updateNotes(event:Event):void
+			{
+				currentGameObject.setNotes(notesTextArea.text);
+			}
+			
+			private function updateDroppable(event:Event):void
+			{
+				(currentGameObject as Item).setDroppable(droppableCheckBox.selected);				
+			}
+			
+			private function updateDestroyable(event:Event):void
+			{
+				(currentGameObject as Item).setDestroyable(destroyableCheckBox.selected);
+			}
+			
 		]]>
 	</mx:Script>
 	<mx:VBox width="200" height="100%">
@@ -381,7 +547,8 @@
 	</mx:VBox>
 	<mx:VBox height="100%" width="100%">
 		<mx:HBox height="100%" width="100%">
-			<mx:TabNavigator width="100%" height="100%">
+			<mx:TabNavigator id="tabNavigator"
+				width="100%" height="100%">
 				<mx:Canvas id="mapContainer" 
 					label="GPS Map" width="100%" height="100%"
 					dragExit="mapDragExitHandler(event);"
@@ -395,7 +562,14 @@
 						dragEnter="canvasDragEnterHandler(event);"/> 		
 				</mx:Canvas>
 				<mx:Canvas id="qrCodeContainer" 
-					label="QR Codes" width="100%" height="100%">
+					label="QR Codes" width="100%" height="100%"
+					borderStyle="solid" borderColor="#000000" borderThickness="4" cornerRadius="5"
+					dragExit="qrCodeDragExitHandler(event)"
+					dragDrop="qrCodeDragDropHandler(event)"
+					dragOver="qrCodeDragOverHandler(event)">
+					<mx:Image id="qrCodeBackground"
+						width="100%" height="100%"
+						dragEnter="qrCodeDragEnterHandler(event)"/>
 				</mx:Canvas>
 				<mx:Canvas id="linkDiagramContainer" 
 					label="Link Diagram" width="100%" height="100%">
@@ -409,26 +583,32 @@
 		<mx:HBox id="propertiesView"
 			width="100%" height="100%" horizontalGap="5"
 			borderStyle="solid" borderColor="#000000" cornerRadius="5" borderThickness="4" backgroundColor="#FFFFFF">
-			<mx:VBox width="100%" height="100%"
+			<mx:VBox id="leftView"
+				width="100%" height="100%"
 				verticalGap="5" paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5">
 				<mx:Label text="Name"/>
 				<mx:TextInput id="objectNameField"
 					maxChars="255" displayAsPassword="false" editable="true" enabled="true" 
-					width="100%" borderStyle="solid" borderColor="#000000" borderThickness="1"/>
+					width="100%" borderStyle="solid" borderColor="#000000" borderThickness="1"
+					change="updateName(event)"/>
 				<mx:VBox id="displayPropertiesView"
 					width="100%" height="100%">
 					<mx:Label text="Media"/>
 					<mx:HBox width="100%" verticalAlign="middle">
-						<mx:Canvas  width="40" height="40" verticalScrollPolicy="off" horizontalScrollPolicy="off"
-							borderStyle="solid" borderColor="#000000" borderThickness="1">
-							<mx:Image width="40" height="40" source="@Embed('assets/editor icons/media.png')"/>
+						<mx:Canvas  id="mediaCanvas" width="40" height="40" verticalScrollPolicy="off" horizontalScrollPolicy="off"
+							borderStyle="solid" borderColor="#000000" borderThickness="1"
+							dragExit="mediaDragExitHandler(event)"
+							dragDrop="mediaDragDropHandler(event)">
+							<mx:Image width="40" height="40" source="@Embed('assets/editor icons/media.png')"
+								dragEnter="mediaDragEnterHandler(event)"/>
 						</mx:Canvas>
 						<mx:TextInput id="mediaFileNameLabel" editable="false"
 							width="100%" borderStyle="solid" borderColor="#000000" borderThickness="1"/>											
 					</mx:HBox>
 					<mx:Label text="Description"/>
 					<mx:TextArea id="descriptionTextArea"
-						width="100%" height="100%"/>					
+						width="100%" height="100%"
+						change="updateDescription(event)"/>					
 				</mx:VBox>
 			</mx:VBox>
 			<mx:VBox id="middleView"
@@ -470,7 +650,8 @@
 							<mx:VBox horizontalCenter="0">
 								<mx:Label text="Droppable"/>
 								<mx:HBox>
-									<mx:CheckBox id="droppableCheckBox"/>
+									<mx:CheckBox id="droppableCheckBox"
+										change="updateDroppable(event)"/>
 									<mx:Image width="60" height="60" horizontalCenter="0"
 										source="@Embed('assets/editor icons/drop.png')"/>																
 								</mx:HBox>
@@ -480,7 +661,8 @@
 							<mx:VBox horizontalCenter="0">
 								<mx:Label text="Destroyable"/>
 								<mx:HBox>
-									<mx:CheckBox id="destroyableCheckBox"/>
+									<mx:CheckBox id="destroyableCheckBox"
+										change="updateDestroyable(event)"/>
 									<mx:Image width="60" height="60" horizontalCenter="0"
 										source="@Embed('assets/editor icons/destroy.png')"/>																
 								</mx:HBox>
@@ -495,7 +677,8 @@
 						width="100%" height="100%"/>
 				</mx:VBox>
 			</mx:VBox>
-			<mx:VBox width="100%" height="100%"
+			<mx:VBox id="rightView"
+				width="100%" height="100%"
 				verticalGap="5" paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5">
 				<mx:Label text="When this object is encountered..."/>
 				<mx:HBox width="100%" height="100%">
@@ -512,7 +695,8 @@
 				</mx:HBox>					
 				<mx:Label text="My Notes (not visible to players)"/>
 				<mx:TextArea id="notesTextArea"
-					width="100%" height="100%"/>
+					width="100%" height="100%"
+					change="updateNotes(event)"/>
 			</mx:VBox>
 		</mx:HBox>
 	</mx:VBox>

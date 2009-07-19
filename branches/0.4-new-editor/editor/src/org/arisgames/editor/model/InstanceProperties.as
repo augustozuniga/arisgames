@@ -1,58 +1,50 @@
 package org.arisgames.editor.model
 {
-	import flash.display.Loader;
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.net.URLRequest;
 	import flash.text.TextField;
+	import flash.text.TextFieldType;
 	
 	import mx.controls.Alert;
+	import mx.core.UIComponent;
 	import mx.events.CloseEvent;
 	
-	import org.arisgames.editor.view.GameObjectMarker;
-	
+	// IMPORTANT: this class is intended to be functionally ABSTRACT.
+	// Do not implement directly.  Instead use one of GPSInstanceProperties or QRCodeInstanceProperites
 	public class InstanceProperties
 	{
-		protected var gpsMarker:GameObjectMarker;
-		protected var initiallyHidden:Boolean;
-		protected var forceView:Boolean;
-		protected var qrCode:int;
-		protected var qrCodeSet:Boolean;
-		protected var quantity:int;
-		protected var sourceObject:InstantiatedObject;
-
-		private var titleField:TextField;
-		private var hiddenPicLoader:Loader;
-		private var visiblePicLoader:Loader;
-		private var visibilityIndicator:Sprite;
-		private var forceViewPicLoader:Loader;
-		private var optionalViewPicLoader:Loader;
-		private var viewModeIndicator:Sprite;
-		private var deleteBox:Sprite;
-		private var contentDisplay:Sprite;		
+		public static const GPS:String = "gps";
+		public static const QR_CODE:String = "qrCode";
 		
-		public function InstanceProperties(sourceObject:InstantiatedObject, initiallyHidden:Boolean = false, forceView:Boolean = true, quantity:int = 1):void
+		protected var sourceObject:InstantiatedObject;
+		protected var type:String;
+		protected var quantity:uint;
+		protected var titleField:TextField;
+		protected var deleteBox:Sprite;
+		protected var contentDisplay:Sprite;
+		protected var quantityView:Sprite;
+		protected var quantityField:TextField;
+
+		public function InstanceProperties(sourceObject:InstantiatedObject, type:String, quantity:int = 1):void
 		{
-			hiddenPicLoader = new Loader()
-			hiddenPicLoader.load(new URLRequest("assets/editor icons/hidden.png"));
-			visiblePicLoader = new Loader();
-			visiblePicLoader.load(new URLRequest("assets/editor icons/visible.png"));
-			visibilityIndicator = new Sprite();
-			visibilityIndicator.addEventListener(MouseEvent.CLICK, updateVisibilityIndicator);
-			forceViewPicLoader = new Loader();
-			forceViewPicLoader.load(new URLRequest("assets/editor icons/exclamationPoint.png"));
-			optionalViewPicLoader = new Loader();
-			optionalViewPicLoader.load(new URLRequest("assets/editor icons/parentheses.png"));
-			viewModeIndicator = new Sprite();
-			viewModeIndicator.addEventListener(MouseEvent.CLICK, updateViewModeIndicator);
+			this.sourceObject = sourceObject;
+			this.type = type;
+			this.setQuantity(quantity);
+
 			titleField = new TextField();
-			deleteBox = new Sprite();
+			titleField.text = getSourceObject().getName();
+			titleField.x = 0;
+			titleField.y = 0;
+
 			var deleteField:TextField = new TextField();
 			deleteField.text = "Delete this copy";
 			deleteField.x = deleteField.textHeight;
 			deleteField.height = deleteField.textHeight + 5;
-			deleteField.width = deleteField.textWidth + 20;
+			deleteField.width = deleteField.textWidth + 5;
 			deleteField.selectable = false;
+
+			deleteBox = new Sprite();
 			deleteBox.graphics.lineStyle(3, 0xFF0000);
 			deleteBox.graphics.moveTo(2, 2);
 			deleteBox.graphics.lineTo(deleteField.textHeight - 2, deleteField.textHeight - 2);
@@ -60,86 +52,57 @@ package org.arisgames.editor.model
 			deleteBox.graphics.lineTo(2, deleteField.textHeight - 2);			
 			deleteBox.addChild(deleteField);
 			deleteBox.addEventListener(MouseEvent.CLICK, deleteMe);
-			this.sourceObject = sourceObject;
-			this.gpsMarker = null;
-			this.qrCode = -1;
-			this.qrCodeSet = false;
-			this.initiallyHidden = initiallyHidden;
-			this.forceView = forceView;
-			setQuantity(quantity);			
-		}
-						
-		public function hasGPSLocation():Boolean
-		{
-			return (gpsMarker != null);
-		}
-		
-		public function getGameMarker():GameObjectMarker
-		{
-			return gpsMarker;
-		}
-		
+			
+			this.contentDisplay = new Sprite();
+			contentDisplay.addChild(titleField);
+			contentDisplay.addChild(deleteBox);
+
+			if(sourceObject.getType() == GameObject.ITEM)
+			{
+				var quantityLabel:TextField = new TextField();
+				quantityLabel.text = "Quantity Here: ";
+				quantityLabel.width = quantityLabel.textWidth;
+				quantityLabel.height = quantityLabel.textHeight + 5;
+				quantityLabel.x = 0;
+				quantityLabel.y = 0;
+				quantityLabel.selectable = false;
+				
+				quantityField = new TextField();
+				quantityField.text = "99"; // for setting size only
+				quantityField.height = quantityField.textHeight + 2;
+				quantityField.width = quantityField.textWidth + 5;
+				quantityField.text = this.getQuantity().toString(); //actual value to display
+				quantityField.maxChars = 2;
+				quantityField.restrict = "0-9";
+				quantityField.selectable = true;
+				quantityField.type = TextFieldType.INPUT;
+				quantityField.x = quantityLabel.width;
+				quantityField.y = 0;
+				quantityField.addEventListener(Event.CHANGE, updateQuantity);
+
+				quantityView = new Sprite();
+				quantityView.addChild(quantityLabel);
+				quantityView.addChild(quantityField);
+				contentDisplay.addChild(quantityView);
+			}
+		}	
+							
 		public function getSourceObject():InstantiatedObject
 		{
 			return this.sourceObject;
 		}
 		
-		public function setGameMarker(newMarker:GameObjectMarker):void
+		public function getType():String
 		{
-			if(this.gpsMarker == null)
-			{
-				this.gpsMarker = newMarker;
-			}
+			return this.type;
 		}
-		
-		public function hasQRCode():Boolean
-		{
-			return this.qrCodeSet;
-		}
-		
-		public function getQRCode():int
-		{
-			return qrCode;
-		}
-		
-		public function setQRCode(newCode:int):void
-		{
-			this.qrCode = newCode;
-			this.qrCodeSet = true;
-		}
-		
-		public function removeQRCode():void
-		{
-			this.qrCode = -1;
-			this.qrCodeSet = false;
-		}
-		
-		public function isInitiallyHidden():Boolean
-		{
-			return initiallyHidden;
-		}
-		
-		public function setInitiallyHidden(newState:Boolean):void
-		{
-			initiallyHidden = newState;
-		}
-		
-		public function isViewForced():Boolean
-		{
-			return forceView;
-		}
-		
-		public function setForceView(newState:Boolean):void
-		{
-			forceView = newState;
-		}
-		
-		public function getQuantity():int
+
+		public function getQuantity():uint
 		{
 			return this.quantity;
 		}
 		
-		public function setQuantity(newQuantity:int):void
+		public function setQuantity(newQuantity:uint):void
 		{
 			if(sourceObject.getType() == GameObject.ITEM)
 			{
@@ -151,98 +114,38 @@ package org.arisgames.editor.model
 			}
 		}
 		
-		public function getContentDisplay():Sprite
+		public function updateQuantity(event:Event):void
 		{
-			var contentDisplay:Sprite = new Sprite();
-			titleField.text = getSourceObject().getName();
-			titleField.x = 0;
-			titleField.y = 0;
-			titleField.width = titleField.textWidth + 20;
-			titleField.height = titleField.textHeight + 5;
-			contentDisplay.addChild(titleField);
-			updateVisibilityIndicator();
-			visibilityIndicator.x = 0;
-			visibilityIndicator.y = titleField.height;
-			contentDisplay.addChild(visibilityIndicator);
-			updateViewModeIndicator();
-			viewModeIndicator.x = visibilityIndicator.width + 5;
-			viewModeIndicator.y = visibilityIndicator.y;
-			contentDisplay.addChild(viewModeIndicator);
-			deleteBox.x = 0;
-			deleteBox.y = visibilityIndicator.y + visibilityIndicator.height + 5;
-			contentDisplay.addChild(deleteBox);
-			return contentDisplay;
+			setQuantity(uint(quantityField.text));
+			if(quantityField.text != getQuantity().toString())
+			{
+				quantityField.text = getQuantity().toString();
+				quantityField.setSelection(0,quantityField.length);
+			}			
 		}
 		
-		private function deleteMe(event:MouseEvent = null):void
+		protected function deleteMe(event:MouseEvent = null):void
 		{
 			Alert.show("Are you sure you want to delete this copy of " + getSourceObject().getName() + "?  (other copies will remain in place)",
 					   "Confirm Delete", (Alert.OK | Alert.CANCEL), null, doDelete, null, Alert.CANCEL);
 		}
 		
-		private function doDelete(event:CloseEvent):void
+		public function getContentDisplay():Sprite
 		{
-			this.getGameMarker().setFocus();
-			if(event.detail == Alert.OK)
-			{
-				visibilityIndicator.removeEventListener(MouseEvent.CLICK, updateVisibilityIndicator);
-				viewModeIndicator.removeEventListener(MouseEvent.CLICK, updateViewModeIndicator);
-				deleteBox.removeEventListener(MouseEvent.CLICK, deleteMe);
-				gpsMarker.deleteMe();
-				gpsMarker = null;
-				this.getSourceObject().removeInstance(this);				
-			}
+			return this.contentDisplay;
 		}
 		
-		private function updateVisibilityIndicator(event:MouseEvent = null):void
+		// ABSTRACT FUNCTION
+		public function updateContentDisplay(event:Event = null):void
 		{
-			if(event != null)
-			{
-				this.setInitiallyHidden(!isInitiallyHidden());
-			}
-			var image1:Loader;
-			if(isInitiallyHidden())
-			{
-				image1 = hiddenPicLoader;
-			}
-			else
-			{
-				image1 = visiblePicLoader;
-			}
-			if(!visibilityIndicator.contains(image1))
-			{
-				while(visibilityIndicator.numChildren > 0)
-				{
-					visibilityIndicator.removeChildAt(0);
-				}
-				visibilityIndicator.addChild(image1);				
-			}
+			Alert.show("Error: updateContentDisplay function from InstanceProperties class must be overriden");
 		}
 
-		private function updateViewModeIndicator(event:MouseEvent = null):void
+		// ABSTRACT FUNCTION
+		protected function doDelete(event:CloseEvent):void
 		{
-			if(event != null)
-			{
-				this.setForceView(!isViewForced());
-			}
-			var image1:Loader;
-			if(isViewForced())
-			{
-				image1 = forceViewPicLoader;
-			}
-			else
-			{
-				image1 = optionalViewPicLoader;
-			}
-			if(!viewModeIndicator.contains(image1))
-			{
-				while(viewModeIndicator.numChildren > 0)
-				{
-					viewModeIndicator.removeChildAt(0);
-				}
-				viewModeIndicator.addChild(image1);				
-			}
+			Alert.show("Error: doDelete function from InstanceProperties class must be overridden");
 		}
-
+		
 	}
 }

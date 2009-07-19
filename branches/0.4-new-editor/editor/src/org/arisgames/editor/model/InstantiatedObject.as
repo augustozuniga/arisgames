@@ -56,9 +56,27 @@ package org.arisgames.editor.model
 			return getInstanceByIndex(currentInstanceIndex);
 		}
 		
+		public function getCurrentInstance():InstanceProperties
+		{
+			if(getNumInstances() > 0)
+			{
+				currentInstanceIndex = Math.max(currentInstanceIndex, 0);
+				return getInstanceByIndex(currentInstanceIndex);
+			}
+			return null;
+		}
+		
 		public function getNumInstances():int
 		{
 			return instances.length;
+		}
+		
+		public function updateAllInstances():void
+		{
+			for(var i:int = 0; i < instances.length; i++)
+			{
+				(instances[i] as InstanceProperties).updateContentDisplay();
+			}
 		}
 		
 

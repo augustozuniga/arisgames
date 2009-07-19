@@ -5,8 +5,6 @@
 	
 	import mx.collections.XMLListCollection;
 	
-	import org.arisgames.editor.view.GameObjectMarker;
-	
 	[Bindable]
 	public class Model extends EventDispatcher
 	{
@@ -30,6 +28,7 @@
 		private var nextVideoID:int;
 		private var XMLData:XML;
 		private var pendingMedia:Media;
+		private var claimedQRCodes:Array;
 				
 		public var XMLDataProvider:XMLListCollection;
 		
@@ -68,6 +67,7 @@
 			images = new Array();
 			sounds = new Array();
 			videos = new Array();
+			claimedQRCodes = new Array();
 			XMLData = <data>
 						<folder label="Items">
 							<object label="Create New Item" generator="true" type="item" id="-1"/>
@@ -103,8 +103,7 @@
 		{
 			return gameList;
 		}
-		
-		
+				
 		public function getCurrentGame():String
 		{
 			return currentGame;
@@ -215,7 +214,7 @@
 			}
 			XMLData.folder.(@label==getFolderName(type)).insertChildBefore(XMLData.folder.object.(@label==creatorLabel), newXML);
 			return newXML;
-			}
+		}
 		
 		public function addMedia(event:Event):XML
 		{
@@ -296,12 +295,43 @@
 					return objArray[i];
 				}
 			}
-			return null;
-			
+			return null;			
+		}
+
+		public function getMedia(objectNode:XML):Media
+		{
+			var type:String = objectNode.attribute("type");
+			var objArray:Array;
+			if(type == Media.IMAGE)
+			{
+				objArray = images;
+			}
+			else if(type == Media.SOUND)
+			{
+				objArray = sounds;
+			}
+			else if(type == Media.VIDEO)
+			{
+				objArray = videos;
+			}
+			else
+			{
+				return null;
+			}
+			var idNum:int = objectNode.attribute("id");
+			for(var i:int = 0; i < objArray.length; i++)
+			{
+				if((objArray[i] as Media).getID() == idNum)
+				{
+					return objArray[i];
+				}
+			}
+			return null;			
 		}
 		
 		public function changeName(type:String, idNum:int, newName:String):void
 		{
+			getGameObject(XMLData.folder.(@label == getFolderName(type)).object.(@id == idNum)[0]).setName(newName);
 			XMLData.folder.(@label == getFolderName(type)).object.(@id == idNum).@label = newName;
 		}
 		
