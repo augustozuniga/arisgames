@@ -7,6 +7,8 @@
 	applicationComplete="init()" xmlns:maps="com.google.maps.*">
 	<mx:Script>
 		<![CDATA[
+			import mx.events.ListEvent;
+			import mx.core.UITextField;
 			import mx.core.UIComponent;
 			import mx.controls.Image;
 			import mx.core.DragSource;
@@ -41,6 +43,7 @@
 			[Bindable]
 			public var currentModel:Model = new Model();
 
+			[Bindable]
 			public var currentGameObject:GameObject;
 			
 			[Bindable]
@@ -190,6 +193,26 @@
 	   			}
 			}
 			
+			private function choicesDragEnterHandler(event:DragEvent):void
+			{
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					var idNum:int = dragXML.attribute("id");
+	                if (dragXML.name() == "object" //make sure object is a page or character
+	                	&& idNum >= 0
+	                	&& (dragXML.attribute("type") == GameObject.PAGE)
+	                	) 
+	                {
+	                    DragManager.acceptDragDrop(choicesDataGrid);
+	                    DragManager.showFeedback(DragManager.COPY);
+	                }
+	   			}
+	   			else if(event.dragSource.hasFormat(InstanceProperties.QR_CODE))
+	   			{
+	   			}
+			}
+			
 			private function qrCodeDragOverHandler(event:DragEvent):void
 			{
                if(event.dragSource.hasFormat(InstanceProperties.QR_CODE))
@@ -284,6 +307,22 @@
 				revertQRCodeBorder();		
 			}
 			
+			private function choicesDragDropHandler(event:DragEvent):void
+			{
+				var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+				var newChoice:Object = new Object();
+				newChoice.label = dragXML.attribute("label");
+				newChoice.choiceText = "Click to enter text shown to user";
+				currentGameObject.addChoice(newChoice);
+				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;
+			}
+			
+			private function updateExitChoice(event:Event):void
+			{
+				currentGameObject.toggleExitChoice();
+				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;
+			}
+
 			private function revertMapBorder():void
 			{
 				mapContainer.setStyle("borderColor", "#000000");
@@ -672,9 +711,29 @@
 				</mx:VBox>
 				<mx:VBox id="choicesView"
 					width="100%" height="100%">
-					<mx:Label text="Choices offered to player from this page/character include..."/>
-					<mx:TextArea id="choicesTextArea" 
-						width="100%" height="100%"/>
+					<mx:HBox width="100%">
+						<mx:Label text="Choices offered to player from here:"/>
+						<mx:Spacer width="100%"/>
+						<mx:CheckBox id="exitChoiceCheckBox"
+							change="updateExitChoice(event)"/>
+						<mx:Label text="Exit"/>												
+					</mx:HBox>
+					<mx:DataGrid id="choicesDataGrid"
+						dataProvider="{currentGameObject.choicesDataProvider}"
+						width="100%" height="100%"
+						editable="true"
+						dragEnter="choicesDragEnterHandler(event)"
+						dragDrop="choicesDragDropHandler(event)"
+						variableRowHeight="true">
+						<mx:columns>
+							<mx:DataGridColumn dataField="label"
+								headerText="Game Object"
+								editable="false" draggable="false"/>
+							<mx:DataGridColumn dataField="choiceText"
+								headerText="Displayed Text"
+								editable="true" draggable="false"/>
+						</mx:columns>
+					</mx:DataGrid>
 				</mx:VBox>
 			</mx:VBox>
 			<mx:VBox id="rightView"

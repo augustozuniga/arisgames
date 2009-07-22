@@ -1,6 +1,7 @@
 package org.arisgames.editor.model
 {
-	import org.arisgames.editor.view.GameObjectMarker;
+	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
 	
 	//IMPORTANT: This class is effectively ABSTRACT. Not intended for instantiation.
 	//Use one the of following subclasses instead: Item, Character, Page, Quest, SecretEvent
@@ -12,6 +13,7 @@ package org.arisgames.editor.model
 		public static const PAGE:String = "page";
 		public static const QUEST:String = "quest";
 		public static const SECRET_EVENT:String = "secretEvent";
+		public static const EXIT_CHOICE:String = "exitChoice";
 		
 		protected var id:int;
 		protected var name:String;
@@ -20,8 +22,10 @@ package org.arisgames.editor.model
 		protected var type:String;
 		protected var media:Media;
 		
-//		private var mediaXMLData:XML;
-//		public var mediaXMLDataProvider:XMLListCollection;
+		protected var exitChoice:Object;
+		protected var exitChoiceShown:Boolean;
+		protected var choicesArray:Array;
+		public var choicesDataProvider:ArrayCollection;
 
 		public function GameObject(id:int, type:String):void
 		{
@@ -30,6 +34,10 @@ package org.arisgames.editor.model
 			this.name = (type + id);
 			this.notes = "";
 			this.media = null;
+			this.choicesArray = new Array();
+			this.choicesDataProvider = new ArrayCollection(choicesArray);
+			this.exitChoice = {label:"Exit", choiceText:"I'm done here", type:EXIT_CHOICE};
+			this.exitChoiceShown = false;
 		}
 		
 		public function getXML():XML
@@ -94,6 +102,42 @@ package org.arisgames.editor.model
 		public function setDescription(newDescription:String):void
 		{
 			this.description = newDescription;
+		}
+		
+		public function addChoice(newChoice:Object):void
+		{
+			choicesArray.push(newChoice);
+		}
+		
+		private function displayDataProvider():void
+		{
+			var result:String = "DataProvider contents.... ";
+			for(var i:int = 0; i < choicesArray.length; i++)
+			{
+				result += choicesArray[i].label;
+				result += ": ";
+				result += choicesArray[i].choiceText;
+				result += "... ";
+			}
+			Alert.show(result);
+		}
+		
+		public function removeChoice(choice:Object):void
+		{
+			choicesArray.splice(choicesArray.indexOf(choice), 1);
+		}
+		
+		public function toggleExitChoice():void
+		{
+			exitChoiceShown = !exitChoiceShown;
+			if(exitChoiceShown)
+			{
+				addChoice(this.exitChoice);
+			}
+			else
+			{
+				removeChoice(this.exitChoice);
+			}
 		}
 		
 	}
