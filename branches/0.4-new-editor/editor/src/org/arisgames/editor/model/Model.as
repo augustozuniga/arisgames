@@ -170,13 +170,20 @@
 			pendingMedia.addEventListener(Media.MEDIA_UPLOAD_CANCELED, cancelMedia);
 		}
 		
+		public function getXML(obj:GameObject):XML
+		{
+			var type:String = obj.getType();
+			var newXML:XML = <object/>;
+			newXML.@label = obj.getName();
+			newXML.@type = type;
+			newXML.@id = obj.getID();
+			return newXML;			
+		}
+		
 		private function addGameObject(newGameObject:GameObject):XML
 		{
 			var type:String = newGameObject.getType();
-			var newXML:XML = <object/>;
-			newXML.@label = newGameObject.getName();
-			newXML.@type = type;
-			newXML.@id = newGameObject.getID();
+			var newXML:XML = getXML(newGameObject);
 			var creatorLabel:String;
 			if(type == GameObject.ITEM)
 			{

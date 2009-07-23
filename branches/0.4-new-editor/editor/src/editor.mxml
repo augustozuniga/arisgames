@@ -217,6 +217,15 @@
 	   			}
 			}
 			
+			private function choicesRemoveDragEnterHandler(event:DragEvent):void
+			{
+	   			if(event.dragSource.hasFormat("items"))
+	   			{
+	   				DragManager.acceptDragDrop(choicesRemoveCanvas);
+	   				DragManager.showFeedback(DragManager.MOVE);
+	   			}
+			}
+
 			private function qrCodeDragOverHandler(event:DragEvent):void
 			{
                if(event.dragSource.hasFormat(InstanceProperties.QR_CODE))
@@ -320,6 +329,7 @@
 					newChoice.label = dragXML.attribute("label");
 					newChoice.choiceText = "Click to enter text shown to user";
 					currentGameObject.addChoice(newChoice);
+					currentGameObject.moveChoice(newChoice, choicesDataGrid.calculateDropIndex(event));
 				}
 				else if(event.dragSource.hasFormat("items"))
 				{
@@ -327,9 +337,21 @@
 					var dropIndex:int = choicesDataGrid.calculateDropIndex(event);
 					currentGameObject.moveChoice(itemToDrop, dropIndex);
 				}
-				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;					
+				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;
+				objectNavigator.selectedItem = currentModel.getXML(currentGameObject);					
 			}
 			
+			private function choicesRemoveDragDropHandler(event:DragEvent):void
+			{
+				if(event.dragSource.hasFormat("items"))
+				{
+					var itemToDrop:Object = (event.dragSource.dataForFormat("items") as Array)[0] as Object;
+					currentGameObject.removeChoice(itemToDrop);
+				}
+				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;
+				exitChoiceCheckBox.selected = currentGameObject.isExitChoiceShown();					
+			}
+
 			private function revertMapBorder():void
 			{
 				mapContainer.setStyle("borderColor", "#000000");
@@ -761,6 +783,18 @@
 								editable="true" draggable="false"/>
 						</mx:columns>
 					</mx:DataGrid>
+					<mx:Canvas id="choicesRemoveCanvas"
+						height="30" width="100%"
+						borderColor="0xAAAAAA" borderStyle="solid" borderThickness="1"
+						dragEnter="choicesRemoveDragEnterHandler(event)"
+						dragDrop="choicesRemoveDragDropHandler(event)">
+						<mx:Image id="choicesRemoveIcon"
+							source="@Embed('assets/editor icons/destroy.png')"
+							height="30" width="30"/>
+						<mx:Label id="choicesRemoveLabel"
+							text="Drop Choice Here to Remove from Available Choices"
+							x="30" verticalCenter="0"/>
+					</mx:Canvas>
 				</mx:VBox>
 			</mx:VBox>
 			<mx:VBox id="rightView"
