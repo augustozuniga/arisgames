@@ -140,5 +140,10 @@ package org.arisgames.editor.model
 			}
 		}
 		
+		public function isExitChoiceShown():Boolean
+		{
+			return this.exitChoiceShown;
+		}
+		
 	}
 }
