@@ -313,12 +313,21 @@
 			
 			private function choicesDragDropHandler(event:DragEvent):void
 			{
-				var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
-				var newChoice:Object = new Object();
-				newChoice.label = dragXML.attribute("label");
-				newChoice.choiceText = "Click to enter text shown to user";
-				currentGameObject.addChoice(newChoice);
-				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					var newChoice:Object = new Object();
+					newChoice.label = dragXML.attribute("label");
+					newChoice.choiceText = "Click to enter text shown to user";
+					currentGameObject.addChoice(newChoice);
+				}
+				else if(event.dragSource.hasFormat("items"))
+				{
+					var itemToDrop:Object = (event.dragSource.dataForFormat("items") as Array)[0] as Object;
+					var dropIndex:int = choicesDataGrid.calculateDropIndex(event);
+					currentGameObject.moveChoice(itemToDrop, dropIndex);
+				}
+				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;					
 			}
 			
 			private function revertMapBorder():void
@@ -381,6 +390,7 @@
 				objectNameField.text = currentGameObject.getName();
 				descriptionTextArea.text = currentGameObject.getDescription();
 				notesTextArea.text = currentGameObject.getNotes();
+				playerModLabel.text = "When this " + getFormatedObjectType() + " is encountered...";
 				if(currentGameObject.hasMedia())
 				{
 					mediaFileNameLabel.text = currentGameObject.getMedia().getFileName();				
@@ -559,6 +569,16 @@
 				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;
 			}
 			
+			private function getFormatedObjectType():String
+			{
+				var result:String = currentGameObject.getType();
+				if(result == GameObject.SECRET_EVENT)
+				{
+					result = "secret event";
+				}
+				return result;
+			}
+			
 		]]>
 	</mx:Script>
 	<mx:VBox width="200" height="100%">
@@ -730,7 +750,8 @@
 						dragEnabled="true" dragMoveEnabled="true"
 						dragEnter="choicesDragEnterHandler(event)"
 						dragDrop="choicesDragDropHandler(event)"
-						variableRowHeight="true">
+						variableRowHeight="true"
+						allowMultipleSelection="false">
 						<mx:columns>
 							<mx:DataGridColumn dataField="label"
 								headerText="Game Object"
@@ -745,7 +766,7 @@
 			<mx:VBox id="rightView"
 				width="100%" height="100%"
 				verticalGap="5" paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5">
-				<mx:Label text="When this object is encountered..."/>
+				<mx:Label id="playerModLabel"/>
 				<mx:HBox width="100%" height="100%">
 					<mx:VBox width="100%" height="100%">
 						<mx:Label text="Add/Reveal"/>

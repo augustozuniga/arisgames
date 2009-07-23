@@ -127,6 +127,12 @@ package org.arisgames.editor.model
 			choicesArray.splice(choicesArray.indexOf(choice), 1);
 		}
 		
+		public function moveChoice(choiceToMove:Object, targetIndex:int):void
+		{
+			removeChoice(choiceToMove);
+			choicesArray.splice(targetIndex, 0, choiceToMove);
+		}
+		
 		public function toggleExitChoice():void
 		{
 			exitChoiceShown = !exitChoiceShown;
