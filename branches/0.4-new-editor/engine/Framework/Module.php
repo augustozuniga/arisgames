@@ -492,7 +492,27 @@ abstract class Framework_Module extends Framework_Object_Web
 		if ($row) return true;
 		else return false;
     }
-	
+
+	/** 
+	 * checkForItem
+	 *
+     * Checks if the specified user has the specified event.
+	 *
+	 * @param		string	$userID
+     * @param		string	$itemID
+	 * @access public
+     * @return boolean
+     */
+    public function checkForItem($userID, $itemID) {
+		$sql = Framework::$db->prefix("SELECT * FROM _P_player_items 
+									  WHERE player_id = '$userID' 
+									  AND item_id = '$itemID'");
+		//echo $sql;
+		$row = Framework::$db->getRow($sql);
+		
+		if ($row) return true;
+		else return false;
+    }	
 	
 	/** 
 	 * addPlayerApplication
