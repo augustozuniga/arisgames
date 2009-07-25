@@ -38,20 +38,20 @@ class Framework_Module_RESTMap extends Framework_Auth_User
 		
 		$this->chromeless = true;
 		
-		// Set up a marker for each location in the locations table
-		$pointsString = '';
-		$sql = Framework::$db->prefix("SELECT * FROM _P_locations 
-									  LEFT OUTER JOIN _P_player_events ON 
-									  _P_locations.require_event_id = _P_player_events.event_id
-									  WHERE latitude != '' AND longitude != ''
-									  AND (type != 'Item' OR (item_qty IS NULL OR item_qty > 0))
-									  AND (require_event_id IS NULL OR player_id = {$user['player_id']})
-									  AND (_P_locations.remove_if_event_id IS NULL 
-									  OR _P_locations.remove_if_event_id NOT IN (SELECT event_id FROM _P_player_events WHERE player_id = {$user['player_id']}))");
-		$rows = Framework::$db->getAll($sql);
-		$this->locations = $rows;
+		// Fetch all locations, checking the linked object's requirements
+		//(that have a qty>0 if an item)
 		
-		// Set up a marker for each player
+		$sql = Framework::$db->prefix("SELECT * FROM _P_locations 
+										WHERE latitude != '' AND longitude != ''
+										AND (type != 'Item' OR (item_qty IS NULL OR item_qty > 0))
+									  ");
+		$locations = Framework::$db->getAll($sql);
+		$locations = $this->checkRequirementsForLocations($user, $locations);
+				
+		
+		$this->locations = $locations;
+		
+		// Fetch other Player Locations
 		$site = Framework::$site->name;
 		$sql = Framework::$db->prefix("SELECT * FROM players 
 									  WHERE site = '$site' 
@@ -62,6 +62,52 @@ class Framework_Module_RESTMap extends Framework_Auth_User
 		$this->players = $rows;
 		
 	}
+	
+	function checkRequirementsForLocations($user, $locations){
+		//echo "<p>Before Test:</p>";
+		//var_dump($locations);
+	
+		//Check the Requirments of the Objects the Locations link to 
+		foreach ($locations as $locationkey => $location) {
+			//var_dump ($location);	
+		
+			//Fetch the requirements
+			$sql = Framework::$db->prefix("SELECT * FROM _P_requirements 
+										  WHERE content_type = '{$location['type']}'
+										  AND content_id = '{$location['type_id']}'
+										  ");
+			$requirements = Framework::$db->getAll($sql);
+			foreach ($requirements as $requirementkey => $requirement) {
+				//var_dump ($requirement);
+			
+				//Check the requirement
+				//if it fails, remove it from the locations array
+				switch ($requirement['requirement']) {
+					case 'HAS_EVENT':
+						//echo 'Checking for an HAS_EVENT';
+						if (!$this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
+						break;
+					case 'DOES_NOT_HAVE_EVENT':
+						//echo 'Checking for an DOES_NOT_HAVE_EVENT';
+						if ($this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
+						break;
+					case 'HAS_ITEM':
+						//echo 'Checking for an HAS_ITEM';
+						if (!$this->checkForItem($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
+						break;
+					case 'DOES_NOT_HAVE_ITEM':
+						//echo 'Checking for a DOES_NOT_HAVE_ITEM';
+						if ($this->checkForItem($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
+						break;
+				}
+			}//requirements loop
+		}//locations loop
+		
+		//echo "<p>After Test:</p>";
+		//var_dump($locations);
+		return $locations;
+	}
+	
 		
 }//class
 ?>
