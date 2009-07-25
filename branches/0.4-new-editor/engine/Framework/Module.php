@@ -515,6 +515,54 @@ abstract class Framework_Module extends Framework_Object_Web
     }	
 	
 	/** 
+	 * objectMeetsRequirements
+	 *
+     * Checks all requirements for the specified object for the specified user
+	 *
+	 * @param		string	$userID
+     * @param		string	$type
+	  * @param		string	$id
+	 * @access public
+     * @return boolean
+     */	
+	function objectMeetsRequirements ($user, $type, $id) {
+		$returnValue = TRUE;
+		
+		//Fetch the requirements
+		$sql = Framework::$db->prefix("SELECT * FROM _P_requirements 
+									  WHERE content_type = '{$type}'
+									  AND content_id = '{$id}'
+									  ");
+		$requirements = Framework::$db->getAll($sql);
+		
+		foreach ($requirements as $requirementkey => $requirement) {
+			//var_dump ($requirement);
+			
+			//Check the requirement
+			switch ($requirement['requirement']) {
+				case 'HAS_EVENT':
+					//echo 'Checking for an HAS_EVENT';
+					if (!$this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					break;
+				case 'DOES_NOT_HAVE_EVENT':
+					//echo 'Checking for an DOES_NOT_HAVE_EVENT';
+					if ($this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					break;
+				case 'HAS_ITEM':
+					//echo 'Checking for an HAS_ITEM';
+					if (!$this->checkForItem($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					break;
+				case 'DOES_NOT_HAVE_ITEM':
+					//echo 'Checking for a DOES_NOT_HAVE_ITEM';
+					if ($this->checkForItem($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					break;
+			}
+		}//requirements loop
+		return $returnValue;
+	}
+	
+	
+	/** 
 	 * addPlayerApplication
 	 *
      * Adds the specified application to the user.

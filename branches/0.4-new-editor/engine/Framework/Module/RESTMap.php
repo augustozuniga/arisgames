@@ -68,40 +68,10 @@ class Framework_Module_RESTMap extends Framework_Auth_User
 		//var_dump($locations);
 	
 		//Check the Requirments of the Objects the Locations link to 
+		//if it fails, remove it from the locations array
 		foreach ($locations as $locationkey => $location) {
-			//var_dump ($location);	
-		
-			//Fetch the requirements
-			$sql = Framework::$db->prefix("SELECT * FROM _P_requirements 
-										  WHERE content_type = '{$location['type']}'
-										  AND content_id = '{$location['type_id']}'
-										  ");
-			$requirements = Framework::$db->getAll($sql);
-			foreach ($requirements as $requirementkey => $requirement) {
-				//var_dump ($requirement);
-			
-				//Check the requirement
-				//if it fails, remove it from the locations array
-				switch ($requirement['requirement']) {
-					case 'HAS_EVENT':
-						//echo 'Checking for an HAS_EVENT';
-						if (!$this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
-						break;
-					case 'DOES_NOT_HAVE_EVENT':
-						//echo 'Checking for an DOES_NOT_HAVE_EVENT';
-						if ($this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
-						break;
-					case 'HAS_ITEM':
-						//echo 'Checking for an HAS_ITEM';
-						if (!$this->checkForItem($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
-						break;
-					case 'DOES_NOT_HAVE_ITEM':
-						//echo 'Checking for a DOES_NOT_HAVE_ITEM';
-						if ($this->checkForItem($user['player_id'],$requirement['requirement_detail'])) unset ($locations[$locationkey]);
-						break;
-				}
-			}//requirements loop
-		}//locations loop
+			if (!$this->objectMeetsRequirements ($user, $location['type'], $location['type_id'])) unset ($locations[$locationkey]);
+		}
 		
 		//echo "<p>After Test:</p>";
 		//var_dump($locations);
