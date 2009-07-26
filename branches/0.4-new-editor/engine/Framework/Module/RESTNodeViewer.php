@@ -53,11 +53,13 @@ class Framework_Module_RESTNodeViewer extends Framework_Auth_User
     	$this->company = Framework::$site->config->aris->company;
     	
     	$sql = Framework::$db->prefix("SELECT * FROM _P_npcs
-			WHERE location_id = '0' 
-				AND (require_event_id IS NULL or require_event_id IN 
-					(SELECT event_id FROM _P_player_events 
-						WHERE player_id = {$user['player_id']}))");
+									  WHERE location_id = '0'");
 		$npcs = Framework::$db->getAll($sql);
+		
+		//Check for all the requirements for each npc
+		foreach ($npcs as $npckey => $npc) {
+			if (!$this->objectMeetsRequirements ($this->$restUser, 'Npc', $npc['npc_id'])) unset ($npcs[$npckey]);	
+		}
 		
 		foreach ($npcs as &$npc) {
 			if (!empty($npc['media'])) {
@@ -97,7 +99,7 @@ class Framework_Module_RESTNodeViewer extends Framework_Auth_User
     	$photo = $this->findMedia($user['photo'], 'defaultUser.png');
     	$site = Framework::$site->name;
     	
-		RESTNodeManager::loadNodeConversations($_REQUEST['npc_id']);
+		RESTNodeManager::loadConversations($_REQUEST['npc_id']);
 		$this->setVariables();
 		$this->time = date('g:i a');
 				
@@ -131,7 +133,7 @@ SCRIPT;
     	$session = Framework_Session::singleton();
 		//$user = $this->restUser;
 		
-		RESTNodeManager::loadNodeConversations($_REQUEST['npc_id']);
+		RESTNodeManager::loadConversations($_REQUEST['npc_id']);
 		$this->setVariables();
 		$this->username = $user['user_name'];
 		$this->password = $user['password'];

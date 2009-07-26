@@ -525,7 +525,8 @@ abstract class Framework_Module extends Framework_Object_Web
 	 * @access public
      * @return boolean
      */	
-	function objectMeetsRequirements ($user, $type, $id) {
+	function objectMeetsRequirements ($user, $type, $id) {		
+		
 		$returnValue = TRUE;
 		
 		//Fetch the requirements
@@ -542,19 +543,19 @@ abstract class Framework_Module extends Framework_Object_Web
 			switch ($requirement['requirement']) {
 				case 'HAS_EVENT':
 					//echo 'Checking for an HAS_EVENT';
-					if (!$this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					if (!self::checkForEvent($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
 					break;
 				case 'DOES_NOT_HAVE_EVENT':
 					//echo 'Checking for an DOES_NOT_HAVE_EVENT';
-					if ($this->checkForEvent($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					if (self::checkForEvent($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
 					break;
 				case 'HAS_ITEM':
 					//echo 'Checking for an HAS_ITEM';
-					if (!$this->checkForItem($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					if (!self::checkForItem($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
 					break;
 				case 'DOES_NOT_HAVE_ITEM':
 					//echo 'Checking for a DOES_NOT_HAVE_ITEM';
-					if ($this->checkForItem($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
+					if (self::checkForItem($user['player_id'],$requirement['requirement_detail'])) $returnValue = FALSE;
 					break;
 			}
 		}//requirements loop
