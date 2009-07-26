@@ -51,6 +51,7 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     		die;
     	}
     	
+		$this->user = $user;
     	$this->chromeless = true;
     	
 		$this->links = $this->processLocationRequest();
@@ -114,28 +115,9 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     }
     
     protected function processLocation($location, &$links) {		
-		//Check for required events
-		if (array_key_exists('require_event_id', $location) 
-			&& $location['require_event_id'] > 0)
-		{
-			if (!array_key_exists($location['require_event_id'], $this->events)) return;
-		}
-		if (array_key_exists('remove_if_event_id', $location)
-			&& $location['remove_if_event_id'] > 0)
-		{
-			if (array_key_exists($location['remove_if_event_id'], $this->events)) return;
-		}
-		
-		//Check if an event should be added
-		/*
-		if (array_key_exists($location['add_event_id'], $location)
-			&& $location['add_event_id'] > 0
-			&& !array_key_exists($location['add_event_id'], $this->events)) 
-		{
-			$this->addEvent($_SESSION['player_id'], $location['add_event_id']);
-		}
-		 */
-		
+		//Check for requirements
+		if (!$this->objectMeetsRequirements ($this->user, 'Location', $location['location_id'])) return;
+				
 		if ($location['type_id'] < 1) return;
     
 		//Process based on type
@@ -158,15 +140,19 @@ class Framework_Module_RESTAsync extends Framework_Auth_User
     }
     
     protected function processNode($location, &$links) {
-    	NodeManager::loadNode($location['type_id'], -1);
-
-    	if (!is_null(NodeManager::$node)) {
-    		$media = (array_key_exists('media', NodeManager::$node) 
-    			&& !empty(NodeManager::$node['media']))
-    				? $this->findMedia(NodeManager::$node['media'], 'defaultAsync.png') : null;
+		$sql = Framework::$db->prefix("SELECT * FROM _P_nodes 
+									  WHERE node_id = '{$location['type_id']}'");
+	
+    	$row = Framework::$db->getRow($sql);
+		
+    	
+		if ($row) {
+    		$media = (array_key_exists('media', $row) 
+    			&& !empty($row))
+    				? $this->findMedia($row['media'], 'defaultAsync.png') : null;
     		array_push($links, 
     			$this->makeLink(TYPE_NODE,$location['force_view'], "&amp;event=faceTalk&amp;npc_id=-1&amp;node_id=" 
-    				. NodeManager::$node['node_id'], NodeManager::$node['title'], $media));
+    				. $row['node_id'], $row['title'], $media));
     	}
     }
     
