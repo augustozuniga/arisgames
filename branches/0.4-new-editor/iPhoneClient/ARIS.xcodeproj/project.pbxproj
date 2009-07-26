@@ -155,7 +155,6 @@
 		A7BCBB3F0F8C236900C7A36C /* ItemDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7BCBB3E0F8C236900C7A36C /* ItemDetailsView.xib */; };
 		A7C1F6000FC070690045F15D /* NearbyBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C1F5FC0FC070690045F15D /* NearbyBar.m */; };
 		A7C1F6010FC070690045F15D /* NearbyBarItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C1F5FE0FC070690045F15D /* NearbyBarItemView.m */; };
-		A7C1F6020FC070690045F15D /* NearbyBarButtonBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = A7C1F5FF0FC070690045F15D /* NearbyBarButtonBackground.png */; };
 		A7DBEDAD0FD5FF8400C6C659 /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = A7DBEDAA0FD5FF8400C6C659 /* page.png */; };
 		A7DBEDAE0FD5FF8400C6C659 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = A7DBEDAB0FD5FF8400C6C659 /* person.png */; };
 		A7DBEDAF0FD5FF8400C6C659 /* pickaxe.png in Resources */ = {isa = PBXBuildFile; fileRef = A7DBEDAC0FD5FF8400C6C659 /* pickaxe.png */; };
@@ -391,7 +390,6 @@
 		A7C1F5FC0FC070690045F15D /* NearbyBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyBar.m; sourceTree = "<group>"; };
 		A7C1F5FD0FC070690045F15D /* NearbyBarItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyBarItemView.h; sourceTree = "<group>"; };
 		A7C1F5FE0FC070690045F15D /* NearbyBarItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyBarItemView.m; sourceTree = "<group>"; };
-		A7C1F5FF0FC070690045F15D /* NearbyBarButtonBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NearbyBarButtonBackground.png; sourceTree = "<group>"; };
 		A7DBEDAA0FD5FF8400C6C659 /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page.png; sourceTree = "<group>"; };
 		A7DBEDAB0FD5FF8400C6C659 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
 		A7DBEDAC0FD5FF8400C6C659 /* pickaxe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pickaxe.png; sourceTree = "<group>"; };
@@ -657,7 +655,6 @@
 				A7C1F5FC0FC070690045F15D /* NearbyBar.m */,
 				A7C1F5FD0FC070690045F15D /* NearbyBarItemView.h */,
 				A7C1F5FE0FC070690045F15D /* NearbyBarItemView.m */,
-				A7C1F5FF0FC070690045F15D /* NearbyBarButtonBackground.png */,
 			);
 			name = NearbyObjectBar;
 			sourceTree = "<group>";
@@ -999,7 +996,6 @@
 				A78E753E0FB5BA0C00922F6C /* Developer.xib in Resources */,
 				A7149F9D0FB89DC8008BAB5D /* Settings.bundle in Resources */,
 				A722C8C00FBCD8D0009432DB /* SelfRegistration.xib in Resources */,
-				A7C1F6020FC070690045F15D /* NearbyBarButtonBackground.png in Resources */,
 				A76048E70FC1B6DE00219A53 /* QRCodeProtocol.h in Resources */,
 				A79830180FCB1D8900C1C2E7 /* WaitingIndicator.xib in Resources */,
 				A798301B0FCB1F8100C1C2E7 /* RoundedBackground.png in Resources */,

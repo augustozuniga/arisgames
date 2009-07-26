@@ -135,7 +135,7 @@ class RESTNodeManager
     	}
 		else { 
 			// Incorrect answer
-			$nodeID = $row['required_condition_not_met_node_id'];
+			$nodeID = $row['require_answer_incorrect_node_id'];
    		}
     	
     	return $nodeID;
