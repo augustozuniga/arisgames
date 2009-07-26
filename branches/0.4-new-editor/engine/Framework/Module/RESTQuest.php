@@ -48,46 +48,27 @@ class Framework_Module_RESTQuest extends Framework_Auth_User
     	
     	$this->title = $site->config->aris->quest->title;
     	$this->chromeless = true;
-    	$this->loadActiveQuests($user['player_id']);
-    	$this->loadCompletedQuests($user['player_id']);
-	}
-	
-	protected function loadActiveQuests($userID) {
-		$sql = $this->db->prefix("SELECT * FROM _P_log
-			LEFT OUTER JOIN _P_player_events 
-				ON _P_log.require_event_id = _P_player_events.event_id
-			WHERE (require_event_id IS NULL OR player_id = $userID) 
-				AND (_P_log.complete_if_event_id IS NULL 
-				OR _P_log.complete_if_event_id 
-					NOT IN (SELECT event_id FROM _P_player_events 
-					WHERE player_id = $userID))
-			ORDER BY _P_log.log_id ASC");
+    			
+		$sql = $this->db->prefix("SELECT * FROM _P_quests
+								 ORDER BY _P_quests.quest_id ASC");
 		$quests = $this->db->getAll($sql);
 		
+		//Groom Media
 		foreach ($quests as &$quest) {
 			$media = empty($quest['media']) ? DEFAULT_IMAGE : $quest['media'];
 			$quest['media'] = $this->findMedia($media, DEFAULT_IMAGE);
 		}
-		unset($quest);
 		
-		$this->activeQuests = $quests;
-	}
-	
-	protected function loadCompletedQuests($userID) {
-		$sql = $this->db->prefix("SELECT * FROM _P_log
-			WHERE _P_log.complete_if_event_id IN 
-				(SELECT event_id FROM _P_player_events 
-				WHERE player_id = $userID)
-			ORDER BY _P_log.log_id ASC");
-		$quests = $this->db->getAll($sql);
-		
+		//Either put it in $this->activeQuests or $this->completedQuests
+		$activeQuests = array();
+		$completedQuests = array(); 
 		foreach ($quests as &$quest) {
-			$media = empty($quest['media']) ? DEFAULT_IMAGE : $quest['media'];
-			$quest['media'] = $this->findMedia($media, DEFAULT_IMAGE);
+			if ($this->objectMeetsRequirements ($user, "Quest", $quest['quest_id'])) $completedQuests[] = $quest;
+			else $activeQuests[] = $quest;
 		}
-		unset($quest);
+		$this->activeQuests = $activeQuests;
+		$this->completedQuests = $completedQuests; 
 		
-		$this->completedQuests = $quests;
 	}
 }
 ?>
