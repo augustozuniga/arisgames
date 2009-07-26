@@ -66,9 +66,13 @@ class Framework_Module_RESTMap extends Framework_Auth_User
 	function checkRequirementsForLocations($user, $locations){
 		//echo "<p>Before Test:</p>";
 		//var_dump($locations);
-	
+		
+		//Check each Location for its requirements
+		foreach ($locations as $locationkey => $location) {
+			if (!$this->objectMeetsRequirements ($user, 'Location', $location['location_id'])) unset ($locations[$locationkey]);
+		}
+		
 		//Check the Requirments of the Objects the Locations link to 
-		//if it fails, remove it from the locations array
 		foreach ($locations as $locationkey => $location) {
 			if (!$this->objectMeetsRequirements ($user, $location['type'], $location['type_id'])) unset ($locations[$locationkey]);
 		}
