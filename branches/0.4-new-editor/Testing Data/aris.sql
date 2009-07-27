@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 26, 2009 at 05:25 PM
+-- Generation Time: Jul 27, 2009 at 05:02 PM
 -- Server version: 5.0.41
 -- PHP Version: 5.2.6
 
@@ -130,7 +130,6 @@ CREATE TABLE IF NOT EXISTS `test1_items` (
   `description` text,
   `media` varchar(50) NOT NULL default 'item_default.jpg',
   `type` enum('AV','Image') NOT NULL default 'Image',
-  `event_id_when_viewed` int(10) unsigned default NULL,
   PRIMARY KEY  (`item_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -172,11 +171,7 @@ CREATE TABLE IF NOT EXISTS `test1_nodes` (
   `opt2_node_id` int(11) unsigned default NULL,
   `opt3_text` varchar(100) default NULL,
   `opt3_node_id` int(11) unsigned default NULL,
-  `add_item_id` int(11) unsigned default NULL,
-  `remove_item_id` int(11) unsigned default NULL,
   `require_answer_incorrect_node_id` int(11) unsigned default NULL,
-  `add_event_id` int(11) unsigned default NULL,
-  `remove_event_id` int(11) unsigned default NULL,
   `require_answer_string` varchar(50) default NULL,
   `require_answer_correct_node_id` int(10) unsigned default NULL,
   `media` varchar(25) default 'mc_chat_icon.png',
@@ -195,7 +190,6 @@ CREATE TABLE IF NOT EXISTS `test1_npcs` (
   `description` tinytext,
   `text` tinytext,
   `media` varchar(30) default NULL,
-  `require_event_id` mediumint(9) default NULL,
   PRIMARY KEY  (`npc_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
@@ -239,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `test1_player_events` (
   `timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `unique` (`player_id`,`event_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -256,7 +250,22 @@ CREATE TABLE IF NOT EXISTS `test1_player_items` (
   UNIQUE KEY `unique` (`player_id`,`item_id`),
   KEY `player_id` (`player_id`),
   KEY `item_id` (`item_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test1_player_state_changes`
+--
+
+CREATE TABLE IF NOT EXISTS `test1_player_state_changes` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `content_type` enum('Node','Item','Npc') NOT NULL,
+  `content_id` int(10) unsigned NOT NULL,
+  `action` enum('GIVE_ITEM','GIVE_EVENT','TAKE_ITEM') NOT NULL,
+  `action_detail` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 

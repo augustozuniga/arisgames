@@ -284,20 +284,6 @@ abstract class Framework_Module extends Framework_Object_Web
     	Framework::$db->exec($sql);
 		return mysql_insert_id();
 	}	
-
-	/**
-     * Marks the item as viewed by the player
-     */ 
-    static protected function itemViewedByPlayer($itemID, $userID) {
-		//Load the item
-		$sql = Framework::$db->prefix("SELECT * FROM _P_items
-									  WHERE item_id = '$itemID'");
-		//echo $sql;
-		$row = Framework::$db->getRow($sql);
-		
-		//If it has an event to set, give it to the player
-		if ($row['event_id_when_viewed']) self::addEvent($userID, $row['event_id_when_viewed']);
-    }
 	
     /**
      * loadApplications
@@ -562,6 +548,48 @@ abstract class Framework_Module extends Framework_Object_Web
 		return $returnValue;
 	}
 	
+	
+	/** 
+	 * objectMeetsRequirements
+	 *
+     * Checks all requirements for the specified object for the specified user
+	 *
+	 * @param		string	$userID
+     * @param		string	$type
+	 * @param		string	$id
+	 * @access public
+     * @return boolean
+     */	
+	function applyPlayerStateChanges($user, $contentType, $contentId) {	
+		
+		//Fetch the state changes
+		$sql = Framework::$db->prefix("SELECT * FROM _P_player_state_changes 
+									  WHERE content_type = '{$contentType}'
+									  AND content_id = '{$contentId}'
+									  ");
+		$stateChanges = Framework::$db->getAll($sql);
+		
+		foreach ($stateChanges as $stateChangeKey => $stateChange) {
+			//var_dump ($stateChange);
+			
+			//Check the requirement
+			switch ($stateChange['action']) {
+				case 'GIVE_ITEM':
+					//echo 'Running a GIVE_ITEM';
+					self::giveItemToPlayer($stateChange['action_detail'], $user['player_id']);
+					break;
+				case 'TAKE_ITEM':
+					//echo 'Running a TAKE_ITEM';
+					self::takeItemFromPlayer($stateChange['action_detail'], $user['player_id']);
+					break;
+				case 'GIVE_EVENT':
+					//echo 'Running a GIVE_EVENT';
+					self::addEvent($user['player_id'],$stateChange['action_detail']);
+					break;
+				
+			}
+		}//stateChanges loop
+	}
 	
 	/** 
 	 * addPlayerApplication

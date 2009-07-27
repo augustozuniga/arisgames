@@ -42,23 +42,18 @@ class RESTNodeManager
 		self::$user = $user;
 		$userID = $user['player_id'];
 		
-		//Load the NPC
+		//Load the NPC Info
 		$sql = Framework::$db->prefix("SELECT * FROM _P_npcs WHERE npc_id = '$npcID'");
     	self::$npc = Framework::$db->getRow($sql);
 
-		//echo 'Manager: Begin loading node: ' . $nodeID . '<br/>';
-		//echo 'User Data:<br/>';
-		//var_dump ($user);
-		
+		//Check if this is a Question Node comming back with an answer		
 		if (!empty($_REQUEST['answer_string'])) {
 			$nodeID = self::checkQuestionNode($nodeID);
 		}
-	
+		
+		//Load the Node Info
 		$sql = Framework::$db->prefix("SELECT * FROM _P_nodes 
 			WHERE node_id = '$nodeID'");
-    	
-		//echo '<p>Manager: DB Call to fetch row begin:</p>';
-		
 		$row = Framework::$db->getRow($sql);
 		
     	if (!$row) {
@@ -67,31 +62,14 @@ class RESTNodeManager
 	    		FRAMEWORK_ERROR_AUTH);
     	}
 
-
     	self::$node = $row;
 		
-		//echo '<p>Manager: self::$node set. Here is the data:</p>';
-		//var_dump(self::$node);
-
-    	if (self::$node['add_item_id']) {
-    		Framework_Module::giveItemToPlayer($userID, self::$node['add_item_id']);
-    	}
-
-    	if (self::$node['remove_item_id']) {
-    		Framework_Module::takeItemFromPlayer($userID, self::$node['remove_item_id']);
-    	}
-
-    	if (self::$node['add_event_id']) {
-			Framework_Module::addEvent($userID, self::$node['add_event_id']);
-    	}
 		
-		if (self::$node['remove_event_id']) {
-			Framework_Module::removePlayerEvent($userID, self::$node['remove_event_id']);
-    	}
-
-		// NOTE: calling methods should check for 'require_answer_string' 
-		// to handle input
-    	
+		//Perform any State Changes specified for this node
+		Framework_Module::applyPlayerStateChanges(self::$user, 'Node', self::$node['node_id']);
+		
+		
+		//Load Node options or NPC conversations if this is not a question node 
 		if (empty(self::$node['require_answer_string'])) {
     		if ((!empty(self::$node['opt1_text']) && !empty(self::$node['opt1_node_id']))
     			|| (!empty(self::$node['opt2_text']) && !empty(self::$node['opt2_node_id']))

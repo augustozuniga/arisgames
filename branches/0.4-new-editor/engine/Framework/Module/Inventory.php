@@ -179,7 +179,11 @@
 			$this->chromeless = true;
 			$this->pageTemplateFile = 'empty.tpl';
 			
-			$this->itemViewedByPlayer( $_REQUEST['item_id'], $_SESSION['player_id']);
+			//get the array for the user object
+			$user = loginUser();
+			
+			Framework_Module::applyPlayerStateChanges($user, 'Item', $_REQUEST['item_id']);
+
 		}	
 		
 		
