@@ -26,6 +26,11 @@ package org.arisgames.editor.model
 		protected var exitChoiceShown:Boolean;
 		protected var choicesArray:Array;
 		public var choicesDataProvider:ArrayCollection;
+		
+		protected var modificationsArray:Array;
+		public var modificationsDataProvider:ArrayCollection;
+		protected var requirementsArray:Array;
+		public var requirementsDataProvider:ArrayCollection;
 
 		public function GameObject(id:int, type:String):void
 		{
@@ -38,6 +43,10 @@ package org.arisgames.editor.model
 			this.choicesDataProvider = new ArrayCollection(choicesArray);
 			this.exitChoice = {label:"Exit", choiceText:"I'm done here", type:EXIT_CHOICE};
 			this.exitChoiceShown = false;
+			this.modificationsArray = new Array();
+			this.modificationsDataProvider = new ArrayCollection(modificationsArray);
+			this.requirementsArray = new Array();
+			this.requirementsDataProvider = new ArrayCollection(requirementsArray);
 		}
 		
 		public function getXML():XML
@@ -109,6 +118,16 @@ package org.arisgames.editor.model
 			choicesArray.push(newChoice);
 		}
 		
+		public function addModification(newModification:Object):void
+		{
+			modificationsArray.push(newModification);
+		}
+		
+		public function addRequirement(newRequirement:Object):void
+		{
+			requirementsArray.push(newRequirement);
+		}
+		
 		private function displayDataProvider():void
 		{
 			var result:String = "DataProvider contents.... ";
@@ -129,6 +148,16 @@ package org.arisgames.editor.model
 			{
 				exitChoiceShown = false;
 			}
+		}
+		
+		public function removeModification(mod:Object):void
+		{
+			modificationsArray.splice(modificationsArray.indexOf(mod), 1);
+		}
+		
+		public function removeRequirement(req:Object):void
+		{
+			requirementsArray.splice(requirementsArray.indexOf(req), 1);
 		}
 		
 		public function moveChoice(choiceToMove:Object, targetIndex:int):void

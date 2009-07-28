@@ -7,6 +7,8 @@
 	applicationComplete="init()" xmlns:maps="com.google.maps.*">
 	<mx:Script>
 		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.ComboBox;
 			import org.arisgames.editor.model.Page;
 			import mx.events.ListEvent;
 			import mx.core.UITextField;
@@ -90,6 +92,14 @@
 			[Bindable]
 			[Embed("assets/editor icons/upload.png")]
 			public var uploaderIcon:Class;
+			
+			public static const ITEM_MODIFICATION_TYPES:Array = ["give to player", "take from player"];
+			public static const SECRET_EVENT_MODIFICATION_TYPES:Array = ["trigger for player"];
+			public static const ITEM_REQUIREMENT_TYPES:Array = ["has", "does not have"];
+			public static const CHARACTER_REQUIREMENT_TYPES:Array = ["has met", "has not met"];
+			public static const PAGE_REQUIREMENT_TYPES:Array = ["has seen", "has not seen"];
+			public static const QUEST_REQUIREMENT_TYPES:Array = ["has received", "has not received", "is working on", "has completed", "has not completed"];
+			public static const SECRET_EVENT_REQUIREMENT_TYPES:Array = ["has triggered", "has not triggered"];
 					    
 		    private function onMapPreinitialize(event:MapEvent):void
 			{
@@ -200,7 +210,7 @@
 				{
 					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
 					var idNum:int = dragXML.attribute("id");
-	                if (dragXML.name() == "object" //make sure object is a page or character
+	                if (dragXML.name() == "object" //make sure object is a page
 	                	&& idNum >= 0
 	                	&& dragXML.attribute("type") == GameObject.PAGE
 	                	&& currentModel.getGameObject(dragXML) != currentGameObject
@@ -223,6 +233,41 @@
 	   			{
 	   				DragManager.acceptDragDrop(choicesRemoveCanvas);
 	   				DragManager.showFeedback(DragManager.MOVE);
+	   			}
+			}
+
+			private function modificationsDragEnterHandler(event:DragEvent):void
+			{
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					var idNum:int = dragXML.attribute("id");
+	                if (dragXML.name() == "object"
+	                	&& idNum >= 0
+	                	&& (dragXML.attribute("type") == GameObject.ITEM || dragXML.attribute("type") == GameObject.SECRET_EVENT)
+	                	&& currentModel.getGameObject(dragXML) != currentGameObject
+	                	) 
+	                {
+	                    DragManager.acceptDragDrop(modificationsDataGrid);
+	                    DragManager.showFeedback(DragManager.COPY);
+	                }
+	   			}
+			}
+
+			private function requirementsDragEnterHandler(event:DragEvent):void
+			{
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					var idNum:int = dragXML.attribute("id");
+	                if (dragXML.name() == "object"
+	                	&& idNum >= 0
+	                	&& currentModel.getGameObject(dragXML) != currentGameObject
+	                	) 
+	                {
+	                    DragManager.acceptDragDrop(requirementsDataGrid);
+	                    DragManager.showFeedback(DragManager.COPY);
+	                }
 	   			}
 			}
 
@@ -352,6 +397,76 @@
 				exitChoiceCheckBox.selected = currentGameObject.isExitChoiceShown();					
 			}
 
+			private function modificationsDragDropHandler(event:DragEvent):void
+			{
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					var newModification:Object = new Object();
+					newModification.label = dragXML.attribute("label");
+					var dp:Array;
+					var type:String = dragXML.attribute("type");
+					if(type == GameObject.ITEM)
+					{
+						dp = ITEM_MODIFICATION_TYPES;
+					}
+					else if(type == GameObject.SECRET_EVENT)
+					{
+						dp = SECRET_EVENT_MODIFICATION_TYPES;
+					}
+					else
+					{
+						Alert.show("Error: could not determine type of dragged object");
+					}
+					newModification.modificationType = dp[0];
+					newModification.modTypeDataProvider = new ArrayCollection(dp);
+					currentGameObject.addModification(newModification);
+				}
+				modificationsDataGrid.dataProvider = currentGameObject.modificationsDataProvider;
+				objectNavigator.selectedItem = currentModel.getXML(currentGameObject);					
+			}
+			
+			private function requirementsDragDropHandler(event:DragEvent):void
+			{
+				if(event.dragSource.hasFormat("treeItems"))
+				{
+					var dragXML:XML = (event.dragSource.dataForFormat("treeItems") as Array)[0] as XML;
+					var newRequirement:Object = new Object();
+					newRequirement.label = dragXML.attribute("label");
+					var dp:Array;
+					var type:String = dragXML.attribute("type");
+					if(type == GameObject.ITEM)
+					{
+						dp = ITEM_REQUIREMENT_TYPES;
+					}
+					else if(type == GameObject.CHARACTER)
+					{
+						dp = CHARACTER_REQUIREMENT_TYPES;
+					}
+					else if(type == GameObject.PAGE)
+					{
+						dp = PAGE_REQUIREMENT_TYPES;
+					}
+					else if(type == GameObject.QUEST)
+					{
+						dp = QUEST_REQUIREMENT_TYPES;
+					}
+					else if(type == GameObject.SECRET_EVENT)
+					{
+						dp = SECRET_EVENT_REQUIREMENT_TYPES;
+					}
+					else
+					{
+						Alert.show("Error: could not determine type of dragged object");
+					}
+					newRequirement.requirementType = dp[0];
+					newRequirement.reqTypeDataProvider = new ArrayCollection(dp);
+					currentGameObject.addRequirement(newRequirement);
+				}
+				requirementsDataGrid.dataProvider = currentGameObject.requirementsDataProvider;
+				objectNavigator.selectedItem = currentModel.getXML(currentGameObject);					
+			}
+			
 			private function revertMapBorder():void
 			{
 				mapContainer.setStyle("borderColor", "#000000");
@@ -411,8 +526,9 @@
 				currentGameObject = newObj;
 				objectNameField.text = currentGameObject.getName();
 				descriptionTextArea.text = currentGameObject.getDescription();
-				notesTextArea.text = currentGameObject.getNotes();
+				//notesTextArea.text = currentGameObject.getNotes();
 				playerModLabel.text = "When this " + getFormatedObjectType() + " is encountered...";
+				requirementsLabel.text = "This " + getFormatedObjectType() + " is available if the player...";
 				if(currentGameObject.hasMedia())
 				{
 					mediaFileNameLabel.text = currentGameObject.getMedia().getFileName();				
@@ -572,7 +688,7 @@
 			
 			private function updateNotes(event:Event):void
 			{
-				currentGameObject.setNotes(notesTextArea.text);
+				//currentGameObject.setNotes(notesTextArea.text);
 			}
 			
 			private function updateDroppable(event:Event):void
@@ -589,6 +705,11 @@
 			{
 				currentGameObject.toggleExitChoice();
 				choicesDataGrid.dataProvider = currentGameObject.choicesDataProvider;
+			}
+			
+			private function updateRequirements(event:Event):void
+			{
+				
 			}
 			
 			private function getFormatedObjectType():String
@@ -800,23 +921,56 @@
 			<mx:VBox id="rightView"
 				width="100%" height="100%"
 				verticalGap="5" paddingLeft="5" paddingTop="5" paddingRight="5" paddingBottom="5">
-				<mx:Label id="playerModLabel"/>
-				<mx:HBox width="100%" height="100%">
-					<mx:VBox width="100%" height="100%">
-						<mx:Label text="Add/Reveal"/>
-						<mx:TextArea id="addBox"
-							width="100%" height="100%"/>
-					</mx:VBox>					
-					<mx:VBox width="100%" height="100%">
-						<mx:Label text="Take/Hide"/>
-						<mx:TextArea id="takeBox"
-							width="100%" height="100%"/>
-					</mx:VBox>					
-				</mx:HBox>					
-				<mx:Label text="My Notes (not visible to players)"/>
-				<mx:TextArea id="notesTextArea"
+				<mx:Label id="requirementsLabel"/>
+				<mx:DataGrid id="requirementsDataGrid"
+					dataProvider="{currentGameObject.requirementsDataProvider}"
 					width="100%" height="100%"
-					change="updateNotes(event)"/>
+					editable="true" horizontalScrollPolicy="auto"
+					dragEnter="requirementsDragEnterHandler(event)"
+					dragDrop="requirementsDragDropHandler(event)"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="requirementType"
+							headerText="Requirement Type"
+							editable="true" draggable="false" width="150">
+							<mx:itemEditor>
+								<mx:Component>
+									<mx:ComboBox dataProvider="{data.reqTypeDataProvider}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>							
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<mx:Label id="playerModLabel"/>
+				<mx:DataGrid id="modificationsDataGrid"
+					dataProvider="{currentGameObject.modificationsDataProvider}"
+					width="100%" height="100%"
+					editable="true" horizontalScrollPolicy="auto"
+					dragEnter="modificationsDragEnterHandler(event)"
+					dragDrop="modificationsDragDropHandler(event)"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="modificationType"
+							headerText="Action"
+							editable="true" draggable="false" width="150">
+							<mx:itemEditor>
+								<mx:Component>
+									<mx:ComboBox dataProvider="{data.modTypeDataProvider}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>							
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
+				<!-- <mx:Label text="My Notes (not visible to players)"/>
+				<mx:TextArea id="notesTextArea"
+				width="100%" height="100%"
+				change="updateNotes(event)"/> -->
 			</mx:VBox>
 		</mx:HBox>
 	</mx:VBox>
