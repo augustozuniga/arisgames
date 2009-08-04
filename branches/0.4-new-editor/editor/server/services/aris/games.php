@@ -51,14 +51,16 @@ class Games
 	
 
 		//Copy the default site to the new name	
-		$from = "{Config::engineSitesPath}/{Config::engineDefaultSite}";
-		$to = "{Config::engineSitesPath}/{$strShortName}";
-		exec("cp -R -v -n $from $to", $output, $return);
+		$from = Config::engineSitesPath . '/' . Config::engineDefaultSite;
+		$to = Config::engineSitesPath . "/{$strShortName}";
+		$command = "cp -R -v -n $from $to";
+		NetDebug::trace($command);
+		exec($command, $output, $return);
 		if ($return) return "ERROR: cannot copy default site";
 	
 		
 		//Build XML file
-		$defaultConfigFile = "{Config::engineSitesPath}/{Config::engineDefaultSite}/config.xml";
+		$defaultConfigFile = Config::engineSitesPath . '/' . Config::engineDefaultSite . '/config.xml';
 		if (!$defaultConfigHandle = fopen($defaultConfigFile, 'r'))  return "ERROR: Can't open default config file";
 		$defaultConfigContent = fread($defaultConfigHandle, filesize($defaultConfigFile));
 		//$defaultConfigContent = str_replace("%tablePrefix%", $new_game_short . "_", $defaultConfigContent);
@@ -66,7 +68,7 @@ class Games
 
 
 
-		$xmlFile = "{Config::engineSitesPath}/{$strShortName}/config.xml";
+		$xmlFile = Config::engineSitesPath . "/{$strShortName}/config.xml";
 		if(!$file_handle = fopen($xmlFile, 'w')) return "ERROR: Can't create XML file";
 		fwrite($file_handle, $defaultConfigContent);
 		fclose($file_handle);
@@ -116,7 +118,7 @@ class Games
 		?>";
 		
 		
-		$phpFile = "{Config::engineSitesPath}/{$strShortName}.php";
+		$phpFile = Config::engineSitesPath . "/{$strShortName}.php";
 		if (!$file_handle = fopen($phpFile, 'w')) return "Can't create PHP file";
 		fwrite($file_handle, $file_data);
 		fclose($file_handle);
