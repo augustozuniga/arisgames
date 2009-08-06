@@ -45,6 +45,48 @@ class Nodes
 		return $rsResult;
 		
 	}
+
+
+	/**
+     * Create a node
+     * @returns the new nodeID on success
+     */
+	public function createNode($intGameID, $strTitle, $strText, $strMedia,
+								$strOpt1Text, $intOpt1NodeID, 
+								$strOpt2Text, $intOpt2NodeID,
+								$strOpt3Text, $intOpt3NodeID,
+								$strQACorrectAnswer, $intQAIncorrectNodeID, $intQACorrectNodeID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		$query = "INSERT INTO {$prefix}_nodes 
+					(title, text, media, 
+						opt1_text, opt1_node_id, 
+						opt2_text, opt2_node_id, 
+						opt3_text, opt3_node_id,
+						require_answer_string, 
+						require_answer_incorrect_node_id, 
+						require_answer_correct_node_id)
+					VALUES ('{$strTitle}', '{$strText}', '{$strMedia}',
+						'{$strOpt1Text}', '{$intOpt1NodeID}',
+						'{$strOpt2Text}','{$intOpt2NodeID}',
+						'{$strOpt3Text}','{$intOpt3NodeID}',
+						'{$strQACorrectAnswer}', 
+						'{$intQAIncorrectNodeID}', 
+						'{$intQACorrectNodeID}')";
+		
+		NetDebug::trace("createNode: Running a query = $query");	
+		
+		mysql_query($query);
+		
+		if (mysql_error()) {
+			NetDebug::trace("createNode: SQL Error = " . mysql_error());
+			return false;
+		}
+		return mysql_insert_id();
+	}
+
+
+
 	
 	
 	/**
@@ -57,7 +99,30 @@ class Nodes
 								$strOpt3Text, $intOpt3NodeID,
 								$strQACorrectAnswer, $intQAIncorrectNodeID, $intQACorrectNodeID)
 	{
+		$prefix = $this->getPrefix($intGameID);
+		$query = "UPDATE {$prefix}_nodes 
+					SET title = '{$strTitle}', text = '{$strText}',
+					media = '{$strMedia}',
+					opt1_text = '{$strOpt1Text}', opt1_node_id = '{$intOpt1NodeID}',
+					opt2_text = '{$strOpt2Text}', opt2_node_id = '{$intOpt2NodeID}',
+					opt3_text = '{$strOpt3Text}', opt3_node_id = '{$intOpt3NodeID}',
+					require_answer_string = '{$strQACorrectAnswer}', 
+					require_answer_incorrect_node_id = '{$intQAIncorrectNodeID}', 
+					require_answer_correct_node_id = '{$intQACorrectNodeID}'
+					WHERE node_id = '{$intNodeID}'";
 		
+		NetDebug::trace("updateNode: Running a query = $query");	
+		
+		mysql_query($query);
+		
+		if (mysql_affected_rows()) {
+			NetDebug::trace("updateNode: record modified");
+			return true;
+		}
+		else {
+			NetDebug::trace("updateNode: No records affected. There must not have been a matching record in that game");
+			return false;
+		}
 	}
 	
 	
