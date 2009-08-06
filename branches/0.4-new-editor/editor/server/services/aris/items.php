@@ -11,8 +11,7 @@ class Items
 	{
 		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
       	mysql_select_db (Config::dbSchema);
-	}
-	
+	}	
 	
 	/**
      * Fetch all Items
@@ -46,17 +45,62 @@ class Items
 		
 	}
 	
-	
 	/**
-     * Update a specific nodes
-     * @returns true on success
+     * Create an Item
+     * @returns the new itemID on success
      */
-	public function updateItem($intGameID, $intItemID, 
-								$strName, $strDescription, $strMedia, $strType)
+	public function createItem($intGameID, $strName, $strDescription, $strMediaFileName)
 	{
 		
+		$type = $this->getItemType($strMediaFileName);
+		$prefix = $this->getPrefix($intGameID);
+		
+		$query = "INSERT INTO {$prefix}_items 
+					(name, description, media, type)
+					VALUES ('{$strName}', '{$strDescription}','{$strMediaFileName}', '$type')";
+		
+		NetDebug::trace("createItem: Running a query = $query");	
+		
+		mysql_query($query);
+		
+		if (mysql_error()) {
+			NetDebug::trace("createItem: SQL Error = " . mysql_error());
+			return false;
+		}
+		return mysql_insert_id();
 	}
+
 	
+	
+	/**
+     * Update a specific Item
+     * @returns true on success
+     */
+	public function updateItem($intGameID, $intItemID, $strName, $strDescription, $strMediaFileName)
+	{
+		$type = $this->getItemType($strMediaFileName);
+		$prefix = $this->getPrefix($intGameID);
+		
+		$query = "UPDATE {$prefix}_items 
+					SET name = '{$strName}', description = '{$strDescription}', 
+					media = '{$strMediaFileName}', type = '{$type}'
+					WHERE item_id = '{$intItemID}'";
+		
+		NetDebug::trace("updateNpc: Running a query = $query");	
+		
+		mysql_query($query);
+		
+		if (mysql_affected_rows()) {
+			NetDebug::trace("updateNpc: Item record modified");
+			return true;
+		}
+		else {
+			NetDebug::trace("updateNpc: No records affected. There must not have been a matching record in that game");
+			return false;
+		}
+
+	}
+			
 	
 	/**
      * Fetch a specific nodes
@@ -88,5 +132,20 @@ class Items
 		
 	}
 	
+	/**
+     * Determine the Item Type
+     * @returns either "AV" or "Image"
+     */
+	private function getItemType($strMediaFileName) {
+		$mediaParts = pathinfo($strMediaFileName);
+ 		$mediaExtension = $mediaParts['extension'];
+ 		
+ 		if ($mediaExtension == '' or $mediaExtension == 'png' or $mediaExtension == 'jpg' ) $type = 'Image';
+ 		else $type = 'AV'; //We should improve this and do a more robust test
+ 		
+ 		NetDebug::trace("getITemType: Item type for '{$strMediaFileName}' is '{$type}'");
+ 		return $type;
+ 		
+ 	}
 	
 }
