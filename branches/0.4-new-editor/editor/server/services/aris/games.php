@@ -20,11 +20,25 @@ class Games
      */
 	public function getGames($intEditorID)
 	{
+		$query = "SELECT super_admin FROM editors 
+				WHERE editor_id = '$intEditorID' LIMIT 1";
+		$editor = mysql_fetch_array(mysql_query($query));
 		
-		$query = "SELECT * FROM games 
-				LEFT JOIN game_editors 
+		if ($editor['super_admin'] == 1)  {
+		       NetDebug::trace("getGames: User is super admin, load all games");
+		       $query = "SELECT * FROM games";
+		       NetDebug::trace($query);
+
+        }
+        else {
+            NetDebug::trace("getGames: User is NOT a super admin");
+
+            $query = "SELECT * FROM games 
+				JOIN game_editors 
 				ON (games.game_id = game_editors.game_id)
 				WHERE game_editors.editor_id = '$intEditorID'";
+			NetDebug::trace($query);
+	    }
 		
 		$rsResult = mysql_query($query);
 		
