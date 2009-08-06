@@ -45,16 +45,57 @@ class Npcs
 		return $rsResult;
 		
 	}
+
+	/**
+     * Create a NPC
+     * @returns the new npcID on success
+     */
+	public function createNpc($intGameID, $strName, $strDescription, $strGreeting, $strMedia)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		$query = "INSERT INTO {$prefix}_npcs 
+					(name, description, text, media)
+					VALUES ('{$strName}', '{$strDescription}', '{$strGreeting}','{$strMedia}')";
+		
+		NetDebug::trace("createNpc: Running a query = $query");	
+		
+		mysql_query($query);
+		
+		if (mysql_error()) {
+			NetDebug::trace("createNode: SQL Error = " . mysql_error());
+			return false;
+		}
+		return mysql_insert_id();
+	}
+
 	
 	
 	/**
-     * Update a specific nodes
+     * Update a specific NPC
      * @returns true on success
      */
 	public function updateNpc($intGameID, $intNpcID, 
 								$strName, $strDescription, $strGreeting, $strMedia)
 	{
+		$prefix = $this->getPrefix($intGameID);
+		$query = "UPDATE {$prefix}_npcs 
+					SET name = '{$strName}', description = '{$strDescription}',
+					text = '{$strGreeting}', media = '{$strMedia}'
+					WHERE npc_id = '{$intNpcID}'";
 		
+		NetDebug::trace("updateNpc: Running a query = $query");	
+		
+		mysql_query($query);
+		
+		if (mysql_affected_rows()) {
+			NetDebug::trace("updateNpc: NPC record modified");
+			return true;
+		}
+		else {
+			NetDebug::trace("updateNpc: No records affected. There must not have been a matching record in that game");
+			return false;
+		}
+
 	}
 	
 	
@@ -69,7 +110,15 @@ class Npcs
 		$query = "DELETE FROM {$prefix}_npcs WHERE npc_id = {$intNpcID}";
 		
 		$rsResult = mysql_query($query);
-		return $rsResult;
+		
+		if (mysql_affected_rows()) {
+			NetDebug::trace("updateNpc: NPC record deleted");
+			return true;
+		}
+		else {
+			NetDebug::trace("updateNpc: No records affected. There must not have been a matching record in that game");
+			return false;
+		}
 		
 	}	
 	
