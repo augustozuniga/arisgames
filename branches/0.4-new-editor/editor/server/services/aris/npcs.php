@@ -31,7 +31,7 @@ class Npcs
 	}
 	
 	/**
-     * Fetch a specific npcs
+     * Fetch a specific npc
      * @returns a single npc
      */
 	public function getNpc($intGameID, $intNpcID)
@@ -41,7 +41,7 @@ class Npcs
 		
 		$query = "SELECT * FROM {$prefix}_npcs WHERE npc_id = {$intNpcID} LIMIT 1";
 		
-		$rsResult = mysql_query($query);
+		$rsResult = mysql_fetch_object(mysql_query($query));
 		return $rsResult;
 		
 	}
@@ -100,7 +100,7 @@ class Npcs
 	
 	
 	/**
-     * Fetch a specific nodes
+     * Delete a specific NPC
      * @returns a single node
      */
 	public function deleteNpc($intGameID, $intNpcID)
@@ -121,6 +121,100 @@ class Npcs
 		}
 		
 	}	
+	
+
+	/**
+     * Create a conversation option for the NPC to link to a node
+     * @returns the new conversationID on success
+     */
+	public function createConversation($intGameID, $intNpcID, $intNodeID, $strText)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		
+		$query = "INSERT INTO {$prefix}_npc_conversations 
+					(npc_id, node_id, text)
+					VALUES ('{$intNpcID}', '{$intNodeID}', '{$strText}')";
+		
+		NetDebug::trace("createConversation: Running a query = $query");	
+		
+		mysql_query($query);
+		
+		if (mysql_error()) {
+			NetDebug::trace("createNConversation: SQL Error = " . mysql_error());
+			return false;
+		}
+		return mysql_insert_id();
+	}
+	
+	
+	
+	
+	/**
+     * Fetch the conversations for a given NPC
+     * @returns a recordset of conversations
+     */
+	public function getConversations($intGameID, $intNpcID) {
+		$prefix = $this->getPrefix($intGameID);
+		$query = "SELECT * FROM {$prefix}_npc_conversations WHERE npc_id = '{$intNpcID}'";
+		
+		NetDebug::trace("getConversations: Running a query = $query");	
+
+		$rsResult = mysql_query($query);
+		return $rsResult;
+		
+	}	
+	
+	
+	/**
+     * Update Conversation
+     * @returns true on success
+     */
+	public function updateConversation($intGameID, $intConverationID, $intNewNPC, $intNewNode, $strNewText)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		
+		$query = "UPDATE {$prefix}_npc_conversations 
+		SET npc_id = '{$intNewNPC}', node_id = '{$intNewNode}', text = '{$strNewText}'
+		WHERE conversation_id = {$intConverationID}";
+		
+		$rsResult = mysql_query($query);
+		
+		if (mysql_affected_rows()) {
+			NetDebug::trace("updateConversation: NPC Conversation record updated");
+			return true;
+		}
+		else {
+			NetDebug::trace("updateConversation: No records affected. There must not have been a matching record in that game");
+			return false;
+		}
+		
+	}	
+	
+
+	/**
+     * Delete a specific NPC Conversation option
+     * @returns true on success
+     */
+	public function deleteConversation($intGameID, $intConverationID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		
+		$query = "DELETE FROM {$prefix}_npc_conversations WHERE conversation_id = {$intConverationID}";
+		
+		$rsResult = mysql_query($query);
+		
+		if (mysql_affected_rows()) {
+			NetDebug::trace("deleteConversation: NPC Conversation record deleted");
+			return true;
+		}
+		else {
+			NetDebug::trace("deleteConversation: No records affected. There must not have been a matching record in that game");
+			return false;
+		}
+		
+	}	
+
+	
 	
 	
 	/**
