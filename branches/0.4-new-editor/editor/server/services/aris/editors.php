@@ -1,12 +1,10 @@
 <?php
 include('config.class.php');
+include('returnData.class.php');
 
 class Editors 
 {
-	private $NAME 				= "Editors";
-	private $VERSION			= "0.0.1";
-	
-	
+		
 	public function Editors()
 	{
 		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
@@ -26,9 +24,9 @@ class Editors
 		
 		NetDebug::trace($query);
 
-		$editor = mysql_fetch_array(mysql_query($query));
-	
-		return $editor['editor_id'];
+		$editor = @mysql_fetch_array(@mysql_query($query));
+		if (!editor) new returnData(1, NULL);
+		return new returnData(0, $editor['editor_id']);
 	}
 	
 	
@@ -42,16 +40,16 @@ class Editors
 				  WHERE name = '{$strUser}' LIMIT 1";
 			
 		if (mysql_fetch_array(mysql_query($query))) {
-			NetDebug::trace('createEditor: user exists');
-			return false;
+			return new returnData(1, NULL, 'user exists');
 		}
 		
 		$query = "INSERT INTO editors (name, password) 
 				  VALUES ('{$strUser}',MD5('$strPassword'))";
 			
-		mysql_query($query);
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
 		
-		return mysql_insert_id();
+		return new returnData(0, mysql_insert_id());
 	}
 	
 	

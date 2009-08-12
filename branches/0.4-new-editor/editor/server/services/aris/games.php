@@ -1,11 +1,9 @@
 <?php
 include('config.class.php');
+include('returnData.class.php');
 
 class Games 
-{
-	private $NAME 				= "Games";
-	private $VERSION			= "0.0.1";
-	
+{	
 	
 	public function Games()
 	{
@@ -16,7 +14,7 @@ class Games
 	
 	/**
      * Fetch the games an editor may edit
-     * @returns the set of games.
+     * @returns Object Recordset for each Game.
      */
 	public function getGames($intEditorID)
 	{
@@ -33,19 +31,20 @@ class Games
         else {
             NetDebug::trace("getGames: User is NOT a super admin");
 
-            $query = "SELECT * FROM games 
+            $query = "SELECT FROM games 
 				JOIN game_editors 
 				ON (games.game_id = game_editors.game_id)
 				WHERE game_editors.editor_id = '$intEditorID'";
 			NetDebug::trace($query);
 	    }
 		
-		$rsResult = mysql_query($query);
-		
-		if(!$rsResult)
-		   return mysql_error($rsConnectionID);
-	
-		return $rsResult;
+		$return = new returnData(0, mysql_query($query), NULL);		
+		if(!$return->data){
+		    $return->returnCode = 1;
+		    $return->returnCodeDescription = "SQL Error";
+        }
+        
+		return $return;
 	}
 	
 	
@@ -57,11 +56,15 @@ class Games
 	{
 
 		$strFullName = addslashes($strFullName);	
-	
+        
+                
 		//Check if a game with this prefix has already been created
 		$query = "SELECT * FROM games WHERE prefix = '{$strShortName}_'";
+		NetDebug::trace($query);
 		if (mysql_num_rows(mysql_query($query)) > 0) 
-			return 'ERROR: duplicate short name';
+		    return new returnData(1, NULL, 'duplicate short name');
+		
+			
 	
 
 		//Copy the default site to the new name	
@@ -70,12 +73,13 @@ class Games
 		$command = "cp -R -v -n $from $to";
 		NetDebug::trace($command);
 		exec($command, $output, $return);
-		if ($return) return "ERROR: cannot copy default site";
+		if ($return) return new returnData(2, NULL, 'cannot copy default site');
+
 	
 		
 		//Build XML file
 		$defaultConfigFile = Config::engineSitesPath . '/' . Config::engineDefaultSite . '/config.xml';
-		if (!$defaultConfigHandle = fopen($defaultConfigFile, 'r'))  return "ERROR: Can't open default config file";
+		if (!$defaultConfigHandle = fopen($defaultConfigFile, 'r'))  return new returnData(2, NULL, 'cannot open default config file'); 
 		$defaultConfigContent = fread($defaultConfigHandle, filesize($defaultConfigFile));
 		//$defaultConfigContent = str_replace("%tablePrefix%", $new_game_short . "_", $defaultConfigContent);
 		fclose($defaultConfigHandle);
@@ -83,7 +87,7 @@ class Games
 
 
 		$xmlFile = Config::engineSitesPath . "/{$strShortName}/config.xml";
-		if(!$file_handle = fopen($xmlFile, 'w')) return "ERROR: Can't create XML file";
+		if(!$file_handle = fopen($xmlFile, 'w'))   return new returnData(2, NULL, 'cannot create XML file');
 		fwrite($file_handle, $defaultConfigContent);
 		fclose($file_handle);
 		
@@ -133,7 +137,7 @@ class Games
 		
 		
 		$phpFile = Config::engineSitesPath . "/{$strShortName}.php";
-		if (!$file_handle = fopen($phpFile, 'w')) return "Can't create PHP file";
+		if (!$file_handle = fopen($phpFile, 'w')) return new returnData(2, NULL, 'cannot create PHP file');
 		fwrite($file_handle, $file_data);
 		fclose($file_handle);
 	
@@ -141,14 +145,15 @@ class Games
 		//Create the game record in SQL
 		$query = "INSERT INTO games (prefix,name) VALUES ('{$strShortName}_','{$strFullName}')";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create game record";
+		if (mysql_error())  return new returnData(4, NULL, 'cannot create game record');
 		$newGameID = mysql_insert_id();
 	
 	
 		//Make the creator an editor of the game
 		$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('{$newGameID}','{$intEditorID}')";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create game_editors record";
+		if (mysql_error()) return new returnData(5, NULL, 'cannot create game_editors record');
+
 	
 	
 		//Create the SQL tables
@@ -162,7 +167,7 @@ class Games
 			PRIMARY KEY  (item_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create items table";
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create items table');
 				
 		$query = "CREATE TABLE {$strShortName}_events (
 			event_id int(10) unsigned NOT NULL auto_increment,
@@ -170,7 +175,7 @@ class Games
  			 PRIMARY KEY  (event_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create events table";		
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create events table');
 		
 		
 		$query = "CREATE TABLE {$strShortName}_player_state_changes (
@@ -182,7 +187,7 @@ class Games
 			PRIMARY KEY  (id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create player_state_changes table";
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_state_changes table');
 		
 		
 		
@@ -195,8 +200,7 @@ class Games
 			PRIMARY KEY  (requirement_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create requirements table";				
-		
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create requirments table');
 		
 	
 		$query = "CREATE TABLE {$strShortName}_locations (
@@ -215,8 +219,7 @@ class Games
 			PRIMARY KEY  (location_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create locations table";
-	
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create locations table');
 	
 		$query = "CREATE TABLE {$strShortName}_quests (
 			  quest_id int(11) unsigned NOT NULL auto_increment,
@@ -227,8 +230,8 @@ class Games
 			  PRIMARY KEY  (quest_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create quests table";
-	
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create quests table');
+		
 		$query = "CREATE TABLE {$strShortName}_nodes (
 			  node_id int(11) unsigned NOT NULL auto_increment,
 			  title varchar(100) default NULL,
@@ -246,8 +249,8 @@ class Games
 			  PRIMARY KEY  (node_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create nodes table";
-	
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create nodes table');
+		
 		$query = "CREATE TABLE {$strShortName}_npc_conversations (
 			conversation_id int(11) NOT NULL auto_increment,
 			npc_id int(10) unsigned NOT NULL default '0',
@@ -256,7 +259,8 @@ class Games
 			PRIMARY KEY  (conversation_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create npc conversations table";
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create conversations table');
+		
 	
 		$query = "CREATE TABLE {$strShortName}_npcs (
 			npc_id int(10) unsigned NOT NULL auto_increment,
@@ -267,8 +271,8 @@ class Games
 			PRIMARY KEY  (npc_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create npcs table";
-	
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create npcs table');
+		
 		$query = "CREATE TABLE {$strShortName}_player_events (
 			id int(11) NOT NULL auto_increment,
 			player_id int(10) unsigned NOT NULL default '0',
@@ -278,8 +282,8 @@ class Games
 			UNIQUE KEY `unique` (player_id,event_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create player_events table";
-	
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_events table');
+		
 		$query = "CREATE TABLE {$strShortName}_player_items (
 			id int(11) NOT NULL auto_increment,
 			player_id int(11) unsigned NOT NULL default '0',
@@ -291,8 +295,8 @@ class Games
 			KEY item_id (item_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create player_items table";
-	
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_items table');
+		
 	
 		$query = "CREATE TABLE {$strShortName}_qrcodes (
 			  qrcode_id int(11) NOT NULL auto_increment,
@@ -301,24 +305,28 @@ class Games
 			  PRIMARY KEY  (qrcode_id)
 			)";
 		@mysql_query($query);
-		if (mysql_error()) return "ERROR: Cannot create qrcodes table";
-												
-		return $newGameID;
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');							
+		
+
+		return new returnData(0, $newGameID, NULL);
+
 		
 	}
 	
 	/**
      * Sets a game's name
-     * @returns true on success
+     * @returns returnCode = 0 on success
      */	
 	public function setGameName($intGameID, $strNewGameName)
 	{
+	    $returnData = new returnData(0, mysql_query($query), NULL);
+
 		$strNewGameName = addslashes($strNewGameName);	
 	
 		$query = "UPDATE games SET name = '{$strNewGameName}' WHERE game_id = {$intGameID}";
 		mysql_query($query);
-		if (mysql_error()) return false;
-		else return true;
+		if (mysql_error()) return new returnData(1, false, "SQL Error");
+		else return new returnData(0, NULL);
 		
 		
 	}		
@@ -332,6 +340,7 @@ class Games
      */	
 	public function copyGame($intSourceGameID, $strNewShortName, $strNewFullName)
 	{
+	    return new returnData(1, NULL, "Copy Game Not Implemented on Server");
 	}	
 	
 	
@@ -339,38 +348,50 @@ class Games
 	
 	/**
      * Create a new game
-     * @returns true on success
+     * @returns returnCode = 0 on success
      */	
 	public function deleteGame($intGameID)
 	{
+		$returnData = new returnData(0, NULL, NULL);
+		
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "game does not exist");
 	
 		//Delete the files
 		exec("rm -rf {Config::engineSitesPath}/{$prefix}", $output, $return);
-		//if ($return) return "ERROR: unable to delete game directory";
+		if ($return) return new returnData(2, NULL, "unable to delete game directory");
 		
 		echo exec("rm {Config::engineSitesPath}/{$prefix}.php", $output, $return);
-		if ($return) return "ERROR: unable to delete game php file";	
+		if ($return) return new returnData(2, NULL, "unable to delete game php file");
 		
 		
 		//Delete the editor_games record
 		$query = "DELETE FROM game_editors WHERE game_id IN (SELECT game_id FROM games WHERE prefix = '{$prefix}_')";
-		mysql_query($query);
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
 		
 		
 		//Delete the game record
 		$query = "DELETE FROM games WHERE prefix = '{$prefix}_'";
-		mysql_query($query);
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+
 
 		//Fetch the table names for this game
 		$query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{$this->dbSchema}' AND TABLE_NAME LIKE '{$prefix}_%'";
 		$result = mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+
+		
+		//Delete all tables for this game
 		while ($table = mysql_fetch_array($result)) {
 			 $query = "DROP TABLE {$table['TABLE_NAME']}";
 			 mysql_query($query);
+			 if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+
 		}
 		
-		return true;		
+		return new returnData(0);	
 	}	
 	
 	
@@ -392,12 +413,12 @@ class Games
 		//Delete a previous backup with the same name
 		$rmCommand = "rm -rf {Config::engineSitesPath}/Backups/{$tmpDir}";
 		exec($rmCommand, $output, $return);
-		if ($return) return "ERROR: cannot remove existing backup";
+		if ($return) return new returnData(1, NULL, "cannot remove existing backup, check file permissions");
 		
 		//Set up a tmp directory
 		$mkdirCommand = "mkdir {Config::engineSitesPath}/Backups/{$tmpDir}";
 		exec($mkdirCommand, $output, $return);
-		if ($return) return "ERROR: cannot create backup directory";
+		if ($return) return new returnData(1, NULL, "cannot create backup dir, check file permissions");
 	
 	
 		//Create SQL File
@@ -407,7 +428,7 @@ class Games
 		
 		exec($getTablesCommand, $output, $return);
 		
-		if ($output == 127) return "ERROR: cannot fetch table names. Check the mysql bin path";
+		if ($output == 127) return new returnData(2, NULL, "cannot get tables, check mysql bin path in config");
 		
 		$tables = '';
 		foreach ($output as $table) {
@@ -419,18 +440,18 @@ class Games
 		$createSQLCommand = "{Config::mysqlBinPath}/mysqldump -u {Config::dbUser} --password={Config::dbPass} {Config::dbSchema} $tables > {Config::engineSitesPath}/Backups/{$tmpDir}/{$sqlFile}";
 		//echo "<p>Running: $createSQLCommand </p>";
 		exec($createSQLCommand, $output, $return);
-		if ($return) return "ERROR: cannot dump sql data. Check the mysql bin path";
+		if ($return) return new returnData(2, NULL, "cannot create SQL, check mysql bin path in config");
 		
 		
 		//Copy the site into the tmp directory
 		$copyCommand = "cp {Config::engineSitesPath}/{$prefix}.php {Config::engineSitesPath}/Backups/{$tmpDir}";
 		exec($copyCommand, $output, $return);
-		if ($return) return "ERROR: cannot copy game directory to the backup directory";	
+		if ($return) return new returnData(1, NULL, "cannot copy files to backup dir, check file permissions");
 		
 		$copyCommand = "cp -R {Config::engineSitesPath}/{$prefix} {Config::engineSitesPath}/Backups/{$tmpDir}/{$prefix}";
 		//echo "<p>Running: $copyCommand </p>";
 		exec($copyCommand, $output, $return);
-		if ($return) return "ERROR: cannot copy php file to the backup directory";	
+		if ($return) return new returnData(1, NULL, "cannot copy php file to backup dir, check file permissions");
 		
 		
 		/*
@@ -450,16 +471,16 @@ class Games
 		chdir($newWd);
 		$createZipCommand = "tar -cf {Config::engineSitesPath}/Backups/{$zipFile} {$tmpDir}/";
 		exec($createZipCommand, $output, $return);
-		if ($return) return "ERROR: cannot compress directory";
+		if ($return) return new returnData(3, NULL, "cannot compress backup dir, check that tar command is avaialbe");
 		
 		//Delete the Temp
 		$rmCommand = "rm -rf {Config::engineSitesPath}/Backups/{$tmpDir}";
 		exec($rmCommand, $output, $return);
-		if ($return) return "ERROR: Cannot delete temp directory";
+		if ($return) return new returnData(1, NULL, "cannot delete backup dir, check file permissions");
 		
 		$this->close($rsConnectionID);
-		return "{Config::engineWWWPath}/Backups/{$zipFile}";	
 		
+		return new returnData(0, "{Config::engineWWWPath}/Backups/{$zipFile}");		
 	}	
 	
 	
@@ -471,6 +492,8 @@ class Games
      */		
 	public function restoreGame($file)
 	{
+	    return new returnData(1, NULL, "restore Game Not Implemented on Server");
+
 	}
 	
 	
@@ -484,8 +507,9 @@ class Games
 	public function getEditors()
 	{
 		$query = "SELECT * FROM editors";
-		$rsResult = mysql_query($query);
-		return $rsResult;
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
+		return new returnData(0, $rsResult);
 	}
 
 
@@ -500,7 +524,8 @@ class Games
 	{
 		$query = "SELECT * FROM editors LEFT JOIN game_editors ON (editors.editor_id = game_editors.editor_id) WHERE editor_id = {$intGameID}";
 		$rsResult = mysql_query($query);
-		return $rsResult;
+		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
+		return new returnData(0, $rsResult);
 	}
 	
 
@@ -516,7 +541,8 @@ class Games
 	{
 		$query = "INSERT INTO game_editors (editor_id, game_id) VALUES ('{$intEditorID}','{$intGameID}')";
 		$rsResult = mysql_query($query);
-		return $rsResult;	
+		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
+		return new returnData(0, $rsResult);	
 	}	
 
 
@@ -531,7 +557,8 @@ class Games
 	{
 		$query = "DELETE FROM game_editors WHERE editor_id = '{$intEditorID}' AND game_id = '{$intGameID}'";
 		$rsResult = mysql_query($query);
-		return $rsResult;		
+		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
+		return new returnData(0, $rsResult);		
 	}
 
 
@@ -541,36 +568,15 @@ class Games
      * Fetch the prefix of a game
      * @returns a prefix string without the trailing _
      */
-	private function getPrefix($intGameID) {
+    private function getPrefix($intGameID) {
 		//Lookup game information
 		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
 		$rsResult = mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return 'ERROR: game id not found';
+		if (mysql_num_rows($rsResult) < 1) return FALSE;
 		$gameRecord = mysql_fetch_array($rsResult);
 		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
 		
 	}
 	
-
-	
-	/**
-     * Class name.
-     * @returns a string that reprezent class name.
-     */
-	public function getName()
-	{
-		return $this->NAME;
-	}
-	
-	
-	
-	/**
-     * Class version.
-     * @returns a string that reprezent class version.
-     */
-	public function getVersion()
-	{
-		return $this->VERSION;
-	}
 }
 ?>

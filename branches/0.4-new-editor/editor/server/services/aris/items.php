@@ -1,11 +1,9 @@
 <?php
 include('config.class.php');
+include('returnData.class.php');
 
 class Items 
 {
-	private $NAME 				= "Items";
-	private $VERSION			= "0.0.1";
-	
 	
 	public function Items()
 	{
@@ -15,18 +13,23 @@ class Items
 	
 	/**
      * Fetch all Items
-     * @returns the items rs
+     * @returns the items
      */
 	public function getItems($intGameID)
 	{
 		
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+
 		
 		$query = "SELECT * FROM {$prefix}_items";
+		NetDebug::trace($query);
+
 		
-		$rsResult = mysql_query($query);
-		return $rsResult;
+		$rsResult = @mysql_query($query);
 		
+		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		return new returnData(0, $rsResult);
 	}
 	
 	/**
@@ -37,11 +40,15 @@ class Items
 	{
 		
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+
+		$query = "SELECT * FROM {$prefix}_items WHERE item_id = {$intItemID} LIMIT 1";
 		
-		$query = "SELECT * FROM {$prefix}_items WHERE node_id = {$intNodeID} LIMIT 1";
-		
-		$rsResult = mysql_query($query);
-		return $rsResult;
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		$item = mysql_fetch_object($rsResult);
+		if (!$item) return new returnData(2, NULL, "No item");
+		return new returnData(0, $item);
 		
 	}
 	
@@ -54,7 +61,8 @@ class Items
 		
 		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
-		
+		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+
 		$query = "INSERT INTO {$prefix}_items 
 					(name, description, media, type)
 					VALUES ('{$strName}', '{$strDescription}','{$strMediaFileName}', '$type')";
@@ -63,18 +71,15 @@ class Items
 		
 		mysql_query($query);
 		
-		if (mysql_error()) {
-			NetDebug::trace("createItem: SQL Error = " . mysql_error());
-			return false;
-		}
-		return mysql_insert_id();
+		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		return new returnData(0, mysql_insert_id());
 	}
 
 	
 	
 	/**
      * Update a specific Item
-     * @returns true on success
+     * @returns true if edit was done, false if no changes were made
      */
 	public function updateItem($intGameID, $intItemID, $strName, $strDescription, $strMediaFileName)
 	{
@@ -89,22 +94,21 @@ class Items
 		NetDebug::trace("updateNpc: Running a query = $query");	
 		
 		mysql_query($query);
+		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
 		
 		if (mysql_affected_rows()) {
-			NetDebug::trace("updateNpc: Item record modified");
-			return true;
+			return new returnData(0, TRUE);
 		}
 		else {
-			NetDebug::trace("updateNpc: No records affected. There must not have been a matching record in that game");
-			return false;
+			return new returnData(0, FALSE);
 		}
 
 	}
 			
 	
 	/**
-     * Fetch a specific nodes
-     * @returns a single node
+     * Delete an Item
+     * @returns true if delete was done, false if no changes were made
      */
 	public function deleteItem($intGameID, $intItemID)
 	{
@@ -113,7 +117,14 @@ class Items
 		$query = "DELETE FROM {$prefix}_items WHERE item_id = {$intItemID}";
 		
 		$rsResult = mysql_query($query);
-		return $rsResult;
+		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		
+		if (mysql_affected_rows()) {
+			return new returnData(0, TRUE);
+		}
+		else {
+			return new returnData(0, FALSE);
+		}
 		
 	}	
 	
@@ -126,7 +137,7 @@ class Items
 		//Lookup game information
 		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
 		$rsResult = mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return 'ERROR: game id not found';
+		if (mysql_num_rows($rsResult) < 1) return FALSE;
 		$gameRecord = mysql_fetch_array($rsResult);
 		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
 		
