@@ -19,13 +19,13 @@ class Locations
 	public function getLocations($intGameID)
 	{
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		
 		$query = "SELECT * FROM {$prefix}_locations";
 		$rsResult = @mysql_query($query);
 		
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		return new returnData(0, $rsResult);	
 	}
 	
@@ -36,12 +36,12 @@ class Locations
 	public function getLocation($intGameID, $intLocationID)
 	{
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "SELECT * FROM {$prefix}_locations WHERE location_id = {$intLocationID} LIMIT 1";
 	
 		$rsResult = @mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		$location = mysql_fetch_object($rsResult);
 		if (!$location) return new returnData(2, NULL, "No matching location");
 		return new returnData(0, $location);
@@ -60,7 +60,7 @@ class Locations
 								$boolHidden, $boolForceView)
 	{
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		//Lookup the name of the item
 		$query = "SELECT name FROM {$prefix}_items 
@@ -68,7 +68,7 @@ class Locations
 		NetDebug::trace("createLocationForItem: Lookup Item query: $query");		
 		
 		$item = mysql_fetch_array(mysql_query($query));
-		if (!$item) return new returnData(1, NULL, "No matching Item");
+		if (!$item) return new returnData(2, NULL, "No matching Item");
 
 		
 		$query = "INSERT INTO {$prefix}_locations 
@@ -85,7 +85,7 @@ class Locations
 		
 		if (mysql_error()) {
 			NetDebug::trace("createLocationForItem: SQL Error = " . mysql_error());
-			return new returnData(2, NULL, "SQL Error");
+			return new returnData(3, NULL, "SQL Error");
 		}
 		return new returnData(0, mysql_insert_id());
 
@@ -102,14 +102,14 @@ class Locations
 								$intNodeId, $boolHidden, $boolForceView)
 	{
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		//Lookup the name of the item
 		$query = "SELECT title FROM {$prefix}_nodes 
 				WHERE node_id = '{$intNodeId}' LIMIT 1";
 		NetDebug::trace("createLocationForNode: Lookup Node query: $query");		
 		$node = mysql_fetch_array(mysql_query($query));
-		if (!$node)  return new returnData(1, NULL, "No matching Node");
+		if (!$node)  return new returnData(2, NULL, "No matching Node");
 
 		$query = "INSERT INTO {$prefix}_locations 
 					(icon, name, 
@@ -125,7 +125,7 @@ class Locations
 		
 		if (mysql_error()) {
 			NetDebug::trace("createLocationForNode: SQL Error = " . mysql_error());
-			return new returnData(2, NULL, "SQL Error");
+			return new returnData(3, NULL, "SQL Error");
 		}
 		return new returnData(0, mysql_insert_id());
 	}
@@ -140,14 +140,14 @@ class Locations
 								$intNpcId, $boolHidden, $boolForceView)
 	{
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		//Lookup the name of the item
 		$query = "SELECT name FROM {$prefix}_npcs 
 				WHERE npc_id = '{$intNpcId}' LIMIT 1";
 		NetDebug::trace("createLocationForNode: Lookup Npc query: $query");		
 		$npc = mysql_fetch_array(mysql_query($query));
-		if (!$npc) return new returnData(1, NULL, "No matching NPC");
+		if (!$npc) return new returnData(2, NULL, "No matching NPC");
 
 		
 		$query = "INSERT INTO {$prefix}_locations 
@@ -164,7 +164,7 @@ class Locations
 		
 		if (mysql_error()) {
 			NetDebug::trace("createLocationForNopc: SQL Error = " . mysql_error());
-			return new returnData(2, NULL, "SQL Error");
+			return new returnData(3, NULL, "SQL Error");
 		}
 		return new returnData(0, mysql_insert_id());
 	}
@@ -177,7 +177,7 @@ class Locations
 								$intQuantity, $boolHidden, $boolForceView )
 	{
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		//Lookup the name of the item
 		$query = "UPDATE {$prefix}_locations
@@ -189,7 +189,7 @@ class Locations
 		NetDebug::trace("deleteLocation: Query: $query");		
 		
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
 		if (mysql_affected_rows()) {
 			return new returnData(0, TRUE);
@@ -207,14 +207,15 @@ class Locations
 	public function deleteLocation($intGameID, $intLocationId)
 	{
 		$prefix = $this->getPrefix($intGameID);
-		
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
 		//Lookup the name of the item
 		$query = "DELETE FROM {$prefix}_locations 
 				WHERE location_id = '{$intLocationId}'";
 		NetDebug::trace("deleteLocation: Query: $query");		
 		
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
 		if (mysql_affected_rows()) {
 			return new returnData(0, TRUE);
