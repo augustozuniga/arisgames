@@ -19,7 +19,7 @@ class Items
 	{
 		
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		
 		$query = "SELECT * FROM {$prefix}_items";
@@ -40,14 +40,14 @@ class Items
 	{
 		
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "SELECT * FROM {$prefix}_items WHERE item_id = {$intItemID} LIMIT 1";
 		
 		$rsResult = @mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
-		$item = mysql_fetch_object($rsResult);
-		if (!$item) return new returnData(2, NULL, "No item");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		$item = @mysql_fetch_object($rsResult);
+		if (!$item) return new returnData(2, NULL, "invalid item id");
 		return new returnData(0, $item);
 		
 	}
@@ -61,7 +61,7 @@ class Items
 		
 		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(2, NULL, "invalid game id");
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "INSERT INTO {$prefix}_items 
 					(name, description, media, type)
@@ -69,9 +69,9 @@ class Items
 		
 		NetDebug::trace("createItem: Running a query = $query");	
 		
-		mysql_query($query);
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
 		return new returnData(0, mysql_insert_id());
 	}
 
@@ -85,7 +85,8 @@ class Items
 	{
 		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
-		
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
 		$query = "UPDATE {$prefix}_items 
 					SET name = '{$strName}', description = '{$strDescription}', 
 					media = '{$strMediaFileName}', type = '{$type}'
@@ -93,8 +94,8 @@ class Items
 		
 		NetDebug::trace("updateNpc: Running a query = $query");	
 		
-		mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
 		if (mysql_affected_rows()) {
 			return new returnData(0, TRUE);
@@ -113,11 +114,12 @@ class Items
 	public function deleteItem($intGameID, $intItemID)
 	{
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		$query = "DELETE FROM {$prefix}_items WHERE item_id = {$intItemID}";
 		
-		$rsResult = mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
 		if (mysql_affected_rows()) {
 			return new returnData(0, TRUE);

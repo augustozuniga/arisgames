@@ -38,13 +38,11 @@ class Games
 			NetDebug::trace($query);
 	    }
 		
-		$return = new returnData(0, mysql_query($query), NULL);		
-		if(!$return->data){
-		    $return->returnCode = 1;
-		    $return->returnCodeDescription = "SQL Error";
-        }
-        
-		return $return;
+		$rs = @mysql_query($query);
+		if (mysql_error())  return new returnData(3, NULL, 'SQL error');
+
+		return new returnData(0, $rs, NULL);		
+
 	}
 	
 	
@@ -62,13 +60,13 @@ class Games
 		$query = "SELECT * FROM games WHERE name = '{$strFullName}'";
 		NetDebug::trace($query);
 		if (mysql_num_rows(mysql_query($query)) > 0) 
-		    return new returnData(1, NULL, 'duplicate name');
+		    return new returnData(4, NULL, 'duplicate name');
 		
 		
 		//Create the game record in SQL
 		$query = "INSERT INTO games (name) VALUES ('{$strFullName}')";
 		@mysql_query($query);
-		if (mysql_error())  return new returnData(4, NULL, 'cannot create game record');
+		if (mysql_error())  return new returnData(6, NULL, 'cannot create game record');
 		$newGameID = mysql_insert_id();
 	    $strShortName = mysql_insert_id();
 	
@@ -77,13 +75,13 @@ class Games
 	    //short name to the new game id
 	    $query = "UPDATE games SET prefix = '{$strShortName}_' WHERE game_id = '{$newGameID}'";
 		@mysql_query($query);
-		if (mysql_error())  return new returnData(4, NULL, 'cannot update game record');
+		if (mysql_error())  return new returnData(6, NULL, 'cannot update game record');
 		
 	
 		//Make the creator an editor of the game
 		$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('{$newGameID}','{$intEditorID}')";
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(5, NULL, 'cannot create game_editors record');
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create game_editors record');
 		
 			
 	
@@ -94,13 +92,13 @@ class Games
 		$command = "cp -R -v -n $from $to";
 		NetDebug::trace($command);
 		exec($command, $output, $return);
-		if ($return) return new returnData(2, NULL, 'cannot copy default site');
+		if ($return) return new returnData(5, NULL, 'cannot copy default site');
 
 	
 		
 		//Build XML file
 		$defaultConfigFile = Config::engineSitesPath . '/' . Config::engineDefaultSite . '/config.xml';
-		if (!$defaultConfigHandle = fopen($defaultConfigFile, 'r'))  return new returnData(2, NULL, 'cannot open default config file'); 
+		if (!$defaultConfigHandle = fopen($defaultConfigFile, 'r'))  return new returnData(5, NULL, 'cannot open default config file'); 
 		$defaultConfigContent = fread($defaultConfigHandle, filesize($defaultConfigFile));
 		//$defaultConfigContent = str_replace("%tablePrefix%", $new_game_short . "_", $defaultConfigContent);
 		fclose($defaultConfigHandle);
@@ -108,7 +106,7 @@ class Games
 
 
 		$xmlFile = Config::engineSitesPath . "/{$strShortName}/config.xml";
-		if(!$file_handle = fopen($xmlFile, 'w'))   return new returnData(2, NULL, 'cannot create XML file');
+		if(!$file_handle = fopen($xmlFile, 'w'))   return new returnData(5, NULL, 'cannot create XML file');
 		fwrite($file_handle, $defaultConfigContent);
 		fclose($file_handle);
 		
@@ -158,7 +156,7 @@ class Games
 		
 		
 		$phpFile = Config::engineSitesPath . "/{$strShortName}.php";
-		if (!$file_handle = fopen($phpFile, 'w')) return new returnData(2, NULL, 'cannot create PHP file');
+		if (!$file_handle = fopen($phpFile, 'w')) return new returnData(5, NULL, 'cannot create PHP file');
 		fwrite($file_handle, $file_data);
 		fclose($file_handle);
 	
@@ -322,7 +320,7 @@ class Games
 	
 	/**
      * Sets a game's name
-     * @returns returnCode = 0 on success
+     * @returns true if a record was updated, false otherwise
      */	
 	public function setGameName($intGameID, $strNewGameName)
 	{
@@ -332,9 +330,10 @@ class Games
 	
 		$query = "UPDATE games SET name = '{$strNewGameName}' WHERE game_id = {$intGameID}";
 		mysql_query($query);
-		if (mysql_error()) return new returnData(1, false, "SQL Error");
-		else return new returnData(0, NULL);
+		if (mysql_error()) return new returnData(3, false, "SQL Error");
 		
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);		
 		
 	}		
 	
@@ -365,11 +364,12 @@ class Games
 		if (!$prefix) return new returnData(1, NULL, "game does not exist");
 	
 		//Delete the files
-		exec("rm -rf {Config::engineSitesPath}/{$prefix}", $output, $return);
-		if ($return) return new returnData(2, NULL, "unable to delete game directory");
+		exec('rm -rf '. Config::engineSitesPath . "/{$prefix}", $output, $return);
+		NetDebug::trace('rm -rf '. Config::engineSitesPath . "/{$prefix}");
+		if ($return) return new returnData(4, NULL, "unable to delete game directory");
 		
-		echo exec("rm {Config::engineSitesPath}/{$prefix}.php", $output, $return);
-		if ($return) return new returnData(2, NULL, "unable to delete game php file");
+		echo exec('rm ' . Config::engineSitesPath . "/{$prefix}.php", $output, $return);
+		if ($return) return new returnData(4, NULL, "unable to delete game php file");
 		
 		
 		//Delete the editor_games record
@@ -413,29 +413,31 @@ class Games
 	{
 	
 		$prefix = $this->getPrefix($intGameID);
+	    if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
 		
 		$tmpDir = "{$prefix}_backup_" . date('Y_m_d');
 		
 		
 		//Delete a previous backup with the same name
-		$rmCommand = "rm -rf {Config::engineSitesPath}/Backups/{$tmpDir}";
+		$rmCommand = "rm -rf ". Config::engineSitesPath . "/Backups/{$tmpDir}";
 		exec($rmCommand, $output, $return);
-		if ($return) return new returnData(1, NULL, "cannot remove existing backup, check file permissions");
+		if ($return) return new returnData(5, NULL, "cannot remove existing backup, check file permissions");
 		
 		//Set up a tmp directory
-		$mkdirCommand = "mkdir {Config::engineSitesPath}/Backups/{$tmpDir}";
+		$mkdirCommand = "mkdir ". Config::engineSitesPath . "/Backups/{$tmpDir}";
 		exec($mkdirCommand, $output, $return);
-		if ($return) return new returnData(1, NULL, "cannot create backup dir, check file permissions");
+		if ($return) return new returnData(5, NULL, "cannot create backup dir, check file permissions");
 	
 	
 		//Create SQL File
 		$sqlFile = 'database.sql';
 		
-		$getTablesCommand = "{Config::mysqlBinPath}/mysql --user={Config::dbUser} --password={Config::dbPass} -B --skip-column-names INFORMATION_SCHEMA -e \"SELECT TABLE_NAME FROM TABLES WHERE TABLE_SCHEMA='{Config::dbSchema}' AND TABLE_NAME LIKE '{$prefix}_%'\"";
+		$getTablesCommand = Config::mysqlBinPath . "/mysql --user=" . Config::dbUser . " --password=". Config::dbPass ." -B --skip-column-names INFORMATION_SCHEMA -e \"SELECT TABLE_NAME FROM TABLES WHERE TABLE_SCHEMA='" .  Config::dbSchema . "' AND TABLE_NAME LIKE '{$prefix}_%'\"";
 		
 		exec($getTablesCommand, $output, $return);
 		
-		if ($output == 127) return new returnData(2, NULL, "cannot get tables, check mysql bin path in config");
+		if ($output == 127) return new returnData(6, NULL, "cannot get tables, check mysql bin path in config");
 		
 		$tables = '';
 		foreach ($output as $table) {
@@ -444,21 +446,22 @@ class Games
 		}
 	
 		
-		$createSQLCommand = "{Config::mysqlBinPath}/mysqldump -u {Config::dbUser} --password={Config::dbPass} {Config::dbSchema} $tables > {Config::engineSitesPath}/Backups/{$tmpDir}/{$sqlFile}";
+		$createSQLCommand = Config::mysqlBinPath ."/mysqldump -u " . Config::dbUser . " --password=" . Config::dbPass . " " . Config::dbSchema . " $tables > ". Config::engineSitesPath . "/Backups/{$tmpDir}/{$sqlFile}";
 		//echo "<p>Running: $createSQLCommand </p>";
 		exec($createSQLCommand, $output, $return);
-		if ($return) return new returnData(2, NULL, "cannot create SQL, check mysql bin path in config");
+		if ($return) return new returnData(6, NULL, "cannot create SQL, check mysql bin path in config");
 		
 		
 		//Copy the site into the tmp directory
-		$copyCommand = "cp {Config::engineSitesPath}/{$prefix}.php {Config::engineSitesPath}/Backups/{$tmpDir}";
+		$copyCommand = "cp ". Config::engineSitesPath . "/{$prefix}.php ". Config::engineSitesPath . "/Backups/{$tmpDir}";
+		NetDebug::trace($copyCommand);
 		exec($copyCommand, $output, $return);
-		if ($return) return new returnData(1, NULL, "cannot copy files to backup dir, check file permissions");
+		if ($return) return new returnData(5, NULL, "cannot copy php file to backup dir, check file permissions");
 		
-		$copyCommand = "cp -R {Config::engineSitesPath}/{$prefix} {Config::engineSitesPath}/Backups/{$tmpDir}/{$prefix}";
+		$copyCommand = "cp -R ". Config::engineSitesPath . "/{$prefix} ". Config::engineSitesPath . "/Backups/{$tmpDir}/{$prefix}";
 		//echo "<p>Running: $copyCommand </p>";
 		exec($copyCommand, $output, $return);
-		if ($return) return new returnData(1, NULL, "cannot copy php file to backup dir, check file permissions");
+		if ($return) return new returnData(5, NULL, "cannot copy game dir to backup dir, check file permissions");
 		
 		
 		/*
@@ -474,20 +477,18 @@ class Games
 		
 		//Zip up the whole directory
 		$zipFile = "{$prefix}_backup_" . date('Y_m_d') . ".tar";
-		$newWd = "{Config::engineSitesPath}/Backups";
+		$newWd = Config::engineSitesPath . "/Backups";
 		chdir($newWd);
-		$createZipCommand = "tar -cf {Config::engineSitesPath}/Backups/{$zipFile} {$tmpDir}/";
+		$createZipCommand = "tar -cf ". Config::engineSitesPath . "/Backups/{$zipFile} {$tmpDir}/";
 		exec($createZipCommand, $output, $return);
-		if ($return) return new returnData(3, NULL, "cannot compress backup dir, check that tar command is avaialbe");
+		if ($return) return new returnData(7, NULL, "cannot compress backup dir, check that tar command is avaialbe");
 		
 		//Delete the Temp
-		$rmCommand = "rm -rf {Config::engineSitesPath}/Backups/{$tmpDir}";
+		$rmCommand = "rm -rf ". Config::engineSitesPath . "/Backups/{$tmpDir}";
 		exec($rmCommand, $output, $return);
-		if ($return) return new returnData(1, NULL, "cannot delete backup dir, check file permissions");
-		
-		$this->close($rsConnectionID);
-		
-		return new returnData(0, "{Config::engineWWWPath}/Backups/{$zipFile}");		
+		if ($return) return new returnData(5, NULL, "cannot delete backup dir, check file permissions");
+				
+		return new returnData(0, Config::engineWWWPath . "/Backups/{$zipFile}");		
 	}	
 	
 	
@@ -499,7 +500,7 @@ class Games
      */		
 	public function restoreGame($file)
 	{
-	    return new returnData(1, NULL, "restore Game Not Implemented on Server");
+	    return new returnData(4, NULL, "restore Game Not Implemented on Server");
 
 	}
 	
@@ -515,7 +516,7 @@ class Games
 	{
 		$query = "SELECT * FROM editors";
 		$rsResult = @mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
+		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
 		return new returnData(0, $rsResult);
 	}
 
@@ -531,7 +532,7 @@ class Games
 	{
 		$query = "SELECT * FROM editors LEFT JOIN game_editors ON (editors.editor_id = game_editors.editor_id) WHERE editor_id = {$intGameID}";
 		$rsResult = mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
+		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
 		return new returnData(0, $rsResult);
 	}
 	
@@ -547,9 +548,12 @@ class Games
 	public function addEditorToGame($intEditorID, $intGameID)
 	{
 		$query = "INSERT INTO game_editors (editor_id, game_id) VALUES ('{$intEditorID}','{$intGameID}')";
-		$rsResult = mysql_query($query);
-		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
-		return new returnData(0, $rsResult);	
+		$rsResult = @mysql_query($query);
+		
+		if (mysql_errno() == 1062) return new returnData(4, NULL, 'duplicate');
+		if (mysql_error()) return new returnData(3, NULL, 'sql error');
+		
+		return new returnData(0);	
 	}	
 
 
@@ -565,7 +569,9 @@ class Games
 		$query = "DELETE FROM game_editors WHERE editor_id = '{$intEditorID}' AND game_id = '{$intGameID}'";
 		$rsResult = mysql_query($query);
 		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
-		return new returnData(0, $rsResult);		
+		
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+        else return new returnData(0, FALSE);
 	}
 
 
