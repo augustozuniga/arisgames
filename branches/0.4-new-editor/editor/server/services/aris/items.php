@@ -46,8 +46,10 @@ class Items
 		
 		$rsResult = @mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		
 		$item = @mysql_fetch_object($rsResult);
 		if (!$item) return new returnData(2, NULL, "invalid item id");
+		
 		return new returnData(0, $item);
 		
 	}
@@ -97,12 +99,9 @@ class Items
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
-		if (mysql_affected_rows()) {
-			return new returnData(0, TRUE);
-		}
-		else {
-			return new returnData(0, FALSE);
-		}
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);
+		
 
 	}
 			
