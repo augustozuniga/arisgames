@@ -23,7 +23,6 @@ class Nodes
 
 		
 		$query = "SELECT * FROM {$prefix}_nodes";
-		
 		$rsResult = @mysql_query($query);
 		
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
@@ -145,9 +144,8 @@ class Nodes
 		$rsResult = @mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
-		if (mysql_affected_rows()) return new returnData(0, TRUE);
-		
-		else return new returnData(2, 'invalid node id');
+		if (mysql_affected_rows()) return new returnData(0);
+		else return new returnData(2, NULL, 'invalid node id');
 
 		
 	}	
