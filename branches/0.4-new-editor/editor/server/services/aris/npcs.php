@@ -1,12 +1,11 @@
 <?php
 include('config.class.php');
+include('returnData.class.php');
+
 
 class Npcs 
 {
-	private $NAME 				= "Npcs";
-	private $VERSION			= "0.0.1";
-	
-	
+
 	public function Npcs()
 	{
 		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
@@ -22,11 +21,14 @@ class Npcs
 	{
 		
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		$query = "SELECT * FROM {$prefix}_npcs";
 		
-		$rsResult = mysql_query($query);
-		return $rsResult;
+		$rsResult = @mysql_query($query);
+		
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		return new returnData(0, $rsResult);	
 		
 	}
 	
@@ -38,11 +40,18 @@ class Npcs
 	{
 		
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		$query = "SELECT * FROM {$prefix}_npcs WHERE npc_id = {$intNpcID} LIMIT 1";
 		
-		$rsResult = mysql_fetch_object(mysql_query($query));
-		return $rsResult;
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+
+		$npc = @mysql_fetch_object($rsResult);
+		
+		if (!$npc) return new returnData(2, NULL, "invalid npc id");
+		return new returnData(0, $npc);		
+		
 		
 	}
 
@@ -53,31 +62,32 @@ class Npcs
 	public function createNpc($intGameID, $strName, $strDescription, $strGreeting, $strMedia)
 	{
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
 		$query = "INSERT INTO {$prefix}_npcs 
 					(name, description, text, media)
 					VALUES ('{$strName}', '{$strDescription}', '{$strGreeting}','{$strMedia}')";
 		
 		NetDebug::trace("createNpc: Running a query = $query");	
 		
-		mysql_query($query);
+		@mysql_query($query);
 		
-		if (mysql_error()) {
-			NetDebug::trace("createNode: SQL Error = " . mysql_error());
-			return false;
-		}
-		return mysql_insert_id();
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		return new returnData(0, mysql_insert_id());		
 	}
 
 	
 	
 	/**
      * Update a specific NPC
-     * @returns true on success
+     * @returns true if a record was updated, false if it was not
      */
 	public function updateNpc($intGameID, $intNpcID, 
 								$strName, $strDescription, $strGreeting, $strMedia)
 	{
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+		
 		$query = "UPDATE {$prefix}_npcs 
 					SET name = '{$strName}', description = '{$strDescription}',
 					text = '{$strGreeting}', media = '{$strMedia}'
@@ -85,16 +95,11 @@ class Npcs
 		
 		NetDebug::trace("updateNpc: Running a query = $query");	
 		
-		mysql_query($query);
-		
-		if (mysql_affected_rows()) {
-			NetDebug::trace("updateNpc: NPC record modified");
-			return true;
-		}
-		else {
-			NetDebug::trace("updateNpc: No records affected. There must not have been a matching record in that game");
-			return false;
-		}
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+	
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);
 
 	}
 	
@@ -106,19 +111,15 @@ class Npcs
 	public function deleteNpc($intGameID, $intNpcID)
 	{
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
 		
 		$query = "DELETE FROM {$prefix}_npcs WHERE npc_id = {$intNpcID}";
 		
-		$rsResult = mysql_query($query);
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
-		if (mysql_affected_rows()) {
-			NetDebug::trace("updateNpc: NPC record deleted");
-			return true;
-		}
-		else {
-			NetDebug::trace("updateNpc: No records affected. There must not have been a matching record in that game");
-			return false;
-		}
+		if (mysql_affected_rows()) return new returnData(0);
+		else return new returnData(2, 'invalid npc id');
 		
 	}	
 	
@@ -130,6 +131,7 @@ class Npcs
 	public function createConversation($intGameID, $intNpcID, $intNodeID, $strText)
 	{
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
 		
 		$query = "INSERT INTO {$prefix}_npc_conversations 
 					(npc_id, node_id, text)
@@ -137,13 +139,11 @@ class Npcs
 		
 		NetDebug::trace("createConversation: Running a query = $query");	
 		
-		mysql_query($query);
+		@mysql_query($query);
 		
-		if (mysql_error()) {
-			NetDebug::trace("createNConversation: SQL Error = " . mysql_error());
-			return false;
-		}
-		return mysql_insert_id();
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		
+		return new returnData(0, mysql_insert_id());		
 	}
 	
 	
@@ -154,39 +154,40 @@ class Npcs
      * @returns a recordset of conversations
      */
 	public function getConversations($intGameID, $intNpcID) {
+		
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+		
 		$query = "SELECT * FROM {$prefix}_npc_conversations WHERE npc_id = '{$intNpcID}'";
 		
 		NetDebug::trace("getConversations: Running a query = $query");	
 
-		$rsResult = mysql_query($query);
-		return $rsResult;
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+
+		return new returnData(0, $rsResult);		
 		
 	}	
 	
 	
 	/**
      * Update Conversation
-     * @returns true on success
+     * @returns true if a record was updated, false if no changes were made (could be becasue conversation id is invalid)
      */
 	public function updateConversation($intGameID, $intConverationID, $intNewNPC, $intNewNode, $strNewText)
 	{
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		$query = "UPDATE {$prefix}_npc_conversations 
 		SET npc_id = '{$intNewNPC}', node_id = '{$intNewNode}', text = '{$strNewText}'
 		WHERE conversation_id = {$intConverationID}";
 		
-		$rsResult = mysql_query($query);
-		
-		if (mysql_affected_rows()) {
-			NetDebug::trace("updateConversation: NPC Conversation record updated");
-			return true;
-		}
-		else {
-			NetDebug::trace("updateConversation: No records affected. There must not have been a matching record in that game");
-			return false;
-		}
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+	
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);
 		
 	}	
 	
@@ -198,19 +199,15 @@ class Npcs
 	public function deleteConversation($intGameID, $intConverationID)
 	{
 		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		$query = "DELETE FROM {$prefix}_npc_conversations WHERE conversation_id = {$intConverationID}";
 		
-		$rsResult = mysql_query($query);
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
-		if (mysql_affected_rows()) {
-			NetDebug::trace("deleteConversation: NPC Conversation record deleted");
-			return true;
-		}
-		else {
-			NetDebug::trace("deleteConversation: No records affected. There must not have been a matching record in that game");
-			return false;
-		}
+		if (mysql_affected_rows()) return new returnData(0);
+		else return new returnData(2, 'invalid conversation id');
 		
 	}	
 
@@ -225,7 +222,7 @@ class Npcs
 		//Lookup game information
 		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
 		$rsResult = mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return 'ERROR: game id not found';
+		if (mysql_num_rows($rsResult) < 1) return FALSE;
 		$gameRecord = mysql_fetch_array($rsResult);
 		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
 		
