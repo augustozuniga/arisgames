@@ -52,17 +52,38 @@ class Games
      * Create a new game
      * @returns an integer of the newly created game_id
      */	
-	public function createGame($intEditorID, $strShortName, $strFullName)
+	public function createGame($intEditorID, $strFullName)
 	{
 
 		$strFullName = addslashes($strFullName);	
         
                 
-		//Check if a game with this prefix has already been created
-		$query = "SELECT * FROM games WHERE prefix = '{$strShortName}_'";
+		//Check if a game with this name has already been created
+		$query = "SELECT * FROM games WHERE name = '{$strFullName}'";
 		NetDebug::trace($query);
 		if (mysql_num_rows(mysql_query($query)) > 0) 
-		    return new returnData(1, NULL, 'duplicate short name');
+		    return new returnData(1, NULL, 'duplicate name');
+		
+		
+		//Create the game record in SQL
+		$query = "INSERT INTO games (name) VALUES ('{$strFullName}')";
+		@mysql_query($query);
+		if (mysql_error())  return new returnData(4, NULL, 'cannot create game record');
+		$newGameID = mysql_insert_id();
+	    $strShortName = mysql_insert_id();
+	
+	
+	    //HACK: We should change the engine to look at the game_id, but for now we will just set the
+	    //short name to the new game id
+	    $query = "UPDATE games SET prefix = '{$strShortName}_' WHERE game_id = '{$newGameID}'";
+		@mysql_query($query);
+		if (mysql_error())  return new returnData(4, NULL, 'cannot update game record');
+		
+	
+		//Make the creator an editor of the game
+		$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('{$newGameID}','{$intEditorID}')";
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(5, NULL, 'cannot create game_editors record');
 		
 			
 	
@@ -140,20 +161,6 @@ class Games
 		if (!$file_handle = fopen($phpFile, 'w')) return new returnData(2, NULL, 'cannot create PHP file');
 		fwrite($file_handle, $file_data);
 		fclose($file_handle);
-	
-	
-		//Create the game record in SQL
-		$query = "INSERT INTO games (prefix,name) VALUES ('{$strShortName}_','{$strFullName}')";
-		@mysql_query($query);
-		if (mysql_error())  return new returnData(4, NULL, 'cannot create game record');
-		$newGameID = mysql_insert_id();
-	
-	
-		//Make the creator an editor of the game
-		$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('{$newGameID}','{$intEditorID}')";
-		@mysql_query($query);
-		if (mysql_error()) return new returnData(5, NULL, 'cannot create game_editors record');
-
 	
 	
 		//Create the SQL tables
