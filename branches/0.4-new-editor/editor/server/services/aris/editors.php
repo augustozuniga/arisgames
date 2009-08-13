@@ -26,7 +26,7 @@ class Editors
 
 		$editor = @mysql_fetch_array(@mysql_query($query));
 		if (!editor) new returnData(1, NULL);
-		return new returnData(0, $editor['editor_id']);
+		return new returnData(0, intval($editor['editor_id']));
 	}
 	
 	
@@ -34,7 +34,7 @@ class Editors
      * Create a new editor
      * @returns the new editorID or false if an account already exists
      */
-	public function createEditor($strUser, $strPassword)
+	public function createEditor($strUser, $strPassword, $strEmail, $strComments)
 	{	
 		$query = "SELECT editor_id FROM editors 
 				  WHERE name = '{$strUser}' LIMIT 1";
@@ -43,8 +43,8 @@ class Editors
 			return new returnData(1, NULL, 'user exists');
 		}
 		
-		$query = "INSERT INTO editors (name, password) 
-				  VALUES ('{$strUser}',MD5('$strPassword'))";
+		$query = "INSERT INTO editors (name, password, email, comments) 
+				  VALUES ('{$strUser}',MD5('$strPassword'),'{$strEmail}','{$strComments}' )";
 			
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
