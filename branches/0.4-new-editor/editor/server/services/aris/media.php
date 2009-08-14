@@ -64,11 +64,10 @@ class Media
      * Fetch the valid file extensions
      * @returns the items
      */
-	public function getValidImageExtensions()
+	public function getValidVideoExtensions()
 	{
 		return new returnData(0, $this->validVideoTypes);
 	}
-
 
 	/**
      * Fetch the valid file extensions
