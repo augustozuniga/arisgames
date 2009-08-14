@@ -52,14 +52,33 @@ class Media
 	}
 	
 	/**
-     * Fetch all Items
+     * Fetch the valid file extensions
      * @returns the items
      */
-	public function getValidMediaExtensions()
+	public function getValidAudioExtensions()
 	{
-		$validExtensions = array_merge_recursive($this->validImageTypes, $this->validAudioTypes, $this->validVideoTypes);
-		return new returnData(0, $validExtensions);
+		return new returnData(0, $this->validAudioTypes);
 	}
+	
+	/**
+     * Fetch the valid file extensions
+     * @returns the items
+     */
+	public function getValidImageExtensions()
+	{
+		return new returnData(0, $this->validVideoTypes);
+	}
+
+
+	/**
+     * Fetch the valid file extensions
+     * @returns the items
+     */
+	public function getValidImageExtensions()
+	{
+		return new returnData(0, $this->validImageTypes);
+	}
+
 	
 	/**
      * Create a media record
