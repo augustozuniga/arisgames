@@ -312,6 +312,17 @@ class Games
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');							
 		
+		
+		
+		$query = "CREATE TABLE {$strShortName}_media (
+            media_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+            media VARCHAR( 255 ) NOT NULL ,
+            PRIMARY KEY ( media_id )
+            )";
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');	
+		
+		
 
 		return new returnData(0, $newGameID, NULL);
 
