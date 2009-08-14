@@ -193,6 +193,42 @@ class Npcs
 	
 
 	/**
+     * Get a list of objects that refer to the specified npc
+     * @returns a list of object types and ids
+     */
+	public function getReferrers($intGameID, $intNpcID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
+		//Find locations
+		$query = "SELECT location_id FROM {$prefix}_locations WHERE 
+					type  = 'Npc' and type_id = {$intNpcID}";
+		$rsLocations = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in Locations query");
+		
+		//Find qrcodes
+		$query = "SELECT qrcode_id FROM {$prefix}_qrcodes WHERE 
+						type  = 'Npc' and type_id = {$intNpcID}";
+		$rsQRCodes = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in QR query");
+				
+		
+		//Combine them together
+		$referrers = array();
+		while ($row = mysql_fetch_array($rsLocations)){
+			$referrers[] = array('type'=>'Location', 'id' => $row['location_id']);
+		}
+		while ($row = mysql_fetch_array($rsQRCodes)){
+			$referrers[] = array('type'=>'QRCode', 'id' => $row['qrcode_id']);
+		}
+		
+		return new returnData(0,$referrers);
+	}	
+	
+	
+
+	/**
      * Delete a specific NPC Conversation option
      * @returns true on success
      */

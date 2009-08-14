@@ -146,9 +146,68 @@ class Nodes
 		
 		if (mysql_affected_rows()) return new returnData(0);
 		else return new returnData(2, NULL, 'invalid node id');
-
-		
 	}	
+	
+	
+	/**
+     * Get a list of objects that refer to the specified node
+     * @returns a list of object types and ids
+     */
+	public function getReferrers($intGameID, $intNodeID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
+		//Find locations
+		$query = "SELECT location_id FROM {$prefix}_locations WHERE 
+					type  = 'Node' and type_id = {$intNodeID}";
+		$rsLocations = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in Locations query");
+		
+		//Find qrcodes
+		$query = "SELECT qrcode_id FROM {$prefix}_qrcodes WHERE 
+						type  = 'Node' and type_id = {$intNodeID}";
+		$rsQRCodes = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in QR query");
+		
+		//Find Nodes
+		$query = "SELECT node_id FROM {$prefix}_nodes WHERE
+					opt1_node_id  = {$intNodeID} or
+					opt2_node_id  = {$intNodeID} or
+					opt3_node_id  = {$intNodeID}";
+		$rsNodes = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in Nodes Query");
+		
+		
+		//Find NPCs
+		$query = "SELECT {$prefix}_npcs.npc_id FROM {$prefix}_npcs 
+					JOIN {$prefix}_npc_conversations
+					ON ({$prefix}_npcs.npc_id = {$prefix}_npc_conversations.npc_id)
+					WHERE {$prefix}_npc_conversations.node_id = {$intNodeID}";
+		NetDebug::trace($query);			
+		$rsNpcs = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in NPC Query");
+		
+		
+		
+		//Combine them together
+		$referrers = array();
+		while ($row = mysql_fetch_array($rsLocations)){
+			$referrers[] = array('type'=>'Location', 'id' => $row['location_id']);
+		}
+		while ($row = mysql_fetch_array($rsQRCodes)){
+			$referrers[] = array('type'=>'QRCode', 'id' => $row['qrcode_id']);
+		}
+		while ($row = mysql_fetch_array($rsNodes)){
+			$referrers[] = array('type'=>'Node', 'id' => $row['node_id']);
+		}
+		while ($row = mysql_fetch_array($rsNpcs)){
+			$referrers[] = array('type'=>'Npc', 'id' => $row['npc_id']);
+		}
+		
+		return new returnData(0,$referrers);
+	}	
+	
 	
 	
 	/**

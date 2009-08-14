@@ -117,7 +117,7 @@ class Locations
 					type, type_id, hidden, force_view)
 					VALUES ('{$strIcon}','{$node['title']}',
 							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
-							'Node','{$intINodeId}','{$boolHidden}','{$boolForceView}')";
+							'Node','{$intNodeId}','{$boolHidden}','{$boolForceView}')";
 		
 		NetDebug::trace("createLocationForNode: Running a query = $query");	
 	
@@ -156,7 +156,7 @@ class Locations
 					type, type_id, hidden, force_view)
 					VALUES ('{$strIcon}','{$npc['name']}',
 							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
-							'Npc','{$intINpcId}','{$boolHidden}','{$boolForceView}')";
+							'Npc','{$intNpcId}','{$boolHidden}','{$boolForceView}')";
 		
 		NetDebug::trace("createLocationForNpc: Running a query = $query");	
 	

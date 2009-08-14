@@ -131,6 +131,54 @@ class Items
 	
 	
 	/**
+     * Get a list of objects that refer to the specified item
+     * @returns a list of object types and ids
+     */
+	public function getReferrers($intGameID, $intItemID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
+		//Find locations
+		$query = "SELECT location_id FROM {$prefix}_locations WHERE 
+					type  = 'Item' and type_id = {$intItemID}";
+		$rsLocations = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in Locations query");
+		
+		//Find qrcodes
+		$query = "SELECT qrcode_id FROM {$prefix}_qrcodes WHERE 
+						type  = 'Item' and type_id = {$intItemID}";
+		$rsQRCodes = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in QR query");
+		
+		//Find State Changes from other objects
+		$query = "SELECT content_type, content_id FROM {$prefix}_player_state_changes WHERE
+					action  =  'GIVE_ITEM' or
+					action  =  'TAKE_ITEM'
+					";
+		$rsStateChanges = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error in state changes Query");
+		
+		//Combine them together
+		$referrers = array();
+		while ($row = mysql_fetch_array($rsLocations)){
+			$referrers[] = array('type'=>'Location', 'id' => $row['location_id']);
+		}
+		while ($row = mysql_fetch_array($rsQRCodes)){
+			$referrers[] = array('type'=>'QRCode', 'id' => $row['qrcode_id']);
+		}
+		while ($row = mysql_fetch_array($rsStateChanges)){
+			$referrers[] = array('type'=>$row['content_type'], 'id' => $row['content_id']);
+		}
+		
+		return new returnData(0,$referrers);
+	}	
+
+
+	
+	
+	
+	/**
      * Fetch the prefix of a game
      * @returns a prefix string without the trailing _
      */
