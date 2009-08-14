@@ -225,6 +225,17 @@ class Locations
 		}	}
 			
 	
+	/**
+     * Fetch the valid content types from the requirements table
+     * @returns an array of strings
+     */
+	public function objectTypeOptions($intGameID){	
+		$options = $this->lookupObjectTypeOptionsFromSQL($intGameID);
+		if (!$options) return new returnData(1, NULL, "invalid game id");
+		return new returnData(0, $options);
+	}
+	
+	
 	
 	/**
      * Fetch the prefix of a game
@@ -239,4 +250,38 @@ class Locations
 		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
 		
 	}
+	
+	/**
+     * Check if a content type is valid
+     * @returns TRUE if valid
+     */
+	private function isValidObjectType($intGameID, $strObjectType) {
+		$validTypes = $this->lookupObjectTypeOptionsFromSQL($intGameID);
+		return in_array($strObjectType, $validTypes);
+	}
+	
+	
+	/**
+     * Fetch the valid requirement types from the requirements table
+     * @returns an array of strings
+     */
+	private function lookupObjectTypeOptionsFromSQL($intGameID){
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return FALSE;
+		
+		$query = "SHOW COLUMNS FROM {$prefix}_locations LIKE 'type'";
+		$result = mysql_query( $query );
+		$row = mysql_fetch_array( $result , MYSQL_NUM );
+		$regex = "/'(.*?)'/";
+		preg_match_all( $regex , $row[1], $enum_array );
+		$enum_fields = $enum_array[1];
+		return( $enum_fields );
+	}	
+	
+	
+
+	
+	
+	
+	
 }
