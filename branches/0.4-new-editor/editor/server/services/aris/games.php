@@ -211,12 +211,12 @@ class Games
 		$query = "CREATE TABLE {$strShortName}_locations (
 	  		location_id int(11) NOT NULL auto_increment,
  	 		icon varchar(30) default NULL,
-			`name` varchar(50) default NULL,
+			name varchar(50) default NULL,
 			description tinytext,
 			latitude double default '43.0746561',
 			longitude double default '-89.384422',
 			error double default '0.0005',
-			`type` enum('Node','Event','Item','Npc') default NULL,
+			type enum('Node','Event','Item','Npc') default NULL,
 			type_id int(11) default NULL,
 			item_qty int(11) default NULL,
 			hidden enum('0','1') default '0',
@@ -307,6 +307,8 @@ class Games
 			  qrcode_id int(11) NOT NULL auto_increment,
 			  `type` enum('Node','Event','Item','Npc') NOT NULL,
 			  type_id int(11) NOT NULL,
+			  x_position double NULL,
+			  y_position double NULL,
 			  PRIMARY KEY  (qrcode_id)
 			)";
 		@mysql_query($query);

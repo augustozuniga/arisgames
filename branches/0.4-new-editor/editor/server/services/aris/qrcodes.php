@@ -58,7 +58,7 @@ class QRCodes
      * Create an Event
      * @returns the new eventID on success
      */
-	public function createQRCode($intGameID, $intQRCodeID, $strObjectType, $intObjectID)
+	public function createQRCode($intGameID, $intQRCodeID, $strObjectType, $intObjectID, $dblXPos, $dblYPos)
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
@@ -66,8 +66,8 @@ class QRCodes
 		if (!$this->isValidObjectType($intGameID, $strObjectType)) return new returnData(4, NULL, "Invalid object type");
 
 		$query = "INSERT INTO {$prefix}_qrcodes 
-					(qrcode_id, type, type_id)
-					VALUES ('{$intQRCodeID}','{$strObjectType}','{$intObjectID}')";
+					(qrcode_id, type, type_id, x_position, y_position)
+					VALUES ('{$intQRCodeID}','{$strObjectType}','{$intObjectID}','{$dblXPos}','{$dblYPos}')";
 		
 		NetDebug::trace("Running a query = $query");	
 		
@@ -83,7 +83,7 @@ class QRCodes
      * Update a specific Event
      * @returns true if edit was done, false if no changes were made
      */
-	public function updateQRCode($intGameID, $intQRCodeID, $strObjectType, $intObjectID)
+	public function updateQRCode($intGameID, $intQRCodeID, $strObjectType, $intObjectID, $dblXPos, $dblYPos)
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
@@ -92,7 +92,11 @@ class QRCodes
 
 
 		$query = "UPDATE {$prefix}_qrcodes
-					SET type = '{$strName}',type_id = '{$strIncompleteDescription}'
+					SET 
+					type = '{$strObjectType}',
+					type_id = '{$intObjectID}',
+					x_position = '{$dblXPos}',
+					y_position = '{$dblYPos}'
 					WHERE qrcode_id = '{$intQRCodeID}'";
 		
 		NetDebug::trace("Running a query = $query");	
