@@ -185,7 +185,7 @@ class Games
 		
 		$query = "CREATE TABLE {$strShortName}_player_state_changes (
 			id int(10) unsigned NOT NULL auto_increment,
-			content_type enum('Node','Item','Npc','Quest') NOT NULL,
+			content_type enum('Node','Item') NOT NULL,
 			content_id int(10) unsigned NOT NULL,
 			action enum('GIVE_ITEM','GIVE_EVENT','TAKE_ITEM') NOT NULL,
 			action_detail int(10) unsigned NOT NULL,
