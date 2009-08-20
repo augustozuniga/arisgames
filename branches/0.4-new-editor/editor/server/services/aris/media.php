@@ -1,6 +1,7 @@
 <?php
 include('config.class.php');
 include('returnData.class.php');
+require_once ('fileVO.class.php');
 
 class Media 
 {
@@ -78,20 +79,22 @@ class Media
 		return new returnData(0, $this->validImageTypes);
 	}
 
+		
 	
 	/**
      * Create a media record
      * @returns the new mediaID on success
      */
-	public function createMedia($intGameID, $strMediaFileName)
+	public function createMedia($intGameID, $strFileName)
 	{
 		
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
-
+		
+            	
 		$query = "INSERT INTO {$prefix}_media 
 					(media)
-					VALUES ('{$strMediaFileName}')";
+					VALUES ('{$strFileName}')";
 		
 		NetDebug::trace("Running a query = $query");	
 		
@@ -99,6 +102,8 @@ class Media
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
 		return new returnData(0, mysql_insert_id());
+
+
 	}
 
 	
@@ -107,14 +112,16 @@ class Media
      * Update a specific Item
      * @returns true if edit was done, false if no changes were made
      */
-	public function updateMedia($intGameID, $strMediaFileName)
+	public function updateMedia($intGameID, $intMediaID, $strFileName)
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
+		//TODO: Delete the old file
+
 		$query = "UPDATE {$prefix}_media  
-					SET media = '{$strMediaFileName}'
-					WHERE item_id = '{$intItemID}'";
+					SET media = '{$strFileName}'
+					WHERE media_id = '{$intMediaID}'";
 		
 		NetDebug::trace("updateNpc: Running a query = $query");	
 		
@@ -137,6 +144,10 @@ class Media
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
+		
+		//TODO: Delete the old file
+
+		
 		$query = "DELETE FROM {$prefix}_media WHERE media_id = {$intMediaID}";
 		
 		$rsResult = @mysql_query($query);
@@ -153,10 +164,24 @@ class Media
 	
 	
 	/**
+	* @returns path to the media directory on the file system
+	*/
+	public function getMediaDirectory($prefix){
+		return new returnData(0, Config::engineSitesPath . "/{$prefix}/Templates/Default/templates");
+	}
+	
+	/**
+	* @returns path to the media directory URL
+	*/
+	public function getMediaDirectoryURL($prefix){
+		return new returnData(0, Config::engineWWWPath . "/{$prefix}/Templates/Default/templates");
+	}	
+	
+	/**
      * Fetch the prefix of a game
      * @returns a prefix string without the trailing _
      */
-	private function getPrefix($intGameID) {
+	public function getPrefix($intGameID) {
 		//Lookup game information
 		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
 		$rsResult = mysql_query($query);
