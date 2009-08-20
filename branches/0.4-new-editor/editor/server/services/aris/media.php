@@ -1,7 +1,6 @@
 <?php
 include('config.class.php');
 include('returnData.class.php');
-require_once ('fileVO.class.php');
 
 class Media 
 {
