@@ -129,7 +129,7 @@ class Games
 		* @filesource
 		*/
 	
-		class Framework_Site_{$new_game_short} extends Framework_Site_Common {
+		class Framework_Site_{$strShortName} extends Framework_Site_Common {
 			/**
 			* $name
 			*
@@ -137,7 +137,7 @@ class Games
 			* @var         string      $name       Name of site driver
 			*/
 			
-			public " . '$name' . " = '{$new_game_short}';
+			public " . '$name' . " = '{$strShortName}';
 			
 			/**
 			* prepare
@@ -198,7 +198,7 @@ class Games
 		
 		$query = "CREATE TABLE {$strShortName}_requirements (
 			requirement_id int(11) NOT NULL auto_increment,
-			content_type enum('Node','Quest','Item','Npc','Location') NOT NULL,
+			content_type enum('Node','QuestDisplay','QuestComplete','Item','Npc','Location') NOT NULL,
 			content_id int(10) unsigned NOT NULL,
 			requirement enum('HAS_ITEM','HAS_EVENT','DOES_NOT_HAVE_ITEM','DOES_NOT_HAVE_EVENT') NOT NULL,
 			requirement_detail int(11) NOT NULL,
