@@ -262,6 +262,7 @@
 					{
 						nodes.getNode.send(currentGameID, objRef.getID());
 					}
+					requirements.getRequirementsForObject.send(currentGameID, objRef.getType(), objRef.getID());
 				}
 			}
 			
@@ -496,6 +497,20 @@
 					questFolder.children = newChildren;
 					gameObjectsArrayCollection.itemUpdated(questFolder);
 					updateView();
+				}				
+			}
+			
+			private function on_requirements_getRequirementsForObjectResult(event:ResultEvent):void
+			{
+				if(filterErrors(event, "requirements.getRequirementsForObjectResult"))
+				{
+					for each(var obj:Object in event.result.data)
+					{
+						currentGameObject.addRequirement(new Requirement(getGameObjectReference(obj.requirement_detail,
+																								Requirement.getSourceType(obj.requirement)),
+																		 obj.requirement)
+														 );
+					}
 				}				
 			}
 			
@@ -768,20 +783,6 @@
 			private function on_requirements_getRequirementResult(event:ResultEvent):void
 			{ //takes gameID, reqID, returns obj{content_id, content_type, requirement, requirement_detail, requirement_id} (detail is id of required object, content is what object has the requirement)
 
-			}
-			
-			private function on_requirements_getRequirementsForObjectResult(event:ResultEvent):void
-			{
-				if(filterErrors(event, "requirements.getRequirementsForObjectResult"))
-				{
-					for each(var obj:Object in event.result.data)
-					{
-						currentGameObject.addRequirement(new Requirement(getGameObjectReference(obj.requirement_id,
-																								obj.requirement_detail),
-																		 obj.requirement)
-														 );
-					}
-				}				
 			}
 			
 			private function on_requirements_requirementTypeOptionsResult(event:ResultEvent):void

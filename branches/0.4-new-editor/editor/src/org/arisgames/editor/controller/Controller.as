@@ -52,8 +52,7 @@ package org.arisgames.editor.controller
 		
 		public function onLoginButtonClick(event:Event):void
 		{
-			currentModel.loginUser(currentView.getUsername(), currentView.getPassword());
-			
+			currentModel.loginUser(currentView.getUsername(), currentView.getPassword());	
 		}
 		
 		public function onMainMenuButtonClick(event:Event):void

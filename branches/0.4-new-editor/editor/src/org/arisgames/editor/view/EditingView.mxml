@@ -54,6 +54,7 @@
 						gameObjectNameTextInput.text = currentGameObject.getName();
 						gameObjectMediaLabel.text = currentGameObject.getMediaFileName();
 						gameObjectDescriptionTextArea.text = currentGameObject.getDescription();
+						requirementsDataGrid.dataProvider = currentGameObject.requirementsArrayCollection;
 					}
 				}
 			}
@@ -135,6 +136,25 @@
 
 			<mx:VBox id="middleView"
 				width="100%" height="100%">
+				<mx:DataGrid id="requirementsDataGrid"
+					width="100%" height="100%"
+					editable="true" horizontalScrollPolicy="auto"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="requirementType"
+							headerText="Requirement Type"
+							editable="true" draggable="false" width="150">
+							<mx:itemEditor>
+								<mx:Component>
+									<mx:ComboBox dataProvider="{data.reqTypeDataProvider}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>							
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
 				
 			</mx:VBox>
 
