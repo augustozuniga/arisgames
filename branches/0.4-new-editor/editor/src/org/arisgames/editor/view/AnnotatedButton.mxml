@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			[Bindable] public var buttonLabel:String;
+			[Bindable] public var buttonClick:Function;
+			[Bindable] public var annotation:String;
+			
+			public function onButtonClick(event:Event):void
+			{
+				buttonClick(event);
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Button id="button"
+		width="200"
+		label="{buttonLabel}"
+		click="onButtonClick(event)"/>
+	<mx:Label text="{annotation}"/>
+	
+</mx:HBox>

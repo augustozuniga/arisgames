@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:UIComponent xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:RemoteObject id="editors"
+		source="aris.editors"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createEditor" result="on_editors_createEditorResult(event)"/>
+		<mx:method name="login" result="on_editors_loginResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="events"
+		source="aris.events"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createEvent" result="on_events_createEventResult(event)"/>
+		<mx:method name="deleteEvent" result="on_events_deleteEventResult(event)"/>
+		<mx:method name="getEvent" result="on_events_getEventResult(event)"/>
+		<mx:method name="getEvents" result="on_events_getEventsResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="games"
+		source="aris.games"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createGame" result="on_games_createGameResult(event)"/>
+		<mx:method name="getGames" result="on_games_getGamesResult(event)"/>
+		<mx:method name="setGameName" result="on_games_setGameNameResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="items"
+		source="aris.items"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createItem" result="on_items_createItemResult(event)"/>
+		<mx:method name="deleteItem" result="on_items_deleteItemResult(event)"/>
+		<mx:method name="getItem" result="on_items_getItemResult(event)"/>
+		<mx:method name="getItems" result="on_items_getItemsResult(event)"/>
+		<mx:method name="getReferrers" result="on_items_getReferrersResult(event)"/>
+		<mx:method name="updateItem" result="on_items_updateItemResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="locations"
+		source="aris.locations"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createLocationForItem" result="on_locations_createLocationForItemResult(event)"/>
+		<mx:method name="createLocationForNode" result="on_locations_createLocationForNodeResult(event)"/>
+		<mx:method name="createLocationForNpc" result="on_locations_createLocationForNpcResult(event)"/>
+		<mx:method name="deleteLocation" result="on_locations_deleteLocationResult(event)"/>
+		<mx:method name="getLocation" result="on_locations_getLocationResult(event)"/>
+		<mx:method name="getLocations" result="on_locations_getLocationsResult(event)"/>
+		<mx:method name="objectTypeOptions" result="on_locations_objectTypeOptionsResult(event)"/>
+		<mx:method name="updateAttributes" result="on_locations_updateAttributesResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="media"
+		source="aris.media"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createMedia" result="on_media_createMediaResult(event)"/>
+		<mx:method name="deleteMedia" result="on_media_deleteMediaResult(event)"/>
+		<mx:method name="getMedia" result="on_media_getMediaResult(event)"/>
+		<mx:method name="getValidAudioExtensions" result="on_media_getValidAudioExtensionsResult(event)"/>
+		<mx:method name="getValidImageExtensions" result="on_media_getValidImageExtensionsResult(event)"/>
+		<mx:method name="getValidVideoExtensions" result="on_media_getValidVideoExtensionsResult(event)"/>
+		<mx:method name="updateMedia" result="on_media_updateMediaResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="nodes"
+		source="aris.nodes"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createNode" result="on_nodes_createNodeResult(event)"/>
+		<mx:method name="deleteNode" result="on_nodes_deleteNodeResult(event)"/>
+		<mx:method name="getNode" result="on_nodes_getNodeResult(event)"/>
+		<mx:method name="getNodes" result="on_nodes_getNodesResult(event)"/>
+		<mx:method name="getReferrers" result="on_nodes_getReferrersResult(event)"/>
+		<mx:method name="updateNode" result="on_nodes_updateNodeResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="npcs"
+		source="aris.npcs"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createConversation" result="on_npcs_createConversationResult(event)"/>
+		<mx:method name="createNpc" result="on_npcs_createNpcResult(event)"/>
+		<mx:method name="deleteConversation" result="on_npcs_deleteConversationResult(event)"/>
+		<mx:method name="deleteNpc" result="on_npcs_deleteNpcResult(event)"/>
+		<mx:method name="getConversation" result="on_npcs_getConversationResult(event)"/>
+		<mx:method name="getNpc" result="on_npcs_getNpcResult(event)"/>
+		<mx:method name="getNpcs" result="on_npcs_getNpcsResult(event)"/>
+		<mx:method name="getReferrers" result="on_npcs_getReferrersResult(event)"/>
+		<mx:method name="updateConversation" result="on_npcs_updateConversationResult(event)"/>
+		<mx:method name="updateNpc" result="on_npcs_updateNpcResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="playerStateChanges"
+		source="aris.playerStateChanges"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="actionTypeOptions" result="on_playerStateChanges_actionTypeOptionsResult(event)"/>
+		<mx:method name="contentTypeOptions" result="on_playerStateChanges_contentTypeOptionsResult(event)"/>
+		<mx:method name="createPlayerStateChange" result="on_playerStateChanges_createPlayerStateChangeResult(event)"/>
+		<mx:method name="deletePlayerStateChange" result="on_playerStateChanges_deletePlayerStateChangeResult(event)"/>
+		<mx:method name="getPlayerStateChange" result="on_playerStateChanges_getPlayerStateChangeResult(event)"/>
+		<mx:method name="getPlayerStateChanges" result="on_playerStateChanges_getPlayerStateChangesResult(event)"/>
+		<mx:method name="getReferrers" result="on_playerStateChanges_getReferrersResult(event)"/>
+		<mx:method name="updatePlayerStateChange" result="on_playerStateChanges_updatePlayerStateChangeResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="quests"
+		source="aris.quests"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createQuest" result="on_quests_createQuestResult(event)"/>
+		<mx:method name="deleteQuest" result="on_quests_deleteQuestResult(event)"/>
+		<mx:method name="getQuest" result="on_quests_getQuestResult(event)"/>
+		<mx:method name="getQuests" result="on_quests_getQuestsResult(event)"/>
+		<mx:method name="updateQuest" result="on_quests_updateQuestResult(event)"/>
+	</mx:RemoteObject>
+
+	<mx:RemoteObject id="requirements"
+		source="aris.requirements"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="contentTypeOptions" result="on_requirements_contentTypeOptionsResult(event)"/>
+		<mx:method name="createRequirement" result="on_requirements_createRequirementResult(event)"/>
+		<mx:method name="deleteRequirement" result="on_requirements_deleteRequirementResult(event)"/>
+		<mx:method name="getRequirement" result="on_requirements_getRequirementResult(event)"/>
+		<mx:method name="getRequirementsForObject" result="on_requirements_getRequirementsForObjectResult(event)"/>
+		<mx:method name="getReferrers" result="on_requirements_getReferrersResult(event)"/>
+		<mx:method name="requirementTypeOptions" result="on_requirements_requirementTypeOptionsResult(event)"/>
+		<mx:method name="updateRequirement" result="on_requirements_updateRequirementResult(event)"/>
+	</mx:RemoteObject>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.CursorManager;
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.rpc.events.ResultEvent;
+			
+			import org.arisgames.editor.view.View;
+			
+			[Bindable] public var availableGamesArrayCollection:ArrayCollection;
+			[Bindable] public var gameObjectsArrayCollection:ArrayCollection;
+			
+			private var availableGamesArray:Array;
+			private var currentView:View;
+			private var currentEditorID:int;
+			private var currentGameID:int;
+			private var currentGameName:String;
+			private var currentGameObject:GameObject;
+			private var gameObjectsArray:Array;
+			private var loggedIn:Boolean;
+			
+			private var characterFolder:Folder;
+			private var itemFolder:Folder;
+			private var pageFolder:Folder;
+			private var questFolder:Folder;
+			
+			/////////////
+			// Getters //
+			/////////////
+			
+			public function getCurrentGameName():String
+			{
+				return currentGameName;
+			}
+			
+			public function isLoggedIn():Boolean
+			{
+				return loggedIn;
+			}
+			
+			////////////////////////////
+			// Other Public Functions //
+			////////////////////////////
+			
+			public function closeGame():void
+			{
+				updateCurrentGame();
+				currentView.goToMainMenu();
+				updateGameList();
+			}
+			
+			public function createGame():void
+			{
+				currentGameName = "My New Game";
+				games.createGame.send(currentEditorID, currentGameName);
+			}
+			
+			public function editGame(ref:GameReference):void
+			{
+				currentGameID = ref.getID();
+				currentGameName = ref.name;
+				currentView.goToGameEditor();
+				getCurrentGameData();
+			}
+			
+			public function getCurrentGameObject():GameObject
+			{
+				return currentGameObject;
+			}
+			
+			public function isReady():Boolean
+			{ 
+				return (CursorManager.currentCursorID == CursorManager.NO_CURSOR);
+			}
+			
+			public function registerNewUser(username:String, password:String, email:String, comments:String):void
+			{
+				editors.createEditor.send(username, password, email, comments);
+			}
+			
+			public function loginUser(username:String, password:String):void
+			{
+				if(!loggedIn)
+				{
+					editors.login.send(username, password);				
+				}
+				else
+				{
+					Alert.show("You are already logged in.");
+				}
+			}
+			
+			public function init(view:View):void
+			{
+				this.currentView = view;
+				this.loggedIn = false;
+				this.availableGamesArray = new Array();
+				this.availableGamesArrayCollection = new ArrayCollection(this.availableGamesArray);
+				
+				this.characterFolder = new Folder("Characters", GameObjectReference.CHARACTER, "Create New Character");
+				this.itemFolder = new Folder("Items", GameObjectReference.ITEM, "Create New Item");
+				this.pageFolder = new Folder("Pages", GameObjectReference.PAGE, "Create New Page");
+				this.questFolder = new Folder("Quests", GameObjectReference.QUEST, "Create New Quest");
+				this.gameObjectsArray = [characterFolder, itemFolder, pageFolder, questFolder];
+				this.gameObjectsArrayCollection = new ArrayCollection(gameObjectsArray);
+			}
+			
+			public function updateCurrentGameName(newName:String):void
+			{
+				currentGameName = newName;
+			}
+			
+			public function setCurrentGameObject(objRef:GameObjectReference):void
+			{
+				if(objRef != null)
+				{
+					if(objRef.getType() == GameObjectReference.CHARACTER)
+					{
+						npcs.getNpc.send(currentGameID, objRef.getID());
+					}
+					else if(objRef.getType() == GameObjectReference.ITEM)
+					{
+						items.getItem.send(currentGameID, objRef.getID());
+					}
+					else if(objRef.getType() == GameObjectReference.PAGE)
+					{
+						nodes.getNode.send(currentGameID, objRef.getID());
+					}
+				}
+			}
+			
+			
+			///////////////////////
+			// Private Functions //
+			///////////////////////
+			
+			private function filterErrors(event:ResultEvent, fname:String):Boolean
+			{
+				if(event.result.returnCode == 0)
+				{
+					return true;
+				}
+				else
+				{
+					var message:String = "Server Error\nSource: " + fname + "\nReturn Code: " + event.result.returnCode.toString();
+					if(event.result.returnCodeDescription != null)
+					{
+						message += "\nDescription: " + event.result.returnCodeDescription;
+					}
+					Alert.show(message);
+					return false;
+				}
+			}
+			
+			private function getGameObjectReference(id:int, type:String):GameObjectReference
+			{
+				var folder:Folder = null;
+				if(type == GameObjectReference.CHARACTER)
+				{
+					folder = characterFolder;
+				}
+				else if(type == GameObjectReference.ITEM)
+				{
+					folder = itemFolder;
+				}
+				else if(type == GameObjectReference.PAGE)
+				{
+					folder = pageFolder;
+				}
+				else if(type == GameObjectReference.QUEST)
+				{
+					folder = questFolder;
+				}
+				if(folder != null)
+				{
+					for each(var ref:Object in folder.children)
+					{
+						if(ref is GameObjectReference && (ref as GameObjectReference).getID() == id)
+						{
+							return (ref as GameObjectReference);
+						}
+					}					
+				}
+				return null;
+			}
+			
+			private function getCurrentGameData():void
+			{
+				npcs.getNpcs.send(currentGameID);
+				items.getItems.send(currentGameID);
+				nodes.getNodes.send(currentGameID);
+				//locations.getLocations.send(currentGameID);
+				//media.getMedia.send(currentGameID);
+				//getQuestList
+				//getQRCodes
+				//getMedia
+			}
+			
+			private function on_editors_createEditorResult(event:ResultEvent):void
+			{
+				if(filterErrors(event, "editors.createEditor"))
+				{
+					currentEditorID = int(event.result.data);
+					loggedIn = true;
+					updateGameList();
+					updateView();
+				}				
+			}
+			
+			private function on_editors_loginResult(event:ResultEvent):void
+			{
+				if(filterErrors(event, "editors.login"))
+				{
+					currentEditorID = int(event.result.data);
+					loggedIn = true;
+					updateGameList();
+					updateView();
+				}
+			}
+			
+			private function on_games_createGameResult(event:ResultEvent):void
+			{ //takes editorID, strFullName, returns id
+				if(filterErrors(event, "games.createGame"))
+				{
+					currentGameID = event.result.data as int;
+					characterFolder.clear();
+					itemFolder.clear();
+					pageFolder.clear();
+					questFolder.clear();
+					currentView.goToGameEditor();
+					updateView();					
+				}
+			}
+			
+			private function on_games_getGamesResult(event:ResultEvent):void
+			{ //takes editorID, returns array obj{game_id, name, prefix}
+				if(filterErrors(event, "games.getGames"))
+				{
+					availableGamesArray = new Array();
+					for each(var obj:Object in event.result.data)
+					{
+						availableGamesArray.push(new GameReference(obj.game_id, obj.name));
+					}
+					availableGamesArrayCollection.source = availableGamesArray;
+					updateView();
+				}
+			}
+			
+			private function on_items_createItemResult(event:ResultEvent):void
+			{ //takes gameID, name, descr, media, returns id
+				if(filterErrors(event, "items.createItem"))
+				{
+					getCurrentGameData();
+				}
+			}
+			
+			private function on_items_getItemResult(event:ResultEvent):void
+			{ //takes gameID, itemID, returns obj{description, item_id, media, name, type}
+				if(filterErrors(event, "items.getItem"))
+				{
+					var requirements:Array = new Array();
+					var playerModifications:Array = new Array();
+					currentGameObject = new Item(getGameObjectReference(event.result.data.item_id, GameObjectReference.ITEM),
+												 event.result.data.description, event.result.data.media, requirements, playerModifications, false, false);
+					updateView();				 
+				}
+			}
+			
+			private function on_items_getItemsResult(event:ResultEvent):void
+			{ //takes gameID, returns array obj{description, item_id, media, name, type}
+				if(filterErrors(event, "items.getItems"))
+				{
+					var newChildren:Array = new Array();
+					for each(var obj:Object in event.result.data)
+					{
+						newChildren.push(new GameObjectReference(obj.item_id, GameObjectReference.ITEM, obj.name));
+					}
+					itemFolder.children = newChildren;
+					gameObjectsArrayCollection.itemUpdated(itemFolder);
+					updateView();
+				}
+			}
+			
+			private function on_nodes_getNodeResult(event:ResultEvent):void
+			{ //takes gameID, nodeID, returns obj{add_event_id, add_item_id, force_layout, media, node_id, opt1_node_id, opt1_text, opt2_node_id, opt2_text, opt3_node_id, opt3_text, remove_event_id, remove_item_id, require_answer_correct_node_id, require_answer_string, require_event_id, require_item_id, require_location_id, required_condition_not_met_node_id, text, title
+				if(filterErrors(event, "nodes.getNode"))
+				{
+					var requirements:Array = new Array();
+					var playerModifications:Array = new Array();
+					var choices:Array = new Array();
+					currentGameObject = new Page(getGameObjectReference(event.result.data.node_id, GameObjectReference.PAGE),
+												 event.result.data.text, event.result.data.media, requirements, playerModifications, choices);
+					updateView();				 
+				}				
+			}
+			
+			private function on_nodes_getNodesResult(event:ResultEvent):void
+			{
+				if(filterErrors(event, "nodes.getNodes"))
+				{
+					var newChildren:Array = new Array();
+					for each(var obj:Object in event.result.data)
+					{
+						newChildren.push(new GameObjectReference(obj.node_id, GameObjectReference.PAGE, obj.title));
+					}
+					pageFolder.children = newChildren;
+					gameObjectsArrayCollection.itemUpdated(pageFolder);
+					updateView();
+				}				
+			}
+			
+			private function on_npcs_getNpcResult(event:ResultEvent):void
+			{ //takes gameID, npcID, returns obj{description, media, name, npc_id, require_event_id, text}
+				if(filterErrors(event, "npcs.getNpc"))
+				{
+					var requirements:Array = new Array();
+					var choices:Array = new Array();
+					currentGameObject = new Character(getGameObjectReference(event.result.data.npc_id, GameObjectReference.CHARACTER),
+												 event.result.data.text, event.result.data.media, requirements, choices);
+					updateView();				 
+				}								
+			}
+			
+			private function on_npcs_getNpcsResult(event:ResultEvent):void
+			{
+				if(filterErrors(event, "npcs.getNpcs"))
+				{
+					var newChildren:Array = new Array();
+					for each(var obj:Object in event.result.data)
+					{
+						newChildren.push(new GameObjectReference(obj.npc_id, GameObjectReference.CHARACTER, obj.name));
+					}
+					characterFolder.children = newChildren;
+					gameObjectsArrayCollection.itemUpdated(characterFolder);
+					updateView();
+				}				
+			}
+			
+			private function on_quests_getQuestResult(event:ResultEvent):void
+			{ //takes gameID, questID, returns obj{???}
+				if(filterErrors(event, "quests.getQuest"))
+				{
+					var requirements:Array = new Array();
+					var objectives:Array = new Array();
+					currentGameObject = new Character(getGameObjectReference(event.result.data.npc_id, GameObjectReference.CHARACTER),
+												 event.result.data.text, event.result.data.media, requirements, objectives);
+					updateView();				 
+				}								
+			}
+			
+			private function on_quests_getQuestsResult(event:ResultEvent):void
+			{
+				if(filterErrors(event, "quest.getQuests"))
+				{
+					var newChildren:Array = new Array();
+					for each(var obj:Object in event.result.data)
+					{
+						newChildren.push(new GameObjectReference(obj.npc_id, GameObjectReference.QUEST, obj.name));
+					}
+					questFolder.children = newChildren;
+					gameObjectsArrayCollection.itemUpdated(questFolder);
+					updateView();
+				}				
+			}
+			
+			private function updateGameList():void
+			{
+				games.getGames.send(currentEditorID);
+			}
+			
+			private function updateView():void
+			{
+				this.currentView.update();
+			}
+			
+
+
+			/////////////////////////////////////////////
+			// Under Construction (Move when finished) //
+			/////////////////////////////////////////////			
+			
+			private function on_events_createEventResult(event:ResultEvent):void
+			{ //takes gameID, description, returns id
+				
+			}
+			
+			private function on_events_deleteEventResult(event:ResultEvent):void
+			{ //takes gameID, eventID, returns true if successful
+				
+			}
+			
+			private function on_events_getEventResult(event:ResultEvent):void
+			{ //takes gameID, eventID, returns obj{description, event_id}
+				
+			}
+			
+			private function on_events_getEventsResult(event:ResultEvent):void
+			{ //takes gameID, returns array of obj{description, event_id}
+				
+			}
+			
+			private function on_games_setGameNameResult(event:ResultEvent):void
+			{ //takes gameID, newName, returns true if successful
+				
+			}
+			
+			private function on_items_deleteItemResult(event:ResultEvent):void
+			{ //takes gameID, itemID, returns true if successful
+				
+			}
+			
+			private function on_items_getReferrersResult(event:ResultEvent):void
+			{ //takes gameID, itemID, returns array obj{type, id} *** check!! ***
+				
+			}
+			
+			private function on_items_updateItemResult(event:ResultEvent):void
+			{ //takes gameID, itemID, name, descr, media, returns true if successful
+				
+			}
+			
+			private function on_locations_createLocationForItemResult(event:ResultEvent):void
+			{ //takes gameID, strIcon, lat, lng, error, itemID, quantity, hidden, forceview, returns locID
+				
+			}
+			
+			private function on_locations_createLocationForNodeResult(event:ResultEvent):void
+			{ //takes gameID, strIcon, lat, lng, error, nodeID, hidden, forceview, returns locID
+				
+			}
+			
+			private function on_locations_createLocationForNpcResult(event:ResultEvent):void
+			{ //takes gameID, strIcon, lat, lng, error, npcID, hidden, forceview, returns locID
+				
+			}
+			
+			private function on_locations_deleteLocationResult(event:ResultEvent):void
+			{ //takes gameID, locID, returns true if successful
+				
+			}
+			
+			private function on_locations_getLocationResult(event:ResultEvent):void
+			{ //takes gameID, locID, returns obj{add_event_id, description, error, force_view, hidden, icon, item_qty, latitude, location_id, longitude, name, remove_if_event_id, require_event_id, type, type_id
+				
+			}
+			
+			private function on_locations_getLocationsResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function on_locations_objectTypeOptionsResult(event:ResultEvent):void
+			{ //takes gameID, returns array of strings
+				
+			}
+			
+			private function on_locations_updateAttributesResult(event:ResultEvent):void
+			{ //takes gameID, locID, quantity, hidden, forceView, returns true if successful
+				
+			}
+			
+			private function on_media_createMediaResult(event:ResultEvent):void
+			{ //takes gameID, fileName, returns mediaID
+				
+			}
+			
+			private function on_media_deleteMediaResult(event:ResultEvent):void
+			{ //takes gameID, mediaID, returns true if successful
+				
+			}
+			
+			private function on_media_getMediaResult(event:ResultEvent):void
+			{ //takes gameID returns array of obj{media_id, name} *** check!!! ***
+				
+			}
+			
+			private function on_media_getValidAudioExtensionsResult(event:ResultEvent):void
+			{ // takes no parameters, returns array of strings
+				
+			}
+			
+			private function on_media_getValidImageExtensionsResult(event:ResultEvent):void
+			{ // takes no parameters, returns array of strings
+				
+			}
+			
+			private function on_media_getValidVideoExtensionsResult(event:ResultEvent):void
+			{ // takes no parameters, returns array of strings
+				
+			}
+			
+			private function on_media_updateMediaResult(event:ResultEvent):void
+			{ //takes gameID, filename, returns true if successful
+				
+			}
+			
+			private function on_nodes_createNodeResult(event:ResultEvent):void
+			{ //takes gameID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeID, opt3text, opt3nodeID, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns nodeID
+				
+			}
+			
+			private function on_nodes_deleteNodeResult(event:ResultEvent):void
+			{ //takes gameID, nodeID, returns returnCode only
+				
+			}
+			
+			private function on_nodes_getReferrersResult(event:ResultEvent):void
+			{ //takes gameID, nodeID, returns ???
+				
+			}
+			
+			private function on_nodes_updateNodeResult(event:ResultEvent):void
+			{ //takes gameID, nodeID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeid, opt3text, opt3nodeid, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns true if successful
+				
+			}
+			
+			private function on_npcs_createConversationResult(event:ResultEvent):void
+			{ //takes gameID, npcID, nodeID, text, returns conversationID
+				
+			}
+			
+			private function on_npcs_createNpcResult(event:ResultEvent):void
+			{ //takes gameID, name, descr, greeting, media, returns npcID
+				
+			}
+			
+			private function on_npcs_deleteConversationResult(event:ResultEvent):void
+			{ //takes gameID, conversationID, returns true on success
+				
+			}
+			
+			private function on_npcs_deleteNpcResult(event:ResultEvent):void
+			{ //takes gameID, npcID, returns ???
+				
+			}
+			
+			private function on_npcs_getConversationResult(event:ResultEvent):void
+			{ //takes gameID, npcID, returns array obj{conversation_id, node_id, npc_id, remove_if_event_id, require_event_id, require_item_id, require_location_id, text}
+				
+			}
+			
+			private function on_npcs_getReferrersResult(event:ResultEvent):void
+			{ //takes gameID, npcID, returns ???
+				
+			}
+			
+			private function on_npcs_updateConversationResult(event:ResultEvent):void
+			{ //takes gameID, conversationID, newNpcID, newNodeID, newText, returns true on success
+				
+			}
+			
+			private function on_npcs_updateNpcResult(event:ResultEvent):void
+			{ //takes gameID, npcID, name, descr, greeting, media, returns true on success
+				
+			}
+			
+			private function on_playerStateChanges_actionTypeOptionsResult(event:ResultEvent):void
+			{ //takes gameID, returns array of strings
+				
+			}
+			
+			private function on_playerStateChanges_contentTypeOptionsResult(event:ResultEvent):void
+			{ //takes gameID, returns array of strings
+				
+			}
+			
+			private function on_playerStateChanges_createPlayerStateChangeResult(event:ResultEvent):void
+			{ //takes gameID, objType, objID, actionType, actionID, returns playerStateChangeID
+				
+			}
+			
+			private function on_playerStateChanges_deletePlayerStateChangeResult(event:ResultEvent):void
+			{ //takes gameID, playerStateChangeID, returns ???
+				
+			}
+			
+			private function on_playerStateChanges_getPlayerStateChangeResult(event:ResultEvent):void
+			{ //takes gameID, playerStateChangeID, returns ????
+				
+			}
+			
+			private function on_playerStateChanges_getPlayerStateChangesResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function on_playerStateChanges_getReferrersResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function on_playerStateChanges_updatePlayerStateChangeResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function on_quests_createQuestResult(event:ResultEvent):void
+			{ //takes gameID, name, incompletedescription, completedescription, media, returns questID
+				
+			}
+			
+			private function on_quests_deleteQuestResult(event:ResultEvent):void
+			{ //takes gameID, questID, returns true if successful
+				
+			}
+			
+			private function on_quests_updateQuestResult(event:ResultEvent):void
+			{ //takes gameID, questID, name, incompleteDescr, completeDescr, media, returns true if successful
+				
+			}
+			
+			private function on_requirements_contentTypeOptionsResult(event:ResultEvent):void
+			{ //takes gameID, returns array of strings
+				
+			}
+			
+			private function on_requirements_createRequirementResult(event:ResultEvent):void
+			{ //takes gameID, strObjType, objID, reqTYpe, reqTypeID, returns new reqID
+				
+			}
+			
+			private function on_requirements_deleteRequirementResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function on_requirements_getReferrersResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function on_requirements_getRequirementResult(event:ResultEvent):void
+			{ //takes gameID, reqID, returns obj{content_id, content_type, requirement, requirement_detail, requirement_id} (detail is id of required object, content is what object has the requirement)
+
+			}
+			
+			private function on_requirements_getRequirementsForObjectResult(event:ResultEvent):void
+			{
+				if(filterErrors(event, "requirements.getRequirementsForObjectResult"))
+				{
+					for each(var obj:Object in event.result.data)
+					{
+						currentGameObject.addRequirement(new Requirement(getGameObjectReference(obj.requirement_id,
+																								obj.requirement_detail),
+																		 obj.requirement)
+														 );
+					}
+				}				
+			}
+			
+			private function on_requirements_requirementTypeOptionsResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function on_requirements_updateRequirementResult(event:ResultEvent):void
+			{
+				
+			}
+			
+			private function updateCurrentGame():void
+			{
+				
+			}
+			
+
+		]]>
+	</mx:Script>
+	
+</mx:UIComponent>

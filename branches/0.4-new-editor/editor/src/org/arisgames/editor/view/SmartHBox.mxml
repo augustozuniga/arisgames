@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			public function drop(obj:DisplayObject):void
+			{
+				if(this.contains(obj))
+				{
+					this.removeChild(obj);
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+</mx:HBox>

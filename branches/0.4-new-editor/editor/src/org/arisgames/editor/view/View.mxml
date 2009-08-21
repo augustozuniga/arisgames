@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:ViewStack xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="org.arisgames.editor.view.*"
+	width="100%" height="100%" xmlns:view1="org.arisgames.editor.view.*">
+
+	<mx:Script>
+		<![CDATA[
+			import org.arisgames.editor.model.GameReference;
+			import org.arisgames.editor.model.GameObjectReference;
+			import org.arisgames.editor.controller.Controller;
+			import org.arisgames.editor.model.Model;
+		
+			private var currentModel:Model;
+			private var currentController:Controller;
+			
+			/////////////
+			// Getters //
+			/////////////
+			
+			public function getGameName():String
+			{
+				if(this.selectedChild == editingView)
+				{
+					return editingView.getGameName();
+				}
+				if(this.selectedChild == mainMenuView)
+				{
+					return mainMenuView.getGameName();
+				}
+				return null;
+			}
+			
+			public function getPassword():String
+			{
+				return mainMenuView.getPassword();
+			}
+			
+			public function getSelectedGame():GameReference
+			{
+				return mainMenuView.getSelectedGame();
+			}
+			
+			public function getSelectedGameObject():GameObjectReference
+			{
+				return editingView.getSelectedGameObject();
+			}
+			
+			public function getUsername():String
+			{
+				return mainMenuView.getUsername();
+			}
+			
+			public function goToGameEditor():void
+			{
+				this.selectedChild = editingView;
+			}
+			
+			public function goToMainMenu():void
+			{
+				this.selectedChild = mainMenuView;
+			}
+			
+			public function setController(newController:Controller):void
+			{
+				currentController = newController;
+				mainMenuView.setController(newController);
+				editingView.setController(newController);
+			}
+			
+			public function setModel(newModel:Model):void
+			{
+				currentModel = newModel;
+				mainMenuView.setModel(newModel);
+				editingView.setModel(newModel);
+			}
+			
+			public function update():void
+			{
+				if(this.selectedChild == mainMenuView)
+				{
+					mainMenuView.update();
+				}
+				else if(this.selectedChild == editingView)
+				{
+					editingView.update();
+				}
+			}
+			
+		]]>
+	</mx:Script>
+
+	<view:MainMenuView id="mainMenuView"/>
+	<view:EditingView id="editingView"/>
+
+</mx:ViewStack>
