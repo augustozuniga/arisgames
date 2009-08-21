@@ -58,7 +58,8 @@ class Items
      * Create an Item
      * @returns the new itemID on success
      */
-	public function createItem($intGameID, $strName, $strDescription, $strMediaFileName)
+	public function createItem($intGameID, $strName, $strDescription, 
+								$strMediaFileName, $boolDropable, $boolDestroyable)
 	{
 		
 		$type = $this->getItemType($strMediaFileName);
@@ -66,8 +67,13 @@ class Items
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "INSERT INTO {$prefix}_items 
-					(name, description, media, type)
-					VALUES ('{$strName}', '{$strDescription}','{$strMediaFileName}', '$type')";
+					(name, description, media, type, dropable, destroyable)
+					VALUES ('{$strName}', 
+							'{$strDescription}',
+							'{$strMediaFileName}', 
+							'$type',
+							'$boolDropable',
+							'$boolDestroyable')";
 		
 		NetDebug::trace("createItem: Running a query = $query");	
 		
@@ -83,15 +89,20 @@ class Items
      * Update a specific Item
      * @returns true if edit was done, false if no changes were made
      */
-	public function updateItem($intGameID, $intItemID, $strName, $strDescription, $strMediaFileName)
+	public function updateItem($intGameID, $intItemID, $strName, $strDescription, 
+								$strMediaFileName, $boolDropable, $boolDestroyable)
 	{
 		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "UPDATE {$prefix}_items 
-					SET name = '{$strName}', description = '{$strDescription}', 
-					media = '{$strMediaFileName}', type = '{$type}'
+					SET name = '{$strName}', 
+						description = '{$strDescription}', 
+						media = '{$strMediaFileName}', 
+						type = '{$type}',
+						dropable = '{$boolDropable}',
+						destroyable = '{$boolDestroyable}'
 					WHERE item_id = '{$intItemID}'";
 		
 		NetDebug::trace("updateNpc: Running a query = $query");	

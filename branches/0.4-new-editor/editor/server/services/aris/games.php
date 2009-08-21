@@ -169,6 +169,8 @@ class Games
 			description text,
 			media varchar(50) NOT NULL default 'item_default.jpg',
 			type enum('AV','Image') NOT NULL default 'Image',
+			dropable enum('0','1') NOT NULL default '0',
+			destroyable enum('0','1') NOT NULL default '0',
 			PRIMARY KEY  (item_id)
 			)";
 		@mysql_query($query);
