@@ -39,7 +39,7 @@
 	if ([elementName isEqualToString:@"location"]) {
 		//Found a location element 
 		Location *location = [[Location alloc] init];
-		location.locationId = [[attributeDict objectForKey:@"location_id"] intValue];
+		location.locationId = [[attributeDict objectForKey:@"id"] intValue];
 		location.name = [attributeDict objectForKey:@"name"];
 		location.latitude = [[attributeDict objectForKey:@"latitude"] doubleValue];
 		location.longitude = [[attributeDict objectForKey:@"longitude"] doubleValue];
