@@ -3,6 +3,10 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import org.arisgames.editor.model.Quest;
+			import org.arisgames.editor.model.Page;
+			import org.arisgames.editor.model.Item;
+			import org.arisgames.editor.model.Character;
 			import org.arisgames.editor.model.GameObject;
 			import org.arisgames.editor.model.GameObjectReference;
 			import org.arisgames.editor.model.Folder;
@@ -55,6 +59,34 @@
 						gameObjectMediaLabel.text = currentGameObject.getMediaFileName();
 						gameObjectDescriptionTextArea.text = currentGameObject.getDescription();
 						requirementsDataGrid.dataProvider = currentGameObject.requirementsArrayCollection;
+						if(currentGameObject is Character)
+						{
+							middleView.addChild(choicesDataGrid);
+							choicesDataGrid.dataProvider = (currentGameObject as Character).choicesArrayCollection;
+							rightView.drop(itemSpecificPropertiesView);
+							rightView.drop(modificationsDataGrid);
+						}
+						else if(currentGameObject is Item)
+						{
+							middleView.drop(choicesDataGrid);
+							rightView.addChild(itemSpecificPropertiesView);
+							destroyableCheckBox.selected = (currentGameObject as Item).isDestroyable();
+							droppableCheckBox.selected = (currentGameObject as Item).isDroppable();
+							rightView.addChild(modificationsDataGrid);
+						}
+						else if(currentGameObject is Page)
+						{
+							middleView.addChild(choicesDataGrid);
+							choicesDataGrid.dataProvider = (currentGameObject as Page).choicesArrayCollection;
+							rightView.drop(itemSpecificPropertiesView);
+							rightView.addChild(modificationsDataGrid);
+						}
+						else if(currentGameObject is Quest)
+						{
+							middleView.drop(choicesDataGrid);
+							rightView.drop(itemSpecificPropertiesView);
+							rightView.drop(modificationsDataGrid);
+						}
 					}
 				}
 			}
@@ -134,8 +166,9 @@
 					editable="true"/>
 			</mx:VBox>
 
-			<mx:VBox id="middleView"
+			<view:SmartVBox id="middleView"
 				width="100%" height="100%">
+
 				<mx:DataGrid id="requirementsDataGrid"
 					width="100%" height="100%"
 					editable="true" horizontalScrollPolicy="auto"
@@ -155,13 +188,75 @@
 							editable="false" draggable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
-				
-			</mx:VBox>
 
-			<mx:VBox id="rightView"
+				<mx:DataGrid id="choicesDataGrid"
+					width="100%" height="100%"
+					editable="true" horizontalScrollPolicy="auto"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false" width="150"/>
+						<mx:DataGridColumn dataField="choiceText"
+							headerText="Choice Description"
+							editable="true" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
+				
+			</view:SmartVBox>
+
+			<view:SmartVBox id="rightView"
 				width="100%" height="100%">
 				
-			</mx:VBox>
+				<mx:DataGrid id="modificationsDataGrid"
+					width="100%" height="100%"
+					editable="true" horizontalScrollPolicy="auto"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="modificationType"
+							headerText="Action Type"
+							editable="true" draggable="false" width="150">
+							<mx:itemEditor>
+								<mx:Component>
+									<mx:ComboBox dataProvider="{data.modificationTypesDataProvider}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>							
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
+				
+				<mx:VBox id="itemSpecificPropertiesView"
+					width="100%">
+					<mx:Label text="All copies of this item are..."/>
+					<mx:HBox 
+						width="100%">
+						<mx:Canvas  width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+							<mx:VBox horizontalCenter="0">
+								<mx:Label text="Droppable"/>
+								<mx:HBox>
+									<mx:CheckBox id="droppableCheckBox"
+										change="currentController.onDroppableCheckBoxChange(event)"/>
+									<mx:Image width="60" height="60" horizontalCenter="0"/>
+								</mx:HBox>
+							</mx:VBox>
+						</mx:Canvas>
+						<mx:Canvas  width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+							<mx:VBox horizontalCenter="0">
+								<mx:Label text="Destroyable"/>
+								<mx:HBox>
+									<mx:CheckBox id="destroyableCheckBox"
+										change="currentController.onDestroyableCheckBoxChange(event)"/>
+									<mx:Image width="60" height="60" horizontalCenter="0"/>																
+								</mx:HBox>
+							</mx:VBox>
+						</mx:Canvas>					
+					</mx:HBox>
+				</mx:VBox>
+				
+			</view:SmartVBox>
 
 		</view:SmartHBox>
 	</mx:VBox>

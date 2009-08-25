@@ -21,7 +21,7 @@ package org.arisgames.editor.model
 			this.description = description;
 			this.media = media;
 			this.requirements = requirements;
-			this.requirementsArrayCollection = new ArrayCollection(requirements);
+			this.requirementsArrayCollection = new ArrayCollection(this.requirements);
 		}
 		
 		public function addRequirement(newRequirement:Requirement):void

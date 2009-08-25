@@ -26,6 +26,11 @@ package org.arisgames.editor.controller
 		// Event Handlers //
 		////////////////////
 		
+		public function onDestroyableCheckBoxChange(event:Event):void
+		{
+			
+		}
+		
 		public function onDiscardCanvasDragEnter(event:DragEvent):void
 		{
 			if(event.dragInitiator is IObjectNavigator)
@@ -36,6 +41,11 @@ package org.arisgames.editor.controller
 		}
 		
 		public function onDiscardCanvasDragDrop(event:DragEvent):void
+		{
+			
+		}
+		
+		public function onDroppableCheckBoxChange(event:Event):void
 		{
 			
 		}

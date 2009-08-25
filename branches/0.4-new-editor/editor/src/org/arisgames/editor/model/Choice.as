@@ -20,6 +20,11 @@ package org.arisgames.editor.model
 		{
 			return text;
 		}
+		
+		public function set choiceText(newText:String):void
+		{
+			text = newText;
+		}
 
 	}
 }

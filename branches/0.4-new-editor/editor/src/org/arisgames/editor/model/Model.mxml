@@ -87,7 +87,7 @@
 		<mx:method name="createNpc" result="on_npcs_createNpcResult(event)"/>
 		<mx:method name="deleteConversation" result="on_npcs_deleteConversationResult(event)"/>
 		<mx:method name="deleteNpc" result="on_npcs_deleteNpcResult(event)"/>
-		<mx:method name="getConversation" result="on_npcs_getConversationResult(event)"/>
+		<mx:method name="getConversations" result="on_npcs_getConversationsResult(event)"/>
 		<mx:method name="getNpc" result="on_npcs_getNpcResult(event)"/>
 		<mx:method name="getNpcs" result="on_npcs_getNpcsResult(event)"/>
 		<mx:method name="getReferrers" result="on_npcs_getReferrersResult(event)"/>
@@ -104,7 +104,7 @@
 		<mx:method name="createPlayerStateChange" result="on_playerStateChanges_createPlayerStateChangeResult(event)"/>
 		<mx:method name="deletePlayerStateChange" result="on_playerStateChanges_deletePlayerStateChangeResult(event)"/>
 		<mx:method name="getPlayerStateChange" result="on_playerStateChanges_getPlayerStateChangeResult(event)"/>
-		<mx:method name="getPlayerStateChanges" result="on_playerStateChanges_getPlayerStateChangesResult(event)"/>
+		<mx:method name="getPlayerStateChangesForObject" result="on_playerStateChanges_getPlayerStateChangesForObjectResult(event)"/>
 		<mx:method name="getReferrers" result="on_playerStateChanges_getReferrersResult(event)"/>
 		<mx:method name="updatePlayerStateChange" result="on_playerStateChanges_updatePlayerStateChangeResult(event)"/>
 	</mx:RemoteObject>
@@ -443,13 +443,15 @@
 			}
 			
 			private function on_items_getItemResult(event:ResultEvent):void
-			{ //takes gameID, itemID, returns obj{description, item_id, media, name, type}
+			{ //takes gameID, itemID, returns obj{description, destroyable, dropable, item_id, media, name, type}
 				if(filterErrors(event, "items.getItem"))
 				{
 					var requirements:Array = new Array();
 					var playerModifications:Array = new Array();
 					currentGameObject = new Item(getGameObjectReference(event.result.data.item_id, GameObjectReference.ITEM),
-												 event.result.data.description, event.result.data.media, requirements, playerModifications, false, false);
+												 event.result.data.description, event.result.data.media, requirements, playerModifications,
+												 int(event.result.data.dropable) == 1, int(event.result.data.destroyable) == 1);
+					playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, GameObjectReference.ITEM, int(event.result.data.item_id));
 					updateView();				 
 				}
 			}
@@ -476,6 +478,21 @@
 					var requirements:Array = new Array();
 					var playerModifications:Array = new Array();
 					var choices:Array = new Array();
+					var choiceID:int = int(event.result.data.opt1_node_id);
+					if(choiceID > 0)
+					{
+						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE), event.result.data.opt1_text));
+					}
+					choiceID = int(event.result.data.opt2_node_id);
+					if(choiceID > 0)
+					{
+						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE), event.result.data.opt2_text));
+					}
+					choiceID = int(event.result.data.opt3_node_id);
+					if(choiceID > 0)
+					{
+						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE), event.result.data.opt3_text));
+					}
 					currentGameObject = new Page(getGameObjectReference(event.result.data.node_id, GameObjectReference.PAGE),
 												 event.result.data.text, event.result.data.media, requirements, playerModifications, choices);
 					updateView();				 
@@ -497,6 +514,18 @@
 				}				
 			}
 			
+			private function on_npcs_getConversationsResult(event:ResultEvent):void
+			{ //takes gameID, npcID, returns array obj{conversation_id, node_id, npc_id, text}
+				trace("hi there");
+				if(filterErrors(event, "npcs.getConversations"))
+				{
+					for each(var obj:Object in event.result.data)
+					{
+						(currentGameObject as Character).addChoice(new Choice(getGameObjectReference(obj.node_id, GameObjectReference.PAGE), obj.text));
+					}
+				}
+			}
+			
 			private function on_npcs_getNpcResult(event:ResultEvent):void
 			{ //takes gameID, npcID, returns obj{description, media, name, npc_id, require_event_id, text}
 				if(filterErrors(event, "npcs.getNpc"))
@@ -505,6 +534,7 @@
 					var choices:Array = new Array();
 					currentGameObject = new Character(getGameObjectReference(event.result.data.npc_id, GameObjectReference.CHARACTER),
 												 event.result.data.text, event.result.data.media, requirements, choices);
+					npcs.getConversations.send(currentGameID, int(event.result.data.npc_id));
 					updateView();				 
 				}								
 			}
@@ -522,6 +552,11 @@
 					gameObjectsArrayCollection.itemUpdated(characterFolder);
 					updateView();
 				}				
+			}
+			
+			private function on_playerStateChanges_getPlayerStateChangesForObjectResult(event:ResultEvent):void
+			{
+				
 			}
 			
 			private function on_quests_getQuestResult(event:ResultEvent):void
@@ -752,11 +787,6 @@
 				
 			}
 			
-			private function on_npcs_getConversationResult(event:ResultEvent):void
-			{ //takes gameID, npcID, returns array obj{conversation_id, node_id, npc_id, remove_if_event_id, require_event_id, require_item_id, require_location_id, text}
-				
-			}
-			
 			private function on_npcs_getReferrersResult(event:ResultEvent):void
 			{ //takes gameID, npcID, returns ???
 				
@@ -794,11 +824,6 @@
 			
 			private function on_playerStateChanges_getPlayerStateChangeResult(event:ResultEvent):void
 			{ //takes gameID, playerStateChangeID, returns ????
-				
-			}
-			
-			private function on_playerStateChanges_getPlayerStateChangesResult(event:ResultEvent):void
-			{
 				
 			}
 			

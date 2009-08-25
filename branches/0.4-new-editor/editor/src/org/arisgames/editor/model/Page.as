@@ -1,7 +1,11 @@
 package org.arisgames.editor.model
 {
+	import mx.collections.ArrayCollection;
+	
 	public class Page extends GameObject
 	{
+		public var choicesArrayCollection:ArrayCollection;
+		
 		private var choices:Array;
 		private var playerModifications:Array;
 		
@@ -15,6 +19,7 @@ package org.arisgames.editor.model
 			super(reference, description, media, requirements);
 			this.playerModifications = playerModifications;
 			this.choices = choices;
+			this.choicesArrayCollection = new ArrayCollection(this.choices);
 		}
 		
 		public function addChoice(newChoice:Choice):void
