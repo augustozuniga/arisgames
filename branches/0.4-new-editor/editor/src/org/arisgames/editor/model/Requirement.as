@@ -1,26 +1,23 @@
 package org.arisgames.editor.model
 {
+	import mx.controls.Alert;
+	
 	public class Requirement
 	{	
-		private var ref:GameObjectReference;
-		private var type:String;
+		public static const DOES_NOT_HAVE_EVENT:String = "DOES_NOT_HAVE_EVENT";
+		public static const DOES_NOT_HAVE_ITEM:String = "DOES_NOT_HAVE_ITEM";
+		public static const HAS_EVENT:String = "HAS_EVENT";
+		public static const HAS_ITEM:String = "HAS_ITEM";
+		public static const REQUIREMENT_TYPES_ITEM:Array = ["currently has", "does not currently have", "has ever looked at", "has never looked at"];
+		public static const REQUIREMENT_TYPES_PAGE:Array = ["has seen", "has never seen"];
 		
-		public function Requirement(objRef:GameObjectReference, type:String)
+		private var ref:GameObjectReference;
+		private var code:int;
+		
+		public function Requirement(objRef:GameObjectReference, code:int)
 		{
 			this.ref = objRef;
-			this.type = type;
-		}
-		
-		public static function getSourceType(req:String):String
-		{
-			if(req == "HAS_ITEM" || req == "DOES_NOT_HAVE_ITEM")
-			{
-				return GameObjectReference.ITEM;
-			}
-			else
-			{
-				return null;
-			}
+			this.code = code;
 		}
 		
 		public function get label():String
@@ -30,7 +27,17 @@ package org.arisgames.editor.model
 		
 		public function get requirementType():String
 		{
-			return type;
+			var type:String = ref.getType();
+			if(type == GameObjectReference.ITEM)
+			{
+				return REQUIREMENT_TYPES_ITEM[code];
+			}
+			if(type == GameObjectReference.PAGE)
+			{
+				return REQUIREMENT_TYPES_PAGE[code];
+			}
+			Alert.show("Error in Requirement.requirementType: bad object type");
+			return null;			
 		}
 
 	}

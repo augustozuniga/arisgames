@@ -3,6 +3,7 @@ package org.arisgames.editor.model
 	public class Character extends GameObject
 	{
 		private var choices:Array;
+		private var greeting:String;
 		
 		public function Character(reference:GameObjectReference,
 							 	  description:String, 
