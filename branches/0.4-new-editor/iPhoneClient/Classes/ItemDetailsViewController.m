@@ -31,6 +31,24 @@
 		pickupButton.hidden = YES;
 		dropButton.hidden = NO;
 		deleteButton.hidden = NO;
+		
+		if (item.dropable) {
+			dropButton.enabled = YES;
+			dropButton.alpha = 1;
+		}
+		else {
+			dropButton.enabled = NO;
+			dropButton.alpha = .2;
+		}
+		
+		if (item.destroyable) {
+			deleteButton.enabled = YES;
+			deleteButton.alpha = 1;
+		}
+		else {
+			deleteButton.enabled = NO;
+			deleteButton.alpha = .2;
+		}
 	}
 	else {
 		pickupButton.hidden = NO;

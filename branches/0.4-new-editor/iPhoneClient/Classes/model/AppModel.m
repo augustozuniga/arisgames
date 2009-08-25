@@ -11,7 +11,7 @@
 #import "GameListParserDelegate.h"
 #import "LocationListParserDelegate.h"
 #import "NearbyLocationsListParserDelegate.h"
-#import "InventoryParserDelegate.h"
+
 #import "XMLParserDelegate.h"
 #import "ARISAppDelegate.h"
 
@@ -62,6 +62,8 @@ NSDictionary *InventoryElements;
 			  @"setType:", @"type",
 			  @"setMediaURL:", @"media",
 			  @"setIconURL:", @"icon",
+			  @"setDropable:", @"dropable",
+			  @"setDestroyable:", @"destroyable",
 			  nil
 			  ], @"row", 
 			nil];
@@ -338,6 +340,7 @@ NSDictionary *InventoryElements;
 	
 	//Fetch Data
 	NSURLRequest *request = [self getURLForModule:@"Inventory&controller=SimpleREST"];
+	NSLog(@"Model: Fetching Inventory from: %@", [request URL]); 
 	NSData *data = [self fetchURLData:request];
 	
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];	

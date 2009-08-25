@@ -150,7 +150,6 @@
 		A7A1728C0F4F27120017E865 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A1728A0F4F27120017E865 /* Icon.png */; };
 		A7A1728D0F4F27120017E865 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A1728B0F4F27120017E865 /* Default.png */; };
 		A7A172950F4F273B0017E865 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A7A172940F4F273B0017E865 /* Icon.icns */; };
-		A7A623560F841A80008E0DFD /* InventoryParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A623550F841A80008E0DFD /* InventoryParserDelegate.m */; };
 		A7A6235B0F841C99008E0DFD /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A6235A0F841C99008E0DFD /* Item.m */; };
 		A7BCBB3F0F8C236900C7A36C /* ItemDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7BCBB3E0F8C236900C7A36C /* ItemDetailsView.xib */; };
 		A7C1F6000FC070690045F15D /* NearbyBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C1F5FC0FC070690045F15D /* NearbyBar.m */; };
@@ -381,8 +380,6 @@
 		A7A1728A0F4F27120017E865 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		A7A1728B0F4F27120017E865 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		A7A172940F4F273B0017E865 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
-		A7A623540F841A80008E0DFD /* InventoryParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InventoryParserDelegate.h; sourceTree = "<group>"; };
-		A7A623550F841A80008E0DFD /* InventoryParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InventoryParserDelegate.m; sourceTree = "<group>"; };
 		A7A623590F841C99008E0DFD /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
 		A7A6235A0F841C99008E0DFD /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
 		A7BCBB3E0F8C236900C7A36C /* ItemDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemDetailsView.xib; sourceTree = "<group>"; };
@@ -629,8 +626,6 @@
 				2B3D18D50F4B25720067FD3A /* AppModel.m */,
 				A722E6E50F573174004B04D2 /* GameListParserDelegate.h */,
 				A722E6E60F573174004B04D2 /* GameListParserDelegate.m */,
-				A7A623540F841A80008E0DFD /* InventoryParserDelegate.h */,
-				A7A623550F841A80008E0DFD /* InventoryParserDelegate.m */,
 				2B3D17050F49C99B0067FD3A /* Game.h */,
 				2B3D17060F49C99B0067FD3A /* Game.m */,
 				A722E7130F57425B004B04D2 /* Location.h */,
@@ -1035,7 +1030,6 @@
 				A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */,
 				A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */,
 				A72C02170F7985FF00D00602 /* QRScannerViewController.mm in Sources */,
-				A7A623560F841A80008E0DFD /* InventoryParserDelegate.m in Sources */,
 				A7A6235B0F841C99008E0DFD /* Item.m in Sources */,
 				A75AF2B90F86A47100F15535 /* ItemDetailsViewController.m in Sources */,
 				289811CD0FA1101C002ED288 /* BarcodeFormat.cpp in Sources */,
@@ -1181,6 +1175,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = ARIS;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Debug;
 		};
@@ -1225,7 +1220,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: UW Division of Information Technology";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ARIS_Prefix.pch;
@@ -1243,7 +1238,7 @@
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
 				PRODUCT_NAME = ARIS;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "68F0BBDC-446C-4299-B849-80904CA13456";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 			};
 			name = Distribution;
 		};

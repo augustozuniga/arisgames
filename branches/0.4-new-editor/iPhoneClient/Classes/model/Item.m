@@ -25,12 +25,23 @@
 @synthesize mediaURL;
 @synthesize iconURL;
 
+@synthesize dropable;
+@synthesize	destroyable;
+
 - (void) setItemId:(NSString *)fromStringValue {
 	itemId = [fromStringValue intValue];
 }
 
 - (void) setLocationId:(NSString *)fromStringValue {
 	locationId = [fromStringValue intValue];
+}
+
+- (void) setDropable:(NSString *)fromStringValue {
+	dropable = [fromStringValue boolValue];
+}
+
+- (void) setDestroyable:(NSString *)fromStringValue {
+	destroyable = [fromStringValue boolValue];
 }
 
 -(nearbyObjectKind) kind {

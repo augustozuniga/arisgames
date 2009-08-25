@@ -21,8 +21,8 @@
 	NSString *type;
 	NSString *mediaURL;
 	NSString *iconURL;
-	bool dropable;
-	bool destroyable;
+	BOOL dropable;
+	BOOL destroyable;
 }
 
 @property(copy, readwrite) NSString *name;
@@ -39,8 +39,11 @@
 @property(copy, readwrite) NSString *type;
 @property(copy, readwrite) NSString *mediaURL;
 @property(copy, readwrite) NSString *iconURL;
-@property bool dropable;
-@property bool destroyable;
+
+@property (readonly, assign) BOOL dropable;
+@property (readonly, assign) BOOL destroyable;
+- (void) setDropable:(NSString *)fromStringValue;
+- (void) setDestroyable:(NSString *)fromStringValue;
 
 - (void) display;
 
