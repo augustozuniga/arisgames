@@ -63,8 +63,10 @@ class Framework_Module_RESTQuest extends Framework_Auth_User
 		$activeQuests = array();
 		$completedQuests = array(); 
 		foreach ($quests as &$quest) {
-			if ($this->objectMeetsRequirements ($user, "Quest", $quest['quest_id'])) $completedQuests[] = $quest;
-			else $activeQuests[] = $quest;
+			if ($this->objectMeetsRequirements ($user, "QuestDisplay", $quest['quest_id'])) {
+				if ($this->objectMeetsRequirements ($user, "QuestComplete", $quest['quest_id'])) $completedQuests[] = $quest;
+				else $activeQuests[] = $quest;
+			}
 		}
 		$this->activeQuests = $activeQuests;
 		$this->completedQuests = $completedQuests; 
