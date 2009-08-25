@@ -146,7 +146,7 @@
 							editable="true" draggable="false" width="150">
 							<mx:itemEditor>
 								<mx:Component>
-									<mx:ComboBox dataProvider="{data.reqTypeDataProvider}"/>
+									<mx:ComboBox dataProvider="{data.requirementTypesDataProvider}"/>
 								</mx:Component>
 							</mx:itemEditor>
 						</mx:DataGridColumn>							
