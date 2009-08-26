@@ -72,7 +72,7 @@ class PlayerStateChanges
 		
 		$query = "INSERT INTO {$prefix}_player_state_changes 
 					(content_type, content_id, action, action_detail)
-					VALUES ('{$strObjectType}','{$intObjectID}','{$strAction}','{$intActionID}')";
+					VALUES ('{$strObjectType}','{$intObjectID}','{$strActionType}','{$intActionID}')";
 		
 		NetDebug::trace("Running a query = $query");	
 		
