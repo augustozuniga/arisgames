@@ -14,11 +14,13 @@ package org.arisgames.editor.model
 							 	  description:String, 
 							 	  media:String,
 							 	  requirements:Array,
-							 	  choices:Array)
+							 	  choices:Array,
+							 	  greeting:String)
 		{
 			super(reference, description, media, requirements);
 			this.choices = choices;
 			this.choicesArrayCollection = new ArrayCollection(this.choices);
+			this.greeting = greeting;
 		}
 		
 		public function addChoice(newChoice:Choice):void
@@ -32,10 +34,20 @@ package org.arisgames.editor.model
 			return choices;
 		}
 		
+		public function getGreeting():String
+		{
+			return greeting;
+		}
+		
 		public function removeChoice(choice:Choice):void
 		{
 			choices.splice(choices.indexOf(choice), 1);
 			choicesArrayCollection.itemUpdated(choices);
-		}		
+		}
+		
+		public function setGreeting(newText:String):void
+		{
+			greeting = newText;
+		}
 	}
 }

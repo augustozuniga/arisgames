@@ -61,28 +61,38 @@
 						requirementsDataGrid.dataProvider = currentGameObject.requirementsArrayCollection;
 						if(currentGameObject is Character)
 						{
-							middleView.addChild(choicesDataGrid);
+							gameObjectGreetingTextArea.text = (currentGameObject as Character).getGreeting();
+							leftView.addChild(greetingView);
+							leftView.drop(completedDescriptionView);
 							choicesDataGrid.dataProvider = (currentGameObject as Character).choicesArrayCollection;
+							middleView.addChild(choicesDataGrid);
 							rightView.drop(itemSpecificPropertiesView);
 							rightView.drop(modificationsDataGrid);
 						}
 						else if(currentGameObject is Item)
 						{
+							leftView.drop(greetingView);
+							leftView.drop(completedDescriptionView);
 							middleView.drop(choicesDataGrid);
-							rightView.addChild(itemSpecificPropertiesView);
 							destroyableCheckBox.selected = (currentGameObject as Item).isDestroyable();
 							droppableCheckBox.selected = (currentGameObject as Item).isDroppable();
+							rightView.addChild(itemSpecificPropertiesView);
 							rightView.addChild(modificationsDataGrid);
 						}
 						else if(currentGameObject is Page)
 						{
-							middleView.addChild(choicesDataGrid);
+							leftView.drop(greetingView);
+							leftView.drop(completedDescriptionView);
 							choicesDataGrid.dataProvider = (currentGameObject as Page).choicesArrayCollection;
+							middleView.addChild(choicesDataGrid);
 							rightView.drop(itemSpecificPropertiesView);
 							rightView.addChild(modificationsDataGrid);
 						}
 						else if(currentGameObject is Quest)
 						{
+							leftView.drop(greetingView);
+							gameObjectCompletedDescriptionTextArea.text = (currentGameObject as Quest).getCompletedDescription();
+							leftView.addChild(completedDescriptionView);
 							middleView.drop(choicesDataGrid);
 							rightView.drop(itemSpecificPropertiesView);
 							rightView.drop(modificationsDataGrid);
@@ -148,7 +158,7 @@
 			width="100%" height="100%"
 			borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2">
 
-			<mx:VBox id="leftView"
+			<view:SmartVBox id="leftView"
 				width="100%" height="100%">
 				<mx:HBox width="100%">
 					<mx:Label text="Name:"/>
@@ -160,11 +170,29 @@
 					<mx:Label id="gameObjectMediaLabel"
 						width="100%"/>
 				</mx:HBox>
-				<mx:Label text="Description"/>
+				<mx:Label id="descriptionLabel"
+					text="Description"/>
 				<mx:TextArea id="gameObjectDescriptionTextArea"
 					height="100%" width="100%"
 					editable="true"/>
-			</mx:VBox>
+
+				<mx:VBox id="greetingView"
+					height="100%" width="100%">
+					<mx:Label text="Greeting"/>
+					<mx:TextArea id="gameObjectGreetingTextArea"
+						height="100%" width="100%"
+						editable="true"/>					
+				</mx:VBox>
+				
+				<mx:VBox id="completedDescriptionView"
+					height="100%" width="100%">
+					<mx:Label text="Description after Quest is Completed"/>
+					<mx:TextArea id="gameObjectCompletedDescriptionTextArea"
+						height="100%" width="100%"
+						editable="true"/>					
+				</mx:VBox>
+
+			</view:SmartVBox>
 
 			<view:SmartVBox id="middleView"
 				width="100%" height="100%">
@@ -255,7 +283,7 @@
 						</mx:Canvas>					
 					</mx:HBox>
 				</mx:VBox>
-				
+
 			</view:SmartVBox>
 
 		</view:SmartHBox>

@@ -22,6 +22,11 @@ package org.arisgames.editor.model
 			objectives.push(newObjective);
 		}
 		
+		public function getCompletedDescription():String
+		{
+			return completedDescription;
+		}
+		
 		public function getObjectives():Array
 		{
 			return objectives;
@@ -30,6 +35,11 @@ package org.arisgames.editor.model
 		public function removeObjective(objective:Requirement):void
 		{
 			objectives.splice(objectives.indexOf(objective), 1);
-		}		
+		}
+		
+		public function setCompletedDescription(newText:String):void
+		{
+			completedDescription = newText;
+		}
 	}
 }

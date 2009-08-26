@@ -541,7 +541,8 @@
 					var requirements:Array = new Array();
 					var choices:Array = new Array();
 					currentGameObject = new Character(getGameObjectReference(event.result.data.npc_id, GameObjectReference.CHARACTER),
-												 event.result.data.text, event.result.data.media, requirements, choices);
+												 event.result.data.description, event.result.data.media, requirements, choices,
+												 event.result.data.text);
 					npcs.getConversations.send(currentGameID, int(event.result.data.npc_id));
 					updateView();				 
 				}								
