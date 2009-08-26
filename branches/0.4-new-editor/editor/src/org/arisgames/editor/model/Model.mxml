@@ -568,13 +568,14 @@
 			}
 			
 			private function on_quests_getQuestResult(event:ResultEvent):void
-			{ //takes gameID, questID, returns obj{???}
+			{ //takes gameID, questID, returns obj{description, media, name, quest_id, text_when_complete}
 				if(filterErrors(event, "quests.getQuest"))
 				{
 					var requirements:Array = new Array();
 					var objectives:Array = new Array();
-					currentGameObject = new Character(getGameObjectReference(event.result.data.npc_id, GameObjectReference.CHARACTER),
-												 event.result.data.text, event.result.data.media, requirements, objectives);
+					currentGameObject = new Quest(getGameObjectReference(event.result.data.quest_id, GameObjectReference.QUEST),
+												  event.result.data.description, event.result.data.media, requirements, objectives,
+												  event.result.data.text_when_complete);
 					updateView();				 
 				}								
 			}
@@ -586,7 +587,7 @@
 					var newChildren:Array = new Array();
 					for each(var obj:Object in event.result.data)
 					{
-						newChildren.push(new GameObjectReference(obj.npc_id, GameObjectReference.QUEST, obj.name));
+						newChildren.push(new GameObjectReference(obj.quest_id, GameObjectReference.QUEST, obj.name));
 					}
 					questFolder.children = newChildren;
 					gameObjectsArrayCollection.itemUpdated(questFolder);
