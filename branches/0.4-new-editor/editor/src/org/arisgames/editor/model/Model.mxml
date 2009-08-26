@@ -504,6 +504,7 @@
 					}
 					currentGameObject = new Page(getGameObjectReference(event.result.data.node_id, GameObjectReference.PAGE),
 												 event.result.data.text, event.result.data.media, requirements, playerModifications, choices);
+					playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, GameObjectReference.PAGE, int(event.result.data.node_id));
 					updateView();				 
 				}				
 			}
@@ -570,7 +571,7 @@
 				{
 					for each(var obj:Object in event.result.data)
 					{
-						var mod:PlayerModification;
+						var mod:PlayerModification; // NOTE: WE NEVER USE EVENTS HERE, ONLY ITEM GIVE/TAKES
 						mod = new PlayerModification(getGameObjectReference(obj.action_detail, GameObjectReference.ITEM), obj.action);
 						if(currentGameObject is Item)
 						{

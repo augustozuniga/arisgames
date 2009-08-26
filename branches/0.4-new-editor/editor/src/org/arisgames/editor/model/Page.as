@@ -5,6 +5,7 @@ package org.arisgames.editor.model
 	public class Page extends GameObject
 	{
 		public var choicesArrayCollection:ArrayCollection;
+		public var modificationsArrayCollection:ArrayCollection;
 		
 		private var choices:Array;
 		private var playerModifications:Array;
@@ -18,6 +19,7 @@ package org.arisgames.editor.model
 		{
 			super(reference, description, media, requirements);
 			this.playerModifications = playerModifications;
+			this.modificationsArrayCollection = new ArrayCollection(this.playerModifications);
 			this.choices = choices;
 			this.choicesArrayCollection = new ArrayCollection(this.choices);
 		}
@@ -25,11 +27,13 @@ package org.arisgames.editor.model
 		public function addChoice(newChoice:Choice):void
 		{
 			choices.push(newChoice);
+			choicesArrayCollection.itemUpdated(choices);
 		}
 		
 		public function addPlayerModification(newModification:PlayerModification):void
 		{
 			playerModifications.push(newModification);
+			modificationsArrayCollection.itemUpdated(playerModifications);
 		}
 		
 		public function getChoices():Array
@@ -45,11 +49,13 @@ package org.arisgames.editor.model
 		public function removeChoice(choice:Choice):void
 		{
 			choices.splice(choices.indexOf(choice), 1);
+			choicesArrayCollection.itemUpdated(choices);
 		}
 		
 		public function removePlayerModification(mod:PlayerModification):void
 		{
 			playerModifications.splice(playerModifications.indexOf(mod), 1);
+			modificationsArrayCollection.itemUpdated(playerModifications);
 		}
 		
 	}

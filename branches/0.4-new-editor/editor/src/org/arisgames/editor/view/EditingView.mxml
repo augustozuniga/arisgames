@@ -77,6 +77,7 @@
 							destroyableCheckBox.selected = (currentGameObject as Item).isDestroyable();
 							droppableCheckBox.selected = (currentGameObject as Item).isDroppable();
 							rightView.addChild(itemSpecificPropertiesView);
+							modificationsDataGrid.dataProvider = (currentGameObject as Item).modificationsArrayCollection;
 							rightView.addChild(modificationsDataGrid);
 						}
 						else if(currentGameObject is Page)
@@ -86,6 +87,7 @@
 							choicesDataGrid.dataProvider = (currentGameObject as Page).choicesArrayCollection;
 							middleView.addChild(choicesDataGrid);
 							rightView.drop(itemSpecificPropertiesView);
+							modificationsDataGrid.dataProvider = (currentGameObject as Page).modificationsArrayCollection;
 							rightView.addChild(modificationsDataGrid);
 						}
 						else if(currentGameObject is Quest)

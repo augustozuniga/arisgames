@@ -1,7 +1,11 @@
 package org.arisgames.editor.model
 {
+	import mx.collections.ArrayCollection;
+	
 	public class Item extends GameObject
 	{
+		public var modificationsArrayCollection:ArrayCollection;
+
 		private var droppable:Boolean;
 		private var destroyable:Boolean;
 		private var playerModifications:Array;
@@ -16,6 +20,7 @@ package org.arisgames.editor.model
 		{
 			super(reference, description, media, requirements);
 			this.playerModifications = playerModifications;
+			this.modificationsArrayCollection = new ArrayCollection(this.playerModifications);
 			this.droppable = droppable;
 			this.destroyable = destroyable;
 		}
@@ -23,6 +28,7 @@ package org.arisgames.editor.model
 		public function addPlayerModification(newModification:PlayerModification):void
 		{
 			playerModifications.push(newModification);
+			modificationsArrayCollection.itemUpdated(playerModifications);
 		}
 		
 		public function getPlayerModifications():Array
@@ -43,6 +49,7 @@ package org.arisgames.editor.model
 		public function removePlayerModification(mod:PlayerModification):void
 		{
 			playerModifications.splice(playerModifications.indexOf(mod), 1);
+			modificationsArrayCollection.itemUpdated(playerModifications);
 		}
 		
 		public function setDestroyable(newValue:Boolean):void
