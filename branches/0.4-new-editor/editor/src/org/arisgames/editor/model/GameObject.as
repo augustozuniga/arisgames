@@ -8,12 +8,20 @@ package org.arisgames.editor.model
 	[Bindable]
 	public class GameObject
 	{
+		public static const DESCRIPTION:String = "description";
+		public static const MEDIA:String = "media";
+		public static const REQUIREMENTS:String = "requirements";
+		
 		public var requirementsArrayCollection:ArrayCollection;
 		
 		private var ref:GameObjectReference;
 		private var description:String;
 		private var media:String;
 		private var requirements:Array;
+		
+		private static var descriptionSnapshot:String;
+		private static var mediaSnapshot:String;
+		private static var requirementsSnapshot:Array;
 		
 		public function GameObject(reference:GameObjectReference, description:String, media:String, requirements:Array)
 		{
@@ -53,6 +61,17 @@ package org.arisgames.editor.model
 		{
 			requirements.splice(requirements.indexOf(req), 1);
 		}
+		
+		public function takeSnapshot():void
+		{
+			descriptionSnapshot = description;
+			mediaSnapshot = media;
+			requirementsSnapshot = new Array();
+			for each(var req:Requirement in requirements)
+			{
+				requirementsSnapshot.push(req);
+			}			
+		}
 
 		public function updateName(newName:String):void
 		{
@@ -71,5 +90,6 @@ package org.arisgames.editor.model
 				media = newMedia.label;
 			}
 		}
+
 	}
 }

@@ -24,7 +24,7 @@
 		destination="amfphp"
 		showBusyCursor="true">
 		<mx:method name="createGame" result="on_games_createGameResult(event)"/>
-		<mx:method name="getGames" result="on_games_getGamesResult(event)"/>
+		<mx:method name="getGamesForEditor" result="on_games_getGamesForEditorResult(event)"/>
 		<mx:method name="setGameName" result="on_games_setGameNameResult(event)"/>
 	</mx:RemoteObject>
 	
@@ -250,6 +250,7 @@
 			
 			public function setCurrentGameObject(objRef:GameObjectReference):void
 			{
+				updateCurrentGame();
 				if(objRef != null)
 				{
 					var id:int = objRef.getID();
@@ -428,9 +429,9 @@
 				}
 			}
 			
-			private function on_games_getGamesResult(event:ResultEvent):void
+			private function on_games_getGamesForEditorResult(event:ResultEvent):void
 			{ //takes editorID, returns array obj{game_id, name, prefix}
-				if(filterErrors(event, "games.getGames"))
+				if(filterErrors(event, "games.getGamesForEditor"))
 				{
 					availableGamesArray = new Array();
 					for each(var obj:Object in event.result.data)
@@ -564,8 +565,23 @@
 			}
 			
 			private function on_playerStateChanges_getPlayerStateChangesForObjectResult(event:ResultEvent):void
-			{
-				
+			{//takes gameID, objType, objID, returns obj{action, action_detail, content_id, content_type, id}
+				if(filterErrors(event, "playerStateChanges.getPlayerStateChanges"))
+				{
+					for each(var obj:Object in event.result.data)
+					{
+						var mod:PlayerModification;
+						mod = new PlayerModification(getGameObjectReference(obj.action_detail, GameObjectReference.ITEM), obj.action);
+						if(currentGameObject is Item)
+						{
+							(currentGameObject as Item).addPlayerModification(mod);
+						}
+						else if(currentGameObject is Page)
+						{
+							(currentGameObject as Page).addPlayerModification(mod);
+						}						
+					}
+				}
 			}
 			
 			private function on_quests_getQuestResult(event:ResultEvent):void
@@ -638,9 +654,14 @@
 				}				
 			}
 			
+			private function updateCurrentGame():void
+			{
+				
+			}
+			
 			private function updateGameList():void
 			{
-				games.getGames.send(currentEditorID);
+				games.getGamesForEditor.send(currentEditorID);
 			}
 			
 			private function updateView():void
@@ -900,11 +921,6 @@
 			}
 			
 			private function on_requirements_updateRequirementResult(event:ResultEvent):void
-			{
-				
-			}
-			
-			private function updateCurrentGame():void
 			{
 				
 			}
