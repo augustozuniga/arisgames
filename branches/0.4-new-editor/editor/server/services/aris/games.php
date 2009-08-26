@@ -11,12 +11,26 @@ class Games
       	mysql_select_db (Config::dbSchema);
 	}
 	
+
+	/**
+     * Fetch all games
+     * @returns Object Recordset for each Game.
+     */
+	public function getGames()
+	{
+	    $query = "SELECT * FROM games";
+		$rs = @mysql_query($query);
+		if (mysql_error())  return new returnData(3, NULL, 'SQL error');
+		return new returnData(0, $rs, NULL);		
+	}
+	
+	
 	
 	/**
      * Fetch the games an editor may edit
      * @returns Object Recordset for each Game.
      */
-	public function getGames($intEditorID)
+	public function getGamesForEditor($intEditorID)
 	{
 		$query = "SELECT super_admin FROM editors 
 				WHERE editor_id = '$intEditorID' LIMIT 1";
