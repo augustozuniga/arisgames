@@ -252,19 +252,27 @@
 			{
 				if(objRef != null)
 				{
-					if(objRef.getType() == GameObjectReference.CHARACTER)
+					var id:int = objRef.getID();
+					var type:String = objRef.getType();
+					if(type == GameObjectReference.CHARACTER)
 					{
-						npcs.getNpc.send(currentGameID, objRef.getID());
+						npcs.getNpc.send(currentGameID, id);
 					}
-					else if(objRef.getType() == GameObjectReference.ITEM)
+					else if(type == GameObjectReference.ITEM)
 					{
-						items.getItem.send(currentGameID, objRef.getID());
+						items.getItem.send(currentGameID, id);
 					}
-					else if(objRef.getType() == GameObjectReference.PAGE)
+					else if(type == GameObjectReference.PAGE)
 					{
-						nodes.getNode.send(currentGameID, objRef.getID());
+						nodes.getNode.send(currentGameID, id);
 					}
-					requirements.getRequirementsForObject.send(currentGameID, objRef.getType(), objRef.getID());
+					else if(type == GameObjectReference.QUEST)
+					{
+						quests.getQuest.send(currentGameID, id);
+						requirements.getRequirementsForObject.send(currentGameID, Requirement.QUEST_COMPLETE, id);
+						type = Requirement.QUEST_DISPLAY;
+					}
+					requirements.getRequirementsForObject.send(currentGameID, type, id);
 				}
 			}
 			
@@ -297,7 +305,7 @@
 				npcs.getNpcs.send(currentGameID);
 				items.getItems.send(currentGameID);
 				nodes.getNodes.send(currentGameID);
-				//getQuestList
+				quests.getQuests.send(currentGameID);
 
 				//locations.getLocations.send(currentGameID);
 				//media.getMedia.send(currentGameID);
@@ -616,7 +624,14 @@
 								reqCode++;
 							}
 						}
-						currentGameObject.addRequirement(new Requirement(ref, reqCode));
+						if(obj.content_type == Requirement.QUEST_COMPLETE)
+						{
+							(currentGameObject as Quest).addObjective(new Requirement(ref, reqCode));
+						}
+						else
+						{
+							currentGameObject.addRequirement(new Requirement(ref, reqCode));							
+						}
 					}
 				}				
 			}

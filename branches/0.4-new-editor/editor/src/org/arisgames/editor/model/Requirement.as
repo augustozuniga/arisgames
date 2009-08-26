@@ -11,6 +11,8 @@ package org.arisgames.editor.model
 		public static const DOES_NOT_HAVE_ITEM:String = "DOES_NOT_HAVE_ITEM";
 		public static const HAS_EVENT:String = "HAS_EVENT";
 		public static const HAS_ITEM:String = "HAS_ITEM";
+		public static const QUEST_COMPLETE:String = "QuestComplete";
+		public static const QUEST_DISPLAY:String = "QuestDisplay";
 		public static const REQUIREMENT_TYPES_ITEM:Array = ["currently has", "does not currently have", "has ever looked at", "has never looked at"];
 		public static const REQUIREMENT_TYPES_PAGE:Array = ["has seen", "has never seen"];
 		
