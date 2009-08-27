@@ -5,6 +5,7 @@ package org.arisgames.editor.model
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	
+	[Bindable]
 	public class Requirement extends EventDispatcher
 	{	
 		public static const DOES_NOT_HAVE_EVENT:String = "DOES_NOT_HAVE_EVENT";
@@ -16,7 +17,7 @@ package org.arisgames.editor.model
 		public static const REQUIREMENT_TYPES_ITEM:Array = ["currently has", "does not currently have", "has ever looked at", "has never looked at"];
 		public static const REQUIREMENT_TYPES_PAGE:Array = ["has seen", "has never seen"];
 		
-		[Bindable] public var requirementTypesDataProvider:ArrayCollection;
+		public var requirementTypesDataProvider:ArrayCollection;
 		
 		private var ref:GameObjectReference;
 		private var code:int;

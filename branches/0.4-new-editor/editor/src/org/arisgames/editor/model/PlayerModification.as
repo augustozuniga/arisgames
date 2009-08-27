@@ -3,12 +3,13 @@ package org.arisgames.editor.model
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	
+	[Bindable]
 	public class PlayerModification
 	{
 		public static const DB_CODES:Array = ["GIVE_ITEM", "TAKE_ITEM"];
 		public static const MODIFICATION_TYPES:Array = ["give the player", "take from the player"];
 		
-		public var modificationTypesDataProvier:ArrayCollection;
+		public var modificationTypesDataProvider:ArrayCollection;
 		
 		private var ref:GameObjectReference;
 		private var type:String;
@@ -25,7 +26,7 @@ package org.arisgames.editor.model
 			{
 				Alert.show("Error in PlayerModification constructor: unrecognized typeCode");
 			}
-			this.modificationTypesDataProvier = new ArrayCollection(DB_CODES);
+			this.modificationTypesDataProvider = new ArrayCollection(MODIFICATION_TYPES);
 		}
 		
 		public function get label():String
@@ -36,6 +37,24 @@ package org.arisgames.editor.model
 		public function get modificationType():String
 		{
 			return type;
+		}
+		
+		public function set modificationType(newType:String):void
+		{
+			var index:int;
+			index = MODIFICATION_TYPES.indexOf(newType);
+			if(index >= 0)
+			{
+				this.type = newType;
+			}
+			else
+			{
+				index = DB_CODES.indexOf(newType);
+				if(index >= 0)
+				{
+					this.type = MODIFICATION_TYPES[index];
+				}				
+			}
 		}
 
 	}
