@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" xmlns:view="org.arisgames.editor.view.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import org.arisgames.editor.model.Quest;
+			import org.arisgames.editor.model.Page;
+			import org.arisgames.editor.model.Item;
+			import org.arisgames.editor.model.Character;
+			import org.arisgames.editor.model.GameObject;
+			import org.arisgames.editor.model.GameObjectReference;
+			import org.arisgames.editor.model.Folder;
+			
+			import org.arisgames.editor.controller.Controller;
+			import org.arisgames.editor.model.Model;
+			
+			[Bindable] private var currentController:Controller;
+			[Bindable] private var currentModel:Model;
+			
+			public function getGameName():String
+			{
+				return gameNameTextInput.text;
+			}
+			
+			public function getSelectedGameObject():GameObjectReference
+			{
+				return objectNavigator.selectedItem as GameObjectReference;
+			}
+			
+			public function setController(newController:Controller):void
+			{
+				currentController = newController;
+			}
+			
+			public function setModel(newModel:Model):void
+			{
+				currentModel = newModel;
+			}
+
+			public function update():void
+			{
+				gameNameTextInput.text = currentModel.getCurrentGameName();
+				for each(var folder:Folder in objectNavigator.dataProvider)
+				{
+					objectNavigator.expandItem(folder, true);
+					var currentGameObject:GameObject = currentModel.getCurrentGameObject();
+					if(currentGameObject == null)
+					{
+						propertiesView.drop(leftView);
+						propertiesView.drop(middleView);
+						propertiesView.drop(rightView);
+					}
+					else
+					{
+						propertiesView.addChild(leftView);
+						propertiesView.addChild(middleView);
+						propertiesView.addChild(rightView);
+						gameObjectNameTextInput.text = currentGameObject.getName();
+						gameObjectMediaLabel.text = currentGameObject.getMediaFileName();
+						gameObjectDescriptionTextArea.text = currentGameObject.getDescription();
+						requirementsDataGrid.dataProvider = currentGameObject.requirementsArrayCollection;
+						if(currentGameObject is Character)
+						{
+							gameObjectGreetingTextArea.text = (currentGameObject as Character).getGreeting();
+							leftView.addChild(greetingView);
+							leftView.drop(completedDescriptionView);
+							choicesDataGrid.dataProvider = (currentGameObject as Character).choicesArrayCollection;
+							middleView.addChild(choicesDataGrid);
+							rightView.drop(itemSpecificPropertiesView);
+							rightView.drop(modificationsDataGrid);
+						}
+						else if(currentGameObject is Item)
+						{
+							leftView.drop(greetingView);
+							leftView.drop(completedDescriptionView);
+							middleView.drop(choicesDataGrid);
+							destroyableCheckBox.selected = (currentGameObject as Item).isDestroyable();
+							droppableCheckBox.selected = (currentGameObject as Item).isDroppable();
+							rightView.addChild(itemSpecificPropertiesView);
+							modificationsDataGrid.dataProvider = (currentGameObject as Item).modificationsArrayCollection;
+							rightView.addChild(modificationsDataGrid);
+						}
+						else if(currentGameObject is Page)
+						{
+							leftView.drop(greetingView);
+							leftView.drop(completedDescriptionView);
+							choicesDataGrid.dataProvider = (currentGameObject as Page).choicesArrayCollection;
+							middleView.addChild(choicesDataGrid);
+							rightView.drop(itemSpecificPropertiesView);
+							modificationsDataGrid.dataProvider = (currentGameObject as Page).modificationsArrayCollection;
+							rightView.addChild(modificationsDataGrid);
+						}
+						else if(currentGameObject is Quest)
+						{
+							leftView.drop(greetingView);
+							gameObjectCompletedDescriptionTextArea.text = (currentGameObject as Quest).getCompletedDescription();
+							leftView.addChild(completedDescriptionView);
+							middleView.drop(choicesDataGrid);
+							rightView.drop(itemSpecificPropertiesView);
+							rightView.drop(modificationsDataGrid);
+						}
+					}
+				}
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:VBox width="200" height="100%">
+		<mx:HBox width="100%"
+			borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2">
+			<mx:Label text="Game Name:"/>
+			<mx:TextInput id="gameNameTextInput"
+				width="100%"
+				focusOut="currentController.onGameNameTextInputFocusOut(event)"/>
+		</mx:HBox>
+
+		<view:ObjectNavigator id="objectNavigator"
+			borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2"
+			dataProvider="{currentModel.gameObjectsArrayCollection}"
+			labelField="label"
+			click="currentController.onObjectNavigatorClick(event)"
+			dragEnabled="true"/>
+
+		<mx:HBox width="100%">
+			<mx:Button id="mainMenuButton"
+				height="100%"
+				label="Main Menu"
+				click="currentController.onMainMenuButtonClick(event)"/>
+			<mx:Spacer width="100%"/>
+			<mx:Canvas id="discardCanvas"
+				height="40" width="40"
+				backgroundColor="#FFFFFF"
+				borderColor="#880000" borderStyle="solid" borderThickness="2" cornerRadius="2"
+				dragEnter="currentController.onDiscardCanvasDragEnter(event)"
+				dragDrop="currentController.onDiscardCanvasDragDrop(event)"/>
+		</mx:HBox>
+	</mx:VBox>
+
+	<mx:VBox width="100%" height="100%">
+		<mx:HBox width="100%" height="{previewCanvas.height}">
+			<mx:TabNavigator id="tabNavigator"
+				height="100%" width="100%">
+				<view:MapContainer id="mapContainer"
+					label="GPS Map"
+					dragEnter="currentController.onMapContainerDragEnter(event)"
+					dragDrop="currentController.onMapContainerDragDrop(event)"/>
+				<mx:Canvas id="qrCodeContainer"
+					label="QR Codes"
+					borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2"
+					dragEnter="currentController.onQRCodeContainerDragEnter(event)"
+					dragDrop="currentController.onQRCodeContainerDragDrop(event)"/>					
+			</mx:TabNavigator>
+			<mx:Canvas id="previewCanvas"
+				height="370" width="320"
+				borderColor="#888888" borderStyle="solid" borderThickness="2" cornerRadius="2"
+				backgroundColor="#000000"/>
+		</mx:HBox>
+		<view:SmartHBox id="propertiesView" 
+			width="100%" height="100%"
+			borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2">
+
+			<view:SmartVBox id="leftView"
+				width="100%" height="100%">
+				<mx:HBox width="100%">
+					<mx:Label text="Name:"/>
+					<mx:TextInput id="gameObjectNameTextInput" 
+						width="100%"/>
+				</mx:HBox>
+				<mx:HBox width="100%">
+					<mx:Label text="Media:"/>
+					<mx:Label id="gameObjectMediaLabel"
+						width="100%"/>
+				</mx:HBox>
+				<mx:Label id="descriptionLabel"
+					text="Description"/>
+				<mx:TextArea id="gameObjectDescriptionTextArea"
+					height="100%" width="100%"
+					editable="true"/>
+
+				<mx:VBox id="greetingView"
+					height="100%" width="100%">
+					<mx:Label text="Greeting"/>
+					<mx:TextArea id="gameObjectGreetingTextArea"
+						height="100%" width="100%"
+						editable="true"/>					
+				</mx:VBox>
+				
+				<mx:VBox id="completedDescriptionView"
+					height="100%" width="100%">
+					<mx:Label text="Description after Quest is Completed"/>
+					<mx:TextArea id="gameObjectCompletedDescriptionTextArea"
+						height="100%" width="100%"
+						editable="true"/>					
+				</mx:VBox>
+
+			</view:SmartVBox>
+
+			<view:SmartVBox id="middleView"
+				width="100%" height="100%">
+
+				<mx:DataGrid id="requirementsDataGrid"
+					width="100%" height="100%"
+					editable="true" horizontalScrollPolicy="auto"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="requirementType"
+							headerText="Requirement Type"
+							editable="true" draggable="false" width="150">
+							<mx:itemEditor>
+								<mx:Component>
+									<mx:ComboBox dataProvider="{data.requirementTypesDataProvider}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>							
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
+
+				<mx:DataGrid id="choicesDataGrid"
+					width="100%" height="100%"
+					editable="true" horizontalScrollPolicy="auto"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false" width="150"/>
+						<mx:DataGridColumn dataField="choiceText"
+							headerText="Choice Description"
+							editable="true" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
+				
+			</view:SmartVBox>
+
+			<view:SmartVBox id="rightView"
+				width="100%" height="100%">
+				
+				<mx:DataGrid id="modificationsDataGrid"
+					width="100%" height="100%"
+					editable="true" horizontalScrollPolicy="auto"
+					allowMultipleSelection="false">
+					<mx:columns>
+						<mx:DataGridColumn dataField="modificationType"
+							headerText="Action Type"
+							editable="true" draggable="false" width="150">
+							<mx:itemEditor>
+								<mx:Component>
+									<mx:ComboBox dataProvider="{data.modificationTypesDataProvider}"/>
+								</mx:Component>
+							</mx:itemEditor>
+						</mx:DataGridColumn>							
+						<mx:DataGridColumn dataField="label"
+							headerText="Game Object"
+							editable="false" draggable="false"/>
+					</mx:columns>
+				</mx:DataGrid>
+				
+				<mx:VBox id="itemSpecificPropertiesView"
+					width="100%">
+					<mx:Label text="All copies of this item are..."/>
+					<mx:HBox 
+						width="100%">
+						<mx:Canvas  width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+							<mx:VBox horizontalCenter="0">
+								<mx:Label text="Droppable"/>
+								<mx:HBox>
+									<mx:CheckBox id="droppableCheckBox"
+										change="currentController.onDroppableCheckBoxChange(event)"/>
+									<mx:Image width="60" height="60" horizontalCenter="0"/>
+								</mx:HBox>
+							</mx:VBox>
+						</mx:Canvas>
+						<mx:Canvas  width="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+							<mx:VBox horizontalCenter="0">
+								<mx:Label text="Destroyable"/>
+								<mx:HBox>
+									<mx:CheckBox id="destroyableCheckBox"
+										change="currentController.onDestroyableCheckBoxChange(event)"/>
+									<mx:Image width="60" height="60" horizontalCenter="0"/>																
+								</mx:HBox>
+							</mx:VBox>
+						</mx:Canvas>					
+					</mx:HBox>
+				</mx:VBox>
+
+			</view:SmartVBox>
+
+		</view:SmartHBox>
+	</mx:VBox>
+	
+</mx:HBox>
