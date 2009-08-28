@@ -16,6 +16,11 @@
 #import "ARISAppDelegate.h"
 
 #import "Item.h"
+#import "JSONConnection.h"
+#import "JSONResult.h"
+#import "JSON.h"
+
+
 
 static NSString *nearbyLock = @"nearbyLock";
 static NSString *locationsLock = @"locationsLock";
@@ -26,9 +31,11 @@ NSDictionary *InventoryElements;
 
 @synthesize serverName;
 @synthesize baseAppURL;
+@synthesize jsonServerBaseURL;
 @synthesize loggedIn;
 @synthesize username;
 @synthesize password;
+@synthesize playerId;
 @synthesize currentModule;
 @synthesize site;
 @synthesize gameList;
@@ -44,6 +51,8 @@ NSDictionary *InventoryElements;
     if (self = [super init]) {
 		//Init USerDefaults
 		defaults = [NSUserDefaults standardUserDefaults];
+		
+		jsonServerBaseURL = @"http://davembp.local/editor/server/json.php/aris";
 		
 		//Init Inventory XML Parsing info
 		if (InventoryElements == nil) {	
@@ -147,20 +156,30 @@ NSDictionary *InventoryElements;
 
 
 - (BOOL)login {
-	BOOL loginSuccessful = NO;
+		
+	NSArray *arguments = [NSArray arrayWithObjects:self.username, self.password, nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName: @"players" 
+																	andMethodName:@"login"
+																	andArguments:arguments]; 
+
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest];
 	
-	//Check with the Server
-	NSURLRequest *keyRequest = [self getURLForModule:@"RESTLogin"];
-	NSData *loginData = [self fetchURLData:keyRequest];
-	NSString *loginResponse = [[NSString alloc] initWithData:loginData encoding:NSASCIIStringEncoding];
 	
+	int returnCode = jsonResult.returnCode;
+	NSLog(@"AppModel: JSONresultCode: %d", returnCode);
+
 	//handle login response
-	if([loginResponse isEqual:@"1"]) {
+	if(returnCode == 0) {
 		loginSuccessful = YES;
+		loggedIn = YES;
+		playerId = [((NSDecimalNumber*)jsonResult.data) intValue];
+	}
+	else {
+		BOOL loginSuccessful = NO;	
 	}
 	
-	loggedIn = loginSuccessful;
-	
+	self.loggedIn = loginSuccessful;
 	return loginSuccessful;
 }
 
@@ -232,28 +251,37 @@ NSDictionary *InventoryElements;
 - (void)fetchGameList {
 	NSLog(@"AppModel: Fetching Game List.");
 	
-	//init location list array
-	if(gameList != nil) {
-		[gameList release];
+	//Call server service
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"games" 
+																	 andMethodName:@"getGames" andArguments:nil];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	
+	//Build the game list
+	NSMutableArray *tempGameList = [[NSMutableArray alloc] init];
+	NSEnumerator *gamesEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
+	NSDictionary *gameDictionary;
+	while (gameDictionary = [gamesEnumerator nextObject]) {
+		//create a new game
+		Game *game = [[Game alloc] init];
+		game.gameId = [gameDictionary valueForKey:@"game_id"];
+		game.name = [gameDictionary valueForKey:@"name"];
+		NSString *prefix = [gameDictionary valueForKey:@"prefix"];
+		//parse out the trailing _ in the prefix
+		game.site = [prefix substringToIndex:[prefix length] - 1];
+		NSLog(@"Model: Adding Game: %@", game.name);
+		[tempGameList addObject:game]; 
 	}
-	gameList = [NSMutableArray array];
-	[gameList retain];
 	
-	//Fetch the Data
-	NSURLRequest *request = [self getURLForModule:@"RESTSelectGame"];
-	NSData *data = [self fetchURLData:request];
-
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-	GameListParserDelegate *gameListParserDelegate = [[GameListParserDelegate alloc] initWithGameList:gameList];
+	self.gameList = [NSArray arrayWithArray:tempGameList];
 	
-	[parser setDelegate:gameListParserDelegate];
+	//Tell everyone
+	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
+	NSLog(@"GameListParser: Finished Building the Game List");
+	NSNotification *gameListNotification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
+	[[NSNotificationCenter defaultCenter] postNotification:gameListNotification];
 	
-	//init parser
-	[parser setShouldProcessNamespaces:NO];
-	[parser setShouldReportNamespacePrefixes:NO];
-	[parser setShouldResolveExternalEntities:NO];
-	[parser parse];
-	[parser release];
 }
 
 
