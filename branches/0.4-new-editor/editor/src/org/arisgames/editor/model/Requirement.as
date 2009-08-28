@@ -16,16 +16,21 @@ package org.arisgames.editor.model
 		public static const QUEST_DISPLAY:String = "QuestDisplay";
 		public static const REQUIREMENT_TYPES_ITEM:Array = ["currently has", "does not currently have", "has ever looked at", "has never looked at"];
 		public static const REQUIREMENT_TYPES_PAGE:Array = ["has seen", "has never seen"];
+		public static const ADD:String = "addRequirement";
+		public static const DELETE:String = "deleteRequirement";
+		public static const MODIFY:String = "modifyRequirement";
 		
 		public var requirementTypesDataProvider:ArrayCollection;
 		
 		private var ref:GameObjectReference;
 		private var code:int;
+		private var id:int;
 		
-		public function Requirement(objRef:GameObjectReference, code:int)
+		public function Requirement(objRef:GameObjectReference, code:int, id:int)
 		{
 			this.ref = objRef;
 			this.code = code;
+			this.id = id;
 			if(ref.getType() == GameObjectReference.ITEM)
 			{
 				this.requirementTypesDataProvider = new ArrayCollection(REQUIREMENT_TYPES_ITEM);
@@ -34,6 +39,11 @@ package org.arisgames.editor.model
 			{
 				this.requirementTypesDataProvider = new ArrayCollection(REQUIREMENT_TYPES_PAGE);
 			}
+		}
+		
+		public function differs(altReq:Requirement):Boolean
+		{
+			return (this.requirementType != altReq.requirementType);
 		}
 		
 		public function get label():String
@@ -54,6 +64,11 @@ package org.arisgames.editor.model
 			}
 			Alert.show("Error in Requirement.requirementType: bad object type");
 			return null;			
+		}
+		
+		public function getID():int
+		{
+			return this.id;
 		}
 		
 		public function set requirementType(newType:String):void

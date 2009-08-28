@@ -8,9 +8,7 @@ package org.arisgames.editor.model
 	[Bindable]
 	public class GameObject
 	{
-		public static const DESCRIPTION:String = "description";
-		public static const MEDIA:String = "media";
-		public static const REQUIREMENTS:String = "requirements";
+		public static const MODIFY:String = "modifyObject";
 		
 		public var requirementsArrayCollection:ArrayCollection;
 		
@@ -19,9 +17,11 @@ package org.arisgames.editor.model
 		private var media:String;
 		private var requirements:Array;
 		
-		private static var descriptionSnapshot:String;
-		private static var mediaSnapshot:String;
-		private static var requirementsSnapshot:Array;
+		//snapshot properties
+		private var nameSnapshot:String;
+		private var descriptionSnapshot:String;
+		private var mediaSnapshot:String;
+		private var requirementsSnapshot:Array;
 		
 		public function GameObject(reference:GameObjectReference, description:String, media:String, requirements:Array)
 		{
@@ -37,6 +37,11 @@ package org.arisgames.editor.model
 			requirements.push(newRequirement);
 		}
 		
+		public function getID():int
+		{
+			return ref.getID();
+		}
+		
 		public function getName():String
 		{
 			return ref.label;
@@ -45,6 +50,51 @@ package org.arisgames.editor.model
 		public function getDescription():String
 		{
 			return description;
+		}
+		
+		//NOTE THAT AS IMPLEMENTED, THIS FUNCTION DESTROYS THE FIDELITY OF THE SNAPSHOT!!
+		public function getDifferences():Array
+		{
+			var differences:Array = new Array();
+			if(this.ref.label != nameSnapshot || this.description != descriptionSnapshot || this.media != mediaSnapshot)
+			{
+				differences.push(GameObject.MODIFY);
+			}
+			for each(var req:Requirement in requirements)
+			{
+				var found:Boolean = false;
+				var index:int = 0;
+				while(!found && index < requirementsSnapshot.length)
+				{
+					if((requirementsSnapshot[index] as Requirement).getID() == req.getID())
+					{
+						found = true;
+					}
+					else
+					{
+						index++;
+					}
+				}
+				if(found)
+				{
+					if((requirementsSnapshot[index] as Requirement).differs(req))
+					{
+						differences.push(Requirement.MODIFY + req.getID().toString());
+						requirementsSnapshot.splice(index, 1); // this is the line that destroys the snapshot fidelity
+															   // it is here to increase performance
+															   // if you remove it, make sure to adjust the next for each to compensate
+					}
+				}
+				else
+				{
+					differences.push(Requirement.ADD + req.getID());
+				}
+			}
+			for each(var remainingReq:Requirement in requirementsSnapshot)
+			{
+				differences.push(Requirement.DELETE + remainingReq.getID());
+			}
+			return differences;
 		}
 		
 		public function getMediaFileName():String
@@ -57,13 +107,24 @@ package org.arisgames.editor.model
 			return requirements;
 		}
 		
+		public function getType():String
+		{
+			return this.ref.getType();
+		}
+		
 		public function removeRequirement(req:Requirement):void
 		{
 			requirements.splice(requirements.indexOf(req), 1);
 		}
 		
+		public function setName(newName:String):void
+		{
+			this.ref.label = newName;
+		}
+		
 		public function takeSnapshot():void
 		{
+			nameSnapshot = ref.label;
 			descriptionSnapshot = description;
 			mediaSnapshot = media;
 			requirementsSnapshot = new Array();

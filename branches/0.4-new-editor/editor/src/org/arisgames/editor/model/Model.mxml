@@ -248,6 +248,12 @@
 				currentGameName = newName;
 			}
 			
+			public function updateGameObjectName(newName:String):void
+			{
+				currentGameObject.setName(newName);
+				gameObjectsArrayCollection.itemUpdated(gameObjectsArray);
+			}
+			
 			public function setCurrentGameObject(objRef:GameObjectReference):void
 			{
 				updateCurrentGame();
@@ -262,10 +268,12 @@
 					else if(type == GameObjectReference.ITEM)
 					{
 						items.getItem.send(currentGameID, id);
+						playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, type, id);
 					}
 					else if(type == GameObjectReference.PAGE)
 					{
 						nodes.getNode.send(currentGameID, id);
+						playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, type, id);
 					}
 					else if(type == GameObjectReference.QUEST)
 					{
@@ -460,7 +468,7 @@
 					currentGameObject = new Item(getGameObjectReference(event.result.data.item_id, GameObjectReference.ITEM),
 												 event.result.data.description, event.result.data.media, requirements, playerModifications,
 												 int(event.result.data.dropable) == 1, int(event.result.data.destroyable) == 1);
-					playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, GameObjectReference.ITEM, int(event.result.data.item_id));
+					currentGameObject.takeSnapshot();
 					updateView();				 
 				}
 			}
@@ -478,6 +486,11 @@
 					gameObjectsArrayCollection.itemUpdated(itemFolder);
 					updateView();
 				}
+			}
+			
+			private function on_items_updateItemResult(event:ResultEvent):void
+			{ //takes gameID, itemID, name, descr, media, returns true if successful
+				filterErrors(event, "items.updateItem");	
 			}
 			
 			private function on_nodes_getNodeResult(event:ResultEvent):void
@@ -504,7 +517,7 @@
 					}
 					currentGameObject = new Page(getGameObjectReference(event.result.data.node_id, GameObjectReference.PAGE),
 												 event.result.data.text, event.result.data.media, requirements, playerModifications, choices);
-					playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, GameObjectReference.PAGE, int(event.result.data.node_id));
+					currentGameObject.takeSnapshot();
 					updateView();				 
 				}				
 			}
@@ -546,6 +559,7 @@
 												 event.result.data.description, event.result.data.media, requirements, choices,
 												 event.result.data.text);
 					npcs.getConversations.send(currentGameID, int(event.result.data.npc_id));
+					currentGameObject.takeSnapshot();
 					updateView();				 
 				}								
 			}
@@ -563,6 +577,11 @@
 					gameObjectsArrayCollection.itemUpdated(characterFolder);
 					updateView();
 				}				
+			}
+			
+			private function on_npcs_updateNpcResult(event:ResultEvent):void
+			{ //takes gameID, npcID, name, descr, greeting, media, returns true on success
+				filterErrors(event, "npcs.updateNpc");
 			}
 			
 			private function on_playerStateChanges_getPlayerStateChangesForObjectResult(event:ResultEvent):void
@@ -583,6 +602,7 @@
 						}						
 					}
 				}
+				currentGameObject.takeSnapshot();
 			}
 			
 			private function on_quests_getQuestResult(event:ResultEvent):void
@@ -594,6 +614,7 @@
 					currentGameObject = new Quest(getGameObjectReference(event.result.data.quest_id, GameObjectReference.QUEST),
 												  event.result.data.description, event.result.data.media, requirements, objectives,
 												  event.result.data.text_when_complete);
+					currentGameObject.takeSnapshot();
 					updateView();				 
 				}								
 			}
@@ -645,19 +666,66 @@
 						}
 						if(obj.content_type == Requirement.QUEST_COMPLETE)
 						{
-							(currentGameObject as Quest).addObjective(new Requirement(ref, reqCode));
+							(currentGameObject as Quest).addObjective(new Requirement(ref, reqCode, obj.requirement_id));
 						}
 						else
 						{
-							currentGameObject.addRequirement(new Requirement(ref, reqCode));							
+							currentGameObject.addRequirement(new Requirement(ref, reqCode, obj.requirement_id));							
 						}
 					}
-				}				
+				}
+				currentGameObject.takeSnapshot();
 			}
 			
 			private function updateCurrentGame():void
 			{
-				
+				if(currentGameObject != null)
+				{					
+					var differences:Array = currentGameObject.getDifferences();
+					for each(var diff:String in differences)
+					{
+						if(diff == GameObject.MODIFY)
+						{
+							if(currentGameObject is Character)
+							{
+								npcs.updateNpc.send(currentGameID,
+													currentGameObject.getID(),
+													currentGameObject.getName(),
+													currentGameObject.getDescription(),
+													(currentGameObject as Character).getGreeting(),
+													currentGameObject.getMediaFileName()
+													);
+							}
+							else if(currentGameObject is Item)
+							{//takes gameID, itemID, name, descr, media, droppable, destroyable, returns true if successful
+								items.updateItem.send(currentGameID,
+													  currentGameObject.getID(),
+													  currentGameObject.getName(),
+													  currentGameObject.getDescription(),
+													  currentGameObject.getMediaFileName(),
+													  (currentGameObject as Item).isDroppable(),
+													  (currentGameObject as Item).isDestroyable()
+													  );
+							}
+							else if(currentGameObject is Page)
+							{
+								
+							}
+						}
+						else if(diff == Requirement.ADD)
+						{
+							
+						}
+						else if(diff == Requirement.DELETE)
+						{
+							
+						}
+						else if(diff == Requirement.MODIFY)
+						{
+							
+						}
+					}
+				}
 			}
 			
 			private function updateGameList():void
@@ -703,11 +771,6 @@
 			
 			private function on_items_getReferrersResult(event:ResultEvent):void
 			{ //takes gameID, itemID, returns array obj{type, id} *** check!! ***
-				
-			}
-			
-			private function on_items_updateItemResult(event:ResultEvent):void
-			{ //takes gameID, itemID, name, descr, media, returns true if successful
 				
 			}
 			
@@ -833,11 +896,6 @@
 			
 			private function on_npcs_updateConversationResult(event:ResultEvent):void
 			{ //takes gameID, conversationID, newNpcID, newNodeID, newText, returns true on success
-				
-			}
-			
-			private function on_npcs_updateNpcResult(event:ResultEvent):void
-			{ //takes gameID, npcID, name, descr, greeting, media, returns true on success
 				
 			}
 			
