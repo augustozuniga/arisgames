@@ -117,6 +117,11 @@ package org.arisgames.editor.model
 			requirements.splice(requirements.indexOf(req), 1);
 		}
 		
+		public function setDescription(newDescription:String):void
+		{
+			this.description = newDescription;
+		}
+		
 		public function setName(newName:String):void
 		{
 			this.ref.label = newName;

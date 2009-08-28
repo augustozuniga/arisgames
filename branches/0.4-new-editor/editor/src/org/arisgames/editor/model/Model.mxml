@@ -248,6 +248,11 @@
 				currentGameName = newName;
 			}
 			
+			public function updateGameObjectDescription(newDescription:String):void
+			{
+				currentGameObject.setDescription(newDescription);
+			}
+			
 			public function updateGameObjectName(newName:String):void
 			{
 				currentGameObject.setName(newName);

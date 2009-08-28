@@ -29,6 +29,16 @@
 				return null;
 			}
 			
+			public function getObjectDescription():String
+			{
+				return editingView.getObjectDescription();
+			}
+			
+			public function getObjectName():String
+			{
+				return editingView.getObjectName();
+			}
+			
 			public function getPassword():String
 			{
 				return mainMenuView.getPassword();

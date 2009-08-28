@@ -22,6 +22,16 @@
 				return gameNameTextInput.text;
 			}
 			
+			public function getObjectDescription():String
+			{
+				return gameObjectDescriptionTextArea.text;
+			}
+			
+			public function getObjectName():String
+			{
+				return gameObjectNameTextInput.text;
+			}
+			
 			public function getSelectedGameObject():GameObjectReference
 			{
 				return objectNavigator.selectedItem as GameObjectReference;
@@ -177,7 +187,8 @@
 					text="Description"/>
 				<mx:TextArea id="gameObjectDescriptionTextArea"
 					height="100%" width="100%"
-					editable="true"/>
+					editable="true"
+					focusOut="currentController.onGameObjectDescriptionTextAreaFocusOut(event)"/>
 
 				<mx:VBox id="greetingView"
 					height="100%" width="100%">

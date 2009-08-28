@@ -1,7 +1,9 @@
 package org.arisgames.editor.controller
 {
 	import flash.events.Event;
+	import flash.events.FocusEvent;
 	
+	import mx.controls.TextArea;
 	import mx.controls.TextInput;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
@@ -61,9 +63,14 @@ package org.arisgames.editor.controller
 			currentModel.updateCurrentGameName(currentView.getGameName());
 		}
 		
+		public function onGameObjectDescriptionTextAreaFocusOut(event:FocusEvent):void
+		{
+			currentModel.updateGameObjectDescription(currentView.getObjectDescription());
+		}
+		
 		public function onGameObjectNameTextInputChange(event:Event):void
 		{
-			currentModel.updateGameObjectName((event.target as TextInput).text);
+			currentModel.updateGameObjectName(currentView.getObjectName());
 		}
 		
 		public function onLoginButtonClick(event:Event):void
