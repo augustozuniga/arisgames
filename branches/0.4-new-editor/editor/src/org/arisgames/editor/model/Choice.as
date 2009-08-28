@@ -21,6 +21,11 @@ package org.arisgames.editor.model
 			return text;
 		}
 		
+		public function getID():int
+		{
+			return ref.getID();
+		}
+		
 		public function set choiceText(newText:String):void
 		{
 			text = newText;

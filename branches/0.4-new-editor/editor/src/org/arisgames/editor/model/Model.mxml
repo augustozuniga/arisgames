@@ -494,7 +494,7 @@
 			}
 			
 			private function on_items_updateItemResult(event:ResultEvent):void
-			{ //takes gameID, itemID, name, descr, media, returns true if successful
+			{ //takes gameID, itemID, name, descr, media, droppable, destroyable, returns true if successful
 				filterErrors(event, "items.updateItem");	
 			}
 			
@@ -540,6 +540,11 @@
 					gameObjectsArrayCollection.itemUpdated(pageFolder);
 					updateView();
 				}				
+			}
+			
+			private function on_nodes_updateNodeResult(event:ResultEvent):void
+			{ //takes gameID, nodeID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeid, opt3text, opt3nodeid, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns true if successful
+				filterErrors(event, "nodes.updateNode");
 			}
 			
 			private function on_npcs_getConversationsResult(event:ResultEvent):void
@@ -639,6 +644,11 @@
 				}				
 			}
 			
+			private function on_quests_updateQuestResult(event:ResultEvent):void
+			{ //takes gameID, questID, name, incompleteDescr, completeDescr, media, returns true if successful
+				filterErrors(event, "quests.updateQuest");
+			}
+			
 			private function on_requirements_getRequirementsForObjectResult(event:ResultEvent):void
 			{
 				if(filterErrors(event, "requirements.getRequirementsForObjectResult"))
@@ -702,19 +712,55 @@
 													);
 							}
 							else if(currentGameObject is Item)
-							{//takes gameID, itemID, name, descr, media, droppable, destroyable, returns true if successful
+							{
+								var destroyable:int = 0;
+								var droppable:int = 0;
+								if((currentGameObject as Item).isDestroyable())
+								{
+									destroyable = 1;
+								}
+								if((currentGameObject as Item).isDroppable())
+								{
+									droppable = 1;
+								}
 								items.updateItem.send(currentGameID,
 													  currentGameObject.getID(),
 													  currentGameObject.getName(),
 													  currentGameObject.getDescription(),
 													  currentGameObject.getMediaFileName(),
-													  (currentGameObject as Item).isDroppable(),
-													  (currentGameObject as Item).isDestroyable()
+													  droppable, destroyable
 													  );
 							}
 							else if(currentGameObject is Page)
+							{//takes gameID, nodeID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeid, opt3text, opt3nodeid, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns true if successful
+								var choices:Array = (currentGameObject as Page).getChoices();
+								while(choices.length < Page.MAX_NUM_CHOICES)
+								{// fill in empty choices with blank data
+									choices.push(new Choice(new GameObjectReference(0, "", ""), ""));
+								} 
+								nodes.updateNode.send(currentGameID,
+													  currentGameObject.getID(),
+													  currentGameObject.getName(),
+													  currentGameObject.getDescription(),
+													  currentGameObject.getMediaFileName(),
+													  (choices[0] as Choice).choiceText,
+													  (choices[0] as Choice).getID(),
+													  (choices[1] as Choice).choiceText,
+													  (choices[1] as Choice).getID(),
+													  (choices[2] as Choice).choiceText,
+													  (choices[2] as Choice).getID(),
+													  "", 0, 0
+													  );													  
+							}
+							else if(currentGameObject is Quest)
 							{
-								
+								quests.updateQuest.send(currentGameID,
+														currentGameObject.getID(),
+														currentGameObject.getName(),
+														currentGameObject.getDescription(),
+														(currentGameObject as Quest).getCompletedDescription(),
+														currentGameObject.getMediaFileName()
+														);
 							}
 						}
 						else if(diff == Requirement.ADD)
@@ -869,11 +915,6 @@
 				
 			}
 			
-			private function on_nodes_updateNodeResult(event:ResultEvent):void
-			{ //takes gameID, nodeID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeid, opt3text, opt3nodeid, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns true if successful
-				
-			}
-			
 			private function on_npcs_createConversationResult(event:ResultEvent):void
 			{ //takes gameID, npcID, nodeID, text, returns conversationID
 				
@@ -946,11 +987,6 @@
 			
 			private function on_quests_deleteQuestResult(event:ResultEvent):void
 			{ //takes gameID, questID, returns true if successful
-				
-			}
-			
-			private function on_quests_updateQuestResult(event:ResultEvent):void
-			{ //takes gameID, questID, name, incompleteDescr, completeDescr, media, returns true if successful
 				
 			}
 			

@@ -1,9 +1,12 @@
 package org.arisgames.editor.model
 {
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
 	
 	public class Page extends GameObject
 	{
+		public static const MAX_NUM_CHOICES:int = 3;
+		
 		public var choicesArrayCollection:ArrayCollection;
 		public var modificationsArrayCollection:ArrayCollection;
 		
@@ -26,8 +29,15 @@ package org.arisgames.editor.model
 		
 		public function addChoice(newChoice:Choice):void
 		{
-			choices.push(newChoice);
-			choicesArrayCollection.itemUpdated(choices);
+			if(choices.length < MAX_NUM_CHOICES)
+			{
+				choices.push(newChoice);
+				choicesArrayCollection.itemUpdated(choices);		
+			}
+			else
+			{
+				Alert.show("A Page cannot contain more than three choices");
+			}
 		}
 		
 		public function addPlayerModification(newModification:PlayerModification):void
