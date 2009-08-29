@@ -8,7 +8,6 @@
 
 #import "AppModel.h"
 
-#import "GameListParserDelegate.h"
 #import "LocationListParserDelegate.h"
 #import "NearbyLocationsListParserDelegate.h"
 
@@ -154,9 +153,10 @@ NSDictionary *InventoryElements;
 	[defaults registerDefaults:initDefaults];
 }
 
+#pragma mark Communication with Server
 
 - (BOOL)login {
-		
+	BOOL loginSuccessful;	
 	NSArray *arguments = [NSArray arrayWithObjects:self.username, self.password, nil];
 	JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName: @"players" 
@@ -165,88 +165,22 @@ NSDictionary *InventoryElements;
 
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest];
 	
-	
-	int returnCode = jsonResult.returnCode;
-	NSLog(@"AppModel: JSONresultCode: %d", returnCode);
-
 	//handle login response
+	int returnCode = jsonResult.returnCode;
+	NSLog(@"AppModel: Login Result Code: %d", returnCode);
 	if(returnCode == 0) {
 		loginSuccessful = YES;
 		loggedIn = YES;
 		playerId = [((NSDecimalNumber*)jsonResult.data) intValue];
 	}
 	else {
-		BOOL loginSuccessful = NO;	
+		loginSuccessful = NO;	
 	}
 	
 	self.loggedIn = loginSuccessful;
 	return loginSuccessful;
 }
 
-//Returns the complete URL for the module, including authentication
--(NSMutableURLRequest *)getURLForModule:(NSString *)moduleName {
-	NSString *urlString = [self getURLStringForModule:moduleName];
-	
-	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
-												cachePolicy:NSURLRequestUseProtocolCachePolicy
-												timeoutInterval:15.0];
-	return urlRequest;
-}
-
-//Returns the complete URL for the module, including authentication
--(NSString *)getURLStringForModule:(NSString *)moduleName {
-	NSString *URLString = [[[NSString alloc] initWithFormat:@"%@?module=%@&site=%@&user_name=%@&password=%@",
-							baseAppURL, moduleName, site, username, password] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-	NSLog(@"Model: URL String for Module was = %@",URLString);
-	return URLString;
-}
-
-//Returns the complete URL for the server
--(NSMutableURLRequest *)getURL:(NSString *)relativeURL {
-	NSString *urlString = [self getURLString:relativeURL];
-	
-	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
-												cachePolicy:NSURLRequestUseProtocolCachePolicy
-											timeoutInterval:15.0];
-	return urlRequest;
-}
-
-//Returns the complete URL for the server
--(NSString *) getURLString:(NSString *)relativeURL {
-	NSString *URLString = [[[NSString alloc] initWithFormat:@"%@%@", serverName, relativeURL]  stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-	NSLog(@"Model: URL String for Module was = %@",URLString);
-	return URLString;
-}
-
-//Returns the complete URL including the engine path
--(NSMutableURLRequest *)getEngineURL:(NSString *)relativeURL {
-	NSString *urlString = [self getEngineURLString:relativeURL];
-	
-	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
-												cachePolicy:NSURLRequestUseProtocolCachePolicy
-											timeoutInterval:15.0];
-	return urlRequest;
-}
-
-//Returns the complete URL including the engine path
--(NSString *) getEngineURLString:(NSString *)relativeURL {
-	NSString *URLString = [[[NSString alloc] initWithFormat:@"%@/%@", baseAppURL, relativeURL]  stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-	NSLog(@"Model: URL String for Module was = %@",URLString);
-	return URLString;
-}
-
-
-
--(NSData *) fetchURLData: (NSURLRequest *)request {
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	NSURLResponse *response = NULL;
-	NSError *error = NULL;
-	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	if (error != NULL) [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
-	else [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeNetworkAlert];
-	return data;
-}
 
 - (void)fetchGameList {
 	NSLog(@"AppModel: Fetching Game List.");
@@ -284,7 +218,6 @@ NSDictionary *InventoryElements;
 	
 }
 
-
 - (void)fetchLocationList {
 	@synchronized (nearbyLock) {
 	
@@ -321,39 +254,6 @@ NSDictionary *InventoryElements;
 		[parser release];
 	}
 }
-
-- (NSMutableArray *)locationList {
-	NSMutableArray *result = nil;
-	@synchronized (locationsLock) {
-		result = [locationList retain];
-	}
-	return result;
-}
-
-- (void)setLocationList:(NSMutableArray *)source {
-	@synchronized (locationsLock) {
-		locationList = [source copy];
-	}
-}
-
-
-- (NSMutableArray *)playerList {
-	NSMutableArray *result = nil;
-	@synchronized (locationsLock) {
-		result = [playerList retain];
-	}
-	return result;
-}
-
-- (void)setPlayerList:(NSMutableArray *)source {
-	@synchronized (locationsLock) {
-		playerList = [source copy];
-	}
-}
-
-
-
-
 
 - (void)fetchInventory {
 	NSLog(@"Model: Inventory Fetch Requested");
@@ -412,6 +312,9 @@ NSDictionary *InventoryElements;
 	}
 }
 
+
+#pragma mark Syncronizers
+
 - (NSMutableArray *)nearbyLocationsList {
 	NSMutableArray *result = nil;
 	@synchronized (nearbyLock) {
@@ -425,6 +328,109 @@ NSDictionary *InventoryElements;
 		nearbyLocationsList = [source copy];
 	}
 }
+
+
+
+- (NSMutableArray *)locationList {
+	NSMutableArray *result = nil;
+	@synchronized (locationsLock) {
+		result = [locationList retain];
+	}
+	return result;
+}
+
+- (void)setLocationList:(NSMutableArray *)source {
+	@synchronized (locationsLock) {
+		locationList = [source copy];
+	}
+}
+
+
+- (NSMutableArray *)playerList {
+	NSMutableArray *result = nil;
+	@synchronized (locationsLock) {
+		result = [playerList retain];
+	}
+	return result;
+}
+
+- (void)setPlayerList:(NSMutableArray *)source {
+	@synchronized (locationsLock) {
+		playerList = [source copy];
+	}
+}
+
+
+
+
+#pragma mark Old Engine Helper Functions
+//Returns the complete URL for the module, including authentication
+-(NSMutableURLRequest *)getURLForModule:(NSString *)moduleName {
+	NSString *urlString = [self getURLStringForModule:moduleName];
+	
+	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+															  cachePolicy:NSURLRequestUseProtocolCachePolicy
+														  timeoutInterval:15.0];
+	return urlRequest;
+}
+
+//Returns the complete URL for the module, including authentication
+-(NSString *)getURLStringForModule:(NSString *)moduleName {
+	NSString *URLString = [[[NSString alloc] initWithFormat:@"%@?module=%@&site=%@&user_name=%@&password=%@",
+							baseAppURL, moduleName, site, username, password] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	NSLog(@"Model: URL String for Module was = %@",URLString);
+	return URLString;
+}
+
+//Returns the complete URL for the server
+-(NSMutableURLRequest *)getURL:(NSString *)relativeURL {
+	NSString *urlString = [self getURLString:relativeURL];
+	
+	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+															  cachePolicy:NSURLRequestUseProtocolCachePolicy
+														  timeoutInterval:15.0];
+	return urlRequest;
+}
+
+//Returns the complete URL for the server
+-(NSString *) getURLString:(NSString *)relativeURL {
+	NSString *URLString = [[[NSString alloc] initWithFormat:@"%@%@", serverName, relativeURL]  stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	NSLog(@"Model: URL String for Module was = %@",URLString);
+	return URLString;
+}
+
+//Returns the complete URL including the engine path
+-(NSMutableURLRequest *)getEngineURL:(NSString *)relativeURL {
+	NSString *urlString = [self getEngineURLString:relativeURL];
+	
+	NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+															  cachePolicy:NSURLRequestUseProtocolCachePolicy
+														  timeoutInterval:15.0];
+	return urlRequest;
+}
+
+//Returns the complete URL including the engine path
+-(NSString *) getEngineURLString:(NSString *)relativeURL {
+	NSString *URLString = [[[NSString alloc] initWithFormat:@"%@/%@", baseAppURL, relativeURL]  stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	NSLog(@"Model: URL String for Module was = %@",URLString);
+	return URLString;
+}
+
+
+
+-(NSData *) fetchURLData: (NSURLRequest *)request {
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	NSURLResponse *response = NULL;
+	NSError *error = NULL;
+	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	if (error != NULL) [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
+	else [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeNetworkAlert];
+	return data;
+}
+
+
+#pragma mark Memory Management
 
 - (void)dealloc {
 	[gameList release];
