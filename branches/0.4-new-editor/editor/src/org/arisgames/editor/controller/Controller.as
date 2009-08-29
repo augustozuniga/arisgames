@@ -3,8 +3,6 @@ package org.arisgames.editor.controller
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	
-	import mx.controls.TextArea;
-	import mx.controls.TextInput;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
@@ -31,7 +29,7 @@ package org.arisgames.editor.controller
 		
 		public function onDestroyableCheckBoxChange(event:Event):void
 		{
-			
+			currentModel.updateDestroyable(currentView.getDestroyable());
 		}
 		
 		public function onDiscardCanvasDragEnter(event:DragEvent):void
@@ -50,7 +48,7 @@ package org.arisgames.editor.controller
 		
 		public function onDroppableCheckBoxChange(event:Event):void
 		{
-			
+			currentModel.updateDroppable(currentView.getDroppable());
 		}
 		
 		public function onEditGameButtonClick(event:Event):void
@@ -63,9 +61,19 @@ package org.arisgames.editor.controller
 			currentModel.updateCurrentGameName(currentView.getGameName());
 		}
 		
+		public function onGameObjectCompletedDescriptionTextAreaFocusOut(event:Event):void
+		{
+			currentModel.updateCompletedDescription(currentView.getCompletedDescription());
+		}
+		
 		public function onGameObjectDescriptionTextAreaFocusOut(event:FocusEvent):void
 		{
 			currentModel.updateGameObjectDescription(currentView.getObjectDescription());
+		}
+		
+		public function onGameObjectGreetingTextAreaFocusOut(event:FocusEvent):void
+		{
+			currentModel.updateGreeting(currentView.getGreeting());
 		}
 		
 		public function onGameObjectNameTextInputChange(event:Event):void

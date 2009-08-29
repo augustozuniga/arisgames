@@ -16,6 +16,21 @@
 			// Getters //
 			/////////////
 			
+			public function getCompletedDescription():String
+			{
+				return editingView.getCompletedDescription();
+			}
+			
+			public function getDestroyable():Boolean
+			{
+				return editingView.getDestroyable();
+			}
+			
+			public function getDroppable():Boolean
+			{
+				return editingView.getDroppable();
+			}
+			
 			public function getGameName():String
 			{
 				if(this.selectedChild == editingView)
@@ -27,6 +42,11 @@
 					return mainMenuView.getGameName();
 				}
 				return null;
+			}
+			
+			public function getGreeting():String
+			{
+				return editingView.getGreeting();
 			}
 			
 			public function getObjectDescription():String

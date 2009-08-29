@@ -243,9 +243,24 @@
 				this.gameObjectsArrayCollection = new ArrayCollection(gameObjectsArray);
 			}
 			
+			public function updateCompletedDescription(newDescription:String):void
+			{
+				(currentGameObject as Quest).setCompletedDescription(newDescription);
+			}
+			
 			public function updateCurrentGameName(newName:String):void
 			{
 				currentGameName = newName;
+			}
+			
+			public function updateDestroyable(newValue:Boolean):void
+			{
+				(currentGameObject as Item).setDestroyable(newValue);
+			}
+			
+			public function updateDroppable(newValue:Boolean):void
+			{
+				(currentGameObject as Item).setDroppable(newValue);
 			}
 			
 			public function updateGameObjectDescription(newDescription:String):void
@@ -257,6 +272,11 @@
 			{
 				currentGameObject.setName(newName);
 				gameObjectsArrayCollection.itemUpdated(gameObjectsArray);
+			}
+			
+			public function updateGreeting(newGreeting:String):void
+			{
+				(currentGameObject as Character).setGreeting(newGreeting);
 			}
 			
 			public function setCurrentGameObject(objRef:GameObjectReference):void
@@ -750,7 +770,7 @@
 													  (choices[2] as Choice).choiceText,
 													  (choices[2] as Choice).getID(),
 													  "", 0, 0
-													  );													  
+													  );								  
 							}
 							else if(currentGameObject is Quest)
 							{
