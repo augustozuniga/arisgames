@@ -1,26 +1,14 @@
 <?php
-include('config.class.php');
-include('returnData.class.php');
+require("module.php");
 
-class Media 
+
+class Media extends Module
 {
-	
-	
-	private $validImageTypes = array('jpg','png');
-	private $validAudioTypes = array('mp3','m4a');
-	private $validVideoTypes = array('mp4','m4v');
-	
-	
-	
-	public function Media()
-	{
-		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
-      	mysql_select_db (Config::dbSchema);
-	}	
-	
+		
+
 	/**
-     * Fetch all Items
-     * @returns the items
+     * Fetch all Media
+     * @returns the media
      */
 	public function getMedia($intGameID)
 	{
@@ -53,7 +41,7 @@ class Media
 	
 	/**
      * Fetch the valid file extensions
-     * @returns the items
+     * @returns the extensions
      */
 	public function getValidAudioExtensions()
 	{
@@ -62,7 +50,7 @@ class Media
 	
 	/**
      * Fetch the valid file extensions
-     * @returns the items
+     * @returns the extensions
      */
 	public function getValidVideoExtensions()
 	{
@@ -71,7 +59,7 @@ class Media
 
 	/**
      * Fetch the valid file extensions
-     * @returns the items
+     * @returns the extensions
      */
 	public function getValidImageExtensions()
 	{
@@ -166,44 +154,15 @@ class Media
 	* @returns path to the media directory on the file system
 	*/
 	public function getMediaDirectory($prefix){
-		return new returnData(0, Config::engineSitesPath . "/{$prefix}/Templates/Default/templates");
+		return new returnData(0, Config::engineSitesPath . "/{$prefix}/" . Config::gameMediaSubdir);
 	}
 	
 	/**
 	* @returns path to the media directory URL
 	*/
 	public function getMediaDirectoryURL($prefix){
-		return new returnData(0, Config::engineWWWPath . "/{$prefix}/Templates/Default/templates");
+		return new returnData(0, Config::engineWWWPath . "/{$prefix}/". Config::gameMediaSubdir);
 	}	
-	
-	/**
-     * Fetch the prefix of a game
-     * @returns a prefix string without the trailing _
-     */
-	public function getPrefix($intGameID) {
-		//Lookup game information
-		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
-		$rsResult = mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return FALSE;
-		$gameRecord = mysql_fetch_array($rsResult);
-		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
-		
-	}
-	
-	/**
-     * Determine the Item Type
-     * @returns "Audio", "Video" or "Image"
-     */
-	private function getMediaType($strMediaFileName) {
-		$mediaParts = pathinfo($strMediaFileName);
- 		$mediaExtension = $mediaParts['extension'];
- 		
- 		if (in_array($mediaExtension, $this->validImageTypes )) return 'Image';
- 		else if (in_array($mediaExtension, $this->validAudioTypes )) return 'Audio';
-		else if (in_array($mediaExtension, $this->validVideoTypes )) return'Video';
- 		
- 		return FALSE;
- 		
- 	}
+
 	
 }

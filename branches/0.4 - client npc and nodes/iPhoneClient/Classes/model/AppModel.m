@@ -37,6 +37,7 @@ NSDictionary *InventoryElements;
 @synthesize playerId;
 @synthesize currentModule;
 @synthesize site;
+@synthesize gameId;
 @synthesize gameList;
 @synthesize locationList;
 @synthesize playerList;
@@ -101,18 +102,20 @@ NSDictionary *InventoryElements;
 					   ([url port] ? [[url port] intValue] : 80)];
 	
 	self.site = [defaults stringForKey:@"site"];
+	self.gameId = [defaults integerForKey:@"gameId"];
 	self.loggedIn = [defaults boolForKey:@"loggedIn"];
 	
 	if (loggedIn == YES) {
 		if (![baseAppURL isEqualToString:[defaults stringForKey:@"lastBaseAppURL"]]) {
 			self.loggedIn = NO;
 			self.site = @"Default";
-			NSLog(@"Model: Server URL changed since last execution. Throw out Defaults and use URL: '%@' Site: '%@'", baseAppURL, site);
+			NSLog(@"Model: Server URL changed since last execution. Throw out Defaults and use URL: '%@' Site: '%@' GameId: '%d'", baseAppURL, site, gameId);
 		}
 		else {
 			self.username = [defaults stringForKey:@"username"];
 			self.password = [defaults stringForKey:@"password"];
-			NSLog(@"Model: Defaults Found. Use URL: '%@' User: '%@' Password: '%@' Site: '%@'", baseAppURL, username, password, site);
+			self.playerId = [defaults integerForKey:@"playerId"];
+			NSLog(@"Model: Defaults Found. Use URL: '%@' User: '%@' Password: '%@' PlayerId: '%d' GameId: '%d' Site: '%@'", baseAppURL, username, password, playerId, gameId, site);
 		}
 	}
 	else NSLog(@"Model: No default User Data to Load. Use URL: '%@' Site: '%@'", baseAppURL, site);
@@ -125,6 +128,8 @@ NSDictionary *InventoryElements;
 	[defaults removeObjectForKey:@"loggedIn"];	
 	[defaults removeObjectForKey:@"username"];
 	[defaults removeObjectForKey:@"password"];
+	[defaults removeObjectForKey:@"playerId"];
+	[defaults removeObjectForKey:@"gameId"];
 	//Don't clear the baseAppURL
 	[defaults setObject:@"Default" forKey:@"site"];
 
@@ -137,6 +142,8 @@ NSDictionary *InventoryElements;
 	[defaults setBool:loggedIn forKey:@"loggedIn"];
 	[defaults setObject:username forKey:@"username"];
 	[defaults setObject:password forKey:@"password"];
+	[defaults setInteger:playerId forKey:@"playerId"];
+	[defaults setInteger:gameId forKey:@"gameId"];
 	[defaults setObject:baseAppURL forKey:@"lastBaseAppURL"];
 	[defaults setObject:site forKey:@"site"];
 	[defaults setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVerison"];
@@ -213,8 +220,8 @@ NSDictionary *InventoryElements;
 	//Tell everyone
 	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
 	NSLog(@"GameListParser: Finished Building the Game List");
-	NSNotification *gameListNotification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
-	[[NSNotificationCenter defaultCenter] postNotification:gameListNotification];
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 	
 }
 
@@ -265,23 +272,36 @@ NSDictionary *InventoryElements;
 
 	inventory = [NSMutableArray array];
 	[inventory retain];
+		
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [[NSNumber numberWithInt:self.gameId] stringValue], [[NSNumber numberWithInt:self.playerId] stringValue], nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"items" 
+																	 andMethodName:@"getItemsForPlayer" andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
 	
-	//Fetch Data
-	NSURLRequest *request = [self getURLForModule:@"Inventory&controller=SimpleREST"];
-	NSLog(@"Model: Fetching Inventory from: %@", [request URL]); 
-	NSData *data = [self fetchURLData:request];
+	//Build the inventory
+	NSMutableArray *tempInventory = [[NSMutableArray alloc] init];
+	NSEnumerator *inventoryEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
+	NSDictionary *itemDictionary;
+	while (itemDictionary = [inventoryEnumerator nextObject]) {
+		Item *item = [[Item alloc] init];
+		item.itemId = [itemDictionary valueForKey:@"item_id"];
+		item.name = [itemDictionary valueForKey:@"name"];
+		item.type = [itemDictionary valueForKey:@"type"];
+		item.description = [itemDictionary valueForKey:@"description"];
+		item.mediaURL = [itemDictionary valueForKey:@"media"];
+		item.iconURL = [itemDictionary valueForKey:@"icon"];
+		item.dropable = [itemDictionary valueForKey:@"dropable"];
+		item.destroyable = [itemDictionary valueForKey:@"destroyable"];
+		NSLog(@"Model: Adding Item: %@", item.name);
+		[tempInventory addObject:item]; 
+	}
 	
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];	
-	XMLParserDelegate *parserDelegate = [[XMLParserDelegate alloc] initWithDictionary:InventoryElements
-																		   andResults:inventory forNotification:@"ReceivedInventory"];
-	[parser setDelegate:parserDelegate];
+	self.inventory = [NSArray arrayWithArray:tempInventory];
 	
-	//init parser
-	[parser setShouldProcessNamespaces:NO];
-	[parser setShouldReportNamespacePrefixes:NO];
-	[parser setShouldResolveExternalEntities:NO];
-	[parser parse];
-	[parser release];
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:self userInfo:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 

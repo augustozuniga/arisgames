@@ -80,7 +80,7 @@ static int DEFAULT_ZOOM = 16;
 							CGRectGetMinY(mainViewBounds),
 							CGRectGetWidth(mainViewBounds),
 							tableViewHeight);
-	mapView = [[RMMapView alloc] initWithFrame:tableFrame];
+	//mapView = [[RMMapView alloc] initWithFrame:tableFrame];
     
 	[self.view addSubview:mapView];
 	

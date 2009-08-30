@@ -1,17 +1,10 @@
 <?php
-include('config.class.php');
-include('returnData.class.php');
+require("module.php");
 
-class Locations 
+
+class Locations extends Module
 {
 
-	public function Locations()
-	{
-		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
-      	mysql_select_db (Config::dbSchema);
-	}	
-	
-	
 	/**
      * Fetch all Locations
      * @returns the locations rs
@@ -28,6 +21,41 @@ class Locations
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		return new returnData(0, $rsResult);	
 	}
+	
+	
+	/**
+     * Fetch all locations for a given player
+     * @returns the locations that meet requirements and have a qty > 0
+     */
+	public function getLocationsForPlayer($intGameID, $intPlayerID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$query = "SELECT * FROM {$prefix}_locations 
+				WHERE latitude != '' AND longitude != ''
+				AND (type != 'Item' OR (item_qty IS NULL OR item_qty > 0))
+				";
+		$rsLocations = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		
+		$arrayLocations = array();
+		
+		while ($location = mysql_fetch_object($rsLocations)) {
+			//If location and object it links to meet requirments, add it to the array
+		
+			if ($this->objectMeetsRequirements ($prefix, $intPlayerID, 'Location', $location->location_id)
+				AND
+				$this->objectMeetsRequirements ($prefix, $intPlayerID, $location->type, $location->type_id)
+				)
+				$arrayLocations[] = $location;
+		}
+		
+		return new returnData(0, $arrayLocations);
+	}
+	
+	
+	
 	
 	/**
      * Fetch a specific location
@@ -235,21 +263,6 @@ class Locations
 		return new returnData(0, $options);
 	}
 	
-	
-	
-	/**
-     * Fetch the prefix of a game
-     * @returns a prefix string without the trailing _
-     */
-	private function getPrefix($intGameID) {
-		//Lookup game information
-		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
-		$rsResult = mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return FALSE;
-		$gameRecord = mysql_fetch_array($rsResult);
-		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
-		
-	}
 	
 	/**
      * Check if a content type is valid

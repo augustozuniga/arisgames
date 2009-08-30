@@ -1,15 +1,9 @@
 <?php
-include('config.class.php');
-include('returnData.class.php');
+require("module.php");
 
-class Items 
+
+class Items extends Module
 {
-	
-	public function Items()
-	{
-		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
-      	mysql_select_db (Config::dbSchema);
-	}	
 	
 	/**
      * Fetch all Items
@@ -31,6 +25,54 @@ class Items
 		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
 		return new returnData(0, $rsResult);
 	}
+	
+	/**
+     * Fetch all Items in Player's inventory
+     * @returns the items
+     */
+	public function getItemsForPlayer($intGameID, $intPlayerID)
+	{
+		
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
+		
+		$query = "SELECT * FROM {$prefix}_items
+									 JOIN {$prefix}_player_items 
+									 ON {$prefix}_items.item_id = {$prefix}_player_items.item_id
+									 WHERE player_id = $intPlayerID";
+		//NetDebug::trace($query);
+		
+		$rsResult = @mysql_query($query);
+		if (!$rsResult) return new returnData(0, NULL);
+		
+		$inventory = array();
+    		while ($row = mysql_fetch_array($rsResult)) {
+    			//Add the full path to media
+    			$row['media'] = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $row['media'];
+    			//Determine the icon
+    			$iconType = $this->getMediaType($row['media']);
+    			switch ($iconType) {
+    				case 'Image':
+    					$row['icon'] = 'defaultImageIcon.png';
+    					break;
+    				case 'Audio':
+    					$row['icon'] = 'defaultAudioIcon.png';
+    					break;
+    				case 'Video':
+    					$row['icon'] = 'defaultVideoIcon.png';
+    					break;
+    			}
+    			$row['icon'] = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $row['icon'];
+
+    			$inventory[] = $row;
+    		}
+		
+		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		return new returnData(0, $inventory);
+	}	
+	
+	
 	
 	/**
      * Fetch a specific nodes
@@ -185,23 +227,6 @@ class Items
 		return new returnData(0,$referrers);
 	}	
 
-
-	
-	
-	
-	/**
-     * Fetch the prefix of a game
-     * @returns a prefix string without the trailing _
-     */
-	private function getPrefix($intGameID) {
-		//Lookup game information
-		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
-		$rsResult = mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return FALSE;
-		$gameRecord = mysql_fetch_array($rsResult);
-		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
-		
-	}
 	
 	/**
      * Determine the Item Type

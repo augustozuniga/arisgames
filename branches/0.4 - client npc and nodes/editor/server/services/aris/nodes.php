@@ -1,17 +1,9 @@
 <?php
-include('config.class.php');
-include('returnData.class.php');
+require("module.php");
 
-
-class Nodes 
+class Nodes extends Module
 {	
-	public function Nodes()
-	{
-		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
-      	mysql_select_db (Config::dbSchema);
-	}
-	
-	
+
 	/**
      * Fetch all nodes
      * @returns the nodes rs
@@ -208,21 +200,6 @@ class Nodes
 		return new returnData(0,$referrers);
 	}	
 	
-	
-	
-	/**
-     * Fetch the prefix of a game
-     * @returns a prefix string without the trailing _
-     */
-	private function getPrefix($intGameID) {
-		//Lookup game information
-		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
-		$rsResult = @mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return FALSE;
-		$gameRecord = mysql_fetch_array($rsResult);
-		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
-		
-	}
 	
 	
 }

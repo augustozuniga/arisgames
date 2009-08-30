@@ -1,15 +1,9 @@
 <?php
-include('config.class.php');
-include('returnData.class.php');
+require("module.php");
 
-class PlayerStateChanges
-{
-	
-	public function PlayerStateChanges()
-	{
-		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
-      	mysql_select_db (Config::dbSchema);
-	}	
+
+class PlayerStateChanges extends Module
+{	
 	
 	/**
      * Fetch all Requirements for a Game Object
@@ -51,7 +45,7 @@ class PlayerStateChanges
 		$row = @mysql_fetch_object($rsResult);
 		if (!$row) return new returnData(2, NULL, "invalid player state change id");
 		
-		return new returnData(0, $requirement);	
+		return new returnData(0, $row);	
 	}
 	
 	/**
@@ -106,7 +100,7 @@ class PlayerStateChanges
 					content_type = '{$strObjectType}',
 					content_id = '{$intObjectID}',
 					action = '{$strActionType}',
-					action_detail = '{$intActionTypeID}'
+					action_detail = '{$intActionID}'
 					WHERE id = '{$intPlayerStateChangeID}'";
 		
 		NetDebug::trace("Running a query = $query");	
@@ -162,29 +156,6 @@ class PlayerStateChanges
 		return new returnData(0, $options);	
 	}
 
-
-
-
-
-
-
-
-
-
-
-	/**
-     * Fetch the prefix of a game
-     * @returns a prefix string without the trailing _
-     */
-	private function getPrefix($intGameID) {
-		//Lookup game information
-		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
-		$rsResult = mysql_query($query);
-		if (mysql_num_rows($rsResult) < 1) return FALSE;
-		$gameRecord = mysql_fetch_array($rsResult);
-		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
-		
-	}
 	
 	/**
      * Fetch the valid content types from the requirements table

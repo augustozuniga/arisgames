@@ -34,7 +34,7 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	//Show waiting Indicator in own thread so it appears on time
-	[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
+	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
 	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
 	
 	[super viewDidLoad];
@@ -53,7 +53,7 @@
 	}
 	
 	//Show waiting Indicator in own thread so it appears on time
-	[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
+	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
 	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
 	
 	//Populate inventory
@@ -144,10 +144,10 @@
 	
 	UIImageView *iconView = (UIImageView *)[cell viewWithTag:3];
 	
-	NSString *relativeURL = [[[inventoryTableData objectAtIndex:[indexPath row]] iconURL] stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];	
-	NSURLRequest *iconRequest = [appModel getURL:relativeURL];
-	NSData *iconData = [appModel fetchURLData: iconRequest];
-
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	NSData* iconData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:[[inventoryTableData objectAtIndex:[indexPath row]] iconURL]]];
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	
 	UIImage *icon = [UIImage imageWithData:iconData];
 	iconView.image = icon;
 
@@ -180,6 +180,8 @@
 
 	//Put the view on the screen
 	[[self navigationController] pushViewController:itemDetailsViewController animated:YES];
+	
+	[itemDetailsViewController release];
 	
 }
 
