@@ -24,13 +24,15 @@ package org.arisgames.editor.model
 		
 		private var ref:GameObjectReference;
 		private var code:int;
-		private var id:int;
+		private var reqID:int;
+		private var eventID:int;
 		
-		public function Requirement(objRef:GameObjectReference, code:int, id:int)
+		public function Requirement(objRef:GameObjectReference, code:int, reqID:int, eventID:int)
 		{
 			this.ref = objRef;
 			this.code = code;
-			this.id = id;
+			this.reqID = reqID;
+			this.eventID = eventID;
 			if(ref.getType() == GameObjectReference.ITEM)
 			{
 				this.requirementTypesDataProvider = new ArrayCollection(REQUIREMENT_TYPES_ITEM);
@@ -39,6 +41,11 @@ package org.arisgames.editor.model
 			{
 				this.requirementTypesDataProvider = new ArrayCollection(REQUIREMENT_TYPES_PAGE);
 			}
+		}
+		
+		public function copy():Requirement
+		{
+			return new Requirement(this.ref, this.code, this.reqID, this.eventID);
 		}
 		
 		public function differs(altReq:Requirement):Boolean
@@ -66,9 +73,44 @@ package org.arisgames.editor.model
 			return null;			
 		}
 		
-		public function getID():int
+		public function getDBCode():String
 		{
-			return this.id;
+			if(ref.getType() == GameObjectReference.ITEM)
+			{
+				if(code == 0)
+				{
+					return HAS_ITEM;
+				}
+				if(code == 1)
+				{
+					return DOES_NOT_HAVE_ITEM;
+				}
+				code -= 2;
+			}
+			if(code ==0)
+			{
+				return HAS_EVENT;
+			}
+			return DOES_NOT_HAVE_EVENT;
+		}
+		
+		public function getObjectID():int
+		{
+			if(ref.getType() == GameObjectReference.ITEM)
+			{
+				return ref.getID();
+			}
+			return eventID;
+		}
+		
+		public function getRequirementID():int
+		{
+			return this.reqID;
+		}
+		
+		public function getObjectType():String
+		{
+			return ref.getType();
 		}
 		
 		public function set requirementType(newType:String):void

@@ -50,7 +50,7 @@ package org.arisgames.editor.model
 				var index:int = 0;
 				while(!found && index < objectivesSnapshot.length)
 				{
-					if((objectivesSnapshot[index] as Requirement).getID() == req.getID())
+					if((objectivesSnapshot[index] as Requirement).getRequirementID() == req.getRequirementID())
 					{
 						found = true;
 					}
@@ -63,7 +63,7 @@ package org.arisgames.editor.model
 				{
 					if((objectivesSnapshot[index] as Requirement).differs(req))
 					{
-						differences.push(Requirement.MODIFY + req.getID().toString());
+						differences.push(Requirement.MODIFY + req.getRequirementID().toString());
 						objectivesSnapshot.splice(index, 1); // this line destroys part of the snapshot
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
@@ -71,12 +71,12 @@ package org.arisgames.editor.model
 				}
 				else
 				{
-					differences.push(Requirement.ADD + req.getID());
+					differences.push(Requirement.ADD + req.getRequirementID());
 				}
 			}
 			for each(var remainingReq:Requirement in objectivesSnapshot)
 			{
-				differences.push(Requirement.DELETE + remainingReq.getID());
+				differences.push(Requirement.DELETE + remainingReq.getRequirementID());
 			}
 			return differences;
 		}
@@ -103,7 +103,7 @@ package org.arisgames.editor.model
 			completedDescriptionSnapshot = completedDescription;
 			for each(var obj:Requirement in objectives)
 			{
-				objectivesSnapshot.push(obj);
+				objectivesSnapshot.push(obj.copy());
 			}
 		}
 	}

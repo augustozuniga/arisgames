@@ -413,6 +413,20 @@
 				return null;
 			}
 			
+			private function getModification(id:int):PlayerModification
+			{
+				if(currentGameObject is Item)
+				{
+					return (currentGameObject as Item).getModification(id);
+				}
+				else if(currentGameObject is Page)
+				{
+					return (currentGameObject as Page).getModification(id);
+				}
+				Alert.show("Error in Model.updateCurrentGame(): unrecognized object type with PlayerModification");
+				return null;
+			}
+
 			private function getRequirementCodeFromEventCode(code:String):int
 			{
 				return int(code.substr(0, 2));
@@ -614,6 +628,16 @@
 				filterErrors(event, "npcs.updateNpc");
 			}
 			
+			private function on_playerStateChanges_createPlayerStateChangeResult(event:ResultEvent):void
+			{ //takes gameID, objType, objID, actionType, actionID, returns playerStateChangeID
+				filterErrors(event, "playerStateChanges.createPlayerStateChange");
+			}
+			
+			private function on_playerStateChanges_deletePlayerStateChangeResult(event:ResultEvent):void
+			{ //takes gameID, playerStateChangeID, returns ???
+				filterErrors(event, "playerStateChanges.deletePlayerStateChange");
+			}
+			
 			private function on_playerStateChanges_getPlayerStateChangesForObjectResult(event:ResultEvent):void
 			{//takes gameID, objType, objID, returns obj{action, action_detail, content_id, content_type, id}
 				if(filterErrors(event, "playerStateChanges.getPlayerStateChanges"))
@@ -621,7 +645,7 @@
 					for each(var obj:Object in event.result.data)
 					{
 						var mod:PlayerModification; // NOTE: WE NEVER USE EVENTS HERE, ONLY ITEM GIVE/TAKES
-						mod = new PlayerModification(getGameObjectReference(obj.action_detail, GameObjectReference.ITEM), obj.action);
+						mod = new PlayerModification(getGameObjectReference(obj.action_detail, GameObjectReference.ITEM), obj.action, obj.id);
 						if(currentGameObject is Item)
 						{
 							(currentGameObject as Item).addPlayerModification(mod);
@@ -633,6 +657,11 @@
 					}
 				}
 				currentGameObject.takeSnapshot();
+			}
+			
+			private function on_playerStateChanges_updatePlayerStateChangeResult(event:ResultEvent):void
+			{
+				filterErrors(event, "playerStateChanges.updatePlayerStateChange");
 			}
 			
 			private function on_quests_getQuestResult(event:ResultEvent):void
@@ -669,6 +698,16 @@
 				filterErrors(event, "quests.updateQuest");
 			}
 			
+			private function on_requirements_createRequirementResult(event:ResultEvent):void
+			{ //takes gameID, strObjType, objID, reqTYpe, reqTypeID, returns new reqID
+				filterErrors(event, "requirements.createRequirement");
+			}
+			
+			private function on_requirements_deleteRequirementResult(event:ResultEvent):void
+			{
+				filterErrors(event, "requirements.deleteRequirement");
+			}
+			
 			private function on_requirements_getRequirementsForObjectResult(event:ResultEvent):void
 			{
 				if(filterErrors(event, "requirements.getRequirementsForObjectResult"))
@@ -677,8 +716,10 @@
 					{
 						var ref:GameObjectReference;
 						var reqCode:int;
+						var eventID:int;
 						if(obj.requirement == Requirement.HAS_ITEM || obj.requirement == Requirement.DOES_NOT_HAVE_ITEM)
 						{
+							eventID = -1;
 							ref = getGameObjectReference(obj.requirement_detail, GameObjectReference.ITEM);
 							if(obj.requirement == Requirement.HAS_ITEM)
 							{
@@ -691,7 +732,8 @@
 						}
 						else if(obj.requirement == Requirement.HAS_EVENT || obj.requirement == Requirement.DOES_NOT_HAVE_EVENT)
 						{
-							var evtCode:String = getEventCodeFromEvent(obj.requirement_detail);
+							eventID = obj.requirement_detail;
+							var evtCode:String = getEventCodeFromEvent(eventID);
 							ref = getGameObjectReferenceFromEventCode(evtCode);
 							reqCode = getRequirementCodeFromEventCode(evtCode);
 							if(obj.requirement == Requirement.DOES_NOT_HAVE_EVENT)
@@ -701,15 +743,20 @@
 						}
 						if(obj.content_type == Requirement.QUEST_COMPLETE)
 						{
-							(currentGameObject as Quest).addObjective(new Requirement(ref, reqCode, obj.requirement_id));
+							(currentGameObject as Quest).addObjective(new Requirement(ref, reqCode, obj.requirement_id, eventID));
 						}
 						else
 						{
-							currentGameObject.addRequirement(new Requirement(ref, reqCode, obj.requirement_id));							
+							currentGameObject.addRequirement(new Requirement(ref, reqCode, obj.requirement_id, eventID));					
 						}
 					}
 				}
 				currentGameObject.takeSnapshot();
+			}
+			
+			private function on_requirements_updateRequirementResult(event:ResultEvent):void
+			{
+				filterErrors(event, "requirements.updateRequirement");
 			}
 			
 			private function updateCurrentGame():void
@@ -783,17 +830,61 @@
 														);
 							}
 						}
-						else if(diff == Requirement.ADD)
+						else if(diff.indexOf(PlayerModification.ADD) == 0)
 						{
-							
+							var modToAdd:PlayerModification = getModification(int(diff.substr(PlayerModification.MODIFY.length)));
+							playerStateChanges.createPlayerStateChange.send(currentGameID,
+																		   currentGameObject.getType(),
+																		   currentGameObject.getID(),
+																		   modToAdd.getDBCode(),
+																		   modToAdd.getItemID()
+																		   );
 						}
-						else if(diff == Requirement.DELETE)
+						else if(diff.indexOf(PlayerModification.DELETE) == 0)
 						{
-							
+							playerStateChanges.deletePlayerStateChange.send(currentGameID,
+																			int(diff.substr(PlayerModification.DELETE.length))
+																			);
 						}
-						else if(diff == Requirement.MODIFY)
+						else if(diff.indexOf(PlayerModification.MODIFY) == 0)
 						{
-							
+							var id:int = int(diff.substr(PlayerModification.MODIFY.length));
+							var modToUpdate:PlayerModification = getModification(id);
+							playerStateChanges.updatePlayerStateChange.send(currentGameID,
+																			id,
+																			currentGameObject.getType(),
+																			currentGameObject.getID(),
+																			modToUpdate.getDBCode(),
+																			modToUpdate.getItemID()
+																			);
+						}
+						else if(diff.indexOf(Requirement.ADD) == 0)
+						{
+							var reqToAdd:Requirement = currentGameObject.getRequirement(int(diff.substr(Requirement.MODIFY.length)));
+							requirements.createRequirement.send(currentGameID,
+																currentGameObject.getType(),
+																currentGameObject.getID(),
+																reqToAdd.getDBCode(),
+																reqToAdd.getObjectID()
+																);
+						}
+						else if(diff.indexOf(Requirement.DELETE) == 0)
+						{
+							requirements.deleteRequirement.send(currentGameID,
+																int(diff.substr(Requirement.DELETE.length))
+																);
+						}
+						else if(diff.indexOf(Requirement.MODIFY) == 0)
+						{
+							var reqID:int = int(diff.substr(Requirement.MODIFY.length));
+							var reqToUpdate:Requirement = currentGameObject.getRequirement(reqID);
+							requirements.updateRequirement.send(currentGameID,
+																reqID,
+																currentGameObject.getType(),
+																currentGameObject.getID(),
+																reqToUpdate.getDBCode(),
+																reqToUpdate.getObjectID()
+																);
 						}
 					}
 				}
@@ -975,27 +1066,12 @@
 				
 			}
 			
-			private function on_playerStateChanges_createPlayerStateChangeResult(event:ResultEvent):void
-			{ //takes gameID, objType, objID, actionType, actionID, returns playerStateChangeID
-				
-			}
-			
-			private function on_playerStateChanges_deletePlayerStateChangeResult(event:ResultEvent):void
-			{ //takes gameID, playerStateChangeID, returns ???
-				
-			}
-			
 			private function on_playerStateChanges_getPlayerStateChangeResult(event:ResultEvent):void
 			{ //takes gameID, playerStateChangeID, returns ????
 				
 			}
 			
 			private function on_playerStateChanges_getReferrersResult(event:ResultEvent):void
-			{
-				
-			}
-			
-			private function on_playerStateChanges_updatePlayerStateChangeResult(event:ResultEvent):void
 			{
 				
 			}
@@ -1015,16 +1091,6 @@
 				
 			}
 			
-			private function on_requirements_createRequirementResult(event:ResultEvent):void
-			{ //takes gameID, strObjType, objID, reqTYpe, reqTypeID, returns new reqID
-				
-			}
-			
-			private function on_requirements_deleteRequirementResult(event:ResultEvent):void
-			{
-				
-			}
-			
 			private function on_requirements_getReferrersResult(event:ResultEvent):void
 			{
 				
@@ -1036,11 +1102,6 @@
 			}
 			
 			private function on_requirements_requirementTypeOptionsResult(event:ResultEvent):void
-			{
-				
-			}
-			
-			private function on_requirements_updateRequirementResult(event:ResultEvent):void
 			{
 				
 			}

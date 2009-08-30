@@ -13,6 +13,9 @@ package org.arisgames.editor.model
 		private var choices:Array;
 		private var playerModifications:Array;
 		
+		private var choicesSnapshot:Array;
+		private var playerModificationsSnapshot:Array;
+		
 		public function Page(reference:GameObjectReference,
 							 description:String, 
 							 media:String,
@@ -51,6 +54,92 @@ package org.arisgames.editor.model
 			return choices;
 		}
 		
+		override public function getDifferences():Array
+		{
+			var differences:Array = super.getDifferences();
+			for each(var mod:PlayerModification in playerModifications)
+			{
+				var modFound:Boolean = false;
+				var modIndex:int = 0;
+				while(!modFound && modIndex < playerModificationsSnapshot.length)
+				{
+					if((playerModificationsSnapshot[modIndex] as PlayerModification).getModID() == mod.getModID())
+					{
+						modFound = true;
+					}
+					else
+					{
+						modIndex++;
+					}
+				}
+				if(modFound)
+				{
+					if((playerModificationsSnapshot[modIndex] as PlayerModification).differs(mod))
+					{
+						differences.push(PlayerModification.MODIFY + mod.getModID().toString());
+						playerModificationsSnapshot.splice(modIndex, 1); // this is the line that destroys the snapshot fidelity
+															   // it is here to increase performance
+															   // if you remove it, make sure to adjust the next for each to compensate
+					}
+				}
+				else
+				{
+					differences.push(PlayerModification.ADD + mod.getModID());
+				}
+			}
+			for each(var remainingMod:PlayerModification in playerModificationsSnapshot)
+			{
+				differences.push(PlayerModification.DELETE + remainingMod.getModID());
+			}
+			for each(var obj:Choice in choices)
+			{
+				var choiceFound:Boolean = false;
+				var choiceIndex:int = 0;
+				while(!choiceFound && choiceIndex < choicesSnapshot.length)
+				{
+					if((choicesSnapshot[choiceIndex] as Choice).getID() == obj.getID())
+					{
+						choiceFound = true;
+					}
+					else
+					{
+						choiceIndex++;
+					}
+				}
+				if(choiceFound)
+				{
+					if((choicesSnapshot[choiceIndex] as Choice).differs(obj))
+					{
+						differences.push(Choice.MODIFY + obj.getID().toString());
+						choicesSnapshot.splice(choiceIndex, 1); // this is the line that destroys the snapshot fidelity
+															   // it is here to increase performance
+															   // if you remove it, make sure to adjust the next for each to compensate
+					}
+				}
+				else
+				{
+					differences.push(Choice.ADD + obj.getID());
+				}
+			}
+			for each(var remainingChoice:Choice in choicesSnapshot)
+			{
+				differences.push(Choice.DELETE + remainingChoice.getID());
+			}
+			return differences;
+		}
+		
+		public function getModification(modID:int):PlayerModification
+		{
+			for each(var mod:PlayerModification in playerModifications)
+			{
+				if(mod.getModID() == modID)
+				{
+					return mod;
+				}
+			}
+			return null;
+		}
+		
 		public function getPlayerModifications():Array
 		{
 			return playerModifications;
@@ -66,6 +155,21 @@ package org.arisgames.editor.model
 		{
 			playerModifications.splice(playerModifications.indexOf(mod), 1);
 			modificationsArrayCollection.itemUpdated(playerModifications);
+		}
+		
+		override public function takeSnapshot():void
+		{
+			super.takeSnapshot();
+			playerModificationsSnapshot = new Array();
+			for each(var mod:PlayerModification in playerModifications)
+			{
+				playerModificationsSnapshot.push(mod.copy());
+			}
+			choicesSnapshot = new Array();
+			for each(var obj:Choice in choices)
+			{
+				choicesSnapshot.push(obj.copy());
+			}
 		}
 		
 	}

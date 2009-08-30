@@ -2,6 +2,10 @@ package org.arisgames.editor.model
 {
 	public class Choice
 	{
+		public static const ADD:String = "addChoice";
+		public static const DELETE:String = "deleteChoice";
+		public static const MODIFY:String = "modifyChoice";
+		
 		private var ref:GameObjectReference;
 		private var text:String;
 		
@@ -9,6 +13,16 @@ package org.arisgames.editor.model
 		{
 			this.ref = objRef;
 			this.text = text;
+		}
+		
+		public function copy():Choice
+		{
+			return new Choice(this.ref, this.text);
+		}
+		
+		public function differs(altChoice:Choice):Boolean
+		{
+			return (this.text != altChoice.choiceText);
 		}
 		
 		public function get label():String

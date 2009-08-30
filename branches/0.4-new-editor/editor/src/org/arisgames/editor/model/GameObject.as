@@ -66,7 +66,7 @@ package org.arisgames.editor.model
 				var index:int = 0;
 				while(!found && index < requirementsSnapshot.length)
 				{
-					if((requirementsSnapshot[index] as Requirement).getID() == req.getID())
+					if((requirementsSnapshot[index] as Requirement).getRequirementID() == req.getRequirementID())
 					{
 						found = true;
 					}
@@ -79,7 +79,7 @@ package org.arisgames.editor.model
 				{
 					if((requirementsSnapshot[index] as Requirement).differs(req))
 					{
-						differences.push(Requirement.MODIFY + req.getID().toString());
+						differences.push(Requirement.MODIFY + req.getRequirementID().toString());
 						requirementsSnapshot.splice(index, 1); // this is the line that destroys the snapshot fidelity
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
@@ -87,12 +87,12 @@ package org.arisgames.editor.model
 				}
 				else
 				{
-					differences.push(Requirement.ADD + req.getID());
+					differences.push(Requirement.ADD + req.getRequirementID());
 				}
 			}
 			for each(var remainingReq:Requirement in requirementsSnapshot)
 			{
-				differences.push(Requirement.DELETE + remainingReq.getID());
+				differences.push(Requirement.DELETE + remainingReq.getRequirementID());
 			}
 			return differences;
 		}
@@ -100,6 +100,18 @@ package org.arisgames.editor.model
 		public function getMediaFileName():String
 		{
 			return media;
+		}
+		
+		public function getRequirement(reqID:int):Requirement
+		{
+			for each(var req:Requirement in requirements)
+			{
+				if(req.getRequirementID() == reqID)
+				{
+					return req;
+				}
+			}
+			return null;
 		}
 		
 		public function getRequirements():Array
@@ -135,7 +147,7 @@ package org.arisgames.editor.model
 			requirementsSnapshot = new Array();
 			for each(var req:Requirement in requirements)
 			{
-				requirementsSnapshot.push(req);
+				requirementsSnapshot.push(req.copy());
 			}			
 		}
 
