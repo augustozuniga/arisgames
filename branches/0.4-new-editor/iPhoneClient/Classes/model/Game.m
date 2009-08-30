@@ -14,6 +14,11 @@
 @synthesize name;
 @synthesize site;
 
+- (void) setGameId:(NSString *)fromStringValue {
+	gameId = [fromStringValue intValue];
+}
+
+
 - (void)dealloc {
 	[name release];
     [super dealloc];

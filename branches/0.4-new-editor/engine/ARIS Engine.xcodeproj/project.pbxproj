@@ -121,14 +121,6 @@
 		A79112C60FC81F30007F5650 /* RESTError_error.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTError_error.tpl; sourceTree = "<group>"; };
 		A79112C70FC81F30007F5650 /* RESTError_loginError.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTError_loginError.tpl; sourceTree = "<group>"; };
 		A79112C80FC81F30007F5650 /* RESTError.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = RESTError.php; sourceTree = "<group>"; };
-		A79112CD0FC81F30007F5650 /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Inventory.png; sourceTree = "<group>"; };
-		A79112CE0FC81F30007F5650 /* RESTInventory.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTInventory.tpl; sourceTree = "<group>"; };
-		A79112CF0FC81F30007F5650 /* RESTInventory_destroyPlayerItem.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTInventory_destroyPlayerItem.tpl; sourceTree = "<group>"; };
-		A79112D00FC81F30007F5650 /* RESTInventory_displayItem.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTInventory_displayItem.tpl; sourceTree = "<group>"; };
-		A79112D10FC81F30007F5650 /* RESTInventory_displayItemXML.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTInventory_displayItemXML.tpl; sourceTree = "<group>"; };
-		A79112D20FC81F30007F5650 /* RESTInventory_dropItemHere.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTInventory_dropItemHere.tpl; sourceTree = "<group>"; };
-		A79112D30FC81F30007F5650 /* RESTInventory_pickupItem.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTInventory_pickupItem.tpl; sourceTree = "<group>"; };
-		A79112D40FC81F30007F5650 /* RESTInventory.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = RESTInventory.php; sourceTree = "<group>"; };
 		A79112D90FC81F30007F5650 /* RESTLogin.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RESTLogin.tpl; sourceTree = "<group>"; };
 		A79112DA0FC81F30007F5650 /* RESTLogin.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = RESTLogin.php; sourceTree = "<group>"; };
 		A79112DB0FC81F30007F5650 /* RESTLoginLib.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = RESTLoginLib.php; sourceTree = "<group>"; };
@@ -406,8 +398,6 @@
 				A79112C00FC81F30007F5650 /* RESTDeveloper.php */,
 				A79112C10FC81F30007F5650 /* RESTError */,
 				A79112C80FC81F30007F5650 /* RESTError.php */,
-				A79112C90FC81F30007F5650 /* RESTInventory */,
-				A79112D40FC81F30007F5650 /* RESTInventory.php */,
 				A79112D50FC81F30007F5650 /* RESTLogin */,
 				A79112DA0FC81F30007F5650 /* RESTLogin.php */,
 				A79112DB0FC81F30007F5650 /* RESTLoginLib.php */,
@@ -939,44 +929,6 @@
 				A79112C50FC81F30007F5650 /* RESTError.tpl */,
 				A79112C60FC81F30007F5650 /* RESTError_error.tpl */,
 				A79112C70FC81F30007F5650 /* RESTError_loginError.tpl */,
-			);
-			path = Default;
-			sourceTree = "<group>";
-		};
-		A79112C90FC81F30007F5650 /* RESTInventory */ = {
-			isa = PBXGroup;
-			children = (
-				A79112CA0FC81F30007F5650 /* Admin */,
-				A79112CB0FC81F30007F5650 /* Templates */,
-			);
-			path = RESTInventory;
-			sourceTree = "<group>";
-		};
-		A79112CA0FC81F30007F5650 /* Admin */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Admin;
-			sourceTree = "<group>";
-		};
-		A79112CB0FC81F30007F5650 /* Templates */ = {
-			isa = PBXGroup;
-			children = (
-				A79112CC0FC81F30007F5650 /* Default */,
-			);
-			path = Templates;
-			sourceTree = "<group>";
-		};
-		A79112CC0FC81F30007F5650 /* Default */ = {
-			isa = PBXGroup;
-			children = (
-				A79112CD0FC81F30007F5650 /* Inventory.png */,
-				A79112CE0FC81F30007F5650 /* RESTInventory.tpl */,
-				A79112CF0FC81F30007F5650 /* RESTInventory_destroyPlayerItem.tpl */,
-				A79112D00FC81F30007F5650 /* RESTInventory_displayItem.tpl */,
-				A79112D10FC81F30007F5650 /* RESTInventory_displayItemXML.tpl */,
-				A79112D20FC81F30007F5650 /* RESTInventory_dropItemHere.tpl */,
-				A79112D30FC81F30007F5650 /* RESTInventory_pickupItem.tpl */,
 			);
 			path = Default;
 			sourceTree = "<group>";

@@ -252,6 +252,7 @@
 	
 	//Set the model to this game
 	appModel.site = selectedGame.site;
+	appModel.gameId = selectedGame.gameId;
 	
 	//Notify the Server
 	NSLog(@"AppDelegate: Game Selected. Notifying Server");

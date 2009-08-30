@@ -1,17 +1,9 @@
 <?php
-include('config.class.php');
-include('returnData.class.php');
+require("module.php");
 
-class Editors 
+class Editors extends Module
 {
-		
-	public function Editors()
-	{
-		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
-      	mysql_select_db (Config::dbSchema);
-	}
-	
-	
+			
 	/**
      * Login to the editor
      * @returns the editorID
@@ -22,7 +14,7 @@ class Editors
 		$query = "SELECT * FROM editors 
 				WHERE name = '$strUser' and password = MD5('{$strPassword}') LIMIT 1";
 		
-		NetDebug::trace($query);
+		//NetDebug::trace($query);
 
 		$rs = @mysql_query($query);
 		if (mysql_num_rows($rs) < 1) return new returnData(4, NULL, 'bad username or password');

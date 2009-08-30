@@ -23,8 +23,8 @@
 - (void)viewDidLoad {
 
 	//Show waiting Indicator in own thread so it appears on time
-	[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
-	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate]showWaitingIndicator:@"Loading..."];
+	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
+	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate]showWaitingIndicator:@"Loading..."];
 
 	
 	if (inInventory == YES) {
@@ -55,7 +55,7 @@
 		dropButton.hidden = YES;
 		deleteButton.hidden = YES;
 	}
-	NSString *mediaURL = [appModel getURLString:item.mediaURL];
+	NSString *mediaURL = item.mediaURL;
 	NSLog(@"ItemDetailsViewController: View Loaded. Current item: %@; mediaURL: %@", item.name, mediaURL);
 
 
@@ -92,7 +92,7 @@
 		[image release];
 		[imageView release];
 	}
-	else if ([item.type isEqualToString: @"AV"]) {
+	else if ([item.type isEqualToString: @"Video"] || [item.type isEqualToString: @"Audio"]) {
 		NSLog(@"ItemDetailsViewController:  Video Layout Selected");
 
 		//Create movie player object
@@ -122,7 +122,7 @@
 	[NSThread detachNewThreadSelector: @selector(fetchURLData:) toTarget: appModel withObject: request];	
 	//[appModel fetchURLData:request];
 	
-	[mediaURL release];
+
 	
 	//Stop Waiting Indicator
 	//[NSThread detachNewThreadSelector: @selector(removeWaitingIndicator) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: nil];
