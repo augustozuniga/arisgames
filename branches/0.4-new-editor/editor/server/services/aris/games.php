@@ -225,9 +225,9 @@ class Games extends Module
 			latitude double default '43.0746561',
 			longitude double default '-89.384422',
 			error double default '0.0005',
-			type enum('Node','Event','Item','Npc') default NULL,
-			type_id int(11) default NULL,
-			item_qty int(11) default NULL,
+			type enum('Node','Event','Item','Npc') NOT NULL,
+			type_id int(11) NOT NULL,
+			item_qty int(11) NOT NULL,
 			hidden enum('0','1') default '0',
 			force_view enum('0','1') NOT NULL default '0' COMMENT 'Forces this Location to Display when nearby',
 			PRIMARY KEY  (location_id)

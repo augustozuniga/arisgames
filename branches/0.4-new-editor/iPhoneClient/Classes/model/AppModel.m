@@ -8,7 +8,6 @@
 
 #import "AppModel.h"
 
-#import "LocationListParserDelegate.h"
 #import "NearbyLocationsListParserDelegate.h"
 
 #import "XMLParserDelegate.h"
@@ -206,7 +205,7 @@ NSDictionary *InventoryElements;
 	while (gameDictionary = [gamesEnumerator nextObject]) {
 		//create a new game
 		Game *game = [[Game alloc] init];
-		game.gameId = [gameDictionary valueForKey:@"game_id"];
+		game.gameId = [[gameDictionary valueForKey:@"game_id"] intValue];
 		game.name = [gameDictionary valueForKey:@"name"];
 		NSString *prefix = [gameDictionary valueForKey:@"prefix"];
 		//parse out the trailing _ in the prefix
@@ -244,21 +243,48 @@ NSDictionary *InventoryElements;
 		playerList = [NSMutableArray array];
 		[playerList retain];
 	
-	
-		//Fetch Data
-		NSURLRequest *request = [self getURLForModule:@"RESTMap"];
-		NSData *data = [self fetchURLData:request];
-	
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-		LocationListParserDelegate *locationListParserDelegate = [[LocationListParserDelegate alloc] initWithModel:self];
-		[parser setDelegate:locationListParserDelegate];
-	
-		//init parser
-		[parser setShouldProcessNamespaces:NO];
-		[parser setShouldReportNamespacePrefixes:NO];
-		[parser setShouldResolveExternalEntities:NO];
-		[parser parse];
-		[parser release];
+		//Call server service
+		NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", self.gameId],
+														[NSString stringWithFormat:@"%d",self.playerId], 
+														nil];
+		JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																		andServiceName:@"locations" 
+																		andMethodName:@"getLocationsForPlayer" 
+																		andArguments:arguments];
+		JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+		
+		
+		//Build the game list
+		NSMutableArray *tempLocationsList = [[NSMutableArray alloc] init];
+		NSEnumerator *locationsEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
+		NSDictionary *locationDictionary;
+		while (locationDictionary = [locationsEnumerator nextObject]) {
+			//create a new location
+			Location *location = [[Location alloc] init];
+			location.locationId = [[locationDictionary valueForKey:@"location_id"] intValue];
+			location.name = [locationDictionary valueForKey:@"name"];
+			location.iconURL = [locationDictionary valueForKey:@"icon"];
+			location.latitude = [[locationDictionary valueForKey:@"latitude"] doubleValue];
+			location.longitude = [[locationDictionary valueForKey:@"longitude"] doubleValue];
+			location.error = [[locationDictionary valueForKey:@"error"] doubleValue];
+			location.objectType = [locationDictionary valueForKey:@"type"];
+			location.objectId = [[locationDictionary valueForKey:@"type_id"] intValue];
+			location.hidden = [[locationDictionary valueForKey:@"hidden"] boolValue];
+			location.forceView = [[locationDictionary valueForKey:@"force_view"] boolValue];
+			location.qty = [[locationDictionary valueForKey:@"item_qty"] intValue];
+			
+			NSLog(@"Model: Adding Location: %@", location.name);
+			[tempLocationsList addObject:location]; 
+		}
+		
+		self.locationList = [NSArray arrayWithArray:tempLocationsList];
+		
+		//Tell everyone
+		NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
+		NSLog(@"GameListParser: Finished Building the Game List");
+		NSNotification *notification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
+		[[NSNotificationCenter defaultCenter] postNotification:notification];
+		
 	}
 }
 
@@ -274,7 +300,9 @@ NSDictionary *InventoryElements;
 	[inventory retain];
 		
 	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [[NSNumber numberWithInt:self.gameId] stringValue], [[NSNumber numberWithInt:self.playerId] stringValue], nil];
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+													[NSString stringWithFormat:@"%d",self.playerId],
+													nil];
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"items" 
 																	 andMethodName:@"getItemsForPlayer" andArguments:arguments];
@@ -286,14 +314,14 @@ NSDictionary *InventoryElements;
 	NSDictionary *itemDictionary;
 	while (itemDictionary = [inventoryEnumerator nextObject]) {
 		Item *item = [[Item alloc] init];
-		item.itemId = [itemDictionary valueForKey:@"item_id"];
+		item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
 		item.name = [itemDictionary valueForKey:@"name"];
 		item.type = [itemDictionary valueForKey:@"type"];
 		item.description = [itemDictionary valueForKey:@"description"];
 		item.mediaURL = [itemDictionary valueForKey:@"media"];
 		item.iconURL = [itemDictionary valueForKey:@"icon"];
-		item.dropable = [itemDictionary valueForKey:@"dropable"];
-		item.destroyable = [itemDictionary valueForKey:@"destroyable"];
+		item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
+		item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
 		NSLog(@"Model: Adding Item: %@", item.name);
 		[tempInventory addObject:item]; 
 	}

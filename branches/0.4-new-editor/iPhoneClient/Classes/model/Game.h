@@ -15,8 +15,7 @@
 	NSString *name;
 }
 
-@property(readonly, assign) int gameId;
-- (void) setGameId:(NSString *)fromStringValue;
+@property(readwrite, assign) int gameId;
 @property(copy, readwrite) NSString *site;
 @property(copy, readwrite) NSString *name;
 

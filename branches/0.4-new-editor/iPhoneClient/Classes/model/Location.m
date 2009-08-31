@@ -13,10 +13,16 @@
 
 @synthesize locationId;
 @synthesize name;
+@synthesize iconURL;
 @synthesize latitude;
 @synthesize longitude;
+@synthesize error;
+@synthesize objectType;
+@synthesize objectId;
 @synthesize hidden;
+@synthesize forceView;
 @synthesize qty;
+
 
 - (void)dealloc {
 	[name release];

@@ -122,7 +122,6 @@
 		A722C8C00FBCD8D0009432DB /* SelfRegistration.xib in Resources */ = {isa = PBXBuildFile; fileRef = A722C8BF0FBCD8D0009432DB /* SelfRegistration.xib */; };
 		A722C8C60FBCD92E009432DB /* SelfRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A722C8C50FBCD92E009432DB /* SelfRegistrationViewController.m */; };
 		A722E7150F57425B004B04D2 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7140F57425B004B04D2 /* Location.m */; };
-		A722E73A0F57431B004B04D2 /* LocationListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */; };
 		A72C01B10F7977A600D00602 /* marker-player.png in Resources */ = {isa = PBXBuildFile; fileRef = A72C01B00F7977A600D00602 /* marker-player.png */; };
 		A72C02140F7985EF00D00602 /* QRScanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = A72C02130F7985EF00D00602 /* QRScanner.xib */; };
 		A72C02170F7985FF00D00602 /* QRScannerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A72C02160F7985FF00D00602 /* QRScannerViewController.mm */; };
@@ -350,8 +349,6 @@
 		A722CB5A0FBDFEA6009432DB /* NearbyObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NearbyObjectProtocol.h; path = Classes/model/NearbyObjectProtocol.h; sourceTree = "<group>"; };
 		A722E7130F57425B004B04D2 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		A722E7140F57425B004B04D2 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
-		A722E7380F57431B004B04D2 /* LocationListParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationListParserDelegate.h; sourceTree = "<group>"; };
-		A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationListParserDelegate.m; sourceTree = "<group>"; };
 		A72C01B00F7977A600D00602 /* marker-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-player.png"; path = "images/marker-player.png"; sourceTree = "<group>"; };
 		A72C02130F7985EF00D00602 /* QRScanner.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRScanner.xib; sourceTree = "<group>"; };
 		A72C02150F7985FF00D00602 /* QRScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRScannerViewController.h; path = Classes/QRScannerViewController.h; sourceTree = "<group>"; };
@@ -642,8 +639,6 @@
 				A7A6235A0F841C99008E0DFD /* Item.m */,
 				A72F04AC0F6ED8620089B90F /* NearbyLocation.h */,
 				A72F04AD0F6ED8620089B90F /* NearbyLocation.m */,
-				A722E7380F57431B004B04D2 /* LocationListParserDelegate.h */,
-				A722E7390F57431B004B04D2 /* LocationListParserDelegate.m */,
 				A72F049E0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.h */,
 				A72F049F0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m */,
 				2B3D18D40F4B25720067FD3A /* AppModel.h */,
@@ -1085,7 +1080,6 @@
 				2B3D18D60F4B25720067FD3A /* AppModel.m in Sources */,
 				A763B5250F4E283100FDCC55 /* MyCLController.m in Sources */,
 				A722E7150F57425B004B04D2 /* Location.m in Sources */,
-				A722E73A0F57431B004B04D2 /* LocationListParserDelegate.m in Sources */,
 				A7E39EAD0F5F60D000826198 /* CameraViewController.m in Sources */,
 				A72F04A00F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m in Sources */,
 				A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */,

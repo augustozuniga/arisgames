@@ -39,7 +39,7 @@
 	else if ( [elementName isEqualToString:@"Item"])  {
 		Item *currentObject = [[Item alloc] init];	
 		
-		currentObject.itemId = [attributeDict objectForKey:@"id"];
+		currentObject.itemId = [[attributeDict objectForKey:@"id"] intValue];
 		currentObject.name = [attributeDict objectForKey:@"name"];
 		currentObject.type = [attributeDict objectForKey:@"itemType"];
 		currentObject.description = [attributeDict objectForKey:@"description"];

@@ -23,6 +23,7 @@
 	NSString *iconURL;
 	BOOL dropable;
 	BOOL destroyable;
+	
 }
 
 @property(copy, readwrite) NSString *name;
@@ -30,20 +31,16 @@
 - (nearbyObjectKind) kind;
 @property(readwrite, assign) BOOL forcedDisplay;
 
-@property(readonly, assign) int itemId;
+@property(readwrite, assign) int itemId;
 @property(readonly, assign) int locationId;
-- (void) setItemId:(NSString *)fromStringValue;
 - (void) setLocationId:(NSString *)fromStringValue;
 
 @property(copy, readwrite) NSString *description;
 @property(copy, readwrite) NSString *type;
 @property(copy, readwrite) NSString *mediaURL;
 @property(copy, readwrite) NSString *iconURL;
-
-@property (readonly, assign) BOOL dropable;
-@property (readonly, assign) BOOL destroyable;
-- (void) setDropable:(NSString *)fromStringValue;
-- (void) setDestroyable:(NSString *)fromStringValue;
+@property (readwrite, assign) BOOL dropable;
+@property (readwrite, assign) BOOL destroyable;
 
 - (void) display;
 
