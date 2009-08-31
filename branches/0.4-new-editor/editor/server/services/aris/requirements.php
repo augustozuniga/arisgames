@@ -95,7 +95,7 @@ class Requirements extends Module
 		
 		
 
-		$query = "UPDATE {$prefix}_requirement 
+		$query = "UPDATE {$prefix}_requirements 
 					SET 
 					content_type = '{$strObjectType}',
 					content_id = '{$intObjectID}',
