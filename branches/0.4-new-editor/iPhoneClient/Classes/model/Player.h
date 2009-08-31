@@ -7,18 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <CoreLocation/CoreLocation.h>
 
 @interface Player : NSObject {
 	NSString *name;
-	double latitude;
-	double longitude;
+	CLLocation *location;
 	BOOL hidden;
 }
 
 @property(copy, readwrite) NSString *name;
-@property(readwrite) double latitude;
-@property(readwrite) double longitude;
+@property(copy, readwrite) CLLocation *location;
 @property(readwrite) BOOL hidden;
 
 @end

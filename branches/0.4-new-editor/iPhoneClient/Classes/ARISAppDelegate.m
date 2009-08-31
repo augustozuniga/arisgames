@@ -178,11 +178,9 @@
 
 - (void) showWaitingIndicator:(NSString *)message {
 	NSLog (@"AppDelegate: Showing Waiting Indicator");
-	
 	if (!self.waitingIndicator) {
 		self.waitingIndicator = [[WaitingIndicatorViewController alloc] initWithNibName:@"WaitingIndicator" bundle:nil];
 	}
-	
 	self.waitingIndicator.message = message;
 	
 	//by adding a subview to window, we make sure it is put on top
@@ -191,10 +189,7 @@
 
 - (void) removeWaitingIndicator {
 	NSLog (@"AppDelegate: Removing Waiting Indicator");
-	
 	if (self.waitingIndicator != nil) [self.waitingIndicator.view removeFromSuperview ];
-
-	
 }
 
 

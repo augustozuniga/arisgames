@@ -28,7 +28,7 @@ extern NSDictionary *InventoryElements;
 	NSMutableArray *locationList;
 	NSMutableArray *playerList;
 	NSMutableArray *nearbyLocationsList;
-	CLLocation *lastLocation;
+	CLLocation *playerLocation;
 	NSMutableArray *inventory;
 	UIAlertView *networkAlert;
 }
@@ -47,7 +47,7 @@ extern NSDictionary *InventoryElements;
 @property(copy, readwrite) NSMutableArray *locationList;
 @property(copy, readwrite) NSMutableArray *playerList;
 @property(copy, readwrite) NSMutableArray *nearbyLocationsList;	
-@property(copy, readwrite) CLLocation *lastLocation;	
+@property(copy, readwrite) CLLocation *playerLocation;	
 @property(copy, readwrite) NSMutableArray *inventory;
 @property(retain) UIAlertView *networkAlert;	
 

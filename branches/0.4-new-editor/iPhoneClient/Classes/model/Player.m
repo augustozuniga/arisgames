@@ -12,8 +12,7 @@
 @implementation Player
 
 @synthesize name;
-@synthesize latitude;
-@synthesize longitude;
+@synthesize location;
 @synthesize hidden;
 
 @end

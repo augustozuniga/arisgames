@@ -44,7 +44,7 @@ static int DEFAULT_ZOOM = 16;
 	NSLog(@"GPS: Refresh Button Touched");
 	
 	//Center the Map
-	[[mapView contents] moveToLatLong:appModel.lastLocation.coordinate];
+	[[mapView contents] moveToLatLong:appModel.playerLocation.coordinate];
 	
 	//Force a location update
 	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
@@ -130,7 +130,7 @@ static int DEFAULT_ZOOM = 16;
 -(void) zoomAndCenterMap {
 	
 	//Center the map on the player
-	[[mapView contents] moveToLatLong:appModel.lastLocation.coordinate];
+	[[mapView contents] moveToLatLong:appModel.playerLocation.coordinate];
 	
 	//Set to default zoom
 	mapView.contents.zoom = DEFAULT_ZOOM;
@@ -139,9 +139,9 @@ static int DEFAULT_ZOOM = 16;
 - (void)refreshPlayerMarker {
 	//Move the player marker
 
-	[markerManager moveMarker:playerMarker AtLatLon: appModel.lastLocation.coordinate];
+	[markerManager moveMarker:playerMarker AtLatLon: appModel.playerLocation.coordinate];
 	
-	if (appModel.lastLocation.horizontalAccuracy > 0 && appModel.lastLocation.horizontalAccuracy < 100)
+	if (appModel.playerLocation.horizontalAccuracy > 0 && appModel.playerLocation.horizontalAccuracy < 100)
 		[playerMarker replaceImage:[RMMarker loadPNGFromBundle:@"marker-player"] anchorPoint:CGPointMake(.5, .6)];
 	else [playerMarker replaceImage:[RMMarker loadPNGFromBundle:@"marker-player-lqgps"] anchorPoint:CGPointMake(.5, .6)];
 
@@ -162,9 +162,7 @@ static int DEFAULT_ZOOM = 16;
 	//Add the freshly loaded locations from the notification
 	for ( Location* location in appModel.locationList ) {
 		if (location.hidden == YES) continue;
-		CLLocationCoordinate2D locationLatLong;
-		locationLatLong.latitude = location.latitude;
-		locationLatLong.longitude = location.longitude;
+		CLLocationCoordinate2D locationLatLong = location.location.coordinate;
 
 		RMMarker *locationMarker = [[RMMarker alloc]initWithCGImage:[RMMarker loadPNGFromBundle:@"marker-blue"]];
 		NSString *label;
@@ -180,8 +178,7 @@ static int DEFAULT_ZOOM = 16;
 	for ( Player* player in appModel.playerList ) {
 		if (player.hidden == YES) continue;
 		CLLocationCoordinate2D locationLatLong;
-		locationLatLong.latitude = player.latitude;
-		locationLatLong.longitude = player.longitude;
+		locationLatLong = player.location.coordinate;
 		
 		RMMarker *marker = [[RMMarker alloc]initWithCGImage:[RMMarker loadPNGFromBundle:@"marker-other-player"]];
 		[marker setTextLabel:player.name];

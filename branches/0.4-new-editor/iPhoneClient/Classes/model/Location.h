@@ -7,33 +7,34 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
+#import "NearbyObjectProtocol.h"
 
-
-@interface Location : NSObject {
+@interface Location : NSObject <NearbyObjectProtocol> {
 	int locationId;
 	NSString *iconURL;
 	NSString *name;
-	double latitude;
-	double longitude;
+	CLLocation *location;
 	double error;
 	NSString *objectType;
+	nearbyObjectKind kind; //for the protocol
 	int objectId;
 	bool hidden;
-	bool forceView;
+	bool forcedDisplay;
 	int qty;
-	
 }
 
 @property(readwrite, assign) int locationId;
 @property(copy, readwrite) NSString *name;
 @property(copy, readwrite) NSString *iconURL;
-@property(readwrite) double latitude;
-@property(readwrite) double longitude;
+@property(copy, readwrite) CLLocation *location;
 @property(readwrite) double error;
 @property(copy, readwrite) NSString *objectType;
+@property(readwrite, assign) nearbyObjectKind kind;
+- (nearbyObjectKind) kind;
 @property(readwrite) int objectId;
 @property(readwrite) bool hidden;
-@property(readwrite) bool forceView;
+@property(readwrite) bool forcedDisplay;
 @property(readwrite) int qty;
 
 @end

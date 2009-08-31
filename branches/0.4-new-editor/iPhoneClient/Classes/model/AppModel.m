@@ -40,7 +40,7 @@ NSDictionary *InventoryElements;
 @synthesize gameList;
 @synthesize locationList;
 @synthesize playerList;
-@synthesize lastLocation;
+@synthesize playerLocation;
 @synthesize inventory;
 @synthesize networkAlert;
 
@@ -114,7 +114,8 @@ NSDictionary *InventoryElements;
 			self.username = [defaults stringForKey:@"username"];
 			self.password = [defaults stringForKey:@"password"];
 			self.playerId = [defaults integerForKey:@"playerId"];
-			NSLog(@"Model: Defaults Found. Use URL: '%@' User: '%@' Password: '%@' PlayerId: '%d' GameId: '%d' Site: '%@'", baseAppURL, username, password, playerId, gameId, site);
+			NSLog(@"Model: Defaults Found. Use URL: '%@' User: '%@' Password: '%@' PlayerId: '%d' GameId: '%d' Site: '%@'", 
+				  baseAppURL, username, password, playerId, gameId, site);
 		}
 	}
 	else NSLog(@"Model: No default User Data to Load. Use URL: '%@' Site: '%@'", baseAppURL, site);
@@ -264,13 +265,15 @@ NSDictionary *InventoryElements;
 			location.locationId = [[locationDictionary valueForKey:@"location_id"] intValue];
 			location.name = [locationDictionary valueForKey:@"name"];
 			location.iconURL = [locationDictionary valueForKey:@"icon"];
-			location.latitude = [[locationDictionary valueForKey:@"latitude"] doubleValue];
-			location.longitude = [[locationDictionary valueForKey:@"longitude"] doubleValue];
+			//location.latitude = [[locationDictionary valueForKey:@"latitude"] doubleValue];
+			//location.longitude = [[locationDictionary valueForKey:@"longitude"] doubleValue];
+			location.location = [[CLLocation alloc] initWithLatitude:[[locationDictionary valueForKey:@"latitude"] doubleValue]
+														   longitude:[[locationDictionary valueForKey:@"longitude"] doubleValue]];
 			location.error = [[locationDictionary valueForKey:@"error"] doubleValue];
 			location.objectType = [locationDictionary valueForKey:@"type"];
 			location.objectId = [[locationDictionary valueForKey:@"type_id"] intValue];
 			location.hidden = [[locationDictionary valueForKey:@"hidden"] boolValue];
-			location.forceView = [[locationDictionary valueForKey:@"force_view"] boolValue];
+			location.forcedDisplay = [[locationDictionary valueForKey:@"force_view"] boolValue];
 			location.qty = [[locationDictionary valueForKey:@"item_qty"] intValue];
 			
 			NSLog(@"Model: Adding Location: %@", location.name);
@@ -282,7 +285,8 @@ NSDictionary *InventoryElements;
 		//Tell everyone
 		NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
 		NSLog(@"GameListParser: Finished Building the Game List");
-		NSNotification *notification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
+		NSNotification *notification = 
+				[NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
 		[[NSNotificationCenter defaultCenter] postNotification:notification];
 		
 	}
@@ -305,7 +309,8 @@ NSDictionary *InventoryElements;
 													nil];
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"items" 
-																	 andMethodName:@"getItemsForPlayer" andArguments:arguments];
+																	andMethodName:@"getItemsForPlayer" 
+																	andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
 	
 	//Build the inventory
@@ -335,6 +340,8 @@ NSDictionary *InventoryElements;
 
 - (void)updateServerLocationAndfetchNearbyLocationList {
 	@synchronized (nearbyLock) {
+		NSLog(@"AppModel: updating player position on server and determining nearby Locations");
+		
 		//init a fresh nearby location list array
 		if(nearbyLocationsList != nil) {
 			[nearbyLocationsList release];
@@ -342,21 +349,34 @@ NSDictionary *InventoryElements;
 		nearbyLocationsList = [NSMutableArray array];
 		[nearbyLocationsList retain];
 	
-		//Fetch Data
-		NSURLRequest *request = [self getURLForModule:
-								 [NSString stringWithFormat:@"RESTAsync&latitude=%f&longitude=%f", lastLocation.coordinate.latitude, lastLocation.coordinate.longitude]];
-		NSData *data = [self fetchURLData:request];	
-		NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];	
-	
-		NearbyLocationsListParserDelegate *nearbyLocationsListParserDelegate = [[NearbyLocationsListParserDelegate alloc] initWithNearbyLocationsList:nearbyLocationsList];
-		[parser setDelegate:nearbyLocationsListParserDelegate];
+		//Update the server with the new Player Location
+		NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.playerId],
+							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.latitude],
+							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.longitude],
+							  nil];
+		JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																		andServiceName:@"players" 
+																		andMethodName:@"updatePlayerLocation" 
+																		andArguments:arguments];
+		[jsonConnection performSynchronousRequest]; 
 		
-		//init parser
-		[parser setShouldProcessNamespaces:NO];
-		[parser setShouldReportNamespacePrefixes:NO];
-		[parser setShouldResolveExternalEntities:NO];
-		[parser parse];
-		[parser release];
+		
+		//Rebuild nearbyLocationList
+		//We could just do this in the getter
+		NSEnumerator *locationsListEnumerator = [locationList objectEnumerator];
+		Location *location;
+		while (location = [locationsListEnumerator nextObject]) {
+			//check if the location is close to the player
+			if ([playerLocation getDistanceFrom:location.location] < location.error)
+				[nearbyLocationsList addObject:location];
+		}
+
+		//Tell the rest of the app that the nearbyLocationList is fresh
+		NSNotification *nearbyLocationListNotification = 
+					[NSNotification notificationWithName:@"ReceivedNearbyLocationList" object:nearbyLocationsList];
+		[[NSNotificationCenter defaultCenter] postNotification:nearbyLocationListNotification];
+		
+		
 	}
 }
 

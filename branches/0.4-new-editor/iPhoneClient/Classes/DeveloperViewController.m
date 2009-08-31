@@ -60,13 +60,13 @@
 	[locationTable reloadData];
 	
 	//Init Accuracy Label
-	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters", appModel.lastLocation.horizontalAccuracy]; 
+	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters", appModel.playerLocation.horizontalAccuracy]; 
 		
 	NSLog(@"model set for DEV");
 }
 
 -(void) updateAccuracy{
-	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters",appModel.lastLocation.horizontalAccuracy]; 
+	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters",appModel.playerLocation.horizontalAccuracy]; 
 }
 
 #pragma mark IB Button Actions
@@ -140,11 +140,8 @@
 	
 	if (tableView == locationTable) {
 		Location *selectedLocation = [locationTableData objectAtIndex:[indexPath row]];
-		NSLog([NSString stringWithFormat:@"Location Selected. Forcing appModel to Latitude: %1.2f Longitude: %1.2f", selectedLocation.latitude, selectedLocation.longitude]);
-		
-		CLLocation *newLocation = [[CLLocation alloc]initWithLatitude:selectedLocation.latitude longitude:selectedLocation.longitude];
-
-		appModel.lastLocation = newLocation;
+		NSLog([NSString stringWithFormat:@"Location Selected. Forcing appModel to Latitude: %1.2f Longitude: %1.2f", selectedLocation.location.coordinate.latitude, selectedLocation.location.coordinate.longitude]);
+		appModel.playerLocation = [selectedLocation.location copy];
 		[appModel updateServerLocationAndfetchNearbyLocationList];
 	}
 }
