@@ -640,7 +640,7 @@
 			
 			private function on_playerStateChanges_getPlayerStateChangesForObjectResult(event:ResultEvent):void
 			{//takes gameID, objType, objID, returns obj{action, action_detail, content_id, content_type, id}
-				if(filterErrors(event, "playerStateChanges.getPlayerStateChanges"))
+				if(filterErrors(event, "playerStateChanges.getPlayerStateChangesForObject"))
 				{
 					for each(var obj:Object in event.result.data)
 					{

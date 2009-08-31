@@ -63,10 +63,10 @@ package org.arisgames.editor.model
 					if((playerModificationsSnapshot[index] as PlayerModification).differs(mod))
 					{
 						differences.push(PlayerModification.MODIFY + mod.getModID().toString());
-						playerModificationsSnapshot.splice(index, 1); // this is the line that destroys the snapshot fidelity
+					}
+					playerModificationsSnapshot.splice(index, 1); // this is the line that destroys the snapshot fidelity
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
-					}
 				}
 				else
 				{

@@ -77,10 +77,10 @@ package org.arisgames.editor.model
 					if((playerModificationsSnapshot[modIndex] as PlayerModification).differs(mod))
 					{
 						differences.push(PlayerModification.MODIFY + mod.getModID().toString());
-						playerModificationsSnapshot.splice(modIndex, 1); // this is the line that destroys the snapshot fidelity
+					}
+					playerModificationsSnapshot.splice(modIndex, 1); // this is the line that destroys the snapshot fidelity
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
-					}
 				}
 				else
 				{
@@ -111,10 +111,10 @@ package org.arisgames.editor.model
 					if((choicesSnapshot[choiceIndex] as Choice).differs(obj))
 					{
 						differences.push(Choice.MODIFY + obj.getID().toString());
-						choicesSnapshot.splice(choiceIndex, 1); // this is the line that destroys the snapshot fidelity
+					}
+					choicesSnapshot.splice(choiceIndex, 1); // this is the line that destroys the snapshot fidelity
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
-					}
 				}
 				else
 				{

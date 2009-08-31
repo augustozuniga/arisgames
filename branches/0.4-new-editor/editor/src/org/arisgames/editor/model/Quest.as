@@ -64,10 +64,10 @@ package org.arisgames.editor.model
 					if((objectivesSnapshot[index] as Requirement).differs(req))
 					{
 						differences.push(Requirement.MODIFY + req.getRequirementID().toString());
-						objectivesSnapshot.splice(index, 1); // this line destroys part of the snapshot
+					}
+					objectivesSnapshot.splice(index, 1); // this line destroys part of the snapshot
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
-					}
 				}
 				else
 				{
