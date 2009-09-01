@@ -3,6 +3,7 @@ package org.arisgames.editor.controller
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	
+	import mx.controls.Alert;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
@@ -10,6 +11,7 @@ package org.arisgames.editor.controller
 	import org.arisgames.editor.model.GameObjectReference;
 	import org.arisgames.editor.model.Generator;
 	import org.arisgames.editor.model.Model;
+	import org.arisgames.editor.model.Requirement;
 	import org.arisgames.editor.view.IObjectNavigator;
 	import org.arisgames.editor.view.View;
 	
@@ -43,6 +45,18 @@ package org.arisgames.editor.controller
 					DragManager.acceptDragDrop(event.target as UIComponent);
 					DragManager.showFeedback(DragManager.MOVE);					
 				}
+			}
+			else if(event.dragSource.hasFormat("items"))
+			{
+				var req:Requirement = event.dragSource.dataForFormat("items")[0] as Requirement;
+				if(req != null)
+				{
+					currentModel.removeRequirement(req);
+				}
+			}
+			else
+			{
+				Alert.show("data formats are: " + event.dragSource.formats[0].toString());
 			}
 		}
 		
@@ -98,7 +112,7 @@ package org.arisgames.editor.controller
 		
 		public function onMapContainerDragEnter(event:DragEvent):void
 		{
-			generalizedDragEnterHandler(event, false);
+			generalizedDragEnterHandler(event, false, [GameObjectReference.CHARACTER, GameObjectReference.ITEM, GameObjectReference.PAGE]);
 		}
 		
 		public function onMapContainerDragDrop(event:DragEvent):void
@@ -131,7 +145,7 @@ package org.arisgames.editor.controller
 		
 		public function onQRCodeContainerDragEnter(event:DragEvent):void
 		{
-			generalizedDragEnterHandler(event, true);
+			generalizedDragEnterHandler(event, true, [GameObjectReference.CHARACTER, GameObjectReference.ITEM, GameObjectReference.PAGE]);
 		}
 		
 		public function onQRCodeContainerDragDrop(event:DragEvent):void
@@ -144,16 +158,30 @@ package org.arisgames.editor.controller
 			
 		}
 		
+		public function onRequirementsDataGridDragDrop(event:DragEvent):void
+		{
+			currentModel.addRequirement(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
+		}
+		
+		public function onRequirementsDataGridDragEnter(event:DragEvent):void
+		{
+			generalizedDragEnterHandler(event, false, [GameObjectReference.ITEM, GameObjectReference.PAGE]);
+		}
+		
 		///////////////////////
 		// Private Functions //
 		///////////////////////
 		
-		private function generalizedDragEnterHandler(event:DragEvent, allowInternalDrag:Boolean):void
+		private function generalizedDragEnterHandler(event:DragEvent, allowInternalDrag:Boolean, allowedTypes:Array):void
 		{
 			if(event.dragInitiator is IObjectNavigator)
 			{
-				DragManager.acceptDragDrop(event.target as UIComponent);
-				DragManager.showFeedback(DragManager.COPY);
+				var ref:GameObjectReference = event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference;
+				if(ref != null && allowedTypes.indexOf(ref.getType()) >= 0)
+				{
+					DragManager.acceptDragDrop(event.target as UIComponent);
+					DragManager.showFeedback(DragManager.COPY);					
+				}
 			}
 			else if(allowInternalDrag && event.target == event.dragInitiator)
 			{
@@ -161,6 +189,6 @@ package org.arisgames.editor.controller
 				DragManager.showFeedback(DragManager.MOVE);
 			}
 		}
-		
+				
 	}
 }

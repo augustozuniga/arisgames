@@ -180,6 +180,11 @@
 			// Other Public Functions //
 			////////////////////////////
 			
+			public function addRequirement(ref:GameObjectReference):void
+			{
+				currentGameObject.addRequirement(new Requirement(ref, 0, -1, getEventIDFromEventCode(ref.getType() + ref.getID().toString())));
+			}
+			
 			public function closeGame():void
 			{
 				updateCurrentGame();
@@ -256,11 +261,6 @@
 				return (CursorManager.currentCursorID == CursorManager.NO_CURSOR);
 			}
 			
-			public function registerNewUser(username:String, password:String, email:String, comments:String):void
-			{
-				editors.createEditor.send(username, password, email, comments);
-			}
-			
 			public function loginUser(username:String, password:String):void
 			{
 				if(!loggedIn)
@@ -287,6 +287,16 @@
 				this.questFolder = new Folder("Quests", GameObjectReference.QUEST, "Create New Quest");
 				this.gameObjectsArray = [characterFolder, itemFolder, pageFolder, questFolder];
 				this.gameObjectsArrayCollection = new ArrayCollection(gameObjectsArray);
+			}
+			
+			public function registerNewUser(username:String, password:String, email:String, comments:String):void
+			{
+				editors.createEditor.send(username, password, email, comments);
+			}
+			
+			public function removeRequirement(req:Requirement):void
+			{
+				currentGameObject.removeRequirement(req);
 			}
 			
 			public function updateCompletedDescription(newDescription:String):void

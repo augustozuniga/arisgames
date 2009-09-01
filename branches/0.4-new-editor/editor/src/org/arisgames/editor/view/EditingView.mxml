@@ -243,7 +243,10 @@
 				<mx:DataGrid id="requirementsDataGrid"
 					width="100%" height="100%"
 					editable="true" horizontalScrollPolicy="auto"
-					allowMultipleSelection="false">
+					allowMultipleSelection="false"
+					dragEnabled="true"
+					dragEnter="currentController.onRequirementsDataGridDragEnter(event)"
+					dragDrop="currentController.onRequirementsDataGridDragDrop(event)">
 					<mx:columns>
 						<mx:DataGridColumn dataField="requirementType"
 							headerText="Requirement Type"

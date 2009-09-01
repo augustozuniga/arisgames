@@ -35,6 +35,7 @@ package org.arisgames.editor.model
 		public function addRequirement(newRequirement:Requirement):void
 		{
 			requirements.push(newRequirement);
+			requirementsArrayCollection.itemUpdated(requirements);
 		}
 		
 		public function getID():int
@@ -132,6 +133,7 @@ package org.arisgames.editor.model
 		public function removeRequirement(req:Requirement):void
 		{
 			requirements.splice(requirements.indexOf(req), 1);
+			requirementsArrayCollection.itemUpdated(requirements);
 		}
 		
 		public function setDescription(newDescription:String):void
