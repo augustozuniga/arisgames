@@ -154,6 +154,7 @@
 			private var currentGameObject:GameObject;
 			private var gameObjectsArray:Array;
 			private var loggedIn:Boolean;
+			private var creatingNewObject:Boolean;
 			
 			private var eventList:Array;
 			private var characterFolder:Folder;
@@ -195,6 +196,7 @@
 			
 			public function createNewGameObject(gen:Generator):void
 			{
+				this.creatingNewObject = true;
 				var type:String = gen.getType();
 				if(type == GameObjectReference.CHARACTER)
 				{//takes gameID, name, descr, greeting, media, returns npcID
@@ -254,6 +256,7 @@
 			{
 				this.currentView = view;
 				this.loggedIn = false;
+				this.creatingNewObject = false;
 				this.availableGamesArray = new Array();
 				this.availableGamesArrayCollection = new ArrayCollection(this.availableGamesArray);
 				
@@ -329,6 +332,7 @@
 						type = Requirement.QUEST_DISPLAY;
 					}
 					requirements.getRequirementsForObject.send(currentGameID, type, id);
+					getCurrentGameData();
 				}
 			}
 			
@@ -552,6 +556,11 @@
 												 event.result.data.description, event.result.data.media, requirements, playerModifications,
 												 int(event.result.data.dropable) == 1, int(event.result.data.destroyable) == 1);
 					currentGameObject.takeSnapshot();
+					if(creatingNewObject)
+					{
+						events.createEvent.send(currentGameID, GameObjectReference.ITEM + event.result.data.item_id.toString());
+						creatingNewObject = false;
+					}
 					updateView();				 
 				}
 			}
@@ -609,6 +618,11 @@
 					currentGameObject = new Page(getGameObjectReference(event.result.data.node_id, GameObjectReference.PAGE),
 												 event.result.data.text, event.result.data.media, requirements, playerModifications, choices);
 					currentGameObject.takeSnapshot();
+					if(creatingNewObject)
+					{
+						events.createEvent.send(currentGameID, GameObjectReference.PAGE + event.result.data.node_id.toString());
+						creatingNewObject = false;
+					}
 					updateView();				 
 				}				
 			}
@@ -664,6 +678,11 @@
 												 event.result.data.text);
 					npcs.getConversations.send(currentGameID, int(event.result.data.npc_id));
 					currentGameObject.takeSnapshot();
+					if(creatingNewObject)
+					{
+						events.createEvent.send(currentGameID, GameObjectReference.CHARACTER + event.result.data.npc_id.toString());
+						creatingNewObject = false;
+					}
 					updateView();				 
 				}								
 			}
@@ -745,6 +764,11 @@
 												  event.result.data.description, event.result.data.media, requirements, objectives,
 												  event.result.data.text_when_complete);
 					currentGameObject.takeSnapshot();
+					if(creatingNewObject)
+					{
+						events.createEvent.send(currentGameID, GameObjectReference.QUEST + event.result.data.quest_id.toString());
+						creatingNewObject = false;
+					}
 					updateView();				 
 				}								
 			}
