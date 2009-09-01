@@ -217,6 +217,15 @@
 				}
 			}
 			
+			public function deleteGameObject(ref:GameObjectReference):void
+			{
+				var type:String = ref.getType();
+				if(type == GameObjectReference.CHARACTER)
+				{
+					npcs.deleteNpc.send(currentGameID, ref.getID());
+				}
+			}
+			
 			public function editGame(ref:GameReference):void
 			{
 				currentGameID = ref.getID();
@@ -653,6 +662,15 @@
 				{
 					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.CHARACTER, "My New Character"));
 				}								
+			}
+			
+			private function on_npcs_deleteNpcResult(event:ResultEvent):void
+			{ //takes gameID, npcID, returns null
+				if(filterErrors(event, "npcs.deleteNpc"))
+				{
+					currentGameObject = null;
+				}
+				getCurrentGameData();
 			}
 			
 			private function on_npcs_getConversationsResult(event:ResultEvent):void
@@ -1122,11 +1140,6 @@
 			
 			private function on_npcs_deleteConversationResult(event:ResultEvent):void
 			{ //takes gameID, conversationID, returns true on success
-				
-			}
-			
-			private function on_npcs_deleteNpcResult(event:ResultEvent):void
-			{ //takes gameID, npcID, returns ???
 				
 			}
 			

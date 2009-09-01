@@ -102,6 +102,11 @@ package org.arisgames.editor.model
 			return media;
 		}
 		
+		public function getReference():GameObjectReference
+		{
+			return ref;
+		}
+		
 		public function getRequirement(reqID:int):Requirement
 		{
 			for each(var req:Requirement in requirements)

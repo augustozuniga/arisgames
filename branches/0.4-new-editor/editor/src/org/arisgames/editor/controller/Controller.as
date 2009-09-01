@@ -38,14 +38,17 @@ package org.arisgames.editor.controller
 		{
 			if(event.dragInitiator is IObjectNavigator)
 			{
-				DragManager.acceptDragDrop(event.target as UIComponent);
-				DragManager.showFeedback(DragManager.MOVE);
+				if(event.dragSource.dataForFormat("treeItems")[0] is GameObjectReference)
+				{
+					DragManager.acceptDragDrop(event.target as UIComponent);
+					DragManager.showFeedback(DragManager.MOVE);					
+				}
 			}
 		}
 		
 		public function onDiscardCanvasDragDrop(event:DragEvent):void
 		{
-			
+			currentModel.deleteGameObject(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
 		}
 		
 		public function onDroppableCheckBoxChange(event:Event):void
