@@ -224,6 +224,18 @@
 				{
 					npcs.deleteNpc.send(currentGameID, ref.getID());
 				}
+				else if(type == GameObjectReference.ITEM)
+				{
+					items.deleteItem.send(currentGameID, ref.getID());
+				}
+				else if(type == GameObjectReference.PAGE)
+				{
+					nodes.deleteNode.send(currentGameID, ref.getID());
+				}
+				else if(type == GameObjectReference.QUEST)
+				{
+					quests.deleteQuest.send(currentGameID, ref.getID());
+				}
 			}
 			
 			public function editGame(ref:GameReference):void
@@ -555,6 +567,15 @@
 				}
 			}
 			
+			private function on_items_deleteItemResult(event:ResultEvent):void
+			{ //takes gameID, itemID, returns true if successful
+				if(filterErrors(event, "items.deleteItem"))
+				{
+					currentGameObject = null;
+				}
+				getCurrentGameData();				
+			}
+			
 			private function on_items_getItemResult(event:ResultEvent):void
 			{ //takes gameID, itemID, returns obj{description, destroyable, dropable, item_id, media, name, type}
 				if(filterErrors(event, "items.getItem"))
@@ -600,6 +621,15 @@
 				{
 					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.PAGE, "My New Page"));
 				}				
+			}
+			
+			private function on_nodes_deleteNodeResult(event:ResultEvent):void
+			{ //takes gameID, nodeID, returns returnCode only
+				if(filterErrors(event, "nodes.deleteNode"))
+				{
+					currentGameObject = null;
+				}
+				getCurrentGameData();				
 			}
 			
 			private function on_nodes_getNodeResult(event:ResultEvent):void
@@ -768,6 +798,15 @@
 				{
 					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.QUEST, "My New Quest"));
 				}				
+			}
+			
+			private function on_quests_deleteQuestResult(event:ResultEvent):void
+			{ //takes gameID, questID, returns true if successful
+				if(filterErrors(event, "quests.deleteQuest"))
+				{
+					currentGameObject = null;
+				}
+				getCurrentGameData();				
 			}
 			
 			private function on_quests_getQuestResult(event:ResultEvent):void
@@ -1038,11 +1077,6 @@
 				
 			}
 			
-			private function on_items_deleteItemResult(event:ResultEvent):void
-			{ //takes gameID, itemID, returns true if successful
-				
-			}
-			
 			private function on_items_getReferrersResult(event:ResultEvent):void
 			{ //takes gameID, itemID, returns array obj{type, id} *** check!! ***
 				
@@ -1123,11 +1157,6 @@
 				
 			}
 			
-			private function on_nodes_deleteNodeResult(event:ResultEvent):void
-			{ //takes gameID, nodeID, returns returnCode only
-				
-			}
-			
 			private function on_nodes_getReferrersResult(event:ResultEvent):void
 			{ //takes gameID, nodeID, returns ???
 				
@@ -1170,11 +1199,6 @@
 			
 			private function on_playerStateChanges_getReferrersResult(event:ResultEvent):void
 			{
-				
-			}
-			
-			private function on_quests_deleteQuestResult(event:ResultEvent):void
-			{ //takes gameID, questID, returns true if successful
 				
 			}
 			
