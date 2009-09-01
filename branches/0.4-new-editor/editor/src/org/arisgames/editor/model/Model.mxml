@@ -307,6 +307,7 @@
 			public function setCurrentGameObject(objRef:GameObjectReference):void
 			{
 				updateCurrentGame();
+				getCurrentGameData();
 				if(objRef != null)
 				{
 					var id:int = objRef.getID();
@@ -332,7 +333,6 @@
 						type = Requirement.QUEST_DISPLAY;
 					}
 					requirements.getRequirementsForObject.send(currentGameID, type, id);
-					getCurrentGameData();
 				}
 			}
 			
@@ -657,7 +657,6 @@
 			
 			private function on_npcs_getConversationsResult(event:ResultEvent):void
 			{ //takes gameID, npcID, returns array obj{conversation_id, node_id, npc_id, text}
-				trace("hi there");
 				if(filterErrors(event, "npcs.getConversations"))
 				{
 					for each(var obj:Object in event.result.data)
@@ -679,8 +678,7 @@
 					npcs.getConversations.send(currentGameID, int(event.result.data.npc_id));
 					currentGameObject.takeSnapshot();
 					if(creatingNewObject)
-					{
-						events.createEvent.send(currentGameID, GameObjectReference.CHARACTER + event.result.data.npc_id.toString());
+					{ //don't create an event for npcs - they can't have one in the database right now
 						creatingNewObject = false;
 					}
 					updateView();				 
@@ -765,8 +763,7 @@
 												  event.result.data.text_when_complete);
 					currentGameObject.takeSnapshot();
 					if(creatingNewObject)
-					{
-						events.createEvent.send(currentGameID, GameObjectReference.QUEST + event.result.data.quest_id.toString());
+					{//don't create an event for quests - they can't have one in the database right now
 						creatingNewObject = false;
 					}
 					updateView();				 
