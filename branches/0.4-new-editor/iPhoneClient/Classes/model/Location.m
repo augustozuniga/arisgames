@@ -7,6 +7,10 @@
 //
 
 #import "Location.h"
+#import "ARISAppDelegate.h"
+#import "AppModel.h"
+#import "Item.h"
+#import "Node.h"
 
 
 @implementation Location
@@ -23,9 +27,25 @@
 @synthesize qty;
 
 -(nearbyObjectKind) kind {
-	if ([objectType isEqualToString:@"Node"]) return NearbyObjectNode;
-	if ([objectType isEqualToString:@"Npc"]) return NearbyObjectNPC;
-	if ([objectType isEqualToString:@"Item"]) return NearbyObjectItem;
+	if ([self.objectType isEqualToString:@"Node"]) return NearbyObjectNode;
+	if ([self.objectType isEqualToString:@"Npc"]) return NearbyObjectNPC;
+	if ([self.objectType isEqualToString:@"Item"]) return NearbyObjectItem;
+}
+
+- (void)display {
+	ARISAppDelegate *appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
+	AppModel *model = [appDelegate appModel];
+	
+	if (self.kind == NearbyObjectItem) {
+		Item *item = [model fetchItem:objectId]; 
+		[item display];	
+	}
+	
+	if (self.kind == NearbyObjectNode) {
+		Node *node = [model fetchNode:objectId]; 
+		[node display];	
+	}
+	
 }
 
 - (void)dealloc {

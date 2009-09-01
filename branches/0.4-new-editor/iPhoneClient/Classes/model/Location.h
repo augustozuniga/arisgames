@@ -30,11 +30,13 @@
 @property(copy, readwrite) CLLocation *location;
 @property(readwrite) double error;
 @property(copy, readwrite) NSString *objectType;
-@property(readwrite, assign) nearbyObjectKind kind;
+@property(readonly) nearbyObjectKind kind;
 - (nearbyObjectKind) kind;
 @property(readwrite) int objectId;
 @property(readwrite) bool hidden;
 @property(readwrite) bool forcedDisplay;
 @property(readwrite) int qty;
+
+- (void) display;
 
 @end
