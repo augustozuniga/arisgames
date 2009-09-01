@@ -8,12 +8,11 @@
 
 #import "AppModel.h"
 
-#import "NearbyLocationsListParserDelegate.h"
-
 #import "XMLParserDelegate.h"
 #import "ARISAppDelegate.h"
 
 #import "Item.h"
+#import "Node.h"
 #import "JSONConnection.h"
 #import "JSONResult.h"
 #import "JSON.h"
@@ -335,6 +334,61 @@ NSDictionary *InventoryElements;
 	
 	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:self userInfo:nil];
 	[[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+-(Item *)fetchItem:(int)itemId{
+	NSLog(@"Model: Fetch Requested for Item %d", itemId);
+		
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"items" 
+																	 andMethodName:@"getItem" 
+																	  andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	//Build the item
+	NSDictionary *itemDictionary = (NSDictionary *)jsonResult.data;	
+		Item *item = [[Item alloc] init];
+		item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
+		item.name = [itemDictionary valueForKey:@"name"];
+		item.type = [itemDictionary valueForKey:@"type"];
+		item.description = [itemDictionary valueForKey:@"description"];
+		item.mediaURL = [itemDictionary valueForKey:@"media"];
+		item.iconURL = [itemDictionary valueForKey:@"icon"];
+		item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
+		item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
+		NSLog(@"Model: Adding Item: %@", item.name);
+
+	
+	return item;
+}
+
+-(Item *)fetchNode:(int)nodeId{
+	NSLog(@"Model: Fetch Requested for Node %d", nodeId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",nodeId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"nodes" 
+																	 andMethodName:@"getNode" 
+																	  andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	//Build the node
+	NSDictionary *nodeDictionary = (NSDictionary *)jsonResult.data;	
+	Node *node = [[Node alloc] init];
+	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
+	node.name = [nodeDictionary valueForKey:@"title"];
+	node.text = [nodeDictionary valueForKey:@"text"];
+	node.mediaURL = [nodeDictionary valueForKey:@"media"];
+	NSLog(@"Model: Adding Node: %@", node.name);
+	
+	return node;
 }
 
 

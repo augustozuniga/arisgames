@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CLLocation.h>
 #import "Game.h"
+#import "Item.h"
 
 extern NSDictionary *InventoryElements;
 
@@ -60,6 +61,7 @@ extern NSDictionary *InventoryElements;
 -(void)fetchGameList;
 -(void)fetchLocationList;
 -(void)fetchInventory;
+-(Item *)fetchItem:(int)itemId;
 -(void)updateServerLocationAndfetchNearbyLocationList;
 -(NSMutableURLRequest *) getURLForModule:(NSString *)moduleName;
 -(NSString *)getURLStringForModule:(NSString *)moduleName;
