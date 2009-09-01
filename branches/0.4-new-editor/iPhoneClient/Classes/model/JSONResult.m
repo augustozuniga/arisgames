@@ -34,6 +34,10 @@
 	//Here we need to determine if the return data is a bool, int or recordset
 	if ([dataObject isKindOfClass:[NSDictionary class]]) {
 		NSDictionary *dataDictionary = ((NSDictionary*) dataObject);
+		if (!([dataDictionary objectForKey:@"columns"] && [dataDictionary objectForKey:@"rows"])) {
+			self.data = dataObject;
+			return self;
+		}
 		NSArray *columnsArray = [dataDictionary objectForKey:@"columns"];
 		NSArray *rowsArray = [dataDictionary objectForKey:@"rows"];
 		NSEnumerator *rowsEnumerator = [rowsArray objectEnumerator];
