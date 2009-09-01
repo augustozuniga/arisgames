@@ -69,7 +69,7 @@
 				return mainMenuView.getSelectedGame();
 			}
 			
-			public function getSelectedGameObject():GameObjectReference
+			public function getSelectedGameObject():Object
 			{
 				return editingView.getSelectedGameObject();
 			}

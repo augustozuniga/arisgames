@@ -7,6 +7,8 @@ package org.arisgames.editor.controller
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
 	
+	import org.arisgames.editor.model.GameObjectReference;
+	import org.arisgames.editor.model.Generator;
 	import org.arisgames.editor.model.Model;
 	import org.arisgames.editor.view.IObjectNavigator;
 	import org.arisgames.editor.view.View;
@@ -108,7 +110,15 @@ package org.arisgames.editor.controller
 		
 		public function onObjectNavigatorClick(event:Event):void
 		{
-			currentModel.setCurrentGameObject(currentView.getSelectedGameObject());
+			var selection:Object = currentView.getSelectedGameObject();
+			if(selection is GameObjectReference)
+			{
+				currentModel.setCurrentGameObject(selection as GameObjectReference);				
+			}
+			if(selection is Generator)
+			{
+				currentModel.createNewGameObject(selection as Generator);
+			}
 		}
 		
 		public function onPasswordEnter(event:Event):void

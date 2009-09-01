@@ -193,9 +193,26 @@
 				games.createGame.send(currentEditorID, currentGameName);
 			}
 			
-			public function createNewGameObject(ref:GameObjectReference):void
+			public function createNewGameObject(gen:Generator):void
 			{
-				setCurrentGameObject(ref);
+				var type:String = gen.getType();
+				if(type == GameObjectReference.CHARACTER)
+				{//takes gameID, name, descr, greeting, media, returns npcID
+					npcs.createNpc.send(currentGameID, "My New Character", "", "", "");
+				}
+				else if(type == GameObjectReference.ITEM)
+				{//takes gameID, name, descr, media, droppable, destroyable, returns id
+					items.createItem.send(currentGameID, "My New Item", "", "", 0, 0);
+				}
+				else if(type == GameObjectReference.PAGE)
+				{//takes gameID, title, text, media, opt1text, opt1id, 2txt, 2id, 3txt, 3id, qacorrecttext, qaincorrectnodeid, qacorrectid
+					nodes.createNode.send(currentGameID, "My New Page", "", "",
+										  "", 0, "", 0, "", 0, "", 0, 0);
+				}
+				else if(type == GameObjectReference.QUEST)
+				{//takes gameID, name, incompletedesc, completedesc, media, returns id
+					quests.createQuest.send(currentGameID, "My New Quest", "", "", "");
+				}
 			}
 			
 			public function editGame(ref:GameReference):void
@@ -521,7 +538,7 @@
 			{ //takes gameID, name, descr, media, returns id
 				if(filterErrors(event, "items.createItem"))
 				{
-					getCurrentGameData();
+					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.ITEM, "My New Item"));
 				}
 			}
 			
@@ -557,6 +574,14 @@
 			private function on_items_updateItemResult(event:ResultEvent):void
 			{ //takes gameID, itemID, name, descr, media, droppable, destroyable, returns true if successful
 				filterErrors(event, "items.updateItem");	
+			}
+			
+			private function on_nodes_createNodeResult(event:ResultEvent):void
+			{ //takes gameID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeID, opt3text, opt3nodeID, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns nodeID
+				if(filterErrors(event, "nodes.createNode"))
+				{
+					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.PAGE, "My New Page"));
+				}				
 			}
 			
 			private function on_nodes_getNodeResult(event:ResultEvent):void
@@ -606,6 +631,14 @@
 			private function on_nodes_updateNodeResult(event:ResultEvent):void
 			{ //takes gameID, nodeID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeid, opt3text, opt3nodeid, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns true if successful
 				filterErrors(event, "nodes.updateNode");
+			}
+			
+			private function on_npcs_createNpcResult(event:ResultEvent):void
+			{ //takes gameID, name, descr, greeting, media, returns npcID
+				if(filterErrors(event, "npcs.createNpc"))
+				{
+					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.CHARACTER, "My New Character"));
+				}								
 			}
 			
 			private function on_npcs_getConversationsResult(event:ResultEvent):void
@@ -692,6 +725,14 @@
 			private function on_playerStateChanges_updatePlayerStateChangeResult(event:ResultEvent):void
 			{
 				filterErrors(event, "playerStateChanges.updatePlayerStateChange");
+			}
+			
+			private function on_quests_createQuestResult(event:ResultEvent):void
+			{ //takes gameID, name, incompletedescription, completedescription, media, returns questID
+				if(filterErrors(event, "quests.createQuest"))
+				{
+					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.QUEST, "My New Quest"));
+				}				
 			}
 			
 			private function on_quests_getQuestResult(event:ResultEvent):void
@@ -1043,11 +1084,6 @@
 				
 			}
 			
-			private function on_nodes_createNodeResult(event:ResultEvent):void
-			{ //takes gameID, title, text, media, opt1text, opt1nodeID, opt2text, opt2nodeID, opt3text, opt3nodeID, QAcorrectanswer, QAincorrectnodeid, QAcorrectnodeid, returns nodeID
-				
-			}
-			
 			private function on_nodes_deleteNodeResult(event:ResultEvent):void
 			{ //takes gameID, nodeID, returns returnCode only
 				
@@ -1060,11 +1096,6 @@
 			
 			private function on_npcs_createConversationResult(event:ResultEvent):void
 			{ //takes gameID, npcID, nodeID, text, returns conversationID
-				
-			}
-			
-			private function on_npcs_createNpcResult(event:ResultEvent):void
-			{ //takes gameID, name, descr, greeting, media, returns npcID
 				
 			}
 			
@@ -1105,11 +1136,6 @@
 			
 			private function on_playerStateChanges_getReferrersResult(event:ResultEvent):void
 			{
-				
-			}
-			
-			private function on_quests_createQuestResult(event:ResultEvent):void
-			{ //takes gameID, name, incompletedescription, completedescription, media, returns questID
 				
 			}
 			
