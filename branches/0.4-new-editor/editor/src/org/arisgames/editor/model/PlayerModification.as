@@ -11,6 +11,7 @@ package org.arisgames.editor.model
 		public static const ADD:String = "addModification";
 		public static const DELETE:String = "deleteModification";
 		public static const MODIFY:String = "modifyModification";
+		public static const GIVE_EVENT:String = "GIVE_EVENT";
 		
 		public var modificationTypesDataProvider:ArrayCollection;
 		

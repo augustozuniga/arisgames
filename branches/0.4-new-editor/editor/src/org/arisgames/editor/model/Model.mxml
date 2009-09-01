@@ -193,6 +193,11 @@
 				games.createGame.send(currentEditorID, currentGameName);
 			}
 			
+			public function createNewGameObject(ref:GameObjectReference):void
+			{
+				setCurrentGameObject(ref);
+			}
+			
 			public function editGame(ref:GameReference):void
 			{
 				currentGameID = ref.getID();
@@ -315,6 +320,7 @@
 			// Private Functions //
 			///////////////////////
 			
+			
 			private function filterErrors(event:ResultEvent, fname:String):Boolean
 			{
 				if(event.result.returnCode == 0)
@@ -344,7 +350,6 @@
 				//locations.getLocations.send(currentGameID);
 				//media.getMedia.send(currentGameID);
 				//getQRCodes
-				//getMedia
 			}
 			
 			private function getEventCodeFromEvent(id:int):String
@@ -357,6 +362,22 @@
 					}
 				}
 				return null;			
+			}
+			
+			private function getEventIDFromEventCode(evtCode:String):int
+			{
+				if(evtCode != null)
+				{
+					for each(var evt:Object in eventList)
+					{
+						if(evt.description.toString() == evtCode)
+						{
+							return int(evt.event_id);
+						}
+					}
+					Alert.show("Error in model.getEventIDFromEventCode: event not found");
+				}
+				return -1;
 			}
 			
 			private function getGameObjectReference(id:int, type:String):GameObjectReference
@@ -427,11 +448,6 @@
 				return null;
 			}
 
-			private function getRequirementCodeFromEventCode(code:String):int
-			{
-				return int(code.substr(0, 2));
-			}
-			
 			private function on_editors_createEditorResult(event:ResultEvent):void
 			{
 				if(filterErrors(event, "editors.createEditor"))
@@ -452,6 +468,17 @@
 					updateGameList();
 					updateView();
 				}
+			}
+			
+			private function on_events_createEventResult(event:ResultEvent):void
+			{ //takes gameID, description, returns id
+				filterErrors(event, "events.createEvent");
+				playerStateChanges.createPlayerStateChange.send(currentGameID,
+																currentGameObject.getType(),
+																currentGameObject.getID(),
+																PlayerModification.GIVE_EVENT,
+																int(event.result.data)
+																);
 			}
 			
 			private function on_events_getEventsResult(event:ResultEvent):void
@@ -644,16 +671,19 @@
 				{
 					for each(var obj:Object in event.result.data)
 					{
-						var mod:PlayerModification; // NOTE: WE NEVER USE EVENTS HERE, ONLY ITEM GIVE/TAKES
-						mod = new PlayerModification(getGameObjectReference(obj.action_detail, GameObjectReference.ITEM), obj.action, obj.id);
-						if(currentGameObject is Item)
-						{
-							(currentGameObject as Item).addPlayerModification(mod);
+						if(obj.action != PlayerModification.GIVE_EVENT)
+						{ // The only events we use are the automatically generated ones, which we don't display to the user
+							var mod:PlayerModification;
+							mod = new PlayerModification(getGameObjectReference(obj.action_detail, GameObjectReference.ITEM), obj.action, obj.id);
+							if(currentGameObject is Item)
+							{
+								(currentGameObject as Item).addPlayerModification(mod);
+							}
+							else if(currentGameObject is Page)
+							{
+								(currentGameObject as Page).addPlayerModification(mod);
+							}						
 						}
-						else if(currentGameObject is Page)
-						{
-							(currentGameObject as Page).addPlayerModification(mod);
-						}						
 					}
 				}
 				currentGameObject.takeSnapshot();
@@ -719,7 +749,7 @@
 						var eventID:int;
 						if(obj.requirement == Requirement.HAS_ITEM || obj.requirement == Requirement.DOES_NOT_HAVE_ITEM)
 						{
-							eventID = -1;
+							eventID = getEventIDFromEventCode(GameObjectReference.ITEM + obj.requirement_detail.toString());
 							ref = getGameObjectReference(obj.requirement_detail, GameObjectReference.ITEM);
 							if(obj.requirement == Requirement.HAS_ITEM)
 							{
@@ -735,7 +765,14 @@
 							eventID = obj.requirement_detail;
 							var evtCode:String = getEventCodeFromEvent(eventID);
 							ref = getGameObjectReferenceFromEventCode(evtCode);
-							reqCode = getRequirementCodeFromEventCode(evtCode);
+							if(evtCode.indexOf(GameObjectReference.ITEM) == 0)
+							{
+								reqCode = 2;
+							}
+							else
+							{
+								reqCode = 0;
+							}
 							if(obj.requirement == Requirement.DOES_NOT_HAVE_EVENT)
 							{
 								reqCode++;
@@ -860,7 +897,7 @@
 						}
 						else if(diff.indexOf(Requirement.ADD) == 0)
 						{
-							var reqToAdd:Requirement = currentGameObject.getRequirement(int(diff.substr(Requirement.MODIFY.length)));
+							var reqToAdd:Requirement = currentGameObject.getRequirement(int(diff.substr(Requirement.ADD.length)));
 							requirements.createRequirement.send(currentGameID,
 																currentGameObject.getType(),
 																currentGameObject.getID(),
@@ -884,7 +921,7 @@
 																currentGameObject.getID(),
 																reqToUpdate.getDBCode(),
 																reqToUpdate.getObjectID()
-																);
+																);		
 						}
 					}
 				}
@@ -905,11 +942,6 @@
 			/////////////////////////////////////////////
 			// Under Construction (Move when finished) //
 			/////////////////////////////////////////////			
-			
-			private function on_events_createEventResult(event:ResultEvent):void
-			{ //takes gameID, description, returns id
-				
-			}
 			
 			private function on_events_deleteEventResult(event:ResultEvent):void
 			{ //takes gameID, eventID, returns true if successful

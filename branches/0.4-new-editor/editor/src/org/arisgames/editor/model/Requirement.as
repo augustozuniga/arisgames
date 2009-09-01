@@ -87,30 +87,53 @@ package org.arisgames.editor.model
 				}
 				code -= 2;
 			}
-			if(code ==0)
+			if(code == 0)
 			{
 				return HAS_EVENT;
 			}
 			return DOES_NOT_HAVE_EVENT;
 		}
 		
+		public function getEventCode():String
+		{
+			var evtCode:String;
+			if(ref.getType() == GameObjectReference.ITEM)
+			{
+				if(code < 2)
+				{
+					return null;
+				}
+				evtCode = GameObjectReference.ITEM;
+			}
+			else if(ref.getType() == GameObjectReference.PAGE)
+			{
+				evtCode = GameObjectReference.PAGE;
+			}
+			else
+			{
+				Alert.show("error in Requirement.getEventCode() - unsupported object type");
+			}
+			evtCode += getObjectID().toString();
+			return evtCode;
+		}
+		
 		public function getObjectID():int
 		{
-			if(ref.getType() == GameObjectReference.ITEM)
+			if(ref.getType() == GameObjectReference.ITEM && code < 2)
 			{
 				return ref.getID();
 			}
 			return eventID;
 		}
 		
-		public function getRequirementID():int
-		{
-			return this.reqID;
-		}
-		
 		public function getObjectType():String
 		{
 			return ref.getType();
+		}
+		
+		public function getRequirementID():int
+		{
+			return this.reqID;
 		}
 		
 		public function set requirementType(newType:String):void
