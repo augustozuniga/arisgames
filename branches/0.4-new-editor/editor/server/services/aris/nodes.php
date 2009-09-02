@@ -41,7 +41,7 @@ class Nodes extends Module
 		
 		if (!$node) return new returnData(2, NULL, "invalid node id");
 		
-		$node->media = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $node->media;
+		$node->mediaURL = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $node->media;
 
 		
 		return new returnData(0, $node);

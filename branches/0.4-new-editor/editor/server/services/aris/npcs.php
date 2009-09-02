@@ -41,10 +41,39 @@ class Npcs extends Module
 		$npc = @mysql_fetch_object($rsResult);
 		
 		if (!$npc) return new returnData(2, NULL, "invalid npc id");
-		return new returnData(0, $npc);		
 		
+		$npc->mediaURL = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $node->media;
+		
+		return new returnData(0, $npc);		
+	}
+
+
+	/**
+     * Fetch a specific npc with the conversation options that meet the requirements
+     * @returns a single npc
+     */
+	public function getNpcWithConversationsForPlayer($intGameID, $intNpcID, $intPlayerID)
+	{
+		
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		//get the npc
+		$npcReturnData = $this->getNpc($intGameID, $intNpcID);
+		if ($npcReturnData->returnCode > 0) return $npcReturnData;
+		$npc = $npcReturnData->data;
+		
+		//get the options for this npc and player
+		$conversationsReturnData = $this->getConversationsForPlayer($intGameID, $intNpcID, $intPlayerID);
+		if ($npcReturnData->returnCode > 0) return $optionsReturnData;
+		$conversationsArray = $conversationsReturnData->data;
+
+		$npc->conversationOptions = $conversationsArray;
+		
+		return new returnData(0, $npc);
 		
 	}
+
 
 	/**
      * Create a NPC
@@ -151,7 +180,7 @@ class Npcs extends Module
 		
 		$query = "SELECT * FROM {$prefix}_npc_conversations WHERE npc_id = '{$intNpcID}'";
 		
-		NetDebug::trace("getConversations: Running a query = $query");	
+		//NetDebug::trace("getConversations: Running a query = $query");	
 
 		$rsResult = @mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
@@ -160,6 +189,31 @@ class Npcs extends Module
 		
 	}	
 	
+	/**
+     * Fetch the conversations for a given NPC
+     * @returns a recordset of conversations
+     */
+	public function getConversationsForPlayer($intGameID, $intNpcID, $intPlayerID) {
+		
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+		
+		$conversationsReturnData = $this->getConversations($intGameID, $intNpcID);	
+		if ($conversationsReturnData->returnCode != 0) return $conversationsReturnData;
+		
+		$conversations = $conversationsReturnData->data;
+
+		$conversationsWithRequirementsMet = array();
+		while ($conversation = mysql_fetch_object($conversations)) {
+			//Check the requirements are met
+			
+			//Add it to the result
+			$conversationsWithRequirementsMet[] = $conversation;
+		}
+		
+		return new returnData(0, $conversationsWithRequirementsMet);
+
+	}	
 	
 	/**
      * Update Conversation

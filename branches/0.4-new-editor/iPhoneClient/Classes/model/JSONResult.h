@@ -21,6 +21,7 @@
 
 
 - (JSONResult*)initWithJSONString:(NSString *)JSONString;
+- (NSObject*) parseJSONData:(NSObject *)dictionary;
 
 
 

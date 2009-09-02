@@ -11,6 +11,7 @@
 #import "AppModel.h"
 #import "Item.h"
 #import "Node.h"
+#import "Npc.h"
 
 
 @implementation Location
@@ -46,6 +47,10 @@
 		[node display];	
 	}
 	
+	if (self.kind == NearbyObjectNPC) {
+		Npc *npc = [model fetchNpc:objectId]; 
+		[npc display];	
+	}
 }
 
 - (void)dealloc {

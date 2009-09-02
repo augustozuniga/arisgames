@@ -28,41 +28,54 @@
 	self.returnCodeDescription = [resultDictionary objectForKey:@"returnCodeDescription"];
 
 	NSObject *dataObject = [resultDictionary objectForKey:@"data"];
-
 	NSLog(@"PARSER data: %@", dataObject);
 	
-	//Here we need to determine if the return data is a bool, int or recordset
-	if ([dataObject isKindOfClass:[NSDictionary class]]) {
-		NSDictionary *dataDictionary = ((NSDictionary*) dataObject);
-		if (!([dataDictionary objectForKey:@"columns"] && [dataDictionary objectForKey:@"rows"])) {
-			self.data = dataObject;
-			return self;
-		}
-		NSArray *columnsArray = [dataDictionary objectForKey:@"columns"];
-		NSArray *rowsArray = [dataDictionary objectForKey:@"rows"];
-		NSEnumerator *rowsEnumerator = [rowsArray objectEnumerator];
-		NSMutableArray *dictionaryArray = [[NSMutableArray alloc] init];
-
-		//add each row as a dictionary to the dictionaryArray 
-		NSArray *rowArray;
-		while (rowArray = [rowsEnumerator nextObject]) {		
-			NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
-			for (int i = 0; i < [rowArray count]; i++) {
-				NSString *value = [rowArray objectAtIndex:i];
-				NSString *key = [columnsArray objectAtIndex:i];
-				[tempDictionary setObject:value forKey:key];
-			} 
-			[dictionaryArray addObject: tempDictionary];
-			[tempDictionary release];		
-		}
-		self.data = dictionaryArray;
-	}
-	else self.data = dataObject;
+	self.data = [self parseJSONData:dataObject];
 		
 	return self;
-	
 }
 
+
+- (NSObject*) parseJSONData:(NSObject *)dataObject{
+	//Check if this is a dictionary or or just a simple int/bool
+	if (![dataObject isKindOfClass:[NSDictionary class]]) return dataObject;
+	
+	//This must be an NSDictionary, go ahead and cast it
+	NSDictionary *dataDictionary = ((NSDictionary*) dataObject);
+	
+	//Check if this dictionary contains a rows/cols pair or is just an object
+	if (!([dataDictionary objectForKey:@"columns"] && [dataDictionary objectForKey:@"rows"])) {
+		//If any of the fields in this dictionary are also dictionaries, we need to parse them as well
+		NSEnumerator *dictionaryEnumerator = [dataDictionary objectEnumerator];
+		NSObject *objectInDictionary;
+		while (objectInDictionary = [dictionaryEnumerator nextObject]) {	
+			//parse it
+			objectInDictionary = [self parseJSONData:objectInDictionary];
+		}
+	
+		return dataDictionary;
+	}
+
+	//Parse the row/col pair into an array of dictionaries
+	NSArray *columnsArray = [dataDictionary objectForKey:@"columns"];
+	NSArray *rowsArray = [dataDictionary objectForKey:@"rows"];
+	NSEnumerator *rowsEnumerator = [rowsArray objectEnumerator];
+	NSMutableArray *dictionaryArray = [[NSMutableArray alloc] init];
+	
+	//add each row as a dictionary to the dictionaryArray 
+	NSArray *rowArray;
+	while (rowArray = [rowsEnumerator nextObject]) {		
+		NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
+		for (int i = 0; i < [rowArray count]; i++) {
+			NSString *value = [rowArray objectAtIndex:i];
+			NSString *key = [columnsArray objectAtIndex:i];
+			[tempDictionary setObject:value forKey:key];
+		} 
+		[dictionaryArray addObject: tempDictionary];
+		[tempDictionary release];		
+	}
+	return dictionaryArray;
+}
 
 
 

@@ -14,6 +14,7 @@
 #import "Item.h"
 #import "Node.h"
 #import "NodeOption.h"
+#import "Npc.h"
 #import "JSONConnection.h"
 #import "JSONResult.h"
 #import "JSON.h"
@@ -384,7 +385,7 @@ NSDictionary *InventoryElements;
 	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
-	node.mediaURL = [nodeDictionary valueForKey:@"media"];
+	node.mediaURL = [nodeDictionary valueForKey:@"mediaURL"];
 
 	//Add options here
 	int optionNodeId;
@@ -414,6 +415,43 @@ NSDictionary *InventoryElements;
 	
 	return node;
 }
+
+-(Npc *)fetchNpc:(int)npcId{
+	NSLog(@"Model: Fetch Requested for Npc %d", npcId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",npcId],
+						  [NSString stringWithFormat:@"%d",self.playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"npcs" 
+																	 andMethodName:@"getNpcWithConversationsForPlayer" 
+																	  andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	//Build the npc object
+	NSDictionary *npcDictionary = (NSDictionary *)jsonResult.data;	
+	Npc *npc = [[Npc alloc] init];
+	npc.npcId = [[npcDictionary valueForKey:@"npc_id"] intValue];
+	npc.name = [npcDictionary valueForKey:@"name"];
+	npc.greeting = [npcDictionary valueForKey:@"text"];
+	npc.description = [npcDictionary valueForKey:@"description"];
+	npc.mediaURL = [npcDictionary valueForKey:@"mediaURL"];
+	
+	NSArray *conversationOptions = [npcDictionary objectForKey:@"conversationOptions"];
+	NSEnumerator *conversationOptionsEnumerator = [conversationOptions objectEnumerator];
+	NSDictionary *conversationDictionary;
+	while (conversationDictionary = [conversationOptionsEnumerator nextObject]) {	
+		//Make the Node Option and add it to the Npc
+		int optionNodeId = [[conversationDictionary valueForKey:@"node_id"] intValue];
+		NSString *text = [conversationDictionary valueForKey:@"text"]; 
+		NodeOption *option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[npc addOption:option];
+	}
+
+	return npc;	
+}	
 
 
 - (void)updateServerLocationAndfetchNearbyLocationList {

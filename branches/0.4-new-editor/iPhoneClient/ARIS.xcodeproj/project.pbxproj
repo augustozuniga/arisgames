@@ -189,6 +189,7 @@
 		ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBAC104D7CC800AA7285 /* NodeOption.m */; };
 		ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */; };
 		ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBEBBC4104D7DAB00AA7285 /* Node.xib */; };
+		ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C4E8104F1A0E002EB824 /* Npc.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -445,6 +446,8 @@
 		ABBEBBC0104D7CF900AA7285 /* NodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeViewController.h; sourceTree = "<group>"; };
 		ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeViewController.m; sourceTree = "<group>"; };
 		ABBEBBC4104D7DAB00AA7285 /* Node.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Node.xib; sourceTree = "<group>"; };
+		ABD5C4E7104F1A0E002EB824 /* Npc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Npc.h; sourceTree = "<group>"; };
+		ABD5C4E8104F1A0E002EB824 /* Npc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Npc.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -641,6 +644,8 @@
 		2B3D17040F49C9920067FD3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ABD5C4E7104F1A0E002EB824 /* Npc.h */,
+				ABD5C4E8104F1A0E002EB824 /* Npc.m */,
 				ABBEBBAB104D7CC800AA7285 /* NodeOption.h */,
 				ABBEBBAC104D7CC800AA7285 /* NodeOption.m */,
 				AB8A429E104C7F8C00422773 /* Node.h */,
@@ -1164,6 +1169,7 @@
 				AB8A42A0104C7F8C00422773 /* Node.m in Sources */,
 				ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */,
 				ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */,
+				ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
