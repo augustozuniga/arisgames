@@ -7,7 +7,9 @@
 //
 
 #import "Npc.h"
-
+#import "ARISAppDelegate.h"
+#import "AppModel.h"
+#import "NpcViewController.h"
 
 @implementation Npc
 @synthesize npcId;
@@ -43,7 +45,17 @@
 
 - (void) display{
 	NSLog(@"Npc: Display Self Requested");
-
+	
+	//Create a reference to the delegate using the application singleton.
+	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
+	AppModel *appModel = appDelegate.appModel;
+	
+	NpcViewController *npcViewController = [[NpcViewController alloc] initWithNibName:@"Npc" bundle: [NSBundle mainBundle]];
+	npcViewController.npc = self; //currentNode;
+	npcViewController.appModel = appModel;
+	
+	[appDelegate displayNearbyObjectView:npcViewController];
+	
 }
 
 

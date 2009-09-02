@@ -42,7 +42,7 @@ class Npcs extends Module
 		
 		if (!$npc) return new returnData(2, NULL, "invalid npc id");
 		
-		$npc->mediaURL = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $node->media;
+		$npc->mediaURL = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $npc->media;
 		
 		return new returnData(0, $npc);		
 	}

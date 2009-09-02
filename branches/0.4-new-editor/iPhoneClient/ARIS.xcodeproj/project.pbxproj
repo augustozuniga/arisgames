@@ -190,6 +190,8 @@
 		ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */; };
 		ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBEBBC4104D7DAB00AA7285 /* Node.xib */; };
 		ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C4E8104F1A0E002EB824 /* Npc.m */; };
+		ABD5C622104F3863002EB824 /* Npc.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABD5C61F104F3863002EB824 /* Npc.xib */; };
+		ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C621104F3863002EB824 /* NpcViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -448,6 +450,9 @@
 		ABBEBBC4104D7DAB00AA7285 /* Node.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Node.xib; sourceTree = "<group>"; };
 		ABD5C4E7104F1A0E002EB824 /* Npc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Npc.h; sourceTree = "<group>"; };
 		ABD5C4E8104F1A0E002EB824 /* Npc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Npc.m; sourceTree = "<group>"; };
+		ABD5C61F104F3863002EB824 /* Npc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Npc.xib; sourceTree = "<group>"; };
+		ABD5C620104F3863002EB824 /* NpcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NpcViewController.h; sourceTree = "<group>"; };
+		ABD5C621104F3863002EB824 /* NpcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NpcViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -932,6 +937,9 @@
 		ABD4F19F1046FC7A003AC93C /* NPC */ = {
 			isa = PBXGroup;
 			children = (
+				ABD5C61F104F3863002EB824 /* Npc.xib */,
+				ABD5C620104F3863002EB824 /* NpcViewController.h */,
+				ABD5C621104F3863002EB824 /* NpcViewController.m */,
 			);
 			name = NPC;
 			sourceTree = "<group>";
@@ -1075,6 +1083,7 @@
 				A75F7D350FDEBC1800E36140 /* marker-other-player.png in Resources */,
 				A7615F8F0FDED3DC00438796 /* LoginBackground.png in Resources */,
 				ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */,
+				ABD5C622104F3863002EB824 /* Npc.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1170,6 +1179,7 @@
 				ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */,
 				ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */,
 				ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */,
+				ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
