@@ -57,6 +57,26 @@ package org.arisgames.editor.model
 		override public function getDifferences():Array
 		{
 			var differences:Array = super.getDifferences();
+			if(differences.indexOf(GameObject.MODIFY) < 0)
+			{
+				if(choices.length != choicesSnapshot.length)
+				{
+					differences.push(GameObject.MODIFY);
+				}
+				else
+				{
+					var i:int = 0;
+					while(i < choices.length)
+					{
+						if((choicesSnapshot[i] as Choice).differs(choices[i] as Choice))
+						{
+							differences.push(GameObject.MODIFY);
+							i = MAX_NUM_CHOICES;
+						}
+						i++;
+					}					
+				}
+			}
 			for each(var mod:PlayerModification in playerModifications)
 			{
 				var modFound:Boolean = false;
@@ -90,40 +110,6 @@ package org.arisgames.editor.model
 			for each(var remainingMod:PlayerModification in playerModificationsSnapshot)
 			{
 				differences.push(PlayerModification.DELETE + remainingMod.getModID());
-			}
-			for each(var obj:Choice in choices)
-			{
-				var choiceFound:Boolean = false;
-				var choiceIndex:int = 0;
-				while(!choiceFound && choiceIndex < choicesSnapshot.length)
-				{
-					if((choicesSnapshot[choiceIndex] as Choice).getID() == obj.getID())
-					{
-						choiceFound = true;
-					}
-					else
-					{
-						choiceIndex++;
-					}
-				}
-				if(choiceFound)
-				{
-					if((choicesSnapshot[choiceIndex] as Choice).differs(obj))
-					{
-						differences.push(Choice.MODIFY + obj.getID().toString());
-					}
-					choicesSnapshot.splice(choiceIndex, 1); // this is the line that destroys the snapshot fidelity
-															   // it is here to increase performance
-															   // if you remove it, make sure to adjust the next for each to compensate
-				}
-				else
-				{
-					differences.push(Choice.ADD + obj.getID());
-				}
-			}
-			for each(var remainingChoice:Choice in choicesSnapshot)
-			{
-				differences.push(Choice.DELETE + remainingChoice.getID());
 			}
 			return differences;
 		}

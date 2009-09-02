@@ -1,5 +1,7 @@
 package org.arisgames.editor.model
 {
+	import mx.controls.Alert;
+	
 	public class Choice
 	{
 		public static const ADD:String = "addChoice";
@@ -13,6 +15,10 @@ package org.arisgames.editor.model
 		{
 			this.ref = objRef;
 			this.text = text;
+			if(this.ref.getType() != GameObjectReference.PAGE)
+			{
+				Alert.show("Error in Choice constructor: reference is not of type GameObjectReference.PAGE");
+			}
 		}
 		
 		public function copy():Choice
@@ -21,8 +27,8 @@ package org.arisgames.editor.model
 		}
 		
 		public function differs(altChoice:Choice):Boolean
-		{
-			return (this.text != altChoice.choiceText);
+		{// note that we don't need to check the type since only pages can be choices...
+			return (this.text != altChoice.choiceText || this.ref.getID() != altChoice.ref.getID());
 		}
 		
 		public function get label():String

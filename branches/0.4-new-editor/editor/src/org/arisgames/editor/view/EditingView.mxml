@@ -266,7 +266,10 @@
 				<mx:DataGrid id="choicesDataGrid"
 					width="100%" height="100%"
 					editable="true" horizontalScrollPolicy="auto"
-					allowMultipleSelection="false">
+					allowMultipleSelection="false"
+					dragEnabled="true"
+					dragEnter="currentController.onChoicesDataGridDragEnter(event)"
+					dragDrop="currentController.onChoicesDataGridDragDrop(event)">
 					<mx:columns>
 						<mx:DataGridColumn dataField="label"
 							headerText="Game Object"

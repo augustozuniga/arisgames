@@ -8,6 +8,7 @@ package org.arisgames.editor.controller
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
 	
+	import org.arisgames.editor.model.Choice;
 	import org.arisgames.editor.model.GameObjectReference;
 	import org.arisgames.editor.model.Generator;
 	import org.arisgames.editor.model.Model;
@@ -31,6 +32,19 @@ package org.arisgames.editor.controller
 		// Event Handlers //
 		////////////////////
 		
+		public function onChoicesDataGridDragDrop(event:DragEvent):void
+		{
+			if(event.dragInitiator is IObjectNavigator)
+			{
+				currentModel.addChoice(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
+			}
+		}
+		
+		public function onChoicesDataGridDragEnter(event:DragEvent):void
+		{
+			generalizedDragEnterHandler(event, true, [GameObjectReference.PAGE]);
+		}
+		
 		public function onDestroyableCheckBoxChange(event:Event):void
 		{
 			currentModel.updateDestroyable(currentView.getDestroyable());
@@ -48,10 +62,11 @@ package org.arisgames.editor.controller
 			}
 			else if(event.dragSource.hasFormat("items"))
 			{
-				var req:Requirement = event.dragSource.dataForFormat("items")[0] as Requirement;
-				if(req != null)
+				var obj:Object = event.dragSource.dataForFormat("items")[0];
+				if(obj is Choice || obj is Requirement)
 				{
-					currentModel.removeRequirement(req);
+					DragManager.acceptDragDrop(event.target as UIComponent)
+					DragManager.showFeedback(DragManager.MOVE);
 				}
 			}
 			else
@@ -62,7 +77,22 @@ package org.arisgames.editor.controller
 		
 		public function onDiscardCanvasDragDrop(event:DragEvent):void
 		{
-			currentModel.deleteGameObject(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
+			if(event.dragInitiator is IObjectNavigator)
+			{
+				currentModel.deleteGameObject(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);				
+			}
+			else
+			{
+				var obj:Object = event.dragSource.dataForFormat("items")[0];
+				if(obj is Choice)
+				{
+					currentModel.removeChoice(obj as Choice);
+				}
+				else if(obj is Requirement)
+				{
+					currentModel.removeRequirement(obj as Requirement);
+				}
+			}
 		}
 		
 		public function onDroppableCheckBoxChange(event:Event):void

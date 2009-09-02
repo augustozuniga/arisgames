@@ -180,6 +180,14 @@
 			// Other Public Functions //
 			////////////////////////////
 			
+			public function addChoice(ref:GameObjectReference):void
+			{
+				if(currentGameObject is Page)
+				{
+					(currentGameObject as Page).addChoice(new Choice(ref, "Go to " + ref.label));
+				}
+			}
+			
 			public function addRequirement(ref:GameObjectReference):void
 			{
 				currentGameObject.addRequirement(new Requirement(ref, 0, -1, getEventIDFromEventCode(ref.getType() + ref.getID().toString())));
@@ -292,6 +300,14 @@
 			public function registerNewUser(username:String, password:String, email:String, comments:String):void
 			{
 				editors.createEditor.send(username, password, email, comments);
+			}
+			
+			public function removeChoice(choiceToRemove:Choice):void
+			{
+				if(currentGameObject is Page)
+				{
+					(currentGameObject as Page).removeChoice(choiceToRemove);
+				}
 			}
 			
 			public function removeRequirement(req:Requirement):void
@@ -468,19 +484,16 @@
 			{
 				var objID:int;
 				var objType:String;
-				var index:int;
-				index = code.indexOf(GameObjectReference.ITEM);
-				if(index > 0)
+				if(code.indexOf(GameObjectReference.ITEM) == 0)
 				{
 					objType = GameObjectReference.ITEM;
-					objID = int(code.substr(index + GameObjectReference.ITEM.length));
+					objID = int(code.substr(GameObjectReference.ITEM.length));
 					return getGameObjectReference(objID, objType);
-				}				
-				index = code.indexOf(GameObjectReference.PAGE);
-				if(index > 0)
+				}
+				else if(code.indexOf(GameObjectReference.PAGE) == 0)
 				{
 					objType = GameObjectReference.PAGE;
-					objID = int(code.substr(index + GameObjectReference.PAGE.length));
+					objID = int(code.substr(GameObjectReference.PAGE.length));
 					return getGameObjectReference(objID, objType);
 				}				
 				return null;
@@ -969,7 +982,7 @@
 								var choices:Array = (currentGameObject as Page).getChoices();
 								while(choices.length < Page.MAX_NUM_CHOICES)
 								{// fill in empty choices with blank data
-									choices.push(new Choice(new GameObjectReference(0, "", ""), ""));
+									choices.push(new Choice(new GameObjectReference(0, GameObjectReference.PAGE, ""), ""));
 								} 
 								nodes.updateNode.send(currentGameID,
 													  currentGameObject.getID(),
