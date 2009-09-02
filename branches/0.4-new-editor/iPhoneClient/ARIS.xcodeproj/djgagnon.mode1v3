@@ -276,13 +276,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>50</integer>
-									<integer>48</integer>
+									<integer>16</integer>
+									<integer>13</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 322}, {232, 729}}</string>
+							<string>{{0, 0}, {232, 729}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -314,14 +315,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>NodeViewController.m</string>
+								<string>Node.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -329,11 +328,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>NodeViewController.m</string>
+										<string>Node.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>ABD5C47C104F06A3002EB824</string>
+										<string>ABD5C4C4104F0994002EB824</string>
 										<key>history</key>
 										<array>
 											<string>ABCA5D591044616C004DA60D</string>
@@ -363,19 +362,19 @@
 											<string>AB8A4297104C7EC700422773</string>
 											<string>AB8A42B0104C815F00422773</string>
 											<string>ABBEBCDD104DDCDB00AA7285</string>
-											<string>ABBEBCDE104DDCDB00AA7285</string>
 											<string>ABBEBCDF104DDCDB00AA7285</string>
 											<string>ABBEBCE0104DDCDB00AA7285</string>
 											<string>ABBEBCE2104DDCDB00AA7285</string>
 											<string>ABBEBCE5104DDCDB00AA7285</string>
-											<string>ABBEBCE6104DDCDB00AA7285</string>
 											<string>ABBEBD0A104DDFB300AA7285</string>
 											<string>ABBEBD0B104DDFB300AA7285</string>
 											<string>ABBEBD63104DE37900AA7285</string>
-											<string>ABBEBD71104DE3F900AA7285</string>
 											<string>ABD5C3C9104EF72A002EB824</string>
-											<string>ABD5C428104EFDD2002EB824</string>
-											<string>ABD5C465104F04DF002EB824</string>
+											<string>ABD5C480104F07D5002EB824</string>
+											<string>ABD5C49D104F08B5002EB824</string>
+											<string>ABD5C49E104F08B5002EB824</string>
+											<string>ABD5C4A7104F08E4002EB824</string>
+											<string>ABD5C4A8104F08E4002EB824</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -387,22 +386,24 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {789, 566}}</string>
+								<string>{{0, 0}, {789, 463}}</string>
 								<key>RubberWindowFrame</key>
 								<string>11 87 1043 788 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>566pt</string>
+							<string>463pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>NodeViewController.h</string>
+								<string>Node.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -410,11 +411,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>NodeViewController.h</string>
+										<string>Node.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>ABD5C47D104F06A3002EB824</string>
+										<string>ABD5C4C5104F0994002EB824</string>
 										<key>history</key>
 										<array>
 											<string>ABCA5D591044616C004DA60D</string>
@@ -442,7 +443,6 @@
 											<string>AB8A4234104C791D00422773</string>
 											<string>AB8A42B0104C815F00422773</string>
 											<string>ABBEBC24104D83D700AA7285</string>
-											<string>ABBEBCDD104DDCDB00AA7285</string>
 											<string>ABBEBCDE104DDCDB00AA7285</string>
 											<string>ABBEBCDF104DDCDB00AA7285</string>
 											<string>ABBEBCE0104DDCDB00AA7285</string>
@@ -452,12 +452,13 @@
 											<string>ABBEBD10104DDFB300AA7285</string>
 											<string>ABBEBD11104DDFB300AA7285</string>
 											<string>ABBEBD12104DDFB300AA7285</string>
-											<string>ABD5C3CD104EF72A002EB824</string>
-											<string>ABD5C3D5104EF808002EB824</string>
 											<string>ABD5C44F104F028E002EB824</string>
 											<string>ABD5C467104F04DF002EB824</string>
-											<string>ABD5C468104F04DF002EB824</string>
-											<string>ABD5C469104F04DF002EB824</string>
+											<string>ABD5C483104F07D5002EB824</string>
+											<string>ABD5C4A1104F08B5002EB824</string>
+											<string>ABD5C4B0104F091F002EB824</string>
+											<string>ABD5C4C0104F0983002EB824</string>
+											<string>ABD5C4C1104F0983002EB824</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -469,14 +470,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 571}, {789, 171}}</string>
+								<string>{{0, 468}, {789, 274}}</string>
 								<key>RubberWindowFrame</key>
 								<string>11 87 1043 788 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>171pt</string>
+							<string>274pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -655,7 +656,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>ABD5C479104F0636002EB824</string>
+		<string>ABD5C4C3104F0983002EB824</string>
 		<string>ABD5C3BE104EF5ED002EB824</string>
 		<string>ABD5C3BF104EF5ED002EB824</string>
 		<string>1CD10A99069EF8BA00B06720</string>
@@ -680,14 +681,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>NodeViewController.m</string>
+								<string>Node.h</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -704,6 +703,8 @@
 							<string>474pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>

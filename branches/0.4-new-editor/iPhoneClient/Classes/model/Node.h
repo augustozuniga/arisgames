@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "NearbyObjectProtocol.h"
 #import "QRCodeProtocol.h"
+#import "NodeOption.h"
 
 @interface Node : NSObject <NearbyObjectProtocol,QRCodeProtocol> {
 	nearbyObjectKind kind;
@@ -30,11 +31,12 @@
 @property(copy, readwrite) NSString *name;
 @property(copy, readwrite) NSString *text;
 @property(copy, readwrite) NSString *mediaURL;
-@property(readwrite, assign) NSMutableArray *options;
-@property(readwrite) NSInteger numberOfOptions;
+@property(readonly) NSMutableArray *options;
+@property(readonly) NSInteger numberOfOptions;
 - (NSInteger) numberOfOptions;
 @property(readwrite, assign) BOOL forcedDisplay; //see note above
 
+- (void) addOption: (NodeOption *)newOption;
 - (void) display;
 
 

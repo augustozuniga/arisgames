@@ -387,7 +387,6 @@ NSDictionary *InventoryElements;
 	node.mediaURL = [nodeDictionary valueForKey:@"media"];
 
 	//Add options here
-	NSMutableArray *options = [[NSMutableArray alloc] init];
 	int optionNodeId;
 	NSString *text;
 	NodeOption *option;
@@ -396,27 +395,20 @@ NSDictionary *InventoryElements;
 		optionNodeId= [[nodeDictionary valueForKey:@"opt1_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt1_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
-		[options addObject:option];
-		node.numberOfOptions++;
+		[node addOption:option];
 	}
 	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null]) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt2_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
-		[options addObject:option];
-		node.numberOfOptions++;
+		[node addOption:option];
 	}
 	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null]) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt3_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt3_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
-		[options addObject:option];
-		node.numberOfOptions++;
-
+		[node addOption:option];
 	}
-	
-	node.options = options;
-					  
 	
 	NSLog(@"Model: Adding Node: %@", node.name);
 	

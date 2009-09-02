@@ -10,7 +10,6 @@
 #import "ARISAppDelegate.h"
 #import "AppModel.h"
 #import "NodeViewController.h"
-#import "NodeOption.h"
 
 
 @implementation Node
@@ -32,7 +31,7 @@
 	self = [super init];
     if (self) {
 		kind = NearbyObjectNode;
-		numberOfOptions = 0;
+		options = [[NSMutableArray alloc] init];
     }
 	
     return self;	
@@ -57,6 +56,9 @@
 	return [options count];
 }
 
+- (void) addOption:(NodeOption *)newOption{
+	[options addObject:newOption];
+}
 
 
 
