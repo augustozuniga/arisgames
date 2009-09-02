@@ -50,7 +50,8 @@ extern NSDictionary *InventoryElements;
 @property(copy, readwrite) NSMutableArray *nearbyLocationsList;	
 @property(copy, readwrite) CLLocation *playerLocation;	
 @property(copy, readwrite) NSMutableArray *inventory;
-@property(retain) UIAlertView *networkAlert;	
+@property(retain) UIAlertView *networkAlert;
+
 
 -(id)init;
 -(void)loadUserDefaults;

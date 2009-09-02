@@ -13,6 +13,7 @@
 
 #import "Item.h"
 #import "Node.h"
+#import "NodeOption.h"
 #import "JSONConnection.h"
 #import "JSONResult.h"
 #import "JSON.h"
@@ -264,8 +265,6 @@ NSDictionary *InventoryElements;
 			location.locationId = [[locationDictionary valueForKey:@"location_id"] intValue];
 			location.name = [locationDictionary valueForKey:@"name"];
 			location.iconURL = [locationDictionary valueForKey:@"icon"];
-			//location.latitude = [[locationDictionary valueForKey:@"latitude"] doubleValue];
-			//location.longitude = [[locationDictionary valueForKey:@"longitude"] doubleValue];
 			location.location = [[CLLocation alloc] initWithLatitude:[[locationDictionary valueForKey:@"latitude"] doubleValue]
 														   longitude:[[locationDictionary valueForKey:@"longitude"] doubleValue]];
 			location.error = [[locationDictionary valueForKey:@"error"] doubleValue];
@@ -366,7 +365,7 @@ NSDictionary *InventoryElements;
 	return item;
 }
 
--(Item *)fetchNode:(int)nodeId{
+-(Node *)fetchNode:(int)nodeId{
 	NSLog(@"Model: Fetch Requested for Node %d", nodeId);
 	
 	//Call server service
@@ -386,6 +385,39 @@ NSDictionary *InventoryElements;
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
 	node.mediaURL = [nodeDictionary valueForKey:@"media"];
+
+	//Add options here
+	NSMutableArray *options = [[NSMutableArray alloc] init];
+	int optionNodeId;
+	NSString *text;
+	NodeOption *option;
+	
+	if ([nodeDictionary valueForKey:@"opt1_node_id"] != [NSNull null]) {
+		optionNodeId= [[nodeDictionary valueForKey:@"opt1_node"] intValue];
+		text = [nodeDictionary valueForKey:@"opt1_text"]; 
+		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[options addObject:option];
+		node.numberOfOptions++;
+	}
+	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null]) {
+		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node"] intValue];
+		text = [nodeDictionary valueForKey:@"opt2_text"]; 
+		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[options addObject:option];
+		node.numberOfOptions++;
+	}
+	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null]) {
+		optionNodeId = [[nodeDictionary valueForKey:@"opt3_node_id"] intValue];
+		text = [nodeDictionary valueForKey:@"opt3_text"]; 
+		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[options addObject:option];
+		node.numberOfOptions++;
+
+	}
+	
+	node.options = options;
+					  
+	
 	NSLog(@"Model: Adding Node: %@", node.name);
 	
 	return node;

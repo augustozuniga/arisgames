@@ -126,7 +126,6 @@
 		A72C02140F7985EF00D00602 /* QRScanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = A72C02130F7985EF00D00602 /* QRScanner.xib */; };
 		A72C02170F7985FF00D00602 /* QRScannerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A72C02160F7985FF00D00602 /* QRScannerViewController.mm */; };
 		A72C021D0F798B0500D00602 /* QRScanner.png in Resources */ = {isa = PBXBuildFile; fileRef = A72C021C0F798B0500D00602 /* QRScanner.png */; };
-		A72F04A00F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A72F049F0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m */; };
 		A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = A72F04AD0F6ED8620089B90F /* NearbyLocation.m */; };
 		A75AF2B90F86A47100F15535 /* ItemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */; };
 		A75F7D350FDEBC1800E36140 /* marker-other-player.png in Resources */ = {isa = PBXBuildFile; fileRef = A75F7D340FDEBC1800E36140 /* marker-other-player.png */; };
@@ -186,6 +185,10 @@
 		AB54A0BA1047301E00A901EF /* JSONResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54A0B91047301E00A901EF /* JSONResult.m */; };
 		AB8A3CCC104936BE00422773 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8A3CCB104936BE00422773 /* libsqlite3.dylib */; };
 		AB8A3CCE104936F500422773 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8A3CCD104936F500422773 /* libiconv.2.dylib */; };
+		AB8A42A0104C7F8C00422773 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8A429F104C7F8C00422773 /* Node.m */; };
+		ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBAC104D7CC800AA7285 /* NodeOption.m */; };
+		ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */; };
+		ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBEBBC4104D7DAB00AA7285 /* Node.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,8 +357,6 @@
 		A72C02150F7985FF00D00602 /* QRScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRScannerViewController.h; path = Classes/QRScannerViewController.h; sourceTree = "<group>"; };
 		A72C02160F7985FF00D00602 /* QRScannerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QRScannerViewController.mm; path = Classes/QRScannerViewController.mm; sourceTree = "<group>"; };
 		A72C021C0F798B0500D00602 /* QRScanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QRScanner.png; path = images/QRScanner.png; sourceTree = "<group>"; };
-		A72F049E0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyLocationsListParserDelegate.h; sourceTree = "<group>"; };
-		A72F049F0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyLocationsListParserDelegate.m; sourceTree = "<group>"; };
 		A72F04AC0F6ED8620089B90F /* NearbyLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyLocation.h; sourceTree = "<group>"; };
 		A72F04AD0F6ED8620089B90F /* NearbyLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyLocation.m; sourceTree = "<group>"; };
 		A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemDetailsViewController.h; path = Classes/ItemDetailsViewController.h; sourceTree = "<group>"; };
@@ -437,6 +438,13 @@
 		AB54A0B91047301E00A901EF /* JSONResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONResult.m; sourceTree = "<group>"; };
 		AB8A3CCB104936BE00422773 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		AB8A3CCD104936F500422773 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../../../usr/lib/libiconv.2.dylib; sourceTree = SDKROOT; };
+		AB8A429E104C7F8C00422773 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		AB8A429F104C7F8C00422773 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
+		ABBEBBAB104D7CC800AA7285 /* NodeOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeOption.h; sourceTree = "<group>"; };
+		ABBEBBAC104D7CC800AA7285 /* NodeOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeOption.m; sourceTree = "<group>"; };
+		ABBEBBC0104D7CF900AA7285 /* NodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeViewController.h; sourceTree = "<group>"; };
+		ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeViewController.m; sourceTree = "<group>"; };
+		ABBEBBC4104D7DAB00AA7285 /* Node.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Node.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -612,7 +620,7 @@
 			isa = PBXGroup;
 			children = (
 				A7986D6A0F8FEC7200A5469F /* Core App */,
-				ABD4F1AD1046FCA6003AC93C /* Node */,
+				ABBEBBBF104D7CE400AA7285 /* Nodes */,
 				ABD4F19F1046FC7A003AC93C /* NPC */,
 				A7986D680F8FEC4900A5469F /* Quests */,
 				A7986D600F8FEB8700A5469F /* GPS */,
@@ -633,14 +641,16 @@
 		2B3D17040F49C9920067FD3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ABBEBBAB104D7CC800AA7285 /* NodeOption.h */,
+				ABBEBBAC104D7CC800AA7285 /* NodeOption.m */,
+				AB8A429E104C7F8C00422773 /* Node.h */,
+				AB8A429F104C7F8C00422773 /* Node.m */,
 				A77A7EB70FB3305500A9DAB5 /* XMLParserDelegate.h */,
 				A7F73FD40FB248DF0044B85A /* XMLParserDelegate.m */,
 				A7A623590F841C99008E0DFD /* Item.h */,
 				A7A6235A0F841C99008E0DFD /* Item.m */,
 				A72F04AC0F6ED8620089B90F /* NearbyLocation.h */,
 				A72F04AD0F6ED8620089B90F /* NearbyLocation.m */,
-				A72F049E0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.h */,
-				A72F049F0F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m */,
 				2B3D18D40F4B25720067FD3A /* AppModel.h */,
 				2B3D18D50F4B25720067FD3A /* AppModel.m */,
 				2B3D17050F49C99B0067FD3A /* Game.h */,
@@ -904,18 +914,21 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		ABBEBBBF104D7CE400AA7285 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				ABBEBBC4104D7DAB00AA7285 /* Node.xib */,
+				ABBEBBC0104D7CF900AA7285 /* NodeViewController.h */,
+				ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */,
+			);
+			name = Nodes;
+			sourceTree = "<group>";
+		};
 		ABD4F19F1046FC7A003AC93C /* NPC */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = NPC;
-			sourceTree = "<group>";
-		};
-		ABD4F1AD1046FCA6003AC93C /* Node */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Node;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1056,6 +1069,7 @@
 				A7DBEDAF0FD5FF8400C6C659 /* pickaxe.png in Resources */,
 				A75F7D350FDEBC1800E36140 /* marker-other-player.png in Resources */,
 				A7615F8F0FDED3DC00438796 /* LoginBackground.png in Resources */,
+				ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,7 +1095,6 @@
 				A763B5250F4E283100FDCC55 /* MyCLController.m in Sources */,
 				A722E7150F57425B004B04D2 /* Location.m in Sources */,
 				A7E39EAD0F5F60D000826198 /* CameraViewController.m in Sources */,
-				A72F04A00F6ED78F0089B90F /* NearbyLocationsListParserDelegate.m in Sources */,
 				A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */,
 				A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */,
 				A72C02170F7985FF00D00602 /* QRScannerViewController.mm in Sources */,
@@ -1148,6 +1161,9 @@
 				AB549EE41047007B00A901EF /* SBJsonWriter.m in Sources */,
 				AB54A0BA1047301E00A901EF /* JSONResult.m in Sources */,
 				AB3E113F10486A5500A9034C /* JSONConnection.m in Sources */,
+				AB8A42A0104C7F8C00422773 /* Node.m in Sources */,
+				ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */,
+				ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

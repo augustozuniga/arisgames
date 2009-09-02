@@ -347,7 +347,7 @@
 				NearbyBarItemView *myView;
 				while (myView = [viewEnumerator nextObject]) {
 					if (CGRectContainsPoint([myView frame], touchPoint)) {
-						//NSLog(@"NearbyBar: Found the object selected, displaying: %@", [myView title]);
+						NSLog(@"NearbyBar: Found the object selected, displaying: %@", [myView title]);
 						[[myView nearbyObject] display];
 					}
 				}

@@ -7,6 +7,7 @@
 //
 
 #import "ARISAppDelegate.h"
+#import "Node.h"
 
 @implementation ARISAppDelegate
 
@@ -203,12 +204,16 @@
 	nearbyObjectNavigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	
 	//Create a close button
-	nearbyObjectViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-																												target:nearbyObjectNavigationController.view 
-																												action:@selector(removeFromSuperview)];
+	nearbyObjectViewController.navigationItem.leftBarButtonItem = 
+		[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+								target:nearbyObjectNavigationController.view 
+								action:@selector(removeFromSuperview)];	
 	//Display
 	[window addSubview:nearbyObjectNavigationController.view]; //Didn't display the tab bar below!
 }
+
+
+
 
 - (void)performUserLogin:(NSNotification *)notification {
 	NSDictionary *userInfo = notification.userInfo;
