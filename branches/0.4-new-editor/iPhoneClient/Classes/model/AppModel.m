@@ -393,14 +393,14 @@ NSDictionary *InventoryElements;
 	NodeOption *option;
 	
 	if ([nodeDictionary valueForKey:@"opt1_node_id"] != [NSNull null]) {
-		optionNodeId= [[nodeDictionary valueForKey:@"opt1_node"] intValue];
+		optionNodeId= [[nodeDictionary valueForKey:@"opt1_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt1_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[options addObject:option];
 		node.numberOfOptions++;
 	}
 	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null]) {
-		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node"] intValue];
+		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt2_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[options addObject:option];

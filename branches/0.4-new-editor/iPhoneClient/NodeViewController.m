@@ -37,38 +37,13 @@ static NSString * const OPTION_CELL = @"option";
 }
 
 - (void) refreshView {
-	/*
-	CGRect frame = tableView.frame;
-	CGRect textFrame = scrollView.frame;
-	NSInteger deltaHeight = frame.size.height;
-	
-	if (node.numberOfOptions > 0 && self.node.numberOfOptions < 3) deltaHeight = 44 * self.node.numberOfOptions + 22;
-	else if (self.node.numberOfOptions > 2) deltaHeight = 0;
-	
-	// TODO: Change these from magic cookies!
-	frame.origin.y = 262 + deltaHeight;
-	textFrame.size.height = 262 + deltaHeight;
-	
-	tableView.frame = frame;
-	scrollView.frame = textFrame; 
-	*/
 	
 	self.title = self.node.name;
-	
-	
-	//Set Up Text Area
-	int margin = 10;
-	UILabel *nodeTextView = [[UILabel alloc] initWithFrame:CGRectMake(margin, 220 + margin, 320 - (2 * margin),
-																			 [self calculateTextHeight:self.node.text])];
-	nodeTextView.text = self.node.text;
-	nodeTextView.backgroundColor = [UIColor blackColor];
-	nodeTextView.textColor = [UIColor whiteColor];
-	nodeTextView.lineBreakMode = UILineBreakModeWordWrap;
-	nodeTextView.numberOfLines = 0;
-	
-	[scrollView addSubview:nodeTextView];
-	[scrollView setContentSize:CGSizeMake(320, nodeTextView.frame.origin.y
-										  + nodeTextView.frame.size.height)];
+		
+	//Throw out an existing scroller subviews
+	for(UIView *subview in [self.scrollView subviews]) {
+		[subview removeFromSuperview];
+	}
 	
 	//Setup the image view
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -80,8 +55,25 @@ static NSString * const OPTION_CELL = @"option";
 	UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
 	imageView.image = image;
 	
-	//Add the image view
-	[scrollView addSubview:imageView];	
+	//Add the image to the scroller
+	[scrollView addSubview:imageView];
+	
+	//Set Up Text Area
+	int margin = 10;
+	UILabel *nodeTextView = [[UILabel alloc] initWithFrame:CGRectMake(margin, 220 + margin, 320 - (2 * margin),
+																			 [self calculateTextHeight:self.node.text])];
+	nodeTextView.text = self.node.text;
+	nodeTextView.backgroundColor = [UIColor blackColor];
+	nodeTextView.textColor = [UIColor whiteColor];
+	nodeTextView.lineBreakMode = UILineBreakModeWordWrap;
+	nodeTextView.numberOfLines = 0;
+	[scrollView setContentSize:CGSizeMake(320, nodeTextView.frame.origin.y
+										  + nodeTextView.frame.size.height)];
+	//Add the text to the scroller
+	[scrollView addSubview:nodeTextView];
+	
+	//Refresh the tableView
+	[tableView reloadData];
 }
 
 - (int) calculateTextHeight:(NSString *)text {
@@ -157,16 +149,10 @@ static NSString * const OPTION_CELL = @"option";
 	NodeOption *selectedOption = [self.node.options objectAtIndex:[indexPath row]];
 	NSLog(@"Displaying option ``%@''", selectedOption.text);
 	
-	// Here, we need to do one of two things:
-	// 1) Put a new view controller on the stack
-	// 2) Replace the currently running information with the new info
-
-	//NSString *nodeURL = [NSString stringWithFormat:@"NodeViewer&event=faceTalk&npc_id=-1&node_id=%d", selectedOption.nodeId];
-	//[appModel fetchNode:nodeURL];
-
-	////Put the view on the screen
-	//[[self navigationController] pushViewController:itemDetailsViewController animated:YES];
-	
+	int newNodeId = selectedOption.nodeId;
+	Node *newNode = [appModel fetchNode:newNodeId];
+	self.node = newNode;
+	[self refreshView];
 }
 
 - (NSString *)tableView:(UITableView *)view titleForHeaderInSection:(NSInteger)section {
