@@ -22,8 +22,6 @@ static NSString *locationsLock = @"locationsLock";
 
 @implementation AppModel
 
-NSDictionary *InventoryElements;
-
 @synthesize serverName;
 @synthesize baseAppURL;
 @synthesize jsonServerBaseURL;
@@ -49,32 +47,6 @@ NSDictionary *InventoryElements;
 		defaults = [NSUserDefaults standardUserDefaults];
 		
 		jsonServerBaseURL = @"http://davembp.local/editor/server/json.php/aris";
-		
-		//Init Inventory XML Parsing info
-		if (InventoryElements == nil) {	
-			InventoryElements = [NSDictionary dictionaryWithObjectsAndKeys:
-								 [NSNull null], @"result",
-								 [NSNull null], @"frameworkTplPath",
-								 [NSNull null], @"isIphone",
-								 [NSNull null], @"site",
-								 [NSNull null], @"title",
-								 [NSNull null], @"inventory",
-			 [NSDictionary dictionaryWithObjectsAndKeys:
-			  [Item class], @"__CLASS_NAME",
-			  @"setItemId:", @"item_id",
-			  @"setName:", @"name",
-			  @"setDescription:", @"description",
-			  @"setType:", @"type",
-			  @"setMediaURL:", @"media",
-			  @"setIconURL:", @"icon",
-			  @"setDropable:", @"dropable",
-			  @"setDestroyable:", @"destroyable",
-			  nil
-			  ], @"row", 
-			nil];
-			[InventoryElements retain];
-		}
-		NSLog(@"Testing InventoryElements nilp? %@", InventoryElements);
 	}
 			 
     return self;
@@ -619,7 +591,6 @@ NSDictionary *InventoryElements;
 	[password release];
 	[currentModule release];
 	[site release];
-	[InventoryElements release];
     [super dealloc];
 }
 

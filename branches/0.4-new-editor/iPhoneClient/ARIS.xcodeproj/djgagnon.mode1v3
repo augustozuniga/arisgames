@@ -278,6 +278,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>35</integer>
 									<integer>23</integer>
 									<integer>1</integer>
 									<integer>0</integer>
@@ -335,7 +336,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>AB2223E0104FF3A300A4255E</string>
+										<string>AB2223EC104FF43200A4255E</string>
 										<key>history</key>
 										<array>
 											<string>ABCA5D591044616C004DA60D</string>
@@ -368,7 +369,6 @@
 											<string>ABD5C480104F07D5002EB824</string>
 											<string>ABD5C49D104F08B5002EB824</string>
 											<string>ABD5C4F2104F1B5E002EB824</string>
-											<string>ABD5C517104F1EF0002EB824</string>
 											<string>ABD5C51A104F1EF0002EB824</string>
 											<string>ABD5C51B104F1EF0002EB824</string>
 											<string>ABD5C51C104F1EF0002EB824</string>
@@ -380,7 +380,8 @@
 											<string>ABD5C64C104F3B69002EB824</string>
 											<string>ABD5C67D104F6A38002EB824</string>
 											<string>AB2223CA104FF2D800A4255E</string>
-											<string>AB2223DC104FF39300A4255E</string>
+											<string>AB2223E7104FF42B00A4255E</string>
+											<string>AB2223E8104FF42B00A4255E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -419,7 +420,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>AB2223E1104FF3A300A4255E</string>
+										<string>AB2223ED104FF43200A4255E</string>
 										<key>history</key>
 										<array>
 											<string>ABCA5D591044616C004DA60D</string>
@@ -710,6 +711,8 @@
 							<string>474pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
