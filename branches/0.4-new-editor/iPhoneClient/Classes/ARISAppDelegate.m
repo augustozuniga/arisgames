@@ -205,7 +205,8 @@
 	
 	//Create a close button
 	nearbyObjectViewController.navigationItem.leftBarButtonItem = 
-		[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+		[[UIBarButtonItem alloc] initWithTitle:@"Back"
+								style: UIBarButtonItemStyleBordered
 								target:nearbyObjectNavigationController.view 
 								action:@selector(removeFromSuperview)];	
 	//Display
