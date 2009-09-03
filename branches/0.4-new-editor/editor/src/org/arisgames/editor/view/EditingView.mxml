@@ -258,7 +258,7 @@
 							</mx:itemEditor>
 						</mx:DataGridColumn>							
 						<mx:DataGridColumn dataField="label"
-							headerText="Game Object"
+							headerText="Name of Item or Page"
 							editable="false" draggable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
@@ -272,7 +272,7 @@
 					dragDrop="currentController.onChoicesDataGridDragDrop(event)">
 					<mx:columns>
 						<mx:DataGridColumn dataField="label"
-							headerText="Game Object"
+							headerText="Page Name"
 							editable="false" draggable="false" width="150"/>
 						<mx:DataGridColumn dataField="choiceText"
 							headerText="Choice Description"
@@ -288,10 +288,13 @@
 				<mx:DataGrid id="modificationsDataGrid"
 					width="100%" height="100%"
 					editable="true" horizontalScrollPolicy="auto"
-					allowMultipleSelection="false">
+					allowMultipleSelection="false"
+					dragEnabled="true"
+					dragEnter="currentController.onModificationsDataGridDragEnter(event)"
+					dragDrop="currentController.onModificationsDataGridDragDrop(event)">
 					<mx:columns>
 						<mx:DataGridColumn dataField="modificationType"
-							headerText="Action Type"
+							headerText="Action"
 							editable="true" draggable="false" width="150">
 							<mx:itemEditor>
 								<mx:Component>
@@ -300,7 +303,7 @@
 							</mx:itemEditor>
 						</mx:DataGridColumn>							
 						<mx:DataGridColumn dataField="label"
-							headerText="Game Object"
+							headerText="Item Name"
 							editable="false" draggable="false"/>
 					</mx:columns>
 				</mx:DataGrid>
@@ -336,7 +339,10 @@
 				<mx:DataGrid id="objectivesDataGrid"
 					width="100%" height="100%"
 					editable="true" horizontalScrollPolicy="auto"
-					allowMultipleSelection="false">
+					allowMultipleSelection="false"
+					dragEnabled="true"
+					dragEnter="currentController.onObjectivesDataGridDragEnter(event)"
+					dragDrop="currentController.onObjectivesDataGridDragDrop(event)">
 					<mx:columns>
 						<mx:DataGridColumn dataField="requirementType"
 							headerText="Objective Type"
@@ -348,7 +354,7 @@
 							</mx:itemEditor>
 						</mx:DataGridColumn>							
 						<mx:DataGridColumn dataField="label"
-							headerText="Game Object"
+							headerText="Name of Item or Page"
 							editable="false" draggable="false"/>
 					</mx:columns>
 				</mx:DataGrid>

@@ -29,6 +29,7 @@ package org.arisgames.editor.model
 		{
 			objectives.push(newObjective);
 			objectivesArrayCollection.itemUpdated(objectives);
+			addCounter++;
 		}
 		
 		public function getCompletedDescription():String

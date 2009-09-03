@@ -33,6 +33,7 @@ package org.arisgames.editor.model
 		{
 			playerModifications.push(newModification);
 			modificationsArrayCollection.itemUpdated(playerModifications);
+			addCounter++;
 		}
 		
 		override public function getDifferences():Array

@@ -12,6 +12,8 @@ package org.arisgames.editor.model
 		
 		public var requirementsArrayCollection:ArrayCollection;
 		
+		protected var addCounter:int;
+
 		private var ref:GameObjectReference;
 		private var description:String;
 		private var media:String;
@@ -30,12 +32,19 @@ package org.arisgames.editor.model
 			this.media = media;
 			this.requirements = requirements;
 			this.requirementsArrayCollection = new ArrayCollection(this.requirements);
+			this.addCounter = 0;
 		}
 		
 		public function addRequirement(newRequirement:Requirement):void
 		{
 			requirements.push(newRequirement);
 			requirementsArrayCollection.itemUpdated(requirements);
+			addCounter++;
+		}
+		
+		public function getAddCounter():int
+		{
+			return addCounter;
 		}
 		
 		public function getID():int
@@ -81,10 +90,10 @@ package org.arisgames.editor.model
 					if((requirementsSnapshot[index] as Requirement).differs(req))
 					{
 						differences.push(Requirement.MODIFY + req.getRequirementID().toString());
-						requirementsSnapshot.splice(index, 1); // this is the line that destroys the snapshot fidelity
+					}
+					requirementsSnapshot.splice(index, 1); // this is the line that destroys the snapshot fidelity
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
-					}
 				}
 				else
 				{

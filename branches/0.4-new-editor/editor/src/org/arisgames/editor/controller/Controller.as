@@ -140,19 +140,39 @@ package org.arisgames.editor.controller
 			currentModel.closeGame();
 		}
 		
-		public function onMapContainerDragEnter(event:DragEvent):void
-		{
-			generalizedDragEnterHandler(event, false, [GameObjectReference.CHARACTER, GameObjectReference.ITEM, GameObjectReference.PAGE]);
-		}
-		
 		public function onMapContainerDragDrop(event:DragEvent):void
 		{
 			
 		}
 		
+		public function onMapContainerDragEnter(event:DragEvent):void
+		{
+			generalizedDragEnterHandler(event, false, [GameObjectReference.CHARACTER, GameObjectReference.ITEM, GameObjectReference.PAGE]);
+		}
+		
+		public function onModificationsDataGridDragDrop(event:DragEvent):void
+		{
+			
+		}
+		
+		public function onModificationsDataGridDragEnter(event:DragEvent):void
+		{
+			generalizedDragEnterHandler(event, false, [GameObjectReference.ITEM]);
+		}
+		
 		public function onNewGameButtonClick(event:Event):void
 		{
 			currentModel.createGame();
+		}
+		
+		public function onObjectivesDataGridDragDrop(event:DragEvent):void
+		{
+			
+		}
+		
+		public function onObjectivesDataGridDragEnter(event:DragEvent):void
+		{
+			generalizedDragEnterHandler(event, false, [GameObjectReference.ITEM, GameObjectReference.PAGE]);
 		}
 		
 		public function onObjectNavigatorClick(event:Event):void

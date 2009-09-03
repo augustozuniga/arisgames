@@ -190,7 +190,11 @@
 			
 			public function addRequirement(ref:GameObjectReference):void
 			{
-				currentGameObject.addRequirement(new Requirement(ref, 0, -1, getEventIDFromEventCode(ref.getType() + ref.getID().toString())));
+				currentGameObject.addRequirement(new Requirement(ref, 0,
+																 -1 - currentGameObject.getAddCounter(),
+																 getEventIDFromEventCode(ref.getType() + ref.getID().toString())
+																 )
+												);
 			}
 			
 			public function closeGame():void

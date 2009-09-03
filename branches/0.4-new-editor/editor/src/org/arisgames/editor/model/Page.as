@@ -35,7 +35,7 @@ package org.arisgames.editor.model
 			if(choices.length < MAX_NUM_CHOICES)
 			{
 				choices.push(newChoice);
-				choicesArrayCollection.itemUpdated(choices);		
+				choicesArrayCollection.itemUpdated(choices);
 			}
 			else
 			{
@@ -47,6 +47,7 @@ package org.arisgames.editor.model
 		{
 			playerModifications.push(newModification);
 			modificationsArrayCollection.itemUpdated(playerModifications);
+			addCounter++;
 		}
 		
 		public function getChoices():Array
