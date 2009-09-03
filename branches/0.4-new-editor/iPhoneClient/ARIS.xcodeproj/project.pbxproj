@@ -174,6 +174,9 @@
 		A7F0EE3F0F71CFEF008F7BAD /* GenericWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */; };
 		A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */; };
 		A7FA0E7C0FC7048C00941493 /* IndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FA0E7B0FC7048C00941493 /* IndicatorView.m */; };
+		AB2223F510502CD800A4255E /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2223F410502CD800A4255E /* Quest.m */; };
+		AB2225B0105058C000A4255E /* QuestCompleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB2225AF105058C000A4255E /* QuestCompleteIcon.png */; };
+		AB2225B8105059DB00A4255E /* QuestActiveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB2225B7105059DB00A4255E /* QuestActiveIcon.png */; };
 		AB3E113F10486A5500A9034C /* JSONConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3E113E10486A5500A9034C /* JSONConnection.m */; };
 		AB549EDF1047007B00A901EF /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AB549ED41047007B00A901EF /* NSObject+SBJSON.m */; };
 		AB549EE01047007B00A901EF /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = AB549ED61047007B00A901EF /* NSString+SBJSON.m */; };
@@ -419,6 +422,10 @@
 		A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericWebViewController.m; path = Classes/GenericWebViewController.m; sourceTree = "<group>"; };
 		A7FA0E7A0FC7048C00941493 /* IndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorView.h; sourceTree = "<group>"; };
 		A7FA0E7B0FC7048C00941493 /* IndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorView.m; sourceTree = "<group>"; };
+		AB2223F310502CD800A4255E /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
+		AB2223F410502CD800A4255E /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
+		AB2225AF105058C000A4255E /* QuestCompleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuestCompleteIcon.png; path = images/QuestCompleteIcon.png; sourceTree = "<group>"; };
+		AB2225B7105059DB00A4255E /* QuestActiveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuestActiveIcon.png; path = images/QuestActiveIcon.png; sourceTree = "<group>"; };
 		AB3E113D10486A5500A9034C /* JSONConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONConnection.h; sourceTree = "<group>"; };
 		AB3E113E10486A5500A9034C /* JSONConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONConnection.m; sourceTree = "<group>"; };
 		AB549ED21047007B00A901EF /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
@@ -646,6 +653,8 @@
 		2B3D17040F49C9920067FD3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AB2223F310502CD800A4255E /* Quest.h */,
+				AB2223F410502CD800A4255E /* Quest.m */,
 				ABD5C4E7104F1A0E002EB824 /* Npc.h */,
 				ABD5C4E8104F1A0E002EB824 /* Npc.m */,
 				ABBEBBAB104D7CC800AA7285 /* NodeOption.h */,
@@ -829,6 +838,8 @@
 		A7986D680F8FEC4900A5469F /* Quests */ = {
 			isa = PBXGroup;
 			children = (
+				AB2225B7105059DB00A4255E /* QuestActiveIcon.png */,
+				AB2225AF105058C000A4255E /* QuestCompleteIcon.png */,
 				A7E39FB30F5F930E00826198 /* Quest.png */,
 				2B3D12CC0F437AC60067FD3A /* QuestsViewController.h */,
 				2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */,
@@ -1079,6 +1090,8 @@
 				A7615F8F0FDED3DC00438796 /* LoginBackground.png in Resources */,
 				ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */,
 				ABD5C622104F3863002EB824 /* Npc.xib in Resources */,
+				AB2225B0105058C000A4255E /* QuestCompleteIcon.png in Resources */,
+				AB2225B8105059DB00A4255E /* QuestActiveIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1187,7 @@
 				ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */,
 				ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */,
 				ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */,
+				AB2223F510502CD800A4255E /* Quest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

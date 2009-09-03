@@ -20,20 +20,23 @@ extern NSDictionary *InventoryElements;
 	NSString *serverName;
 	NSString *baseAppURL;
 	NSString *jsonServerBaseURL;
+	NSString *site;
+	int gameId;
+	UIViewController *currentModule;
+	UIAlertView *networkAlert;
+	
 	BOOL loggedIn;
 	int playerId;
 	NSString *username;
 	NSString *password;
-	UIViewController *currentModule;
-	NSString *site;
-	int gameId;
+	CLLocation *playerLocation;
+
 	NSMutableArray *gameList;
 	NSMutableArray *locationList;
 	NSMutableArray *playerList;
 	NSMutableArray *nearbyLocationsList;
-	CLLocation *playerLocation;
 	NSMutableArray *inventory;
-	UIAlertView *networkAlert;
+	NSMutableDictionary *questList;
 }
 
 @property(copy) NSString *serverName;
@@ -49,6 +52,7 @@ extern NSDictionary *InventoryElements;
 @property(copy, readwrite) NSMutableArray *gameList;	
 @property(copy, readwrite) NSMutableArray *locationList;
 @property(copy, readwrite) NSMutableArray *playerList;
+@property(copy, readwrite) NSMutableDictionary *questList;
 @property(copy, readwrite) NSMutableArray *nearbyLocationsList;	
 @property(copy, readwrite) CLLocation *playerLocation;	
 @property(copy, readwrite) NSMutableArray *inventory;
@@ -65,6 +69,7 @@ extern NSDictionary *InventoryElements;
 -(void)fetchGameList;
 -(void)fetchLocationList;
 -(void)fetchInventory;
+-(void)fetchQuestList;
 -(Item *)fetchItem:(int)itemId;
 -(Node *)fetchNode:(int)nodeId;
 -(Npc *)fetchNpc:(int)npcId;

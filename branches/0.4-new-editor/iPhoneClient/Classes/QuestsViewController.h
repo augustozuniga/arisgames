@@ -7,17 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ARISAppDelegate.h";
 #import "model/AppModel.h";
 
-@interface QuestsViewController : UIViewController <UIWebViewDelegate> {
-	NSString *moduleName;
-	UIWebView *webview;
+
+@interface QuestsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate> {
 	AppModel *appModel;
+	NSMutableArray *allQuests;
+	IBOutlet UITableView *tableView;
+
 }
 
--(void) setModel:(AppModel *)model;
+@property(copy, readwrite) AppModel *appModel;
+@property(copy, readwrite) NSMutableArray *allQuests;
+@property(nonatomic, retain) IBOutlet UITableView *tableView;
 
-@property(copy, readwrite) NSString *moduleName;
-@property (nonatomic, retain) IBOutlet UIWebView *webview;
+
 
 @end

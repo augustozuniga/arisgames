@@ -10,6 +10,8 @@
 #import "ARISAppDelegate.h"
 
 #import "NodeOption.h"
+#import "Quest.h"
+
 
 #import "JSONConnection.h"
 #import "JSONResult.h"
@@ -37,6 +39,7 @@ static NSString *locationsLock = @"locationsLock";
 @synthesize playerList;
 @synthesize playerLocation;
 @synthesize inventory;
+@synthesize questList;
 @synthesize networkAlert;
 
 @dynamic nearbyLocationsList;
@@ -422,6 +425,68 @@ static NSString *locationsLock = @"locationsLock";
 }	
 
 
+
+-(void)fetchQuestList {
+	NSLog(@"Model: Fetch Requested for Quest");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"quests" 
+																	 andMethodName:@"getQuestsForPlayer" 
+																	  andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	//Build the questList
+	NSDictionary *dataDictionary = (NSDictionary *)jsonResult.data;
+	
+	//parse out the active quests into quest objects
+	NSMutableArray *activeQuestObjects = [[NSMutableArray alloc] init];
+	NSArray *activeQuests = [dataDictionary objectForKey:@"active"];
+	NSEnumerator *activeQuestsEnumerator = [activeQuests objectEnumerator];
+	NSDictionary *activeQuest;
+	while (activeQuest = [activeQuestsEnumerator nextObject]) {
+		//We have a quest, parse it into a quest abject and add it to the activeQuestObjects array
+		Quest *quest = [[Quest alloc] init];
+		quest.questId = [[activeQuest objectForKey:@"quest_id"] intValue];
+		quest.name = [activeQuest objectForKey:@"name"];
+		quest.description = [activeQuest objectForKey:@"description"];
+		quest.mediaURL = [activeQuest objectForKey:@"mediaURL"];
+		[activeQuestObjects addObject:quest];
+ 	}
+	
+		
+	//parse out the completed quests into quest objects	
+	NSMutableArray *completedQuestObjects = [[NSMutableArray alloc] init];
+	NSArray *completedQuests = [dataDictionary objectForKey:@"completed"];
+	NSEnumerator *completedQuestsEnumerator = [completedQuests objectEnumerator];
+	NSDictionary *completedQuest;
+	while (completedQuest = [completedQuestsEnumerator nextObject]) {
+		//We have a quest, parse it into a quest abject and add it to the completedQuestObjects array
+		Quest *quest = [[Quest alloc] init];
+		quest.questId = [[completedQuest objectForKey:@"quest_id"] intValue];
+		quest.name = [completedQuest objectForKey:@"name"];
+		quest.description = [completedQuest objectForKey:@"text_when_complete"];
+		quest.mediaURL = [completedQuest objectForKey:@"mediaURL"];
+		[completedQuestObjects addObject:quest];
+	}
+	
+	//Package the two object arrays in a Dictionary
+	NSMutableDictionary *tmpQuestList = [[NSMutableDictionary alloc] init];
+	[tmpQuestList setObject:activeQuestObjects forKey:@"active"];
+	[tmpQuestList setObject:completedQuestObjects forKey:@"completed"];
+
+	//Save it as the model's quest list
+	questList = tmpQuestList;
+	
+	//Sound the alarm
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedQuestList" object:self userInfo:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+
 - (void)updateServerLocationAndfetchNearbyLocationList {
 	@synchronized (nearbyLock) {
 		NSLog(@"AppModel: updating player position on server and determining nearby Locations");
@@ -459,8 +524,6 @@ static NSString *locationsLock = @"locationsLock";
 		NSNotification *nearbyLocationListNotification = 
 					[NSNotification notificationWithName:@"ReceivedNearbyLocationList" object:nearbyLocationsList];
 		[[NSNotificationCenter defaultCenter] postNotification:nearbyLocationListNotification];
-		
-		
 	}
 }
 
