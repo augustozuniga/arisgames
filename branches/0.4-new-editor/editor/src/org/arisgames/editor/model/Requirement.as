@@ -6,7 +6,7 @@ package org.arisgames.editor.model
 	import mx.controls.Alert;
 	
 	[Bindable]
-	public class Requirement extends EventDispatcher
+	public class Requirement
 	{	
 		public static const DOES_NOT_HAVE_EVENT:String = "DOES_NOT_HAVE_EVENT";
 		public static const DOES_NOT_HAVE_ITEM:String = "DOES_NOT_HAVE_ITEM";

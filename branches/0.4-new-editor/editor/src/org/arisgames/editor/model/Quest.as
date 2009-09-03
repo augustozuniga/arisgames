@@ -82,6 +82,18 @@ package org.arisgames.editor.model
 			return differences;
 		}
 		
+		public function getObjective(id:int):Requirement
+		{
+			for each(var objective:Requirement in objectives)
+			{
+				if(objective.getRequirementID() == id)
+				{
+					return objective;
+				}
+			}
+			return null;
+		}
+		
 		public function getObjectives():Array
 		{
 			return objectives;

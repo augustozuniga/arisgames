@@ -152,7 +152,7 @@ package org.arisgames.editor.controller
 		
 		public function onModificationsDataGridDragDrop(event:DragEvent):void
 		{
-			
+			currentModel.addModification(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);			
 		}
 		
 		public function onModificationsDataGridDragEnter(event:DragEvent):void
@@ -167,7 +167,7 @@ package org.arisgames.editor.controller
 		
 		public function onObjectivesDataGridDragDrop(event:DragEvent):void
 		{
-			
+			currentModel.addObjective(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
 		}
 		
 		public function onObjectivesDataGridDragEnter(event:DragEvent):void

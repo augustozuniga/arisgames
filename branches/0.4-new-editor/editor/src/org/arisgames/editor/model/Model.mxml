@@ -15,7 +15,6 @@
 		showBusyCursor="true">
 		<mx:method name="createEvent" result="on_events_createEventResult(event)"/>
 		<mx:method name="deleteEvent" result="on_events_deleteEventResult(event)"/>
-		<mx:method name="getEvent" result="on_events_getEventResult(event)"/>
 		<mx:method name="getEvents" result="on_events_getEventsResult(event)"/>
 	</mx:RemoteObject>
 
@@ -99,11 +98,8 @@
 		source="aris.playerStateChanges"
 		destination="amfphp"
 		showBusyCursor="true">
-		<mx:method name="actionTypeOptions" result="on_playerStateChanges_actionTypeOptionsResult(event)"/>
-		<mx:method name="contentTypeOptions" result="on_playerStateChanges_contentTypeOptionsResult(event)"/>
 		<mx:method name="createPlayerStateChange" result="on_playerStateChanges_createPlayerStateChangeResult(event)"/>
 		<mx:method name="deletePlayerStateChange" result="on_playerStateChanges_deletePlayerStateChangeResult(event)"/>
-		<mx:method name="getPlayerStateChange" result="on_playerStateChanges_getPlayerStateChangeResult(event)"/>
 		<mx:method name="getPlayerStateChangesForObject" result="on_playerStateChanges_getPlayerStateChangesForObjectResult(event)"/>
 		<mx:method name="getReferrers" result="on_playerStateChanges_getReferrersResult(event)"/>
 		<mx:method name="updatePlayerStateChange" result="on_playerStateChanges_updatePlayerStateChangeResult(event)"/>
@@ -124,13 +120,10 @@
 		source="aris.requirements"
 		destination="amfphp"
 		showBusyCursor="true">
-		<mx:method name="contentTypeOptions" result="on_requirements_contentTypeOptionsResult(event)"/>
 		<mx:method name="createRequirement" result="on_requirements_createRequirementResult(event)"/>
 		<mx:method name="deleteRequirement" result="on_requirements_deleteRequirementResult(event)"/>
-		<mx:method name="getRequirement" result="on_requirements_getRequirementResult(event)"/>
 		<mx:method name="getRequirementsForObject" result="on_requirements_getRequirementsForObjectResult(event)"/>
 		<mx:method name="getReferrers" result="on_requirements_getReferrersResult(event)"/>
-		<mx:method name="requirementTypeOptions" result="on_requirements_requirementTypeOptionsResult(event)"/>
 		<mx:method name="updateRequirement" result="on_requirements_updateRequirementResult(event)"/>
 	</mx:RemoteObject>
 	
@@ -183,21 +176,53 @@
 			
 			public function addChoice(ref:GameObjectReference):void
 			{
-				if(currentGameObject is Page)
-				{
-					(currentGameObject as Page).addChoice(new Choice(ref,
-																	 "Go to " + ref.label,
-																	 -1 - currentGameObject.getAddCounter()
-																	 )
-														  );
-				}
-				else if(currentGameObject is Character)
+				if(currentGameObject is Character)
 				{
 					(currentGameObject as Character).addChoice(new Choice(ref,
 																		  "Ask about " + ref.label,
 																		  -1 - currentGameObject.getAddCounter()
 																		  )
 															   );
+				}
+				else if(currentGameObject is Page)
+				{
+					(currentGameObject as Page).addChoice(new Choice(ref,
+																	 "Go to " + ref.label,
+																	 -1 - currentGameObject.getAddCounter()
+																	 )
+														  );
+				} 
+			}
+			
+			public function addModification(ref:GameObjectReference):void
+			{
+				if(currentGameObject is Item)
+				{
+					(currentGameObject as Item).addPlayerModification(new PlayerModification(ref,
+																							 PlayerModification.DB_CODES[0],
+																							 -1 - currentGameObject.getAddCounter()
+																							 )
+																	 );				
+				}
+				else if(currentGameObject is Page)
+				{
+					(currentGameObject as Page).addPlayerModification(new PlayerModification(ref,
+																							 PlayerModification.DB_CODES[0],
+																							 -1 - currentGameObject.getAddCounter()
+																							 )
+																	 );									
+				}
+			}
+			
+			public function addObjective(ref:GameObjectReference):void
+			{
+				if(currentGameObject is Quest)
+				{
+					(currentGameObject as Quest).addObjective(new Requirement(ref, 0,
+																			  -1 - currentGameObject.getAddCounter(),
+																			  getEventIDFromEventCode(ref.getType() + ref.getID().toString())
+																			  )
+															  );
 				}
 			}
 			
@@ -563,6 +588,11 @@
 																);
 			}
 			
+			private function on_events_deleteEventResult(event:ResultEvent):void
+			{ //takes gameID, eventID, returns true if successful
+				filterErrors(event, "events.deleteEvent");
+			}
+			
 			private function on_events_getEventsResult(event:ResultEvent):void
 			{ //takes gameID, returns array of obj{description, event_id}
 				if(filterErrors(event, "events.getEvents"))
@@ -810,6 +840,11 @@
 				}				
 			}
 			
+			private function on_npcs_updateConversationResult(event:ResultEvent):void
+			{ //takes gameID, conversationID, newNpcID, newNodeID, newText, returns true on success
+				filterErrors(event, "npcs.updateConversation");
+			}
+			
 			private function on_npcs_updateNpcResult(event:ResultEvent):void
 			{ //takes gameID, npcID, name, descr, greeting, media, returns true on success
 				filterErrors(event, "npcs.updateNpc");
@@ -832,7 +867,8 @@
 					for each(var obj:Object in event.result.data)
 					{
 						if(obj.action != PlayerModification.GIVE_EVENT)
-						{ // The only events we use are the automatically generated ones, which we don't display to the user
+						{ // The only events we use are the automatically generated ones, which we don't display to the user,
+						  // and we don't need to keep track of them here
 							var mod:PlayerModification;
 							mod = new PlayerModification(getGameObjectReference(obj.action_detail, GameObjectReference.ITEM), obj.action, obj.id);
 							if(currentGameObject is Item)
@@ -1079,8 +1115,21 @@
 						else if(diff.indexOf(Requirement.ADD) == 0)
 						{
 							var reqToAdd:Requirement = currentGameObject.getRequirement(int(diff.substr(Requirement.ADD.length)));
+							var objTypeToAdd:String = currentGameObject.getType();
+							if(objTypeToAdd == GameObjectReference.QUEST)
+							{
+								if(reqToAdd == null)
+								{
+									reqToAdd = (currentGameObject as Quest).getObjective(int(diff.substr(Requirement.ADD.length)));
+									objTypeToAdd = Requirement.QUEST_COMPLETE;
+								}
+								else
+								{
+									objTypeToAdd = Requirement.QUEST_DISPLAY;
+								}
+							}
 							requirements.createRequirement.send(currentGameID,
-																currentGameObject.getType(),
+																objTypeToAdd,
 																currentGameObject.getID(),
 																reqToAdd.getDBCode(),
 																reqToAdd.getObjectID()
@@ -1096,9 +1145,22 @@
 						{
 							var reqID:int = int(diff.substr(Requirement.MODIFY.length));
 							var reqToUpdate:Requirement = currentGameObject.getRequirement(reqID);
+							var objTypeToUpdate:String = currentGameObject.getType();
+							if(objTypeToUpdate == GameObjectReference.QUEST)
+							{
+								if(reqToUpdate == null)
+								{
+									reqToUpdate = (currentGameObject as Quest).getObjective(reqID);
+									objTypeToUpdate = Requirement.QUEST_COMPLETE;
+								}
+								else
+								{
+									objTypeToUpdate = Requirement.QUEST_DISPLAY;
+								}
+							}
 							requirements.updateRequirement.send(currentGameID,
 																reqID,
-																currentGameObject.getType(),
+																objTypeToUpdate,
 																currentGameObject.getID(),
 																reqToUpdate.getDBCode(),
 																reqToUpdate.getObjectID()
@@ -1150,16 +1212,6 @@
 			/////////////////////////////////////////////
 			// Under Construction (Move when finished) //
 			/////////////////////////////////////////////			
-			
-			private function on_events_deleteEventResult(event:ResultEvent):void
-			{ //takes gameID, eventID, returns true if successful
-				
-			}
-			
-			private function on_events_getEventResult(event:ResultEvent):void
-			{ //takes gameID, eventID, returns obj{description, event_id}
-				
-			}
 			
 			private function on_games_setGameNameResult(event:ResultEvent):void
 			{ //takes gameID, newName, returns true if successful
@@ -1256,33 +1308,8 @@
 				
 			}
 			
-			private function on_npcs_updateConversationResult(event:ResultEvent):void
-			{ //takes gameID, conversationID, newNpcID, newNodeID, newText, returns true on success
-				
-			}
-			
-			private function on_playerStateChanges_actionTypeOptionsResult(event:ResultEvent):void
-			{ //takes gameID, returns array of strings
-				
-			}
-			
-			private function on_playerStateChanges_contentTypeOptionsResult(event:ResultEvent):void
-			{ //takes gameID, returns array of strings
-				
-			}
-			
-			private function on_playerStateChanges_getPlayerStateChangeResult(event:ResultEvent):void
-			{ //takes gameID, playerStateChangeID, returns ????
-				
-			}
-			
 			private function on_playerStateChanges_getReferrersResult(event:ResultEvent):void
 			{
-				
-			}
-			
-			private function on_requirements_contentTypeOptionsResult(event:ResultEvent):void
-			{ //takes gameID, returns array of strings
 				
 			}
 			
@@ -1291,17 +1318,6 @@
 				
 			}
 			
-			private function on_requirements_getRequirementResult(event:ResultEvent):void
-			{ //takes gameID, reqID, returns obj{content_id, content_type, requirement, requirement_detail, requirement_id} (detail is id of required object, content is what object has the requirement)
-
-			}
-			
-			private function on_requirements_requirementTypeOptionsResult(event:ResultEvent):void
-			{
-				
-			}
-			
-
 		]]>
 	</mx:Script>
 	
