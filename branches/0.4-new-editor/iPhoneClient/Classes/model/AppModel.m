@@ -7,8 +7,6 @@
 //
 
 #import "AppModel.h"
-
-#import "XMLParserDelegate.h"
 #import "ARISAppDelegate.h"
 
 #import "NodeOption.h"
