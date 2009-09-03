@@ -127,7 +127,7 @@ abstract class Module
 		$query = "SELECT * FROM {$strPrefix}_player_events 
 					WHERE player_id = '{$intPlayerID}' 
 					AND event_id = '{$intEventID}'";
-		
+		//NetDebug::trace($query);
 		$rsResult = @mysql_query($query);
 		
 		if (mysql_num_rows($rsResult) > 0) return true;
@@ -160,11 +160,11 @@ abstract class Module
 	 *
      * @return boolean
      */	
-	function objectMeetsRequirements ($strPrefix, $intPlayerId, $strObjectType, $intObjectId) {		
+	function objectMeetsRequirements ($strPrefix, $intPlayerID, $strObjectType, $intObjectID) {		
 		
 		//Fetch the requirements
 		$query = "SELECT * FROM {$strPrefix}_requirements 
-					WHERE content_type = '{$strObjectType}' AND content_id = '{$intObjectId}'";
+					WHERE content_type = '{$strObjectType}' AND content_id = '{$intObjectID}'";
 		$rsRequirments = @mysql_query($query);
 		
 		while ($requirement = mysql_fetch_array($rsRequirments)) {
@@ -174,19 +174,19 @@ abstract class Module
 			switch ($requirement['requirement']) {
 				case 'HAS_EVENT':
 					//echo 'Checking for an HAS_EVENT';
-					if (!$this->checkForEvent($intPlayerId, $requirement['requirement_detail'])) return FALSE;
+					if (!$this->checkForEvent($strPrefix, $intPlayerID, $requirement['requirement_detail'])) return FALSE;
 					break;
 				case 'DOES_NOT_HAVE_EVENT':
 					//echo 'Checking for an DOES_NOT_HAVE_EVENT';
-					if ($this->checkForEvent($intPlayerId, $requirement['requirement_detail'])) return FALSE;
+					if ($this->checkForEvent($strPrefix, $intPlayerID, $requirement['requirement_detail'])) return FALSE;
 					break;
 				case 'HAS_ITEM':
 					//echo 'Checking for an HAS_ITEM';
-					if (!$this->checkForItem($intPlayerId, $requirement['requirement_detail'])) return FALSE;
+					if (!$this->checkForItem($strPrefix, $intPlayerID, $requirement['requirement_detail'])) return FALSE;
 					break;
 				case 'DOES_NOT_HAVE_ITEM':
 					//echo 'Checking for a DOES_NOT_HAVE_ITEM';
-					if ($this->checkForItem($intPlayerId, $requirement['requirement_detail'])) return FALSE;
+					if ($this->checkForItem($strPrefix, $intPlayerID, $requirement['requirement_detail'])) return FALSE;
 					break;
 			}
 		}

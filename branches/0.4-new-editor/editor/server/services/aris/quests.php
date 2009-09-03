@@ -6,8 +6,8 @@ class Quests extends Module
 {	
 	
 	/**
-     * Fetch all Events
-     * @returns the events
+     * Fetch all Quests
+     * @returns the quests
      */
 	public function getQuests($intGameID)
 	{
@@ -17,14 +17,58 @@ class Quests extends Module
 
 		
 		$query = "SELECT * FROM {$prefix}_quests";
-		NetDebug::trace($query);
+		//NetDebug::trace($query);
 
-		
 		$rsResult = @mysql_query($query);
-		
 		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		
 		return new returnData(0, $rsResult);
 	}
+	
+	/**
+     * Fetch all Quests for a paticular player
+     * @returns a returnData object with two arrays, active and completed
+     */
+	public function getQuestsForPlayer($intGameID,$intPlayerID)
+	{
+		
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
+		$query = "SELECT * FROM {$prefix}_quests";
+		//NetDebug::trace($query);
+
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+		
+		$activeQuests = array();
+		$completedQuests = array();
+		
+		//Walk the rs add each quest to the correct array
+		while ($quest = mysql_fetch_object($rsResult)) {
+			
+			$display = $this->objectMeetsRequirements ($prefix, 
+												$intPlayerID, 
+												"QuestDisplay", 
+												$quest->quest_id);
+			$complete = $this->objectMeetsRequirements ($prefix, 
+												$intPlayerID, 
+												"QuestComplete", 
+												$quest->quest_id);	
+												
+			//NetDebug::trace("Quest " . $quest->quest_id . ": display = $display complete = $complete");									
+			
+			if ($display && !$complete) $activeQuests[] = $quest;
+			if ($display && $complete) $completedQuests[] = $quest;
+			
+
+
+		}	
+		$quests = (object) array('active' => $activeQuests, 'completed' => $completedQuests);
+	
+		return new returnData(0, $quests);
+	}	
+	
 	
 	/**
      * Fetch a specific event
