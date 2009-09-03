@@ -64,7 +64,7 @@
 				{
 					mainVBox.addChild(loginBox);
 					mainVBox.drop(newGameButton);						
-					mainVBox.removeChild(editGameButton);
+					mainVBox.drop(editGameButton);
 				}
 			}
 			

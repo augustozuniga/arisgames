@@ -136,6 +136,7 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import mx.binding.utils.ChangeWatcher;
 			import mx.managers.CursorManager;
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
@@ -184,7 +185,19 @@
 			{
 				if(currentGameObject is Page)
 				{
-					(currentGameObject as Page).addChoice(new Choice(ref, "Go to " + ref.label));
+					(currentGameObject as Page).addChoice(new Choice(ref,
+																	 "Go to " + ref.label,
+																	 -1 - currentGameObject.getAddCounter()
+																	 )
+														  );
+				}
+				else if(currentGameObject is Character)
+				{
+					(currentGameObject as Character).addChoice(new Choice(ref,
+																		  "Ask about " + ref.label,
+																		  -1 - currentGameObject.getAddCounter()
+																		  )
+															   );
 				}
 			}
 			
@@ -196,7 +209,7 @@
 																 )
 												);
 			}
-			
+
 			public function closeGame():void
 			{
 				updateCurrentGame();
@@ -669,17 +682,26 @@
 					var choiceID:int = int(event.result.data.opt1_node_id);
 					if(choiceID > 0)
 					{
-						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE), event.result.data.opt1_text));
+						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE),
+												event.result.data.opt1_text,
+												1)
+									 );
 					}
 					choiceID = int(event.result.data.opt2_node_id);
 					if(choiceID > 0)
 					{
-						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE), event.result.data.opt2_text));
+						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE),
+												event.result.data.opt2_text,
+												2)
+									 );
 					}
 					choiceID = int(event.result.data.opt3_node_id);
 					if(choiceID > 0)
 					{
-						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE), event.result.data.opt3_text));
+						choices.push(new Choice(getGameObjectReference(choiceID, GameObjectReference.PAGE),
+												event.result.data.opt3_text,
+												3)
+									 );
 					}
 					currentGameObject = new Page(getGameObjectReference(event.result.data.node_id, GameObjectReference.PAGE),
 												 event.result.data.text, event.result.data.media, requirements, playerModifications, choices);
@@ -713,12 +735,22 @@
 				filterErrors(event, "nodes.updateNode");
 			}
 			
+			private function on_npcs_createConversationResult(event:ResultEvent):void
+			{ //takes gameID, npcID, nodeID, text, returns conversationID
+				filterErrors(event, "npcs.createConversation");
+			}
+			
 			private function on_npcs_createNpcResult(event:ResultEvent):void
 			{ //takes gameID, name, descr, greeting, media, returns npcID
 				if(filterErrors(event, "npcs.createNpc"))
 				{
 					setCurrentGameObject(new GameObjectReference(int(event.result.data), GameObjectReference.CHARACTER, "My New Character"));
 				}								
+			}
+			
+			private function on_npcs_deleteConversationResult(event:ResultEvent):void
+			{ //takes gameID, conversationID, returns true on success
+				filterErrors(event, "npcs.deleteConversation");
 			}
 			
 			private function on_npcs_deleteNpcResult(event:ResultEvent):void
@@ -736,7 +768,10 @@
 				{
 					for each(var obj:Object in event.result.data)
 					{
-						(currentGameObject as Character).addChoice(new Choice(getGameObjectReference(obj.node_id, GameObjectReference.PAGE), obj.text));
+						(currentGameObject as Character).addChoice(new Choice(getGameObjectReference(obj.node_id, GameObjectReference.PAGE),
+																			  obj.text,
+																			  obj.conversation_id)
+																   );
 					}
 				}
 			}
@@ -986,7 +1021,7 @@
 								var choices:Array = (currentGameObject as Page).getChoices();
 								while(choices.length < Page.MAX_NUM_CHOICES)
 								{// fill in empty choices with blank data
-									choices.push(new Choice(new GameObjectReference(0, GameObjectReference.PAGE, ""), ""));
+									choices.push(new Choice(new GameObjectReference(0, GameObjectReference.PAGE, ""), "", 0));
 								} 
 								nodes.updateNode.send(currentGameID,
 													  currentGameObject.getID(),
@@ -994,11 +1029,11 @@
 													  currentGameObject.getDescription(),
 													  currentGameObject.getMediaFileName(),
 													  (choices[0] as Choice).choiceText,
-													  (choices[0] as Choice).getID(),
+													  (choices[0] as Choice).getPageID(),
 													  (choices[1] as Choice).choiceText,
-													  (choices[1] as Choice).getID(),
+													  (choices[1] as Choice).getPageID(),
 													  (choices[2] as Choice).choiceText,
-													  (choices[2] as Choice).getID(),
+													  (choices[2] as Choice).getPageID(),
 													  "", 0, 0
 													  );								  
 							}
@@ -1068,6 +1103,33 @@
 																reqToUpdate.getDBCode(),
 																reqToUpdate.getObjectID()
 																);		
+						}
+						else if(diff.indexOf(Choice.ADD) == 0)
+						{
+							var choiceToAdd:Choice = (currentGameObject as Character).getChoice(int(diff.substr(Choice.ADD.length)));
+							npcs.createConversation.send(currentGameID,
+														 currentGameObject.getID(),
+														 choiceToAdd.getPageID(),
+														 choiceToAdd.choiceText
+														 );
+														 
+						}
+						else if(diff.indexOf(Choice.DELETE) == 0)
+						{
+							npcs.deleteConversation.send(currentGameID,
+														 int(diff.substr(Choice.DELETE.length))
+														 );
+						}
+						else if(diff.indexOf(Choice.MODIFY) == 0)
+						{
+							var choiceID:int = int(diff.substr(Choice.MODIFY.length));
+							var choiceToUpdate:Choice = (currentGameObject as Character).getChoice(choiceID);
+							npcs.updateConversation.send(currentGameID,
+														 choiceID,
+														 currentGameObject.getID(),
+														 choiceToUpdate.getPageID(),
+														 choiceToUpdate.choiceText
+														 );														 
 						}
 					}
 				}
@@ -1186,16 +1248,6 @@
 			
 			private function on_nodes_getReferrersResult(event:ResultEvent):void
 			{ //takes gameID, nodeID, returns ???
-				
-			}
-			
-			private function on_npcs_createConversationResult(event:ResultEvent):void
-			{ //takes gameID, npcID, nodeID, text, returns conversationID
-				
-			}
-			
-			private function on_npcs_deleteConversationResult(event:ResultEvent):void
-			{ //takes gameID, conversationID, returns true on success
 				
 			}
 			

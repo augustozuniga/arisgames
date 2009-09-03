@@ -36,6 +36,7 @@ package org.arisgames.editor.model
 			{
 				choices.push(newChoice);
 				choicesArrayCollection.itemUpdated(choices);
+				addCounter++;
 			}
 			else
 			{

@@ -8,13 +8,15 @@ package org.arisgames.editor.model
 		public static const DELETE:String = "deleteChoice";
 		public static const MODIFY:String = "modifyChoice";
 		
+		private var choiceID:int;
 		private var ref:GameObjectReference;
 		private var text:String;
 		
-		public function Choice(objRef:GameObjectReference, text:String)
+		public function Choice(objRef:GameObjectReference, text:String, choiceID:int)
 		{
 			this.ref = objRef;
 			this.text = text;
+			this.choiceID = choiceID;
 			if(this.ref.getType() != GameObjectReference.PAGE)
 			{
 				Alert.show("Error in Choice constructor: reference is not of type GameObjectReference.PAGE");
@@ -23,7 +25,7 @@ package org.arisgames.editor.model
 		
 		public function copy():Choice
 		{
-			return new Choice(this.ref, this.text);
+			return new Choice(this.ref, this.text, this.choiceID);
 		}
 		
 		public function differs(altChoice:Choice):Boolean
@@ -41,7 +43,12 @@ package org.arisgames.editor.model
 			return text;
 		}
 		
-		public function getID():int
+		public function getChoiceID():int
+		{
+			return choiceID;
+		}
+		
+		public function getPageID():int
 		{
 			return ref.getID();
 		}
