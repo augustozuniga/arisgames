@@ -11,10 +11,8 @@
 #import "XMLParserDelegate.h"
 #import "ARISAppDelegate.h"
 
-#import "Item.h"
-#import "Node.h"
 #import "NodeOption.h"
-#import "Npc.h"
+
 #import "JSONConnection.h"
 #import "JSONResult.h"
 #import "JSON.h"

@@ -151,7 +151,7 @@ static NSString * const OPTION_CELL = @"option";
 	NodeOption *selectedOption = [self.npc.options objectAtIndex:[indexPath row]];
 	NSLog(@"Displaying option ``%@''", selectedOption.text);
 	
-	[self.view removeFromSuperview];
+	//Just put the node view right on top of this view
 	
 	int newNodeId = selectedOption.nodeId;
 	Node *newNode = [appModel fetchNode:newNodeId];

@@ -10,6 +10,8 @@
 #import <CoreLocation/CLLocation.h>
 #import "Game.h"
 #import "Item.h"
+#import "Node.h"
+#import "Npc.h"
 
 extern NSDictionary *InventoryElements;
 
@@ -58,12 +60,17 @@ extern NSDictionary *InventoryElements;
 -(void)clearUserDefaults;
 -(void)saveUserDefaults;
 -(void)initUserDefaults;
+
 -(BOOL)login;
 -(void)fetchGameList;
 -(void)fetchLocationList;
 -(void)fetchInventory;
 -(Item *)fetchItem:(int)itemId;
+-(Node *)fetchNode:(int)nodeId;
+-(Npc *)fetchNpc:(int)npcId;
+	
 -(void)updateServerLocationAndfetchNearbyLocationList;
+
 -(NSMutableURLRequest *) getURLForModule:(NSString *)moduleName;
 -(NSString *)getURLStringForModule:(NSString *)moduleName;
 -(NSString *) getURLString:(NSString *)relativeURL;
