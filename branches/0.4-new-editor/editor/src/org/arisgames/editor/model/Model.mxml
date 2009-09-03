@@ -23,6 +23,7 @@
 		destination="amfphp"
 		showBusyCursor="true">
 		<mx:method name="createGame" result="on_games_createGameResult(event)"/>
+		<mx:method name="deleteGame" result="on_games_deleteGameResult(event)"/>
 		<mx:method name="getGamesForEditor" result="on_games_getGamesForEditorResult(event)"/>
 		<mx:method name="setGameName" result="on_games_setGameNameResult(event)"/>
 	</mx:RemoteObject>
@@ -282,10 +283,16 @@
 				else if(type == GameObjectReference.ITEM)
 				{
 					items.deleteItem.send(currentGameID, ref.getID());
+					events.deleteEvent.send(currentGameID,
+											getEventIDFromEventCode(GameObjectReference.ITEM + ref.getID().toString())
+											);
 				}
 				else if(type == GameObjectReference.PAGE)
 				{
 					nodes.deleteNode.send(currentGameID, ref.getID());
+					events.deleteEvent.send(currentGameID,
+											getEventIDFromEventCode(GameObjectReference.PAGE + ref.getID().toString())
+											);
 				}
 				else if(type == GameObjectReference.QUEST)
 				{
@@ -613,6 +620,11 @@
 					currentView.goToGameEditor();
 					updateView();					
 				}
+			}
+			
+			private function on_games_deleteGameResult(event:ResultEvent):void
+			{
+				filterErrors(event, "games.deleteGame");
 			}
 			
 			private function on_games_getGamesForEditorResult(event:ResultEvent):void
