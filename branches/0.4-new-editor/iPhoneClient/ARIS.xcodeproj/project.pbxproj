@@ -106,7 +106,6 @@
 		2B3D12D00F437AF90067FD3A /* Quests.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D12CF0F437AF90067FD3A /* Quests.xib */; };
 		2B3D12D90F437D6E0067FD3A /* InventoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */; };
 		2B3D12DB0F437E690067FD3A /* InventoryList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D12DA0F437E690067FD3A /* InventoryList.xib */; };
-		2B3D12E00F4380B70067FD3A /* GPSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D12DF0F4380B70067FD3A /* GPSViewController.m */; };
 		2B3D12EC0F4382070067FD3A /* LogoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D12EB0F4382070067FD3A /* LogoutViewController.m */; };
 		2B3D12EE0F4382A00067FD3A /* Logout.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D12ED0F4382A00067FD3A /* Logout.xib */; };
 		2B3D14620F45EBAA0067FD3A /* GamePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D14610F45EBAA0067FD3A /* GamePickerViewController.m */; };
@@ -115,24 +114,20 @@
 		2B3D175A0F49D18D0067FD3A /* DeveloperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D17590F49D18D0067FD3A /* DeveloperViewController.m */; };
 		2B3D18D60F4B25720067FD3A /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D18D50F4B25720067FD3A /* AppModel.m */; };
 		A702FBBE0F8E804A00BE6549 /* playArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A702FBBD0F8E804A00BE6549 /* playArrow.png */; };
-		A703EFE30F7C5C39008A12E2 /* marker-player-lqgps.png in Resources */ = {isa = PBXBuildFile; fileRef = A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */; };
 		A7149F9D0FB89DC8008BAB5D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7149F9C0FB89DC8008BAB5D /* Settings.bundle */; };
 		A72135270FA8B548003E4059 /* QRScannerParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A72135260FA8B548003E4059 /* QRScannerParserDelegate.m */; };
 		A721352E0FA8B6F6003E4059 /* QRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = A721352D0FA8B6F6003E4059 /* QRCode.m */; };
 		A722C8C00FBCD8D0009432DB /* SelfRegistration.xib in Resources */ = {isa = PBXBuildFile; fileRef = A722C8BF0FBCD8D0009432DB /* SelfRegistration.xib */; };
 		A722C8C60FBCD92E009432DB /* SelfRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A722C8C50FBCD92E009432DB /* SelfRegistrationViewController.m */; };
 		A722E7150F57425B004B04D2 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7140F57425B004B04D2 /* Location.m */; };
-		A72C01B10F7977A600D00602 /* marker-player.png in Resources */ = {isa = PBXBuildFile; fileRef = A72C01B00F7977A600D00602 /* marker-player.png */; };
 		A72C02140F7985EF00D00602 /* QRScanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = A72C02130F7985EF00D00602 /* QRScanner.xib */; };
 		A72C02170F7985FF00D00602 /* QRScannerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A72C02160F7985FF00D00602 /* QRScannerViewController.mm */; };
 		A72C021D0F798B0500D00602 /* QRScanner.png in Resources */ = {isa = PBXBuildFile; fileRef = A72C021C0F798B0500D00602 /* QRScanner.png */; };
 		A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = A72F04AD0F6ED8620089B90F /* NearbyLocation.m */; };
 		A75AF2B90F86A47100F15535 /* ItemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */; };
-		A75F7D350FDEBC1800E36140 /* marker-other-player.png in Resources */ = {isa = PBXBuildFile; fileRef = A75F7D340FDEBC1800E36140 /* marker-other-player.png */; };
 		A76048E70FC1B6DE00219A53 /* QRCodeProtocol.h in Resources */ = {isa = PBXBuildFile; fileRef = A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */; };
 		A7615F8F0FDED3DC00438796 /* LoginBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = A7615F8E0FDED3DC00438796 /* LoginBackground.png */; };
 		A763B5250F4E283100FDCC55 /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = A763B5240F4E283100FDCC55 /* MyCLController.m */; };
-		A78E753C0FB5B88000922F6C /* GPS.xib in Resources */ = {isa = PBXBuildFile; fileRef = A78E753B0FB5B88000922F6C /* GPS.xib */; };
 		A78E753E0FB5BA0C00922F6C /* Developer.xib in Resources */ = {isa = PBXBuildFile; fileRef = A78E753D0FB5BA0C00922F6C /* Developer.xib */; };
 		A78FD8B00F4B7E9400820FEA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78FD8AF0F4B7E9400820FEA /* Foundation.framework */; };
 		A78FD8B20F4B7EA200820FEA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A78FD8B10F4B7EA200820FEA /* CoreGraphics.framework */; };
@@ -141,7 +136,6 @@
 		A79830140FCB1CD700C1C2E7 /* WaitingIndicatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A79830130FCB1CD700C1C2E7 /* WaitingIndicatorViewController.m */; };
 		A79830180FCB1D8900C1C2E7 /* WaitingIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = A79830170FCB1D8900C1C2E7 /* WaitingIndicator.xib */; };
 		A798301B0FCB1F8100C1C2E7 /* RoundedBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = A798301A0FCB1F8100C1C2E7 /* RoundedBackground.png */; };
-		A7986E860F8FF42000A5469F /* libMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7986D830F8FEDD900A5469F /* libMapView.a */; };
 		A7A172830F4F26A60017E865 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = A7A172820F4F26A60017E865 /* Entitlements.plist */; };
 		A7A1728C0F4F27120017E865 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A1728A0F4F27120017E865 /* Icon.png */; };
 		A7A1728D0F4F27120017E865 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A7A1728B0F4F27120017E865 /* Default.png */; };
@@ -157,14 +151,8 @@
 		A7E39EAD0F5F60D000826198 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7E39EAC0F5F60D000826198 /* CameraViewController.m */; };
 		A7E39ECA0F5F655E00826198 /* Camera.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7E39EC90F5F655E00826198 /* Camera.xib */; };
 		A7E39FB40F5F930E00826198 /* Developer.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FA90F5F930E00826198 /* Developer.png */; };
-		A7E39FB50F5F930E00826198 /* GPS.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAA0F5F930E00826198 /* GPS.png */; };
 		A7E39FB60F5F930E00826198 /* Inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAB0F5F930E00826198 /* Inventory.png */; };
-		A7E39FB70F5F930E00826198 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAC0F5F930E00826198 /* loading.png */; };
 		A7E39FB80F5F930E00826198 /* Logout.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAD0F5F930E00826198 /* Logout.png */; };
-		A7E39FB90F5F930E00826198 /* marker-blue-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */; };
-		A7E39FBA0F5F930E00826198 /* marker-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAF0F5F930E00826198 /* marker-blue.png */; };
-		A7E39FBB0F5F930E00826198 /* marker-red-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FB00F5F930E00826198 /* marker-red-withletter.png */; };
-		A7E39FBC0F5F930E00826198 /* marker-red.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FB10F5F930E00826198 /* marker-red.png */; };
 		A7E39FBE0F5F930E00826198 /* Quest.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FB30F5F930E00826198 /* Quest.png */; };
 		A7E39FCA0F60456200826198 /* IM.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FC90F60456200826198 /* IM.png */; };
 		A7E39FDB0F61759700826198 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FD90F61759700826198 /* camera.png */; };
@@ -185,7 +173,6 @@
 		AB549EE31047007B00A901EF /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AB549EDC1047007B00A901EF /* SBJsonParser.m */; };
 		AB549EE41047007B00A901EF /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AB549EDE1047007B00A901EF /* SBJsonWriter.m */; };
 		AB54A0BA1047301E00A901EF /* JSONResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54A0B91047301E00A901EF /* JSONResult.m */; };
-		AB8A3CCC104936BE00422773 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8A3CCB104936BE00422773 /* libsqlite3.dylib */; };
 		AB8A3CCE104936F500422773 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8A3CCD104936F500422773 /* libiconv.2.dylib */; };
 		AB8A42A0104C7F8C00422773 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = AB8A429F104C7F8C00422773 /* Node.m */; };
 		ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBAC104D7CC800AA7285 /* NodeOption.m */; };
@@ -194,6 +181,21 @@
 		ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C4E8104F1A0E002EB824 /* Npc.m */; };
 		ABD5C622104F3863002EB824 /* Npc.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABD5C61F104F3863002EB824 /* Npc.xib */; };
 		ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C621104F3863002EB824 /* NpcViewController.m */; };
+		ABDA40BD10506AF400823A94 /* GPS.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40AA10506AF400823A94 /* GPS.xib */; };
+		ABDA40BE10506AF400823A94 /* GPS.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40AB10506AF400823A94 /* GPS.png */; };
+		ABDA40BF10506AF400823A94 /* GPSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */; };
+		ABDA40C010506AF400823A94 /* PlayerAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40AF10506AF400823A94 /* PlayerAnnotation.m */; };
+		ABDA40C110506AF400823A94 /* ItemAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B110506AF400823A94 /* ItemAnnotation.m */; };
+		ABDA40C210506AF400823A94 /* AnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B310506AF400823A94 /* AnnotationView.m */; };
+		ABDA40C310506AF400823A94 /* marker-other-player.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B510506AF400823A94 /* marker-other-player.png */; };
+		ABDA40C410506AF400823A94 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B610506AF400823A94 /* loading.png */; };
+		ABDA40C510506AF400823A94 /* marker-player-lqgps.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B710506AF400823A94 /* marker-player-lqgps.png */; };
+		ABDA40C610506AF400823A94 /* marker-player.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B810506AF400823A94 /* marker-player.png */; };
+		ABDA40C710506AF400823A94 /* marker-blue-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B910506AF400823A94 /* marker-blue-withletter.png */; };
+		ABDA40C810506AF400823A94 /* marker-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40BA10506AF400823A94 /* marker-blue.png */; };
+		ABDA40C910506AF400823A94 /* marker-red-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40BB10506AF400823A94 /* marker-red-withletter.png */; };
+		ABDA40CA10506AF400823A94 /* marker-red.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40BC10506AF400823A94 /* marker-red.png */; };
+		ABDA40DE10506CB300823A94 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA40DD10506CB300823A94 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,20 +205,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 289811FC0FA1105E002ED288;
 			remoteInfo = zxingcore;
-		};
-		A7986D800F8FEDD900A5469F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A7E4C85E0F54C35300C6D9E8 /* MapView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B83E673E0E80F332001663B6;
-			remoteInfo = SimpleMap;
-		};
-		A7986D820F8FEDD900A5469F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A7E4C85E0F54C35300C6D9E8 /* MapView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B8C974590E8A19B2007D16AD;
-			remoteInfo = MapView;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -329,8 +317,6 @@
 		2B3D12D70F437D6E0067FD3A /* InventoryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InventoryListViewController.h; path = Classes/InventoryListViewController.h; sourceTree = "<group>"; };
 		2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InventoryListViewController.m; path = Classes/InventoryListViewController.m; sourceTree = "<group>"; };
 		2B3D12DA0F437E690067FD3A /* InventoryList.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InventoryList.xib; sourceTree = "<group>"; };
-		2B3D12DE0F4380B70067FD3A /* GPSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPSViewController.h; path = Classes/GPSViewController.h; sourceTree = "<group>"; };
-		2B3D12DF0F4380B70067FD3A /* GPSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPSViewController.m; path = Classes/GPSViewController.m; sourceTree = "<group>"; };
 		2B3D12EA0F4382070067FD3A /* LogoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogoutViewController.h; path = Classes/LogoutViewController.h; sourceTree = "<group>"; };
 		2B3D12EB0F4382070067FD3A /* LogoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogoutViewController.m; path = Classes/LogoutViewController.m; sourceTree = "<group>"; };
 		2B3D12ED0F4382A00067FD3A /* Logout.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Logout.xib; sourceTree = "<group>"; };
@@ -345,7 +331,6 @@
 		2B3D18D50F4B25720067FD3A /* AppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppModel.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; plistStructureDefinitionIdentifier = "<none>"; sourceTree = "<group>"; };
 		A702FBBD0F8E804A00BE6549 /* playArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playArrow.png; sourceTree = "<group>"; };
-		A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-player-lqgps.png"; path = "images/marker-player-lqgps.png"; sourceTree = "<group>"; };
 		A7149F9C0FB89DC8008BAB5D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A72135250FA8B548003E4059 /* QRScannerParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRScannerParserDelegate.h; sourceTree = "<group>"; };
 		A72135260FA8B548003E4059 /* QRScannerParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRScannerParserDelegate.m; sourceTree = "<group>"; };
@@ -357,7 +342,6 @@
 		A722CB5A0FBDFEA6009432DB /* NearbyObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NearbyObjectProtocol.h; path = Classes/model/NearbyObjectProtocol.h; sourceTree = "<group>"; };
 		A722E7130F57425B004B04D2 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		A722E7140F57425B004B04D2 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
-		A72C01B00F7977A600D00602 /* marker-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-player.png"; path = "images/marker-player.png"; sourceTree = "<group>"; };
 		A72C02130F7985EF00D00602 /* QRScanner.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QRScanner.xib; sourceTree = "<group>"; };
 		A72C02150F7985FF00D00602 /* QRScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRScannerViewController.h; path = Classes/QRScannerViewController.h; sourceTree = "<group>"; };
 		A72C02160F7985FF00D00602 /* QRScannerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QRScannerViewController.mm; path = Classes/QRScannerViewController.mm; sourceTree = "<group>"; };
@@ -366,12 +350,10 @@
 		A72F04AD0F6ED8620089B90F /* NearbyLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyLocation.m; sourceTree = "<group>"; };
 		A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemDetailsViewController.h; path = Classes/ItemDetailsViewController.h; sourceTree = "<group>"; };
 		A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemDetailsViewController.m; path = Classes/ItemDetailsViewController.m; sourceTree = "<group>"; };
-		A75F7D340FDEBC1800E36140 /* marker-other-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-other-player.png"; path = "images/marker-other-player.png"; sourceTree = "<group>"; };
 		A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeProtocol.h; sourceTree = "<group>"; };
 		A7615F8E0FDED3DC00438796 /* LoginBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginBackground.png; path = images/LoginBackground.png; sourceTree = "<group>"; };
 		A763B5230F4E283100FDCC55 /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCLController.h; path = Classes/MyCLController.h; sourceTree = "<group>"; };
 		A763B5240F4E283100FDCC55 /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCLController.m; path = Classes/MyCLController.m; sourceTree = "<group>"; };
-		A78E753B0FB5B88000922F6C /* GPS.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPS.xib; sourceTree = "<group>"; };
 		A78E753D0FB5BA0C00922F6C /* Developer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Developer.xib; sourceTree = "<group>"; };
 		A78FD8AF0F4B7E9400820FEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		A78FD8B10F4B7EA200820FEA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -402,19 +384,12 @@
 		A7E39EAC0F5F60D000826198 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraViewController.m; path = Classes/CameraViewController.m; sourceTree = "<group>"; };
 		A7E39EC90F5F655E00826198 /* Camera.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Camera.xib; sourceTree = "<group>"; };
 		A7E39FA90F5F930E00826198 /* Developer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Developer.png; path = images/Developer.png; sourceTree = "<group>"; };
-		A7E39FAA0F5F930E00826198 /* GPS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = GPS.png; path = images/GPS.png; sourceTree = "<group>"; };
 		A7E39FAB0F5F930E00826198 /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Inventory.png; path = images/Inventory.png; sourceTree = "<group>"; };
-		A7E39FAC0F5F930E00826198 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = loading.png; path = images/loading.png; sourceTree = "<group>"; };
 		A7E39FAD0F5F930E00826198 /* Logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logout.png; path = images/Logout.png; sourceTree = "<group>"; };
-		A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-blue-withletter.png"; path = "images/marker-blue-withletter.png"; sourceTree = "<group>"; };
-		A7E39FAF0F5F930E00826198 /* marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-blue.png"; path = "images/marker-blue.png"; sourceTree = "<group>"; };
-		A7E39FB00F5F930E00826198 /* marker-red-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-red-withletter.png"; path = "images/marker-red-withletter.png"; sourceTree = "<group>"; };
-		A7E39FB10F5F930E00826198 /* marker-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "marker-red.png"; path = "images/marker-red.png"; sourceTree = "<group>"; };
 		A7E39FB30F5F930E00826198 /* Quest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Quest.png; path = images/Quest.png; sourceTree = "<group>"; };
 		A7E39FC90F60456200826198 /* IM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IM.png; path = images/IM.png; sourceTree = "<group>"; };
 		A7E39FD90F61759700826198 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = images/camera.png; sourceTree = "<group>"; };
 		A7E39FDA0F61759700826198 /* Game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Game.png; path = images/Game.png; sourceTree = "<group>"; };
-		A7E4C85E0F54C35300C6D9E8 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = Classes/map/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
 		A7E4C88B0F54C4D000C6D9E8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A7E4C8980F54C5E300C6D9E8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericWebView.xib; sourceTree = "<group>"; };
@@ -443,7 +418,6 @@
 		AB549EDE1047007B00A901EF /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		AB54A0B81047301E00A901EF /* JSONResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONResult.h; sourceTree = "<group>"; };
 		AB54A0B91047301E00A901EF /* JSONResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONResult.m; sourceTree = "<group>"; };
-		AB8A3CCB104936BE00422773 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = ../../../../../../usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		AB8A3CCD104936F500422773 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = ../../../../../../usr/lib/libiconv.2.dylib; sourceTree = SDKROOT; };
 		AB8A429E104C7F8C00422773 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		AB8A429F104C7F8C00422773 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
@@ -457,6 +431,25 @@
 		ABD5C61F104F3863002EB824 /* Npc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Npc.xib; sourceTree = "<group>"; };
 		ABD5C620104F3863002EB824 /* NpcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NpcViewController.h; sourceTree = "<group>"; };
 		ABD5C621104F3863002EB824 /* NpcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NpcViewController.m; sourceTree = "<group>"; };
+		ABDA40AA10506AF400823A94 /* GPS.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPS.xib; sourceTree = "<group>"; };
+		ABDA40AB10506AF400823A94 /* GPS.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GPS.png; sourceTree = "<group>"; };
+		ABDA40AC10506AF400823A94 /* GPSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSViewController.h; sourceTree = "<group>"; };
+		ABDA40AD10506AF400823A94 /* GPSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSViewController.m; sourceTree = "<group>"; };
+		ABDA40AE10506AF400823A94 /* PlayerAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerAnnotation.h; sourceTree = "<group>"; };
+		ABDA40AF10506AF400823A94 /* PlayerAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerAnnotation.m; sourceTree = "<group>"; };
+		ABDA40B010506AF400823A94 /* ItemAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemAnnotation.h; sourceTree = "<group>"; };
+		ABDA40B110506AF400823A94 /* ItemAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemAnnotation.m; sourceTree = "<group>"; };
+		ABDA40B210506AF400823A94 /* AnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationView.h; sourceTree = "<group>"; };
+		ABDA40B310506AF400823A94 /* AnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationView.m; sourceTree = "<group>"; };
+		ABDA40B510506AF400823A94 /* marker-other-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-other-player.png"; sourceTree = "<group>"; };
+		ABDA40B610506AF400823A94 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		ABDA40B710506AF400823A94 /* marker-player-lqgps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-player-lqgps.png"; sourceTree = "<group>"; };
+		ABDA40B810506AF400823A94 /* marker-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-player.png"; sourceTree = "<group>"; };
+		ABDA40B910506AF400823A94 /* marker-blue-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-blue-withletter.png"; sourceTree = "<group>"; };
+		ABDA40BA10506AF400823A94 /* marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-blue.png"; sourceTree = "<group>"; };
+		ABDA40BB10506AF400823A94 /* marker-red-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-red-withletter.png"; sourceTree = "<group>"; };
+		ABDA40BC10506AF400823A94 /* marker-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-red.png"; sourceTree = "<group>"; };
+		ABDA40DD10506CB300823A94 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -472,9 +465,8 @@
 				A7E4C8990F54C5E300C6D9E8 /* CoreLocation.framework in Frameworks */,
 				A7955B930F73E095005148E4 /* AudioToolbox.framework in Frameworks */,
 				A79202640F8E717C0049F990 /* MediaPlayer.framework in Frameworks */,
-				A7986E860F8FF42000A5469F /* libMapView.a in Frameworks */,
-				AB8A3CCC104936BE00422773 /* libsqlite3.dylib in Frameworks */,
 				AB8A3CCE104936F500422773 /* libiconv.2.dylib in Frameworks */,
+				ABDA40DE10506CB300823A94 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -635,7 +627,7 @@
 				ABBEBBBF104D7CE400AA7285 /* Nodes */,
 				ABD4F19F1046FC7A003AC93C /* NPC */,
 				A7986D680F8FEC4900A5469F /* Quests */,
-				A7986D600F8FEB8700A5469F /* GPS */,
+				ABDA40A910506AF400823A94 /* GPS */,
 				A7986D660F8FEC2100A5469F /* Inventory */,
 				A7986D690F8FEC6300A5469F /* Camera */,
 				A7986D620F8FEBD300A5469F /* QR Scanner */,
@@ -699,21 +691,6 @@
 			name = NearbyObjectBar;
 			sourceTree = "<group>";
 		};
-		A77B06ED0F78372F005945D3 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				A75F7D340FDEBC1800E36140 /* marker-other-player.png */,
-				A7E39FAC0F5F930E00826198 /* loading.png */,
-				A703EFE20F7C5C39008A12E2 /* marker-player-lqgps.png */,
-				A72C01B00F7977A600D00602 /* marker-player.png */,
-				A7E39FAE0F5F930E00826198 /* marker-blue-withletter.png */,
-				A7E39FAF0F5F930E00826198 /* marker-blue.png */,
-				A7E39FB00F5F930E00826198 /* marker-red-withletter.png */,
-				A7E39FB10F5F930E00826198 /* marker-red.png */,
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
 		A798300A0FCB1C5900C1C2E7 /* Waiting Indicator */ = {
 			isa = PBXGroup;
 			children = (
@@ -723,20 +700,6 @@
 				A79830170FCB1D8900C1C2E7 /* WaitingIndicator.xib */,
 			);
 			name = "Waiting Indicator";
-			sourceTree = "<group>";
-		};
-		A7986D600F8FEB8700A5469F /* GPS */ = {
-			isa = PBXGroup;
-			children = (
-				A78E753B0FB5B88000922F6C /* GPS.xib */,
-				A7E39FAA0F5F930E00826198 /* GPS.png */,
-				AB8A3CCB104936BE00422773 /* libsqlite3.dylib */,
-				A7E4C85E0F54C35300C6D9E8 /* MapView.xcodeproj */,
-				2B3D12DF0F4380B70067FD3A /* GPSViewController.m */,
-				2B3D12DE0F4380B70067FD3A /* GPSViewController.h */,
-				A77B06ED0F78372F005945D3 /* Images */,
-			);
-			name = GPS;
 			sourceTree = "<group>";
 		};
 		A7986D610F8FEBB200A5469F /* Developer */ = {
@@ -869,6 +832,7 @@
 				A7E4C8980F54C5E300C6D9E8 /* CoreLocation.framework */,
 				A7955B920F73E095005148E4 /* AudioToolbox.framework */,
 				A79202630F8E717C0049F990 /* MediaPlayer.framework */,
+				ABDA40DD10506CB300823A94 /* MapKit.framework */,
 				AB549ED11047007B00A901EF /* JSON Framework */,
 				A7149F9C0FB89DC8008BAB5D /* Settings.bundle */,
 				A760473F0FC0AA1E00219A53 /* NearbyObjectBar */,
@@ -898,15 +862,6 @@
 				A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */,
 			);
 			name = "Generic Web View (compatability)";
-			sourceTree = "<group>";
-		};
-		A7986D7C0F8FEDD900A5469F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A7986D810F8FEDD900A5469F /* MapView.app */,
-				A7986D830F8FEDD900A5469F /* libMapView.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		AB549ED11047007B00A901EF /* JSON Framework */ = {
@@ -948,6 +903,39 @@
 				ABD5C621104F3863002EB824 /* NpcViewController.m */,
 			);
 			name = NPC;
+			sourceTree = "<group>";
+		};
+		ABDA40A910506AF400823A94 /* GPS */ = {
+			isa = PBXGroup;
+			children = (
+				ABDA40B410506AF400823A94 /* Images */,
+				ABDA40AA10506AF400823A94 /* GPS.xib */,
+				ABDA40AB10506AF400823A94 /* GPS.png */,
+				ABDA40AC10506AF400823A94 /* GPSViewController.h */,
+				ABDA40AD10506AF400823A94 /* GPSViewController.m */,
+				ABDA40AE10506AF400823A94 /* PlayerAnnotation.h */,
+				ABDA40AF10506AF400823A94 /* PlayerAnnotation.m */,
+				ABDA40B010506AF400823A94 /* ItemAnnotation.h */,
+				ABDA40B110506AF400823A94 /* ItemAnnotation.m */,
+				ABDA40B210506AF400823A94 /* AnnotationView.h */,
+				ABDA40B310506AF400823A94 /* AnnotationView.m */,
+			);
+			name = GPS;
+			sourceTree = "<group>";
+		};
+		ABDA40B410506AF400823A94 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				ABDA40B510506AF400823A94 /* marker-other-player.png */,
+				ABDA40B610506AF400823A94 /* loading.png */,
+				ABDA40B710506AF400823A94 /* marker-player-lqgps.png */,
+				ABDA40B810506AF400823A94 /* marker-player.png */,
+				ABDA40B910506AF400823A94 /* marker-blue-withletter.png */,
+				ABDA40BA10506AF400823A94 /* marker-blue.png */,
+				ABDA40BB10506AF400823A94 /* marker-red-withletter.png */,
+				ABDA40BC10506AF400823A94 /* marker-red.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1008,12 +996,6 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* ARIS */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A7986D7C0F8FEDD900A5469F /* Products */;
-					ProjectRef = A7E4C85E0F54C35300C6D9E8 /* MapView.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* ARIS */,
@@ -1021,23 +1003,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		A7986D810F8FEDD900A5469F /* MapView.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = MapView.app;
-			remoteRef = A7986D800F8FEDD900A5469F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		A7986D830F8FEDD900A5469F /* libMapView.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMapView.a;
-			remoteRef = A7986D820F8FEDD900A5469F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1D60588D0D05DD3D006BFB54 /* Resources */ = {
@@ -1057,26 +1022,17 @@
 				A7A172950F4F273B0017E865 /* Icon.icns in Resources */,
 				A7E39ECA0F5F655E00826198 /* Camera.xib in Resources */,
 				A7E39FB40F5F930E00826198 /* Developer.png in Resources */,
-				A7E39FB50F5F930E00826198 /* GPS.png in Resources */,
 				A7E39FB60F5F930E00826198 /* Inventory.png in Resources */,
-				A7E39FB70F5F930E00826198 /* loading.png in Resources */,
 				A7E39FB80F5F930E00826198 /* Logout.png in Resources */,
-				A7E39FB90F5F930E00826198 /* marker-blue-withletter.png in Resources */,
-				A7E39FBA0F5F930E00826198 /* marker-blue.png in Resources */,
-				A7E39FBB0F5F930E00826198 /* marker-red-withletter.png in Resources */,
-				A7E39FBC0F5F930E00826198 /* marker-red.png in Resources */,
 				A7E39FBE0F5F930E00826198 /* Quest.png in Resources */,
 				A7E39FCA0F60456200826198 /* IM.png in Resources */,
 				A7E39FDB0F61759700826198 /* camera.png in Resources */,
 				A7E39FDC0F61759700826198 /* Game.png in Resources */,
 				A7F0EE3F0F71CFEF008F7BAD /* GenericWebView.xib in Resources */,
-				A72C01B10F7977A600D00602 /* marker-player.png in Resources */,
 				A72C02140F7985EF00D00602 /* QRScanner.xib in Resources */,
 				A72C021D0F798B0500D00602 /* QRScanner.png in Resources */,
-				A703EFE30F7C5C39008A12E2 /* marker-player-lqgps.png in Resources */,
 				A7BCBB3F0F8C236900C7A36C /* ItemDetailsView.xib in Resources */,
 				A702FBBE0F8E804A00BE6549 /* playArrow.png in Resources */,
-				A78E753C0FB5B88000922F6C /* GPS.xib in Resources */,
 				A78E753E0FB5BA0C00922F6C /* Developer.xib in Resources */,
 				A7149F9D0FB89DC8008BAB5D /* Settings.bundle in Resources */,
 				A722C8C00FBCD8D0009432DB /* SelfRegistration.xib in Resources */,
@@ -1086,12 +1042,21 @@
 				A7DBEDAD0FD5FF8400C6C659 /* page.png in Resources */,
 				A7DBEDAE0FD5FF8400C6C659 /* person.png in Resources */,
 				A7DBEDAF0FD5FF8400C6C659 /* pickaxe.png in Resources */,
-				A75F7D350FDEBC1800E36140 /* marker-other-player.png in Resources */,
 				A7615F8F0FDED3DC00438796 /* LoginBackground.png in Resources */,
 				ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */,
 				ABD5C622104F3863002EB824 /* Npc.xib in Resources */,
 				AB2225B0105058C000A4255E /* QuestCompleteIcon.png in Resources */,
 				AB2225B8105059DB00A4255E /* QuestActiveIcon.png in Resources */,
+				ABDA40BD10506AF400823A94 /* GPS.xib in Resources */,
+				ABDA40BE10506AF400823A94 /* GPS.png in Resources */,
+				ABDA40C310506AF400823A94 /* marker-other-player.png in Resources */,
+				ABDA40C410506AF400823A94 /* loading.png in Resources */,
+				ABDA40C510506AF400823A94 /* marker-player-lqgps.png in Resources */,
+				ABDA40C610506AF400823A94 /* marker-player.png in Resources */,
+				ABDA40C710506AF400823A94 /* marker-blue-withletter.png in Resources */,
+				ABDA40C810506AF400823A94 /* marker-blue.png in Resources */,
+				ABDA40C910506AF400823A94 /* marker-red-withletter.png in Resources */,
+				ABDA40CA10506AF400823A94 /* marker-red.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1108,7 +1073,6 @@
 				2B3D12BF0F4377A60067FD3A /* IMViewController.m in Sources */,
 				2B3D12CE0F437AC60067FD3A /* QuestsViewController.m in Sources */,
 				2B3D12D90F437D6E0067FD3A /* InventoryListViewController.m in Sources */,
-				2B3D12E00F4380B70067FD3A /* GPSViewController.m in Sources */,
 				2B3D12EC0F4382070067FD3A /* LogoutViewController.m in Sources */,
 				2B3D14620F45EBAA0067FD3A /* GamePickerViewController.m in Sources */,
 				2B3D17070F49C99B0067FD3A /* Game.m in Sources */,
@@ -1188,6 +1152,10 @@
 				ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */,
 				ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */,
 				AB2223F510502CD800A4255E /* Quest.m in Sources */,
+				ABDA40BF10506AF400823A94 /* GPSViewController.m in Sources */,
+				ABDA40C010506AF400823A94 /* PlayerAnnotation.m in Sources */,
+				ABDA40C110506AF400823A94 /* ItemAnnotation.m in Sources */,
+				ABDA40C210506AF400823A94 /* AnnotationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

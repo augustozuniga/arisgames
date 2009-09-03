@@ -41,7 +41,7 @@ static int const COMPLETED_SECTION = 1;
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[appModel fetchQuestList];
+	if (appModel.loggedIn) [appModel fetchQuestList];
 		
 	NSLog(@"QuestsViewController: Quests View Loaded");
 }

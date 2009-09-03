@@ -272,11 +272,11 @@
 	if ([viewController isKindOfClass:[UINavigationController class]]) {
 		UINavigationController *navigationController = (UINavigationController*) viewController;
 		visibleViewController = [navigationController visibleViewController];
-		[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
+		//[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
 	}
 	else {
 		visibleViewController = viewController;
-		[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
+		//[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
 	}
 	[appModel updateServerLocationAndfetchNearbyLocationList];
 }
