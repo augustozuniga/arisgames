@@ -8,6 +8,7 @@
 
 #import "JSONResult.h"
 #import "JSON.h"
+#import "ARISAppDelegate.h"
 
 @implementation JSONResult
 
@@ -21,9 +22,15 @@
 
 	// Parse JSON into a resultObject
 	SBJSON *json = [[SBJSON new] autorelease];
-	NSError *jsonError;
+	NSError *jsonError = nil;
+
 	NSDictionary *resultDictionary = [json objectWithString:JSONString error:&jsonError];
 
+	if (jsonError.code) {
+		NSLog(@"JSONResult: Error %d parsing JSON String: %@. There must be a problem with the server",jsonError.code, JSONString);
+		[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];
+		return nil;
+	}
 	self.returnCode = [[resultDictionary objectForKey:@"returnCode"]intValue];
 	self.returnCodeDescription = [resultDictionary objectForKey:@"returnCodeDescription"];
 

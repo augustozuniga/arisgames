@@ -49,6 +49,13 @@ static int const COMPLETED_SECTION = 1;
 -(void)refreshViewFromModel {
 	NSLog(@"QuestsViewController: Refreshing view from model");
 	
+	//init quest list
+	if(quests != nil) {
+		[quests release];
+	}
+	quests = [NSMutableArray array];
+	[quests retain];
+	
 	NSArray *activeQuestsArray = [appModel.questList objectForKey:@"active"];
 	NSArray *completedQuestsArray = [appModel.questList objectForKey:@"completed"];
 	

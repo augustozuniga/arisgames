@@ -55,7 +55,7 @@ class Players extends Module
 					SET latitude = {$floatLat} , longitude = {$floatLong}
 					WHERE player_id = {$intPlayerID}";
 		
-		NetDebug::trace($query);
+		//NetDebug::trace($query);
 
 		@mysql_query($query);
 		

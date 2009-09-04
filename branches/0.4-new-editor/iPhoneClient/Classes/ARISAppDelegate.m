@@ -212,15 +212,18 @@
 
 
 - (void)performUserLogin:(NSNotification *)notification {
+	NSLog(@"AppDelegate: Login Requested");
+	
 	NSDictionary *userInfo = notification.userInfo;
 	
 	NSLog([NSString stringWithFormat:@"AppDelegate: Perform Login for: %@ Paswword: %@", [userInfo objectForKey:@"username"], [userInfo objectForKey:@"password"]] );
 	appModel.username = [userInfo objectForKey:@"username"];
 	appModel.password = [userInfo objectForKey:@"password"];
-	BOOL loginSuccessful = [appModel login];
-	NSLog([appModel description]);
+
+	[appModel login];
+	
 	//handle login response
-	if(loginSuccessful) {
+	if(appModel.loggedIn) {
 		NSLog(@"AppDelegate: Login Success");
 		[loginViewNavigationController.view removeFromSuperview];
 		[appModel fetchGameList];
@@ -228,11 +231,16 @@
 		gamePickerViewController.view.frame = [UIScreen mainScreen].applicationFrame;
 
 	} else {
-		NSLog(@"AppDelegate: Login Failed");
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"Invalid username or password."
-													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-		[alert show];	
-		[alert release];
+		NSLog(@"AppDelegate: Login Failed, check for a network issue");
+		if (self.networkAlert) NSLog(@"AppDelegate: Network is down, skip login alert");
+		else {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"Invalid username or password."
+														   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+			[alert show];	
+			[alert release];
+		}
+
+		
 	}
 	
 }

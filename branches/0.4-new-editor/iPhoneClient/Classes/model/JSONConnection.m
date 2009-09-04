@@ -7,6 +7,8 @@
 //
 
 #import "JSONConnection.h"
+#import "AppModel.h"
+#import "ARISAppDelegate.h"
 
 
 @implementation JSONConnection
@@ -52,11 +54,22 @@
 												   timeoutInterval:30];
 	
 	// Make synchronous request
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
 	NSURLResponse *response;
 	NSError *error;
 	NSData *resultData = [NSURLConnection sendSynchronousRequest:requestURLRequest
 											   returningResponse:&response
 														   error:&error];	
+
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+	if (error != NULL) {
+		NSLog(@"JSONConnection: Error communicating with server. %d", error.code);
+		[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
+	}	
+	//else [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeNetworkAlert];
+	
 	NSString *jsonString = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
 	
 	//Get the JSONResult here

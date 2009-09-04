@@ -48,8 +48,6 @@ static NSString *locationsLock = @"locationsLock";
     if (self = [super init]) {
 		//Init USerDefaults
 		defaults = [NSUserDefaults standardUserDefaults];
-		
-		jsonServerBaseURL = @"http://davembp.local/editor/server/json.php/aris";
 	}
 			 
     return self;
@@ -90,7 +88,14 @@ static NSString *locationsLock = @"locationsLock";
 				  baseAppURL, username, password, playerId, gameId, site);
 		}
 	}
+
 	else NSLog(@"Model: No default User Data to Load. Use URL: '%@' Site: '%@'", baseAppURL, site);
+	
+	
+	self.jsonServerBaseURL = [NSString stringWithFormat:@"%@%@",
+						 baseAppURL, @"../editor/server/json.php/aris"];
+	
+	NSLog(@"AppModel: jsonServerURL is %@",jsonServerBaseURL);
 }
 
 
@@ -135,40 +140,50 @@ static NSString *locationsLock = @"locationsLock";
 #pragma mark Communication with Server
 
 - (BOOL)login {
-	BOOL loginSuccessful;	
+	NSLog(@"AppModel: Login Requested");
 	NSArray *arguments = [NSArray arrayWithObjects:self.username, self.password, nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:self.jsonServerBaseURL 
+	JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:jsonServerBaseURL 
 																	andServiceName: @"players" 
 																	andMethodName:@"login"
 																	andArguments:arguments]; 
 
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest];
 	
+	if (!jsonResult) {
+		self.loggedIn = NO;
+		return NO;
+	}
+	
 	//handle login response
 	int returnCode = jsonResult.returnCode;
 	NSLog(@"AppModel: Login Result Code: %d", returnCode);
 	if(returnCode == 0) {
-		loginSuccessful = YES;
+		self.loggedIn = YES;
 		loggedIn = YES;
 		playerId = [((NSDecimalNumber*)jsonResult.data) intValue];
 	}
 	else {
-		loginSuccessful = NO;	
+		self.loggedIn = NO;	
 	}
-	
-	self.loggedIn = loginSuccessful;
-	return loginSuccessful;
+
+	return self.loggedIn;
 }
 
 
 - (void)fetchGameList {
 	NSLog(@"AppModel: Fetching Game List.");
 	
+	
 	//Call server service
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"games" 
 																	 andMethodName:@"getGames" andArguments:nil];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchGameList: No result Data, return");
+		return;
+	}
 	
 	
 	//Build the game list
@@ -199,8 +214,13 @@ static NSString *locationsLock = @"locationsLock";
 
 - (void)fetchLocationList {
 	@synchronized (nearbyLock) {
-	
+		
 		NSLog(@"AppModel: Fetching Locations from Server");	
+		
+		if (!loggedIn) {
+			NSLog(@"AppModel: Player Not logged in yet, skip the location fetch");	
+			return;
+		}
 		
 		//init location list array
 		if(locationList != nil) {
@@ -226,6 +246,10 @@ static NSString *locationsLock = @"locationsLock";
 																		andArguments:arguments];
 		JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
 		
+		if (!jsonResult) {
+			NSLog(@"AppModel fetchLocationList: No result Data, return");
+			return;
+		}
 		
 		//Build the game list
 		NSMutableArray *tempLocationsList = [[NSMutableArray alloc] init];
@@ -283,6 +307,13 @@ static NSString *locationsLock = @"locationsLock";
 																	andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
 	
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchInventory: No result Data, return");
+		return;
+	}	
+	
+	
+	
 	//Build the inventory
 	NSMutableArray *tempInventory = [[NSMutableArray alloc] init];
 	NSEnumerator *inventoryEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
@@ -320,6 +351,12 @@ static NSString *locationsLock = @"locationsLock";
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
 	
+	
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchItem: No result Data, return");
+		return nil;
+	}		
+	
 	//Build the item
 	NSDictionary *itemDictionary = (NSDictionary *)jsonResult.data;	
 		Item *item = [[Item alloc] init];
@@ -349,6 +386,12 @@ static NSString *locationsLock = @"locationsLock";
 																	 andMethodName:@"getNode" 
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchNode: No result Data, return");
+		return nil;
+	}	
+	
 	
 	//Build the node
 	NSDictionary *nodeDictionary = (NSDictionary *)jsonResult.data;	
@@ -401,6 +444,13 @@ static NSString *locationsLock = @"locationsLock";
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
 	
+
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchNpc: No result Data, return");
+		return nil;
+	}	
+	
+	
 	//Build the npc object
 	NSDictionary *npcDictionary = (NSDictionary *)jsonResult.data;	
 	Npc *npc = [[Npc alloc] init];
@@ -438,6 +488,11 @@ static NSString *locationsLock = @"locationsLock";
 																	 andMethodName:@"getQuestsForPlayer" 
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchQuestList: No result Data, return");
+		return nil;
+	}		
 	
 	//Build the questList
 	NSDictionary *dataDictionary = (NSDictionary *)jsonResult.data;
@@ -490,6 +545,11 @@ static NSString *locationsLock = @"locationsLock";
 - (void)updateServerLocationAndfetchNearbyLocationList {
 	@synchronized (nearbyLock) {
 		NSLog(@"AppModel: updating player position on server and determining nearby Locations");
+		
+		if (!loggedIn) {
+			NSLog(@"AppModel: Player Not logged in yet, skip the location update");	
+			return;
+		}
 		
 		//init a fresh nearby location list array
 		if(nearbyLocationsList != nil) {
@@ -630,6 +690,8 @@ static NSString *locationsLock = @"locationsLock";
 	NSLog(@"Model: URL String for Module was = %@",URLString);
 	return URLString;
 }
+
+
 
 
 
