@@ -8,6 +8,8 @@
 
 #import "NodeViewController.h"
 #import "NodeOption.h"
+#import "ARISAppDelegate.h"
+#import "AppModel.h"
 
 static NSString * const OPTION_CELL = @"option";
 
@@ -17,17 +19,12 @@ static NSString * const OPTION_CELL = @"option";
 // The designated initializer. Override to perform setup that is required before the view is loaded.
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
     }
 
     return self;
 }
 
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {

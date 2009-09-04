@@ -81,7 +81,6 @@
 	NSLog(@"Login: New User Button Touched");
 	SelfRegistrationViewController *selfRegistrationViewController = [[SelfRegistrationViewController alloc] 
 															initWithNibName:@"SelfRegistration" bundle:[NSBundle mainBundle]];
-	[selfRegistrationViewController setModel:appModel];
 	
 	//Put the view on the screen
 	[[self navigationController] pushViewController:selfRegistrationViewController animated:YES];

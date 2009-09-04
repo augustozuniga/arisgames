@@ -17,9 +17,6 @@ static int const COMPLETED_SECTION = 1;
 
 @implementation QuestsViewController
 
-@synthesize appModel;
-@synthesize allQuests;
-
 //Override init for passing title and icon to tab bar
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
 {
@@ -27,12 +24,12 @@ static int const COMPLETED_SECTION = 1;
     if (self) {
         self.title = @"Quests";
         self.tabBarItem.image = [UIImage imageNamed:@"Quest.png"];
-		allQuests = [[NSMutableArray alloc] init];
+		quests = [[NSMutableArray alloc] init];
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
-		appModel = [[[UIApplication sharedApplication] delegate] appModel];
 		//register for notifications
 		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
-		[dispatcher addObserver:self selector:@selector(refreshQuestLists) name:@"ReceivedQuestList" object:nil];
+		[dispatcher addObserver:self selector:@selector(refreshViewFromModel) name:@"ReceivedQuestList" object:nil];
     }
     return self;
 }
@@ -40,21 +37,23 @@ static int const COMPLETED_SECTION = 1;
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	
-	if (appModel.loggedIn) [appModel fetchQuestList];
-		
+	[self refresh];		
 	NSLog(@"QuestsViewController: Quests View Loaded");
 }
 
+- (void)refresh {
+	NSLog(@"QuestsViewController: refresh requested");
+	if (appModel.loggedIn) [appModel fetchQuestList];
+}
 
--(void)refreshQuestLists {
-	NSLog(@"QuestsViewController: ReceivedQuestList notification recieved, refreshing");
+-(void)refreshViewFromModel {
+	NSLog(@"QuestsViewController: Refreshing view from model");
 	
 	NSArray *activeQuestsArray = [appModel.questList objectForKey:@"active"];
 	NSArray *completedQuestsArray = [appModel.questList objectForKey:@"completed"];
 	
-	[allQuests addObject:activeQuestsArray ]; //this will be at index 0
-	[allQuests addObject:completedQuestsArray]; //this will be at index 1
+	[quests addObject:activeQuestsArray ]; //this will be at index 0
+	[quests addObject:completedQuestsArray]; //this will be at index 1
 
 	[tableView reloadData];
 }
@@ -107,12 +106,12 @@ static int const COMPLETED_SECTION = 1;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [allQuests count];
+    return [quests count];
 }
 
 // returns the # of rows in each component..
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	NSArray *array = [allQuests objectAtIndex:section];
+	NSArray *array = [quests objectAtIndex:section];
 	return [array count];
 }
 
@@ -127,7 +126,7 @@ static int const COMPLETED_SECTION = 1;
 	int section = indexPath.section;
 	int indexWithinSection = indexPath.row;
 	
-	NSArray *array = [allQuests objectAtIndex:section];	
+	NSArray *array = [quests objectAtIndex:section];	
 	Quest *quest = (Quest*)[array objectAtIndex:indexWithinSection];
 	
 	//Get the refrence to the cell's properties

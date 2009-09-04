@@ -7,11 +7,11 @@
 //
 
 #import "CameraViewController.h"
-
+#import "ARISAppDelegate.h"
+#import "AppModel.h"
 
 @implementation CameraViewController
 
-@synthesize moduleName;
 @synthesize imagePickerController;
 
 //Override init for passing title and icon to tab bar
@@ -21,6 +21,9 @@
     if (self) {
         self.title = @"Camera";
         self.tabBarItem.image = [UIImage imageNamed:@"camera.png"];
+		
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
+
     }
     return self;
 }
@@ -29,8 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	moduleName = @"RESTCamera";
-		
 	self.imagePickerController = [[UIImagePickerController alloc] init];
 	self.imagePickerController.allowsImageEditing = YES;
 	self.imagePickerController.delegate = self;
@@ -38,14 +39,6 @@
 	NSLog(@"Camera Loaded");
 }
 
--(void) setModel:(AppModel *)model {
-	if(appModel != model) {
-		[appModel release];
-		appModel = model;
-		[appModel retain];
-	}	
-	NSLog(@"model set for Camera");
-}
 
 - (IBAction)cameraButtonTouchAction {
 	NSLog(@"Camera Button Pressed");
@@ -55,6 +48,7 @@
 
 #pragma mark UIImagePickerControllerDelegate Protocol Methods
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editInfo {
+	/*
 	[[picker parentViewController] dismissModalViewControllerAnimated:YES];
 	
 	NSLog(@"Preparing to send file from camera to Server");
@@ -119,7 +113,7 @@
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Photo Taken" message: @"It is available in your inventory" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	[alert show];
 	[alert release];
-	
+	*/
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

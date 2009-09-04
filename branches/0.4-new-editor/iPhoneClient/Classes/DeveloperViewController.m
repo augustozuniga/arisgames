@@ -7,10 +7,11 @@
 //
 
 #import "DeveloperViewController.h"
+#import "ARISAppDelegate.h"
+#import "AppModel.h"
 
 @implementation DeveloperViewController
 
-@synthesize moduleName;
 @synthesize locationTable;
 @synthesize locationTableData;
 @synthesize clearEventsButton;
@@ -24,6 +25,13 @@
     if (self) {
         self.title = @"Developer";
         self.tabBarItem.image = [UIImage imageNamed:@"Developer.png"];
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
+		
+		//register for notifications
+		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
+		[dispatcher addObserver:self selector:@selector(updateAccuracy) name:@"PlayerMoved" object:nil];	
+		[dispatcher addObserver:self selector:@selector(refreshViewFromModel) name:@"ReceivedLocationList" object:nil];	
+	
     }
     return self;
 }
@@ -33,36 +41,28 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	moduleName = @"RESTDeveloper";
 	
-	//register for notifications
-	NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
-	[dispatcher addObserver:self selector:@selector(updateAccuracy) name:@"PlayerMoved" object:nil];	
+	[self refresh];
 	
-	NSLog(@"Developer loaded");
-}
-
-- (void)viewDidAppear {	
-	
+	NSLog(@"DeveloperViewController: view loaded");
 }
 
 
--(void) setModel:(AppModel *)model {
-	if(appModel != model) {
-		[appModel release];
-		appModel = model;
-		[appModel retain];
-	}
-	
-	//Populate locations array
+-(void) refresh {	
+	NSLog(@"DeveloperViewController: Refresh Began");
+
 	[appModel fetchLocationList];
+}
+
+-(void) refreshViewFromModel {
+	NSLog(@"DeveloperViewController: Model Updated, refreshing view");
+	
 	locationTableData = appModel.locationList;
 	[locationTable reloadData];
 	
 	//Init Accuracy Label
-	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters", appModel.playerLocation.horizontalAccuracy]; 
-		
-	NSLog(@"model set for DEV");
+	accuracyLabelValue.text = [NSString stringWithFormat:@"+/-%1.2f Meters", 
+							   appModel.playerLocation.horizontalAccuracy]; 
 }
 
 -(void) updateAccuracy{
@@ -72,6 +72,7 @@
 #pragma mark IB Button Actions
 
 -(IBAction)clearEventsButtonTouched: (id) sender{
+	/*
 	//Fire off a request to the REST Module and display an alert when it is successfull
 	NSString *baseURL = [appModel getURLStringForModule:moduleName];
 	NSString *URLparams = @"&event=deleteAllEvents";
@@ -85,10 +86,12 @@
 	[alert show];
 	[result release];
 	[alert release];
+	 */
 	
 }
 
 -(IBAction)clearItemsButtonTouched: (id) sender{
+	/*
 	//Fire off a request to the REST Module and display an alert when it is successfull
 	NSString *baseURL = [appModel getURLStringForModule:moduleName];
 	NSString *URLparams = @"&event=deleteAllItems";
@@ -102,7 +105,7 @@
 	[alert show];
 	[result release];
 	[alert release];
-
+	 */
 }
 
 
@@ -140,7 +143,7 @@
 	
 	if (tableView == locationTable) {
 		Location *selectedLocation = [locationTableData objectAtIndex:[indexPath row]];
-		NSLog([NSString stringWithFormat:@"Location Selected. Forcing appModel to Latitude: %1.2f Longitude: %1.2f", selectedLocation.location.coordinate.latitude, selectedLocation.location.coordinate.longitude]);
+		NSLog([NSString stringWithFormat:@"DeveloperViewController: Location Selected. Forcing appModel to Latitude: %1.2f Longitude: %1.2f", selectedLocation.location.coordinate.latitude, selectedLocation.location.coordinate.longitude]);
 		appModel.playerLocation = [selectedLocation.location copy];
 		[appModel updateServerLocationAndfetchNearbyLocationList];
 	}
@@ -156,7 +159,6 @@
 
 - (void)dealloc {
 	[appModel release];
-	[moduleName release];
     [super dealloc];
 }
 

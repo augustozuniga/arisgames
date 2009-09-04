@@ -20,7 +20,6 @@
 @implementation GPSViewController
 
 @synthesize mapView;
-@synthesize moduleName;
 @synthesize autoCenter;
 
 //Override init for passing title and icon to tab bar
@@ -30,18 +29,28 @@
     if (self) {
         self.title = @"GPS";
         self.tabBarItem.image = [UIImage imageNamed:@"GPS.png"];
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
+		
+		autoCenter = YES;
+
 		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
 												   initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
 												   target:self 
-												   action:@selector(refresh:)] autorelease];
+												   action:@selector(refreshButtonAction:)] autorelease];
 		
 		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] 
 												  initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
 												  target:self 
 												  action:@selector(changeMapType:)] autorelease];
+		
+		//register for notifications
+		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
+		[dispatcher addObserver:self selector:@selector(refresh) name:@"PlayerMoved" object:nil];
+		[dispatcher addObserver:self selector:@selector(refreshViewFromModel) name:@"ReceivedLocationList" object:nil];
+		
+		
 	}
 	
-	autoCenter = YES;
     return self;
 }
 		
@@ -59,9 +68,9 @@
 	}
 }
 
-- (IBAction)refresh: (id) sender{
+- (IBAction)refreshButtonAction: (id) sender{
 
-	NSLog(@"GPS: Refresh Button Touched");
+	NSLog(@"GPSViewController: Refresh Button Touched");
 	
 	//Center the Map
 	[mapView setCenterCoordinate:appModel.playerLocation.coordinate animated:YES];
@@ -72,7 +81,7 @@
 	[appDelegate.myCLController.locationManager startUpdatingLocation];
 
 	//Rerfresh all contents
-	[self refreshMap];
+	[self refresh];
 	
 	//Zoom and Center
 	[self zoomAndCenterMap];
@@ -82,17 +91,8 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	moduleName = @"RESTMap";
 	
 	NSLog(@"Begin Loading GPS View");
-	
-	//register for notifications
-	NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
-	[dispatcher addObserver:self selector:@selector(refreshMap) name:@"PlayerMoved" object:nil];
-	[dispatcher addObserver:self selector:@selector(refreshMarkers) name:@"ReceivedLocationList" object:nil];
-	
-	NSLog(@"GPS ViewController is GPS observer");
-
 
 	//Setup the Map
 	CGFloat tableViewHeight = 416; // todo: get this from const
@@ -102,7 +102,7 @@
 							CGRectGetMinY(mainViewBounds),
 							CGRectGetWidth(mainViewBounds),
 							tableViewHeight);
-	NSLog(@"Mapview about to be inited.");
+	NSLog(@"GPSViewController: Mapview about to be inited.");
 	mapView = [[MKMapView alloc] initWithFrame:tableFrame];
 	MKCoordinateRegion region = mapView.region;
 	region.span.latitudeDelta=0.001;
@@ -110,66 +110,27 @@
 	[mapView setRegion:region animated:NO];
 	[mapView regionThatFits:region];
 	[mapView setDelegate:self]; //View will request annotation views from us
-	
-	//mapView = [[RMMapView alloc] initWithFrame:tableFrame];
-	
-	NSLog(@"Mapview inited.");
-    
 	[self.view addSubview:mapView];
-
-//	CGRect buttonFrame = self.view.bounds;
-//	buttonFrame.size.width = 100;
-//	buttonFrame.size.height = 60;
-//	buttonFrame.origin.x -=70.0;
-//	buttonFrame.origin.y -=70.0;
-//	UIButton *mapTypeButton = [[UIButton alloc] initWithFrame:buttonFrame];
-//	[
-//	[self.view addSubview:mapTypeButton];
-	
-	//markerManager = [mapView markerManager];
-	
-	//Set up the Player Marker and Center the Map on them
-	//Since we arn't ABSOLUTLY sure we have a valid playerLocation in the Model, make a fake one and let CLCController update later
-	
+	NSLog(@"GPSViewController: Mapview inited and added to view");
 	
 	CLLocationCoordinate2D playerPosition;
 	playerMarker = [[PlayerAnnotation alloc] initWithCoordinate:playerPosition];
 	playerMarker.title = @"You";
 	[mapView addAnnotation:playerMarker];
 
-	
-	
-//	[markerManager addMarker:playerMarker AtLatLong:playerPosition];
-	
-	NSLog(@"GPS View Loaded");
+	[self refresh];		
+
+	NSLog(@"GPSViewController: View Loaded");
 }
-
-
-
-
-
--(void) setModel:(AppModel *)model {
-	if(appModel != model) {
-		[appModel release];
-		appModel = model;
-		[appModel retain];
-	}
-	NSLog(@"model set for GPS");
-	
-	[self refreshMap];
-}
-
-
-
 
 // Updates the map to current data for player and locations from the server
-- (void) refreshMap {
-	NSLog(@"GPS refreshMap requested");	
+- (void) refresh {
+	NSLog(@"GPSViewController: refresh requested");	
+	
 	//Move the player marker
 	[self refreshPlayerMarker];
-		
-	//Ask for the Locations to be loaded into the model, which will trigger a notification to refreshMarkers here
-	//[NSThread detachNewThreadSelector: @selector(fetchLocationList) toTarget:appModel withObject: nil];	
+
+	//Update the locations
 	[appModel fetchLocationList];
 
 }
@@ -189,20 +150,10 @@
 	//Move the player marker
 	playerMarker.coordinate = appModel.playerLocation.coordinate;
 	[self zoomAndCenterMap];
-	
-	//[markerManager moveMarker:playerMarker AtLatLon: appModel.lastLocation.coordinate];
-	
-//	if (appModel.lastLocation.horizontalAccuracy > 0 && appModel.lastLocation.horizontalAccuracy < 100)
-//		[playerMarker replaceImage:[RMMarker loadPNGFromBundle:@"marker-player"] anchorPoint:CGPointMake(.5, .6)];
-//	else [playerMarker replaceImage:[RMMarker loadPNGFromBundle:@"marker-player-lqgps"] anchorPoint:CGPointMake(.5, .6)];
-
-//	//Center the first time
-//	if (autoCenter == YES) [self zoomAndCenterMap];
-//	autoCenter = NO;
 }
 
-- (void)refreshMarkers {
-	NSLog(@"Refreshing Map Markers");
+- (void)refreshViewFromModel {
+	NSLog(@"GPSViewController: Refreshing view from model");
 	
 	//Blow away the old markers
 	[mapView removeAnnotations:[mapView annotations]];
@@ -212,7 +163,7 @@
 	
 	//Add the freshly loaded locations from the notification
 	for ( Location* location in appModel.locationList ) {
-		NSLog(@"Location name:%@ id:%d", location.name, location.locationId);
+		NSLog(@"GPSViewController: Adding location name:%@ id:%d", location.name, location.locationId);
 		if (location.hidden == YES) continue;
 		CLLocationCoordinate2D locationLatLong = location.location.coordinate;
 		
@@ -229,12 +180,7 @@
 	for ( Player *player in appModel.playerList ) {
 		if (player.hidden == YES) continue;
 		CLLocationCoordinate2D locationLatLong = player.location.coordinate;
-		
-		
-		//RMMarker *marker = [[RMMarker alloc]initWithCGImage:[RMMarker loadPNGFromBundle:@"marker-other-player"]];
-//		[marker setTextLabel:player.name];
-//		[markerManager addMarker:marker AtLatLong:locationLatLong];
-//		[marker release];
+
 		PlayerAnnotation *aPlayer = [[PlayerAnnotation alloc]initWithCoordinate:locationLatLong];
 		aPlayer.title = player.name;
 		[mapView addAnnotation:aPlayer];
@@ -250,7 +196,6 @@
 
 - (void)dealloc {
 	[appModel release];
-	[moduleName release];
     [super dealloc];
 }
 

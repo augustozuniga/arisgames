@@ -200,7 +200,7 @@ static NSString *locationsLock = @"locationsLock";
 - (void)fetchLocationList {
 	@synchronized (nearbyLock) {
 	
-		NSLog(@"Fetching All Locations.");	
+		NSLog(@"AppModel: Fetching Locations from Server");	
 		
 		//init location list array
 		if(locationList != nil) {
@@ -254,9 +254,9 @@ static NSString *locationsLock = @"locationsLock";
 		
 		//Tell everyone
 		NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
-		NSLog(@"GameListParser: Finished Building the Game List");
+		NSLog(@"AppModel: Finished fetching locations from server");
 		NSNotification *notification = 
-				[NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
+				[NSNotification notificationWithName:@"ReceivedLocationList" object:self userInfo:dictionary];
 		[[NSNotificationCenter defaultCenter] postNotification:notification];
 		
 	}

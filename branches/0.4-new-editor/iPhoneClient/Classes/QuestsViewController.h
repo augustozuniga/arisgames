@@ -13,15 +13,14 @@
 
 @interface QuestsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate> {
 	AppModel *appModel;
-	NSMutableArray *allQuests;
+	NSMutableArray *quests;
 	IBOutlet UITableView *tableView;
 
 }
 
-@property(copy, readwrite) AppModel *appModel;
-@property(copy, readwrite) NSMutableArray *allQuests;
 @property(nonatomic, retain) IBOutlet UITableView *tableView;
 
+- (void)refresh;
 
 
 @end

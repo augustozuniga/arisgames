@@ -15,10 +15,7 @@
 	AppModel *appModel;	
 }
 
--(void) setModel:(AppModel *)model;
 -(void) setURL:(NSString*)urlString;
-
-
 
 @property (nonatomic, retain) IBOutlet UIWebView *webview;
 

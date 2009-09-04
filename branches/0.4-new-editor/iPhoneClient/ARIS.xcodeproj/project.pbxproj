@@ -100,8 +100,6 @@
 		28AD73880D9D96C1002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD73870D9D96C1002E5188 /* MainWindow.xib */; };
 		2B3D11AD0F4361380067FD3A /* Login.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D11AC0F4361380067FD3A /* Login.xib */; };
 		2B3D11B10F4361940067FD3A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D11B00F4361940067FD3A /* LoginViewController.m */; };
-		2B3D12BF0F4377A60067FD3A /* IMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D12BE0F4377A60067FD3A /* IMViewController.m */; };
-		2B3D12C20F4377E50067FD3A /* IM.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D12C10F4377E50067FD3A /* IM.xib */; };
 		2B3D12CE0F437AC60067FD3A /* QuestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */; };
 		2B3D12D00F437AF90067FD3A /* Quests.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B3D12CF0F437AF90067FD3A /* Quests.xib */; };
 		2B3D12D90F437D6E0067FD3A /* InventoryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */; };
@@ -154,7 +152,6 @@
 		A7E39FB60F5F930E00826198 /* Inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAB0F5F930E00826198 /* Inventory.png */; };
 		A7E39FB80F5F930E00826198 /* Logout.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FAD0F5F930E00826198 /* Logout.png */; };
 		A7E39FBE0F5F930E00826198 /* Quest.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FB30F5F930E00826198 /* Quest.png */; };
-		A7E39FCA0F60456200826198 /* IM.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FC90F60456200826198 /* IM.png */; };
 		A7E39FDB0F61759700826198 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FD90F61759700826198 /* camera.png */; };
 		A7E39FDC0F61759700826198 /* Game.png in Resources */ = {isa = PBXBuildFile; fileRef = A7E39FDA0F61759700826198 /* Game.png */; };
 		A7E4C88C0F54C4D000C6D9E8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E4C88B0F54C4D000C6D9E8 /* QuartzCore.framework */; };
@@ -308,9 +305,6 @@
 		2B3D11AC0F4361380067FD3A /* Login.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login.xib; sourceTree = "<group>"; };
 		2B3D11AF0F4361940067FD3A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Classes/LoginViewController.h; sourceTree = "<group>"; };
 		2B3D11B00F4361940067FD3A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Classes/LoginViewController.m; sourceTree = "<group>"; };
-		2B3D12BD0F4377A60067FD3A /* IMViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IMViewController.h; path = Classes/IMViewController.h; sourceTree = "<group>"; };
-		2B3D12BE0F4377A60067FD3A /* IMViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IMViewController.m; path = Classes/IMViewController.m; sourceTree = "<group>"; };
-		2B3D12C10F4377E50067FD3A /* IM.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IM.xib; sourceTree = "<group>"; };
 		2B3D12CC0F437AC60067FD3A /* QuestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestsViewController.h; path = Classes/QuestsViewController.h; sourceTree = "<group>"; };
 		2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestsViewController.m; path = Classes/QuestsViewController.m; sourceTree = "<group>"; };
 		2B3D12CF0F437AF90067FD3A /* Quests.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Quests.xib; sourceTree = "<group>"; };
@@ -387,7 +381,6 @@
 		A7E39FAB0F5F930E00826198 /* Inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Inventory.png; path = images/Inventory.png; sourceTree = "<group>"; };
 		A7E39FAD0F5F930E00826198 /* Logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logout.png; path = images/Logout.png; sourceTree = "<group>"; };
 		A7E39FB30F5F930E00826198 /* Quest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Quest.png; path = images/Quest.png; sourceTree = "<group>"; };
-		A7E39FC90F60456200826198 /* IM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IM.png; path = images/IM.png; sourceTree = "<group>"; };
 		A7E39FD90F61759700826198 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = camera.png; path = images/camera.png; sourceTree = "<group>"; };
 		A7E39FDA0F61759700826198 /* Game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Game.png; path = images/Game.png; sourceTree = "<group>"; };
 		A7E4C88B0F54C4D000C6D9E8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -631,7 +624,6 @@
 				A7986D660F8FEC2100A5469F /* Inventory */,
 				A7986D690F8FEC6300A5469F /* Camera */,
 				A7986D620F8FEBD300A5469F /* QR Scanner */,
-				A7986D630F8FEBEB00A5469F /* IM */,
 				A7986D640F8FEBFA00A5469F /* Game Picker */,
 				A7986D670F8FEC3900A5469F /* Logout */,
 				A7986D610F8FEBB200A5469F /* Developer */,
@@ -734,17 +726,6 @@
 				A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */,
 			);
 			name = "QR Scanner";
-			sourceTree = "<group>";
-		};
-		A7986D630F8FEBEB00A5469F /* IM */ = {
-			isa = PBXGroup;
-			children = (
-				A7E39FC90F60456200826198 /* IM.png */,
-				2B3D12BD0F4377A60067FD3A /* IMViewController.h */,
-				2B3D12BE0F4377A60067FD3A /* IMViewController.m */,
-				2B3D12C10F4377E50067FD3A /* IM.xib */,
-			);
-			name = IM;
 			sourceTree = "<group>";
 		};
 		A7986D640F8FEBFA00A5469F /* Game Picker */ = {
@@ -1011,7 +992,6 @@
 			files = (
 				28AD73880D9D96C1002E5188 /* MainWindow.xib in Resources */,
 				2B3D11AD0F4361380067FD3A /* Login.xib in Resources */,
-				2B3D12C20F4377E50067FD3A /* IM.xib in Resources */,
 				2B3D12D00F437AF90067FD3A /* Quests.xib in Resources */,
 				2B3D12DB0F437E690067FD3A /* InventoryList.xib in Resources */,
 				2B3D12EE0F4382A00067FD3A /* Logout.xib in Resources */,
@@ -1025,7 +1005,6 @@
 				A7E39FB60F5F930E00826198 /* Inventory.png in Resources */,
 				A7E39FB80F5F930E00826198 /* Logout.png in Resources */,
 				A7E39FBE0F5F930E00826198 /* Quest.png in Resources */,
-				A7E39FCA0F60456200826198 /* IM.png in Resources */,
 				A7E39FDB0F61759700826198 /* camera.png in Resources */,
 				A7E39FDC0F61759700826198 /* Game.png in Resources */,
 				A7F0EE3F0F71CFEF008F7BAD /* GenericWebView.xib in Resources */,
@@ -1070,7 +1049,6 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* ARISAppDelegate.m in Sources */,
 				2B3D11B10F4361940067FD3A /* LoginViewController.m in Sources */,
-				2B3D12BF0F4377A60067FD3A /* IMViewController.m in Sources */,
 				2B3D12CE0F437AC60067FD3A /* QuestsViewController.m in Sources */,
 				2B3D12D90F437D6E0067FD3A /* InventoryListViewController.m in Sources */,
 				2B3D12EC0F4382070067FD3A /* LogoutViewController.m in Sources */,

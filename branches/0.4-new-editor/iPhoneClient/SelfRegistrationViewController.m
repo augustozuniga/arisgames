@@ -7,11 +7,12 @@
 //
 
 #import "SelfRegistrationViewController.h"
+#import "ARISAppDelegate.h"
+#import "AppModel.h"
 
 
 @implementation SelfRegistrationViewController
 
-@synthesize moduleName;
 @synthesize scrollView;
 @synthesize entryFields;
 @synthesize userName;
@@ -27,28 +28,20 @@
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
         self.title = @"Create a New User";
-		self.moduleName = @"RESTLogin";
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
+
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardNotification:)  name:UIKeyboardWillShowNotification object:nil];  
-    }
+    
+	}
+	
     return self;
 }
 
 
--(void) setModel:(AppModel *)model {
-	if(appModel != model) {
-		[appModel release];
-		appModel = model;
-		[appModel retain];
-	}
-	NSLog(@"Self Registration: Model Set");
+- (void)viewDidLoad {
+	[super viewDidLoad];
 }
-
-/*
- // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
- - (void)viewDidLoad {
- [super viewDidLoad];
- }
- */
+ 
 
 - (IBAction)submitButtonTouched: (id) sender{
 	[self submitRegistration];
@@ -60,6 +53,7 @@
 
 -(void)submitRegistration {
 	//Check with the Server
+	/*
 	NSString *newUserURLString = [[NSString alloc] initWithFormat:@"?module=%@&event=selfRegistration&site=%@&user_name=%@&password=%@&first_name=%@&last_name=%@&email=%@",
 								  moduleName, appModel.site, self.userName.text, self.password.text, self.firstName.text, self.lastName.text, self.email.text];
 	//NSLog(@"SelfRegistration: Module String = %@",newUserModuleString);
@@ -85,7 +79,7 @@
 		[alert release];
 		
 	}
-	
+	*/
 }
 
 - (void)scrollViewToCenterOfScreen:(UIView *)theView {  
@@ -166,7 +160,6 @@
 
 - (void)dealloc {
 	[appModel release];
-	[moduleName release];
     [super dealloc];
 }
 

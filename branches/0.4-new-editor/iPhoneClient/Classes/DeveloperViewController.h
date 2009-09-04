@@ -11,7 +11,6 @@
 #import "Location.h";
 
 @interface DeveloperViewController : UIViewController {
-	NSString *moduleName;
 	AppModel *appModel;	
 	
 	UITableView *locationTable;
@@ -21,9 +20,6 @@
 	UILabel *accuracyLabelValue;
 }
 
--(void) setModel:(AppModel *)model;
-
-@property(copy, readwrite) NSString *moduleName;
 @property(nonatomic, retain) IBOutlet UITableView *locationTable;
 @property(nonatomic, retain) IBOutlet NSMutableArray *locationTableData;
 @property(nonatomic, retain) IBOutlet UIButton *clearEventsButton;

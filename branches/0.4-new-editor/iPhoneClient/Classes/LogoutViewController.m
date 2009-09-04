@@ -11,7 +11,6 @@
 
 @implementation LogoutViewController
 
-@synthesize moduleName;
 
 //Override init for passing title and icon to tab bar
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
@@ -36,9 +35,6 @@
 	
 	NSNotification *logoutRequestNotification = [NSNotification notificationWithName:@"LogoutRequested" object:self];
 	[[NSNotificationCenter defaultCenter] postNotification:logoutRequestNotification];
-
-	
-	
 }
 
 
@@ -49,7 +45,6 @@
 
 
 - (void)dealloc {
-	[moduleName release];
     [super dealloc];
 }
 

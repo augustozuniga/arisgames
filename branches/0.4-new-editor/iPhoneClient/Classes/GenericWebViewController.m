@@ -20,17 +20,17 @@
 	//Show waiting Indicator in own thread so it appears on time
 	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
+
+	appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 	
-	
-	webview.delegate = self;
-	
+	webview.delegate = self;	
 	webview.hidden = YES;
 	[webview loadRequest:request];
 	
-	NSLog(@"Generic Web Controller is Now Loading the URL in ViewDidLoad");
-	NSLog(@"GenericWebView loaded");
+	NSLog(@"GenericWebViewController: is Now Loading the URL in ViewDidLoad");
+	NSLog(@"GenericWebViewController: view loaded");
 	
-	 [super viewDidLoad];
+	[super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -44,22 +44,14 @@
 	//Show waiting Indicator in own thread so it appears on time
 	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
-
+	/*
 	request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
 	webview.hidden = YES;
 	[webview loadRequest:request];
 	NSLog(@"Generic Web Controller is Now Loading: %@",urlString);
+	 */
 }
 
--(void) setModel:(AppModel *)model{
-	if(appModel != model) {
-		[appModel release];
-		appModel = model;
-		[appModel retain];
-	}
-	
-	NSLog(@"model set for GenericWebViewController");
-}
 
 - (void)dealloc {
 	[appModel release];

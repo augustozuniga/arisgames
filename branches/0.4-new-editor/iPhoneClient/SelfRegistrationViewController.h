@@ -24,7 +24,6 @@
 	
 }
 
-@property(copy, readwrite) NSString *moduleName;
 @property (nonatomic, retain) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, retain) NSMutableArray *entryFields;
 @property (nonatomic, retain) IBOutlet UITextField *userName;
@@ -34,7 +33,6 @@
 @property (nonatomic, retain) IBOutlet UITextField *email;
 
 
--(void) setModel:(AppModel *)model;
 -(IBAction)submitButtonTouched: (id) sender;
 -(IBAction)cancelButtonTouched: (id) sender;
 -(void)submitRegistration;

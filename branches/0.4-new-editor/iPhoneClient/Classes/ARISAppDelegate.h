@@ -24,7 +24,6 @@
 #import "InventoryListViewController.h"
 #import "CameraViewController.h"
 #import "QRScannerViewController.h"
-#import "IMViewController.h"
 #import "GamePickerViewController.h"
 #import "LogoutViewController.h"
 #import "DeveloperViewController.h"

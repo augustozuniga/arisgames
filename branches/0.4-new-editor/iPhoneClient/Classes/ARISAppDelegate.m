@@ -74,11 +74,6 @@
 	QRScannerViewController *qrScannerViewController = [[[QRScannerViewController alloc] initWithNibName:@"QRScanner" bundle:nil] autorelease];
 	UINavigationController *qrScannerNavigationController = [[UINavigationController alloc] initWithRootViewController: qrScannerViewController];
 	qrScannerNavigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
-
-	//IM View
-	IMViewController *imViewController = [[[IMViewController alloc] initWithNibName:@"IM" bundle:nil] autorelease];
-	UINavigationController *imNavigationController = [[UINavigationController alloc] initWithRootViewController: imViewController];
-	imNavigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	
 	//Logout View
 	LogoutViewController *logoutViewController = [[[LogoutViewController alloc] initWithNibName:@"Logout" bundle:nil] autorelease];
@@ -266,19 +261,6 @@
 	//Display the tabBar (and it's content)
 	tabBarController.view.hidden = NO;
 	
-	//Get the visible view controller and make sure it's model has been set
-	UIViewController *viewController = [tabBarController selectedViewController];
-	UIViewController *visibleViewController;
-	if ([viewController isKindOfClass:[UINavigationController class]]) {
-		UINavigationController *navigationController = (UINavigationController*) viewController;
-		visibleViewController = [navigationController visibleViewController];
-		//[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
-	}
-	else {
-		visibleViewController = viewController;
-		//[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
-	}
-	[appModel updateServerLocationAndfetchNearbyLocationList];
 }
 
 - (void)setGameList:(NSNotification *)notification {
@@ -323,9 +305,11 @@
 		visibleViewController = viewController;
 	}
 	
+	NSLog(@"AppDelegate: %@ selected",[visibleViewController title]);
+	
 	//Use setModel to refresh the content
-	if([visibleViewController respondsToSelector:@selector(setModel:)]) {
-		[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
+	if([visibleViewController respondsToSelector:@selector(refresh)]) {
+		[visibleViewController performSelector:@selector(refresh) withObject:nil];
 	}
 	
 	//Hides the existing Controller

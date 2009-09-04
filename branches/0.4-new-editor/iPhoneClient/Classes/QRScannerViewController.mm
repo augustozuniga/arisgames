@@ -10,11 +10,11 @@
 #import "Decoder.h"
 #import "TwoDDecoderResult.h"
 #import "ARISAppDelegate.h"
+#import "AppModel.h"
 
 
 @implementation QRScannerViewController 
 
-@synthesize moduleName;
 @synthesize imagePickerController;
 @synthesize scanButton;
 @synthesize manualCode;
@@ -26,6 +26,7 @@
     if (self) {
         self.title = @"Scanner";
         self.tabBarItem.image = [UIImage imageNamed:@"QRScanner.png"];
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
     }
     return self;
 }
@@ -34,27 +35,16 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
-	moduleName = @"RESTQRScanner";
-	
-	
+		
 	self.imagePickerController = [[UIImagePickerController alloc] init];
 	self.imagePickerController.allowsImageEditing = YES;
 	self.imagePickerController.delegate = self;
 	
-	NSLog(@"QRScannerViewController Loaded");
-}
-
--(void) setModel:(AppModel *)model {
-	if(appModel != model) {
-		[appModel release];
-		appModel = model;
-		[appModel retain];
-	}	
-	NSLog(@"model set for QRScannerViewController");
+	NSLog(@"QRScannerViewController: Loaded");
 }
 
 - (IBAction)scanButtonTouchAction: (id) sender{
-	NSLog(@"Scan Button Pressed");
+	NSLog(@"QRScannerViewController: Scan Button Pressed");
 	
 	self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
 	[self presentModalViewController:self.imagePickerController animated:YES];
@@ -62,7 +52,7 @@
 }
 
 - (IBAction)codeEnteredAction: (id) sender{
-	NSLog(@"Code Entered");
+	NSLog(@"QRScannerViewController: Code Entered");
 	[self loadResult:manualCode.text];
 }
 
@@ -101,12 +91,13 @@
 
 	//we are done with the scanner, so release it
 	[decoder release];
-	NSLog(@"QR Scanner: Decode Complete. QR Code ID = %@", result);
+	NSLog(@"QRScannerViewController: Decode Complete. QR Code ID = %@", result);
 	
 	[self loadResult:result];
 }	
 
 -(void) loadResult:(NSString *)result {
+	/*
 	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
 	//Start Waiting Indicator
 	[appDelegate showWaitingIndicator:@"Loading Content..."];
@@ -128,6 +119,7 @@
 	[parser setShouldResolveExternalEntities:NO];
 	[parser parse];
 	[parser release];
+	 */
 }
 
 - (void)decoder:(Decoder *)decoder decodingImage:(UIImage *)image usingSubset:(UIImage *)subset progress:(NSString *)message {
