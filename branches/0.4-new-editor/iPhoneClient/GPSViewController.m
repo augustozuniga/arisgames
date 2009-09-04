@@ -39,7 +39,8 @@
 												   action:@selector(refreshButtonAction:)] autorelease];
 		
 		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] 
-												  initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+												  initWithTitle: @"Map Type"
+												  style: UIBarButtonItemStylePlain
 												  target:self 
 												  action:@selector(changeMapType:)] autorelease];
 		

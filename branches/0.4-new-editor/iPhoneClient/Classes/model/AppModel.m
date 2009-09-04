@@ -93,7 +93,7 @@ static NSString *locationsLock = @"locationsLock";
 	
 	
 	self.jsonServerBaseURL = [NSString stringWithFormat:@"%@%@",
-						 baseAppURL, @"../editor/server/json.php/aris"];
+						 baseAppURL, @"json.php/aris"];
 	
 	NSLog(@"AppModel: jsonServerURL is %@",jsonServerBaseURL);
 }
@@ -406,19 +406,19 @@ static NSString *locationsLock = @"locationsLock";
 	NSString *text;
 	NodeOption *option;
 	
-	if ([nodeDictionary valueForKey:@"opt1_node_id"] != [NSNull null]) {
+	if ([nodeDictionary valueForKey:@"opt1_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt1_node_id"] intValue] > 0) {
 		optionNodeId= [[nodeDictionary valueForKey:@"opt1_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt1_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[node addOption:option];
 	}
-	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null]) {
+	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt2_node_id"] intValue] > 0) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt2_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[node addOption:option];
 	}
-	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null]) {
+	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt3_node_id"] intValue] > 0) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt3_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt3_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
@@ -491,7 +491,7 @@ static NSString *locationsLock = @"locationsLock";
 	
 	if (!jsonResult) {
 		NSLog(@"AppModel fetchQuestList: No result Data, return");
-		return nil;
+		return;
 	}		
 	
 	//Build the questList
