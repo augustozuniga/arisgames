@@ -192,7 +192,7 @@ class Games extends Module
 			  require_answer_incorrect_node_id int(11) unsigned default NULL,
 			  require_answer_string varchar(50) default NULL,
 			  require_answer_correct_node_id int(10) unsigned default NULL,
-			  media varchar(25),
+			  media varchar(50),
 			  PRIMARY KEY  (node_id)
 			)";
 		@mysql_query($query);
@@ -214,7 +214,7 @@ class Games extends Module
 			`name` varchar(30) NOT NULL default '',
 			description tinytext,
 			`text` tinytext,
-			media varchar(30) default NULL,
+			media varchar(50) default NULL,
 			PRIMARY KEY  (npc_id)
 			)";
 		@mysql_query($query);

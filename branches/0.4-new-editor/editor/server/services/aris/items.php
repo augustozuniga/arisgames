@@ -49,7 +49,7 @@ class Items extends Module
 		$inventory = array();
     		while ($row = mysql_fetch_array($rsResult)) {
     			//Add the full path to media
-    			$row['media'] = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $row['media'];
+    			$row['media'] = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . $row['media'];
     			//Determine the icon
     			$iconType = $this->getMediaType($row['media']);
     			switch ($iconType) {
@@ -63,7 +63,7 @@ class Items extends Module
     					$row['icon'] = 'defaultVideoIcon.png';
     					break;
     			}
-    			$row['icon'] = Config::engineWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . '/' . $row['icon'];
+    			$row['icon'] = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . $row['icon'];
 
     			$inventory[] = $row;
     		}
