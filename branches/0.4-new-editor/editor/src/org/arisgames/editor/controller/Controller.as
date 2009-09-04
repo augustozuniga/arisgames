@@ -12,6 +12,7 @@ package org.arisgames.editor.controller
 	import org.arisgames.editor.model.GameObjectReference;
 	import org.arisgames.editor.model.Generator;
 	import org.arisgames.editor.model.Model;
+	import org.arisgames.editor.model.PlayerModification;
 	import org.arisgames.editor.model.Requirement;
 	import org.arisgames.editor.view.IObjectNavigator;
 	import org.arisgames.editor.view.View;
@@ -45,9 +46,38 @@ package org.arisgames.editor.controller
 			generalizedDragEnterHandler(event, true, [GameObjectReference.PAGE]);
 		}
 		
+		public function onDeleteGameButtonClick(event:Event):void
+		{
+			currentModel.deleteGame(currentView.getSelectedGame());
+		}
+		
 		public function onDestroyableCheckBoxChange(event:Event):void
 		{
 			currentModel.updateDestroyable(currentView.getDestroyable());
+		}
+		
+		public function onDiscardCanvasDragDrop(event:DragEvent):void
+		{
+			if(event.dragInitiator is IObjectNavigator)
+			{
+				currentModel.deleteGameObject(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);				
+			}
+			else
+			{
+				var obj:Object = event.dragSource.dataForFormat("items")[0];
+				if(obj is Choice)
+				{
+					currentModel.removeChoice(obj as Choice);
+				}
+				else if(obj is Requirement)
+				{
+					currentModel.removeRequirement(obj as Requirement);
+				}
+				else if(obj is PlayerModification)
+				{
+					currentModel.removePlayerModification(obj as PlayerModification);
+				}
+			}
 		}
 		
 		public function onDiscardCanvasDragEnter(event:DragEvent):void
@@ -72,26 +102,6 @@ package org.arisgames.editor.controller
 			else
 			{
 				Alert.show("data formats are: " + event.dragSource.formats[0].toString());
-			}
-		}
-		
-		public function onDiscardCanvasDragDrop(event:DragEvent):void
-		{
-			if(event.dragInitiator is IObjectNavigator)
-			{
-				currentModel.deleteGameObject(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);				
-			}
-			else
-			{
-				var obj:Object = event.dragSource.dataForFormat("items")[0];
-				if(obj is Choice)
-				{
-					currentModel.removeChoice(obj as Choice);
-				}
-				else if(obj is Requirement)
-				{
-					currentModel.removeRequirement(obj as Requirement);
-				}
 			}
 		}
 		

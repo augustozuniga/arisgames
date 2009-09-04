@@ -273,6 +273,11 @@
 				}
 			}
 			
+			public function deleteGame(ref:GameReference):void
+			{
+				games.deleteGame.send(ref.getID());
+			}
+			
 			public function deleteGameObject(ref:GameObjectReference):void
 			{
 				var type:String = ref.getType();
@@ -359,8 +364,20 @@
 				}
 			}
 			
-			public function removeRequirement(req:Requirement):void
+			public function removePlayerModification(mod:PlayerModification):void
 			{
+				if(currentGameObject is Item)
+				{
+					(currentGameObject as Item).removePlayerModification(mod);
+				}
+				else if(currentGameObject is Page)
+				{
+					(currentGameObject as Page).removePlayerModification(mod);
+				}
+			}
+			
+			public function removeRequirement(req:Requirement):void
+			{// note that Quest overrides the following method to remove from the appropriate group (requirements or objectives)
 				currentGameObject.removeRequirement(req);
 			}
 			

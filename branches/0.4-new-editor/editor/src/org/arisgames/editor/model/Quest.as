@@ -105,6 +105,18 @@ package org.arisgames.editor.model
 			objectivesArrayCollection.itemUpdated(objectives);
 		}
 		
+		override public function removeRequirement(req:Requirement):void
+		{
+			if(objectives.indexOf(req) < 0)
+			{
+				super.removeRequirement(req);
+			}
+			else
+			{
+				removeObjective(req);
+			}
+		}
+		
 		public function setCompletedDescription(newText:String):void
 		{
 			completedDescription = newText;

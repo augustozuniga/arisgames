@@ -114,6 +114,10 @@
 			buttonLabel="Modify Game"
 			buttonClick="{currentController.onEditGameButtonClick}"
 			annotation="Edit the selected game on the left."/>
+		<view:AnnotatedButton id="deleteGameButton"
+			buttonLabel="Delete Game"
+			buttonClick="{currentController.onDeleteGameButtonClick}"
+			annotation="Delete the selected game on the left."/>
 	</view:SmartVBox>
 
 </mx:HBox>
