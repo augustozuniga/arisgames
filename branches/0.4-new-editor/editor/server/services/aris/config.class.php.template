@@ -7,9 +7,11 @@ class Config
 	const dbSchema 				= 'aris';
 	const dbHost 				= 'localhost';
 	
-	const engineSitesPath		= '/Users/davidgagnon/Sites/engine/Framework/Site';
-	const engineWWWPath			= 'http://davembp.local/engine/Framework/Site';
-	const engineDefaultSite		= 'Default';
+	const gamedataFSPath		= '/Users/djgagnon/Sites/editor/server';
+	const gamedataWWWPath		= 'http://davembp.local/editor/server';
+	const defaultGameName		= 'default';
+	const gameMediaSubdir		= '';
+
 	const mysqlBinPath			= '/Applications/MAMP/Library/bin';
 }
 

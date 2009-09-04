@@ -20,7 +20,7 @@ abstract class Module
      * Fetch the prefix of a game
      * @returns a prefix string without the trailing _
      */
-	protected function getPrefix($intGameID) {
+	public function getPrefix($intGameID) {
 		//Lookup game information
 		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
 		$rsResult = @mysql_query($query);

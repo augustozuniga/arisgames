@@ -20,8 +20,9 @@ class Players extends Module
 		$rs = @mysql_query($query);
 		if (mysql_num_rows($rs) < 1) return new returnData(4, NULL, 'bad username or password');
 		
-		$editor = @mysql_fetch_array($rs);
-		return new returnData(0, intval($editor['player_id']));
+		$player = @mysql_fetch_object($rs);
+				
+		return new returnData(0, intval($player->player_id));
 	}
 		
 
@@ -31,11 +32,8 @@ class Players extends Module
      */
 	public function getPlayersForGame($intGameID)
 	{
-		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(1, NULL, "invalid game id");
-		
 		$query = "SELECT player_id, user_name, latitude, longitude FROM players 
-				WHERE site = '{$prefix}'";
+				WHERE last_game_id = '{$intGameID}'";
 		
 		//NetDebug::trace($query);
 

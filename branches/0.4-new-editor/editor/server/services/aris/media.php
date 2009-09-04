@@ -78,6 +78,7 @@ class Media extends Module
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
+		NetDebug::trace("Filename: $strFileName");	
             	
 		$query = "INSERT INTO {$prefix}_media 
 					(media)
@@ -154,14 +155,14 @@ class Media extends Module
 	* @returns path to the media directory on the file system
 	*/
 	public function getMediaDirectory($prefix){
-		return new returnData(0, Config::engineSitesPath . "/{$prefix}/" . Config::gameMediaSubdir);
+		return new returnData(0, Config::gamedataFSPath . "/{$prefix}/" . Config::gameMediaSubdir);
 	}
 	
 	/**
 	* @returns path to the media directory URL
 	*/
 	public function getMediaDirectoryURL($prefix){
-		return new returnData(0, Config::engineWWWPath . "/{$prefix}/". Config::gameMediaSubdir);
+		return new returnData(0, Config::gamedataFSPath . "/{$prefix}/". Config::gameMediaSubdir);
 	}	
 
 	

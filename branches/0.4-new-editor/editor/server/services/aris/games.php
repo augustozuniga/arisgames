@@ -94,79 +94,12 @@ class Games extends Module
 	
 
 		//Copy the default site to the new name	
-		$from = Config::engineSitesPath . '/' . Config::engineDefaultSite;
-		$to = Config::engineSitesPath . "/{$strShortName}";
+		$from = Config::gamedataFSPath . '/' . Config::defaultGameName;
+		$to = Config::gamedataFSPath . "/{$strShortName}";
 		$command = "cp -R -v -n $from $to";
 		NetDebug::trace($command);
 		exec($command, $output, $return);
 		if ($return) return new returnData(5, NULL, 'cannot copy default site');
-
-	
-		
-		//Build XML file
-		$defaultConfigFile = Config::engineSitesPath . '/' . Config::engineDefaultSite . '/config.xml';
-		if (!$defaultConfigHandle = fopen($defaultConfigFile, 'r'))  return new returnData(5, NULL, 'cannot open default config file'); 
-		$defaultConfigContent = fread($defaultConfigHandle, filesize($defaultConfigFile));
-		//$defaultConfigContent = str_replace("%tablePrefix%", $new_game_short . "_", $defaultConfigContent);
-		fclose($defaultConfigHandle);
-
-
-
-		$xmlFile = Config::engineSitesPath . "/{$strShortName}/config.xml";
-		if(!$file_handle = fopen($xmlFile, 'w'))   return new returnData(5, NULL, 'cannot create XML file');
-		fwrite($file_handle, $defaultConfigContent);
-		fclose($file_handle);
-		
-		//Build PHP file
-		$file_data = 
-		"<?php
-	
-		/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-		/**
-		* Framework_Site_Aris
-		*
-		* Framework allows you to run multiple sites with multiple templates and
-		* modules. Each site needs it's own site driver. You can use this to house
-		* centrally located/needed information and such.
-		*
-		* @author      Kevin Harris <klharris2@wisc.edu>
-		* @author      David Gagnon <djgagnon@wisc.edu>
-		* @copyright   Joe Stump <joe@joestump.net>
-		* @package     Framework
-		* @filesource
-		*/
-	
-		class Framework_Site_{$strShortName} extends Framework_Site_Common {
-			/**
-			* $name
-			*
-			* @access      public
-			* @var         string      $name       Name of site driver
-			*/
-			
-			public " . '$name' . " = '{$strShortName}';
-			
-			/**
-			* prepare
-			*
-			* This function is ran by Framework right after loading up the site
-			* driver. It's a good place to put initialization type code that is
-			* globally required throughout your site.
-			*
-			* @access      public
-			* @return      mixed
-			*/
-			public function prepare(){}
-		}
-	
-		?>";
-		
-		
-		$phpFile = Config::engineSitesPath . "/{$strShortName}.php";
-		if (!$file_handle = fopen($phpFile, 'w')) return new returnData(5, NULL, 'cannot create PHP file');
-		fwrite($file_handle, $file_data);
-		fclose($file_handle);
-	
 	
 		//Create the SQL tables
 
@@ -386,13 +319,11 @@ class Games extends Module
 		if (!$prefix) return new returnData(1, NULL, "game does not exist");
 	
 		//Delete the files
-		exec('rm -rf '. Config::engineSitesPath . "/{$prefix}", $output, $return);
-		NetDebug::trace('rm -rf '. Config::engineSitesPath . "/{$prefix}");
+		$command = 'rm -rf '. Config::gamedataFSPath . "/{$prefix}";
+		NetDebug::trace("deleteFiles command: $command");		
+
+		exec($command, $output, $return);
 		if ($return) return new returnData(4, NULL, "unable to delete game directory");
-		
-		echo exec('rm ' . Config::engineSitesPath . "/{$prefix}.php", $output, $return);
-		if ($return) return new returnData(4, NULL, "unable to delete game php file");
-		
 		
 		//Delete the editor_games record
 		$query = "DELETE FROM game_editors WHERE game_id IN (SELECT game_id FROM games WHERE prefix = '{$prefix}_')";
@@ -442,12 +373,12 @@ class Games extends Module
 		
 		
 		//Delete a previous backup with the same name
-		$rmCommand = "rm -rf ". Config::engineSitesPath . "/Backups/{$tmpDir}";
+		$rmCommand = "rm -rf ". Config::gamedataFSPath . "/backups/{$tmpDir}";
 		exec($rmCommand, $output, $return);
 		if ($return) return new returnData(5, NULL, "cannot remove existing backup, check file permissions");
 		
 		//Set up a tmp directory
-		$mkdirCommand = "mkdir ". Config::engineSitesPath . "/Backups/{$tmpDir}";
+		$mkdirCommand = "mkdir ". Config::gamedataFSPath . "/backups/{$tmpDir}";
 		exec($mkdirCommand, $output, $return);
 		if ($return) return new returnData(5, NULL, "cannot create backup dir, check file permissions");
 	
@@ -468,49 +399,32 @@ class Games extends Module
 		}
 	
 		
-		$createSQLCommand = Config::mysqlBinPath ."/mysqldump -u " . Config::dbUser . " --password=" . Config::dbPass . " " . Config::dbSchema . " $tables > ". Config::engineSitesPath . "/Backups/{$tmpDir}/{$sqlFile}";
+		$createSQLCommand = Config::mysqlBinPath ."/mysqldump -u " . Config::dbUser . " --password=" . Config::dbPass . " " . Config::dbSchema . " $tables > ". Config::gamedataFSPath . "/Backups/{$tmpDir}/{$sqlFile}";
 		//echo "<p>Running: $createSQLCommand </p>";
 		exec($createSQLCommand, $output, $return);
 		if ($return) return new returnData(6, NULL, "cannot create SQL, check mysql bin path in config");
 		
 		
-		//Copy the site into the tmp directory
-		$copyCommand = "cp ". Config::engineSitesPath . "/{$prefix}.php ". Config::engineSitesPath . "/Backups/{$tmpDir}";
-		NetDebug::trace($copyCommand);
-		exec($copyCommand, $output, $return);
-		if ($return) return new returnData(5, NULL, "cannot copy php file to backup dir, check file permissions");
-		
-		$copyCommand = "cp -R ". Config::engineSitesPath . "/{$prefix} ". Config::engineSitesPath . "/Backups/{$tmpDir}/{$prefix}";
+		$copyCommand = "cp -R ". Config::gamedataFSPath . "/{$prefix} ". Config::gamedataFSPath . "/backups/{$tmpDir}/{$prefix}";
 		//echo "<p>Running: $copyCommand </p>";
 		exec($copyCommand, $output, $return);
 		if ($return) return new returnData(5, NULL, "cannot copy game dir to backup dir, check file permissions");
 		
 		
-		/*
-		//Create a version file
-		$versionCommand = "{$svn_bin_path}/svnversion {$engine_path} > {$engine_sites_path}/Backups/{$tmpDir}/version";
-		echo "<p>Running: $versionCommand </p>";
-		exec($versionCommand, $output, $return);
-		if ($return) echo ("<h3>There was an error creating a version file: $return </h3>
-						  <p>Check your svn_bin_path in the config file<p>");
-		else echo "<p>Version Recorded</p>";
-		*/
-		
-		
 		//Zip up the whole directory
 		$zipFile = "{$prefix}_backup_" . date('Y_m_d') . ".tar";
-		$newWd = Config::engineSitesPath . "/Backups";
+		$newWd = Config::gamedataFSPath . "/backups";
 		chdir($newWd);
-		$createZipCommand = "tar -cf ". Config::engineSitesPath . "/Backups/{$zipFile} {$tmpDir}/";
+		$createZipCommand = "tar -cf ". Config::gamedataFSPath . "/backups/{$zipFile} {$tmpDir}/";
 		exec($createZipCommand, $output, $return);
 		if ($return) return new returnData(7, NULL, "cannot compress backup dir, check that tar command is avaialbe");
 		
 		//Delete the Temp
-		$rmCommand = "rm -rf ". Config::engineSitesPath . "/Backups/{$tmpDir}";
+		$rmCommand = "rm -rf ". Config::gamedataFSPath . "/backups/{$tmpDir}";
 		exec($rmCommand, $output, $return);
 		if ($return) return new returnData(5, NULL, "cannot delete backup dir, check file permissions");
 				
-		return new returnData(0, Config::engineWWWPath . "/Backups/{$zipFile}");		
+		return new returnData(0, Config::gamedataWWWPath . "/backups/{$zipFile}");		
 	}	
 	
 	
