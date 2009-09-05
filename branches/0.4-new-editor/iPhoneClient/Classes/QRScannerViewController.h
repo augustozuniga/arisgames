@@ -7,13 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "model/AppModel.h"
+#import "AppModel.h"
 #import "DecoderDelegate.h"
-#import "QRScannerParserDelegate.h"
-#import "GenericWebViewController.h"
 
-
-@interface QRScannerViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, DecoderDelegate, QRScannerParserDelegateDelegate> {
+@interface QRScannerViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, DecoderDelegate> {
 	AppModel *appModel;
 	IBOutlet UIButton *scanButton;
 	IBOutlet UITextField *manualCode;

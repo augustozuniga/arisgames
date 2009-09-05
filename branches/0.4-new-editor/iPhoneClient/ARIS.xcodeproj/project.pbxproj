@@ -121,7 +121,6 @@
 		A72C02140F7985EF00D00602 /* QRScanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = A72C02130F7985EF00D00602 /* QRScanner.xib */; };
 		A72C02170F7985FF00D00602 /* QRScannerViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A72C02160F7985FF00D00602 /* QRScannerViewController.mm */; };
 		A72C021D0F798B0500D00602 /* QRScanner.png in Resources */ = {isa = PBXBuildFile; fileRef = A72C021C0F798B0500D00602 /* QRScanner.png */; };
-		A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = A72F04AD0F6ED8620089B90F /* NearbyLocation.m */; };
 		A75AF2B90F86A47100F15535 /* ItemDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */; };
 		A76048E70FC1B6DE00219A53 /* QRCodeProtocol.h in Resources */ = {isa = PBXBuildFile; fileRef = A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */; };
 		A7615F8F0FDED3DC00438796 /* LoginBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = A7615F8E0FDED3DC00438796 /* LoginBackground.png */; };
@@ -328,8 +327,8 @@
 		A7149F9C0FB89DC8008BAB5D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A72135250FA8B548003E4059 /* QRScannerParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRScannerParserDelegate.h; sourceTree = "<group>"; };
 		A72135260FA8B548003E4059 /* QRScannerParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRScannerParserDelegate.m; sourceTree = "<group>"; };
-		A721352C0FA8B6F6003E4059 /* QRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCode.h; sourceTree = "<group>"; };
-		A721352D0FA8B6F6003E4059 /* QRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCode.m; sourceTree = "<group>"; };
+		A721352C0FA8B6F6003E4059 /* QRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRCode.h; path = ../../QRCode.h; sourceTree = "<group>"; };
+		A721352D0FA8B6F6003E4059 /* QRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QRCode.m; path = ../../QRCode.m; sourceTree = "<group>"; };
 		A722C8BF0FBCD8D0009432DB /* SelfRegistration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelfRegistration.xib; sourceTree = "<group>"; };
 		A722C8C40FBCD92E009432DB /* SelfRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfRegistrationViewController.h; sourceTree = "<group>"; };
 		A722C8C50FBCD92E009432DB /* SelfRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfRegistrationViewController.m; sourceTree = "<group>"; };
@@ -340,11 +339,9 @@
 		A72C02150F7985FF00D00602 /* QRScannerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRScannerViewController.h; path = Classes/QRScannerViewController.h; sourceTree = "<group>"; };
 		A72C02160F7985FF00D00602 /* QRScannerViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = QRScannerViewController.mm; path = Classes/QRScannerViewController.mm; sourceTree = "<group>"; };
 		A72C021C0F798B0500D00602 /* QRScanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QRScanner.png; path = images/QRScanner.png; sourceTree = "<group>"; };
-		A72F04AC0F6ED8620089B90F /* NearbyLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyLocation.h; sourceTree = "<group>"; };
-		A72F04AD0F6ED8620089B90F /* NearbyLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyLocation.m; sourceTree = "<group>"; };
 		A75AF2B70F86A47100F15535 /* ItemDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemDetailsViewController.h; path = Classes/ItemDetailsViewController.h; sourceTree = "<group>"; };
 		A75AF2B80F86A47100F15535 /* ItemDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemDetailsViewController.m; path = Classes/ItemDetailsViewController.m; sourceTree = "<group>"; };
-		A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeProtocol.h; sourceTree = "<group>"; };
+		A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRCodeProtocol.h; path = ../../QRCodeProtocol.h; sourceTree = "<group>"; };
 		A7615F8E0FDED3DC00438796 /* LoginBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoginBackground.png; path = images/LoginBackground.png; sourceTree = "<group>"; };
 		A763B5230F4E283100FDCC55 /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCLController.h; path = Classes/MyCLController.h; sourceTree = "<group>"; };
 		A763B5240F4E283100FDCC55 /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCLController.m; path = Classes/MyCLController.m; sourceTree = "<group>"; };
@@ -637,6 +634,9 @@
 		2B3D17040F49C9920067FD3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A721352C0FA8B6F6003E4059 /* QRCode.h */,
+				A721352D0FA8B6F6003E4059 /* QRCode.m */,
+				A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */,
 				AB2223F310502CD800A4255E /* Quest.h */,
 				AB2223F410502CD800A4255E /* Quest.m */,
 				ABD5C4E7104F1A0E002EB824 /* Npc.h */,
@@ -647,8 +647,6 @@
 				AB8A429F104C7F8C00422773 /* Node.m */,
 				A7A623590F841C99008E0DFD /* Item.h */,
 				A7A6235A0F841C99008E0DFD /* Item.m */,
-				A72F04AC0F6ED8620089B90F /* NearbyLocation.h */,
-				A72F04AD0F6ED8620089B90F /* NearbyLocation.m */,
 				2B3D18D40F4B25720067FD3A /* AppModel.h */,
 				2B3D18D50F4B25720067FD3A /* AppModel.m */,
 				2B3D17050F49C99B0067FD3A /* Game.h */,
@@ -721,9 +719,6 @@
 				A72C02130F7985EF00D00602 /* QRScanner.xib */,
 				A72135250FA8B548003E4059 /* QRScannerParserDelegate.h */,
 				A72135260FA8B548003E4059 /* QRScannerParserDelegate.m */,
-				A721352C0FA8B6F6003E4059 /* QRCode.h */,
-				A721352D0FA8B6F6003E4059 /* QRCode.m */,
-				A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */,
 			);
 			name = "QR Scanner";
 			sourceTree = "<group>";
@@ -1059,7 +1054,6 @@
 				A763B5250F4E283100FDCC55 /* MyCLController.m in Sources */,
 				A722E7150F57425B004B04D2 /* Location.m in Sources */,
 				A7E39EAD0F5F60D000826198 /* CameraViewController.m in Sources */,
-				A72F04AE0F6ED8620089B90F /* NearbyLocation.m in Sources */,
 				A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */,
 				A72C02170F7985FF00D00602 /* QRScannerViewController.mm in Sources */,
 				A7A6235B0F841C99008E0DFD /* Item.m in Sources */,

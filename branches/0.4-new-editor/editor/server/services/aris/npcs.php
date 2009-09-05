@@ -1,5 +1,5 @@
 <?php
-require("module.php");
+require_once("module.php");
 
 class Npcs extends Module
 {
@@ -59,12 +59,12 @@ class Npcs extends Module
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		//get the npc
-		$npcReturnData = $this->getNpc($intGameID, $intNpcID);
+		$npcReturnData = Npcs::getNpc($intGameID, $intNpcID);
 		if ($npcReturnData->returnCode > 0) return $npcReturnData;
 		$npc = $npcReturnData->data;
 		
 		//get the options for this npc and player
-		$conversationsReturnData = $this->getConversationsForPlayer($intGameID, $intNpcID, $intPlayerID);
+		$conversationsReturnData = Npcs::getConversationsForPlayer($intGameID, $intNpcID, $intPlayerID);
 		if ($npcReturnData->returnCode > 0) return $optionsReturnData;
 		$conversationsArray = $conversationsReturnData->data;
 
@@ -198,7 +198,7 @@ class Npcs extends Module
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
 		
-		$conversationsReturnData = $this->getConversations($intGameID, $intNpcID);	
+		$conversationsReturnData = Npcs::getConversations($intGameID, $intNpcID);	
 		if ($conversationsReturnData->returnCode != 0) return $conversationsReturnData;
 		
 		$conversations = $conversationsReturnData->data;

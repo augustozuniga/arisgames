@@ -44,17 +44,19 @@ static NSString * const OPTION_CELL = @"option";
 	}
 	
 	//Setup the image view
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	NSLog(@"NodeViewController: Image URL: %@",self.npc.mediaURL);
-	NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:self.npc.mediaURL]];
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	
-	UIImage* image = [[UIImage alloc] initWithData:imageData];
-	UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
-	imageView.image = image;
-	
-	//Add the image to the scroller
-	[scrollView addSubview:imageView];
+	if (self.npc.mediaURL) {
+		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+		NSLog(@"NodeViewController: Image URL: %@",self.npc.mediaURL);
+		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:self.npc.mediaURL]];
+		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+		
+		UIImage* image = [[UIImage alloc] initWithData:imageData];
+		UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
+		imageView.image = image;
+		
+		//Add the image to the scroller
+		[scrollView addSubview:imageView];
+	}
 	
 	//Set Up Text Area
 	int margin = 10;

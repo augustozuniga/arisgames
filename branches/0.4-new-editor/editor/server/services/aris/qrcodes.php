@@ -1,6 +1,8 @@
 <?php
-require("module.php");
-
+require_once('nodes.php');
+require_once('npcs.php');
+require_once('items.php');
+require_once("module.php");
 
 class QRCodes extends Module
 {
@@ -47,6 +49,45 @@ class QRCodes extends Module
 		return new returnData(0, $event);
 		
 	}
+	
+	/**
+     * Fetch a QRCode object
+     * @returns an NPC, Nopde or Item with a type value specifying which
+     */
+	public function getQRCodeObjectForPlayer($intGameID, $intQRCodeID, $intPlayerID)
+	{
+		
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+
+		$query = "SELECT * FROM {$prefix}_qrcodes WHERE qrcode_id = {$intQRCodeID} LIMIT 1";
+		
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		
+		$qrcode = @mysql_fetch_object($rsResult);
+		if (!$qrcode) return new returnData(2, NULL, "invalid QRCode id");
+		
+		switch ($qrcode->type) {
+			case 'Npc': 
+				$returnResult = Npcs::getNpcWithConversationsForPlayer($intGameID, $qrcode->type_id, $intPlayerID);
+				$returnResult->data->type = "Npc";
+				break;
+			case 'Node': 
+				$returnResult = Nodes::getNode($intGameID, $qrcode->type_id);
+				$returnResult->data->type = "Node";
+				break;
+			case 'Item': 
+				$returnResult = Items::getItem($intGameID, $qrcode->type_id);
+				$returnResult->data->type = "Item";
+				break;	
+		}
+		
+		return $returnResult;
+		
+	}
+	
+
 	
 	/**
      * Create an Event

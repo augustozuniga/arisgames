@@ -312,8 +312,6 @@ static NSString *locationsLock = @"locationsLock";
 		return;
 	}	
 	
-	
-	
 	//Build the inventory
 	NSMutableArray *tempInventory = [[NSMutableArray alloc] init];
 	NSEnumerator *inventoryEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
@@ -357,22 +355,24 @@ static NSString *locationsLock = @"locationsLock";
 		return nil;
 	}		
 	
-	//Build the item
-	NSDictionary *itemDictionary = (NSDictionary *)jsonResult.data;	
-		Item *item = [[Item alloc] init];
-		item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
-		item.name = [itemDictionary valueForKey:@"name"];
-		item.type = [itemDictionary valueForKey:@"type"];
-		item.description = [itemDictionary valueForKey:@"description"];
-		item.mediaURL = [itemDictionary valueForKey:@"media"];
-		item.iconURL = [itemDictionary valueForKey:@"icon"];
-		item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
-		item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
-		NSLog(@"Model: Adding Item: %@", item.name);
-
-	
-	return item;
+	return [self parseItemFromDictionary:(NSDictionary *)jsonResult.data];
 }
+
+-(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{
+	Item *item = [[Item alloc] init];
+	item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
+	item.name = [itemDictionary valueForKey:@"name"];
+	item.type = [itemDictionary valueForKey:@"type"];
+	item.description = [itemDictionary valueForKey:@"description"];
+	item.mediaURL = [itemDictionary valueForKey:@"media"];
+	item.iconURL = [itemDictionary valueForKey:@"icon"];
+	item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
+	item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
+	NSLog(@"Model: Adding Item: %@", item.name);
+	
+	return item;	
+}
+
 
 -(Node *)fetchNode:(int)nodeId{
 	NSLog(@"Model: Fetch Requested for Node %d", nodeId);
@@ -393,14 +393,17 @@ static NSString *locationsLock = @"locationsLock";
 	}	
 	
 	
+	return [self parseNodeFromDictionary: (NSDictionary *)jsonResult.data];
+}
+
+-(Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary{
 	//Build the node
-	NSDictionary *nodeDictionary = (NSDictionary *)jsonResult.data;	
 	Node *node = [[Node alloc] init];
 	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
 	node.mediaURL = [nodeDictionary valueForKey:@"mediaURL"];
-
+	
 	//Add options here
 	int optionNodeId;
 	NSString *text;
@@ -424,10 +427,8 @@ static NSString *locationsLock = @"locationsLock";
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[node addOption:option];
 	}
-	
-	NSLog(@"Model: Adding Node: %@", node.name);
-	
-	return node;
+		
+	return node;	
 }
 
 -(Npc *)fetchNpc:(int)npcId{
@@ -443,16 +444,16 @@ static NSString *locationsLock = @"locationsLock";
 																	 andMethodName:@"getNpcWithConversationsForPlayer" 
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
 
 	if (!jsonResult) {
 		NSLog(@"AppModel fetchNpc: No result Data, return");
 		return nil;
 	}	
 	
-	
-	//Build the npc object
-	NSDictionary *npcDictionary = (NSDictionary *)jsonResult.data;	
+	return [self parseNpcFromDictionary:(NSDictionary *)jsonResult.data];
+}
+
+-(Npc *)parseNpcFromDictionary: (NSDictionary *)npcDictionary {
 	Npc *npc = [[Npc alloc] init];
 	npc.npcId = [[npcDictionary valueForKey:@"npc_id"] intValue];
 	npc.name = [npcDictionary valueForKey:@"name"];
@@ -470,8 +471,40 @@ static NSString *locationsLock = @"locationsLock";
 		NodeOption *option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[npc addOption:option];
 	}
-
 	return npc;	
+}
+
+-(NSObject<QRCodeProtocol> *)fetchQRCode:(NSString*)QRcodeId{
+	NSLog(@"Model: Fetch Requested for QRCodeId: %@", QRcodeId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%@",QRcodeId],
+						  [NSString stringWithFormat:@"%d",self.playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"qrcodes" 
+																	 andMethodName:@"getQRCodeObjectForPlayer" 
+																	  andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchQRCode: No result Data, return");
+		return nil;
+	}	
+	
+	
+	//Build the object
+	NSDictionary *qrCodeDictionary = (NSDictionary *)jsonResult.data;
+	NSString *type = [qrCodeDictionary valueForKey:@"type"];
+	NSLog(@"QRCode Type: %@",type);
+
+	if ([type isEqualToString:@"Node"]) return [self parseNodeFromDictionary:qrCodeDictionary];
+	if ([type isEqualToString:@"Item"]) return [self parseItemFromDictionary:qrCodeDictionary];
+	if ([type isEqualToString:@"Npc"]) return [self parseNpcFromDictionary:qrCodeDictionary];
+	
+	return nil;
 }	
 
 

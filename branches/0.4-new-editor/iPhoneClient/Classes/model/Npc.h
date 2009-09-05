@@ -11,7 +11,7 @@
 #import "QRCodeProtocol.h"
 #import "NodeOption.h"
 
-@interface Npc : NSObject {
+@interface Npc : NSObject  <NearbyObjectProtocol,QRCodeProtocol>{
 	nearbyObjectKind kind;
 	int npcId;
 	NSString *name;

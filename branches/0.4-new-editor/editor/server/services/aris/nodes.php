@@ -1,5 +1,5 @@
 <?php
-require("module.php");
+require_once("module.php");
 
 class Nodes extends Module
 {	

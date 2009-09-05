@@ -87,39 +87,31 @@
 	[appDelegate removeWaitingIndicator];
 	
 	//get the result
-	NSString *result = twoDResult.text;
+	NSString *encodedText = twoDResult.text;
 
 	//we are done with the scanner, so release it
 	[decoder release];
-	NSLog(@"QRScannerViewController: Decode Complete. QR Code ID = %@", result);
+	NSLog(@"QRScannerViewController: Decode Complete. QR Code ID = %@", encodedText);
 	
-	[self loadResult:result];
+	[self loadResult:encodedText];
 }	
 
--(void) loadResult:(NSString *)result {
-	/*
-	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
-	//Start Waiting Indicator
-	[appDelegate showWaitingIndicator:@"Loading Content..."];
+-(void) loadResult:(NSString *)encodedText {
+	//Fetch the coresponding object from the server
+	NSObject<QRCodeProtocol> *qrCodeObject = [appModel fetchQRCode:encodedText];
 	
-	//init url
-	NSString *baseURL = [appModel getURLStringForModule:@"RESTQRScanner"];
-	NSString *fullURL = [ NSString stringWithFormat:@"%@&qrcode_id=%@", baseURL, result];
-	NSLog([NSString stringWithFormat:@"Fetching QR Code from : %@", fullURL]);
-	
-	//setup the xml parser to use a qrparser delegate and the deleage to use this view controller as a delegate
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[NSURL URLWithString:fullURL]];
-	QRScannerParserDelegate *parserDelegate = [[QRScannerParserDelegate alloc] init];
-	[parser setDelegate: parserDelegate];
-	[parserDelegate setDelegate: self];
-	
-	//init parser
-	[parser setShouldProcessNamespaces:NO];
-	[parser setShouldReportNamespacePrefixes:NO];
-	[parser setShouldResolveExternalEntities:NO];
-	[parser parse];
-	[parser release];
-	 */
+	if (qrCodeObject == nil) {
+		//Display an alert
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Decoding Error" message:@"This code is not a part of your current ARIS game"
+			 delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+		[alert show];	
+		[alert release];
+					  
+	}
+	else {	
+		//Display the content
+		[qrCodeObject display];
+	}
 }
 
 - (void)decoder:(Decoder *)decoder decodingImage:(UIImage *)image usingSubset:(UIImage *)subset progress:(NSString *)message {
@@ -162,25 +154,7 @@
 	//nada
 }
 
-#pragma mark QRScannerParserDelegate Methods
-- (void) qrParserDidFinish:(id<QRCodeProtocol>)qrcode{
-	//Stop Waiting Indicator
-	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
-	[appDelegate removeWaitingIndicator];
-	
-	if (qrcode == nil) {
-		//Display an alert
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Decoding Error" message:@"This code is not a part of your current ARIS game"
-													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-		[alert show];	
-		[alert release];
-		
-	}
-	else {	
-		//Display the content
-		[qrcode display];
-	}
-}
+
 
 
 #pragma mark Memory Management

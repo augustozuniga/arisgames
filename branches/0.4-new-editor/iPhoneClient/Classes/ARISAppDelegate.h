@@ -14,7 +14,6 @@
 #import "MyCLController.h"
 
 #import "model/Game.h"
-#import "NearbyLocation.h"
 #import "NearbyBar.h"
 #import "Item.h"
 #import "ItemDetailsViewController.h"

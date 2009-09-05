@@ -73,7 +73,7 @@
 	[scrollView setContentSize:CGSizeMake(320, itemDescriptionView.frame.origin.y
 										  + itemDescriptionView.frame.size.height)];
 	
-	if ([item.type isEqualToString: @"Image"]) {
+	if ([item.type isEqualToString: @"Image"] && mediaURL) {
 		NSLog(@"ItemDetailsViewController: Image Layout Selected");
 		//Setup the image view
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -92,7 +92,7 @@
 		[image release];
 		[imageView release];
 	}
-	else if ([item.type isEqualToString: @"Video"] || [item.type isEqualToString: @"Audio"]) {
+	else if (([item.type isEqualToString: @"Video"] || [item.type isEqualToString: @"Audio"]) && mediaURL) {
 		NSLog(@"ItemDetailsViewController:  Video Layout Selected");
 
 		//Create movie player object
