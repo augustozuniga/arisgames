@@ -13,7 +13,7 @@ class Players extends Module
 	{
 
 		$query = "SELECT * FROM players 
-				WHERE user_name = '{$strUser}' and password = '{$strPassword}' LIMIT 1";
+				WHERE user_name = '{$strUser}' and password = MD5('{$strPassword}') LIMIT 1";
 		
 		//NetDebug::trace($query);
 
@@ -62,13 +62,105 @@ class Players extends Module
 		else return new returnData(0, FALSE);
 	}
 	
+
 	/**
-     * New Player
+     * Player Viewed a Node, exectute it's actions
+     * @returns returnData with data=true if a player state change was made
+     */
+	public function nodeViewed($intGameID, $intPlayerID, $intNodeID)
+	{	
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$changeMade = Module::applyPlayerStateChanges($prefix, $intPlayerID, 'Node', $intNodeID);
+		
+		return new returnData(0, $changeMade);
+	}
+	
+
+	/**
+     * Player Viewed an Item, exectute it's actions
+     * @returns returnData with data=true if a player state change was made
+     */
+	public function itemViewed($intGameID, $intPlayerID, $intItemID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$changeMade = Module::applyPlayerStateChanges($prefix, $intPlayerID, 'Item', $intItemID);
+		
+		return new returnData(0, $changeMade);
+	}
+	
+	
+	/**
+     * Reset all player Events
+     * @returns returnData with data=true if changes were made
+     */
+	public function resetPlayerEvents($intGameID, $intPlayerID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$query = "DELETE {$prefix}_player_events
+					WHERE player_id = {$intPlayerID}";
+		
+		//NetDebug::trace($query);
+
+		@mysql_query($query);
+		
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);
+	}
+	
+	
+	/**
+     * Reset all player Items
+     * @returns returnData with data=true if changes were made
+     */
+	public function resetPlayerItems($intGameID, $intPlayerID)
+	{	
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$query = "DELETE {$prefix}_player_items
+					WHERE player_id = {$intPlayerID}";
+		
+		//NetDebug::trace($query);
+
+		@mysql_query($query);
+		
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);
+	}
+
+	
+	
+	
+	/**
+     * Create a new Player
      * @returns player id
      */
-	public function createPlayer($strUser, $strPassword, $strFirstName, $strLastName, $strEmail)
+	public function createPlayer($strNewUserName, $strPassword, $strFirstName, $strLastName, $strEmail)
 	{
-		return new returnData(4, NULL, 'not yet implemented');
+		$query = "SELECT player_id FROM players 
+				  WHERE user_name = '{$strNewUserName}' LIMIT 1";
+			
+		if (mysql_fetch_array(mysql_query($query))) {
+			return new returnData(4, NULL, 'user exists');
+		}
+		
+		$query = "INSERT INTO players (user_name, password, 
+									first_name, last_name, email) 
+				  VALUES ('{$strNewUserName}', MD5('$strPassword'),
+				  		'{$strFirstName}','{$strLastName}','{$strEmail}')";
+			
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
+		
+		return new returnData(0, mysql_insert_id());
 	}
 	
 	
