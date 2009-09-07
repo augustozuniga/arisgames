@@ -90,14 +90,12 @@ class Media extends Module
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
 		return new returnData(0, mysql_insert_id());
-
-
 	}
 
 	
 	
 	/**
-     * Update a specific Item
+     * Update a specific Media
      * @returns true if edit was done, false if no changes were made
      */
 	public function updateMedia($intGameID, $intMediaID, $strFileName)
