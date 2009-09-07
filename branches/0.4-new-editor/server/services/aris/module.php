@@ -5,9 +5,9 @@ require_once('returnData.class.php');
 abstract class Module
 {
 	
-	private $validImageTypes = array('jpg','png');
-	private $validAudioTypes = array('mp3','m4a');
-	private $validVideoTypes = array('mp4','m4v');
+	protected $validImageTypes = array('jpg','png');
+	protected $validAudioTypes = array('mp3','m4a');
+	protected $validVideoTypes = array('mp4','m4v');
 	
 	
 	public function Module()
