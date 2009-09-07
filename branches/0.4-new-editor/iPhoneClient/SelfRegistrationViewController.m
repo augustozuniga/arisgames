@@ -53,33 +53,29 @@
 
 -(void)submitRegistration {
 	//Check with the Server
-	/*
-	NSString *newUserURLString = [[NSString alloc] initWithFormat:@"?module=%@&event=selfRegistration&site=%@&user_name=%@&password=%@&first_name=%@&last_name=%@&email=%@",
-								  moduleName, appModel.site, self.userName.text, self.password.text, self.firstName.text, self.lastName.text, self.email.text];
-	//NSLog(@"SelfRegistration: Module String = %@",newUserModuleString);
-	NSURLRequest *newUserRequest = [appModel getEngineURL:newUserURLString];
-	NSData *newUserRequestData = [appModel fetchURLData:newUserRequest];
-	NSString *newUserRequestResponse = [[NSString alloc] initWithData:newUserRequestData encoding:NSASCIIStringEncoding];
+	//self.userName.text, self.password.text, self.firstName.text, self.lastName.text, self.email.text];
 	
-	//handle login response
-	if([newUserRequestResponse isEqual:@"1"]) {
+	BOOL success = [appModel registerNewUser:self.userName.text password:self.password.text 
+								   firstName:self.firstName.text lastName:self.lastName.text email:self.email.text]; 
+	
+	if(success) {
 		NSLog(@"SelfRegistration: New User Created Successfully");
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Your new User was Created. Go ahead and login."
 													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];	
 		[alert release];
 		[self.navigationController popToRootViewControllerAnimated:YES];
-		
 	}
 	else {
-		NSLog(@"SelfRegistration: Error Creating New User");
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Either this name has been taken or you didn't fill out all the required information."
+		NSLog(@"SelfRegistration: Unsuccessfull registration attempt, check network before giving an alert");
+		if (appModel.networkAlert) NSLog(@"SelfRegistration: Network is down, skip alert");
+		else{
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Either this name has been taken or you didn't fill out all the required information."
 													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-		[alert show];	
-		[alert release];
-		
+			[alert show];	
+			[alert release];
+		}	
 	}
-	*/
 }
 
 - (void)scrollViewToCenterOfScreen:(UIView *)theView {  

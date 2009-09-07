@@ -59,30 +59,37 @@ extern NSDictionary *InventoryElements;
 @property(retain) UIAlertView *networkAlert;
 
 
--(id)init;
--(void)loadUserDefaults;
--(void)clearUserDefaults;
--(void)saveUserDefaults;
--(void)initUserDefaults;
+- (id)init;
+- (void)loadUserDefaults;
+- (void)clearUserDefaults;
+- (void)saveUserDefaults;
+- (void)initUserDefaults;
 
--(BOOL)login;
--(void)fetchGameList;
--(void)fetchLocationList;
--(void)fetchInventory;
--(void)fetchQuestList;
--(Item *)fetchItem:(int)itemId;
--(Node *)fetchNode:(int)nodeId;
--(Npc *)fetchNpc:(int)npcId;
+- (BOOL)login;
+- (void)fetchGameList;
+- (void)fetchLocationList;
+- (void)fetchInventory;
+- (void)fetchQuestList;
+- (Item *)fetchItem:(int)itemId;
+- (Node *)fetchNode:(int)nodeId;
+- (Npc *)fetchNpc:(int)npcId;
 	
--(void)updateServerLocationAndfetchNearbyLocationList;
+- (void)updateServerLocationAndfetchNearbyLocationList;
+- (void)updateServerNodeViewed: (int)nodeId;
+- (void)updateServerItemViewed: (int)itemId;
+- (void)resetPlayerEvents;
+- (void)resetPlayerItems;
+- (void)createItemForImage: (UIImage *)image;
+- (void)createPlayer;
 
--(NSMutableURLRequest *) getURLForModule:(NSString *)moduleName;
--(NSString *)getURLStringForModule:(NSString *)moduleName;
--(NSString *) getURLString:(NSString *)relativeURL;
--(NSMutableURLRequest *)getURL:(NSString *)relativeURL;
--(NSMutableURLRequest *)getEngineURL:(NSString *)relativeURL;
--(NSString *) getEngineURLString:(NSString *)relativeURL;
--(NSData *) fetchURLData: (NSURLRequest *)request;
+
+- (NSMutableURLRequest *) getURLForModule:(NSString *)moduleName;
+- (NSString *)getURLStringForModule:(NSString *)moduleName;
+- (NSString *) getURLString:(NSString *)relativeURL;
+- (NSMutableURLRequest *)getURL:(NSString *)relativeURL;
+- (NSMutableURLRequest *)getEngineURL:(NSString *)relativeURL;
+- (NSString *) getEngineURLString:(NSString *)relativeURL;
+- (NSData *) fetchURLData: (NSURLRequest *)request;
 
 
 @end

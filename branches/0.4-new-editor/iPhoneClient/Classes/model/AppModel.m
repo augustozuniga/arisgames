@@ -170,6 +170,39 @@ static NSString *locationsLock = @"locationsLock";
 }
 
 
+- (BOOL)registerNewUser:(NSString*)userName password:(NSString*)pass 
+			  firstName:(NSString*)firstName lastName:(NSString*)lastName email:(NSString*)email {
+	NSLog(@"AppModel: New User Registration Requested");
+	//createPlayer($strNewUserName, $strPassword, $strFirstName, $strLastName, $strEmail)
+	NSArray *arguments = [NSArray arrayWithObjects:userName, pass, firstName, lastName, email, nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:jsonServerBaseURL 
+																	 andServiceName: @"players" 
+																	  andMethodName:@"createPlayer"
+																	   andArguments:arguments]; 
+	
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest];
+	
+	if (!jsonResult) {
+		NSLog(@"AppModel registerNewUser: No result Data, return");
+		return NO;
+	}
+	
+    BOOL success;
+	
+	int returnCode = jsonResult.returnCode;
+	if (returnCode == 0) {
+		NSLog(@"AppModel: Result from new user request successfull");
+		success = YES;
+	}
+	else { 
+		NSLog(@"AppModel: Result from new user request unsuccessfull");
+		success = NO;
+	}
+	return success;
+	
+}
+
+
 - (void)fetchGameList {
 	NSLog(@"AppModel: Fetching Game List.");
 	
@@ -574,13 +607,80 @@ static NSString *locationsLock = @"locationsLock";
 	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
+- (void)updateServerNodeViewed: (int)nodeId {
+	NSLog(@"Model: Node %d Viewed, update server", nodeId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",nodeId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"nodeViewed" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerItemViewed: (int)itemId {
+	NSLog(@"Model: Item %d Viewed, update server", itemId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"itemViewed" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)resetPlayerEvents {
+	NSLog(@"Model: Clearing Player Events");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"resetEvents" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)resetPlayerItems {
+	NSLog(@"Model: Clearing Player Items");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"resetItems" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)createItemForImage: (UIImage *)image{
+	NSLog(@"Model: creating a new Item for an image");
+	
+	//Upload the file to get it's name
+	
+	//Create the media record, add the item to the game and add this item to the players inventory
+
+}
+
 
 - (void)updateServerLocationAndfetchNearbyLocationList {
 	@synchronized (nearbyLock) {
-		NSLog(@"AppModel: updating player position on server and determining nearby Locations");
+		NSLog(@"Model: updating player position on server and determining nearby Locations");
 		
 		if (!loggedIn) {
-			NSLog(@"AppModel: Player Not logged in yet, skip the location update");	
+			NSLog(@"Model: Player Not logged in yet, skip the location update");	
 			return;
 		}
 		
@@ -620,6 +720,9 @@ static NSString *locationsLock = @"locationsLock";
 	}
 }
 
+- (void)createPlayer{
+	NSLog(@"Model: Creating Player");
+}
 
 #pragma mark Syncronizers
 
