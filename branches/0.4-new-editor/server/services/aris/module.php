@@ -20,7 +20,7 @@ abstract class Module
      * Fetch the prefix of a game
      * @returns a prefix string without the trailing _
      */
-	public function getPrefix($intGameID) {
+	public function getPrefix($intGameID) {	
 		//Lookup game information
 		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
 		$rsResult = @mysql_query($query);
@@ -133,12 +133,28 @@ abstract class Module
 		if (mysql_num_rows($rsResult) > 0) return true;
 		else return false;
     }
+    
+    
+	/** 
+	 * addEventToPlayer
+	 *
+     * Adds the specified event to the player.
+     * @return void
+     */
+    protected function addEventToPlayer($strPrefix, $intPlayerID, $intEventID) {
+	   	if (!Module::checkForEvent($strPrefix, $intPlayerID, $intEventID)) {
+			$query = "INSERT INTO {$strPrefix}_player_events 
+									  (player_id, event_id) VALUES ('$intPlayerID','$intEventID')
+									  ON duplicate KEY UPDATE event_id = '$intEventID'";
+			@mysql_query($query);    
+		}
+    }    
+
 
 	/** 
 	 * checkForItem
 	 *
      * Checks if the specified user has the specified event.
-	 *
      * @return boolean
      */
     protected function checkForItem($strPrefix, $intPlayerID, $intItemID) {
@@ -157,10 +173,9 @@ abstract class Module
 	 * objectMeetsRequirements
 	 *
      * Checks all requirements for the specified object for the specified user
-	 *
      * @return boolean
      */	
-	function objectMeetsRequirements ($strPrefix, $intPlayerID, $strObjectType, $intObjectID) {		
+	protected function objectMeetsRequirements ($strPrefix, $intPlayerID, $strObjectType, $intObjectID) {		
 		
 		//Fetch the requirements
 		$query = "SELECT * FROM {$strPrefix}_requirements 
@@ -194,7 +209,49 @@ abstract class Module
 	}	
 	
 	
-	
+	/** 
+	 * applyPlayerStateChanges
+	 *
+     * Applies any state changes for the given object
+     * @return boolean. True if a change was made, false otherwise
+     */	
+	protected function applyPlayerStateChanges($strPrefix, $intPlayerID, $strObjectType, $intObjectID) {	
+		
+		$changeMade = FALSE;
+		
+		//Fetch the state changes
+		$query = "SELECT * FROM {$strPrefix}_player_state_changes 
+									  WHERE content_type = '{$strObjectType}'
+									  AND content_id = '{$intObjectID}'";
+		
+		$rsStateChanges = @mysql_query($query);
+		
+		while ($stateChange = mysql_fetch_array($rsStateChanges)) {
+			//var_dump ($stateChange);
+			
+			//Check the requirement
+			switch ($stateChange['action']) {
+				case 'GIVE_ITEM':
+					//echo 'Running a GIVE_ITEM';
+					Module::giveItemToPlayer($strPrefix, $stateChange['action_detail'], $intPlayerID);
+					$changeMade = TRUE;
+					break;
+				case 'TAKE_ITEM':
+					//echo 'Running a TAKE_ITEM';
+					Module::takeItemFromPlayer($strPrefix, $stateChange['action_detail'], $intPlayerID);
+					$changeMade = TRUE;
+					break;
+				case 'GIVE_EVENT':
+					//echo 'Running a GIVE_EVENT';
+					Module::addEventToPlayer($strPrefix, $stateChange['action_detail'], $intPlayerID);
+					$changeMade = TRUE;
+					break;	
+			}
+		}//stateChanges loop
+		
+		return $changeMade;
+	}
+		
 	
 	
 	
