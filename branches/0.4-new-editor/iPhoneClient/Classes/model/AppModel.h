@@ -80,7 +80,8 @@ extern NSDictionary *InventoryElements;
 - (void)resetPlayerEvents;
 - (void)resetPlayerItems;
 - (void)createItemForImage: (UIImage *)image;
-- (void)createPlayer;
+- (BOOL)registerNewUser:(NSString*)userName password:(NSString*)pass 
+			  firstName:(NSString*)firstName lastName:(NSString*)lastName email:(NSString*)email;
 
 
 - (NSMutableURLRequest *) getURLForModule:(NSString *)moduleName;

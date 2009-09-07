@@ -260,14 +260,33 @@
 	
 	//Notify the Server
 	NSLog(@"AppDelegate: Game Selected. Notifying Server");
-	NSURLRequest *request = [appModel getURLForModule:@"RESTSelectGame&event=setGame"];	
-	[appModel fetchURLData:request];
 	
 	//Set tabBar to the first item
 	tabBarController.selectedIndex = 0;
 	
 	//Display the tabBar (and it's content)
 	tabBarController.view.hidden = NO;
+	
+	
+	UINavigationController *navigationController;
+	UIViewController *visibleViewController;
+	
+	//Get the naviation controller and visible view controller
+	if ([tabBarController.selectedViewController isKindOfClass:[UINavigationController class]]) {
+		navigationController = (UINavigationController*)tabBarController.selectedViewController;
+		visibleViewController = [navigationController visibleViewController];
+	}
+	else {
+		navigationController = nil;
+		visibleViewController = tabBarController.selectedViewController;
+	}
+	
+	NSLog(@"AppDelegate: %@ selected",[visibleViewController title]);
+	
+	//Use setModel to refresh the content
+	if([visibleViewController respondsToSelector:@selector(refresh)]) {
+		[visibleViewController performSelector:@selector(refresh) withObject:nil];
+	}
 	
 }
 
