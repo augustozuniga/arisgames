@@ -22,6 +22,7 @@
 		source="aris.games"
 		destination="amfphp"
 		showBusyCursor="true">
+		<mx:method name="copyGame" result="on_games_copyGameResult(event)"/>
 		<mx:method name="createGame" result="on_games_createGameResult(event)"/>
 		<mx:method name="deleteGame" result="on_games_deleteGameResult(event)"/>
 		<mx:method name="getGamesForEditor" result="on_games_getGamesForEditorResult(event)"/>
@@ -117,6 +118,17 @@
 		<mx:method name="updateQuest" result="on_quests_updateQuestResult(event)"/>
 	</mx:RemoteObject>
 
+	<mx:RemoteObject id="qrcodes"
+		source="aris.qrcodes"
+		destination="amfphp"
+		showBusyCursor="true">
+		<mx:method name="createQRcode" result="on_qrcodes_createQRCodeResult(event)"/>
+		<mx:method name="deleteQRCode" result="on_qrcodes_deleteQRCodeResult(event)"/>
+		<mx:method name="getQRCode" result="on_qrcodes_getQRCodeResult(event)"/>
+		<mx:method name="getQRCodes" result="on_qrcodes_getQRCodesResult(event)"/>
+		<mx:method name="updateQRCode" result="on_qrcodes_updateQRCodeResult(event)"/>
+	</mx:RemoteObject>
+
 	<mx:RemoteObject id="requirements"
 		source="aris.requirements"
 		destination="amfphp"
@@ -156,6 +168,7 @@
 			private var itemFolder:Folder;
 			private var pageFolder:Folder;
 			private var questFolder:Folder;
+			private var mediaFolder:Folder;
 			
 			/////////////
 			// Getters //
@@ -244,6 +257,11 @@
 				currentGameObject = null;
 			}
 			
+			public function copyGame(ref:GameReference):void
+			{
+				games.copyGame.send(ref.getID(), "copyOf" + ref.name, "Copy of " + ref.name);
+			}
+			
 			public function createGame():void
 			{
 				currentGameName = "My New Game";
@@ -270,6 +288,14 @@
 				else if(type == GameObjectReference.QUEST)
 				{//takes gameID, name, incompletedesc, completedesc, media, returns id
 					quests.createQuest.send(currentGameID, "My New Quest", "", "", "");
+				}
+				else if(type == GameObjectReference.MEDIA)
+				{
+					var uploader:MediaUploader = new MediaUploader(this);
+				}
+				else
+				{
+					Alert.show("Error in Model.createNewGameObject: unrecognized generator type.");
 				}
 			}
 			
@@ -318,6 +344,26 @@
 				return currentGameObject;
 			}
 			
+			public function init(view:View):void
+			{
+				GameReference.init(this);
+				//media.getValidAudioExtensions.send(
+				
+				this.currentView = view;
+				this.loggedIn = false;
+				this.creatingNewObject = false;
+				this.availableGamesArray = new Array();
+				this.availableGamesArrayCollection = new ArrayCollection(this.availableGamesArray);
+				
+				this.characterFolder = new Folder("Characters", GameObjectReference.CHARACTER, "Create New Character");
+				this.itemFolder = new Folder("Items", GameObjectReference.ITEM, "Create New Item");
+				this.pageFolder = new Folder("Pages", GameObjectReference.PAGE, "Create New Page");
+				this.questFolder = new Folder("Quests", GameObjectReference.QUEST, "Create New Quest");
+				this.mediaFolder = new Folder("Media", GameObjectReference.MEDIA, "Upload New Media File");
+				this.gameObjectsArray = [characterFolder, itemFolder, pageFolder, questFolder, mediaFolder];
+				this.gameObjectsArrayCollection = new ArrayCollection(gameObjectsArray);
+			}
+			
 			public function isReady():Boolean
 			{ 
 				return (CursorManager.currentCursorID == CursorManager.NO_CURSOR);
@@ -333,22 +379,6 @@
 				{
 					Alert.show("You are already logged in.");
 				}
-			}
-			
-			public function init(view:View):void
-			{
-				this.currentView = view;
-				this.loggedIn = false;
-				this.creatingNewObject = false;
-				this.availableGamesArray = new Array();
-				this.availableGamesArrayCollection = new ArrayCollection(this.availableGamesArray);
-				
-				this.characterFolder = new Folder("Characters", GameObjectReference.CHARACTER, "Create New Character");
-				this.itemFolder = new Folder("Items", GameObjectReference.ITEM, "Create New Item");
-				this.pageFolder = new Folder("Pages", GameObjectReference.PAGE, "Create New Page");
-				this.questFolder = new Folder("Quests", GameObjectReference.QUEST, "Create New Quest");
-				this.gameObjectsArray = [characterFolder, itemFolder, pageFolder, questFolder];
-				this.gameObjectsArrayCollection = new ArrayCollection(gameObjectsArray);
 			}
 			
 			public function registerNewUser(username:String, password:String, email:String, comments:String):void
@@ -379,6 +409,11 @@
 			public function removeRequirement(req:Requirement):void
 			{// note that Quest overrides the following method to remove from the appropriate group (requirements or objectives)
 				currentGameObject.removeRequirement(req);
+			}
+			
+			public function renameGame(gameID:int, newName:String):void
+			{
+				games.setGameName.send(gameID, newName);
 			}
 			
 			public function updateCompletedDescription(newDescription:String):void
@@ -445,6 +480,11 @@
 						requirements.getRequirementsForObject.send(currentGameID, Requirement.QUEST_COMPLETE, id);
 						type = Requirement.QUEST_DISPLAY;
 					}
+					else
+					{
+						Alert.show("Error in Model.setCurrentGameObject: unkown object type.");
+						return;
+					}
 					requirements.getRequirementsForObject.send(currentGameID, type, id);
 				}
 			}
@@ -480,10 +520,9 @@
 				items.getItems.send(currentGameID);
 				nodes.getNodes.send(currentGameID);
 				quests.getQuests.send(currentGameID);
-
-				//locations.getLocations.send(currentGameID);
-				//media.getMedia.send(currentGameID);
-				//getQRCodes
+				media.getMedia.send(currentGameID);
+				qrcodes.getQRCodes.send(currentGameID);
+				//locations.getLocations.send(currentGameID);				
 			}
 			
 			private function getEventCodeFromEvent(id:int):String
@@ -625,6 +664,14 @@
 				}
 			}
 			
+			private function on_games_copyGameResult(event:ResultEvent):void
+			{ //takes gameID, newSHortName, newFullName, returns true on success
+				if(filterErrors(event, "games.copyGame"))
+				{
+					updateGameList();
+				}
+			}
+			
 			private function on_games_createGameResult(event:ResultEvent):void
 			{ //takes editorID, strFullName, returns id
 				if(filterErrors(event, "games.createGame"))
@@ -655,6 +702,14 @@
 					}
 					availableGamesArrayCollection.source = availableGamesArray;
 					updateView();
+				}
+			}
+			
+			private function on_games_setGameNameResult(event:ResultEvent):void
+			{ //takes gameID, newName, returns true if successful
+				if(filterErrors(event, "games.setGameName"))
+				{
+					updateGameList();
 				}
 			}
 			
@@ -712,6 +767,21 @@
 			private function on_items_updateItemResult(event:ResultEvent):void
 			{ //takes gameID, itemID, name, descr, media, droppable, destroyable, returns true if successful
 				filterErrors(event, "items.updateItem");	
+			}
+			
+			private function on_media_getMediaResult(event:ResultEvent):void
+			{ //takes gameID returns array of obj{media_id, name} *** check!!! ***
+				if(filterErrors(event, "media.getMedia"))
+				{
+					var newChildren:Array = new Array();
+					for each(var obj:Object in event.result.data)
+					{
+						newChildren.push(new GameObjectReference(obj.media_id, GameObjectReference.MEDIA, obj.name));
+					}
+					mediaFolder.children = newChildren;
+					gameObjectsArrayCollection.itemUpdated(mediaFolder);
+					updateView();
+				}
 			}
 			
 			private function on_nodes_createNodeResult(event:ResultEvent):void
@@ -917,6 +987,14 @@
 			private function on_playerStateChanges_updatePlayerStateChangeResult(event:ResultEvent):void
 			{
 				filterErrors(event, "playerStateChanges.updatePlayerStateChange");
+			}
+			
+			private function on_qrcodes_getQRCodesResult(event:ResultEvent):void
+			{//takes gameID, returns {qrcode_id, type, type_id, x_position, y_position}
+				if(filterErrors(event, "qrcodes.getQRCodes"))
+				{
+					
+				}
 			}
 			
 			private function on_quests_createQuestResult(event:ResultEvent):void
@@ -1242,11 +1320,6 @@
 			// Under Construction (Move when finished) //
 			/////////////////////////////////////////////			
 			
-			private function on_games_setGameNameResult(event:ResultEvent):void
-			{ //takes gameID, newName, returns true if successful
-				
-			}
-			
 			private function on_items_getReferrersResult(event:ResultEvent):void
 			{ //takes gameID, itemID, returns array obj{type, id} *** check!! ***
 				
@@ -1302,11 +1375,6 @@
 				
 			}
 			
-			private function on_media_getMediaResult(event:ResultEvent):void
-			{ //takes gameID returns array of obj{media_id, name} *** check!!! ***
-				
-			}
-			
 			private function on_media_getValidAudioExtensionsResult(event:ResultEvent):void
 			{ // takes no parameters, returns array of strings
 				
@@ -1339,6 +1407,26 @@
 			
 			private function on_playerStateChanges_getReferrersResult(event:ResultEvent):void
 			{
+				
+			}
+			
+			private function on_qrcodes_createQRCodeResult(event:ResultEvent):void
+			{//takes gameID, qrcode, objType, objID, xpos, ypos, returns id
+				
+			}
+			
+			private function on_qrcodes_deleteQRCodeResult(event:ResultEvent):void
+			{// takes gameID, qrcode, returns true if successful
+				
+			}
+			
+			private function on_qrcodes_getQRCodeResult(event:ResultEvent):void
+			{//takes gameID, qrcode, returns array of{qrcode_id, type, type_id, x_position, y_position}
+				
+			}
+			
+			private function on_qrcodes_updateQRCodeResult(event:ResultEvent):void
+			{//takes gameID, qrcode, objTYpe, objID, xpos, ypos, returns true if successful
 				
 			}
 			

@@ -16,6 +16,11 @@
 			// Getters //
 			/////////////
 			
+			public function getComments():String
+			{
+				return mainMenuView.getComments();
+			}
+			
 			public function getCompletedDescription():String
 			{
 				return editingView.getCompletedDescription();
@@ -29,6 +34,11 @@
 			public function getDroppable():Boolean
 			{
 				return editingView.getDroppable();
+			}
+			
+			public function getEmail():String
+			{
+				return mainMenuView.getEmail();
 			}
 			
 			public function getGameName():String
@@ -87,6 +97,11 @@
 			public function goToMainMenu():void
 			{
 				this.selectedChild = mainMenuView;
+			}
+			
+			public function passwordsMatch():Boolean
+			{
+				return mainMenuView.passwordsMatch();
 			}
 			
 			public function setController(newController:Controller):void

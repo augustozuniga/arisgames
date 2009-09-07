@@ -9,10 +9,12 @@ package org.arisgames.editor.model
 		private var droppable:Boolean;
 		private var destroyable:Boolean;
 		private var playerModifications:Array;
+		private var instances:Array;
 		
 		private var droppableSnapshot:Boolean;
 		private var destroyableSnapshot:Boolean;
 		private var playerModificationsSnapshot:Array;
+		private var instancesSnapshot:Array;
 		
 		public function Item(reference:GameObjectReference,
 							 description:String, 
@@ -27,6 +29,13 @@ package org.arisgames.editor.model
 			this.modificationsArrayCollection = new ArrayCollection(this.playerModifications);
 			this.droppable = droppable;
 			this.destroyable = destroyable;
+			this.instances = new Array();
+		}
+		
+		public function addInstance(newInstance:GameObjectInstance):void
+		{
+			instances.push(newInstance);
+			addCounter++;
 		}
 		
 		public function addPlayerModification(newModification:PlayerModification):void
@@ -78,7 +87,53 @@ package org.arisgames.editor.model
 			{
 				differences.push(PlayerModification.DELETE + remainingMod.getModID());
 			}
+			for each(var instance:GameObjectInstance in instances)
+			{
+				var instanceFound:Boolean = false;
+				var instanceIndex:int = 0;
+				while(!found && instanceIndex < instancesSnapshot.length)
+				{
+					if((instancesSnapshot[instanceIndex] as GameObjectInstance).getInstanceID() == instance.getInstanceID())
+					{
+						instanceFound = true;
+					}
+					else
+					{
+						instanceIndex++;
+					}
+				}
+				if(found)
+				{
+					if((instancesSnapshot[instanceIndex] as GameObjectInstance).differs(instance))
+					{
+						differences.push(GameObjectInstance.MODIFY + instance.getInstanceID().toString());
+					}
+					instancesSnapshot.splice(instanceIndex, 1); // this is the line that destroys the snapshot fidelity
+															   // it is here to increase performance
+															   // if you remove it, make sure to adjust the next for each to compensate
+				}
+				else
+				{
+					differences.push(GameObjectInstance.ADD + instance.getInstanceID());
+				}
+			}
+			for each(var remainingInstance:GameObjectInstance in instancesSnapshot)
+			{
+				differences.push(GameObjectInstance.DELETE + remainingInstance.getInstanceID());
+			}
 			return differences;
+		}
+		
+		public function getInstance(id:int):GameObjectInstance
+		{
+			for each(var instance:GameObjectInstance in instances)
+			{
+				if(instance.getInstanceID() == id)
+				{
+					return instance;
+				}
+			}
+			return null;
 		}
 		
 		public function getModification(modID:int):PlayerModification
@@ -108,6 +163,11 @@ package org.arisgames.editor.model
 			return droppable;
 		}
 		
+		public function removeInstance(instance:GameObjectInstance):void
+		{
+			instances.splice(instances.indexOf(instance), 1);
+		}
+		
 		public function removePlayerModification(mod:PlayerModification):void
 		{
 			playerModifications.splice(playerModifications.indexOf(mod), 1);
@@ -133,6 +193,11 @@ package org.arisgames.editor.model
 			for each(var mod:PlayerModification in playerModifications)
 			{
 				playerModificationsSnapshot.push(mod.copy());
+			}
+			instancesSnapshot = new Array();
+			for each(var instance:GameObjectInstance in instances)
+			{
+				instancesSnapshot.push(instance.copy());
 			}
 		}
 		

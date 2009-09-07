@@ -2,6 +2,7 @@ package org.arisgames.editor.controller
 {
 	import flash.events.Event;
 	import flash.events.FocusEvent;
+	import flash.events.MouseEvent;
 	
 	import mx.controls.Alert;
 	import mx.core.UIComponent;
@@ -10,6 +11,7 @@ package org.arisgames.editor.controller
 	
 	import org.arisgames.editor.model.Choice;
 	import org.arisgames.editor.model.GameObjectReference;
+	import org.arisgames.editor.model.GameReference;
 	import org.arisgames.editor.model.Generator;
 	import org.arisgames.editor.model.Model;
 	import org.arisgames.editor.model.PlayerModification;
@@ -44,6 +46,11 @@ package org.arisgames.editor.controller
 		public function onChoicesDataGridDragEnter(event:DragEvent):void
 		{
 			generalizedDragEnterHandler(event, true, [GameObjectReference.PAGE]);
+		}
+		
+		public function onCopyGameButtonClick(event:MouseEvent):void
+		{
+			currentModel.copyGame(currentView.getSelectedGame());
 		}
 		
 		public function onDeleteGameButtonClick(event:Event):void
@@ -190,7 +197,14 @@ package org.arisgames.editor.controller
 			var selection:Object = currentView.getSelectedGameObject();
 			if(selection is GameObjectReference)
 			{
-				currentModel.setCurrentGameObject(selection as GameObjectReference);				
+				if((selection as GameObjectReference).isMedia())
+				{
+					//this space reserved for any desired behavior when clicking on a media file
+				}
+				else
+				{
+					currentModel.setCurrentGameObject(selection as GameObjectReference);					
+				}
 			}
 			if(selection is Generator)
 			{
@@ -213,11 +227,6 @@ package org.arisgames.editor.controller
 			
 		}
 		
-		public function onRegisterButtonClick(event:Event):void
-		{
-			
-		}
-		
 		public function onRequirementsDataGridDragDrop(event:DragEvent):void
 		{
 			currentModel.addRequirement(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
@@ -226,6 +235,22 @@ package org.arisgames.editor.controller
 		public function onRequirementsDataGridDragEnter(event:DragEvent):void
 		{
 			generalizedDragEnterHandler(event, false, [GameObjectReference.ITEM, GameObjectReference.PAGE]);
+		}
+		
+		public function onSubmitRegistrationButtonClick(event:Event):void
+		{
+			if(currentView.passwordsMatch())
+			{
+				currentModel.registerNewUser(currentView.getUsername(),
+											 currentView.getPassword(),
+											 currentView.getEmail(),
+											 currentView.getComments()
+											 );
+			}
+			else
+			{
+				Alert.show("Passwords do not match.  Please try again.");
+			}
 		}
 		
 		///////////////////////

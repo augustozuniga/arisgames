@@ -9,13 +9,33 @@
 		
 			import org.arisgames.editor.controller.Controller;
 			import org.arisgames.editor.model.Model;
-
+			
+			private static const LOGIN_BOX_LABEL_WIDTH:Number = 150;
+			
 			[Bindable] private var currentController:Controller;
 			[Bindable] private var currentModel:Model;
+			
+			private var registering:Boolean = false;
 			
 			/////////////
 			// Getters //
 			/////////////
+			
+			public function cancelRegistration(event:Event = null):void
+			{
+				registering = false;
+				update();
+			}
+			
+			public function getComments():String
+			{
+				return commentsTextInput.text;
+			}
+			
+			public function getEmail():String
+			{
+				return emailTextInput.text;
+			}
 			
 			public function getGameName():String
 			{
@@ -42,6 +62,11 @@
 				return usernameTextInput.text;
 			}
 			
+			public function passwordsMatch():Boolean
+			{
+				return (passwordTextInput.text == passwordConfirmTextInput.text);
+			}
+			
 			public function setController(newController:Controller):void
 			{
 				currentController = newController;
@@ -52,6 +77,12 @@
 				currentModel = newModel;
 			}
 			
+			public function startRegistration(event:Event = null):void
+			{
+				registering = true;
+				update();
+			}
+			
 			public function update():void
 			{
 				if(currentModel.isLoggedIn())
@@ -59,12 +90,30 @@
 					mainVBox.drop(loginBox);
 					mainVBox.addChild(newGameButton);
 					mainVBox.addChild(editGameButton);
+					mainVBox.addChild(copyGameButton);
+					mainVBox.addChild(deleteGameButton);
+					passwordTextInput.text = "";
+					passwordConfirmTextInput.text = "";
+					emailTextInput.text = "";
+					commentsTextInput.text = "";
 				}
 				else
 				{
 					mainVBox.addChild(loginBox);
 					mainVBox.drop(newGameButton);						
 					mainVBox.drop(editGameButton);
+					mainVBox.drop(copyGameButton);
+					mainVBox.drop(deleteGameButton);
+					if(registering)
+					{
+						loginBox.drop(loginButtonBox);
+						loginBox.addChild(registrationControlsBox);
+					}
+					else
+					{
+						loginBox.addChild(loginButtonBox);
+						loginBox.drop(registrationControlsBox);
+					}
 				}
 			}
 			
@@ -74,38 +123,72 @@
 	<mx:Tree id="availableGamesTree"
 		height="100%" width="200"
 		dataProvider="{currentModel.availableGamesArrayCollection}"
-		labelField="name"/>
+		labelField="name"
+		editable="true"/>
 
 	<view:SmartVBox id="mainVBox"
 		height="100%" width="100%"
 		backgroundColor="#FFFFFF">
 		<mx:Label text="Welcome to the ARIS Game Editor!" fontSize="32" color="#008800"/>
-		<mx:VBox id="loginBox" width="300">
+		<view:SmartVBox id="loginBox" width="400">
 			<mx:HBox paddingLeft="10" width="100%">
 				<mx:Label text="Username:"
-					width="80"/>
+					width="{LOGIN_BOX_LABEL_WIDTH}"/>
 				<mx:TextInput id="usernameTextInput"
 					width="100%"/>				
 			</mx:HBox>
 			<mx:HBox paddingLeft="10" width="100%">
 				<mx:Label text="Password:"
-					width="80"/>
+					width="{LOGIN_BOX_LABEL_WIDTH}"/>
 				<mx:TextInput id="passwordTextInput"
 					width="100%"
 					displayAsPassword="true"
 					enter="currentController.onPasswordEnter(event)"/>								
 			</mx:HBox>
-			<mx:HBox paddingLeft="10" width="100%">
-				<mx:Spacer width="80"/>
+			<mx:HBox id="loginButtonBox"
+				paddingLeft="10" width="100%">
+				<mx:Spacer width="{LOGIN_BOX_LABEL_WIDTH}"/>
 				<mx:Button id="loginButton"
 					label="Login"
 					click="currentController.onLoginButtonClick(event)"/>
 				<mx:Spacer width="100%"/>
 				<mx:Button id="registerButton"
 					label="Register New User"
-					click="currentController.onRegisterButtonClick(event)"/>				
+					click="startRegistration(event)"/>				
 			</mx:HBox>
-		</mx:VBox>
+			<mx:VBox id="registrationControlsBox"
+				width="{loginBox.width}">
+				<mx:HBox paddingLeft="10" width="100%">
+					<mx:Label text="Confirm Password:"
+						width="{LOGIN_BOX_LABEL_WIDTH}"/>
+					<mx:TextInput id="passwordConfirmTextInput"
+						width="100%"
+						displayAsPassword="true"/>								
+				</mx:HBox>
+				<mx:HBox paddingLeft="10" width="100%">
+					<mx:Label text="Email:"
+						width="{LOGIN_BOX_LABEL_WIDTH}"/>
+					<mx:TextInput id="emailTextInput"
+						width="100%"/>							
+				</mx:HBox>
+				<mx:HBox paddingLeft="10" width="100%">
+					<mx:Label text="How you heard about us:"
+						width="{LOGIN_BOX_LABEL_WIDTH}"/>
+					<mx:TextInput id="commentsTextInput"
+						width="100%"/>						
+				</mx:HBox>
+				<mx:HBox paddingLeft="10" width="100%">
+					<mx:Spacer width="{LOGIN_BOX_LABEL_WIDTH}"/>
+					<mx:Button id="submitRegistrationButton"
+						label="Submit"
+						click="currentController.onSubmitRegistrationButtonClick(event)"/>
+					<mx:Spacer width="100%"/>
+					<mx:Button id="cancelRegistrationButton"
+						label="Cancel"
+						click="cancelRegistration(event)"/>				
+				</mx:HBox>
+			</mx:VBox>
+		</view:SmartVBox>
 		<view:AnnotatedButton id="newGameButton"
 			buttonLabel="Create New Game"
 			buttonClick="{currentController.onNewGameButtonClick}"
@@ -114,6 +197,10 @@
 			buttonLabel="Modify Game"
 			buttonClick="{currentController.onEditGameButtonClick}"
 			annotation="Edit the selected game on the left."/>
+		<view:AnnotatedButton id="copyGameButton"
+			buttonLabel="Copy Game"
+			buttonClick="{currentController.onCopyGameButtonClick}"
+			annotation="Copy the selected game on the left."/>
 		<view:AnnotatedButton id="deleteGameButton"
 			buttonLabel="Delete Game"
 			buttonClick="{currentController.onDeleteGameButtonClick}"

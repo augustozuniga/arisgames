@@ -6,9 +6,7 @@ package org.arisgames.editor.model
 		public static const ITEM:String = "Item";
 		public static const PAGE:String = "Node";
 		public static const QUEST:String = "Quest";
-		public static const AUDIO:String = "Audio";
-		public static const IMAGE:String = "Image";
-		public static const VIDEO:String = "Video";
+		public static const MEDIA:String = "Media";
 		
 		private var privateID:int;
 		private var privateName:String;
@@ -42,8 +40,8 @@ package org.arisgames.editor.model
 		}
 		
 		public function isMedia():Boolean
-		{
-			return (privateType == AUDIO || privateType == IMAGE || privateType == VIDEO);
+		{ // this function is included for possible extensions that distinguish between media types
+			return (privateType == MEDIA);
 		}
 
 	}
