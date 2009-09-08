@@ -41,19 +41,6 @@
 				return mainMenuView.getEmail();
 			}
 			
-			public function getGameName():String
-			{
-				if(this.selectedChild == editingView)
-				{
-					return editingView.getGameName();
-				}
-				if(this.selectedChild == mainMenuView)
-				{
-					return mainMenuView.getGameName();
-				}
-				return null;
-			}
-			
 			public function getGreeting():String
 			{
 				return editingView.getGreeting();

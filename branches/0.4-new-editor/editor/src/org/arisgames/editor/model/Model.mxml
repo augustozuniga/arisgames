@@ -164,6 +164,8 @@
 			private var creatingNewObject:Boolean;
 			
 			private var eventList:Array;
+			private var gpsInstanceList:Array;
+			private var qrCodeInstanceList:Array;
 			private var characterFolder:Folder;
 			private var itemFolder:Folder;
 			private var pageFolder:Folder;
@@ -177,6 +179,16 @@
 			public function getCurrentGameName():String
 			{
 				return currentGameName;
+			}
+			
+			public function getGPSInstances():Array
+			{
+				return gpsInstanceList;
+			}
+			
+			public function getQRCodeInstances():Array
+			{
+				return qrCodeInstanceList;
 			}
 			
 			public function isLoggedIn():Boolean
@@ -356,6 +368,10 @@
 				this.creatingNewObject = false;
 				this.availableGamesArray = new Array();
 				this.availableGamesArrayCollection = new ArrayCollection(this.availableGamesArray);
+				
+				this.eventList = new Array();
+				this.gpsInstanceList = new Array();
+				this.qrCodeInstanceList = new Array();
 				
 				this.characterFolder = new Folder("Characters", GameObjectReference.CHARACTER, "Create New Character");
 				this.itemFolder = new Folder("Items", GameObjectReference.ITEM, "Create New Item");
@@ -1030,7 +1046,19 @@
 			{//takes gameID, returns {qrcode_id, type, type_id, x_position, y_position}
 				if(filterErrors(event, "qrcodes.getQRCodes"))
 				{
-					
+					this.qrCodeInstanceList = new Array();
+					var codes:Array = event.result.data.source as Array;
+					for each(var obj:Object in codes)
+					{
+						var instance:QRCodeInstance = new QRCodeInstance(getGameObjectReference(obj.type_id, obj.type),
+																		 obj.qrcode_id,
+																		 obj.x_position,
+																		 obj.y_position
+																		 );
+						instance.makeMarker();
+						this.qrCodeInstanceList.push(instance);
+					}
+					updateView();
 				}
 			}
 			

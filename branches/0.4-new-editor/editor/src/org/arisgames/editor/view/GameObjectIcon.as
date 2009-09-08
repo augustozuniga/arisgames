@@ -61,14 +61,14 @@ package org.arisgames.editor.view
 			{
 				Alert.show("Error in GameObjectIcon constructor: unknown object type");
 			}
-			loader.load(new URLRequest(url);
+			loader.load(new URLRequest(url));
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, drawImage);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorHandler);		
 		}
 		
 		private function drawImage(event:Event):void
 		{
-			var myBitmap:BitmapData = (loader.width, loader.height, false);
+			var myBitmap:BitmapData = new BitmapData(loader.width, loader.height, false);
 			var transform:Matrix = new Matrix();
 			transform.tx = xOffset - RADIUS;
 			transform.ty = YOFFSET - RADIUS;

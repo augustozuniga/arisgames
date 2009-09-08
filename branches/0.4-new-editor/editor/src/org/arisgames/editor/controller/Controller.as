@@ -1,17 +1,18 @@
 package org.arisgames.editor.controller
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	
 	import mx.controls.Alert;
+	import mx.core.Container;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
 	
 	import org.arisgames.editor.model.Choice;
 	import org.arisgames.editor.model.GameObjectReference;
-	import org.arisgames.editor.model.GameReference;
 	import org.arisgames.editor.model.Generator;
 	import org.arisgames.editor.model.Model;
 	import org.arisgames.editor.model.PlayerModification;
@@ -120,11 +121,6 @@ package org.arisgames.editor.controller
 		public function onEditGameButtonClick(event:Event):void
 		{
 			currentModel.editGame(currentView.getSelectedGame());	
-		}
-		
-		public function onGameNameTextInputFocusOut(event:Event):void
-		{
-			currentModel.updateCurrentGameName(currentView.getGameName());
 		}
 		
 		public function onGameObjectCompletedDescriptionTextAreaFocusOut(event:Event):void

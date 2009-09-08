@@ -3,6 +3,10 @@
 	
 	<mx:Script>
 		<![CDATA[
+			import org.arisgames.editor.model.QRCodeInstance;
+			import org.arisgames.editor.model.Generator;
+			import mx.validators.EmailValidator;
+			import mx.messaging.AbstractConsumer;
 			import org.arisgames.editor.model.Quest;
 			import org.arisgames.editor.model.Page;
 			import org.arisgames.editor.model.Item;
@@ -17,6 +21,10 @@
 			[Bindable] private var currentController:Controller;
 			[Bindable] private var currentModel:Model;
 			
+			[Bindable] [Embed("assets/editor icons/folder.png")] private var folderIcon:Class;
+			[Bindable] [Embed("assets/editor icons/newObjectIcon.png")] private var newObjectIcon:Class;
+			[Bindable] [Embed("assets/editor icons/upload.png")] private var uploadIcon:Class;
+			
 			public function getCompletedDescription():String
 			{
 				return gameObjectCompletedDescriptionTextArea.text;
@@ -30,11 +38,6 @@
 			public function getDroppable():Boolean
 			{
 				return droppableCheckBox.selected;
-			}
-			
-			public function getGameName():String
-			{
-				return gameNameTextInput.text;
 			}
 			
 			public function getGreeting():String
@@ -52,6 +55,30 @@
 				return gameObjectNameTextInput.text;
 			}
 			
+/*			public function getObjectNavigatorIcon(node:Object):Object
+			{
+				if(node is Folder)
+				{
+					return folderIcon;
+				}
+				else if(node is Generator)
+				{
+					if((node as Generator).getType() == GameObjectReference.MEDIA)
+					{
+						return uploadIcon;
+					}
+					else
+					{
+						return newObjectIcon;
+					} 
+				}
+				else if(node is GameObjectReference)
+				{
+					return new GameObjectIcon((node as GameObjectReference).getType());
+				}
+				return null;
+			}
+*/			
 			public function getSelectedGameObject():Object
 			{
 				return objectNavigator.selectedItem;
@@ -69,11 +96,18 @@
 
 			public function update():void
 			{
-				gameNameTextInput.text = currentModel.getCurrentGameName();
+				gameNameLabel.text = currentModel.getCurrentGameName();
 				for each(var folder:Folder in objectNavigator.dataProvider)
 				{
 					objectNavigator.expandItem(folder, true);
 				}
+				updateCurrentGameObject();
+				updateSelectedReference();
+				updateQRCodeMarkers();
+			}
+			
+			public function updateCurrentGameObject():void
+			{
 				var currentGameObject:GameObject = currentModel.getCurrentGameObject();
 				if(currentGameObject == null)
 				{
@@ -136,7 +170,28 @@
 						objectivesDataGrid.dataProvider = (currentGameObject as Quest).objectivesArrayCollection;
 						rightView.addChild(objectivesDataGrid);
 					}
+				}
+			}
+			
+			public function updateSelectedReference():void
+			{
+				var currentGameObject:GameObject = currentModel.getCurrentGameObject();
+				if(currentGameObject != null)
+				{
 					objectNavigator.selectedItem = currentGameObject.getReference();
+				}
+			}
+			
+			public function updateQRCodeMarkers():void
+			{
+				for each(var marker:QRCodeMarker in qrCodeContainer.getChildren())
+				{
+					qrCodeContainer.removeChild(marker);
+				}
+				var instances:Array = currentModel.getQRCodeInstances();
+				for each(var instance:QRCodeInstance in instances)
+				{
+					qrCodeContainer.addChild(instance.getMarker());
 				}
 			}
 			
@@ -144,20 +199,15 @@
 	</mx:Script>
 	
 	<mx:VBox width="200" height="100%">
-		<mx:HBox width="100%"
-			borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2">
-			<mx:Label text="Game Name:"/>
-			<mx:TextInput id="gameNameTextInput"
-				width="100%"
-				focusOut="currentController.onGameNameTextInputFocusOut(event)"/>
-		</mx:HBox>
+		<mx:Label id="gameNameLabel"
+			width="100%"/>
 
 		<view:ObjectNavigator id="objectNavigator"
 			borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2"
 			dataProvider="{currentModel.gameObjectsArrayCollection}"
-			labelField="label"
+			labelField="label" 
 			click="currentController.onObjectNavigatorClick(event)"
-			dragEnabled="true"/>
+			dragEnabled="true"/><!--iconFunction="getObjectNavigatorIcon"-->
 
 		<mx:HBox width="100%">
 			<mx:Button id="mainMenuButton"
@@ -186,7 +236,7 @@
 					label="QR Codes"
 					borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2"
 					dragEnter="currentController.onQRCodeContainerDragEnter(event)"
-					dragDrop="currentController.onQRCodeContainerDragDrop(event)"/>					
+					dragDrop="currentController.onQRCodeContainerDragDrop(event)"/>			
 			</mx:TabNavigator>
 			<mx:Canvas id="previewCanvas"
 				height="370" width="320"
