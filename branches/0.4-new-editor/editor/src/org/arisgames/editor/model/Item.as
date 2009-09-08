@@ -55,26 +55,26 @@ package org.arisgames.editor.model
 			}
 			for each(var mod:PlayerModification in playerModifications)
 			{
-				var found:Boolean = false;
-				var index:int = 0;
-				while(!found && index < playerModificationsSnapshot.length)
+				var modFound:Boolean = false;
+				var modIndex:int = 0;
+				while(!modFound && modIndex < playerModificationsSnapshot.length)
 				{
-					if((playerModificationsSnapshot[index] as PlayerModification).getModID() == mod.getModID())
+					if((playerModificationsSnapshot[modIndex] as PlayerModification).getModID() == mod.getModID())
 					{
-						found = true;
+						modFound = true;
 					}
 					else
 					{
-						index++;
+						modIndex++;
 					}
 				}
-				if(found)
+				if(modFound)
 				{
-					if((playerModificationsSnapshot[index] as PlayerModification).differs(mod))
+					if((playerModificationsSnapshot[modIndex] as PlayerModification).differs(mod))
 					{
 						differences.push(PlayerModification.MODIFY + mod.getModID().toString());
 					}
-					playerModificationsSnapshot.splice(index, 1); // this is the line that destroys the snapshot fidelity
+					playerModificationsSnapshot.splice(modIndex, 1); // this is the line that destroys the snapshot fidelity
 															   // it is here to increase performance
 															   // if you remove it, make sure to adjust the next for each to compensate
 				}
@@ -91,7 +91,7 @@ package org.arisgames.editor.model
 			{
 				var instanceFound:Boolean = false;
 				var instanceIndex:int = 0;
-				while(!found && instanceIndex < instancesSnapshot.length)
+				while(!instanceFound && instanceIndex < instancesSnapshot.length)
 				{
 					if((instancesSnapshot[instanceIndex] as GameObjectInstance).getInstanceID() == instance.getInstanceID())
 					{
@@ -102,7 +102,7 @@ package org.arisgames.editor.model
 						instanceIndex++;
 					}
 				}
-				if(found)
+				if(instanceFound)
 				{
 					if((instancesSnapshot[instanceIndex] as GameObjectInstance).differs(instance))
 					{

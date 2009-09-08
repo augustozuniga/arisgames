@@ -347,7 +347,9 @@
 			public function init(view:View):void
 			{
 				GameReference.init(this);
-				//media.getValidAudioExtensions.send(
+				media.getValidAudioExtensions.send();
+				media.getValidImageExtensions.send();
+				media.getValidVideoExtensions.send();
 				
 				this.currentView = view;
 				this.loggedIn = false;
@@ -416,6 +418,43 @@
 				games.setGameName.send(gameID, newName);
 			}
 			
+			public function setCurrentGameObject(objRef:GameObjectReference):void
+			{
+				updateCurrentGame();
+				getCurrentGameData();
+				if(objRef != null)
+				{
+					var id:int = objRef.getID();
+					var type:String = objRef.getType();
+					if(type == GameObjectReference.CHARACTER)
+					{
+						npcs.getNpc.send(currentGameID, id);
+					}
+					else if(type == GameObjectReference.ITEM)
+					{
+						items.getItem.send(currentGameID, id);
+						playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, type, id);
+					}
+					else if(type == GameObjectReference.PAGE)
+					{
+						nodes.getNode.send(currentGameID, id);
+						playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, type, id);
+					}
+					else if(type == GameObjectReference.QUEST)
+					{
+						quests.getQuest.send(currentGameID, id);
+						requirements.getRequirementsForObject.send(currentGameID, Requirement.QUEST_COMPLETE, id);
+						type = Requirement.QUEST_DISPLAY;
+					}
+					else
+					{
+						Alert.show("Error in Model.setCurrentGameObject: unkown object type.");
+						return;
+					}
+					requirements.getRequirementsForObject.send(currentGameID, type, id);
+				}
+			}
+			
 			public function updateCompletedDescription(newDescription:String):void
 			{
 				(currentGameObject as Quest).setCompletedDescription(newDescription);
@@ -452,41 +491,16 @@
 				(currentGameObject as Character).setGreeting(newGreeting);
 			}
 			
-			public function setCurrentGameObject(objRef:GameObjectReference):void
+			public function uploadMedia(fileRef:FileReference):void
 			{
-				updateCurrentGame();
+				var params:URLVariables = new URLVariables();
+				params.gameID = currentGameID;
+				var request:URLRequest = new URLRequest("http://atsosxdev.doit.wisc.edu/aris/editor/server/services/aris/uploadHandler.php");
+				request.method = URLRequestMethod.POST;
+				request.data = params;
+				fileRef.upload(request);
+				media.createMedia.send(currentGameID, fileRef.name);
 				getCurrentGameData();
-				if(objRef != null)
-				{
-					var id:int = objRef.getID();
-					var type:String = objRef.getType();
-					if(type == GameObjectReference.CHARACTER)
-					{
-						npcs.getNpc.send(currentGameID, id);
-					}
-					else if(type == GameObjectReference.ITEM)
-					{
-						items.getItem.send(currentGameID, id);
-						playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, type, id);
-					}
-					else if(type == GameObjectReference.PAGE)
-					{
-						nodes.getNode.send(currentGameID, id);
-						playerStateChanges.getPlayerStateChangesForObject.send(currentGameID, type, id);
-					}
-					else if(type == GameObjectReference.QUEST)
-					{
-						quests.getQuest.send(currentGameID, id);
-						requirements.getRequirementsForObject.send(currentGameID, Requirement.QUEST_COMPLETE, id);
-						type = Requirement.QUEST_DISPLAY;
-					}
-					else
-					{
-						Alert.show("Error in Model.setCurrentGameObject: unkown object type.");
-						return;
-					}
-					requirements.getRequirementsForObject.send(currentGameID, type, id);
-				}
 			}
 			
 			
@@ -676,12 +690,7 @@
 			{ //takes editorID, strFullName, returns id
 				if(filterErrors(event, "games.createGame"))
 				{
-					currentGameID = event.result.data as int;
-					characterFolder.clear();
-					itemFolder.clear();
-					pageFolder.clear();
-					questFolder.clear();
-					currentView.goToGameEditor();
+					updateGameList();
 					updateView();					
 				}
 			}
@@ -689,6 +698,8 @@
 			private function on_games_deleteGameResult(event:ResultEvent):void
 			{
 				filterErrors(event, "games.deleteGame");
+				updateGameList();
+				updateView();
 			}
 			
 			private function on_games_getGamesForEditorResult(event:ResultEvent):void
@@ -770,18 +781,44 @@
 			}
 			
 			private function on_media_getMediaResult(event:ResultEvent):void
-			{ //takes gameID returns array of obj{media_id, name} *** check!!! ***
+			{ //takes gameID returns array of obj{media_id, name}
 				if(filterErrors(event, "media.getMedia"))
 				{
 					var newChildren:Array = new Array();
 					for each(var obj:Object in event.result.data)
 					{
-						newChildren.push(new GameObjectReference(obj.media_id, GameObjectReference.MEDIA, obj.name));
+						newChildren.push(new GameObjectReference(obj.media_id, GameObjectReference.MEDIA, obj.media));
 					}
 					mediaFolder.children = newChildren;
 					gameObjectsArrayCollection.itemUpdated(mediaFolder);
 					updateView();
 				}
+			}
+			
+			private function on_media_getValidAudioExtensionsResult(event:ResultEvent):void
+			{ // takes no parameters, returns array of strings (extensions without the dot)
+				if(filterErrors(event, "media.getValidAudioExtensions"))
+				{
+					MediaUploader.addExtensions(event.result.data as Array);
+				}
+			}
+			
+			private function on_media_getValidImageExtensionsResult(event:ResultEvent):void
+			{ // takes no parameters, returns array of strings (extensions without the dot)
+				if(filterErrors(event, "media.getValidImageExtensions"))
+				{
+					MediaUploader.addExtensions(event.result.data as Array);
+				}
+				
+			}
+			
+			private function on_media_getValidVideoExtensionsResult(event:ResultEvent):void
+			{ // takes no parameters, returns array of strings (extensions without the dot)
+				if(filterErrors(event, "media.getValidVideoExtensions"))
+				{
+					MediaUploader.addExtensions(event.result.data as Array);
+				}
+				
 			}
 			
 			private function on_nodes_createNodeResult(event:ResultEvent):void
@@ -1372,21 +1409,6 @@
 			
 			private function on_media_deleteMediaResult(event:ResultEvent):void
 			{ //takes gameID, mediaID, returns true if successful
-				
-			}
-			
-			private function on_media_getValidAudioExtensionsResult(event:ResultEvent):void
-			{ // takes no parameters, returns array of strings
-				
-			}
-			
-			private function on_media_getValidImageExtensionsResult(event:ResultEvent):void
-			{ // takes no parameters, returns array of strings
-				
-			}
-			
-			private function on_media_getValidVideoExtensionsResult(event:ResultEvent):void
-			{ // takes no parameters, returns array of strings
 				
 			}
 			

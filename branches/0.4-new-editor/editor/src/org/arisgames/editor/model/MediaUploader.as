@@ -6,7 +6,7 @@ package org.arisgames.editor.model
 	
 	public class MediaUploader
 	{
-		private static var fileTypes:String = "";
+		private static var fileTypes:String = "Media Files ()";
 		private static var windowsExtensions:String = "";
 		
 		private var currentModel:Model;
@@ -22,13 +22,23 @@ package org.arisgames.editor.model
 		
 		public static function addExtensions(newExtensions:Array):void
 		{
-//			fileTypes += ;
-//			windowsExtensions += ;
+			var additionalFileTypes:String = "";
+			for each(var extension:String in newExtensions)
+			{
+				if(windowsExtensions.length > 0)
+				{
+					additionalFileTypes += ",";
+					windowsExtensions += ";";
+				}
+				additionalFileTypes += extension;
+				windowsExtensions += "*." + extension;
+			}
+			fileTypes = fileTypes.substring(0, fileTypes.length - 2) + additionalFileTypes + ")";
 		}
 		
 		public function selectHandler(event:Event):void
 		{
-//			currentModel.uploadMedia(fileRef);
+			currentModel.uploadMedia(fileRef);
 			fileRef.removeEventListener(Event.SELECT, selectHandler);
 		}
 
