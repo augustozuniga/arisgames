@@ -626,9 +626,10 @@ static NSString *locationsLock = @"locationsLock";
 	NSLog(@"Model: Item %d Viewed, update server", itemId);
 	
 	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",itemId],
+	NSArray *arguments = [NSArray arrayWithObjects:
+						  [NSString stringWithFormat:@"%d",self.gameId],
 						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
 						  nil];
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"players" 

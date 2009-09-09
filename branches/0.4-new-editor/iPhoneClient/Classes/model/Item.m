@@ -54,7 +54,6 @@
 
 	//Have AppDelegate display
 	[appDelegate displayNearbyObjectView:itemDetailsViewController];
-
 	
 }
 

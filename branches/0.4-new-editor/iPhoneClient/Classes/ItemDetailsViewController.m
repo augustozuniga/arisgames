@@ -114,20 +114,13 @@
 		[button setImage:[UIImage imageNamed:@"playArrow.png"] forState:UIControlStateNormal];
 		[scrollView addSubview:button];		
 	}
-	
-	
-	//Notify server that the item was viewed
-	NSURLRequest *request = [appModel getURLForModule:[ NSString stringWithFormat:@"Inventory&controller=SimpleREST&event=viewedItem&item_id=%d", self.item.itemId]];
-	NSLog(@"ItemDetialsViewController: Notifying server this item was viewed using URL:%@",request.URL.absoluteString);
-	[NSThread detachNewThreadSelector: @selector(fetchURLData:) toTarget: appModel withObject: request];	
-	//[appModel fetchURLData:request];
-	
 
-	
 	//Stop Waiting Indicator
 	//[NSThread detachNewThreadSelector: @selector(removeWaitingIndicator) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: nil];
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
 	
+	//Notify the server this item was displayed
+	[appModel updateServerItemViewed:itemId];
 	
 	[super viewDidLoad];
 }
