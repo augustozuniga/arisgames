@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AppModel.h"
 
 @interface GamePickerViewController : UITableViewController {
+	AppModel *appModel;
 	NSMutableArray *gameList;
 	UITableView *gameTable;
 }

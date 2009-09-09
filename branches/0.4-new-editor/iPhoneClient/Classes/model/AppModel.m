@@ -637,6 +637,22 @@ static NSString *locationsLock = @"locationsLock";
 	[jsonConnection performSynchronousRequest]; 
 }
 
+- (void)updateServerGameSelected{
+	NSLog(@"Model: Game %d Selected, update server", gameId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: 
+						  [NSString stringWithFormat:@"%d",self.playerId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"updatePlayerLastGame" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+
 - (void)resetPlayerEvents {
 	NSLog(@"Model: Clearing Player Events");
 	

@@ -8,6 +8,7 @@
 
 #import "GamePickerViewController.h"
 #import "model/Game.h"
+#import "ARISAppDelegate.h"
 
 @implementation GamePickerViewController
 
@@ -20,6 +21,7 @@
     if (self) {
         self.title = @"Select Game";
         self.tabBarItem.image = [UIImage imageNamed:@"Game.png"];
+		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
     }
     return self;
 }

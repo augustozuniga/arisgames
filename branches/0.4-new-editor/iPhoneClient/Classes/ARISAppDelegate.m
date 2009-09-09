@@ -260,6 +260,7 @@
 	
 	//Notify the Server
 	NSLog(@"AppDelegate: Game Selected. Notifying Server");
+	[appModel updateServerGameSelected];
 	
 	//Set tabBar to the first item
 	tabBarController.selectedIndex = 0;
