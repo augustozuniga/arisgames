@@ -3,7 +3,7 @@ package org.arisgames.editor.model
 	import mx.collections.ArrayCollection;
 	import mx.controls.Alert;
 	
-	public class Page extends GameObject
+	public class Page extends InstantiatedGameObject
 	{
 		public static const MAX_NUM_CHOICES:int = 3;
 		

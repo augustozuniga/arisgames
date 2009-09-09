@@ -252,6 +252,11 @@
 				}
 			}
 			
+			public function addQRCode(ref:GameObjectReference):void
+			{
+				
+			}
+			
 			public function addRequirement(ref:GameObjectReference):void
 			{
 				currentGameObject.addRequirement(new Requirement(ref, 0,
@@ -524,6 +529,24 @@
 			// Private Functions //
 			///////////////////////
 			
+			private function assignInstances():void
+			{
+				if(currentGameObject is InstantiatedGameObject)
+				{
+					for each(var qr:QRCodeInstance in qrCodeInstanceList)
+					{
+						if(qr.belongsToGameObject(currentGameObject))
+						{
+							(currentGameObject as InstantiatedGameObject).addQRCodeInstance(qr);							
+							qr.getMarker().showHalo();
+						}
+					}					
+				}
+				else
+				{
+					Alert.show("Error in Model.assignInstances: currentGameObject is not an InstantiatedGameObject");
+				}
+			}
 			
 			private function filterErrors(event:ResultEvent, fname:String):Boolean
 			{
@@ -766,6 +789,7 @@
 					currentGameObject = new Item(getGameObjectReference(event.result.data.item_id, GameObjectReference.ITEM),
 												 event.result.data.description, event.result.data.media, requirements, playerModifications,
 												 int(event.result.data.dropable) == 1, int(event.result.data.destroyable) == 1);
+					assignInstances();
 					currentGameObject.takeSnapshot();
 					if(creatingNewObject)
 					{
@@ -887,6 +911,7 @@
 					}
 					currentGameObject = new Page(getGameObjectReference(event.result.data.node_id, GameObjectReference.PAGE),
 												 event.result.data.text, event.result.data.media, requirements, playerModifications, choices);
+					assignInstances();
 					currentGameObject.takeSnapshot();
 					if(creatingNewObject)
 					{
@@ -955,6 +980,7 @@
 																			  obj.conversation_id)
 																   );
 					}
+					currentGameObject.takeSnapshot();
 				}
 			}
 			
@@ -968,6 +994,7 @@
 												 event.result.data.description, event.result.data.media, requirements, choices,
 												 event.result.data.text);
 					npcs.getConversations.send(currentGameID, int(event.result.data.npc_id));
+					assignInstances();
 					currentGameObject.takeSnapshot();
 					if(creatingNewObject)
 					{ //don't create an event for npcs - they can't have one in the database right now

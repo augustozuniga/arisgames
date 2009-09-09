@@ -34,6 +34,11 @@ package org.arisgames.editor.view
 			addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 		}
 		
+		public function hideHalo():void
+		{
+			this.marker.hideHalo();
+		}
+		
 		public function mouseDownHandler(event:MouseEvent):void
 		{
 			dragging = true;
@@ -53,6 +58,11 @@ package org.arisgames.editor.view
 		public function mouseUpHandler(event:MouseEvent):void
 		{
 			dragging = false;
+		}
+		
+		public function showHalo():void
+		{
+			this.marker.showHalo();
 		}
 		
 		public function updateInfoWindow():void

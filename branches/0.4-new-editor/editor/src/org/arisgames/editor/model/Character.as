@@ -4,7 +4,7 @@ package org.arisgames.editor.model
 	import mx.controls.Alert;
 	
 	[Bindable]
-	public class Character extends GameObject
+	public class Character extends InstantiatedGameObject
 	{
 		public var choicesArrayCollection:ArrayCollection;
 		

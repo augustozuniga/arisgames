@@ -4,10 +4,7 @@ package org.arisgames.editor.model
 	
 	public class GameObjectInstance
 	{
-		public static const ADD:String = "addInstance";
-		public static const DELETE:String = "deleteInstance";
 		public static const GPS:String = "gpsInstance";
-		public static const MODIFY:String = "modifyInstance";
 		public static const QRCODE:String = "qrCodeInstance";
 		
 		protected var ref:GameObjectReference;

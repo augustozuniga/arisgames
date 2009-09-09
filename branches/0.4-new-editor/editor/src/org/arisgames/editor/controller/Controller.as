@@ -1,12 +1,10 @@
 package org.arisgames.editor.controller
 {
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
 	
 	import mx.controls.Alert;
-	import mx.core.Container;
 	import mx.core.UIComponent;
 	import mx.events.DragEvent;
 	import mx.managers.DragManager;
@@ -220,7 +218,7 @@ package org.arisgames.editor.controller
 		
 		public function onQRCodeContainerDragDrop(event:DragEvent):void
 		{
-			
+			currentModel.addQRCode(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
 		}
 		
 		public function onRequirementsDataGridDragDrop(event:DragEvent):void
