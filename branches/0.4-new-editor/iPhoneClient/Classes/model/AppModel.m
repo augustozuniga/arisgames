@@ -612,8 +612,8 @@ static NSString *locationsLock = @"locationsLock";
 	
 	//Call server service
 	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",nodeId],
 						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",nodeId],
 						  nil];
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"players" 

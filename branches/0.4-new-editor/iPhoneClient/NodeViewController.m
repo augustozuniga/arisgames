@@ -34,6 +34,9 @@ static NSString * const OPTION_CELL = @"option";
 }
 
 - (void) refreshView {
+	//Update the server
+	[appModel updateServerNodeViewed:node.nodeId];
+	
 	
 	self.title = self.node.name;
 		
