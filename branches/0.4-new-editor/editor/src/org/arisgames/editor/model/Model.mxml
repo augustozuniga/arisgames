@@ -272,8 +272,8 @@
 				//case 1: new qrcode is NOT for the currentGameObject
 				if(currentGameObject == null || currentGameObject.getReference() != ref)
 				{
-//					qrcodes.createQRCode.send(currentGameID,
-											  
+					qrcodes.createQRCode.send(currentGameID, id, ref.getType(), ref.getID(), xPos, yPos);
+					setCurrentGameObject(ref);
 				}
 				else //case 2: new qrcode is for the currentGameObject
 				{
