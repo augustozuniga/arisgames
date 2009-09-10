@@ -1069,6 +1069,16 @@
 				filterErrors(event, "playerStateChanges.updatePlayerStateChange");
 			}
 			
+			private function on_qrcodes_createQRCodeResult(event:ResultEvent):void
+			{//takes gameID, qrcode, objType, objID, xpos, ypos, returns id
+				filterErrors(event, "qrcodes.createQRCode");
+			}
+			
+			private function on_qrcodes_deleteQRCodeResult(event:ResultEvent):void
+			{// takes gameID, qrcode, returns true if successful
+				filterErrors(event, "qrcodes.deleteQRCode");
+			}
+			
 			private function on_qrcodes_getQRCodesResult(event:ResultEvent):void
 			{//takes gameID, returns {qrcode_id, type, type_id, x_position, y_position}
 				if(filterErrors(event, "qrcodes.getQRCodes"))
@@ -1087,6 +1097,11 @@
 					}
 					updateView();
 				}
+			}
+			
+			private function on_qrcodes_updateQRCodeResult(event:ResultEvent):void
+			{//takes gameID, qrcode, objTYpe, objID, xpos, ypos, returns true if successful
+				filterErrors(event, "qrcodes.updateQRCode");
 			}
 			
 			private function on_quests_createQuestResult(event:ResultEvent):void
@@ -1392,6 +1407,36 @@
 														 choiceToUpdate.choiceText
 														 );														 
 						}
+						else if(diff.indexOf(QRCodeInstance.ADD) == 0)
+						{
+							var qrToAddID:int = int(diff.substr(QRCodeInstance.ADD.length));
+							var qrToAdd:QRCodeInstance = (currentGameObject as InstantiatedGameObject).getQRCodeInstance(qrToAddID);
+							qrcodes.createQRCode.send(currentGameID,
+													  qrToAddID,
+													  qrToAdd.getObjectType(),
+													  qrToAdd.getObjectID(),
+													  qrToAdd.getXPos(),
+													  qrToAdd.getYPos()
+													  );
+						}
+						else if(diff.indexOf(QRCodeInstance.DELETE) == 0)
+						{
+							qrcodes.deleteQRCode.send(currentGameID,
+													  int(diff.substr(QRCodeInstance.DELETE.length))
+													  );
+						}
+						else if(diff.indexOf(QRCodeInstance.MODIFY) == 0)
+						{
+							var qrToUpdateID:int = int(diff.substr(QRCodeInstance.MODIFY.length));
+							var qrToUpdate:QRCodeInstance = (currentGameObject as InstantiatedGameObject).getQRCodeInstance(qrToUpdateID);
+							qrcodes.createQRCode.send(currentGameID,
+													  qrToUpdateID,
+													  qrToUpdate.getObjectType(),
+													  qrToUpdate.getObjectID(),
+													  qrToUpdate.getXPos(),
+													  qrToUpdate.getYPos()
+													  );							
+						}
 					}
 				}
 			}
@@ -1487,23 +1532,8 @@
 				
 			}
 			
-			private function on_qrcodes_createQRCodeResult(event:ResultEvent):void
-			{//takes gameID, qrcode, objType, objID, xpos, ypos, returns id
-				
-			}
-			
-			private function on_qrcodes_deleteQRCodeResult(event:ResultEvent):void
-			{// takes gameID, qrcode, returns true if successful
-				
-			}
-			
 			private function on_qrcodes_getQRCodeResult(event:ResultEvent):void
 			{//takes gameID, qrcode, returns array of{qrcode_id, type, type_id, x_position, y_position}
-				
-			}
-			
-			private function on_qrcodes_updateQRCodeResult(event:ResultEvent):void
-			{//takes gameID, qrcode, objTYpe, objID, xpos, ypos, returns true if successful
 				
 			}
 			

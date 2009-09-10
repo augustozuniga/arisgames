@@ -25,16 +25,6 @@ package org.arisgames.editor.model
 					);
 		}
 		
-		public function copy():GameObjectInstance
-		{
-			return new GameObjectInstance(this.ref, this.privateID, this.instanceType);
-		}
-		
-		public function differs(instanceToCompare:GameObjectInstance):Boolean
-		{
-			return false;
-		}
-		
 		public function getInstanceID():int
 		{
 			return this.privateID;
@@ -43,6 +33,11 @@ package org.arisgames.editor.model
 		public function getInstanceType():String
 		{
 			return this.instanceType;
+		}
+		
+		public function getObjectID():int
+		{
+			return ref.getID();
 		}
 		
 		public function getObjectName():String

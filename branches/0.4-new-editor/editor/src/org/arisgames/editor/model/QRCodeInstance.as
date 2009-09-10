@@ -20,9 +20,16 @@ package org.arisgames.editor.model
 			this.yPos = yPos;
 		}
 		
-		override public function copy():GameObjectInstance
+		public function copy():GameObjectInstance
 		{
 			return new QRCodeInstance(this.ref, this.privateID, getXPos(), getYPos());
+		}
+		
+		public function differs(altInstance:QRCodeInstance):Boolean
+		{
+			return (   (this.getXPos() != altInstance.getXPos())
+					|| (this.getYPos() != altInstance.getYPos())
+					);
 		}
 		
 		public function getMarker():QRCodeMarker
