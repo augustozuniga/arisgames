@@ -277,7 +277,13 @@
 				}
 				else //case 2: new qrcode is for the currentGameObject
 				{
-					(currentGameObject as InstantiatedGameObject).addQRCodeInstance(new QRCodeInstance(ref, id, xPos, yPos));																				
+					var newInstance:QRCodeInstance = new QRCodeInstance(ref, id, xPos, yPos);
+					(currentGameObject as InstantiatedGameObject).addQRCodeInstance(newInstance);																				
+					newInstance.makeMarker();
+					newInstance.getMarker().showHalo();
+					newInstance.getMarker().showInfoWindow();
+					qrCodeInstanceList.push(newInstance);
+					updateView();
 				}
 			}
 			
@@ -1125,6 +1131,7 @@
 																		 obj.y_position
 																		 );
 						instance.makeMarker();
+						instance.getMarker().showInfoWindow();
 						this.qrCodeInstanceList.push(instance);
 					}
 					updateView();

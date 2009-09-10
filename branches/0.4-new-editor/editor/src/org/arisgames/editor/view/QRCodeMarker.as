@@ -75,6 +75,12 @@ package org.arisgames.editor.view
 			this.marker.showHalo();
 		}
 		
+		public function showInfoWindow():void
+		{
+			updateInfoWindow();
+			this.marker.showInfoWindow();
+		}
+		
 		public function updateInfoWindow():void
 		{
 			infoWindow = new Sprite();
