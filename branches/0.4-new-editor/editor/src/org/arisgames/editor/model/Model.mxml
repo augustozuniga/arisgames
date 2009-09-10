@@ -252,9 +252,19 @@
 				}
 			}
 			
-			public function addQRCode(ref:GameObjectReference):void
+			public function addQRCode(ref:GameObjectReference, xPos:Number, yPos:Number):void
 			{
-				
+				var id:int = 1234;
+				//case 1: new qrcode is NOT for the currentGameObject
+				if(currentGameObject == null || currentGameObject.getReference() != ref)
+				{
+//					qrcodes.createQRCode.send(currentGameID,
+											  
+				}
+				else //case 2: new qrcode is for the currentGameObject
+				{
+					(currentGameObject as InstantiatedGameObject).addQRCodeInstance(new QRCodeInstance(ref, id, xPos, yPos));																				
+				}
 			}
 			
 			public function addRequirement(ref:GameObjectReference):void

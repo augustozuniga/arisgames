@@ -221,7 +221,7 @@ package org.arisgames.editor.controller
 		
 		public function onQRCodeContainerDragDrop(event:DragEvent):void
 		{
-			currentModel.addQRCode(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
+			currentModel.addQRCode(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference, event.localX, event.localY);
 		}
 		
 		public function onQRCodeMarkerMouseDown(event:MouseEvent):void

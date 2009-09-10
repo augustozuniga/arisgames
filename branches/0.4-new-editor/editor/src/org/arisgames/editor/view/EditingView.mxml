@@ -237,6 +237,7 @@
 				<mx:Canvas id="qrCodeContainer"
 					label="QR Codes"
 					borderColor="#000000" borderStyle="solid" borderThickness="2" cornerRadius="2"
+					backgroundColor="#FFFFFF" backgroundAlpha="1"
 					dragEnter="currentController.onQRCodeContainerDragEnter(event)"
 					dragDrop="currentController.onQRCodeContainerDragDrop(event)"/>			
 			</mx:TabNavigator>
