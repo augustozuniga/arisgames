@@ -34,9 +34,19 @@ package org.arisgames.editor.view
 			addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 		}
 		
+		public function getInstance():QRCodeInstance
+		{
+			return this.instance;
+		}
+		
 		public function hideHalo():void
 		{
 			this.marker.hideHalo();
+		}
+		
+		public function isHaloVisible():Boolean
+		{
+			return this.marker.isHaloVisible();
 		}
 		
 		public function mouseDownHandler(event:MouseEvent):void

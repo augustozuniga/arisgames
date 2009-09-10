@@ -15,7 +15,10 @@ package org.arisgames.editor.controller
 	import org.arisgames.editor.model.Model;
 	import org.arisgames.editor.model.PlayerModification;
 	import org.arisgames.editor.model.Requirement;
+	import org.arisgames.editor.view.GameObjectIcon;
 	import org.arisgames.editor.view.IObjectNavigator;
+	import org.arisgames.editor.view.MarkerIcon;
+	import org.arisgames.editor.view.QRCodeMarker;
 	import org.arisgames.editor.view.View;
 	
 	[Bindable]
@@ -219,6 +222,19 @@ package org.arisgames.editor.controller
 		public function onQRCodeContainerDragDrop(event:DragEvent):void
 		{
 			currentModel.addQRCode(event.dragSource.dataForFormat("treeItems")[0] as GameObjectReference);
+		}
+		
+		public function onQRCodeMarkerMouseDown(event:MouseEvent):void
+		{
+			if(event.target is QRCodeMarker)
+			{
+				currentModel.goToGameObjectInstance( (event.target as QRCodeMarker).getInstance() );
+			}
+			else if(event.target is GameObjectIcon)
+			{
+				var marker:QRCodeMarker = ((event.target as GameObjectIcon).parent as MarkerIcon).parent as QRCodeMarker;
+				currentModel.goToGameObjectInstance(marker.getInstance());
+			}
 		}
 		
 		public function onRequirementsDataGridDragDrop(event:DragEvent):void

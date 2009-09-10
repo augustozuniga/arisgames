@@ -186,11 +186,13 @@
 			{
 				for each(var marker:QRCodeMarker in qrCodeContainer.getChildren())
 				{
+					marker.removeEventListener(MouseEvent.MOUSE_DOWN, currentController.onQRCodeMarkerMouseDown);
 					qrCodeContainer.removeChild(marker);
 				}
 				var instances:Array = currentModel.getQRCodeInstances();
 				for each(var instance:QRCodeInstance in instances)
 				{
+					instance.getMarker().addEventListener(MouseEvent.MOUSE_DOWN, currentController.onQRCodeMarkerMouseDown);
 					qrCodeContainer.addChild(instance.getMarker());
 				}
 			}

@@ -361,6 +361,14 @@
 				return currentGameObject;
 			}
 			
+			public function goToGameObjectInstance(instance:GameObjectInstance):void
+			{
+				if( currentGameObject == null || !(instance.belongsToGameObject(currentGameObject)) )
+				{
+					setCurrentGameObject(getGameObjectReference(instance.getObjectID(), instance.getObjectType()));
+				}
+			}
+			
 			public function init(view:View):void
 			{
 				GameReference.init(this);
@@ -1429,7 +1437,7 @@
 						{
 							var qrToUpdateID:int = int(diff.substr(QRCodeInstance.MODIFY.length));
 							var qrToUpdate:QRCodeInstance = (currentGameObject as InstantiatedGameObject).getQRCodeInstance(qrToUpdateID);
-							qrcodes.createQRCode.send(currentGameID,
+							qrcodes.updateQRCode.send(currentGameID,
 													  qrToUpdateID,
 													  qrToUpdate.getObjectType(),
 													  qrToUpdate.getObjectID(),
