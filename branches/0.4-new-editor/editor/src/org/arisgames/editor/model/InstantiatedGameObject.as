@@ -15,10 +15,15 @@ package org.arisgames.editor.model
 			this.gpsInstances = new Array();
 		}
 		
+		public function addGPSInstance(newInstance:GPSInstance):void
+		{
+			gpsInstances.push(newInstance);
+			addCounter++;
+		}
+		
 		public function addQRCodeInstance(newInstance:QRCodeInstance):void
 		{
 			qrInstances.push(newInstance);
-			addCounter++;
 		}
 		
 		override public function getDifferences():Array
@@ -58,7 +63,53 @@ package org.arisgames.editor.model
 			{
 				differences.push(QRCodeInstance.DELETE + remainingQRInstance.getInstanceID());
 			}
+			for each(var gpsInstance:GPSInstance in gpsInstances)
+			{
+				var gpsInstanceFound:Boolean = false;
+				var gpsInstanceIndex:int = 0;
+				while(!gpsInstanceFound && gpsInstanceIndex < gpsInstancesSnapshot.length)
+				{
+					if((gpsInstancesSnapshot[gpsInstanceIndex] as GPSInstance).getInstanceID() == gpsInstance.getInstanceID())
+					{
+						gpsInstanceFound = true;
+					}
+					else
+					{
+						gpsInstanceIndex++;
+					}
+				}
+				if(gpsInstanceFound)
+				{
+					if((gpsInstancesSnapshot[gpsInstanceIndex] as GPSInstance).differs(gpsInstance))
+					{
+						differences.push(GPSInstance.MODIFY + gpsInstance.getInstanceID().toString());
+					}
+					gpsInstancesSnapshot.splice(gpsInstanceIndex, 1); // this is the line that destroys the snapshot fidelity
+															   // it is here to increase performance
+															   // if you remove it, make sure to adjust the next for each to compensate
+				}
+				else
+				{
+					differences.push(GPSInstance.ADD + gpsInstance.getInstanceID());
+				}
+			}
+			for each(var remainingGPSInstance:GPSInstance in gpsInstancesSnapshot)
+			{
+				differences.push(GPSInstance.DELETE + remainingGPSInstance.getInstanceID());
+			}
 			return differences;
+		}
+		
+		public function getGPSInstance(id:int):GPSInstance
+		{
+			for each(var instance:GPSInstance in gpsInstances)
+			{
+				if(instance.getInstanceID() == id)
+				{
+					return instance;
+				}
+			}
+			return null;			
 		}
 		
 		public function getQRCodeInstance(id:int):QRCodeInstance
@@ -73,6 +124,11 @@ package org.arisgames.editor.model
 			return null;
 		}
 		
+		public function removeGPSInstance(instance:GPSInstance):void
+		{
+			gpsInstances.splice(gpsInstances.indexOf(instance), 1);
+		}
+		
 		public function removeQRCodeInstance(instance:QRCodeInstance):void
 		{
 			qrInstances.splice(qrInstances.indexOf(instance), 1);
@@ -82,9 +138,14 @@ package org.arisgames.editor.model
 		{
 			super.takeSnapshot();
 			qrInstancesSnapshot = new Array();
-			for each(var instance:QRCodeInstance in qrInstances)
+			for each(var qrInstance:QRCodeInstance in qrInstances)
 			{
-				qrInstancesSnapshot.push(instance.copy());
+				qrInstancesSnapshot.push(qrInstance.copy());
+			}
+			gpsInstancesSnapshot = new Array();
+			for each(var gpsInstance:GPSInstance in gpsInstances)
+			{
+				gpsInstancesSnapshot.push(gpsInstance.copy());
 			}
 		}
 	}
