@@ -254,7 +254,21 @@
 			
 			public function addQRCode(ref:GameObjectReference, xPos:Number, yPos:Number):void
 			{
-				var id:int = 1234;
+				var idFound:Boolean = false;
+				var id:int;
+				while(!idFound)
+				{
+					id = Math.floor(Math.random() * QRCodeInstance.MAX_CODE);
+					idFound = true;
+					for each(var qr:QRCodeInstance in qrCodeInstanceList)
+					{
+						if(qr.getInstanceID() == id)
+						{
+							idFound = false;
+							break;
+						}
+					}
+				}
 				//case 1: new qrcode is NOT for the currentGameObject
 				if(currentGameObject == null || currentGameObject.getReference() != ref)
 				{

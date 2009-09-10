@@ -7,6 +7,7 @@ package org.arisgames.editor.model
 		public static const ADD:String = "addQRCodeInstance";
 		public static const DELETE:String = "deleteQRCodeInstance";
 		public static const MODIFY:String = "modifyQRCodeInstance";
+		public static const MAX_CODE:int = 10000;
 
 		private var marker:QRCodeMarker;
 		private var xPos:Number;
