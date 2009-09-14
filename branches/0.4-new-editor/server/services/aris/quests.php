@@ -98,6 +98,11 @@ class Quests extends Module
      */
 	public function createQuest($intGameID, $strName, $strIncompleteDescription, $strCompleteDescription, $strMedia)
 	{
+		
+		$strName = addslashes($strName);	
+		$strIncompleteDescription = addslashes($strIncompleteDescription);	
+		$strCompleteDescription = addslashes($strCompleteDescription);	
+		
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
@@ -121,6 +126,11 @@ class Quests extends Module
      */
 	public function updateQuest($intGameID, $intQuestID, $strName, $strIncompleteDescription, $strCompleteDescription, $strMedia)
 	{
+		
+		$strName = addslashes($strName);	
+		$strIncompleteDescription = addslashes($strIncompleteDescription);	
+		$strCompleteDescription = addslashes($strCompleteDescription);	
+		
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 

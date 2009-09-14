@@ -81,6 +81,11 @@ class Npcs extends Module
      */
 	public function createNpc($intGameID, $strName, $strDescription, $strGreeting, $strMedia)
 	{
+		
+		$strName = addslashes($strName);	
+		$strDescription = addslashes($strDescription);	
+		$strGreeting = addslashes($strGreeting);	
+			
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
@@ -105,6 +110,11 @@ class Npcs extends Module
 	public function updateNpc($intGameID, $intNpcID, 
 								$strName, $strDescription, $strGreeting, $strMedia)
 	{
+		
+		$strName = addslashes($strName);	
+		$strDescription = addslashes($strDescription);	
+		$strGreeting = addslashes($strGreeting);			
+		
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
 		
@@ -150,6 +160,8 @@ class Npcs extends Module
      */
 	public function createConversation($intGameID, $intNpcID, $intNodeID, $strText)
 	{
+		$strText = addslashes($strText);	
+		
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
 		
@@ -221,6 +233,8 @@ class Npcs extends Module
      */
 	public function updateConversation($intGameID, $intConverationID, $intNewNPC, $intNewNode, $strNewText)
 	{
+		$strText = addslashes($strText);	
+		
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		

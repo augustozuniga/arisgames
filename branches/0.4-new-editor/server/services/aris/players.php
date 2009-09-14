@@ -163,6 +163,12 @@ class Players extends Module
      */
 	public function createPlayer($strNewUserName, $strPassword, $strFirstName, $strLastName, $strEmail)
 	{
+		
+		$strNewUserName = addslashes($strNewUserName);	
+		$strFirstName = addslashes($strFirstName);	
+		$strLastName = addslashes($strLastName);	
+		$strEmail = addslashes($strEmail);	
+		
 		$query = "SELECT player_id FROM players 
 				  WHERE user_name = '{$strNewUserName}' LIMIT 1";
 			

@@ -59,6 +59,15 @@ class Nodes extends Module
 								$strOpt3Text, $intOpt3NodeID,
 								$strQACorrectAnswer, $intQAIncorrectNodeID, $intQACorrectNodeID)
 	{
+		
+		$strTitle = addslashes($strTitle);	
+		$strText = addslashes($strText);	
+		$strOpt1Text = addslashes($strOpt1Text);	
+		$strOpt2Text = addslashes($strOpt2Text);
+		$strOpt3Text = addslashes($strOpt3Text);	
+		$strQACorrectAnswer = addslashes($strQACorrectAnswer);		
+		
+		
 		$prefix = $this->getPrefix($intGameID);
 		$query = "INSERT INTO {$prefix}_nodes 
 					(title, text, media, 
@@ -99,6 +108,13 @@ class Nodes extends Module
 								$strOpt3Text, $intOpt3NodeID,
 								$strQACorrectAnswer, $intQAIncorrectNodeID, $intQACorrectNodeID)
 	{
+		$strTitle = addslashes($strTitle);	
+		$strText = addslashes($strText);	
+		$strOpt1Text = addslashes($strOpt1Text);	
+		$strOpt2Text = addslashes($strOpt2Text);
+		$strOpt3Text = addslashes($strOpt3Text);	
+		$strQACorrectAnswer = addslashes($strQACorrectAnswer);
+		
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 

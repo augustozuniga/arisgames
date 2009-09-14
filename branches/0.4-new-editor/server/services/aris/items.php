@@ -103,6 +103,8 @@ class Items extends Module
 	public function createItem($intGameID, $strName, $strDescription, 
 								$strMediaFileName, $boolDropable, $boolDestroyable)
 	{
+		$strName = addslashes($strName);	
+		$strDescription = addslashes($strDescription);	
 		
 		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
@@ -168,6 +170,10 @@ class Items extends Module
 	{
 		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
+		
+		$strName = addslashes($strName);	
+		$strDescription = addslashes($strDescription);	
+		
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "UPDATE {$prefix}_items 
