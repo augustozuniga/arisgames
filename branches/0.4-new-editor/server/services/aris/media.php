@@ -5,7 +5,6 @@ require("module.php");
 class Media extends Module
 {
 		
-
 	/**
      * Fetch all Media
      * @returns the media
@@ -25,10 +24,12 @@ class Media extends Module
 		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
 		
 		$returnData = new returnData(0, array());
+		
 		//Calculate the media types
 		while ($mediaRow = mysql_fetch_array($rsResult)) {
 			$mediaItem = array();
 			$mediaItem['media_id'] = $mediaRow['media_id'];
+			$mediaItem['name'] = $mediaRow['name'];
 			$mediaItem['media'] = $mediaRow['media'];
 			$mediaItem['type'] = $this->getMediaType($mediaRow['media']);
 			array_push($returnData->data, $mediaItem);
@@ -72,17 +73,15 @@ class Media extends Module
      * Create a media record
      * @returns the new mediaID on success
      */
-	public function createMedia($intGameID, $strFileName)
+	public function createMedia($intGameID, $strName, $strFileName)
 	{
 		
-		$prefix = $this->getPrefix($intGameID);
+		$prefix = $this->getPrefix($intGameID, $strFileName);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
-		
-		NetDebug::trace("Filename: $strFileName");	
-            	
+		            	
 		$query = "INSERT INTO {$prefix}_media 
-					(media)
-					VALUES ('{$strFileName}')";
+					(name, media)
+					VALUES ('{$strName}', '{$strFileName}')";
 		
 		NetDebug::trace("Running a query = $query");	
 		
@@ -98,15 +97,15 @@ class Media extends Module
      * Update a specific Media
      * @returns true if edit was done, false if no changes were made
      */
-	public function updateMedia($intGameID, $intMediaID, $strFileName)
+	public function renameMedia($intGameID, $intMediaID, $strName)
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
-		//TODO: Delete the old file
-
-		$query = "UPDATE {$prefix}_media  
-					SET media = '{$strFileName}'
+		//Update this record
+		$query = "UPDATE {$prefix}_media 
+					SET name = '{$strName}' 
+					media = '{$strFileName}'
 					WHERE media_id = '{$intMediaID}'";
 		
 		NetDebug::trace("updateNpc: Running a query = $query");	
@@ -115,11 +114,9 @@ class Media extends Module
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
 		if (mysql_affected_rows()) return new returnData(0, TRUE);
-		else return new returnData(0, FALSE);
-		
-
+		else return new returnData(0, FALSE);	
 	}
-			
+		
 	
 	/**
      * Delete a Media Item
@@ -130,14 +127,25 @@ class Media extends Module
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
+		$query = "SELECT * FROM {$prefix}_media WHERE media_id = {$intMediaID}";
+		$rsResult = @mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error:". mysql_error());
 		
-		//TODO: Delete the old file
+		$mediaRow = mysql_fetch_array($rsResult);
+		if ($mediaRow === FALSE) return new returnData(2, NULL, "Invalid Media ID");
 
+
+		//Delete the file		
+		$fileToDelete = Config::gamedataFSPath . "/{$prefix}/" . $mediaRow['media'];
+		if (!@unlink($fileToDelete)) 
+			return new returnData(4, NULL, "Could not delete: $fileToDelete");
 		
+		
+		//Delete the Record
 		$query = "DELETE FROM {$prefix}_media WHERE media_id = {$intMediaID}";
 		
 		$rsResult = @mysql_query($query);
-		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error:" . mysql_error());
 		
 		if (mysql_affected_rows()) {
 			return new returnData(0, TRUE);

@@ -260,6 +260,7 @@ class Games extends Module
 		
 		$query = "CREATE TABLE {$strShortName}_media (
             media_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+            name VARCHAR( 255 ) NOT NULL ,
             media VARCHAR( 255 ) NOT NULL ,
             PRIMARY KEY ( media_id )
             )";
