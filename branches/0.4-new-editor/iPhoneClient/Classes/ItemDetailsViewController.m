@@ -120,7 +120,7 @@
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
 	
 	//Notify the server this item was displayed
-	[appModel updateServerItemViewed:itemId];
+	[appModel updateServerItemViewed:[self itemId]];
 	
 	[super viewDidLoad];
 }
