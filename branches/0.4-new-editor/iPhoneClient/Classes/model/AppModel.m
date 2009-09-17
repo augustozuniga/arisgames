@@ -694,6 +694,7 @@ static NSString *locationsLock = @"locationsLock";
 
 - (void)updateServerLocationAndfetchNearbyLocationList {
 	@synchronized (nearbyLock) {
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 		NSLog(@"Model: updating player position on server and determining nearby Locations");
 		
 		if (!loggedIn) {
@@ -705,18 +706,17 @@ static NSString *locationsLock = @"locationsLock";
 		if(nearbyLocationsList != nil) {
 			[nearbyLocationsList release];
 		}
-		nearbyLocationsList = [NSMutableArray array];
-		[nearbyLocationsList retain];
+		nearbyLocationsList = [[NSMutableArray alloc] initWithCapacity:5];
 	
 		//Update the server with the new Player Location
 		NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.playerId],
 							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.latitude],
 							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.longitude],
 							  nil];
-		JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																		andServiceName:@"players" 
-																		andMethodName:@"updatePlayerLocation" 
-																		andArguments:arguments];
+		JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:self.jsonServerBaseURL 
+																		 andServiceName:@"players" 
+																		 andMethodName:@"updatePlayerLocation" 
+																		 andArguments:arguments];
 		[jsonConnection performSynchronousRequest]; 
 		
 		
@@ -734,6 +734,7 @@ static NSString *locationsLock = @"locationsLock";
 		NSNotification *nearbyLocationListNotification = 
 					[NSNotification notificationWithName:@"ReceivedNearbyLocationList" object:nearbyLocationsList];
 		[[NSNotificationCenter defaultCenter] postNotification:nearbyLocationListNotification];
+		[pool drain];
 	}
 }
 
