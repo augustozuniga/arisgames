@@ -7,6 +7,7 @@
 //
 
 enum {
+	NearbyObjectNil			= 0,
 	NearbyObjectNPC			= 1,
 	NearbyObjectItem		= 2,
 	NearbyObjectNode		= 3

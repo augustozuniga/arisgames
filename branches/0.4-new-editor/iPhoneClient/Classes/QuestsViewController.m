@@ -17,6 +17,8 @@ static int const COMPLETED_SECTION = 1;
 
 @implementation QuestsViewController
 
+@synthesize tableView;
+
 //Override init for passing title and icon to tab bar
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
 {

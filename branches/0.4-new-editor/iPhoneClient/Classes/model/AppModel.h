@@ -91,6 +91,10 @@ extern NSDictionary *InventoryElements;
 - (NSMutableURLRequest *)getEngineURL:(NSString *)relativeURL;
 - (NSString *) getEngineURLString:(NSString *)relativeURL;
 - (NSData *) fetchURLData: (NSURLRequest *)request;
-
+- (Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary;
+- (Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary;
+- (Npc *)parseNpcFromDictionary: (NSDictionary *)npcDictionary;
+- (void)updateServerGameSelected;
+-(NSObject<QRCodeProtocol> *)fetchQRCode:(NSString*)QRcodeId;
 
 @end

@@ -28,9 +28,11 @@
 @synthesize qty;
 
 -(nearbyObjectKind) kind {
-	if ([self.objectType isEqualToString:@"Node"]) return NearbyObjectNode;
-	if ([self.objectType isEqualToString:@"Npc"]) return NearbyObjectNPC;
-	if ([self.objectType isEqualToString:@"Item"]) return NearbyObjectItem;
+	nearbyObjectKind returnValue = NearbyObjectNil;
+	if ([self.objectType isEqualToString:@"Node"]) returnValue = NearbyObjectNode;
+	if ([self.objectType isEqualToString:@"Npc"]) returnValue = NearbyObjectNPC;
+	if ([self.objectType isEqualToString:@"Item"]) returnValue = NearbyObjectItem;
+	return returnValue;
 }
 
 - (void)display {

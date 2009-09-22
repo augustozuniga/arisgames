@@ -29,4 +29,5 @@
 -(IBAction)clearEventsButtonTouched: (id) sender;
 -(IBAction)clearItemsButtonTouched: (id) sender;
 
+-(void) refresh;
 @end
