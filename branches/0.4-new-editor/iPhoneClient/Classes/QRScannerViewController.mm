@@ -130,10 +130,11 @@
 												   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 	[alert show];	
 	[alert release];
-	
-	
-	
-	
+}
+
+- (void) qrParserDidFinish:(id<QRCodeProtocol>)qrcode {
+	NSLog(@"Not implemented.");
+	assert(false);
 }
 
 - (void)decoder:(Decoder *)decoder willDecodeImage:(UIImage *)image usingSubset:(UIImage *)subset {

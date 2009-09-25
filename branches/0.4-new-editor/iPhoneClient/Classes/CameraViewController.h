@@ -17,11 +17,8 @@
     IBOutlet UIImageView *image;
     UIImagePickerController *imagePickerController;
 }
-
-
-- (IBAction)cameraButtonTouchAction;
-
 @property (nonatomic, retain) UIImagePickerController *imagePickerController;
 
+- (IBAction)cameraButtonTouchAction;
 
 @end

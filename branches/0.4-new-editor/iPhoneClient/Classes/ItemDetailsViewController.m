@@ -8,25 +8,18 @@
 
 #import "ItemDetailsViewController.h"
 #import "ARISAppDelegate.h"
+#import "Media.h"
 
 @implementation ItemDetailsViewController
-
-@synthesize appModel;
-@synthesize item;
-@synthesize inInventory;
-@synthesize dropButton;
-@synthesize deleteButton;
-@synthesize backButton;
-@synthesize pickupButton;
+@synthesize appModel, item, inInventory, dropButton;
+@synthesize deleteButton, backButton, pickupButton;
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-
 	//Show waiting Indicator in own thread so it appears on time
 	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate]showWaitingIndicator:@"Loading..."];
 
-	
 	if (inInventory == YES) {
 		pickupButton.hidden = YES;
 		dropButton.hidden = NO;
@@ -55,7 +48,10 @@
 		dropButton.hidden = YES;
 		deleteButton.hidden = YES;
 	}
-	NSString *mediaURL = item.mediaURL;
+	
+	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.itemId]];
+	
+	NSString *mediaURL = media.url;
 	NSLog(@"ItemDetailsViewController: View Loaded. Current item: %@; mediaURL: %@", item.name, mediaURL);
 
 
@@ -73,7 +69,7 @@
 	[scrollView setContentSize:CGSizeMake(320, itemDescriptionView.frame.origin.y
 										  + itemDescriptionView.frame.size.height)];
 	
-	if ([item.type isEqualToString: @"Image"] && mediaURL) {
+	if ([media.type isEqualToString: @"Image"] && mediaURL) {
 		NSLog(@"ItemDetailsViewController: Image Layout Selected");
 		//Setup the image view
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -92,7 +88,7 @@
 		[image release];
 		[imageView release];
 	}
-	else if (([item.type isEqualToString: @"Video"] || [item.type isEqualToString: @"Audio"]) && mediaURL) {
+	else if (([media.type isEqualToString: @"Video"] || [item.type isEqualToString: @"Audio"]) && mediaURL) {
 		NSLog(@"ItemDetailsViewController:  Video Layout Selected");
 
 		//Create movie player object
@@ -120,8 +116,7 @@
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
 	
 	//Notify the server this item was displayed
-	[appModel updateServerItemViewed:[self itemId]];
-	
+	[appModel updateServerItemViewed:item.itemId];
 	[super viewDidLoad];
 }
 

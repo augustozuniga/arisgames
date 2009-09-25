@@ -19,10 +19,10 @@
 @synthesize forcedDisplay;
 
 @synthesize itemId;
+@synthesize mediaId;
 @synthesize locationId;
 @synthesize description;
 @synthesize type;
-@synthesize mediaURL;
 @synthesize iconURL;
 
 @synthesize dropable;
@@ -61,7 +61,6 @@
 	[name release];
 	[description release];
 	[type release];
-	[mediaURL release];
 	[iconURL release];
     [super dealloc];
 }

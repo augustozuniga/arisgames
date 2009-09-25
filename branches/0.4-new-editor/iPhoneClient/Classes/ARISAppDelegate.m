@@ -39,7 +39,6 @@
 	
 	//Load defaults from UserDefaults
 	[appModel loadUserDefaults];
-	
 	[appModel retain];
 
 	//register for notifications from views
@@ -133,7 +132,10 @@
 			tabBarController.view.hidden = YES;
 			[window addSubview:gamePickerNavigationController.view];
 		}
-		else NSLog(@"Appdelegate: Player already logged in and they have a site selected. Go into the default module");
+		else {
+			NSLog(@"Appdelegate: Player already logged in and they have a site selected. Go into the default module");
+			[appModel fetchMediaList];
+		}
 	}
 	else {
 		NSLog(@"Appdelegate: Player not logged in, display login");
@@ -268,7 +270,6 @@
 	//Display the tabBar (and it's content)
 	tabBarController.view.hidden = NO;
 	
-	
 	UINavigationController *navigationController;
 	UIViewController *visibleViewController;
 	
@@ -283,12 +284,12 @@
 	}
 	
 	NSLog(@"AppDelegate: %@ selected",[visibleViewController title]);
+	[appModel fetchMediaList];
 	
 	//Use setModel to refresh the content
 	if([visibleViewController respondsToSelector:@selector(refresh)]) {
 		[visibleViewController performSelector:@selector(refresh) withObject:nil];
 	}
-	
 }
 
 - (void)setGameList:(NSNotification *)notification {

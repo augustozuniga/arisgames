@@ -32,7 +32,6 @@
 }
 
 - (JSONResult*) performSynchronousRequest{
-	
 	//Build the base URL string
 	NSMutableString *requestString = [[NSMutableString alloc] initWithFormat:@"%@.%@.%@", 
 							   self.jsonServerBaseURL, self.serviceName, self.methodName];

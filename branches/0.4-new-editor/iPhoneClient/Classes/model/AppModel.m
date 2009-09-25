@@ -8,51 +8,47 @@
 
 #import "AppModel.h"
 #import "ARISAppDelegate.h"
-
+#import "Media.h"
 #import "NodeOption.h"
 #import "Quest.h"
-
-
 #import "JSONConnection.h"
 #import "JSONResult.h"
 #import "JSON.h"
 
-
-
-static NSString *nearbyLock = @"nearbyLock";
-static NSString *locationsLock = @"locationsLock";
+static NSString *const nearbyLock = @"nearbyLock";
+static NSString *const locationsLock = @"locationsLock";
+static const int kDefaultCapacity = 10;
 
 @implementation AppModel
 
-@synthesize serverName;
-@synthesize baseAppURL;
-@synthesize jsonServerBaseURL;
-@synthesize loggedIn;
-@synthesize username;
-@synthesize password;
-@synthesize playerId;
-@synthesize currentModule;
-@synthesize site;
-@synthesize gameId;
-@synthesize gameList;
-@synthesize locationList;
-@synthesize playerList;
-@synthesize playerLocation;
-@synthesize inventory;
-@synthesize questList;
-@synthesize networkAlert;
+@synthesize serverName, baseAppURL, jsonServerBaseURL, loggedIn;
+@synthesize username, password, playerId, currentModule;
+@synthesize site, gameId, gameList, locationList, playerList;
+@synthesize playerLocation, inventory, questList, networkAlert, mediaList;
 
 @dynamic nearbyLocationsList;
 
+#pragma mark Init/dealloc
 -(id)init {
     if (self = [super init]) {
 		//Init USerDefaults
 		defaults = [NSUserDefaults standardUserDefaults];
+		mediaList = [[NSMutableDictionary alloc] initWithCapacity:kDefaultCapacity];
 	}
 			 
     return self;
 }
 
+- (void)dealloc {
+	[mediaList release];
+	[gameList release];
+	[baseAppURL release];
+	[username release];
+	[password release];
+	[currentModule release];
+	[site release];
+    [super dealloc];
+}
 
 -(void)loadUserDefaults {
 	NSLog(@"Model: Loading User Defaults");
@@ -88,9 +84,7 @@ static NSString *locationsLock = @"locationsLock";
 				  baseAppURL, username, password, playerId, gameId, site);
 		}
 	}
-
 	else NSLog(@"Model: No default User Data to Load. Use URL: '%@' Site: '%@'", baseAppURL, site);
-	
 	
 	self.jsonServerBaseURL = [NSString stringWithFormat:@"%@%@",
 						 baseAppURL, @"json.php/aris"];
@@ -109,9 +103,7 @@ static NSString *locationsLock = @"locationsLock";
 	[defaults removeObjectForKey:@"gameId"];
 	//Don't clear the baseAppURL
 	[defaults setObject:@"Default" forKey:@"site"];
-
 }
-
 
 -(void)saveUserDefaults {
 	NSLog(@"Model: Saving User Defaults");
@@ -124,9 +116,7 @@ static NSString *locationsLock = @"locationsLock";
 	[defaults setObject:baseAppURL forKey:@"lastBaseAppURL"];
 	[defaults setObject:site forKey:@"site"];
 	[defaults setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVerison"];
-	
 }
-
 
 -(void)initUserDefaults {	
 	NSDictionary *initDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -138,7 +128,6 @@ static NSString *locationsLock = @"locationsLock";
 }
 
 #pragma mark Communication with Server
-
 - (BOOL)login {
 	NSLog(@"AppModel: Login Requested");
 	NSArray *arguments = [NSArray arrayWithObjects:self.username, self.password, nil];
@@ -168,7 +157,6 @@ static NSString *locationsLock = @"locationsLock";
 
 	return self.loggedIn;
 }
-
 
 - (BOOL)registerNewUser:(NSString*)userName password:(NSString*)pass 
 			  firstName:(NSString*)firstName lastName:(NSString*)lastName email:(NSString*)email {
@@ -202,11 +190,8 @@ static NSString *locationsLock = @"locationsLock";
 	
 }
 
-
 - (void)fetchGameList {
 	NSLog(@"AppModel: Fetching Game List.");
-	
-	
 	//Call server service
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"games" 
@@ -217,7 +202,6 @@ static NSString *locationsLock = @"locationsLock";
 		NSLog(@"AppModel fetchGameList: No result Data, return");
 		return;
 	}
-	
 	
 	//Build the game list
 	NSMutableArray *tempGameList = [[NSMutableArray alloc] init];
@@ -242,14 +226,11 @@ static NSString *locationsLock = @"locationsLock";
 	NSLog(@"GameListParser: Finished Building the Game List");
 	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
 	[[NSNotificationCenter defaultCenter] postNotification:notification];
-	
 }
 
 - (void)fetchLocationList {
 	@synchronized (nearbyLock) {
-		
 		NSLog(@"AppModel: Fetching Locations from Server");	
-		
 		if (!loggedIn) {
 			NSLog(@"AppModel: Player Not logged in yet, skip the location fetch");	
 			return;
@@ -315,7 +296,48 @@ static NSString *locationsLock = @"locationsLock";
 		NSNotification *notification = 
 				[NSNotification notificationWithName:@"ReceivedLocationList" object:self userInfo:dictionary];
 		[[NSNotificationCenter defaultCenter] postNotification:notification];
+	}
+}
+
+- (void)fetchMediaList {
+	NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",self.gameId], nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"media" 
+																	 andMethodName:@"getMedia" andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	if (!jsonResult) {
+		NSLog(@"AppModel fetchMediaList: No results");
+		return;
+	}
+
+	[mediaList removeAllObjects];
+	NSEnumerator *enumerator = [((NSArray *)jsonResult.data) objectEnumerator];
+	NSDictionary *dict;
+	while (dict = [enumerator nextObject]) {
+		NSInteger uid = [[dict valueForKey:@"media_id"] intValue];
+		NSString *url = [dict valueForKey:@"media"];
+		NSString *type = [dict valueForKey:@"type"];
 		
+		if (uid < 1) {
+			NSLog(@"Invalid media id: %d", uid);
+			continue;
+		}
+		if ([url length] < 1) {
+			NSLog(@"Empty url string for media #%d.", uid);
+			continue;
+		}
+		if ([type length] < 1) {
+			NSLog(@"Empty type for media #%d", uid);
+			continue;
+		}
+		
+ 		url = [NSString stringWithFormat:@"%@gamedata/%d/%@", baseAppURL, gameId, url];
+		NSLog(@">>>> URL %@", url);
+		
+		Media *media = [[Media alloc] initWithId:uid andUrlString:url ofType:type];
+		[mediaList setObject:media forKey:[NSNumber numberWithInt:uid]];
+		[media release];
 	}
 }
 
@@ -355,7 +377,7 @@ static NSString *locationsLock = @"locationsLock";
 		item.name = [itemDictionary valueForKey:@"name"];
 		item.type = [itemDictionary valueForKey:@"type"];
 		item.description = [itemDictionary valueForKey:@"description"];
-		item.mediaURL = [itemDictionary valueForKey:@"media"];
+		item.mediaId = [[itemDictionary valueForKey:@"media"] intValue];
 		item.iconURL = [itemDictionary valueForKey:@"icon"];
 		item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
 		item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
@@ -371,7 +393,6 @@ static NSString *locationsLock = @"locationsLock";
 
 -(Item *)fetchItem:(int)itemId{
 	NSLog(@"Model: Fetch Requested for Item %d", itemId);
-		
 	//Call server service
 	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
 						  [NSString stringWithFormat:@"%d",itemId],
@@ -381,7 +402,6 @@ static NSString *locationsLock = @"locationsLock";
 																	 andMethodName:@"getItem" 
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
 	
 	if (!jsonResult) {
 		NSLog(@"AppModel fetchItem: No result Data, return");
@@ -397,7 +417,7 @@ static NSString *locationsLock = @"locationsLock";
 	item.name = [itemDictionary valueForKey:@"name"];
 	item.type = [itemDictionary valueForKey:@"type"];
 	item.description = [itemDictionary valueForKey:@"description"];
-	item.mediaURL = [itemDictionary valueForKey:@"media"];
+	item.mediaId = [[itemDictionary valueForKey:@"media"] intValue];
 	item.iconURL = [itemDictionary valueForKey:@"icon"];
 	item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
 	item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
@@ -424,7 +444,6 @@ static NSString *locationsLock = @"locationsLock";
 		NSLog(@"AppModel fetchNode: No result Data, return");
 		return nil;
 	}	
-	
 	
 	return [self parseNodeFromDictionary: (NSDictionary *)jsonResult.data];
 }
@@ -521,12 +540,10 @@ static NSString *locationsLock = @"locationsLock";
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
 	
-	
 	if (!jsonResult) {
 		NSLog(@"AppModel fetchQRCode: No result Data, return");
 		return nil;
 	}	
-	
 	
 	//Build the object
 	NSDictionary *qrCodeDictionary = (NSDictionary *)jsonResult.data;
@@ -539,8 +556,6 @@ static NSString *locationsLock = @"locationsLock";
 	
 	return nil;
 }	
-
-
 
 -(void)fetchQuestList {
 	NSLog(@"Model: Fetch Requested for Quest");
@@ -578,7 +593,6 @@ static NSString *locationsLock = @"locationsLock";
 		[activeQuestObjects addObject:quest];
  	}
 	
-		
 	//parse out the completed quests into quest objects	
 	NSMutableArray *completedQuestObjects = [[NSMutableArray alloc] init];
 	NSArray *completedQuests = [dataDictionary objectForKey:@"completed"];
@@ -684,13 +698,9 @@ static NSString *locationsLock = @"locationsLock";
 
 - (void)createItemForImage: (UIImage *)image{
 	NSLog(@"Model: creating a new Item for an image");
-	
 	//Upload the file to get it's name
-	
 	//Create the media record, add the item to the game and add this item to the players inventory
-
 }
-
 
 - (void)updateServerLocationAndfetchNearbyLocationList {
 	@synchronized (nearbyLock) {
@@ -718,7 +728,6 @@ static NSString *locationsLock = @"locationsLock";
 																		 andMethodName:@"updatePlayerLocation" 
 																		 andArguments:arguments];
 		[jsonConnection performSynchronousRequest]; 
-		
 		
 		//Rebuild nearbyLocationList
 		//We could just do this in the getter
@@ -758,8 +767,6 @@ static NSString *locationsLock = @"locationsLock";
 	}
 }
 
-
-
 - (NSMutableArray *)locationList {
 	NSMutableArray *result = nil;
 	@synchronized (locationsLock) {
@@ -788,9 +795,6 @@ static NSString *locationsLock = @"locationsLock";
 		playerList = [source copy];
 	}
 }
-
-
-
 
 #pragma mark Old Engine Helper Functions
 //Returns the complete URL for the module, including authentication
@@ -845,10 +849,6 @@ static NSString *locationsLock = @"locationsLock";
 	return URLString;
 }
 
-
-
-
-
 -(NSData *) fetchURLData: (NSURLRequest *)request {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	NSURLResponse *response = NULL;
@@ -858,19 +858,6 @@ static NSString *locationsLock = @"locationsLock";
 	if (error != NULL) [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
 	else [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeNetworkAlert];
 	return data;
-}
-
-
-#pragma mark Memory Management
-
-- (void)dealloc {
-	[gameList release];
-	[baseAppURL release];
-	[username release];
-	[password release];
-	[currentModule release];
-	[site release];
-    [super dealloc];
 }
 
 @end

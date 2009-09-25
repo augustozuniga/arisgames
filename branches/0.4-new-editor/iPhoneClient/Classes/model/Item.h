@@ -15,15 +15,14 @@
 	nearbyObjectKind kind;
 	BOOL forcedDisplay;
 	
+	int mediaId;
 	int itemId;
 	int locationId; //null if in the player's inventory
 	NSString *description;
 	NSString *type;
-	NSString *mediaURL;
 	NSString *iconURL;
 	BOOL dropable;
-	BOOL destroyable;
-	
+	BOOL destroyable;	
 }
 
 @property(copy, readwrite) NSString *name;
@@ -33,11 +32,12 @@
 
 @property(readwrite, assign) int itemId;
 @property(readonly, assign) int locationId;
+@property(readwrite, assign) int mediaId;
 - (void) setLocationId:(NSString *)fromStringValue;
+
 
 @property(copy, readwrite) NSString *description;
 @property(copy, readwrite) NSString *type;
-@property(copy, readwrite) NSString *mediaURL;
 @property(copy, readwrite) NSString *iconURL;
 @property (readwrite, assign) BOOL dropable;
 @property (readwrite, assign) BOOL destroyable;

@@ -131,10 +131,10 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithFrame:CGRectZero reuseIdentifier:CellIdentifier] autorelease];
     }
-	cell.textColor = [[UIColor alloc] initWithWhite:1.0 alpha:1.0]; 	
+	cell.textLabel.textColor = [[UIColor alloc] initWithWhite:1.0 alpha:1.0]; 	
 
 	//Set the text based on who's asking
-	if (tableView == locationTable) cell.text = [[locationTableData objectAtIndex: [indexPath row]] name];
+	if (tableView == locationTable) cell.textLabel.text = [[locationTableData objectAtIndex: [indexPath row]] name];
 	
     return cell;
 }

@@ -56,7 +56,6 @@
 @property (nonatomic, retain) WaitingIndicatorViewController *waitingIndicator;
 @property (nonatomic, retain) UIAlertView *networkAlert;
 
-
 - (void)displayNearbyObjectView:(UIViewController *)nearbyObjectViewController;
 - (void) showWaitingIndicator:(NSString *)message;
 - (void) removeWaitingIndicator;

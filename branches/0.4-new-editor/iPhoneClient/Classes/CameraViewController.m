@@ -10,15 +10,20 @@
 #import "ARISAppDelegate.h"
 #import "AppModel.h"
 
+static NSString *const kBoundaryMagicString  = @"---------------------------14737809831466499882746641449";
+
+@interface CameraViewController()
+- (NSData *) encode:(NSString *)data forPostWithName:(NSString *)name;
+@end
+
+
 @implementation CameraViewController
 
 @synthesize imagePickerController;
 
 //Override init for passing title and icon to tab bar
-- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
-{
-    self = [super initWithNibName:nibName bundle:nibBundle];
-    if (self) {
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle {
+    if (self = [super initWithNibName:nibName bundle:nibBundle]) {
         self.title = @"Camera";
         self.tabBarItem.image = [UIImage imageNamed:@"camera.png"];
 		
@@ -33,6 +38,7 @@
     [super viewDidLoad];
 	
 	self.imagePickerController = [[UIImagePickerController alloc] init];
+	[imagePickerController release];
 	self.imagePickerController.allowsImageEditing = YES;
 	self.imagePickerController.delegate = self;
 	
@@ -46,23 +52,34 @@
 	[self presentModalViewController:self.imagePickerController animated:YES];
 }
 
+- (NSData *) encode:(NSString *)data forPostWithName:(NSString *)name {
+	NSData *result = [[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n--%@\r\n",
+						 name, data, kBoundaryMagicString] dataUsingEncoding:NSUTF8StringEncoding] autorelease];
+	return result;	
+}
+
 #pragma mark UIImagePickerControllerDelegate Protocol Methods
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img editingInfo:(NSDictionary *)editInfo {
-	/*
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)img 
+				  editingInfo:(NSDictionary *)editInfo 
+{
 	[[picker parentViewController] dismissModalViewControllerAnimated:YES];
+	
+	UIAlertView *a = [[UIAlertView alloc] initWithTitle:@"Test" 
+													message:[NSString stringWithFormat:@"Sending to %@", appModel.baseAppURL]
+												   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+	[a show];
+	[a release];
 	
 	NSLog(@"Preparing to send file from camera to Server");
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
-	
 	//turning the image in the UIView into a NSData JPEG object at 90% quality
 	NSData *imageData = UIImageJPEGRepresentation(img, .9);
 	
-	
 	// setting up the request object now
-	NSURL* url = [[NSURL alloc] initWithString:appModel.baseAppURL];
-	NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL: url];
+	NSURL *url = [[[NSURL alloc] initWithString:appModel.baseAppURL] autorelease];
+	NSMutableURLRequest* request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
 	[request setHTTPMethod: @"POST"];
 	
 	//Add headers
@@ -74,46 +91,32 @@
 	NSMutableData *body = [NSMutableData data];
 	[body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 	
-	//other post vars
-	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"user_name\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", appModel.username] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"password\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", appModel.password] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"site\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", appModel.site] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"module\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", self.moduleName] dataUsingEncoding:NSUTF8StringEncoding]];
-	[body appendData:[[NSString stringWithFormat:@"--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+	// GameID
+	[body appendData:[self encode:[NSString stringWithFormat:@"%d", appModel.gameId] forPostWithName:@"gameID"]];
 	
 	//image
-	
-	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"image\"; filename=\"ipodfile.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"file\"; filename=\"ipodfile.jpg\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 	[body appendData:[NSData dataWithData:imageData]];
 	[body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	
+		
 	// setting the body of the post to the reqeust
 	[request setHTTPBody:body];
 	
 	// post it
-	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-	NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+	NSURLResponse *response;
+	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+	NSString *returnString = [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] autorelease];
 	NSLog([NSString stringWithFormat: @"Camera file posted. Result from Server: %@", returnString]);
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    [pool release];
+    [pool drain];
 	
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Photo Taken" message: @"It is available in your inventory" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Photo Taken" 
+													message:@"It is available in your inventory" 
+												   delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
 	[alert show];
 	[alert release];
-	*/
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -121,11 +124,13 @@
 }
 
 #pragma mark UINavigationControllerDelegate Protocol Methods
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+- (void)navigationController:(UINavigationController *)navigationController 
+	   didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
 	//nada
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+- (void)navigationController:(UINavigationController *)navigationController 
+	  willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
 	//nada
 }
 
@@ -137,6 +142,7 @@
 
 
 - (void)dealloc {
+	[imagePickerController release];
     [super dealloc];
 }
 

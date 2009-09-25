@@ -37,6 +37,7 @@ extern NSDictionary *InventoryElements;
 	NSMutableArray *nearbyLocationsList;
 	NSMutableArray *inventory;
 	NSMutableDictionary *questList;
+	NSMutableDictionary *mediaList;
 }
 
 @property(copy) NSString *serverName;
@@ -58,6 +59,7 @@ extern NSDictionary *InventoryElements;
 @property(copy, readwrite) NSMutableArray *inventory;
 @property(retain) UIAlertView *networkAlert;
 
+@property(readonly)	NSMutableDictionary	*mediaList;
 
 - (id)init;
 - (void)loadUserDefaults;
@@ -68,6 +70,7 @@ extern NSDictionary *InventoryElements;
 - (BOOL)login;
 - (void)fetchGameList;
 - (void)fetchLocationList;
+- (void)fetchMediaList;
 - (void)fetchInventory;
 - (void)fetchQuestList;
 - (Item *)fetchItem:(int)itemId;
