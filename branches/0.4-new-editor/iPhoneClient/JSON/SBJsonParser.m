@@ -34,6 +34,7 @@
 - (BOOL)scanValue:(NSObject **)o;
 
 - (BOOL)scanRestOfArray:(NSMutableArray **)o;
+- (BOOL)scanRestOfComment;
 - (BOOL)scanRestOfDictionary:(NSMutableDictionary **)o;
 - (BOOL)scanRestOfNull:(NSNull **)o;
 - (BOOL)scanRestOfFalse:(NSNumber **)o;
@@ -120,6 +121,10 @@ static char ctrl[0x22];
     skipWhitespace(c);
     
     switch (*c++) {
+		case '/':
+			if ([self scanRestOfComment]) return [self scanValue:o];
+			[self addErrorWithCode:EPARSE description:@"Expected comment."];
+			return NO;
         case '{':
             return [self scanRestOfDictionary:(NSMutableDictionary **)o];
             break;
@@ -228,6 +233,26 @@ static char ctrl[0x22];
     }
     
     [self addErrorWithCode:EEOF description: @"End of input while parsing array"];
+    return NO;
+}
+
+- (BOOL)scanRestOfComment {
+	if (*c == '*') {
+		c++;
+		while (*c) {
+			if (*c == '*' && *(c + 1) == '/') {
+				c += 2;
+				skipWhitespace(c);
+				return YES;
+			}
+			
+			c++;
+		}
+		
+		[self addErrorWithCode:EPARSE description: @"Expected '*/'"];
+		return NO;
+    }
+    [self addErrorWithCode:EPARSE description: @"Expected '/*'"];
     return NO;
 }
 
