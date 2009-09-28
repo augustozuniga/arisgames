@@ -68,6 +68,10 @@ extern NSDictionary *InventoryElements;
 - (void)initUserDefaults;
 
 - (BOOL)login;
+
+- (id) fetchFromService:(NSString *)aService usingMethod:(NSString *)aMethod 
+			   withArgs:(NSArray *)arguments usingParser:(SEL)aSelector;
+
 - (void)fetchGameList;
 - (void)fetchLocationList;
 - (void)fetchMediaList;

@@ -190,6 +190,130 @@ static const int kDefaultCapacity = 10;
 	
 }
 
+#pragma mark Fetch selectors
+- (id) fetchFromService:(NSString *)aService usingMethod:(NSString *)aMethod 
+			   withArgs:(NSArray *)arguments usingParser:(SEL)aSelector 
+{
+	NSLog(@"JSON://%@/%@/%@", aService, aMethod, arguments);
+	
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:aService
+																	 andMethodName:aMethod
+																	  andArguments:arguments];
+	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
+	
+	if (!jsonResult) {
+		NSLog(@"\tFailed.");
+		return nil;
+	}
+	
+	return [self performSelector:aSelector withObject:jsonResult.data];
+}
+
+
+-(Item *)fetchItem:(int)itemId{
+	NSLog(@"Model: Fetch Requested for Item %d", itemId);
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  nil];
+
+	return [self fetchFromService:@"items" usingMethod:@"getItem" withArgs:arguments 
+					  usingParser:@selector(parseItemFromDictionary:)];
+}
+
+-(Node *)fetchNode:(int)nodeId{
+	NSLog(@"Model: Fetch Requested for Node %d", nodeId);
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",nodeId],
+						  nil];
+	
+	return [self fetchFromService:@"nodes" usingMethod:@"getNode" withArgs:arguments
+					  usingParser:@selector(parseNodeFromDictionary:)];
+}
+
+-(Npc *)fetchNpc:(int)npcId{
+	NSLog(@"Model: Fetch Requested for Npc %d", npcId);
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",npcId],
+						  [NSString stringWithFormat:@"%d",self.playerId],
+						  nil];
+	return [self fetchFromService:@"npcs" usingMethod:@"getNpcWithConversationsForPlayer"
+						 withArgs:arguments usingParser:@selector(parseNpcFromDictionary:)];
+}
+
+#pragma mark Parsers
+-(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
+	Item *item = [[Item alloc] init];
+	item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
+	item.name = [itemDictionary valueForKey:@"name"];
+	item.type = [itemDictionary valueForKey:@"type"];
+	item.description = [itemDictionary valueForKey:@"description"];
+	item.mediaId = [[itemDictionary valueForKey:@"media"] intValue];
+	item.iconURL = [itemDictionary valueForKey:@"icon"];
+	item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
+	item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
+	NSLog(@"\tadded item %@", item.name);
+	
+	return item;	
+}
+
+-(Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary{
+	//Build the node
+	Node *node = [[Node alloc] init];
+	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
+	node.name = [nodeDictionary valueForKey:@"title"];
+	node.text = [nodeDictionary valueForKey:@"text"];
+	node.mediaId = [[nodeDictionary valueForKey:@"mediaURL"] intValue];
+	
+	//Add options here
+	int optionNodeId;
+	NSString *text;
+	NodeOption *option;
+	
+	if ([nodeDictionary valueForKey:@"opt1_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt1_node_id"] intValue] > 0) {
+		optionNodeId= [[nodeDictionary valueForKey:@"opt1_node_id"] intValue];
+		text = [nodeDictionary valueForKey:@"opt1_text"]; 
+		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[node addOption:option];
+	}
+	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt2_node_id"] intValue] > 0) {
+		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node_id"] intValue];
+		text = [nodeDictionary valueForKey:@"opt2_text"]; 
+		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[node addOption:option];
+	}
+	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt3_node_id"] intValue] > 0) {
+		optionNodeId = [[nodeDictionary valueForKey:@"opt3_node_id"] intValue];
+		text = [nodeDictionary valueForKey:@"opt3_text"]; 
+		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[node addOption:option];
+	}
+	
+	return node;	
+}
+
+-(Npc *)parseNpcFromDictionary: (NSDictionary *)npcDictionary {
+	Npc *npc = [[Npc alloc] init];
+	npc.npcId = [[npcDictionary valueForKey:@"npc_id"] intValue];
+	npc.name = [npcDictionary valueForKey:@"name"];
+	npc.greeting = [npcDictionary valueForKey:@"text"];
+	npc.description = [npcDictionary valueForKey:@"description"];
+	npc.mediaId = [[npcDictionary valueForKey:@"mediaURL"] intValue];
+	
+	NSArray *conversationOptions = [npcDictionary objectForKey:@"conversationOptions"];
+	NSEnumerator *conversationOptionsEnumerator = [conversationOptions objectEnumerator];
+	NSDictionary *conversationDictionary;
+	while (conversationDictionary = [conversationOptionsEnumerator nextObject]) {	
+		//Make the Node Option and add it to the Npc
+		int optionNodeId = [[conversationDictionary valueForKey:@"node_id"] intValue];
+		NSString *text = [conversationDictionary valueForKey:@"text"]; 
+		NodeOption *option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
+		[npc addOption:option];
+	}
+	return npc;	
+}
+
+#pragma mark Unrefactored fetch code
 - (void)fetchGameList {
 	NSLog(@"AppModel: Fetching Game List.");
 	//Call server service
@@ -389,141 +513,6 @@ static const int kDefaultCapacity = 10;
 	
 	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:self userInfo:nil];
 	[[NSNotificationCenter defaultCenter] postNotification:notification];
-}
-
--(Item *)fetchItem:(int)itemId{
-	NSLog(@"Model: Fetch Requested for Item %d", itemId);
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",itemId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"items" 
-																	 andMethodName:@"getItem" 
-																	  andArguments:arguments];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchItem: No result Data, return");
-		return nil;
-	}		
-	
-	return [self parseItemFromDictionary:(NSDictionary *)jsonResult.data];
-}
-
--(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{
-	Item *item = [[Item alloc] init];
-	item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
-	item.name = [itemDictionary valueForKey:@"name"];
-	item.type = [itemDictionary valueForKey:@"type"];
-	item.description = [itemDictionary valueForKey:@"description"];
-	item.mediaId = [[itemDictionary valueForKey:@"media"] intValue];
-	item.iconURL = [itemDictionary valueForKey:@"icon"];
-	item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
-	item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
-	NSLog(@"Model: Adding Item: %@", item.name);
-	
-	return item;	
-}
-
-
--(Node *)fetchNode:(int)nodeId{
-	NSLog(@"Model: Fetch Requested for Node %d", nodeId);
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",nodeId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"nodes" 
-																	 andMethodName:@"getNode" 
-																	  andArguments:arguments];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchNode: No result Data, return");
-		return nil;
-	}	
-	
-	return [self parseNodeFromDictionary: (NSDictionary *)jsonResult.data];
-}
-
--(Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary{
-	//Build the node
-	Node *node = [[Node alloc] init];
-	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
-	node.name = [nodeDictionary valueForKey:@"title"];
-	node.text = [nodeDictionary valueForKey:@"text"];
-	node.mediaId = [[nodeDictionary valueForKey:@"mediaURL"] intValue];
-	
-	//Add options here
-	int optionNodeId;
-	NSString *text;
-	NodeOption *option;
-	
-	if ([nodeDictionary valueForKey:@"opt1_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt1_node_id"] intValue] > 0) {
-		optionNodeId= [[nodeDictionary valueForKey:@"opt1_node_id"] intValue];
-		text = [nodeDictionary valueForKey:@"opt1_text"]; 
-		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
-		[node addOption:option];
-	}
-	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt2_node_id"] intValue] > 0) {
-		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node_id"] intValue];
-		text = [nodeDictionary valueForKey:@"opt2_text"]; 
-		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
-		[node addOption:option];
-	}
-	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt3_node_id"] intValue] > 0) {
-		optionNodeId = [[nodeDictionary valueForKey:@"opt3_node_id"] intValue];
-		text = [nodeDictionary valueForKey:@"opt3_text"]; 
-		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
-		[node addOption:option];
-	}
-		
-	return node;	
-}
-
--(Npc *)fetchNpc:(int)npcId{
-	NSLog(@"Model: Fetch Requested for Npc %d", npcId);
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",npcId],
-						  [NSString stringWithFormat:@"%d",self.playerId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"npcs" 
-																	 andMethodName:@"getNpcWithConversationsForPlayer" 
-																	  andArguments:arguments];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchNpc: No result Data, return");
-		return nil;
-	}	
-	
-	return [self parseNpcFromDictionary:(NSDictionary *)jsonResult.data];
-}
-
--(Npc *)parseNpcFromDictionary: (NSDictionary *)npcDictionary {
-	Npc *npc = [[Npc alloc] init];
-	npc.npcId = [[npcDictionary valueForKey:@"npc_id"] intValue];
-	npc.name = [npcDictionary valueForKey:@"name"];
-	npc.greeting = [npcDictionary valueForKey:@"text"];
-	npc.description = [npcDictionary valueForKey:@"description"];
-	npc.mediaId = [[npcDictionary valueForKey:@"mediaURL"] intValue];
-	
-	NSArray *conversationOptions = [npcDictionary objectForKey:@"conversationOptions"];
-	NSEnumerator *conversationOptionsEnumerator = [conversationOptions objectEnumerator];
-	NSDictionary *conversationDictionary;
-	while (conversationDictionary = [conversationOptionsEnumerator nextObject]) {	
-		//Make the Node Option and add it to the Npc
-		int optionNodeId = [[conversationDictionary valueForKey:@"node_id"] intValue];
-		NSString *text = [conversationDictionary valueForKey:@"text"]; 
-		NodeOption *option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
-		[npc addOption:option];
-	}
-	return npc;	
 }
 
 -(NSObject<QRCodeProtocol> *)fetchQRCode:(NSString*)QRcodeId{
