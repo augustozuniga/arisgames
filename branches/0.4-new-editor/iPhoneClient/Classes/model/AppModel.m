@@ -454,7 +454,7 @@ static const int kDefaultCapacity = 10;
 	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
-	node.mediaURL = [nodeDictionary valueForKey:@"mediaURL"];
+	node.mediaId = [[nodeDictionary valueForKey:@"mediaURL"] intValue];
 	
 	//Add options here
 	int optionNodeId;
@@ -511,7 +511,7 @@ static const int kDefaultCapacity = 10;
 	npc.name = [npcDictionary valueForKey:@"name"];
 	npc.greeting = [npcDictionary valueForKey:@"text"];
 	npc.description = [npcDictionary valueForKey:@"description"];
-	npc.mediaURL = [npcDictionary valueForKey:@"mediaURL"];
+	npc.mediaId = [[npcDictionary valueForKey:@"mediaURL"] intValue];
 	
 	NSArray *conversationOptions = [npcDictionary objectForKey:@"conversationOptions"];
 	NSEnumerator *conversationOptionsEnumerator = [conversationOptions objectEnumerator];
@@ -589,7 +589,7 @@ static const int kDefaultCapacity = 10;
 		quest.questId = [[activeQuest objectForKey:@"quest_id"] intValue];
 		quest.name = [activeQuest objectForKey:@"name"];
 		quest.description = [activeQuest objectForKey:@"description"];
-		quest.mediaURL = [activeQuest objectForKey:@"mediaURL"];
+		quest.mediaId = [[activeQuest objectForKey:@"mediaURL"] intValue];
 		[activeQuestObjects addObject:quest];
  	}
 	
@@ -604,7 +604,7 @@ static const int kDefaultCapacity = 10;
 		quest.questId = [[completedQuest objectForKey:@"quest_id"] intValue];
 		quest.name = [completedQuest objectForKey:@"name"];
 		quest.description = [completedQuest objectForKey:@"text_when_complete"];
-		quest.mediaURL = [completedQuest objectForKey:@"mediaURL"];
+		quest.mediaId = [[completedQuest objectForKey:@"mediaURL"] intValue];
 		[completedQuestObjects addObject:quest];
 	}
 	

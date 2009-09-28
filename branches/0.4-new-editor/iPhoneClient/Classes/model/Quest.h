@@ -13,13 +13,12 @@
 	int questId;
 	NSString *name;
 	NSString *description;
-	NSString *mediaURL;
+	int mediaId;
 }
 
 @property(readwrite, assign) int questId;
 @property(copy, readwrite) NSString *name;
 @property(copy, readwrite) NSString *description;
-@property(copy, readwrite) NSString *mediaURL;
-
+@property(readwrite, assign) int mediaId;
 
 @end

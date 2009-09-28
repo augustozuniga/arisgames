@@ -9,11 +9,11 @@
 #import "QuestsViewController.h"
 #import "ARISAppDelegate.h"
 #import "Quest.h"
+#import "Media.h"
 
 static NSString * const OPTION_CELL = @"quest";
 static int const ACTIVE_SECTION = 0;
 static int const COMPLETED_SECTION = 1;
-
 
 @implementation QuestsViewController
 
@@ -149,9 +149,10 @@ static int const COMPLETED_SECTION = 1;
 	
 	//Set the icon
 	UIImage *icon;
-	if (quest.mediaURL) {
+	if (quest.mediaId > 0) {
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		NSData* iconData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:quest.mediaURL]];
+		Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:quest.mediaId]];
+		NSData* iconData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:media.url]];
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 		icon = [UIImage imageWithData:iconData];
 		cellIconView.image = icon;

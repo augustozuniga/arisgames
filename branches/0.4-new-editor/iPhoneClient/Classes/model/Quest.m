@@ -14,7 +14,7 @@
 @synthesize questId;
 @synthesize name;
 @synthesize description;
-@synthesize mediaURL;
+@synthesize mediaId;
 
 
 @end

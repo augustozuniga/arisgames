@@ -11,13 +11,12 @@
 #import "AppModel.h"
 #import "NodeViewController.h"
 
-
 @implementation Node
 
 @synthesize nodeId;
 @synthesize name;
 @synthesize text;
-@synthesize mediaURL;
+@synthesize mediaId;
 @synthesize kind;
 @synthesize forcedDisplay;
 @synthesize numberOfOptions;

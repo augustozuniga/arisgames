@@ -16,7 +16,7 @@
 @synthesize name;
 @synthesize greeting;
 @synthesize description;
-@synthesize mediaURL;
+@synthesize mediaId;
 @synthesize kind;
 @synthesize forcedDisplay;
 @synthesize numberOfOptions;

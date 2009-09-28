@@ -49,7 +49,7 @@
 		deleteButton.hidden = YES;
 	}
 	
-	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.itemId]];
+	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.mediaId]];
 	
 	NSString *mediaURL = media.url;
 	NSLog(@"ItemDetailsViewController: View Loaded. Current item: %@; mediaURL: %@", item.name, mediaURL);
