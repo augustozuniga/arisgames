@@ -11,6 +11,7 @@
 #import "Node.h"
 #import "ARISAppDelegate.h"
 #import "AppModel.h"
+#import "Media.h"
 
 static NSString * const OPTION_CELL = @"option";
 
@@ -44,10 +45,11 @@ static NSString * const OPTION_CELL = @"option";
 	}
 	
 	//Setup the image view
-	if (self.npc.mediaURL) {
+	if (npc.mediaId > 0) {
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		NSLog(@"NodeViewController: Image URL: %@",self.npc.mediaURL);
-		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:self.npc.mediaURL]];
+		Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:npc.mediaId]];
+		NSLog(@"NodeViewController: Image URL: %@", media.url);
+		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:media.url]];
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 		
 		UIImage* image = [[UIImage alloc] initWithData:imageData];

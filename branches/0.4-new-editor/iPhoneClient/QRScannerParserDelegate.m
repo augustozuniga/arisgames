@@ -43,7 +43,7 @@
 		currentObject.name = [attributeDict objectForKey:@"name"];
 		currentObject.type = [attributeDict objectForKey:@"itemType"];
 		currentObject.description = [attributeDict objectForKey:@"description"];
-		currentObject.mediaURL = [attributeDict objectForKey:@"mediaURL"];
+		currentObject.mediaId = [[attributeDict objectForKey:@"mediaURL"] intValue];
 		currentObject.iconURL = [attributeDict objectForKey:@"iconURL"];
 		qrcode = currentObject;
 		NSLog(@"QRScannerParserDelegate: Item found : '%@'", currentObject.name);

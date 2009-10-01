@@ -33,8 +33,8 @@
 	NSString *baseURL = [appModel getURLStringForModule:@"RESTNodeViewer"];
 	NSString *URLparams = self.URL;
 	NSString *fullURL = [ NSString stringWithFormat:@"%@%@", baseURL, URLparams];
+	genericWebViewController.appModel = appModel;
 	
-	[genericWebViewController setModel:appModel];
 	[genericWebViewController setURL: fullURL];
 	genericWebViewController.title = self.name;
 	

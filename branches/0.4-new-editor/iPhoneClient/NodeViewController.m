@@ -10,6 +10,7 @@
 #import "NodeOption.h"
 #import "ARISAppDelegate.h"
 #import "AppModel.h"
+#import "Media.h"
 
 static NSString * const OPTION_CELL = @"option";
 
@@ -37,7 +38,6 @@ static NSString * const OPTION_CELL = @"option";
 	//Update the server
 	[appModel updateServerNodeViewed:node.nodeId];
 	
-	
 	self.title = self.node.name;
 		
 	//Throw out an existing scroller subviews
@@ -46,10 +46,12 @@ static NSString * const OPTION_CELL = @"option";
 	}
 	
 	//Setup the image view
-	if (self.node.mediaURL) {
+	if (node.mediaId > 0) {
+		Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:node.mediaId]];
+		
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		NSLog(@"NodeViewController: Image URL: %@",self.node.mediaURL);
-		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:self.node.mediaURL]];
+		NSLog(@"NodeViewController: Image URL: %@", media.url);
+		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:media.url]];
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 		
 		UIImage* image = [[UIImage alloc] initWithData:imageData];
