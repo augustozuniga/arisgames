@@ -39,11 +39,8 @@ class Npcs extends Module
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 
 		$npc = @mysql_fetch_object($rsResult);
-		
 		if (!$npc) return new returnData(2, NULL, "invalid npc id");
-		
-		$npc->mediaURL = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . $npc->media;
-		
+				
 		return new returnData(0, $npc);		
 	}
 
@@ -79,7 +76,7 @@ class Npcs extends Module
      * Create a NPC
      * @returns the new npcID on success
      */
-	public function createNpc($intGameID, $strName, $strDescription, $strGreeting, $strMedia)
+	public function createNpc($intGameID, $strName, $strDescription, $strGreeting, $intMediaID)
 	{
 		
 		$strName = addslashes($strName);	
@@ -90,8 +87,8 @@ class Npcs extends Module
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		
 		$query = "INSERT INTO {$prefix}_npcs 
-					(name, description, text, media)
-					VALUES ('{$strName}', '{$strDescription}', '{$strGreeting}','{$strMedia}')";
+					(name, description, text, media_id)
+					VALUES ('{$strName}', '{$strDescription}', '{$strGreeting}','{$intMediaID}')";
 		
 		NetDebug::trace("createNpc: Running a query = $query");	
 		
@@ -108,7 +105,7 @@ class Npcs extends Module
      * @returns true if a record was updated, false if it was not
      */
 	public function updateNpc($intGameID, $intNpcID, 
-								$strName, $strDescription, $strGreeting, $strMedia)
+								$strName, $strDescription, $strGreeting, $intMediaID)
 	{
 		
 		$strName = addslashes($strName);	
@@ -120,7 +117,7 @@ class Npcs extends Module
 		
 		$query = "UPDATE {$prefix}_npcs 
 					SET name = '{$strName}', description = '{$strDescription}',
-					text = '{$strGreeting}', media = '{$strMedia}'
+					text = '{$strGreeting}', media_id = '{$intMediaID}'
 					WHERE npc_id = '{$intNpcID}'";
 		
 		NetDebug::trace("updateNpc: Running a query = $query");	

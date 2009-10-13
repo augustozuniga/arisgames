@@ -82,7 +82,7 @@ class Locations extends Module
      * Places an Item on the map
      * @returns the new locationID on success
      */
-	public function createLocationForItem($intGameID, $strIcon, 
+	public function createLocationForItem($intGameID, $intIconMediaID, 
 								$dblLatitude, $dblLongitude, $dblError,
 								$intItemId, $intQuantity, 
 								$boolHidden, $boolForceView)
@@ -100,9 +100,9 @@ class Locations extends Module
 
 		
 		$query = "INSERT INTO {$prefix}_locations 
-					(icon, name, latitude, longitude, error, 
+					(name, icon_media_id, latitude, longitude, error, 
 					type, type_id, item_qty, hidden, force_view)
-					VALUES ('{$strIcon}','{$item['name']}',
+					VALUES ('{$item['name']}', '{$intIconMediaID}',
 							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
 							'Item','{$intItemId}','{$intQuantity}',
 							'{$boolHidden}','{$boolForceView}')";
@@ -125,7 +125,7 @@ class Locations extends Module
      * Places an Node on the map
      * @returns the new locationID on success
      */
-	public function createLocationForNode($intGameID, $strIcon, 
+	public function createLocationForNode($intGameID, $intIconMediaID, 
 								$dblLatitude, $dblLongitude, $dblError,
 								$intNodeId, $boolHidden, $boolForceView)
 	{
@@ -140,10 +140,10 @@ class Locations extends Module
 		if (!$node)  return new returnData(2, NULL, "No matching Node");
 
 		$query = "INSERT INTO {$prefix}_locations 
-					(icon, name, 
+					(icon_media_id, name, 
 					latitude, longitude, error, 
 					type, type_id, hidden, force_view)
-					VALUES ('{$strIcon}','{$node['title']}',
+					VALUES ('{$intIconMediaID}','{$node['title']}',
 							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
 							'Node','{$intNodeId}','{$boolHidden}','{$boolForceView}')";
 		
@@ -163,7 +163,7 @@ class Locations extends Module
      * Places an Npc on the map
      * @returns the new locationID on success
      */
-	public function createLocationForNpc($intGameID, $strIcon, 
+	public function createLocationForNpc($intGameID, $intIconMediaID, 
 								$dblLatitude, $dblLongitude, $dblError,
 								$intNpcId, $boolHidden, $boolForceView)
 	{
@@ -179,10 +179,10 @@ class Locations extends Module
 
 		
 		$query = "INSERT INTO {$prefix}_locations 
-					(icon, name, 
+					(icon_media_id, name, 
 					latitude, longitude, error, 
 					type, type_id, hidden, force_view)
-					VALUES ('{$strIcon}','{$npc['name']}',
+					VALUES ('{$intIconMediaID}','{$npc['name']}',
 							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
 							'Npc','{$intNpcId}','{$boolHidden}','{$boolForceView}')";
 		

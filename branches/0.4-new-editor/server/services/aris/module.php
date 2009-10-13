@@ -5,11 +5,6 @@ require_once('returnData.class.php');
 abstract class Module
 {
 	
-	protected $validImageTypes = array('jpg','png');
-	protected $validAudioTypes = array('mp3','m4a');
-	protected $validVideoTypes = array('mp4','m4v');
-	
-	
 	public function Module()
 	{
 		$this->conn = mysql_pconnect(Config::dbHost, Config::dbUser, Config::dbPass);
@@ -98,24 +93,7 @@ abstract class Module
 		$row = @mysql_fetch_array($rsResult);	
 		return $row['name'];
     }
-	
-
-	/**
-     * Determine the Item Type
-     * @returns "Audio", "Video" or "Image"
-     */
-	protected function getMediaType($strMediaFileName) {
-		$mediaParts = pathinfo($strMediaFileName);
- 		$mediaExtension = $mediaParts['extension'];
- 		
- 		if (in_array($mediaExtension, $this->validImageTypes )) return 'Image';
- 		else if (in_array($mediaExtension, $this->validAudioTypes )) return 'Audio';
-		else if (in_array($mediaExtension, $this->validVideoTypes )) return'Video';
- 		
- 		return FALSE;
- 	}	
-	
-	
+		
 	/** 
 	 * checkForEvent
 	 *

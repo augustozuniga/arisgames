@@ -4,7 +4,15 @@ require("module.php");
 
 class Media extends Module
 {
-		
+	
+	const MEDIA_IMAGE = 'Image';
+	const MEDIA_VIDEO = 'Video';
+	const MEDIA_AUDIO = 'Audio';
+	protected $validImageTypes = array('jpg','png');
+	protected $validAudioTypes = array('mp3','m4a');
+	protected $validVideoTypes = array('mp4','m4v');
+	
+	
 	/**
      * Fetch all Media
      * @returns the media
@@ -30,13 +38,14 @@ class Media extends Module
 			$mediaItem = array();
 			$mediaItem['media_id'] = $mediaRow['media_id'];
 			$mediaItem['name'] = $mediaRow['name'];
-			$mediaItem['media'] = $mediaRow['media'];
-			$mediaItem['type'] = $this->getMediaType($mediaRow['media']);
+			$mediaItem['file_name'] = $mediaRow['file_name'];
+			$mediaItem['url_path'] = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir;
+			$mediaItem['type'] = $this->getMediaType($mediaRow['file_name']);
 			array_push($returnData->data, $mediaItem);
 		}
 		
 		NetDebug::trace($rsResult);
-		//reset($rsResult);
+
 		return $returnData;
 	}
 	
@@ -76,11 +85,11 @@ class Media extends Module
 	public function createMedia($intGameID, $strName, $strFileName)
 	{
 		
-		$prefix = $this->getPrefix($intGameID, $strFileName);
+		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		            	
 		$query = "INSERT INTO {$prefix}_media 
-					(name, media)
+					(name, file_name)
 					VALUES ('{$strName}', '{$strFileName}')";
 		
 		NetDebug::trace("Running a query = $query");	
@@ -136,7 +145,7 @@ class Media extends Module
 
 
 		//Delete the file		
-		$fileToDelete = Config::gamedataFSPath . "/{$prefix}/" . $mediaRow['media'];
+		$fileToDelete = Config::gamedataFSPath . "/{$prefix}/" . $mediaRow['file_name'];
 		if (!@unlink($fileToDelete)) 
 			return new returnData(4, NULL, "Could not delete: $fileToDelete");
 		
@@ -171,5 +180,19 @@ class Media extends Module
 		return new returnData(0, Config::gamedataFSPath . "/{$prefix}/". Config::gameMediaSubdir);
 	}	
 
+	/**
+     * Determine the Item Type
+     * @returns "Audio", "Video" or "Image"
+     */
+	protected function getMediaType($strMediaFileName) {
+		$mediaParts = pathinfo($strMediaFileName);
+ 		$mediaExtension = $mediaParts['extension'];
+ 		
+ 		if (in_array($mediaExtension, $this->validImageTypes )) return self::MEDIA_IMAGE;
+ 		else if (in_array($mediaExtension, $this->validAudioTypes )) return self::MEDIA_AUDIO;
+		else if (in_array($mediaExtension, $this->validVideoTypes )) return self::MEDIA_VIDEO;
+ 		
+ 		return FALSE;
+ 	}	
 	
 }

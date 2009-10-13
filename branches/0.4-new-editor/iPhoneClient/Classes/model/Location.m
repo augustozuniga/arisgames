@@ -18,7 +18,7 @@
 
 @synthesize locationId;
 @synthesize name;
-@synthesize iconURL;
+@synthesize iconMediaId;
 @synthesize location;
 @synthesize error;
 @synthesize objectType;

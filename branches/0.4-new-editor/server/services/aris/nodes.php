@@ -31,18 +31,13 @@ class Nodes extends Module
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
-		
 		$query = "SELECT * FROM {$prefix}_nodes WHERE node_id = {$intNodeID} LIMIT 1";
 		
 		$rsResult = @mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
 		
-		$node = mysql_fetch_object($rsResult);
-		
+		$node = mysql_fetch_object($rsResult);		
 		if (!$node) return new returnData(2, NULL, "invalid node id");
-		
-		$node->mediaURL = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . $node->media;
-
 		
 		return new returnData(0, $node);
 		
@@ -53,7 +48,7 @@ class Nodes extends Module
      * Create a node
      * @returns the new nodeID on success
      */
-	public function createNode($intGameID, $strTitle, $strText, $strMedia,
+	public function createNode($intGameID, $strTitle, $strText, $intMediaID,
 								$strOpt1Text, $intOpt1NodeID, 
 								$strOpt2Text, $intOpt2NodeID,
 								$strOpt3Text, $intOpt3NodeID,
@@ -70,14 +65,14 @@ class Nodes extends Module
 		
 		$prefix = $this->getPrefix($intGameID);
 		$query = "INSERT INTO {$prefix}_nodes 
-					(title, text, media, 
+					(title, text, media_id, 
 						opt1_text, opt1_node_id, 
 						opt2_text, opt2_node_id, 
 						opt3_text, opt3_node_id,
 						require_answer_string, 
 						require_answer_incorrect_node_id, 
 						require_answer_correct_node_id)
-					VALUES ('{$strTitle}', '{$strText}', '{$strMedia}',
+					VALUES ('{$strTitle}', '{$strText}', '{$intMediaID}',
 						'{$strOpt1Text}', '{$intOpt1NodeID}',
 						'{$strOpt2Text}','{$intOpt2NodeID}',
 						'{$strOpt3Text}','{$intOpt3NodeID}',
@@ -102,7 +97,7 @@ class Nodes extends Module
      * Update a specific node
      * @returns true if a record was updated, falso if no changes were made
      */
-	public function updateNode($intGameID, $intNodeID, $strTitle, $strText, $strMedia,
+	public function updateNode($intGameID, $intNodeID, $strTitle, $strText, $intMediaID,
 								$strOpt1Text, $intOpt1NodeID, 
 								$strOpt2Text, $intOpt2NodeID,
 								$strOpt3Text, $intOpt3NodeID,
@@ -121,7 +116,7 @@ class Nodes extends Module
 		
 		$query = "UPDATE {$prefix}_nodes 
 					SET title = '{$strTitle}', text = '{$strText}',
-					media = '{$strMedia}',
+					media_id = '{$intMediaID}',
 					opt1_text = '{$strOpt1Text}', opt1_node_id = '{$intOpt1NodeID}',
 					opt2_text = '{$strOpt2Text}', opt2_node_id = '{$intOpt2NodeID}',
 					opt3_text = '{$strOpt3Text}', opt3_node_id = '{$intOpt3NodeID}',

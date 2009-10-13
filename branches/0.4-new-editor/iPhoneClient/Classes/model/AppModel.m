@@ -246,10 +246,9 @@ static const int kDefaultCapacity = 10;
 	Item *item = [[Item alloc] init];
 	item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
 	item.name = [itemDictionary valueForKey:@"name"];
-	item.type = [itemDictionary valueForKey:@"type"];
 	item.description = [itemDictionary valueForKey:@"description"];
-	item.mediaId = [[itemDictionary valueForKey:@"media"] intValue];
-	item.iconURL = [itemDictionary valueForKey:@"icon"];
+	item.mediaId = [[itemDictionary valueForKey:@"media_id"] intValue];
+	item.iconMediaId = [[itemDictionary valueForKey:@"icon_media_id"] intValue];
 	item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
 	item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
 	NSLog(@"\tadded item %@", item.name);
@@ -263,7 +262,7 @@ static const int kDefaultCapacity = 10;
 	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
-	node.mediaId = [[nodeDictionary valueForKey:@"mediaURL"] intValue];
+	node.mediaId = [[nodeDictionary valueForKey:@"media_id"] intValue];
 	
 	//Add options here
 	int optionNodeId;
@@ -298,7 +297,7 @@ static const int kDefaultCapacity = 10;
 	npc.name = [npcDictionary valueForKey:@"name"];
 	npc.greeting = [npcDictionary valueForKey:@"text"];
 	npc.description = [npcDictionary valueForKey:@"description"];
-	npc.mediaId = [[npcDictionary valueForKey:@"mediaURL"] intValue];
+	npc.mediaId = [[npcDictionary valueForKey:@"media_id"] intValue];
 	
 	NSArray *conversationOptions = [npcDictionary objectForKey:@"conversationOptions"];
 	NSEnumerator *conversationOptionsEnumerator = [conversationOptions objectEnumerator];
@@ -398,7 +397,7 @@ static const int kDefaultCapacity = 10;
 			Location *location = [[Location alloc] init];
 			location.locationId = [[locationDictionary valueForKey:@"location_id"] intValue];
 			location.name = [locationDictionary valueForKey:@"name"];
-			location.iconURL = [locationDictionary valueForKey:@"icon"];
+			location.iconMediaId = [[locationDictionary valueForKey:@"icon_media_id"] intValue];
 			location.location = [[CLLocation alloc] initWithLatitude:[[locationDictionary valueForKey:@"latitude"] doubleValue]
 														   longitude:[[locationDictionary valueForKey:@"longitude"] doubleValue]];
 			location.error = [[locationDictionary valueForKey:@"error"] doubleValue];
@@ -440,26 +439,27 @@ static const int kDefaultCapacity = 10;
 	NSDictionary *dict;
 	while (dict = [enumerator nextObject]) {
 		NSInteger uid = [[dict valueForKey:@"media_id"] intValue];
-		NSString *url = [dict valueForKey:@"media"];
+		NSString *fileName = [dict valueForKey:@"file_name"];
+		
 		NSString *type = [dict valueForKey:@"type"];
 		
 		if (uid < 1) {
-			NSLog(@"Invalid media id: %d", uid);
+			NSLog(@"AppModel fetchMediaList: Invalid media id: %d", uid);
 			continue;
 		}
-		if ([url length] < 1) {
-			NSLog(@"Empty url string for media #%d.", uid);
+		if ([fileName length] < 1) {
+			NSLog(@"AppModel fetchMediaList: Empty fileName string for media #%d.", uid);
 			continue;
 		}
 		if ([type length] < 1) {
-			NSLog(@"Empty type for media #%d", uid);
+			NSLog(@"AppModel fetchMediaList: Empty type for media #%d", uid);
 			continue;
 		}
 		
- 		url = [NSString stringWithFormat:@"%@gamedata/%d/%@", baseAppURL, gameId, url];
-		NSLog(@">>>> URL %@", url);
+ 		fileName = [NSString stringWithFormat:@"%@gamedata/%d/%@", baseAppURL, gameId, fileName];
+		NSLog(@"AppModel fetchMediaList: Full URL: %@", fileName);
 		
-		Media *media = [[Media alloc] initWithId:uid andUrlString:url ofType:type];
+		Media *media = [[Media alloc] initWithId:uid andUrlString:fileName ofType:type];
 		[mediaList setObject:media forKey:[NSNumber numberWithInt:uid]];
 		[media release];
 	}
@@ -499,10 +499,9 @@ static const int kDefaultCapacity = 10;
 		Item *item = [[Item alloc] init];
 		item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
 		item.name = [itemDictionary valueForKey:@"name"];
-		item.type = [itemDictionary valueForKey:@"type"];
 		item.description = [itemDictionary valueForKey:@"description"];
-		item.mediaId = [[itemDictionary valueForKey:@"media"] intValue];
-		item.iconURL = [itemDictionary valueForKey:@"icon"];
+		item.mediaId = [[itemDictionary valueForKey:@"media_id"] intValue];
+		item.iconMediaId = [[itemDictionary valueForKey:@"icon_media_id"] intValue];
 		item.dropable = [[itemDictionary valueForKey:@"dropable"] boolValue];
 		item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
 		NSLog(@"Model: Adding Item: %@", item.name);

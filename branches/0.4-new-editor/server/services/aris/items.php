@@ -45,31 +45,8 @@ class Items extends Module
 		
 		$rsResult = @mysql_query($query);
 		if (!$rsResult) return new returnData(0, NULL);
-		
-		$inventory = array();
-    		while ($row = mysql_fetch_array($rsResult)) {
-    			//Add the full path to media
-    			$row['media'] = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . $row['media'];
-    			//Determine the icon
-    			$iconType = $this->getMediaType($row['media']);
-    			switch ($iconType) {
-    				case 'Image':
-    					$row['icon'] = 'defaultImageIcon.png';
-    					break;
-    				case 'Audio':
-    					$row['icon'] = 'defaultAudioIcon.png';
-    					break;
-    				case 'Video':
-    					$row['icon'] = 'defaultVideoIcon.png';
-    					break;
-    			}
-    			$row['icon'] = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir . $row['icon'];
-
-    			$inventory[] = $row;
-    		}
-		
 		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
-		return new returnData(0, $inventory);
+		return new returnData(0, $rsResult);
 	}	
 	
 	
@@ -101,21 +78,20 @@ class Items extends Module
      * @returns the new itemID on success
      */
 	public function createItem($intGameID, $strName, $strDescription, 
-								$strMediaFileName, $boolDropable, $boolDestroyable)
+								$intIconMediaID, $intMediaID, $boolDropable, $boolDestroyable)
 	{
 		$strName = addslashes($strName);	
 		$strDescription = addslashes($strDescription);	
 		
-		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "INSERT INTO {$prefix}_items 
-					(name, description, media, type, dropable, destroyable)
+					(name, description, icon_media_id, media_id, dropable, destroyable)
 					VALUES ('{$strName}', 
 							'{$strDescription}',
-							'{$strMediaFileName}', 
-							'$type',
+							'{$intIconMediaID}', 
+							'{$intMediaID}', 
 							'$boolDropable',
 							'$boolDestroyable')";
 		
@@ -132,19 +108,17 @@ class Items extends Module
      * @returns with returnData object (0 on success) 
      */
 	public function createItemAndGiveToPlayer($intGameID, $intPlayerID, $strName, $strDescription, 
-								$strMediaFileName, $boolDropable, $boolDestroyable)
+								$intMediaID, $boolDropable, $boolDestroyable)
 	{
 		
-		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "INSERT INTO {$prefix}_items 
-					(name, description, media, type, dropable, destroyable)
+					(name, description, media_id, dropable, destroyable)
 					VALUES ('{$strName}', 
 							'{$strDescription}',
-							'{$strMediaFileName}', 
-							'$type',
+							'{$intMediaID}', 
 							'$boolDropable',
 							'$boolDestroyable')";
 		
@@ -166,9 +140,8 @@ class Items extends Module
      * @returns true if edit was done, false if no changes were made
      */
 	public function updateItem($intGameID, $intItemID, $strName, $strDescription, 
-								$strMediaFileName, $boolDropable, $boolDestroyable)
+								$intIconMediaID, $intMediaID, $boolDropable, $boolDestroyable)
 	{
-		$type = $this->getItemType($strMediaFileName);
 		$prefix = $this->getPrefix($intGameID);
 		
 		$strName = addslashes($strName);	
@@ -179,8 +152,8 @@ class Items extends Module
 		$query = "UPDATE {$prefix}_items 
 					SET name = '{$strName}', 
 						description = '{$strDescription}', 
-						media = '{$strMediaFileName}', 
-						type = '{$type}',
+						icon_media_id = '{$intIconMediaID}',
+						media_id = '{$intMediaID}', 
 						dropable = '{$boolDropable}',
 						destroyable = '{$boolDestroyable}'
 					WHERE item_id = '{$intItemID}'";
@@ -265,21 +238,6 @@ class Items extends Module
 		return new returnData(0,$referrers);
 	}	
 
-	
-	/**
-     * Determine the Item Type
-     * @returns either "AV" or "Image"
-     */
-	private function getItemType($strMediaFileName) {
-		$mediaParts = pathinfo($strMediaFileName);
- 		$mediaExtension = $mediaParts['extension'];
- 		
- 		if ($mediaExtension == '' or $mediaExtension == 'png' or $mediaExtension == 'jpg' ) $type = 'Image';
- 		else $type = 'AV'; //We should improve this and do a more robust test
- 		
- 		NetDebug::trace("getITemType: Item type for '{$strMediaFileName}' is '{$type}'");
- 		return $type;
- 		
- 	}
+
 	
 }

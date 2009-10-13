@@ -88,7 +88,7 @@
 		[image release];
 		[imageView release];
 	}
-	else if (([media.type isEqualToString: @"Video"] || [item.type isEqualToString: @"Audio"]) && mediaURL) {
+	else if (([media.type isEqualToString: @"Video"] || [media.type isEqualToString: @"Audio"]) && mediaURL) {
 		NSLog(@"ItemDetailsViewController:  Video Layout Selected");
 
 		//Create movie player object

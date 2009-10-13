@@ -107,12 +107,12 @@ class Games extends Module
 			item_id int(11) unsigned NOT NULL auto_increment,
 			name varchar(100) default NULL,
 			description text,
-			media varchar(50) NOT NULL default 'item_default.jpg',
-			type enum('AV','Image') NOT NULL default 'Image',
+			icon_media_id int(10) unsigned default NULL,
+			media_id int(10) unsigned default NULL,
 			dropable enum('0','1') NOT NULL default '0',
 			destroyable enum('0','1') NOT NULL default '0',
 			PRIMARY KEY  (item_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create items table');
 				
@@ -120,7 +120,7 @@ class Games extends Module
 			event_id int(10) unsigned NOT NULL auto_increment,
   			description tinytext,
  			 PRIMARY KEY  (event_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create events table');
 		
@@ -132,7 +132,7 @@ class Games extends Module
 			action enum('GIVE_ITEM','GIVE_EVENT','TAKE_ITEM') NOT NULL,
 			action_detail int(10) unsigned NOT NULL,
 			PRIMARY KEY  (id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_state_changes table');
 		
@@ -145,14 +145,13 @@ class Games extends Module
 			requirement enum('HAS_ITEM','HAS_EVENT','DOES_NOT_HAVE_ITEM','DOES_NOT_HAVE_EVENT') NOT NULL,
 			requirement_detail int(11) NOT NULL,
 			PRIMARY KEY  (requirement_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create requirments table');
 		
 	
 		$query = "CREATE TABLE {$strShortName}_locations (
 	  		location_id int(11) NOT NULL auto_increment,
- 	 		icon varchar(30) default NULL,
 			name varchar(50) default NULL,
 			description tinytext,
 			latitude double default '43.0746561',
@@ -160,29 +159,30 @@ class Games extends Module
 			error double default '0.0005',
 			type enum('Node','Event','Item','Npc') NOT NULL,
 			type_id int(11) NOT NULL,
+			icon_media_id int(10) unsigned default NULL,
 			item_qty int(11) NOT NULL,
 			hidden enum('0','1') default '0',
 			force_view enum('0','1') NOT NULL default '0' COMMENT 'Forces this Location to Display when nearby',
 			PRIMARY KEY  (location_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create locations table');
 	
 		$query = "CREATE TABLE {$strShortName}_quests (
-			  quest_id int(11) unsigned NOT NULL auto_increment,
-			  `name` tinytext,
-			  description text,
-			  text_when_complete tinytext NOT NULL COMMENT 'This is the txt that displays on the completed quests screen',
-			  media varchar(50) default 'quest_default.jpg',
-			  PRIMARY KEY  (quest_id)
-			)";
+			 quest_id int(11) unsigned NOT NULL auto_increment,
+			 name tinytext,
+			 description text,
+			 text_when_complete tinytext NOT NULL COMMENT 'This is the txt that displays on the completed quests screen',
+			 icon_media_id int(10) unsigned default NULL,
+			 PRIMARY KEY  (quest_id)
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create quests table');
 		
 		$query = "CREATE TABLE {$strShortName}_nodes (
 			  node_id int(11) unsigned NOT NULL auto_increment,
 			  title varchar(100) default NULL,
-			  `text` text,
+			  text text,
 			  opt1_text varchar(100) default NULL,
 			  opt1_node_id int(11) unsigned default NULL,
 			  opt2_text varchar(100) default NULL,
@@ -192,9 +192,9 @@ class Games extends Module
 			  require_answer_incorrect_node_id int(11) unsigned default NULL,
 			  require_answer_string varchar(50) default NULL,
 			  require_answer_correct_node_id int(10) unsigned default NULL,
-			  media varchar(50),
+			  media_id int(10) unsigned default NULL,
 			  PRIMARY KEY  (node_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create nodes table');
 		
@@ -202,21 +202,21 @@ class Games extends Module
 			conversation_id int(11) NOT NULL auto_increment,
 			npc_id int(10) unsigned NOT NULL default '0',
 			node_id int(10) unsigned NOT NULL default '0',
-			`text` tinytext NOT NULL,
+			text tinytext NOT NULL,
 			PRIMARY KEY  (conversation_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create conversations table');
 		
 	
 		$query = "CREATE TABLE {$strShortName}_npcs (
 			npc_id int(10) unsigned NOT NULL auto_increment,
-			`name` varchar(30) NOT NULL default '',
+			name varchar(30) NOT NULL default '',
 			description tinytext,
-			`text` tinytext,
-			media varchar(50) default NULL,
+			text tinytext,
+			media_id int(10) unsigned default NULL,
 			PRIMARY KEY  (npc_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create npcs table');
 		
@@ -224,10 +224,10 @@ class Games extends Module
 			id int(11) NOT NULL auto_increment,
 			player_id int(10) unsigned NOT NULL default '0',
 			event_id int(10) unsigned NOT NULL default '0',
-			`timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
+			timestamp timestamp NOT NULL default CURRENT_TIMESTAMP,
 			PRIMARY KEY  (id),
 			UNIQUE KEY `unique` (player_id,event_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_events table');
 		
@@ -235,12 +235,12 @@ class Games extends Module
 			id int(11) NOT NULL auto_increment,
 			player_id int(11) unsigned NOT NULL default '0',
 			item_id int(11) unsigned NOT NULL default '0',
-			`timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
+			timestamp timestamp NOT NULL default CURRENT_TIMESTAMP,
 			PRIMARY KEY  (id),
 			UNIQUE KEY `unique` (player_id,item_id),
 			KEY player_id (player_id),
 			KEY item_id (item_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_items table');
 		
@@ -252,7 +252,7 @@ class Games extends Module
 			  x_position double NULL,
 			  y_position double NULL,
 			  PRIMARY KEY  (qrcode_id)
-			)";
+			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');							
 		
@@ -260,10 +260,10 @@ class Games extends Module
 		
 		$query = "CREATE TABLE {$strShortName}_media (
             media_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-            name VARCHAR( 255 ) NOT NULL ,
-            media VARCHAR( 255 ) NOT NULL ,
+            name VARCHAR( 255 ) NOT NULL,
+            file_name VARCHAR( 255 ) NOT NULL,
             PRIMARY KEY ( media_id )
-            )";
+            )ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');	
 		

@@ -7,7 +7,7 @@
 //
 
 #import "InventoryListViewController.h"
-
+#import "Media.h"
 
 @implementation InventoryListViewController
 
@@ -127,12 +127,24 @@
 	lblTemp2.text = [description substringToIndex:targetIndex];
 	
 	UIImageView *iconView = (UIImageView *)[cell viewWithTag:3];
+	UIImage *icon;
 	
+	Item *item = [inventory objectAtIndex:[indexPath row]];
+	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.mediaId]];
+	
+	/*
+	//Load the icon from the server
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	NSData* iconData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:[[inventory objectAtIndex:[indexPath row]] iconURL]]];
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	icon = [UIImage imageWithData:iconData];
+	*/
 	
-	UIImage *icon = [UIImage imageWithData:iconData];
+	//Load the Default
+	if ([media.type isEqualToString: @"Image"]) icon = [UIImage imageNamed:@"defaultImageIcon.png"];
+	if ([media.type isEqualToString: @"Audio"]) icon = [UIImage imageNamed:@"defaultAudioIcon"];
+	if ([media.type isEqualToString: @"Video"]) icon = [UIImage imageNamed:@"defaultVideoIcon"];
+
 	iconView.image = icon;
 
 	return cell;

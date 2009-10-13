@@ -12,7 +12,7 @@
 
 @interface Location : NSObject <NearbyObjectProtocol> {
 	int locationId;
-	NSString *iconURL;
+	int iconMediaId;
 	NSString *name;
 	CLLocation *location;
 	double error;
@@ -26,7 +26,8 @@
 
 @property(readwrite, assign) int locationId;
 @property(copy, readwrite) NSString *name;
-@property(copy, readwrite) NSString *iconURL;
+@property(readwrite, assign) int iconMediaId;
+
 @property(copy, readwrite) CLLocation *location;
 @property(readwrite) double error;
 @property(copy, readwrite) NSString *objectType;

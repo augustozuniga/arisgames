@@ -22,17 +22,10 @@
 @synthesize mediaId;
 @synthesize locationId;
 @synthesize description;
-@synthesize type;
-@synthesize iconURL;
+@synthesize iconMediaId;
 
 @synthesize dropable;
 @synthesize	destroyable;
-
-
-- (void) setLocationId:(NSString *)fromStringValue {
-	locationId = [fromStringValue intValue];
-}
-
 
 -(nearbyObjectKind) kind {
 	return NearbyObjectItem;
@@ -57,11 +50,10 @@
 	
 }
 
+
 - (void)dealloc {
 	[name release];
 	[description release];
-	[type release];
-	[iconURL release];
     [super dealloc];
 }
 
