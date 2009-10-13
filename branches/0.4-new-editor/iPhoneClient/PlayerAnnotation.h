@@ -21,6 +21,7 @@
 @property (readwrite, copy) NSString *subtitle;
 
 
+
 - (id)initWithCoordinate:(CLLocationCoordinate2D) coordinate;
 
 

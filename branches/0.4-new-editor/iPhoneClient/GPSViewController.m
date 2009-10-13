@@ -170,7 +170,7 @@
 		
 		ItemAnnotation *anItem = [[ItemAnnotation alloc]initWithCoordinate:locationLatLong];
 		anItem.title = location.name;
-		if (location.qty > 0) anItem.subtitle = [NSString stringWithFormat:@"Quantity: %d", location.qty];
+		anItem.subtitle = [NSString stringWithFormat:@"%d",location.qty];
 		[mapView addAnnotation:anItem];
 		[mapView selectAnnotation:anItem animated:YES];
 
@@ -199,6 +199,56 @@
 	[appModel release];
     [super dealloc];
 }
+
+-(UIImage *)addTitle:(NSString *)imageTitle quantity:(int)quantity toImage:(UIImage *)img {
+	
+	NSString *calloutString;
+	if (quantity > 1) {
+		calloutString = [NSString stringWithFormat:@"%@:%d",imageTitle, quantity];
+	} else {
+		calloutString = imageTitle;
+	}
+ 	UIFont *myFont = [UIFont fontWithName:@"Arial" size:12];
+	CGSize textSize = [calloutString sizeWithFont:myFont];
+	CGRect textRect = CGRectMake(0, 0, textSize.width + 10, textSize.height);
+	
+	//callout path
+	CGMutablePathRef calloutPath = CGPathCreateMutable();
+	CGPoint pointerPoint = CGPointMake(textRect.origin.x + 0.6 * textRect.size.width,  textRect.origin.y + textRect.size.height + 5);
+	CGPathMoveToPoint(calloutPath, NULL, textRect.origin.x, textRect.origin.y);
+	CGPathAddLineToPoint(calloutPath, NULL, textRect.origin.x, textRect.origin.y + textRect.size.height);
+	CGPathAddLineToPoint(calloutPath, NULL, pointerPoint.x - 5.0, textRect.origin.y + textRect.size.height);
+	CGPathAddLineToPoint(calloutPath, NULL, pointerPoint.x, pointerPoint.y);
+	CGPathAddLineToPoint(calloutPath, NULL, pointerPoint.x + 5.0, textRect.origin.y+ textRect.size.height);
+	CGPathAddLineToPoint(calloutPath, NULL, textRect.origin.x + textRect.size.width, textRect.origin.y + textRect.size.height);
+	CGPathAddLineToPoint(calloutPath, NULL, textRect.origin.x + textRect.size.width, textRect.origin.y);
+	CGPathAddLineToPoint(calloutPath, NULL, textRect.origin.x, textRect.origin.y);
+	
+	
+	
+	CGRect imageRect = CGRectMake(0, textSize.height + 10.0, img.size.width, img.size.height);
+	CGRect backgroundRect = CGRectUnion(textRect, imageRect);
+	if (backgroundRect.size.width > img.size.width) {
+		imageRect.origin.x = (backgroundRect.size.width - img.size.width) / 2.0;
+	}
+	
+	CGSize contextSize = backgroundRect.size;
+	UIGraphicsBeginImageContext(contextSize);
+	CGContextAddPath(UIGraphicsGetCurrentContext(), calloutPath);
+	[[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.6] set];
+	CGContextFillPath(UIGraphicsGetCurrentContext());
+	[[UIColor blackColor] set];
+	CGContextAddPath(UIGraphicsGetCurrentContext(), calloutPath);
+	CGContextStrokePath(UIGraphicsGetCurrentContext());
+	[img drawAtPoint:imageRect.origin];
+	[calloutString drawInRect:textRect withFont:myFont lineBreakMode:UILineBreakModeWordWrap alignment:UITextAlignmentCenter];
+	UIImage *returnImage = UIGraphicsGetImageFromCurrentImageContext();
+	CGPathRelease(calloutPath);
+	UIGraphicsEndImageContext();
+	
+	return returnImage;
+}
+
 
 -(UIImage *)addText:(NSString *)text1 toImage:(UIImage *)img {
     int w = img.size.width;
@@ -245,7 +295,7 @@
 	} else {
 		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
 		UIImage* myImage = [UIImage imageNamed: @"pickaxe.png"];
-		annotationView.image = [self addText:annotation.title toImage:myImage]; 	
+		annotationView.image = [self addTitle:annotation.title quantity:[annotation.subtitle intValue] toImage:myImage]; 	
 		return annotationView;
 	}
 }
