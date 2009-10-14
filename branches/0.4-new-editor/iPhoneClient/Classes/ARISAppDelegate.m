@@ -169,6 +169,8 @@
 	if (self.networkAlert != nil) {
 		[self.networkAlert dismissWithClickedButtonIndex:0 animated:YES];
 	}
+	
+
 }
 
 

@@ -186,8 +186,6 @@
 		ABDA40C110506AF400823A94 /* ItemAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B110506AF400823A94 /* ItemAnnotation.m */; };
 		ABDA40C210506AF400823A94 /* AnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B310506AF400823A94 /* AnnotationView.m */; };
 		ABDA40C310506AF400823A94 /* marker-other-player.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B510506AF400823A94 /* marker-other-player.png */; };
-		ABDA40C410506AF400823A94 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B610506AF400823A94 /* loading.png */; };
-		ABDA40C510506AF400823A94 /* marker-player-lqgps.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B710506AF400823A94 /* marker-player-lqgps.png */; };
 		ABDA40C610506AF400823A94 /* marker-player.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B810506AF400823A94 /* marker-player.png */; };
 		ABDA40C710506AF400823A94 /* marker-blue-withletter.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B910506AF400823A94 /* marker-blue-withletter.png */; };
 		ABDA40C810506AF400823A94 /* marker-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40BA10506AF400823A94 /* marker-blue.png */; };
@@ -436,8 +434,6 @@
 		ABDA40B210506AF400823A94 /* AnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationView.h; sourceTree = "<group>"; };
 		ABDA40B310506AF400823A94 /* AnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationView.m; sourceTree = "<group>"; };
 		ABDA40B510506AF400823A94 /* marker-other-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-other-player.png"; sourceTree = "<group>"; };
-		ABDA40B610506AF400823A94 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
-		ABDA40B710506AF400823A94 /* marker-player-lqgps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-player-lqgps.png"; sourceTree = "<group>"; };
 		ABDA40B810506AF400823A94 /* marker-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-player.png"; sourceTree = "<group>"; };
 		ABDA40B910506AF400823A94 /* marker-blue-withletter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-blue-withletter.png"; sourceTree = "<group>"; };
 		ABDA40BA10506AF400823A94 /* marker-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-blue.png"; sourceTree = "<group>"; };
@@ -912,8 +908,6 @@
 			isa = PBXGroup;
 			children = (
 				ABDA40B510506AF400823A94 /* marker-other-player.png */,
-				ABDA40B610506AF400823A94 /* loading.png */,
-				ABDA40B710506AF400823A94 /* marker-player-lqgps.png */,
 				ABDA40B810506AF400823A94 /* marker-player.png */,
 				ABDA40B910506AF400823A94 /* marker-blue-withletter.png */,
 				ABDA40BA10506AF400823A94 /* marker-blue.png */,
@@ -1033,8 +1027,6 @@
 				ABDA40BD10506AF400823A94 /* GPS.xib in Resources */,
 				ABDA40BE10506AF400823A94 /* GPS.png in Resources */,
 				ABDA40C310506AF400823A94 /* marker-other-player.png in Resources */,
-				ABDA40C410506AF400823A94 /* loading.png in Resources */,
-				ABDA40C510506AF400823A94 /* marker-player-lqgps.png in Resources */,
 				ABDA40C610506AF400823A94 /* marker-player.png in Resources */,
 				ABDA40C710506AF400823A94 /* marker-blue-withletter.png in Resources */,
 				ABDA40C810506AF400823A94 /* marker-blue.png in Resources */,

@@ -28,7 +28,7 @@
 - (nearbyObjectKind) kind;
 @property(readwrite, assign) BOOL forcedDisplay;
 @property(readwrite, assign) int itemId;
-@property(readonly, assign) int locationId;
+@property(readwrite, assign) int locationId;
 @property(readwrite, assign) int mediaId;
 @property(copy, readwrite) NSString *description;
 @property(readwrite, assign) int iconMediaId;

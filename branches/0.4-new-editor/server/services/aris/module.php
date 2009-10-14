@@ -66,8 +66,11 @@ abstract class Module
      */ 
     protected function giveItemToWorld($strGamePrefix, $intItemID, $floatLat, $floatLong, $intQty = 1) {
 		$itemName = $this->getItemName($strGamePrefix, $intItemID);
-		$query = "INSERT INTO {$strGamePrefix}_locations (name, type, type_id, latitude, longitude, item_qty)
-										  VALUES ('{$itemName}','Item','$intItemID}','{$floatLat}','{$floatLong}','{$intQty}')";
+		$error = 100; //Use 100 meters
+		$icon_media_id = $this->getItemIconMediaId($strGamePrefix, $intItemID); //Set the map icon = the item's icon
+		
+		$query = "INSERT INTO {$strGamePrefix}_locations (name, type, type_id, icon_media_id, latitude, longitude, error, item_qty)
+										  VALUES ('{$itemName}','Item','{$intItemID}', '{$icon_media_id}', '{$floatLat}','{$floatLong}', '{$error}','{$intQty}')";
     	@mysql_query($query);    	
     }
 	
@@ -88,11 +91,21 @@ abstract class Module
     * Looks up an item name
     **/
     protected function getItemName($strPrefix, $intItemID){
-    	$query = "SELECT name FROM {$strPrefix}_items WHERE item_id = $intRecordID";
+    	$query = "SELECT name FROM {$strPrefix}_items WHERE item_id = $intItemID";
     	$rsResult = @mysql_query($query);		
 		$row = @mysql_fetch_array($rsResult);	
 		return $row['name'];
     }
+    
+ 	/**
+    * Looks up an item icon media id
+    **/
+    protected function getItemIconMediaId($strPrefix, $intItemID){
+    	$query = "SELECT name FROM {$strPrefix}_items WHERE item_id = $intItemID";
+    	$rsResult = @mysql_query($query);		
+		$row = @mysql_fetch_array($rsResult);	
+		return $row['icon_media_id'];
+    }   
 		
 	/** 
 	 * checkForEvent

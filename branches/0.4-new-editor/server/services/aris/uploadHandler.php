@@ -13,6 +13,8 @@ header('Status: 200 OK');
 $media = new Media();
 $prefix = $media->getPrefix($_POST['gameID']);
 
+//Check for Errors
+if ($_FILES['file']['error']) die ("data=&returnCode=4&returnCodeDescription=PHPUploadError");
 if (!$prefix) die ("data=&returnCode=1&returnCodeDescription=InvalidGameID");
 		
 $gameMediaDirectory = $media->getMediaDirectory($prefix)->data;

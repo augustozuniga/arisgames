@@ -96,7 +96,7 @@ class Quests extends Module
      * Create an Event
      * @returns the new eventID on success
      */
-	public function createQuest($intGameID, $strName, $strIncompleteDescription, $strCompleteDescription, $strMedia)
+	public function createQuest($intGameID, $strName, $strIncompleteDescription, $strCompleteDescription, $intIconMediaID)
 	{
 		
 		$strName = addslashes($strName);	
@@ -107,8 +107,8 @@ class Quests extends Module
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		$query = "INSERT INTO {$prefix}_quests 
-					(name, description, text_when_complete, media)
-					VALUES ('{$strName}','{$strIncompleteDescription}','{$strCompleteDescription}','{$strMedia}')";
+					(name, description, text_when_complete, icon_media_id)
+					VALUES ('{$strName}','{$strIncompleteDescription}','{$strCompleteDescription}','{$intIconMediaID}')";
 		
 		NetDebug::trace("Running a query = $query");	
 		
@@ -124,7 +124,7 @@ class Quests extends Module
      * Update a specific Event
      * @returns true if edit was done, false if no changes were made
      */
-	public function updateQuest($intGameID, $intQuestID, $strName, $strIncompleteDescription, $strCompleteDescription, $strMedia)
+	public function updateQuest($intGameID, $intQuestID, $strName, $strIncompleteDescription, $strCompleteDescription, $intIconMediaID)
 	{
 		
 		$strName = addslashes($strName);	
@@ -139,7 +139,7 @@ class Quests extends Module
 					name = '{$strName}',
 					description = '{$strIncompleteDescription}',
 					text_when_complete = '{$strCompleteDescription}',
-					media = '{$strMedia}'
+					media_id = '{$intIconMediaID}'
 					WHERE quest_id = '{$intQuestID}'";
 		
 		NetDebug::trace("Running a query = $query");	

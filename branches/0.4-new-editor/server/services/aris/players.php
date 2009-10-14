@@ -154,8 +154,46 @@ class Players extends Module
 		else return new returnData(0, FALSE);
 	}
 
+	/**
+     * Removes an Item from the Map and Gives it to the Player
+     * @returns returnData with data=true if changes were made
+     */
+	public function pickupItemFromLocation($intGameID, $intPlayerID, $intItemID, $intLocationID)
+	{	
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$this->giveItemToPlayer($prefix, $intItemID, $intPlayerID);
+		$this->decrementItemQtyAtLocation($prefix, $intLocationID, 1); 
+		return new returnData(0, FALSE);
+	}
 	
+	/**
+     * Removes an Item from the players Inventory and Places it on the map
+     * @returns returnData with data=true if changes were made
+     */
+	public function dropItem($intGameID, $intPlayerID, $intItemID, $floatLat, $floatLong)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$this->takeItemFromPlayer($prefix, $intItemID, $intPlayerID);
+		$this->giveItemToWorld($prefix, $intItemID, $floatLat, $floatLong, 1);
+		return new returnData(0, FALSE);
+	}		
 	
+	/**
+     * Removes an Item from the players Inventory
+     * @returns returnData with data=true if changes were made
+     */
+	public function destroyItem($intGameID, $intPlayerID, $intItemID)
+	{
+		$prefix = $this->getPrefix($intGameID);
+		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		$this->takeItemFromPlayer($prefix, $intItemID, $intPlayerID);
+		return new returnData(0, FALSE);
+	}		
 	
 	/**
      * Create a new Player

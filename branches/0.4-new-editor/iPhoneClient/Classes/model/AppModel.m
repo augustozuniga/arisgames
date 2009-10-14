@@ -388,7 +388,7 @@ static const int kDefaultCapacity = 10;
 			return;
 		}
 		
-		//Build the game list
+		//Build the location list
 		NSMutableArray *tempLocationsList = [[NSMutableArray alloc] init];
 		NSEnumerator *locationsEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
 		NSDictionary *locationDictionary;
@@ -656,6 +656,7 @@ static const int kDefaultCapacity = 10;
 }
 
 
+
 - (void)resetPlayerEvents {
 	NSLog(@"Model: Clearing Player Events");
 	
@@ -680,6 +681,54 @@ static const int kDefaultCapacity = 10;
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"players" 
 																	 andMethodName:@"resetItems" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerPickupItem: (int)itemId fromLocation: (int)locationId {
+	NSLog(@"Model: Informing the Server the player picked up item");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  [NSString stringWithFormat:@"%d",locationId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"pickupItemFromLocation" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerDropItemHere: (int)itemId {
+	NSLog(@"Model: Informing the Server the player dropped an item");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  [NSString stringWithFormat:@"%f",playerLocation.coordinate.latitude],
+						  [NSString stringWithFormat:@"%f",playerLocation.coordinate.longitude],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"dropItem" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerDestroyItem: (int)itemId {
+	NSLog(@"Model: Informing the Server the player destroyed an item");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"destroyItem" 
 																	  andArguments:arguments];
 	[jsonConnection performSynchronousRequest]; 
 }

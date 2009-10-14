@@ -138,48 +138,43 @@
 - (void) moviePlayBackDidFinish:(NSNotification*)notification { }
 
 - (IBAction)dropButtonTouchAction: (id) sender{
-	//Fire off a request to the REST Module and display an alert when it is successfull
-	NSString *baseURL = [appModel getURLStringForModule:@"Inventory"];
-	NSString *URLparams = [ NSString stringWithFormat:@"&controller=SimpleREST&event=dropItemHere&item_id=%d", self.item.itemId];
-	NSString *fullURL = [ NSString stringWithFormat:@"%@%@", baseURL, URLparams];
+	NSLog(@"ItemDetailsVC: Drop Button Pressed");
 	
-	NSLog([NSString stringWithFormat:@"ItemDetailsViewController: Dropping Item Here using REST Call: %@", fullURL ]);
+	[appModel updateServerDropItemHere:self.item.itemId];
+
 	
-	NSString *result = [[NSString alloc] initWithContentsOfURL:[NSURL URLWithString:fullURL]];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Item Dropped" message: @"Your Item was dropped here on the map. Other players will not see this object on their map." delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Item Dropped" 
+										message: @"Your Item was dropped here on the map for other players to see." 
+										delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	[alert show];
-	[result release];
 	[alert release];
 	
+	//Refresh Map Locations (To add this item)
+	[appModel fetchLocationList];
+	
+	//Refresh the Nearby Locations (This item should now be part of the list)
+	[appModel updateServerLocationAndfetchNearbyLocationList];
+	
+	//Refresh the inventory (To remove this item)
+	[appModel fetchInventory];
 	
 	//Dismiss Item Details View
 	[self.navigationController popToRootViewControllerAnimated:YES];
-	
-	//Refresh the Nearby Locations
-	[appModel updateServerLocationAndfetchNearbyLocationList];
-	
-	//Refresh Map Locations
-	[appModel fetchLocationList];
-	
-	//Refresh the inventory
-	[appModel fetchInventory];
+
 }
 
 - (IBAction)deleteButtonTouchAction: (id) sender{
-	//Fire off a request to the REST Module and display an alert when it is successfull
-	NSString *baseURL = [appModel getURLStringForModule:@"Inventory"];
-	NSString *URLparams = [ NSString stringWithFormat:@"&controller=SimpleREST&event=destroyPlayerItem&item_id=%d", self.item.itemId];
-	NSString *fullURL = [ NSString stringWithFormat:@"%@%@", baseURL, URLparams];
+	NSLog(@"ItemDetailsVC: Destroy Button Pressed");
+
+	[appModel updateServerDestroyItem:self.item.itemId];
 	
-	NSLog([NSString stringWithFormat:@"ItemDetailsViewController: Deleting all Items for this Player on server: %@", fullURL ]);
 	
-	NSString *result = [[NSString alloc] initWithContentsOfURL:[NSURL URLWithString:fullURL]];
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Item destroyed" message: @"This object was removed from your inventory" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
-	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Item Destroyed" 
+													message: @"This object was removed from your inventory" 
+												   delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	[alert show];
-	[result release];
 	[alert release];
+	 
 	
 	//Refresh the inventory
 	[appModel fetchInventory];
@@ -200,27 +195,20 @@
 - (IBAction)pickupButtonTouchAction: (id) sender{
 	NSLog(@"ItemDetailsViewController: pickupButtonTouched");
 	
-	//Fire off a request to the REST Module and display an alert when it is successfull
-	NSString *baseURL = [appModel getURLStringForModule:@"Inventory"];
-	NSString *URLparams = [NSString stringWithFormat:@"&controller=SimpleREST&event=pickupItem&item_id=%d&location_id=%d", self.item.itemId, self.item.locationId];
-	NSString *fullURL = [NSString stringWithFormat:@"%@%@", baseURL, URLparams];
+	[appModel updateServerPickupItem:self.item.itemId fromLocation:self.item.locationId];
 	
-	NSLog([NSString stringWithFormat:@"ItemDetailsViewController: Telling server to pickup this item using URL: %@", fullURL ]);
-	
-	NSString *result = [[NSString alloc] initWithContentsOfURL:[NSURL URLWithString:fullURL]];
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Picked up an Item" message: @"It is available in your inventory" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	
 	[alert show];
-	[result release];
 	[alert release];
 	
-	//Refresh the Nearby Locations
-	[appModel updateServerLocationAndfetchNearbyLocationList];
-	
-	//Refresh Map Locations
+	//Refresh Map Locations (to update quantities on the map)
 	[appModel fetchLocationList];
 	
-	//Refresh the inventory
+	//Refresh the Nearby Locations (in case this item is no longer here)
+	[appModel updateServerLocationAndfetchNearbyLocationList];
+	
+	//Refresh the inventory (to show the new item)
 	[appModel fetchInventory];
 	
 	[self.navigationController.view removeFromSuperview];

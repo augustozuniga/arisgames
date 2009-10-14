@@ -10,7 +10,7 @@ class Media extends Module
 	const MEDIA_AUDIO = 'Audio';
 	protected $validImageTypes = array('jpg','png');
 	protected $validAudioTypes = array('mp3','m4a');
-	protected $validVideoTypes = array('mp4','m4v');
+	protected $validVideoTypes = array('mp4','m4v','3gp');
 	
 	
 	/**
