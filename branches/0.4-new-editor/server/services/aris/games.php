@@ -328,18 +328,21 @@ class Games extends Module
 		
 		//Delete the editor_games record
 		$query = "DELETE FROM game_editors WHERE game_id IN (SELECT game_id FROM games WHERE prefix = '{$prefix}_')";
+		NetDebug::trace($query);
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
 		
 		
 		//Delete the game record
 		$query = "DELETE FROM games WHERE prefix = '{$prefix}_'";
+		NetDebug::trace($query);
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
 
 
 		//Fetch the table names for this game
-		$query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='{$this->dbSchema}' AND TABLE_NAME LIKE '{$prefix}_%'";
+		$query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . Config::dbSchema . "' AND TABLE_NAME LIKE '{$prefix}_%'";
+		NetDebug::trace($query);
 		$result = mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
 
@@ -347,9 +350,9 @@ class Games extends Module
 		//Delete all tables for this game
 		while ($table = mysql_fetch_array($result)) {
 			 $query = "DROP TABLE {$table['TABLE_NAME']}";
+			 NetDebug::trace($query);
 			 mysql_query($query);
 			 if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
-
 		}
 		
 		return new returnData(0);	
