@@ -4,7 +4,37 @@ require("module.php");
 
 class Players extends Module
 {	
-
+	/**
+     * Create a new Player
+     * @returns player id
+     */
+	public function createPlayer($strNewUserName, $strPassword, $strFirstName, $strLastName, $strEmail)
+	{
+		
+		$strNewUserName = addslashes($strNewUserName);	
+		$strFirstName = addslashes($strFirstName);	
+		$strLastName = addslashes($strLastName);	
+		$strEmail = addslashes($strEmail);	
+		
+		$query = "SELECT player_id FROM players 
+				  WHERE user_name = '{$strNewUserName}' LIMIT 1";
+			
+		if (mysql_fetch_array(mysql_query($query))) {
+			return new returnData(4, NULL, 'user exists');
+		}
+		
+		$query = "INSERT INTO players (user_name, password, 
+									first_name, last_name, email) 
+				  VALUES ('{$strNewUserName}', MD5('$strPassword'),
+				  		'{$strFirstName}','{$strLastName}','{$strEmail}')";
+			
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
+		
+		return new returnData(0, mysql_insert_id());
+	}
+	
+	
 	/**
      * Login
      * @returns player id
@@ -62,24 +92,7 @@ class Players extends Module
 		else return new returnData(0, FALSE);
 	}
 	
-	/**
-     * updates the player's last game
-     * @returns a returnData object, result code 0 on success
-     */
-	public function updatePlayerLastGame($intPlayerID, $intGameID)
-	{
-		$query = "UPDATE players
-					SET last_game_id = '{$intGameID}'
-					WHERE player_id = {$intPlayerID}";
-		
-		//NetDebug::trace($query);
-
-		@mysql_query($query);
-		
-		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
-		if (mysql_affected_rows()) return new returnData(0, TRUE);
-		else return new returnData(0, FALSE);
-	}	
+	
 
 	/**
      * Player Viewed a Node, exectute it's actions
@@ -195,37 +208,7 @@ class Players extends Module
 		return new returnData(0, FALSE);
 	}		
 	
-	/**
-     * Create a new Player
-     * @returns player id
-     */
-	public function createPlayer($strNewUserName, $strPassword, $strFirstName, $strLastName, $strEmail)
-	{
-		
-		$strNewUserName = addslashes($strNewUserName);	
-		$strFirstName = addslashes($strFirstName);	
-		$strLastName = addslashes($strLastName);	
-		$strEmail = addslashes($strEmail);	
-		
-		$query = "SELECT player_id FROM players 
-				  WHERE user_name = '{$strNewUserName}' LIMIT 1";
-			
-		if (mysql_fetch_array(mysql_query($query))) {
-			return new returnData(4, NULL, 'user exists');
-		}
-		
-		$query = "INSERT INTO players (user_name, password, 
-									first_name, last_name, email) 
-				  VALUES ('{$strNewUserName}', MD5('$strPassword'),
-				  		'{$strFirstName}','{$strLastName}','{$strEmail}')";
-			
-		@mysql_query($query);
-		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
-		
-		return new returnData(0, mysql_insert_id());
-	}
-	
-	
+
 	
 }
 ?>
