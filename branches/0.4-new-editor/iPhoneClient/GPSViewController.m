@@ -21,6 +21,9 @@
 
 @synthesize mapView;
 @synthesize autoCenter;
+@synthesize mapTypeButton;
+@synthesize playerTrackingButton;
+@synthesize gpsAccuracyIndicator;
 
 //Override init for passing title and icon to tab bar
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
@@ -32,18 +35,7 @@
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		autoCenter = YES;
-
-		self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
-												   initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-												   target:self 
-												   action:@selector(refreshButtonAction:)] autorelease];
-		
-		self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] 
-												  initWithTitle: @"Map Type"
-												  style: UIBarButtonItemStylePlain
-												  target:self 
-												  action:@selector(changeMapType:)] autorelease];
-		
+				
 		//register for notifications
 		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
 		[dispatcher addObserver:self selector:@selector(refresh) name:@"PlayerMoved" object:nil];
@@ -96,7 +88,7 @@
 	NSLog(@"Begin Loading GPS View");
 
 	//Setup the Map
-	CGFloat tableViewHeight = 416; // todo: get this from const
+	CGFloat tableViewHeight = 325; //416-44; // todo: get this from const
 	CGRect mainViewBounds = self.view.bounds;
 	CGRect tableFrame;
 	tableFrame = CGRectMake(CGRectGetMinX(mainViewBounds),
@@ -114,11 +106,21 @@
 	[self.view addSubview:mapView];
 	NSLog(@"GPSViewController: Mapview inited and added to view");
 	
+	
+	//Setup the player marker
 	CLLocationCoordinate2D playerPosition;
 	playerMarker = [[PlayerAnnotation alloc] initWithCoordinate:playerPosition];
 	playerMarker.title = @"You";
 	[mapView addAnnotation:playerMarker];
+	mapView.showsUserLocation = YES;
 
+	//Setup the buttons
+	mapTypeButton.target = self; 
+	mapTypeButton.action = @selector(changeMapType:);
+	
+	playerTrackingButton.target = self; 
+	playerTrackingButton.action = @selector(refreshButtonAction:);
+	
 	[self refresh];		
 
 	NSLog(@"GPSViewController: View Loaded");
@@ -130,7 +132,12 @@
 	
 	//Move the player marker
 	[self refreshPlayerMarker];
-
+	
+	//Update the GPS accuracy
+	if (appModel.playerLocation.horizontalAccuracy < 100) {
+		gpsAccuracyIndicator.title = [NSString stringWithFormat:@"+/-%1.2f Meters",appModel.playerLocation.horizontalAccuracy]; 
+	}
+	
 	//Update the locations
 	[appModel fetchLocationList];
 
