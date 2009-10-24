@@ -23,7 +23,6 @@
 @synthesize autoCenter;
 @synthesize mapTypeButton;
 @synthesize playerTrackingButton;
-@synthesize gpsAccuracyIndicator;
 
 //Override init for passing title and icon to tab bar
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
@@ -64,10 +63,7 @@
 - (IBAction)refreshButtonAction: (id) sender{
 
 	NSLog(@"GPSViewController: Refresh Button Touched");
-	
-	//Center the Map
-	[mapView setCenterCoordinate:appModel.playerLocation.coordinate animated:YES];
-	
+		
 	//Force a location update
 	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
 	[appDelegate.myCLController.locationManager stopUpdatingLocation];
@@ -75,9 +71,6 @@
 
 	//Rerfresh all contents
 	[self refresh];
-	
-	//Zoom and Center
-	[self zoomAndCenterMap];
 
 }
 		
@@ -95,6 +88,7 @@
 							CGRectGetMinY(mainViewBounds),
 							CGRectGetWidth(mainViewBounds),
 							tableViewHeight);
+	
 	NSLog(@"GPSViewController: Mapview about to be inited.");
 	mapView = [[MKMapView alloc] initWithFrame:tableFrame];
 	MKCoordinateRegion region = mapView.region;
@@ -102,18 +96,12 @@
 	region.span.longitudeDelta=0.001;
 	[mapView setRegion:region animated:NO];
 	[mapView regionThatFits:region];
+	mapView.showsUserLocation = YES;
 	[mapView setDelegate:self]; //View will request annotation views from us
 	[self.view addSubview:mapView];
 	NSLog(@"GPSViewController: Mapview inited and added to view");
 	
 	
-	//Setup the player marker
-	CLLocationCoordinate2D playerPosition;
-	playerMarker = [[PlayerAnnotation alloc] initWithCoordinate:playerPosition];
-	playerMarker.title = @"You";
-	[mapView addAnnotation:playerMarker];
-	mapView.showsUserLocation = YES;
-
 	//Setup the buttons
 	mapTypeButton.target = self; 
 	mapTypeButton.action = @selector(changeMapType:);
@@ -121,7 +109,9 @@
 	playerTrackingButton.target = self; 
 	playerTrackingButton.action = @selector(refreshButtonAction:);
 	
-	[self refresh];		
+	[self refresh];	
+	
+	
 
 	NSLog(@"GPSViewController: View Loaded");
 }
@@ -130,16 +120,11 @@
 - (void) refresh {
 	NSLog(@"GPSViewController: refresh requested");	
 	
-	//Move the player marker
-	[self refreshPlayerMarker];
-	
-	//Update the GPS accuracy
-	if (appModel.playerLocation.horizontalAccuracy < 100) {
-		gpsAccuracyIndicator.title = [NSString stringWithFormat:@"+/-%1.2f Meters",appModel.playerLocation.horizontalAccuracy]; 
-	}
-	
 	//Update the locations
 	[appModel fetchLocationList];
+	
+	//Zoom and Center
+	[self zoomAndCenterMap];
 
 }
 
@@ -154,20 +139,19 @@
 	//mapView.contents.zoom = DEFAULT_ZOOM;
 }
 
-- (void)refreshPlayerMarker {
-	//Move the player marker
-	playerMarker.coordinate = appModel.playerLocation.coordinate;
-	[self zoomAndCenterMap];
-}
+
 
 - (void)refreshViewFromModel {
 	NSLog(@"GPSViewController: Refreshing view from model");
 	
-	//Blow away the old markers
-	[mapView removeAnnotations:[mapView annotations]];
+	//Blow away the old markers except for the player marker
 	
-	//Add the player marker back in
-	[mapView addAnnotation:playerMarker];
+	NSEnumerator *existingAnnotationsEnumerator = [[[mapView annotations] copy] objectEnumerator];
+	NSObject <MKAnnotation> *annotation;
+	while (annotation = [existingAnnotationsEnumerator nextObject]) {
+		if (annotation != mapView.userLocation) [mapView removeAnnotation:annotation];
+	}
+	
 	
 	//Add the freshly loaded locations from the notification
 	for ( Location* location in appModel.locationList ) {
@@ -288,22 +272,28 @@
 
 #pragma mark Views for annotations
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation{
-	if ([annotation isMemberOfClass:[PlayerAnnotation class]]) {
-		if ([annotation isEqual:playerMarker]) {
-			AnnotationView *playerAnnotationView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"PlayerAnnotation"];
-			playerAnnotationView.image = [UIImage imageNamed:@"marker-player.png"];
-			return playerAnnotationView;
-		} else {
-			AnnotationView *playerAnnotationView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"OtherPlayerAnnotation"];
-			playerAnnotationView.image = [UIImage imageNamed:@"marker-other-player.png"];
-			return playerAnnotationView;
-		}
-	} else {
-		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
-		UIImage* myImage = [UIImage imageNamed: @"pickaxe.png"];
-		annotationView.image = [self addTitle:annotation.title quantity:[annotation.subtitle intValue] toImage:myImage]; 	
-		return annotationView;
+- (MKAnnotationView *)mapView:(MKMapView *)myMapView viewForAnnotation:(id <MKAnnotation>)annotation{
+
+	
+	//Player
+	if (annotation == mapView.userLocation)
+	{
+		 return nil; //Let it do it's own thing
+	}
+	
+	//Other Players
+	else if ([annotation isMemberOfClass:[PlayerAnnotation class]]) {
+				AnnotationView *playerAnnotationView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"OtherPlayerAnnotation"];
+				playerAnnotationView.image = [UIImage imageNamed:@"marker-other-player.png"];
+				return playerAnnotationView;	
+	} 
+	
+	//Everything else
+	else {
+			AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
+			UIImage* myImage = [UIImage imageNamed: @"pickaxe.png"];
+			annotationView.image = [self addTitle:annotation.title quantity:[annotation.subtitle intValue] toImage:myImage]; 	
+			return annotationView;
 	}
 }
 

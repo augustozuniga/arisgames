@@ -22,7 +22,6 @@
 	BOOL autoCenter;
 	IBOutlet UIBarButtonItem *mapTypeButton;
 	IBOutlet UIBarButtonItem *playerTrackingButton;
-	IBOutlet UIBarButtonItem *gpsAccuracyIndicator;
 }
 
 -(void) refresh;
@@ -34,6 +33,5 @@
 @property BOOL autoCenter;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *mapTypeButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *playerTrackingButton;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *gpsAccuracyIndicator;
 
 @end
