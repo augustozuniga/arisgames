@@ -14,11 +14,13 @@
 	CLLocationCoordinate2D coordinate;
 	NSString *title;
 	NSString *subtitle;
+	NSString *iconURL;
 }
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property (readwrite, copy) NSString *title;
 @property (readwrite, copy) NSString *subtitle;
+@property (readwrite, copy) NSString *iconURL;
 
 
 
