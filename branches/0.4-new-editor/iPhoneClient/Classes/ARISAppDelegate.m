@@ -184,7 +184,12 @@
 	self.waitingIndicator.message = message;
 	
 	//by adding a subview to window, we make sure it is put on top
-	if (appModel.loggedIn == YES) [self.window addSubview:self.waitingIndicator.view]; 
+	if (appModel.loggedIn == YES) {
+		[NSThread detachNewThreadSelector:@selector(addSubview:) toTarget:self.window withObject:self.waitingIndicator.view];
+		//[self.window addSubview:self.waitingIndicator.view]; 
+		[self.waitingIndicator.view setNeedsDisplay];
+		[self.window setNeedsDisplay];
+	}
 }
 
 - (void) removeWaitingIndicator {

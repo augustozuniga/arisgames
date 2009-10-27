@@ -54,7 +54,8 @@
 	
 	// Make synchronous request
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-
+	[[[UIApplication sharedApplication] delegate] showWaitingIndicator: @"Loading"];
+	
 	NSURLResponse *response;
 	NSError *error;
 	NSData *resultData = [NSURLConnection sendSynchronousRequest:requestURLRequest
@@ -62,6 +63,7 @@
 														   error:&error];	
 
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	[[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
 
 	if (error != NULL) {
 		NSLog(@"JSONConnection: Error communicating with server. %d", error.code);

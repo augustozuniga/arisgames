@@ -19,6 +19,7 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+	NSLog(@"Waiting Indicator: ViewDidLoad");
     [spinner startAnimating];
 	[super viewDidLoad];
 }
@@ -30,6 +31,7 @@
 
 
 - (void)dealloc {
+	NSLog(@"Waiting Indicator: Dealloc");
     [super dealloc];
 }
 
