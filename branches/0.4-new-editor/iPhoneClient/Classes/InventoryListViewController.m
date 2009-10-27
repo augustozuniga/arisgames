@@ -139,12 +139,19 @@
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	icon = [UIImage imageWithData:iconData];
 	*/
-	
-	//Load the Default
-	if ([media.type isEqualToString: @"Image"]) icon = [UIImage imageNamed:@"defaultImageIcon.png"];
-	if ([media.type isEqualToString: @"Audio"]) icon = [UIImage imageNamed:@"defaultAudioIcon"];
-	if ([media.type isEqualToString: @"Video"]) icon = [UIImage imageNamed:@"defaultVideoIcon"];
 
+	if (item.iconMediaId != 0) {
+		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.iconMediaId]];
+		//NSLog(@"icon url: %@",iconMedia.url);
+		NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:iconMedia.url]];
+		icon = [UIImage imageWithData:imageData];
+	} else {
+		//Load the Default
+		if ([media.type isEqualToString: @"Image"]) icon = [UIImage imageNamed:@"defaultImageIcon.png"];
+		if ([media.type isEqualToString: @"Audio"]) icon = [UIImage imageNamed:@"defaultAudioIcon"];
+		if ([media.type isEqualToString: @"Video"]) icon = [UIImage imageNamed:@"defaultVideoIcon"];
+	}
+	
 	iconView.image = icon;
 
 	return cell;
