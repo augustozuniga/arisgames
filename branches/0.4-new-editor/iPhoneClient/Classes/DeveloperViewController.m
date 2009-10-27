@@ -47,6 +47,11 @@
 	NSLog(@"DeveloperViewController: view loaded");
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[self refresh];		
+	NSLog(@"DeveloperViewController: view did appear");
+}
+
 
 -(void) refresh {	
 	NSLog(@"DeveloperViewController: Refresh Began");

@@ -117,6 +117,12 @@
 	NSLog(@"GPSViewController: View Loaded");
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[self refresh];		
+	NSLog(@"GPSViewController: view did appear");
+}
+
+
 // Updates the map to current data for player and locations from the server
 - (void) refresh {
 	NSLog(@"GPSViewController: refresh requested");	

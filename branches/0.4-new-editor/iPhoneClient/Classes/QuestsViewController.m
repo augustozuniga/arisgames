@@ -43,6 +43,11 @@ static int const COMPLETED_SECTION = 1;
 	NSLog(@"QuestsViewController: Quests View Loaded");
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[self refresh];		
+	NSLog(@"QuestsViewController: Quests View Loaded");
+}
+
 - (void)refresh {
 	NSLog(@"QuestsViewController: refresh requested");
 	if (appModel.loggedIn) [appModel fetchQuestList];

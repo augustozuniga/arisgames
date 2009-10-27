@@ -45,7 +45,6 @@
 	NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
 	[dispatcher addObserver:self selector:@selector(performUserLogin:) name:@"PerformUserLogin" object:nil];
 	[dispatcher addObserver:self selector:@selector(selectGame:) name:@"SelectGame" object:nil];
-	[dispatcher addObserver:self selector:@selector(setGameList:) name:@"ReceivedGameList" object:nil];
 	[dispatcher addObserver:self selector:@selector(performLogout:) name:@"LogoutRequested" object:nil];
 	[dispatcher addObserver:self selector:@selector(displayNearbyObjects:) name:@"NearbyButtonTouched" object:nil];
 
@@ -299,14 +298,6 @@
 	}
 }
 
-- (void)setGameList:(NSNotification *)notification {
-    //NSDictionary *loginObject = [notification object];
-	NSDictionary *userInfo = notification.userInfo;
-	NSMutableArray *gameList = [userInfo objectForKey:@"gameList"];
-	NSLog(@"AppDelegate: Setting Game List on controller");
-	[gamePickerViewController setGameList:gameList];
-	[gamePickerViewController slideIn];
-}
 
 - (void)performLogout:(NSNotification *)notification {
     NSLog(@"Performing Logout: Clearing NSUserDefaults and Displaying Login Screen");
@@ -343,11 +334,6 @@
 	
 	NSLog(@"AppDelegate: %@ selected",[visibleViewController title]);
 	
-	//Use setModel to refresh the content
-	if([visibleViewController respondsToSelector:@selector(refresh)]) {
-		[visibleViewController performSelector:@selector(refresh) withObject:nil];
-	}
-	
 	//Hides the existing Controller
 	UIViewController *selViewController = [tabBarController selectedViewController];
 	[selViewController.navigationController.view removeFromSuperview];
@@ -363,12 +349,6 @@
 	   didShowViewController:(UIViewController *)viewController 
 					animated:(BOOL)animated {
 	
-	if([viewController class] == [gamePickerViewController class]) {
-		[viewController performSelector:@selector(setGameList:) withObject:appModel.gameList];
-	}
-	if([viewController respondsToSelector:@selector(setModel:)]) {
-		[viewController performSelector:@selector(setModel:) withObject:appModel];
-	}
 }
 
 #pragma mark Memory Management

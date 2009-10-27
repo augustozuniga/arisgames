@@ -32,13 +32,14 @@
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad {
-	//Show waiting Indicator in own thread so it appears on time
-	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
-	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
-	
+- (void)viewDidLoad {	
 	[super viewDidLoad];
 	NSLog(@"Inventory View Loaded");
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[self refresh];		
+	NSLog(@"InventoryListViewController: view did appear");
 }
 
 -(void)refresh {
@@ -132,14 +133,6 @@
 	Item *item = [inventory objectAtIndex:[indexPath row]];
 	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.mediaId]];
 	
-	/*
-	//Load the icon from the server
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	NSData* iconData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:[[inventory objectAtIndex:[indexPath row]] iconURL]]];
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	icon = [UIImage imageWithData:iconData];
-	*/
-
 	if (item.iconMediaId != 0) {
 		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.iconMediaId]];
 		//NSLog(@"icon url: %@",iconMedia.url);

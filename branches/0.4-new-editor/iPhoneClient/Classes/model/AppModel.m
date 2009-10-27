@@ -241,6 +241,17 @@ static const int kDefaultCapacity = 10;
 						 withArgs:arguments usingParser:@selector(parseNpcFromDictionary:)];
 }
 
+- (void)fetchGameList {
+	NSLog(@"AppModel: Fetching Game List.");
+	self.gameList = [self fetchFromService:@"games" usingMethod:@"getGames"
+						 withArgs:nil usingParser:@selector(parseGameListFromArray:)];
+	
+	//Tell everyone
+	NSLog(@"AppModel: Finished Building the Game List");
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
 #pragma mark Parsers
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
 	Item *item = [[Item alloc] init];
@@ -312,25 +323,12 @@ static const int kDefaultCapacity = 10;
 	return npc;	
 }
 
-#pragma mark Unrefactored fetch code
-- (void)fetchGameList {
-	NSLog(@"AppModel: Fetching Game List.");
-	//Call server service
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"games" 
-																	 andMethodName:@"getGames" andArguments:nil];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchGameList: No result Data, return");
-		return;
-	}
-	
-	//Build the game list
+-(NSArray *)parseGameListFromArray: (NSArray *)gameListArray{
 	NSMutableArray *tempGameList = [[NSMutableArray alloc] init];
-	NSEnumerator *gamesEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
+	
+	NSEnumerator *gameListEnumerator = [gameListArray objectEnumerator];	
 	NSDictionary *gameDictionary;
-	while (gameDictionary = [gamesEnumerator nextObject]) {
+	while (gameDictionary = [gameListEnumerator nextObject]) {
 		//create a new game
 		Game *game = [[Game alloc] init];
 		game.gameId = [[gameDictionary valueForKey:@"game_id"] intValue];
@@ -342,14 +340,12 @@ static const int kDefaultCapacity = 10;
 		[tempGameList addObject:game]; 
 	}
 	
-	self.gameList = [NSArray arrayWithArray:tempGameList];
-	
-	//Tell everyone
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
-	NSLog(@"GameListParser: Finished Building the Game List");
-	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedGameList" object:self userInfo:dictionary];
-	[[NSNotificationCenter defaultCenter] postNotification:notification];
+	return tempGameList;
+
 }
+
+#pragma mark Unrefactored fetch code
+
 
 - (void)fetchLocationList {
 	@synchronized (nearbyLock) {

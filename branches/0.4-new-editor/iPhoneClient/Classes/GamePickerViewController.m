@@ -22,6 +22,14 @@
         self.title = @"Select Game";
         self.tabBarItem.image = [UIImage imageNamed:@"Game.png"];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
+		
+		//register for notifications
+		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
+		[dispatcher addObserver:self selector:@selector(refreshViewFromModel) name:@"ReceivedGameList" object:nil];
+		
+		//create game list
+		gameList = [NSMutableArray array];
+		[gameList retain];
     }
     return self;
 }
@@ -31,24 +39,14 @@
     [super viewDidLoad];
 	
 	NSLog(@"GamePickerViewController: View Loaded");
-	
-	//create game list
-	gameList = [NSMutableArray array];
-	[gameList retain];
-		
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-	[gameTable reloadData];
+	NSLog(@"GamePickerViewController: View Appeared, reloading data");	
+	[appModel fetchGameList];
 }
 
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning]; // Releases the view if it doesn't have a superview
@@ -57,11 +55,9 @@
 
 #pragma mark custom methods, logic
 
-- (void)setGameList:(NSMutableArray *)list {
-	NSLog(@"GamePickerViewController: Game List Set");
-	[gameList release];
-	gameList = list;
-	[gameList retain];
+- (void)refreshViewFromModel {
+	NSLog(@"GamePickerViewController: Refresh View from Model");
+	gameList = appModel.gameList;
 	[gameTable reloadData];
 }
 
