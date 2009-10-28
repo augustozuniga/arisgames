@@ -272,7 +272,7 @@ static const int kDefaultCapacity = 10;
 		[locationList retain];
 		
 		self.locationList = [self fetchFromService:@"locations" usingMethod:@"getLocationsForPlayer"
-									  withArgs:arguments usingParser:@selector(parseLocationsFromArray:)];
+									  withArgs:arguments usingParser:@selector(parseLocationListFromArray:)];
 		
 		//Tell everyone
 		NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
@@ -377,7 +377,7 @@ static const int kDefaultCapacity = 10;
 
 }
 
--(NSArray *)parseLocationsFromArray: (NSArray *)locationsArray{
+-(NSArray *)parseLocationListFromArray: (NSArray *)locationsArray{
 
 	//Build the location list
 	NSMutableArray *tempLocationsList = [[NSMutableArray alloc] init];
