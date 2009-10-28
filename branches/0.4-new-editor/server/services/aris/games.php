@@ -108,7 +108,7 @@ class Games extends Module
 			name varchar(100) default NULL,
 			description text,
 			icon_media_id int(10) unsigned default NULL,
-			media_id int(10) unsigned default NULL,
+			media_id int(10) unsigned NOT NULL default '0',
 			dropable enum('0','1') NOT NULL default '0',
 			destroyable enum('0','1') NOT NULL default '0',
 			PRIMARY KEY  (item_id)
@@ -156,10 +156,10 @@ class Games extends Module
 			description tinytext,
 			latitude double default '43.0746561',
 			longitude double default '-89.384422',
-			error double default '0.0005',
+			error double default '5',
 			type enum('Node','Event','Item','Npc') NOT NULL,
 			type_id int(11) NOT NULL,
-			icon_media_id int(10) unsigned default NULL,
+			icon_media_id int(10) unsigned NOT NULL default '0',
 			item_qty int(11) NOT NULL,
 			hidden enum('0','1') default '0',
 			force_view enum('0','1') NOT NULL default '0' COMMENT 'Forces this Location to Display when nearby',
@@ -173,7 +173,7 @@ class Games extends Module
 			 name tinytext,
 			 description text,
 			 text_when_complete tinytext NOT NULL COMMENT 'This is the txt that displays on the completed quests screen',
-			 icon_media_id int(10) unsigned default NULL,
+			 icon_media_id int(10) unsigned NOT NULL default '0',
 			 PRIMARY KEY  (quest_id)
 			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
@@ -184,15 +184,15 @@ class Games extends Module
 			  title varchar(100) default NULL,
 			  text text,
 			  opt1_text varchar(100) default NULL,
-			  opt1_node_id int(11) unsigned default NULL,
+			  opt1_node_id int(11) unsigned NOT NULL default '0',
 			  opt2_text varchar(100) default NULL,
-			  opt2_node_id int(11) unsigned default NULL,
+			  opt2_node_id int(11) unsigned NOT NULL default '0',
 			  opt3_text varchar(100) default NULL,
-			  opt3_node_id int(11) unsigned default NULL,
-			  require_answer_incorrect_node_id int(11) unsigned default NULL,
+			  opt3_node_id int(11) unsigned NOT NULL default '0',
+			  require_answer_incorrect_node_id int(11) unsigned NOT NULL default '0',
 			  require_answer_string varchar(50) default NULL,
-			  require_answer_correct_node_id int(10) unsigned default NULL,
-			  media_id int(10) unsigned default NULL,
+			  require_answer_correct_node_id int(10) unsigned NOT NULL default '0',
+			  media_id int(10) unsigned NOT NULL default '0',
 			  PRIMARY KEY  (node_id)
 			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
@@ -249,8 +249,6 @@ class Games extends Module
 			  qrcode_id int(11) NOT NULL auto_increment,
 			  `type` enum('Node','Event','Item','Npc') NOT NULL,
 			  type_id int(11) NOT NULL,
-			  x_position double NULL,
-			  y_position double NULL,
 			  PRIMARY KEY  (qrcode_id)
 			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
