@@ -54,7 +54,7 @@
 	
 	// Make synchronous request
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	[[[UIApplication sharedApplication] delegate] showWaitingIndicator: @"Loading"];
+	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator: @"Loading"];
 	
 	NSURLResponse *response;
 	NSError *error;
@@ -63,18 +63,18 @@
 														   error:&error];	
 
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
+	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
 
 	if (error != NULL) {
 		NSLog(@"JSONConnection: Error communicating with server. %d", error.code);
 		[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
 	}	
-	//else [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeNetworkAlert];
 	
 	NSString *jsonString = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
 	
 	//Get the JSONResult here
 	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:jsonString];
+	
 	return jsonResult;
 }
 
