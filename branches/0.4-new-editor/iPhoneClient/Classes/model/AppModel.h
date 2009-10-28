@@ -93,14 +93,6 @@ extern NSDictionary *InventoryElements;
 - (BOOL)registerNewUser:(NSString*)userName password:(NSString*)pass 
 			  firstName:(NSString*)firstName lastName:(NSString*)lastName email:(NSString*)email;
 
-
-- (NSMutableURLRequest *) getURLForModule:(NSString *)moduleName;
-- (NSString *)getURLStringForModule:(NSString *)moduleName;
-- (NSString *) getURLString:(NSString *)relativeURL;
-- (NSMutableURLRequest *)getURL:(NSString *)relativeURL;
-- (NSMutableURLRequest *)getEngineURL:(NSString *)relativeURL;
-- (NSString *) getEngineURLString:(NSString *)relativeURL;
-- (NSData *) fetchURLData: (NSURLRequest *)request;
 - (Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary;
 - (Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary;
 - (Npc *)parseNpcFromDictionary: (NSDictionary *)npcDictionary;

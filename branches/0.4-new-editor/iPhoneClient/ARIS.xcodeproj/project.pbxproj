@@ -113,7 +113,6 @@
 		2B3D18D60F4B25720067FD3A /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3D18D50F4B25720067FD3A /* AppModel.m */; };
 		A702FBBE0F8E804A00BE6549 /* playArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = A702FBBD0F8E804A00BE6549 /* playArrow.png */; };
 		A7149F9D0FB89DC8008BAB5D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A7149F9C0FB89DC8008BAB5D /* Settings.bundle */; };
-		A721352E0FA8B6F6003E4059 /* QRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = A721352D0FA8B6F6003E4059 /* QRCode.m */; };
 		A722C8C00FBCD8D0009432DB /* SelfRegistration.xib in Resources */ = {isa = PBXBuildFile; fileRef = A722C8BF0FBCD8D0009432DB /* SelfRegistration.xib */; };
 		A722C8C60FBCD92E009432DB /* SelfRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A722C8C50FBCD92E009432DB /* SelfRegistrationViewController.m */; };
 		A722E7150F57425B004B04D2 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = A722E7140F57425B004B04D2 /* Location.m */; };
@@ -326,8 +325,6 @@
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; plistStructureDefinitionIdentifier = "<none>"; sourceTree = "<group>"; };
 		A702FBBD0F8E804A00BE6549 /* playArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playArrow.png; sourceTree = "<group>"; };
 		A7149F9C0FB89DC8008BAB5D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		A721352C0FA8B6F6003E4059 /* QRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRCode.h; path = ../../QRCode.h; sourceTree = "<group>"; };
-		A721352D0FA8B6F6003E4059 /* QRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QRCode.m; path = ../../QRCode.m; sourceTree = "<group>"; };
 		A722C8BF0FBCD8D0009432DB /* SelfRegistration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelfRegistration.xib; sourceTree = "<group>"; };
 		A722C8C40FBCD92E009432DB /* SelfRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfRegistrationViewController.h; sourceTree = "<group>"; };
 		A722C8C50FBCD92E009432DB /* SelfRegistrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfRegistrationViewController.m; sourceTree = "<group>"; };
@@ -636,8 +633,6 @@
 		2B3D17040F49C9920067FD3A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A721352C0FA8B6F6003E4059 /* QRCode.h */,
-				A721352D0FA8B6F6003E4059 /* QRCode.m */,
 				A76048E60FC1B6DE00219A53 /* QRCodeProtocol.h */,
 				AB2223F310502CD800A4255E /* Quest.h */,
 				AB2223F410502CD800A4255E /* Quest.m */,
@@ -1106,7 +1101,6 @@
 				289811F60FA1101C002ED288 /* TransformingMonochromeBitmapSource.cpp in Sources */,
 				289813C60FA7489B002ED288 /* TwoDDecoderResult.mm in Sources */,
 				289813EA0FA74E2E002ED288 /* Decoder.mm in Sources */,
-				A721352E0FA8B6F6003E4059 /* QRCode.m in Sources */,
 				A722C8C60FBCD92E009432DB /* SelfRegistrationViewController.m in Sources */,
 				A7C1F6000FC070690045F15D /* NearbyBar.m in Sources */,
 				A7C1F6010FC070690045F15D /* NearbyBarItemView.m in Sources */,
