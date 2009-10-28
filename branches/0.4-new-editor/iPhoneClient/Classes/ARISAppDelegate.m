@@ -186,8 +186,6 @@
 	if (appModel.loggedIn == YES) {
 		[NSThread detachNewThreadSelector:@selector(addSubview:) toTarget:self.window withObject:self.waitingIndicator.view];
 		//[self.window addSubview:self.waitingIndicator.view]; 
-		[self.waitingIndicator.view setNeedsDisplay];
-		[self.window setNeedsDisplay];
 	}
 }
 
@@ -234,8 +232,7 @@
 	if(appModel.loggedIn) {
 		NSLog(@"AppDelegate: Login Success");
 		[loginViewNavigationController.view removeFromSuperview];
-		[appModel fetchGameList];
-		[window addSubview:gamePickerNavigationController.view];
+		[window addSubview:gamePickerNavigationController.view]; //This will automatically load it's own data
 		gamePickerViewController.view.frame = [UIScreen mainScreen].applicationFrame;
 
 	} else {
