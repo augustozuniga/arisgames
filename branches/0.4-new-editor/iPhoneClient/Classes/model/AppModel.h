@@ -54,12 +54,12 @@ extern NSDictionary *InventoryElements;
 @property(copy, readwrite) NSMutableArray *locationList;
 @property(copy, readwrite) NSMutableArray *playerList;
 @property(copy, readwrite) NSMutableDictionary *questList;
+@property(copy, readwrite) NSMutableDictionary *mediaList;
 @property(copy, readwrite) NSMutableArray *nearbyLocationsList;	
 @property(copy, readwrite) CLLocation *playerLocation;	
 @property(copy, readwrite) NSMutableArray *inventory;
 @property(retain) UIAlertView *networkAlert;
 
-@property(readonly)	NSMutableDictionary	*mediaList;
 
 - (id)init;
 - (void)loadUserDefaults;

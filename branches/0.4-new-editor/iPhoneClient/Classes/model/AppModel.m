@@ -285,6 +285,16 @@ static const int kDefaultCapacity = 10;
 
 
 
+
+- (void)fetchMediaList {
+	NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",self.gameId], nil];
+	
+	self.mediaList = [self fetchFromService:@"media" usingMethod:@"getMedia"
+									  withArgs:arguments usingParser:@selector(parseMediaListFromArray:)];
+	
+}
+
+
 #pragma mark Parsers
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
 	Item *item = [[Item alloc] init];
@@ -403,36 +413,15 @@ static const int kDefaultCapacity = 10;
 		[location release];
 	}
 	
-	
-	
 	return tempLocationsList;
-	
 	
 }
 
 
+-(NSMutableDictionary *)parseMediaListFromArray: (NSArray *)mediaListArray{
 
-
-
-
-#pragma mark Unrefactored fetch code
-
-
-
-- (void)fetchMediaList {
-	NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",self.gameId], nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"media" 
-																	 andMethodName:@"getMedia" andArguments:arguments];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchMediaList: No results");
-		return;
-	}
-
-	[mediaList removeAllObjects];
-	NSEnumerator *enumerator = [((NSArray *)jsonResult.data) objectEnumerator];
+	NSMutableDictionary *tempMediaList = [[NSMutableDictionary alloc] init];
+	NSEnumerator *enumerator = [((NSArray *)mediaListArray) objectEnumerator];
 	NSDictionary *dict;
 	while (dict = [enumerator nextObject]) {
 		NSInteger uid = [[dict valueForKey:@"media_id"] intValue];
@@ -453,14 +442,24 @@ static const int kDefaultCapacity = 10;
 			continue;
 		}
 		
- 		fileName = [NSString stringWithFormat:@"%@gamedata/%d/%@", baseAppURL, gameId, fileName];
+		fileName = [NSString stringWithFormat:@"%@gamedata/%d/%@", baseAppURL, gameId, fileName];
 		NSLog(@"AppModel fetchMediaList: Full URL: %@", fileName);
 		
 		Media *media = [[Media alloc] initWithId:uid andUrlString:fileName ofType:type];
-		[mediaList setObject:media forKey:[NSNumber numberWithInt:uid]];
+		[tempMediaList setObject:media forKey:[NSNumber numberWithInt:uid]];
 		[media release];
 	}
+	
+	return tempMediaList;
 }
+
+
+
+
+
+
+#pragma mark Unrefactored fetch code
+
 
 - (void)fetchInventory {
 	NSLog(@"Model: Inventory Fetch Requested");
