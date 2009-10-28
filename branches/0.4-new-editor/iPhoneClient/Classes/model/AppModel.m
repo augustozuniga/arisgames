@@ -295,6 +295,30 @@ static const int kDefaultCapacity = 10;
 }
 
 
+- (void)fetchInventory {
+	NSLog(@"Model: Inventory Fetch Requested");
+	//init inventory array
+	if(inventory != nil) {
+		NSLog(@"*** Releasing inventory ***");
+		[inventory release];
+	}
+	
+	inventory = [NSMutableArray array];
+	[inventory retain];
+	
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",self.playerId],
+						  nil];
+	self.inventory = [self fetchFromService:@"items" usingMethod:@"getItemsForPlayer"
+								   withArgs:arguments usingParser:@selector(parseInventoryFromArray:)];
+	
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:self userInfo:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+
+
+
 #pragma mark Parsers
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
 	Item *item = [[Item alloc] init];
@@ -454,42 +478,9 @@ static const int kDefaultCapacity = 10;
 }
 
 
-
-
-
-
-#pragma mark Unrefactored fetch code
-
-
-- (void)fetchInventory {
-	NSLog(@"Model: Inventory Fetch Requested");
-	//init inventory array
-	if(inventory != nil) {
-		NSLog(@"*** Releasing inventory ***");
-		[inventory release];
-	}
-
-	inventory = [NSMutableArray array];
-	[inventory retain];
-		
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-													[NSString stringWithFormat:@"%d",self.playerId],
-													nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"items" 
-																	andMethodName:@"getItemsForPlayer" 
-																	andArguments:arguments];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchInventory: No result Data, return");
-		return;
-	}	
-	
-	//Build the inventory
+-(NSArray *)parseInventoryFromArray: (NSArray *)inventoryArray{
 	NSMutableArray *tempInventory = [[NSMutableArray alloc] init];
-	NSEnumerator *inventoryEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
+	NSEnumerator *inventoryEnumerator = [((NSArray *)inventoryArray) objectEnumerator];	
 	NSDictionary *itemDictionary;
 	while (itemDictionary = [inventoryEnumerator nextObject]) {
 		Item *item = [[Item alloc] init];
@@ -502,13 +493,20 @@ static const int kDefaultCapacity = 10;
 		item.destroyable = [[itemDictionary valueForKey:@"destroyable"] boolValue];
 		NSLog(@"Model: Adding Item: %@", item.name);
 		[tempInventory addObject:item]; 
+		[item release];
 	}
+
+	return tempInventory;
 	
-	self.inventory = [NSArray arrayWithArray:tempInventory];
-	
-	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:self userInfo:nil];
-	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
+
+
+
+
+#pragma mark Unrefactored fetch code
+
+
+
 
 -(NSObject<QRCodeProtocol> *)fetchQRCode:(NSString*)QRcodeId{
 	NSLog(@"Model: Fetch Requested for QRCodeId: %@", QRcodeId);
