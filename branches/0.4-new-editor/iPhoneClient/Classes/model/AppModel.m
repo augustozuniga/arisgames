@@ -190,6 +190,182 @@ static const int kDefaultCapacity = 10;
 	
 }
 
+- (void)updateServerNodeViewed: (int)nodeId {
+	NSLog(@"Model: Node %d Viewed, update server", nodeId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",nodeId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"nodeViewed" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerItemViewed: (int)itemId {
+	NSLog(@"Model: Item %d Viewed, update server", itemId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects:
+						  [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"itemViewed" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerGameSelected{
+	NSLog(@"Model: Game %d Selected, update server", gameId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: 
+						  [NSString stringWithFormat:@"%d",self.playerId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"updatePlayerLastGame" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+
+
+- (void)resetPlayerEvents {
+	NSLog(@"Model: Clearing Player Events");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"resetEvents" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)resetPlayerItems {
+	NSLog(@"Model: Clearing Player Items");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"resetItems" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerPickupItem: (int)itemId fromLocation: (int)locationId {
+	NSLog(@"Model: Informing the Server the player picked up item");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  [NSString stringWithFormat:@"%d",locationId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"pickupItemFromLocation" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerDropItemHere: (int)itemId {
+	NSLog(@"Model: Informing the Server the player dropped an item");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  [NSString stringWithFormat:@"%f",playerLocation.coordinate.latitude],
+						  [NSString stringWithFormat:@"%f",playerLocation.coordinate.longitude],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"dropItem" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)updateServerDestroyItem: (int)itemId {
+	NSLog(@"Model: Informing the Server the player destroyed an item");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",itemId],
+						  nil];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"players" 
+																	 andMethodName:@"destroyItem" 
+																	  andArguments:arguments];
+	[jsonConnection performSynchronousRequest]; 
+}
+
+- (void)createItemForImage: (UIImage *)image{
+	NSLog(@"Model: creating a new Item for an image");
+	//Upload the file to get it's name
+	//Create the media record, add the item to the game and add this item to the players inventory
+}
+
+- (void)updateServerLocationAndfetchNearbyLocationList {
+	@synchronized (nearbyLock) {
+		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		NSLog(@"Model: updating player position on server and determining nearby Locations");
+		
+		if (!loggedIn) {
+			NSLog(@"Model: Player Not logged in yet, skip the location update");	
+			return;
+		}
+		
+		//init a fresh nearby location list array
+		if(nearbyLocationsList != nil) {
+			[nearbyLocationsList release];
+		}
+		nearbyLocationsList = [[NSMutableArray alloc] initWithCapacity:5];
+		
+		//Update the server with the new Player Location
+		NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.playerId],
+							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.latitude],
+							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.longitude],
+							  nil];
+		JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:self.jsonServerBaseURL 
+																		 andServiceName:@"players" 
+																		  andMethodName:@"updatePlayerLocation" 
+																		   andArguments:arguments];
+		[jsonConnection performSynchronousRequest]; 
+		
+		//Rebuild nearbyLocationList
+		//We could just do this in the getter
+		NSEnumerator *locationsListEnumerator = [locationList objectEnumerator];
+		Location *location;
+		while (location = [locationsListEnumerator nextObject]) {
+			//check if the location is close to the player
+			if ([playerLocation getDistanceFrom:location.location] < location.error)
+				[nearbyLocationsList addObject:location];
+		}
+		
+		//Tell the rest of the app that the nearbyLocationList is fresh
+		NSNotification *nearbyLocationListNotification = 
+		[NSNotification notificationWithName:@"ReceivedNearbyLocationList" object:nearbyLocationsList];
+		[[NSNotificationCenter defaultCenter] postNotification:nearbyLocationListNotification];
+		[pool drain];
+	}
+}
+
+
 #pragma mark Fetch selectors
 - (id) fetchFromService:(NSString *)aService usingMethod:(NSString *)aMethod 
 			   withArgs:(NSArray *)arguments usingParser:(SEL)aSelector 
@@ -593,191 +769,6 @@ static const int kDefaultCapacity = 10;
 	return tmpQuestList;
 }
 
-
-
-
-#pragma mark Unrefactored fetch code
-
-
-
-- (void)updateServerNodeViewed: (int)nodeId {
-	NSLog(@"Model: Node %d Viewed, update server", nodeId);
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  [NSString stringWithFormat:@"%d",nodeId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"nodeViewed" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-- (void)updateServerItemViewed: (int)itemId {
-	NSLog(@"Model: Item %d Viewed, update server", itemId);
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects:
-						  [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  [NSString stringWithFormat:@"%d",itemId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"itemViewed" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-- (void)updateServerGameSelected{
-	NSLog(@"Model: Game %d Selected, update server", gameId);
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: 
-						  [NSString stringWithFormat:@"%d",self.playerId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"updatePlayerLastGame" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-
-
-- (void)resetPlayerEvents {
-	NSLog(@"Model: Clearing Player Events");
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"resetEvents" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-- (void)resetPlayerItems {
-	NSLog(@"Model: Clearing Player Items");
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"resetItems" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-- (void)updateServerPickupItem: (int)itemId fromLocation: (int)locationId {
-	NSLog(@"Model: Informing the Server the player picked up item");
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  [NSString stringWithFormat:@"%d",itemId],
-						  [NSString stringWithFormat:@"%d",locationId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"pickupItemFromLocation" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-- (void)updateServerDropItemHere: (int)itemId {
-	NSLog(@"Model: Informing the Server the player dropped an item");
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  [NSString stringWithFormat:@"%d",itemId],
-						  [NSString stringWithFormat:@"%f",playerLocation.coordinate.latitude],
-						  [NSString stringWithFormat:@"%f",playerLocation.coordinate.longitude],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"dropItem" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-- (void)updateServerDestroyItem: (int)itemId {
-	NSLog(@"Model: Informing the Server the player destroyed an item");
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  [NSString stringWithFormat:@"%d",itemId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"players" 
-																	 andMethodName:@"destroyItem" 
-																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
-}
-
-- (void)createItemForImage: (UIImage *)image{
-	NSLog(@"Model: creating a new Item for an image");
-	//Upload the file to get it's name
-	//Create the media record, add the item to the game and add this item to the players inventory
-}
-
-- (void)updateServerLocationAndfetchNearbyLocationList {
-	@synchronized (nearbyLock) {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		NSLog(@"Model: updating player position on server and determining nearby Locations");
-		
-		if (!loggedIn) {
-			NSLog(@"Model: Player Not logged in yet, skip the location update");	
-			return;
-		}
-		
-		//init a fresh nearby location list array
-		if(nearbyLocationsList != nil) {
-			[nearbyLocationsList release];
-		}
-		nearbyLocationsList = [[NSMutableArray alloc] initWithCapacity:5];
-	
-		//Update the server with the new Player Location
-		NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.playerId],
-							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.latitude],
-							  [NSString stringWithFormat:@"%f",playerLocation.coordinate.longitude],
-							  nil];
-		JSONConnection *jsonConnection = [[JSONConnection alloc] initWithArisJSONServer:self.jsonServerBaseURL 
-																		 andServiceName:@"players" 
-																		 andMethodName:@"updatePlayerLocation" 
-																		 andArguments:arguments];
-		[jsonConnection performSynchronousRequest]; 
-		
-		//Rebuild nearbyLocationList
-		//We could just do this in the getter
-		NSEnumerator *locationsListEnumerator = [locationList objectEnumerator];
-		Location *location;
-		while (location = [locationsListEnumerator nextObject]) {
-			//check if the location is close to the player
-			if ([playerLocation getDistanceFrom:location.location] < location.error)
-				[nearbyLocationsList addObject:location];
-		}
-
-		//Tell the rest of the app that the nearbyLocationList is fresh
-		NSNotification *nearbyLocationListNotification = 
-					[NSNotification notificationWithName:@"ReceivedNearbyLocationList" object:nearbyLocationsList];
-		[[NSNotificationCenter defaultCenter] postNotification:nearbyLocationListNotification];
-		[pool drain];
-	}
-}
-
-- (void)createPlayer{
-	NSLog(@"Model: Creating Player");
-}
 
 #pragma mark Syncronizers
 
