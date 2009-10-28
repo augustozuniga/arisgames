@@ -252,6 +252,39 @@ static const int kDefaultCapacity = 10;
 	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
+- (void)fetchLocationList {
+	@synchronized (locationsLock) {
+		NSLog(@"AppModel: Fetching Locations from Server");	
+		if (!loggedIn) {
+			NSLog(@"AppModel: Player Not logged in yet, skip the location fetch");	
+			return;
+		}
+				
+		NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", self.gameId],
+							  [NSString stringWithFormat:@"%d",self.playerId], 
+							  nil];
+		
+		//init location list array
+		if(locationList != nil) {
+			[locationList release];
+		}
+		locationList = [NSMutableArray array];
+		[locationList retain];
+		
+		self.locationList = [self fetchFromService:@"locations" usingMethod:@"getLocationsForPlayer"
+									  withArgs:arguments usingParser:@selector(parseLocationsFromArray:)];
+		
+		//Tell everyone
+		NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
+		NSLog(@"AppModel: Finished fetching locations from server");
+		NSNotification *notification = 
+		[NSNotification notificationWithName:@"ReceivedLocationList" object:self userInfo:dictionary];
+		[[NSNotificationCenter defaultCenter] postNotification:notification];
+	}
+}
+
+
+
 #pragma mark Parsers
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
 	Item *item = [[Item alloc] init];
@@ -344,79 +377,47 @@ static const int kDefaultCapacity = 10;
 
 }
 
+-(NSArray *)parseLocationsFromArray: (NSArray *)locationsArray{
+
+	//Build the location list
+	NSMutableArray *tempLocationsList = [[NSMutableArray alloc] init];
+	NSEnumerator *locationsEnumerator = [locationsArray objectEnumerator];	
+	NSDictionary *locationDictionary;
+	while (locationDictionary = [locationsEnumerator nextObject]) {
+		//create a new location
+		Location *location = [[Location alloc] init];
+		location.locationId = [[locationDictionary valueForKey:@"location_id"] intValue];
+		location.name = [locationDictionary valueForKey:@"name"];
+		location.iconMediaId = [[locationDictionary valueForKey:@"icon_media_id"] intValue];
+		location.location = [[CLLocation alloc] initWithLatitude:[[locationDictionary valueForKey:@"latitude"] doubleValue]
+													   longitude:[[locationDictionary valueForKey:@"longitude"] doubleValue]];
+		location.error = [[locationDictionary valueForKey:@"error"] doubleValue];
+		location.objectType = [locationDictionary valueForKey:@"type"];
+		location.objectId = [[locationDictionary valueForKey:@"type_id"] intValue];
+		location.hidden = [[locationDictionary valueForKey:@"hidden"] boolValue];
+		location.forcedDisplay = [[locationDictionary valueForKey:@"force_view"] boolValue];
+		location.qty = [[locationDictionary valueForKey:@"item_qty"] intValue];
+		
+		NSLog(@"Model: Adding Location: %@", location.name);
+		[tempLocationsList addObject:location];
+		[location release];
+	}
+	
+	
+	
+	return tempLocationsList;
+	
+	
+}
+
+
+
+
+
+
 #pragma mark Unrefactored fetch code
 
 
-- (void)fetchLocationList {
-	@synchronized (nearbyLock) {
-		NSLog(@"AppModel: Fetching Locations from Server");	
-		if (!loggedIn) {
-			NSLog(@"AppModel: Player Not logged in yet, skip the location fetch");	
-			return;
-		}
-		
-		//init location list array
-		if(locationList != nil) {
-			[locationList release];
-		}
-		locationList = [NSMutableArray array];
-		[locationList retain];
-	
-		//init player list array
-		if(playerList != nil) {
-			[playerList release];
-		}
-		playerList = [NSMutableArray array];
-		[playerList retain];
-	
-		//Call server service
-		NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", self.gameId],
-														[NSString stringWithFormat:@"%d",self.playerId], 
-														nil];
-		JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																		andServiceName:@"locations" 
-																		andMethodName:@"getLocationsForPlayer" 
-																		andArguments:arguments];
-		JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-		
-		if (!jsonResult) {
-			NSLog(@"AppModel fetchLocationList: No result Data, return");
-			return;
-		}
-		
-		//Build the location list
-		NSMutableArray *tempLocationsList = [[NSMutableArray alloc] init];
-		NSEnumerator *locationsEnumerator = [((NSArray *)jsonResult.data) objectEnumerator];	
-		NSDictionary *locationDictionary;
-		while (locationDictionary = [locationsEnumerator nextObject]) {
-			//create a new location
-			Location *location = [[Location alloc] init];
-			location.locationId = [[locationDictionary valueForKey:@"location_id"] intValue];
-			location.name = [locationDictionary valueForKey:@"name"];
-			location.iconMediaId = [[locationDictionary valueForKey:@"icon_media_id"] intValue];
-			location.location = [[CLLocation alloc] initWithLatitude:[[locationDictionary valueForKey:@"latitude"] doubleValue]
-														   longitude:[[locationDictionary valueForKey:@"longitude"] doubleValue]];
-			location.error = [[locationDictionary valueForKey:@"error"] doubleValue];
-			location.objectType = [locationDictionary valueForKey:@"type"];
-			location.objectId = [[locationDictionary valueForKey:@"type_id"] intValue];
-			location.hidden = [[locationDictionary valueForKey:@"hidden"] boolValue];
-			location.forcedDisplay = [[locationDictionary valueForKey:@"force_view"] boolValue];
-			location.qty = [[locationDictionary valueForKey:@"item_qty"] intValue];
-			
-			NSLog(@"Model: Adding Location: %@", location.name);
-			[tempLocationsList addObject:location]; 
-		}
-		
-		self.locationList = [NSArray arrayWithArray:tempLocationsList];
-		
-		//Tell everyone
-		NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
-		NSLog(@"AppModel: Finished fetching locations from server");
-		NSNotification *notification = 
-				[NSNotification notificationWithName:@"ReceivedLocationList" object:self userInfo:dictionary];
-		[[NSNotificationCenter defaultCenter] postNotification:notification];
-	}
-}
 
 - (void)fetchMediaList {
 	NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d",self.gameId], nil];
