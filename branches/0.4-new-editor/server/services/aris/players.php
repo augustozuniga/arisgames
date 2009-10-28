@@ -56,6 +56,27 @@ class Players extends Module
 	}
 		
 
+	
+	/**
+     * updates the player's last game
+     * @returns a returnData object, result code 0 on success
+     */
+	public function updatePlayerLastGame($intPlayerID, $intGameID)
+	{
+		$query = "UPDATE players
+					SET last_game_id = '{$intGameID}'
+					WHERE player_id = {$intPlayerID}";
+		
+		NetDebug::trace($query);
+
+		@mysql_query($query);
+		
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);
+	}	
+
+
 	/**
      * getPlayersForGame
      * @returns players with this game id
