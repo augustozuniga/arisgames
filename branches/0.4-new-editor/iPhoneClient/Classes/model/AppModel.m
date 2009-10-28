@@ -317,6 +317,22 @@ static const int kDefaultCapacity = 10;
 }
 
 
+-(NSObject<QRCodeProtocol> *)fetchQRCode:(NSString*)QRcodeId{
+	NSLog(@"Model: Fetch Requested for QRCodeId: %@", QRcodeId);
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%@",QRcodeId],
+						  [NSString stringWithFormat:@"%d",self.playerId],
+						  nil];
+	
+	return [self fetchFromService:@"qrcodes" usingMethod:@"getQRCodeObjectForPlayer"
+				  withArgs:arguments usingParser:@selector(parseQRCodeObjectFromDictionary:)];
+	
+}	
+
+
+
 
 
 #pragma mark Parsers
@@ -501,6 +517,19 @@ static const int kDefaultCapacity = 10;
 }
 
 
+-(NSObject<QRCodeProtocol> *)parseQRCodeObjectFromDictionary: (NSDictionary *)qrCodeObjectDictionary {
+
+	NSString *type = [qrCodeObjectDictionary valueForKey:@"type"];
+	NSLog(@"QRCode Type: %@",type);
+
+	if ([type isEqualToString:@"Node"]) return [self parseNodeFromDictionary:qrCodeObjectDictionary];
+	if ([type isEqualToString:@"Item"]) return [self parseItemFromDictionary:qrCodeObjectDictionary];
+	if ([type isEqualToString:@"Npc"]) return [self parseNpcFromDictionary:qrCodeObjectDictionary];
+
+	return nil;
+}
+
+
 
 
 #pragma mark Unrefactored fetch code
@@ -508,36 +537,6 @@ static const int kDefaultCapacity = 10;
 
 
 
--(NSObject<QRCodeProtocol> *)fetchQRCode:(NSString*)QRcodeId{
-	NSLog(@"Model: Fetch Requested for QRCodeId: %@", QRcodeId);
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%@",QRcodeId],
-						  [NSString stringWithFormat:@"%d",self.playerId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"qrcodes" 
-																	 andMethodName:@"getQRCodeObjectForPlayer" 
-																	  andArguments:arguments];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchQRCode: No result Data, return");
-		return nil;
-	}	
-	
-	//Build the object
-	NSDictionary *qrCodeDictionary = (NSDictionary *)jsonResult.data;
-	NSString *type = [qrCodeDictionary valueForKey:@"type"];
-	NSLog(@"QRCode Type: %@",type);
-
-	if ([type isEqualToString:@"Node"]) return [self parseNodeFromDictionary:qrCodeDictionary];
-	if ([type isEqualToString:@"Item"]) return [self parseItemFromDictionary:qrCodeDictionary];
-	if ([type isEqualToString:@"Npc"]) return [self parseNpcFromDictionary:qrCodeDictionary];
-	
-	return nil;
-}	
 
 -(void)fetchQuestList {
 	NSLog(@"Model: Fetch Requested for Quest");
