@@ -334,6 +334,28 @@ static const int kDefaultCapacity = 10;
 
 
 
+-(void)fetchQuestList {
+	NSLog(@"Model: Fetch Requested for Quest");
+	
+	//Call server service
+	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
+						  [NSString stringWithFormat:@"%d",playerId],
+						  nil];
+	
+	self.questList = [self fetchFromService:@"quests" usingMethod:@"getQuestsForPlayer"
+				  withArgs:arguments usingParser:@selector(parseQuestListFromDictionary:)];
+	
+	//Sound the alarm
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedQuestList" object:self userInfo:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
+	
+}
+
+
+
+
+
+
 
 #pragma mark Parsers
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
@@ -531,37 +553,11 @@ static const int kDefaultCapacity = 10;
 
 
 
+-(NSMutableDictionary *)parseQuestListFromDictionary: (NSDictionary *)questListDictionary{
 
-#pragma mark Unrefactored fetch code
-
-
-
-
-
--(void)fetchQuestList {
-	NSLog(@"Model: Fetch Requested for Quest");
-	
-	//Call server service
-	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
-						  [NSString stringWithFormat:@"%d",playerId],
-						  nil];
-	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
-																	andServiceName:@"quests" 
-																	 andMethodName:@"getQuestsForPlayer" 
-																	  andArguments:arguments];
-	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
-	if (!jsonResult) {
-		NSLog(@"AppModel fetchQuestList: No result Data, return");
-		return;
-	}		
-	
-	//Build the questList
-	NSDictionary *dataDictionary = (NSDictionary *)jsonResult.data;
-	
 	//parse out the active quests into quest objects
 	NSMutableArray *activeQuestObjects = [[NSMutableArray alloc] init];
-	NSArray *activeQuests = [dataDictionary objectForKey:@"active"];
+	NSArray *activeQuests = [questListDictionary objectForKey:@"active"];
 	NSEnumerator *activeQuestsEnumerator = [activeQuests objectEnumerator];
 	NSDictionary *activeQuest;
 	while (activeQuest = [activeQuestsEnumerator nextObject]) {
@@ -572,11 +568,11 @@ static const int kDefaultCapacity = 10;
 		quest.description = [activeQuest objectForKey:@"description"];
 		quest.mediaId = [[activeQuest objectForKey:@"mediaURL"] intValue];
 		[activeQuestObjects addObject:quest];
- 	}
-	
+	}
+
 	//parse out the completed quests into quest objects	
 	NSMutableArray *completedQuestObjects = [[NSMutableArray alloc] init];
-	NSArray *completedQuests = [dataDictionary objectForKey:@"completed"];
+	NSArray *completedQuests = [questListDictionary objectForKey:@"completed"];
 	NSEnumerator *completedQuestsEnumerator = [completedQuests objectEnumerator];
 	NSDictionary *completedQuest;
 	while (completedQuest = [completedQuestsEnumerator nextObject]) {
@@ -588,19 +584,21 @@ static const int kDefaultCapacity = 10;
 		quest.mediaId = [[completedQuest objectForKey:@"mediaURL"] intValue];
 		[completedQuestObjects addObject:quest];
 	}
-	
+
 	//Package the two object arrays in a Dictionary
 	NSMutableDictionary *tmpQuestList = [[NSMutableDictionary alloc] init];
 	[tmpQuestList setObject:activeQuestObjects forKey:@"active"];
 	[tmpQuestList setObject:completedQuestObjects forKey:@"completed"];
 
-	//Save it as the model's quest list
-	questList = tmpQuestList;
-	
-	//Sound the alarm
-	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedQuestList" object:self userInfo:nil];
-	[[NSNotificationCenter defaultCenter] postNotification:notification];
+	return tmpQuestList;
 }
+
+
+
+
+#pragma mark Unrefactored fetch code
+
+
 
 - (void)updateServerNodeViewed: (int)nodeId {
 	NSLog(@"Model: Node %d Viewed, update server", nodeId);
