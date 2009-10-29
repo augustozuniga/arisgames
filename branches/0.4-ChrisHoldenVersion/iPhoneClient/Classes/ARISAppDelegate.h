@@ -20,7 +20,6 @@
 #import "ItemDetailsViewController.h"
 
 #import "QuestsViewController.h"
-#import "GPSViewController.h"
 #import "InventoryListViewController.h"
 #import "CameraViewController.h"
 #import "QRScannerViewController.h"

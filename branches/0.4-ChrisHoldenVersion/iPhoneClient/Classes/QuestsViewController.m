@@ -31,12 +31,25 @@
 	self.webview.delegate = self;
 	moduleName = @"RESTQuest";
 	
+	webview.hidden = YES;
+	
+	
+	//Show waiting Indicator
+	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
+	
+	[webview loadRequest:[appModel getURLForModule:moduleName]];
+	
 	NSLog(@"To Do View Loaded");
 }
 
 
 - (void)viewDidAppear {
-
+	webview.hidden = YES;
+	
+	//Show waiting Indicator
+	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
+	
+	[webview loadRequest:[appModel getURLForModule:moduleName]];
 }
 
 - (void)didReceiveMemoryWarning {

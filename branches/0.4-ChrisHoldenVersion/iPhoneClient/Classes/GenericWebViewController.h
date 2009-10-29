@@ -18,9 +18,16 @@
 -(void) setModel:(AppModel *)model;
 -(void) setURL:(NSString*)urlString;
 
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error;
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)webViewDidFinishLoad:(UIWebView *)webView;
+- (void)webViewDidStartLoad:(UIWebView *)webView;
 
 
 @property (nonatomic, retain) IBOutlet UIWebView *webview;
+@property (readwrite, copy) NSURLRequest *request;
+
+
 
 
 

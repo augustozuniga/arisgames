@@ -13,24 +13,22 @@
 @implementation GenericWebViewController
 
 @synthesize webview;
+@synthesize request;
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	//Show waiting Indicator in own thread so it appears on time
-	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];
-	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
-	
-	
 	webview.delegate = self;
-	
 	webview.hidden = YES;
-	[webview loadRequest:request];
 	
-	NSLog(@"Generic Web Controller is Now Loading the URL in ViewDidLoad");
-	NSLog(@"GenericWebView loaded");
+	if (self.request) {
+		[webview loadRequest:self.request];
+	}
 	
-	 [super viewDidLoad];
+	//NSLog(@"Generic Web Controller is Now Loading the URL in ViewDidLoad");
+	//NSLog(@"GenericWebView loaded");
+	
+	//[super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,14 +39,10 @@
 
 #pragma mark custom methods and logic
 -(void) setURL: (NSString*)urlString {
-	//Show waiting Indicator in own thread so it appears on time
-	//[NSThread detachNewThreadSelector: @selector(showWaitingIndicator:) toTarget: (ARISAppDelegate *)[[UIApplication sharedApplication] delegate] withObject: @"Loading..."];	
-	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
-
-	request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-	webview.hidden = YES;
-	[webview loadRequest:request];
-	NSLog(@"Generic Web Controller is Now Loading: %@",urlString);
+	self.request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+	//webview.hidden = YES;
+	//[webview loadRequest:request];
+	NSLog(@"Generic Web Controller request is set to: %@",urlString);
 }
 
 -(void) setModel:(AppModel *)model{
@@ -67,12 +61,24 @@
 }
 
 #pragma mark WebView Delegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+//nada
+	return true;
+}
+
+
 - (void)webViewDidStartLoad:(UIWebView *)webView {
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator:@"Loading..."];
+
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+	NSLog(@"Generic Web Controller Data Loaded");
+
+	
 	webview.hidden = NO;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	
@@ -81,7 +87,8 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-	
+	NSLog(@"Generic Web Controller Loading Error");
+
 	webview.hidden = NO;
 	
 	//Display an error message to user about the connection

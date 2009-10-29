@@ -54,10 +54,6 @@
 	UINavigationController *questsNavigationController = [[UINavigationController alloc] initWithRootViewController: questsViewController];
 	questsNavigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	
-	//Setup GPS View
-	//GPSViewController *gpsViewController = [[[GPSViewController alloc] initWithNibName:@"GPS" bundle:nil] autorelease];
-	//UINavigationController *gpsNavigationController = [[UINavigationController alloc] initWithRootViewController: gpsViewController];
-	//gpsNavigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 
 	//Setup Inventory View
 	InventoryListViewController *inventoryListViewController = [[[InventoryListViewController alloc] initWithNibName:@"InventoryList" bundle:nil] autorelease];
@@ -113,8 +109,8 @@
 										qrScannerNavigationController,
 										/*cameraNavigationController,*/
 										/* imNavigationController, */
-										gamePickerNavigationController,
 										logoutNavigationController,
+										gamePickerNavigationController,
 										developerNavigationController,
 										nil];	
 
@@ -148,6 +144,11 @@
 	//Inventory Bar, which is really a view
 	nearbyBar = [[NearbyBar alloc] initWithFrame:CGRectMake(0.0, 63.0, 320.0, 20.0)];
 	[window addSubview:nearbyBar];	
+	
+
+	[questsViewController setModel:appModel];
+	
+	
 	
 }
 
@@ -186,7 +187,9 @@
 	self.waitingIndicator.message = message;
 	
 	//by adding a subview to window, we make sure it is put on top
-	if (appModel.loggedIn == YES) [self.window addSubview:self.waitingIndicator.view]; 
+	if (appModel.loggedIn == YES) {
+		[NSThread detachNewThreadSelector:@selector(addSubview:) toTarget:self.window withObject:self.waitingIndicator.view];
+	}
 }
 
 - (void) removeWaitingIndicator {
