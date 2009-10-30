@@ -160,9 +160,9 @@ class Games extends Module
 			type enum('Node','Event','Item','Npc') NOT NULL,
 			type_id int(11) NOT NULL,
 			icon_media_id int(10) unsigned NOT NULL default '0',
-			item_qty int(11) NOT NULL,
-			hidden enum('0','1') default '0',
-			force_view enum('0','1') NOT NULL default '0' COMMENT 'Forces this Location to Display when nearby',
+			item_qty int(11) NOT NULL default '0',
+			hidden enum('0','1') NOT NULL default '0',
+			force_view enum('0','1') NOT NULL default '0',
 			PRIMARY KEY  (location_id)
 			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
