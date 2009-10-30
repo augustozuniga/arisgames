@@ -79,32 +79,23 @@ class Locations extends Module
 	
 	
 	/**
-     * Places an Item on the map
+     * Places a location placeholder on the map which links to an aris game object type and id
      * @returns the new locationID on success
      */
-	public function createLocationForItem($intGameID, $intIconMediaID, 
+	public function createLocation($intGameID, $strLocationName, $intIconMediaID, 
 								$dblLatitude, $dblLongitude, $dblError,
-								$intItemId, $intQuantity, 
-								$boolHidden, $boolForceView)
+								$strObjectType, $intObjectID,
+								$intQuantity, $boolHidden, $boolForceView)
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
-		//Lookup the name of the item
-		$query = "SELECT name FROM {$prefix}_items 
-				WHERE item_id = '{$intItemId}' LIMIT 1";
-		NetDebug::trace("createLocationForItem: Lookup Item query: $query");		
-		
-		$item = mysql_fetch_array(mysql_query($query));
-		if (!$item) return new returnData(2, NULL, "No matching Item");
-
-		
 		$query = "INSERT INTO {$prefix}_locations 
 					(name, icon_media_id, latitude, longitude, error, 
 					type, type_id, item_qty, hidden, force_view)
-					VALUES ('{$item['name']}', '{$intIconMediaID}',
+					VALUES ('{$strLocationName}', '{$intIconMediaID}',
 							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
-							'Item','{$intItemId}','{$intQuantity}',
+							'{$strObjectType}','{$intObjectID}','{$intQuantity}',
 							'{$boolHidden}','{$boolForceView}')";
 		
 		NetDebug::trace("createLocationForItem: Running a query = $query");	
@@ -112,7 +103,7 @@ class Locations extends Module
 		@mysql_query($query);
 		
 		if (mysql_error()) {
-			NetDebug::trace("createLocationForItem: SQL Error = " . mysql_error());
+			NetDebug::trace("createLocation: SQL Error = " . mysql_error());
 			return new returnData(3, NULL, "SQL Error");
 		}
 		return new returnData(0, mysql_insert_id());
@@ -120,104 +111,45 @@ class Locations extends Module
 	}
 
 
-	
-	/**
-     * Places an Node on the map
-     * @returns the new locationID on success
-     */
-	public function createLocationForNode($intGameID, $intIconMediaID, 
-								$dblLatitude, $dblLongitude, $dblError,
-								$intNodeId, $boolHidden, $boolForceView)
-	{
-		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
-		//Lookup the name of the item
-		$query = "SELECT title FROM {$prefix}_nodes 
-				WHERE node_id = '{$intNodeId}' LIMIT 1";
-		NetDebug::trace("createLocationForNode: Lookup Node query: $query");		
-		$node = mysql_fetch_array(mysql_query($query));
-		if (!$node)  return new returnData(2, NULL, "No matching Node");
-
-		$query = "INSERT INTO {$prefix}_locations 
-					(icon_media_id, name, 
-					latitude, longitude, error, 
-					type, type_id, hidden, force_view)
-					VALUES ('{$intIconMediaID}','{$node['title']}',
-							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
-							'Node','{$intNodeId}','{$boolHidden}','{$boolForceView}')";
-		
-		NetDebug::trace("createLocationForNode: Running a query = $query");	
-	
-		@mysql_query($query);
-		
-		if (mysql_error()) {
-			NetDebug::trace("createLocationForNode: SQL Error = " . mysql_error());
-			return new returnData(3, NULL, "SQL Error");
-		}
-		return new returnData(0, mysql_insert_id());
-	}
-
-
-	/**
-     * Places an Npc on the map
-     * @returns the new locationID on success
-     */
-	public function createLocationForNpc($intGameID, $intIconMediaID, 
-								$dblLatitude, $dblLongitude, $dblError,
-								$intNpcId, $boolHidden, $boolForceView)
-	{
-		$prefix = $this->getPrefix($intGameID);
-		if (!$prefix) return new returnData(1, NULL, "invalid game id");
-
-		//Lookup the name of the item
-		$query = "SELECT name FROM {$prefix}_npcs 
-				WHERE npc_id = '{$intNpcId}' LIMIT 1";
-		NetDebug::trace("createLocationForNode: Lookup Npc query: $query");		
-		$npc = mysql_fetch_array(mysql_query($query));
-		if (!$npc) return new returnData(2, NULL, "No matching NPC");
-
-		
-		$query = "INSERT INTO {$prefix}_locations 
-					(icon_media_id, name, 
-					latitude, longitude, error, 
-					type, type_id, hidden, force_view)
-					VALUES ('{$intIconMediaID}','{$npc['name']}',
-							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
-							'Npc','{$intNpcId}','{$boolHidden}','{$boolForceView}')";
-		
-		NetDebug::trace("createLocationForNpc: Running a query = $query");	
-	
-		@mysql_query($query);
-		
-		if (mysql_error()) {
-			NetDebug::trace("createLocationForNopc: SQL Error = " . mysql_error());
-			return new returnData(3, NULL, "SQL Error");
-		}
-		return new returnData(0, mysql_insert_id());
-	}
 
 	/**
      * Updates the attributes of a Location
      * @returns true if a record was modified, false if no changes were required (could be from not matching the location id)
      */
-	public function updateAttributes($intGameID, $intLocationId, 
-								$intQuantity, $boolHidden, $boolForceView )
+	public function updateLocation($intGameID, $intLocationID, $strLocationName, $intIconMediaID, 
+								$dblLatitude, $dblLongitude, $dblError,
+								$strObjectType, $intObjectID,
+								$intQuantity, $boolHidden, $boolForceView)
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
-		//Lookup the name of the item
+		//Check the object Type is good or null
+		if ( !$this->isValidObjectType($intGameID, $strObjectType) and strlen($strObjectType) >0 )
+			return new returnData(4, NULL, "invalid object type");
+		
 		$query = "UPDATE {$prefix}_locations
 				SET 
+				name = '{$strLocationName}',
+				icon_media_id = '{$intIconMediaID}', 
+				latitude = '{$dblLatitude}', 
+				longitude = '{$dblLongitude}', 
+				error = '{$dblError}',
+				type = '{$strObjectType}',
+				type_id = '{$intObjectID}',
 				item_qty = '{$intQuantity}',
-				hidden = '{$boolHidden}'
+				hidden = '{$boolHidden}',
 				force_view = '{$boolForceView}'
-				WHERE location_id = '{$intLocationId}'";
-		NetDebug::trace("deleteLocation: Query: $query");		
+				WHERE location_id = '{$intLocationID}'";
+		
+		NetDebug::trace("updateLocation: Query: $query");		
 		
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		if (mysql_error()) {
+			NetDebug::trace("MySQL Error:" . mysql_error());
+			return new returnData(3, NULL, "SQL Error");		
+		}
 		
 		if (mysql_affected_rows()) {
 			return new returnData(0, TRUE);
