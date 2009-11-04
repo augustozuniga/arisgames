@@ -43,7 +43,17 @@ class Editors extends Module
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
 		
+		//Email the editor login information to them
+		
 		return new returnData(0, mysql_insert_id());
+	}
+	
+	/**
+     * Reset and email editor a new password- NOT IMPLEMENTED
+     * @returns void
+     */
+	public function resetPassword($strEmail) {
+	
 	}
 	
 	
