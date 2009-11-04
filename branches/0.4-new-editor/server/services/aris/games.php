@@ -38,10 +38,9 @@ class Games extends Module
         else {
             NetDebug::trace("getGames: User is NOT a super admin");
 
-            $query = "SELECT FROM games 
-				JOIN game_editors 
-				ON (games.game_id = game_editors.game_id)
-				WHERE game_editors.editor_id = '$intEditorID'";
+			$query = "SELECT g.* from games g, game_editors ge 
+						WHERE g.game_id = ge.game_id AND ge.editor_id = '$intEditorID'";
+
 			NetDebug::trace($query);
 	    }
 		
