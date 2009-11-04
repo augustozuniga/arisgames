@@ -53,7 +53,7 @@ static const int kDefaultCapacity = 10;
 -(void)loadUserDefaults {
 	NSLog(@"Model: Loading User Defaults");
 	
-	//Load the base App URL and calculate the serverName (we should move the calculation to a geter)
+	//Load the base App URL
 	self.baseAppURL = [defaults stringForKey:@"baseAppURL"];
 	
 	//Make sure it has a trailing slash (needed in some places)
@@ -66,14 +66,12 @@ static const int kDefaultCapacity = 10;
 	self.serverName = [NSString stringWithFormat:@"http://%@:%d", [url host], 
 					   ([url port] ? [[url port] intValue] : 80)];
 	
-	self.site = [defaults stringForKey:@"site"];
 	self.gameId = [defaults integerForKey:@"gameId"];
 	self.loggedIn = [defaults boolForKey:@"loggedIn"];
 	
 	if (loggedIn == YES) {
 		if (![baseAppURL isEqualToString:[defaults stringForKey:@"lastBaseAppURL"]]) {
 			self.loggedIn = NO;
-			self.site = @"Default";
 			NSLog(@"Model: Server URL changed since last execution. Throw out Defaults and use URL: '%@' Site: '%@' GameId: '%d'", baseAppURL, site, gameId);
 		}
 		else {
@@ -84,7 +82,8 @@ static const int kDefaultCapacity = 10;
 				  baseAppURL, username, password, playerId, gameId, site);
 		}
 	}
-	else NSLog(@"Model: No default User Data to Load. Use URL: '%@' Site: '%@'", baseAppURL, site);
+	else NSLog(@"Model: Player was not logged in, Initing with Defaults");
+
 	
 	self.jsonServerBaseURL = [NSString stringWithFormat:@"%@%@",
 						 baseAppURL, @"json.php/aris"];
@@ -102,7 +101,6 @@ static const int kDefaultCapacity = 10;
 	[defaults removeObjectForKey:@"playerId"];
 	[defaults removeObjectForKey:@"gameId"];
 	//Don't clear the baseAppURL
-	[defaults setObject:@"Default" forKey:@"site"];
 }
 
 -(void)saveUserDefaults {
@@ -114,18 +112,44 @@ static const int kDefaultCapacity = 10;
 	[defaults setInteger:playerId forKey:@"playerId"];
 	[defaults setInteger:gameId forKey:@"gameId"];
 	[defaults setObject:baseAppURL forKey:@"lastBaseAppURL"];
-	[defaults setObject:site forKey:@"site"];
 	[defaults setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVerison"];
 }
 
 -(void)initUserDefaults {	
-	NSDictionary *initDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
-								  @"http://arisgames.org/engine/", @"baseAppURL",
-								  @"Default", @"site",
-								  nil];
-
-	[defaults registerDefaults:initDefaults];
+	
+	//Load the settings bundle data into an array
+	NSString *pathStr = [[NSBundle mainBundle] bundlePath];
+	NSString *settingsBundlePath = [pathStr stringByAppendingPathComponent:@"Settings.bundle"];
+	NSString *finalPath = [settingsBundlePath stringByAppendingPathComponent:@"Root.plist"];
+	NSDictionary *settingsDict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+	NSArray *prefSpecifierArray = [settingsDict objectForKey:@"PreferenceSpecifiers"];
+	
+	//Find the Defaults
+	NSString *baseAppURLDefault;
+	NSDictionary *prefItem;
+	for (prefItem in prefSpecifierArray)
+	{
+		NSString *keyValueStr = [prefItem objectForKey:@"Key"];
+		id defaultValue = [prefItem objectForKey:@"DefaultValue"];
+		
+		if ([keyValueStr isEqualToString:@"baseAppURL"])
+		{
+			baseAppURLDefault = defaultValue;
+		}
+		//More defaults would go here
+	}
+	
+	// since no default values have been set (i.e. no preferences file created), create it here
+	NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys: 
+								 baseAppURLDefault,  @"baseAppURL", 
+								 nil];
+	
+	[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+
+
 
 #pragma mark Communication with Server
 - (BOOL)login {

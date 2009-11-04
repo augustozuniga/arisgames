@@ -34,7 +34,7 @@
 	appModel = [[AppModel alloc] init];
 	
 	//Init keys in UserDefaults in case the user has not visited the ARIS Settings page
-	//To set these defaults, edit Settings.bundle->Root.plist and initUSerDefaults in appMode.m
+	//To set these defaults, edit Settings.bundle->Root.plist 
 	[appModel initUserDefaults];
 	
 	//Load defaults from UserDefaults
