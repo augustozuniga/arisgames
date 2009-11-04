@@ -56,10 +56,11 @@ class Games extends Module
      * Create a new game
      * @returns an integer of the newly created game_id
      */	
-	public function createGame($intEditorID, $strFullName)
+	public function createGame($intEditorID, $strFullName, $strDescription)
 	{
 
 		$strFullName = addslashes($strFullName);	
+		$strDescription = addslashes($strDescription);
         
                 
 		//Check if a game with this name has already been created
@@ -70,7 +71,7 @@ class Games extends Module
 		
 		
 		//Create the game record in SQL
-		$query = "INSERT INTO games (name) VALUES ('{$strFullName}')";
+		$query = "INSERT INTO games (name, description) VALUES ('{$strFullName}','{$strDescription}')";
 		@mysql_query($query);
 		if (mysql_error())  return new returnData(6, NULL, 'cannot create game record');
 		$newGameID = mysql_insert_id();
@@ -271,17 +272,40 @@ class Games extends Module
 		
 	}
 	
+	
 	/**
-     * Sets a game's name
+     * Updates a game's information
      * @returns true if a record was updated, false otherwise
      */	
-	public function setGameName($intGameID, $strNewGameName)
+	public function updateGame($intGameID, $strNewName, $strNewDescription)
 	{
 	    $returnData = new returnData(0, mysql_query($query), NULL);
 
 		$strNewGameName = addslashes($strNewGameName);	
 	
-		$query = "UPDATE games SET name = '{$strNewGameName}' WHERE game_id = {$intGameID}";
+		$query = "UPDATE games 
+				SET name = '{$strNewName}',
+				description = '{$strNewDescription}'
+				WHERE game_id = {$intGameID}";
+		mysql_query($query);
+		if (mysql_error()) return new returnData(3, false, "SQL Error");
+		
+		if (mysql_affected_rows()) return new returnData(0, TRUE);
+		else return new returnData(0, FALSE);		
+		
+	}		
+	
+	/**
+     * Sets a game's name
+     * @returns true if a record was updated, false otherwise
+     */	
+	public function setGameName($intGameID, $strNewName)
+	{
+	    $returnData = new returnData(0, mysql_query($query), NULL);
+
+		$strNewGameName = addslashes($strNewGameName);	
+	
+		$query = "UPDATE games SET name = '{$strNewName}' WHERE game_id = {$intGameID}";
 		mysql_query($query);
 		if (mysql_error()) return new returnData(3, false, "SQL Error");
 		
