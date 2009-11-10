@@ -50,10 +50,19 @@ class Editors extends Module
 	
 	/**
      * Reset and email editor a new password- NOT IMPLEMENTED
-     * @returns void
+     * @returns 0 on success
      */
-	public function resetPassword($strEmail) {
+	public function resetAndEmailNewPassword($strEmail) {
+		return new returnData(0, NULL);
+	}
 	
+		
+	/**
+     * Email editor account name - NOT IMPLEMENTED
+     * @returns 0 on success
+     */
+	public function emailUserName($strEmail) {
+		return new returnData(0, NULL);
 	}
 	
 	
