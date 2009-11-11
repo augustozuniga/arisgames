@@ -172,6 +172,7 @@
 		AB9521D510853A780017BF33 /* defaultAudioIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9521D210853A780017BF33 /* defaultAudioIcon.png */; };
 		AB9521D610853A780017BF33 /* defaultImageIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9521D310853A780017BF33 /* defaultImageIcon.png */; };
 		AB9521D710853A780017BF33 /* defaultVideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB9521D410853A780017BF33 /* defaultVideoIcon.png */; };
+		AB9A7C1710AA173F002FD9BC /* ARISURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A7C1610AA173F002FD9BC /* ARISURLConnection.m */; };
 		ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBAC104D7CC800AA7285 /* NodeOption.m */; };
 		ABBEBBC2104D7CF900AA7285 /* NodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */; };
 		ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABBEBBC4104D7DAB00AA7285 /* Node.xib */; };
@@ -410,6 +411,8 @@
 		AB9521D210853A780017BF33 /* defaultAudioIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAudioIcon.png; sourceTree = "<group>"; };
 		AB9521D310853A780017BF33 /* defaultImageIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultImageIcon.png; sourceTree = "<group>"; };
 		AB9521D410853A780017BF33 /* defaultVideoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultVideoIcon.png; sourceTree = "<group>"; };
+		AB9A7C1510AA173F002FD9BC /* ARISURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARISURLConnection.h; sourceTree = "<group>"; };
+		AB9A7C1610AA173F002FD9BC /* ARISURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARISURLConnection.m; sourceTree = "<group>"; };
 		ABBEBBAB104D7CC800AA7285 /* NodeOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeOption.h; sourceTree = "<group>"; };
 		ABBEBBAC104D7CC800AA7285 /* NodeOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeOption.m; sourceTree = "<group>"; };
 		ABBEBBC0104D7CF900AA7285 /* NodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeViewController.h; sourceTree = "<group>"; };
@@ -612,6 +615,7 @@
 		29B97314FDCFA39411CA2CEA /* ARIS */ = {
 			isa = PBXGroup;
 			children = (
+				A7149F9C0FB89DC8008BAB5D /* Settings.bundle */,
 				A7986D6A0F8FEC7200A5469F /* Core App */,
 				ABBEBBBF104D7CE400AA7285 /* Nodes */,
 				ABD4F19F1046FC7A003AC93C /* NPC */,
@@ -656,6 +660,8 @@
 				AB3E113E10486A5500A9034C /* JSONConnection.m */,
 				AB54A0B81047301E00A901EF /* JSONResult.h */,
 				AB54A0B91047301E00A901EF /* JSONResult.m */,
+				AB9A7C1510AA173F002FD9BC /* ARISURLConnection.h */,
+				AB9A7C1610AA173F002FD9BC /* ARISURLConnection.m */,
 				D43717DD106D62BB0020C515 /* Media.h */,
 				D43717DE106D62BB0020C515 /* Media.m */,
 			);
@@ -809,7 +815,6 @@
 				A7955B920F73E095005148E4 /* AudioToolbox.framework */,
 				A79202630F8E717C0049F990 /* MediaPlayer.framework */,
 				ABDA40DD10506CB300823A94 /* MapKit.framework */,
-				A7149F9C0FB89DC8008BAB5D /* Settings.bundle */,
 				AB549ED11047007B00A901EF /* JSON Framework */,
 				A760473F0FC0AA1E00219A53 /* NearbyObjectBar */,
 				A798300A0FCB1C5900C1C2E7 /* Waiting Indicator */,
@@ -1126,6 +1131,7 @@
 				ABDA40C110506AF400823A94 /* ItemAnnotation.m in Sources */,
 				ABDA40C210506AF400823A94 /* AnnotationView.m in Sources */,
 				D43717DF106D62BB0020C515 /* Media.m in Sources */,
+				AB9A7C1710AA173F002FD9BC /* ARISURLConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
