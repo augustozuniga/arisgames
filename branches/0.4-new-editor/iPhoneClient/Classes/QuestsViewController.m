@@ -45,7 +45,7 @@ static int const COMPLETED_SECTION = 1;
 
 - (void)viewDidAppear:(BOOL)animated {
 	[self refresh];		
-	NSLog(@"QuestsViewController: Quests View Loaded");
+	NSLog(@"QuestsViewController: Quests View Did Appear");
 }
 
 - (void)refresh {

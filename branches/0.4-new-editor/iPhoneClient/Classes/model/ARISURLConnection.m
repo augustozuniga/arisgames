@@ -12,9 +12,10 @@
 @implementation ARISURLConnection
 @synthesize parser;
 
-- (id)initWithRequest:(NSURLRequest *)request delegate:(id)delegate parser:(SEL)parser {
-	self = [self initWithRequest:(NSURLRequest *)request delegate:(id)delegate];
-	self.parser = parser;
+- (id)initWithRequest:(NSURLRequest *)request delegate:(id)delegate parser:(SEL)aParser {
+	if (self = [self initWithRequest:(NSURLRequest *)request delegate:(id)delegate]) {
+		self.parser = aParser;
+	}
 	return self;
 }
 

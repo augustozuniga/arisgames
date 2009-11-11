@@ -10,11 +10,12 @@
 #import "JSONResult.h"
 
 
-@interface JSONConnection : NSObject {
+@interface JSONConnection : NSObject{
 	NSString *jsonServerBaseURL;
 	NSString *serviceName;
 	NSString *methodName;
 	NSArray *arguments;
+	NSMutableData *asyncData;
 }
 
 @property(copy, readwrite) NSString *jsonServerBaseURL;
@@ -28,5 +29,6 @@
 					andArguments:(NSArray *)arguments;
 
 - (JSONResult*) performSynchronousRequest;
+- (void) performAsynchronousRequestWithParser: (SEL)parser;
 
 @end

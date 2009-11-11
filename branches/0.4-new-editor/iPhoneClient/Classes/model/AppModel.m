@@ -453,34 +453,23 @@ static const int kDefaultCapacity = 10;
 }
 
 - (void)fetchLocationList {
-	@synchronized (locationsLock) {
-		NSLog(@"AppModel: Fetching Locations from Server");	
-		if (!loggedIn) {
-			NSLog(@"AppModel: Player Not logged in yet, skip the location fetch");	
-			return;
-		}
-				
-		NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", self.gameId],
-							  [NSString stringWithFormat:@"%d",self.playerId], 
-							  nil];
-		
-		//init location list array
-		if(locationList != nil) {
-			[locationList release];
-		}
-		locationList = [NSMutableArray array];
-		[locationList retain];
-		
-		self.locationList = [self fetchFromService:@"locations" usingMethod:@"getLocationsForPlayer"
-									  withArgs:arguments usingParser:@selector(parseLocationListFromArray:)];
-		
-		//Tell everyone
-		NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.gameList forKey:@"gameList"];
-		NSLog(@"AppModel: Finished fetching locations from server");
-		NSNotification *notification = 
-		[NSNotification notificationWithName:@"ReceivedLocationList" object:self userInfo:dictionary];
-		[[NSNotificationCenter defaultCenter] postNotification:notification];
+	NSLog(@"AppModel: Fetching Locations from Server");	
+	
+	if (!loggedIn) {
+		NSLog(@"AppModel: Player Not logged in yet, skip the location fetch");	
+		return;
 	}
+			
+	NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", self.gameId],
+						  [NSString stringWithFormat:@"%d",self.playerId], 
+						  nil];
+	
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"locations"
+																	 andMethodName:@"getLocationsForPlayer"
+																	  andArguments:arguments];
+	[jsonConnection performAsynchronousRequestWithParser:@selector(parseLocationListFromJSON:)]; 
+	
 }
 
 
@@ -497,11 +486,6 @@ static const int kDefaultCapacity = 10;
 
 - (void)fetchInventory {
 	NSLog(@"Model: Inventory Fetch Requested");
-	//init inventory array
-	if(inventory != nil) {
-		NSLog(@"*** Releasing inventory ***");
-		[inventory release];
-	}
 	
 	inventory = [NSMutableArray array];
 	[inventory retain];
@@ -509,11 +493,12 @@ static const int kDefaultCapacity = 10;
 	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
 						  [NSString stringWithFormat:@"%d",self.playerId],
 						  nil];
-	self.inventory = [self fetchFromService:@"items" usingMethod:@"getItemsForPlayer"
-								   withArgs:arguments usingParser:@selector(parseInventoryFromArray:)];
 	
-	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:self userInfo:nil];
-	[[NSNotificationCenter defaultCenter] postNotification:notification];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"items"
+																	 andMethodName:@"getItemsForPlayer"
+																	  andArguments:arguments];
+	[jsonConnection performAsynchronousRequestWithParser:@selector(parseInventoryFromJSON:)]; 
 }
 
 
@@ -535,25 +520,21 @@ static const int kDefaultCapacity = 10;
 
 
 -(void)fetchQuestList {
-	NSLog(@"Model: Fetch Requested for Quest");
+	NSLog(@"Model: Fetch Requested for Quests");
 	
 	//Call server service
 	NSArray *arguments = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d",self.gameId],
 						  [NSString stringWithFormat:@"%d",playerId],
 						  nil];
 	
-	self.questList = [self fetchFromService:@"quests" usingMethod:@"getQuestsForPlayer"
-				  withArgs:arguments usingParser:@selector(parseQuestListFromDictionary:)];
+	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
+																	andServiceName:@"quests"
+																	 andMethodName:@"getQuestsForPlayer"
+																	  andArguments:arguments];
 	
-	//Sound the alarm
-	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedQuestList" object:self userInfo:nil];
-	[[NSNotificationCenter defaultCenter] postNotification:notification];
+	[jsonConnection performAsynchronousRequestWithParser:@selector(parseQuestListFromJSON:)]; 	
 	
 }
-
-
-
-
 
 
 
@@ -649,8 +630,15 @@ static const int kDefaultCapacity = 10;
 
 }
 
--(NSArray *)parseLocationListFromArray: (NSArray *)locationsArray{
+-(void)parseLocationListFromJSON: (JSONResult *)jsonResult{
 
+	NSLog(@"AppModel: Parsing Location List");
+	
+	//Check for an error
+	
+	NSArray *locationsArray = (NSArray *)jsonResult.data;
+	
+	
 	//Build the location list
 	NSMutableArray *tempLocationsList = [[NSMutableArray alloc] init];
 	NSEnumerator *locationsEnumerator = [locationsArray objectEnumerator];	
@@ -675,7 +663,13 @@ static const int kDefaultCapacity = 10;
 		[location release];
 	}
 	
-	return tempLocationsList;
+	self.locationList = tempLocationsList;
+	
+	//Tell everyone
+	NSLog(@"AppModel: Finished fetching locations from server, model updated");
+	NSNotification *notification = 
+	[NSNotification notificationWithName:@"ReceivedLocationList" object:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 	
 }
 
@@ -716,7 +710,13 @@ static const int kDefaultCapacity = 10;
 }
 
 
--(NSArray *)parseInventoryFromArray: (NSArray *)inventoryArray{
+-(void)parseInventoryFromJSON: (JSONResult *)jsonResult{
+	NSLog(@"AppModel: Parsing Inventory");
+	
+	//Check for an error
+	
+	NSArray *inventoryArray = (NSArray *)jsonResult.data;
+	
 	NSMutableArray *tempInventory = [[NSMutableArray alloc] init];
 	NSEnumerator *inventoryEnumerator = [((NSArray *)inventoryArray) objectEnumerator];	
 	NSDictionary *itemDictionary;
@@ -734,7 +734,11 @@ static const int kDefaultCapacity = 10;
 		[item release];
 	}
 
-	return tempInventory;
+	self.inventory = tempInventory;
+	
+	NSLog(@"AppModel: Finished fetching inventory from server, model updated");
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
 	
 }
 
@@ -753,8 +757,15 @@ static const int kDefaultCapacity = 10;
 
 
 
--(NSMutableDictionary *)parseQuestListFromDictionary: (NSDictionary *)questListDictionary{
+-(NSMutableDictionary *)parseQuestListFromJSON: (JSONResult *)jsonResult{
 
+	NSLog(@"AppModel: Parsing Quests");
+	
+	//Check for an error
+	
+	NSDictionary *questListDictionary = (NSArray *)jsonResult.data;	
+	
+	
 	//parse out the active quests into quest objects
 	NSMutableArray *activeQuestObjects = [[NSMutableArray alloc] init];
 	NSArray *activeQuests = [questListDictionary objectForKey:@"active"];
@@ -789,8 +800,14 @@ static const int kDefaultCapacity = 10;
 	NSMutableDictionary *tmpQuestList = [[NSMutableDictionary alloc] init];
 	[tmpQuestList setObject:activeQuestObjects forKey:@"active"];
 	[tmpQuestList setObject:completedQuestObjects forKey:@"completed"];
-
-	return tmpQuestList;
+	
+	self.questList = tmpQuestList;
+	
+	//Sound the alarm
+	NSLog(@"AppModel: Finished fetching quests from server, model updated");
+	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedQuestList" object:nil];
+	[[NSNotificationCenter defaultCenter] postNotification:notification];
+	
 }
 
 
