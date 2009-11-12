@@ -171,10 +171,9 @@
 		anItem.title = location.name;
 		anItem.subtitle = [NSString stringWithFormat:@"%d",location.qty];
 		if (location.iconMediaId != 0) { //look for info about image for icon, if we have one
-			Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:location.iconMediaId]];
-			anItem.iconURL = media.url;
+			anItem.iconMediaId = location.iconMediaId;
 		} else {
-			anItem.iconURL = nil;
+			location.iconMediaId = nil;
 		}
 		[mapView addAnnotation:anItem];
 		[mapView selectAnnotation:anItem animated:YES];
@@ -304,12 +303,18 @@
 	
 	//Everything else
 	else {
+		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:[(ItemAnnotation *)annotation iconMediaId]]];
 		UIImage *myImage;
 		
 		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
-		if ([(ItemAnnotation *)annotation iconURL]) {
-			NSLog(@"GPSViewController: Begin loading iconURL is %@", [(ItemAnnotation *)annotation iconURL]);
-			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[(ItemAnnotation *)annotation iconURL]]];
+		if (iconMedia != nil) {
+			NSLog(@"GPSViewController: %@ annotation has a custom icon",[(ItemAnnotation *)annotation title]);
+			if (iconMedia.imageView != nil ) {
+				NSLog(@"GPSViewController: icon media as already loaded data, reuse it.");
+				myImage = iconMedia.imageView.image;
+			}
+			NSLog(@"GPSViewController: Begin loading annotation icon from URL: %@", iconMedia.url);
+			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:iconMedia.url]];
 			NSLog(@"GPSViewController: icon loaded");
 			myImage = [UIImage imageWithData:imageData];
 		} else {
