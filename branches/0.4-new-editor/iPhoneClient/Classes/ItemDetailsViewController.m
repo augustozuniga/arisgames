@@ -49,10 +49,8 @@
 		deleteButton.hidden = YES;
 	}
 	
-	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.mediaId]];
-	
-	NSString *mediaURL = media.url;
-	NSLog(@"ItemDetailsViewController: View Loaded. Current item: %@; mediaURL: %@", item.name, mediaURL);
+
+	NSLog(@"ItemDetailsViewController: View Loaded. Current item: %@", item.name);
 
 
 	//Set Up General Stuff
@@ -69,30 +67,32 @@
 	[scrollView setContentSize:CGSizeMake(320, itemDescriptionView.frame.origin.y
 										  + itemDescriptionView.frame.size.height)];
 	
-	if ([media.type isEqualToString: @"Image"] && mediaURL) {
-		NSLog(@"ItemDetailsViewController: Image Layout Selected");
-		//Setup the image view
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		NSData* imageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:mediaURL]];
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	
+	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.mediaId]];
 
-		UIImage* image = [[UIImage alloc] initWithData:imageData];
-		UIImageView* imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
-		imageView.image = image;
+	if ([media.type isEqualToString: @"Image"] && media.url) {
+		NSLog(@"ItemDetailsViewController: Image Layout Selected");
+		
+		UIImageView* mediaImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
+		
+		if (media.imageView != nil ) {
+			NSLog(@"ItemDetailsViewController: We have an image for %@. No need to load.", itemDescriptionView.text);
+			mediaImageView = media.imageView;
+		}
+		else {
+			[media performAsynchronousImageLoadWithTargetImageView:mediaImageView]; 
+			mediaImageView.image = [UIImage imageNamed:@"listIconPlaceholder.png"];
+		}
 		
 		//Add the image view
-		[scrollView addSubview:imageView];
+		[scrollView addSubview:mediaImageView];
 		
-		//clean up
-		[imageData release];
-		[image release];
-		[imageView release];
 	}
-	else if (([media.type isEqualToString: @"Video"] || [media.type isEqualToString: @"Audio"]) && mediaURL) {
+	else if (([media.type isEqualToString: @"Video"] || [media.type isEqualToString: @"Audio"]) && media.url) {
 		NSLog(@"ItemDetailsViewController:  Video Layout Selected");
 
 		//Create movie player object
-		mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:mediaURL]];
+		mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:media.url]];
 		
 		// Register to receive a notifications
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePreloadDidFinish:) name:MPMoviePlayerContentPreloadDidFinishNotification object:nil];

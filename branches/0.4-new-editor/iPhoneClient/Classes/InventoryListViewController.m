@@ -128,7 +128,6 @@
 	lblTemp2.text = [description substringToIndex:targetIndex];
 	
 	UIImageView *iconView = (UIImageView *)[cell viewWithTag:3];
-	UIImage *icon;
 	
 	Item *item = [inventory objectAtIndex:[indexPath row]];
 	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.mediaId]];
@@ -137,20 +136,20 @@
 		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.iconMediaId]];
 		if (iconMedia.imageView != nil ) {
 			NSLog(@"InventoryListViewController: We have an image for %@. No need to load.", lblTemp1.text);
-			icon = iconMedia.imageView.image;
+			iconView = iconMedia.imageView;
 		}
 		else {
 			[iconMedia performAsynchronousImageLoadWithTargetImageView:iconView]; 
-			icon = [UIImage imageNamed:@"listIconPlaceholder.png"];
+			iconView.image = [UIImage imageNamed:@"listIconPlaceholder.png"];
 		}
 	} else {
 		//Load the Default
-		if ([media.type isEqualToString: @"Image"]) icon = [UIImage imageNamed:@"defaultImageIcon.png"];
-		if ([media.type isEqualToString: @"Audio"]) icon = [UIImage imageNamed:@"defaultAudioIcon"];
-		if ([media.type isEqualToString: @"Video"]) icon = [UIImage imageNamed:@"defaultVideoIcon"];
+		if ([media.type isEqualToString: @"Image"]) iconView.image = [UIImage imageNamed:@"defaultImageIcon.png"];
+		if ([media.type isEqualToString: @"Audio"]) iconView.image = [UIImage imageNamed:@"defaultAudioIcon"];
+		if ([media.type isEqualToString: @"Video"]) iconView.image = [UIImage imageNamed:@"defaultVideoIcon"];
 	}
 	
-	iconView.image = icon;
+
 
 	return cell;
 }

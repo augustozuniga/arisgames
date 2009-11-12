@@ -156,6 +156,7 @@
 		A7F0EE3F0F71CFEF008F7BAD /* GenericWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */; };
 		A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */; };
 		A7FA0E7C0FC7048C00941493 /* IndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FA0E7B0FC7048C00941493 /* IndicatorView.m */; };
+		AB1D2CB010AC96EF0045CDA4 /* listIconPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = AB1D2CAF10AC96EF0045CDA4 /* listIconPlaceholder.png */; };
 		AB2223F510502CD800A4255E /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2223F410502CD800A4255E /* Quest.m */; };
 		AB2225B0105058C000A4255E /* QuestCompleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB2225AF105058C000A4255E /* QuestCompleteIcon.png */; };
 		AB2225B8105059DB00A4255E /* QuestActiveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB2225B7105059DB00A4255E /* QuestActiveIcon.png */; };
@@ -384,6 +385,7 @@
 		A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericWebViewController.m; path = Classes/GenericWebViewController.m; sourceTree = "<group>"; };
 		A7FA0E7A0FC7048C00941493 /* IndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorView.h; sourceTree = "<group>"; };
 		A7FA0E7B0FC7048C00941493 /* IndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorView.m; sourceTree = "<group>"; };
+		AB1D2CAF10AC96EF0045CDA4 /* listIconPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = listIconPlaceholder.png; sourceTree = "<group>"; };
 		AB2223F310502CD800A4255E /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
 		AB2223F410502CD800A4255E /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		AB2225AF105058C000A4255E /* QuestCompleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuestCompleteIcon.png; path = images/QuestCompleteIcon.png; sourceTree = "<group>"; };
@@ -658,10 +660,10 @@
 				A7E32E9D0FD1CEFD0058EDB7 /* Player.m */,
 				AB3E113D10486A5500A9034C /* JSONConnection.h */,
 				AB3E113E10486A5500A9034C /* JSONConnection.m */,
-				AB54A0B81047301E00A901EF /* JSONResult.h */,
-				AB54A0B91047301E00A901EF /* JSONResult.m */,
 				AB9A7C1510AA173F002FD9BC /* ARISURLConnection.h */,
 				AB9A7C1610AA173F002FD9BC /* ARISURLConnection.m */,
+				AB54A0B81047301E00A901EF /* JSONResult.h */,
+				AB54A0B91047301E00A901EF /* JSONResult.m */,
 				D43717DD106D62BB0020C515 /* Media.h */,
 				D43717DE106D62BB0020C515 /* Media.m */,
 			);
@@ -754,6 +756,7 @@
 		A7986D660F8FEC2100A5469F /* Inventory */ = {
 			isa = PBXGroup;
 			children = (
+				AB1D2CAF10AC96EF0045CDA4 /* listIconPlaceholder.png */,
 				AB9521D210853A780017BF33 /* defaultAudioIcon.png */,
 				AB9521D310853A780017BF33 /* defaultImageIcon.png */,
 				AB9521D410853A780017BF33 /* defaultVideoIcon.png */,
@@ -1035,6 +1038,7 @@
 				AB9521D510853A780017BF33 /* defaultAudioIcon.png in Resources */,
 				AB9521D610853A780017BF33 /* defaultImageIcon.png in Resources */,
 				AB9521D710853A780017BF33 /* defaultVideoIcon.png in Resources */,
+				AB1D2CB010AC96EF0045CDA4 /* listIconPlaceholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
