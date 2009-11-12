@@ -13,12 +13,18 @@
 	NSInteger	uid;
 	NSString	*url;
 	NSString	*type;
+	
+	UIImageView		*imageView;
+	NSMutableData	*asyncData;
 }
 
 @property(readonly) NSInteger	uid;
 @property(readonly)	NSString	*url;
 @property(readonly) NSString	*type;
+@property(readonly) UIImageView	*imageView;
+
 
 - (id) initWithId:(NSInteger)anId andUrlString:(NSString *)aUrl ofType:(NSString *)aType;
+- (void) performAsynchronousImageLoadWithTargetImageView: (UIImageView*)anImageView;
 
 @end

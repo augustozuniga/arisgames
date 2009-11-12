@@ -135,9 +135,14 @@
 	
 	if (item.iconMediaId != 0) {
 		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.iconMediaId]];
-		//NSLog(@"icon url: %@",iconMedia.url);
-		NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:iconMedia.url]];
-		icon = [UIImage imageWithData:imageData];
+		if (iconMedia.imageView != nil ) {
+			NSLog(@"InventoryListViewController: We have an image for %@. No need to load.", lblTemp1.text);
+			icon = iconMedia.imageView.image;
+		}
+		else {
+			[iconMedia performAsynchronousImageLoadWithTargetImageView:iconView]; 
+			icon = [UIImage imageNamed:@"listIconPlaceholder.png"];
+		}
 	} else {
 		//Load the Default
 		if ([media.type isEqualToString: @"Image"]) icon = [UIImage imageNamed:@"defaultImageIcon.png"];
@@ -149,6 +154,7 @@
 
 	return cell;
 }
+
 					 
  - (unsigned int) indexOf:(char) searchChar inString:(NSString *)searchString {
 	NSRange searchRange;
