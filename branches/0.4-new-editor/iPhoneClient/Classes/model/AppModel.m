@@ -369,7 +369,7 @@ static const int kDefaultCapacity = 10;
 																		 andServiceName:@"players" 
 																		  andMethodName:@"updatePlayerLocation" 
 																		   andArguments:arguments];
-		[jsonConnection performSynchronousRequest]; 
+		[jsonConnection performAsynchronousRequestWithParser:nil]; 
 		
 		//Rebuild nearbyLocationList
 		//We could just do this in the getter
@@ -715,6 +715,14 @@ static const int kDefaultCapacity = 10;
 	
 	//Check for an error
 	
+	//Check if this data is the same as the last time we fetched it
+	/*
+	if (TRUE) [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate]
+	
+	Keep going
+	 
+	*/ 
+	 
 	NSArray *inventoryArray = (NSArray *)jsonResult.data;
 	
 	NSMutableArray *tempInventory = [[NSMutableArray alloc] init];
