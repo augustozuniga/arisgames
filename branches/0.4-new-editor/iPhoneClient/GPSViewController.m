@@ -162,7 +162,7 @@
 	
 	//Add the freshly loaded locations from the notification
 	for ( Location* location in appModel.locationList ) {
-		NSLog(@"GPSViewController: Adding location name:%@ id:%d", location.name, location.locationId);
+		NSLog(@"GPSViewController: Adding location annotation for:%@ id:%d", location.name, location.locationId);
 		if (location.hidden == YES) continue;
 		CLLocationCoordinate2D locationLatLong = location.location.coordinate;
 		
@@ -308,8 +308,9 @@
 		
 		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
 		if ([(ItemAnnotation *)annotation iconURL]) {
-			NSLog(@"Item iconURL is %@", [(ItemAnnotation *)annotation iconURL]);
+			NSLog(@"GPSViewController: Begin loading iconURL is %@", [(ItemAnnotation *)annotation iconURL]);
 			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[(ItemAnnotation *)annotation iconURL]]];
+			NSLog(@"GPSViewController: icon loaded");
 			myImage = [UIImage imageWithData:imageData];
 		} else {
 			myImage = [UIImage imageNamed: @"pickaxe.png"];
