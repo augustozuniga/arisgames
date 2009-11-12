@@ -148,11 +148,9 @@
 	//Get the JSONResult here
 	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:jsonString];
 	
-	//check for errors???
 	NSLog(@"JSONConnection: JSON String: %@",jsonResult);
 
-	
-	[appModel performSelector:connection.parser withObject:jsonResult];
+	if (connection.parser) [appModel performSelector:connection.parser withObject:jsonResult];
 	
 	[asyncData release];
 }
