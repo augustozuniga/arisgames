@@ -39,7 +39,13 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[self refresh];		
+	
+	//remove any existing badge
+	self.tabBarItem.badgeValue = nil;
+	
 	NSLog(@"InventoryListViewController: view did appear");
+	
+	
 }
 
 -(void)refresh {
@@ -49,10 +55,17 @@
 
 -(void)refreshViewFromModel {
 	NSLog(@"InventoryListViewController: Refresh View from Model");
+	
+	//Add a badge if this is NOT the first time data has been loaded
+	if (inventory != nil) self.tabBarItem.badgeValue = @"!";
+	
 	inventory = appModel.inventory;
 	[inventoryTable reloadData];
+	
 	//Stop Waiting Indicator
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
+	
+	
 	
 }
 

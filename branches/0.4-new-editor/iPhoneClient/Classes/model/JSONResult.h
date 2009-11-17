@@ -13,11 +13,14 @@
 	int returnCode;
 	NSString *returnCodeDescription;
 	NSObject *data;
+	NSInteger hash;
 }
 
 @property(readwrite) int returnCode;
 @property(copy, readwrite) NSString *returnCodeDescription;
 @property(copy, readwrite) NSObject *data;
+@property(readonly) NSInteger hash;
+
 
 
 - (JSONResult*)initWithJSONString:(NSString *)JSONString;

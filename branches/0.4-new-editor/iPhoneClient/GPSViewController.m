@@ -119,6 +119,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
 	[self refresh];		
+	
+	//remove any existing badge
+	self.tabBarItem.badgeValue = nil;
+	
 	NSLog(@"GPSViewController: view did appear");
 }
 
@@ -151,17 +155,20 @@
 - (void)refreshViewFromModel {
 	NSLog(@"GPSViewController: Refreshing view from model");
 	
-	//Blow away the old markers except for the player marker
+	//Add a badge if this is NOT the first time data has been loaded
+	if (locations != nil) self.tabBarItem.badgeValue = @"!";
 	
+	//Blow away the old markers except for the player marker
 	NSEnumerator *existingAnnotationsEnumerator = [[[mapView annotations] copy] objectEnumerator];
 	NSObject <MKAnnotation> *annotation;
 	while (annotation = [existingAnnotationsEnumerator nextObject]) {
 		if (annotation != mapView.userLocation) [mapView removeAnnotation:annotation];
 	}
 	
+	locations = appModel.locationList;
 	
 	//Add the freshly loaded locations from the notification
-	for ( Location* location in appModel.locationList ) {
+	for ( Location* location in locations ) {
 		NSLog(@"GPSViewController: Adding location annotation for:%@ id:%d", location.name, location.locationId);
 		if (location.hidden == YES) continue;
 		CLLocationCoordinate2D locationLatLong = location.location.coordinate;

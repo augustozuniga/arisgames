@@ -227,6 +227,11 @@ static const int kDefaultCapacity = 10;
 																	 andMethodName:@"nodeViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performSynchronousRequest]; 
+	
+	//Check for any updates to player state
+	[self fetchLocationList];
+	[self fetchQuestList];
+	[self fetchInventory];
 }
 
 - (void)updateServerItemViewed: (int)itemId {
@@ -243,6 +248,11 @@ static const int kDefaultCapacity = 10;
 																	 andMethodName:@"itemViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performSynchronousRequest]; 
+	
+	//Check for any updates to player state
+	[self fetchLocationList];
+	[self fetchQuestList];
+	[self fetchInventory];
 }
 
 - (void)updateServerGameSelected{
@@ -635,7 +645,16 @@ static const int kDefaultCapacity = 10;
 	NSLog(@"AppModel: Parsing Location List");
 	
 	//Check for an error
+	//Compare this hash to the last one. If the same, stop hee
+	if (jsonResult.hash == locationListHash) {
+		NSLog(@"AppModel: Hash is same as last location list update, continue");
+		return nil;
+	}
 	
+	//Save this hash for later comparisions
+	locationListHash = jsonResult.hash;
+	
+	//Continue parsing
 	NSArray *locationsArray = (NSArray *)jsonResult.data;
 	
 	
@@ -715,14 +734,16 @@ static const int kDefaultCapacity = 10;
 	
 	//Check for an error
 	
-	//Check if this data is the same as the last time we fetched it
-	/*
-	if (TRUE) [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate]
+	//Compare this hash to the last one. If the same, stop hee
+	if (jsonResult.hash == inventoryHash) {
+		NSLog(@"AppModel: Hash is same as last inventory listy update, continue");
+		return nil;
+	}
 	
-	Keep going
-	 
-	*/ 
-	 
+	//Save this hash for later comparisions
+	inventoryHash = jsonResult.hash;
+	
+	//Continue parsing
 	NSArray *inventoryArray = (NSArray *)jsonResult.data;
 	
 	NSMutableArray *tempInventory = [[NSMutableArray alloc] init];
@@ -748,6 +769,8 @@ static const int kDefaultCapacity = 10;
 	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedInventory" object:nil];
 	[[NSNotificationCenter defaultCenter] postNotification:notification];
 	
+	//Note: The inventory list VC listener will add the badge now that it knows something is different
+	
 }
 
 
@@ -771,7 +794,17 @@ static const int kDefaultCapacity = 10;
 	
 	//Check for an error
 	
-	NSDictionary *questListDictionary = (NSArray *)jsonResult.data;	
+	//Compare this hash to the last one. If the same, stop here
+	if (jsonResult.hash == questListHash) {
+		NSLog(@"AppModel: Hash is same as last quest list update, continue");
+		return nil;
+	}
+	
+	//Save this hash for later comparisions
+	questListHash = jsonResult.hash;
+	
+	//Continue parsing
+	NSDictionary *questListDictionary = (NSDictionary *)jsonResult.data;	
 	
 	
 	//parse out the active quests into quest objects

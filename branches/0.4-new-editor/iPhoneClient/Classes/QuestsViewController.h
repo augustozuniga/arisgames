@@ -19,6 +19,8 @@
 }
 
 @property(nonatomic, retain) IBOutlet UITableView *tableView;
+@property(nonatomic, retain) NSMutableArray *quests;
+
 
 - (void)refresh;
 

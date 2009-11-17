@@ -15,11 +15,15 @@
 @synthesize returnCode;
 @synthesize returnCodeDescription;
 @synthesize data;
+@synthesize hash;
 
 
 
 - (JSONResult*)initWithJSONString:(NSString *)JSONString{
-
+	
+	//Calculate the hash
+	hash = [JSONString hash];
+	
 	// Parse JSON into a resultObject
 	SBJSON *json = [[SBJSON new] autorelease];
 	NSError *jsonError = nil;

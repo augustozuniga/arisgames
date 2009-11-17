@@ -19,7 +19,7 @@
 }
 
 @property(nonatomic, retain) IBOutlet UITableView *inventoryTable;
-@property(nonatomic, retain) IBOutlet NSMutableArray *inventory;
+@property(nonatomic, retain) NSMutableArray *inventory;
 
 - (void) refresh;
 - (unsigned int) indexOf:(char) searchChar inString:(NSString *)searchString;

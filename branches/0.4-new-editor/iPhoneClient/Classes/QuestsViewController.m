@@ -18,6 +18,7 @@ static int const COMPLETED_SECTION = 1;
 @implementation QuestsViewController
 
 @synthesize tableView;
+@synthesize quests;
 
 //Override init for passing title and icon to tab bar
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
@@ -26,7 +27,6 @@ static int const COMPLETED_SECTION = 1;
     if (self) {
         self.title = @"Quests";
         self.tabBarItem.image = [UIImage imageNamed:@"Quest.png"];
-		quests = [[NSMutableArray alloc] init];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		//register for notifications
@@ -44,7 +44,11 @@ static int const COMPLETED_SECTION = 1;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-	[self refresh];		
+	[self refresh];
+	
+	//remove any existing badge
+	self.tabBarItem.badgeValue = nil;
+	
 	NSLog(@"QuestsViewController: Quests View Did Appear");
 }
 
@@ -55,19 +59,15 @@ static int const COMPLETED_SECTION = 1;
 
 -(void)refreshViewFromModel {
 	NSLog(@"QuestsViewController: Refreshing view from model");
+
+	//Add a badge if this is NOT the first time data has been loaded
+	if (quests != nil) self.tabBarItem.badgeValue = @"!";
 	
-	//init quest list
-	if(quests != nil) {
-		[quests release];
-	}
-	quests = [NSMutableArray array];
-	[quests retain];
-	
+	//rebuild the list
 	NSArray *activeQuestsArray = [appModel.questList objectForKey:@"active"];
 	NSArray *completedQuestsArray = [appModel.questList objectForKey:@"completed"];
 	
-	[quests addObject:activeQuestsArray ]; //this will be at index 0
-	[quests addObject:completedQuestsArray]; //this will be at index 1
+	self.quests = [NSArray arrayWithObjects:activeQuestsArray, completedQuestsArray, nil];
 
 	[tableView reloadData];
 }
