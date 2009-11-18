@@ -316,14 +316,16 @@
 		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
 		if (iconMedia != nil) {
 			NSLog(@"GPSViewController: %@ annotation has a custom icon",[(ItemAnnotation *)annotation title]);
-			if (iconMedia.imageView != nil ) {
+			if (iconMedia.image != nil ) {
 				NSLog(@"GPSViewController: icon media as already loaded data, reuse it.");
-				myImage = iconMedia.imageView.image;
+				myImage = iconMedia.image;
 			}
-			NSLog(@"GPSViewController: Begin loading annotation icon from URL: %@", iconMedia.url);
-			NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:iconMedia.url]];
-			NSLog(@"GPSViewController: icon loaded");
-			myImage = [UIImage imageWithData:imageData];
+			else {
+				NSLog(@"GPSViewController: Begin loading annotation icon from URL: %@", iconMedia.url);
+				NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:iconMedia.url]];
+				NSLog(@"GPSViewController: icon loaded");
+				myImage = [UIImage imageWithData:imageData];
+			}
 		} else {
 			myImage = [UIImage imageNamed: @"pickaxe.png"];
 		}

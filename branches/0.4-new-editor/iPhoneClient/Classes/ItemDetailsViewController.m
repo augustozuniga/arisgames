@@ -9,6 +9,7 @@
 #import "ItemDetailsViewController.h"
 #import "ARISAppDelegate.h"
 #import "Media.h"
+#import "AsyncImageView.h"
 
 @implementation ItemDetailsViewController
 @synthesize appModel, item, inInventory, dropButton;
@@ -73,16 +74,10 @@
 	if ([media.type isEqualToString: @"Image"] && media.url) {
 		NSLog(@"ItemDetailsViewController: Image Layout Selected");
 		
-		UIImageView* mediaImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
+		AsyncImageView* mediaImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
 		
-		if (media.imageView != nil ) {
-			NSLog(@"ItemDetailsViewController: We have an image for %@. No need to load.", itemDescriptionView.text);
-			mediaImageView = media.imageView;
-		}
-		else {
-			[media performAsynchronousImageLoadWithTargetImageView:mediaImageView]; 
-		}
-		
+		[mediaImageView loadImageFromMedia:media];
+
 		//Add the image view
 		[scrollView addSubview:mediaImageView];
 		

@@ -7,10 +7,10 @@
 //
 
 #import "Media.h"
-#import "ARISAppDelegate.h"
+
 
 @implementation Media
-@synthesize uid, url, type, imageView;
+@synthesize uid, url, type, image;
 
 - (id) initWithId:(NSInteger)anId andUrlString:(NSString *)aUrl ofType:(NSString *)aType {
 	assert(anId > 0 && @"Non-natural ID.");
@@ -25,91 +25,6 @@
 	
 	return self;
 }
-
-
-
-- (void) performAsynchronousImageLoadWithTargetImageView: (UIImageView*)anImageView{
-		
-	NSLog(@"Media: URL for async load is : %@", url);
-	
-	//Save a ref to the view
-	imageView = anImageView;
-	
-	//Convert into a NSURLRequest
-	NSURL *requestURL = [[NSURL alloc]initWithString:url];
-	NSURLRequest *request = [NSURLRequest requestWithURL:requestURL
-											 cachePolicy:NSURLRequestReturnCacheDataElseLoad
-										 timeoutInterval:30];
-	
-	//set up indicators
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	
-	//put a spinner in the view
-	UIActivityIndicatorView *spinner = 
-		[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
-	[spinner startAnimating];
-	spinner.bounds = imageView.bounds;
-	spinner.center = imageView.center;
-	[imageView addSubview:spinner];
-	
-	
-	//do it
-	NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-	asyncData = [NSMutableData dataWithCapacity:10000];
-	[asyncData retain];
-	[urlConnection start];
-	
-	NSLog(@"Media: Begining Async request");
-	
-}
-
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-	NSLog(@"Media: Recieved Async Data");
-	[asyncData appendData:data];
-}
-
-
-
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	NSLog(@"Media: Finished Loading Data");
-	
-	//end the UI indicator
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	
-	if ([[imageView subviews] count]>0) {
-        [[[imageView subviews] objectAtIndex:0] removeFromSuperview];
-    }
-	
-    UIImageView* imageSubView = [[[UIImageView alloc] initWithImage:[UIImage imageWithData:asyncData]] autorelease];
-	
-    //imageSubView.contentMode = UIViewContentModeScaleAspectFit;
-    //imageSubView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth || UIViewAutoresizingFlexibleHeight );
-	
-    [imageView addSubview:imageSubView];
-    imageSubView.frame = imageView.bounds;
-
-	[imageView setNeedsLayout];
-	[imageSubView setNeedsLayout];
-	
-	[asyncData release];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-	NSLog(@"Media: Error communicating with server. %d", error.code);
-	
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
-	
-
-	
-	[asyncData release];
-}
-
-
-
-
 
 
 

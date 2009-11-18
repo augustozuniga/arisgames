@@ -818,7 +818,7 @@ static const int kDefaultCapacity = 10;
 		quest.questId = [[activeQuest objectForKey:@"quest_id"] intValue];
 		quest.name = [activeQuest objectForKey:@"name"];
 		quest.description = [activeQuest objectForKey:@"description"];
-		quest.mediaId = [[activeQuest objectForKey:@"mediaURL"] intValue];
+		quest.iconMediaId = [[activeQuest objectForKey:@"icon_media_id"] intValue];
 		[activeQuestObjects addObject:quest];
 	}
 
@@ -833,7 +833,7 @@ static const int kDefaultCapacity = 10;
 		quest.questId = [[completedQuest objectForKey:@"quest_id"] intValue];
 		quest.name = [completedQuest objectForKey:@"name"];
 		quest.description = [completedQuest objectForKey:@"text_when_complete"];
-		quest.mediaId = [[completedQuest objectForKey:@"mediaURL"] intValue];
+		quest.iconMediaId = [[completedQuest objectForKey:@"icon_media_id"] intValue];
 		[completedQuestObjects addObject:quest];
 	}
 

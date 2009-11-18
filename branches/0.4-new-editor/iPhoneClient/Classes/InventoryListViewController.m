@@ -8,6 +8,7 @@
 
 #import "InventoryListViewController.h"
 #import "Media.h"
+#import "AsyncImageView.h"
 
 @implementation InventoryListViewController
 
@@ -102,7 +103,7 @@
 	[lblTemp release];
 	
 	//Init Icon with tag 3
-	iconViewTemp = [[UIImageView alloc] initWithFrame:IconFrame];
+	iconViewTemp = [[AsyncImageView alloc] initWithFrame:IconFrame];
 	iconViewTemp.tag = 3;
 	iconViewTemp.backgroundColor = [UIColor blackColor];
 	[cell.contentView addSubview:iconViewTemp];
@@ -140,21 +141,16 @@
 						  [description length] - 1);
 	lblTemp2.text = [description substringToIndex:targetIndex];
 	
-	UIImageView *iconView = (UIImageView *)[cell viewWithTag:3];
+	AsyncImageView *iconView = (AsyncImageView *)[cell viewWithTag:3];
 	
 	Item *item = [inventory objectAtIndex:[indexPath row]];
 	Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.mediaId]];
-	
+
 	if (item.iconMediaId != 0) {
 		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:item.iconMediaId]];
-		if (iconMedia.imageView != nil ) {
-			NSLog(@"InventoryListViewController: We have an image for %@. No need to load.", lblTemp1.text);
-			iconView = iconMedia.imageView;
-		}
-		else {
-			[iconMedia performAsynchronousImageLoadWithTargetImageView:iconView]; 
-		}
-	} else {
+		[iconView loadImageFromMedia:iconMedia];
+	}
+	else {
 		//Load the Default
 		if ([media.type isEqualToString: @"Image"]) iconView.image = [UIImage imageNamed:@"defaultImageIcon.png"];
 		if ([media.type isEqualToString: @"Audio"]) iconView.image = [UIImage imageNamed:@"defaultAudioIcon"];

@@ -156,6 +156,7 @@
 		A7F0EE3F0F71CFEF008F7BAD /* GenericWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F0EE3E0F71CFEF008F7BAD /* GenericWebView.xib */; };
 		A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */; };
 		A7FA0E7C0FC7048C00941493 /* IndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FA0E7B0FC7048C00941493 /* IndicatorView.m */; };
+		AB15EC1510B49F8A00EEC11F /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */; };
 		AB2223F510502CD800A4255E /* Quest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2223F410502CD800A4255E /* Quest.m */; };
 		AB2225B0105058C000A4255E /* QuestCompleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB2225AF105058C000A4255E /* QuestCompleteIcon.png */; };
 		AB2225B8105059DB00A4255E /* QuestActiveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB2225B7105059DB00A4255E /* QuestActiveIcon.png */; };
@@ -384,6 +385,8 @@
 		A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GenericWebViewController.m; path = Classes/GenericWebViewController.m; sourceTree = "<group>"; };
 		A7FA0E7A0FC7048C00941493 /* IndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorView.h; sourceTree = "<group>"; };
 		A7FA0E7B0FC7048C00941493 /* IndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorView.m; sourceTree = "<group>"; };
+		AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		AB2223F310502CD800A4255E /* Quest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quest.h; sourceTree = "<group>"; };
 		AB2223F410502CD800A4255E /* Quest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Quest.m; sourceTree = "<group>"; };
 		AB2225AF105058C000A4255E /* QuestCompleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = QuestCompleteIcon.png; path = images/QuestCompleteIcon.png; sourceTree = "<group>"; };
@@ -831,6 +834,8 @@
 				A7A1728B0F4F27120017E865 /* Default.png */,
 				A7A172940F4F273B0017E865 /* Icon.icns */,
 				A7A1728A0F4F27120017E865 /* Icon.png */,
+				AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */,
+				AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */,
 			);
 			name = "Core App";
 			sourceTree = "<group>";
@@ -1132,6 +1137,7 @@
 				ABDA40C210506AF400823A94 /* AnnotationView.m in Sources */,
 				D43717DF106D62BB0020C515 /* Media.m in Sources */,
 				AB9A7C1710AA173F002FD9BC /* ARISURLConnection.m in Sources */,
+				AB15EC1510B49F8A00EEC11F /* AsyncImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

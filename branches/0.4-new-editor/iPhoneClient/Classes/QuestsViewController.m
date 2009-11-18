@@ -10,6 +10,7 @@
 #import "ARISAppDelegate.h"
 #import "Quest.h"
 #import "Media.h"
+#import "AsyncImageView.h"
 
 static NSString * const OPTION_CELL = @"quest";
 static int const ACTIVE_SECTION = 0;
@@ -81,7 +82,7 @@ static int const COMPLETED_SECTION = 1;
 	CGRect label1Frame = CGRectMake(70, 10, 230, 25);
 	CGRect label2Frame = CGRectMake(70, 35, 230, 25);
 	UILabel *lblTemp;
-	UIImageView *iconViewTemp;
+	AsyncImageView *iconViewTemp;
 	
 	
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:cellFrame 
@@ -110,7 +111,7 @@ static int const COMPLETED_SECTION = 1;
 	[lblTemp release];
 	
 	//Init Icon with tag 3
-	iconViewTemp = [[UIImageView alloc] initWithFrame:iconFrame];
+	iconViewTemp = [[AsyncImageView alloc] initWithFrame:iconFrame];
 	iconViewTemp.tag = 3;
 	iconViewTemp.backgroundColor = [UIColor blackColor];
 	[cell.contentView addSubview:iconViewTemp];
@@ -146,29 +147,22 @@ static int const COMPLETED_SECTION = 1;
 	//Get the refrence to the cell's properties
 	UILabel *cellName = (UILabel *)[cell viewWithTag:1];
 	UILabel *cellDescription = (UILabel *)[cell viewWithTag:2];
-	UIImageView *cellIconView = (UIImageView *)[cell viewWithTag:3];
+	AsyncImageView *cellIconView = (AsyncImageView *)[cell viewWithTag:3];
 
 	//Set the name and description, those are easy
 	cellName.text = quest.name;
 	cellDescription.text = quest.description;
 	
 	//Set the icon
-	UIImage *icon;
-	if (quest.mediaId > 0) {
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-		Media *media = [appModel.mediaList objectForKey:[NSNumber numberWithInt:quest.mediaId]];
-		NSData* iconData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:media.url]];
-		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-		icon = [UIImage imageWithData:iconData];
-		cellIconView.image = icon;
+	if (quest.iconMediaId > 0) {
+		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:quest.iconMediaId]];
+		[cellIconView loadImageFromMedia:iconMedia];
 	}
 	else {
-		if (section == ACTIVE_SECTION) icon = [UIImage imageNamed:@"QuestActiveIcon.png"];
-		if (section == COMPLETED_SECTION) icon = [UIImage imageNamed:@"QuestCompleteIcon.png"];
+		if (section == ACTIVE_SECTION) cellIconView.image = [UIImage imageNamed:@"QuestActiveIcon.png"];
+		if (section == COMPLETED_SECTION) cellIconView.image = [UIImage imageNamed:@"QuestCompleteIcon.png"];
 
 	}
-
-	cellIconView.image = icon;
 	
 	return cell;
 }
