@@ -92,7 +92,21 @@ class Players extends Module
 		return new returnData(0, $rs);
 	}
 
+	/**
+     * getOtherPlayersForGame
+     * @returns players with this game id
+     */
+	public function getOtherPlayersForGame($intGameID, $intPlayerID)
+	{
+		$query = "SELECT player_id, user_name, latitude, longitude FROM players 
+				WHERE last_game_id = '{$intGameID}' AND
+				player_id != '{$intPlayerID}'";
+		
+		//NetDebug::trace($query);
 
+		$rs = @mysql_query($query);
+		return new returnData(0, $rs);
+	}
 
 	/**
      * updates the lat/long for the player record
