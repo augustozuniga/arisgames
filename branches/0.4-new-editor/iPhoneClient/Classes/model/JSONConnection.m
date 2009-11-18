@@ -101,7 +101,7 @@
 	
 	//set up indicators
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator: @"Loading"];
+	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showWaitingIndicator: @"Loading"];
 	
 	//do it
 	ARISURLConnection *urlConnection = [[ARISURLConnection alloc] initWithRequest:request delegate:self parser:parser];
@@ -136,7 +136,7 @@
 	
 	//end the loading and spinner UI indicators
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
+	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
 
 	
 	//Create a reference to the delegate using the application singleton.
@@ -159,7 +159,7 @@
 	NSLog(@"JSONConnection: Error communicating with server. %d", error.code);
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
+	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
 	
 	[asyncData release];
