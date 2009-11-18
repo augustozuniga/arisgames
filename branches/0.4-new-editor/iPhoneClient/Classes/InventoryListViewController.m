@@ -153,7 +153,6 @@
 		}
 		else {
 			[iconMedia performAsynchronousImageLoadWithTargetImageView:iconView]; 
-			iconView.image = [UIImage imageNamed:@"listIconPlaceholder.png"];
 		}
 	} else {
 		//Load the Default

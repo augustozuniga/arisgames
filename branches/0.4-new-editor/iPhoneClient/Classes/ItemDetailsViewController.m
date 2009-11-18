@@ -81,7 +81,6 @@
 		}
 		else {
 			[media performAsynchronousImageLoadWithTargetImageView:mediaImageView]; 
-			mediaImageView.image = [UIImage imageNamed:@"listIconPlaceholder.png"];
 		}
 		
 		//Add the image view

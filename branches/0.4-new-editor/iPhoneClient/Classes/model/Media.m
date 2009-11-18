@@ -32,7 +32,7 @@
 		
 	NSLog(@"Media: URL for async load is : %@", url);
 	
-	//Make the UIImage this media's image
+	//Save a ref to the view
 	imageView = anImageView;
 	
 	//Convert into a NSURLRequest
@@ -43,6 +43,14 @@
 	
 	//set up indicators
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	
+	//put a spinner in the view
+	UIActivityIndicatorView *spinner = 
+		[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
+	[spinner startAnimating];
+	spinner.bounds = imageView.bounds;
+	spinner.center = imageView.center;
+	[imageView addSubview:spinner];
 	
 	
 	//do it
