@@ -90,7 +90,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					811,
+					493,
 					20,
 					48,
 					43,
@@ -141,7 +141,7 @@
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
 					20,
-					726,
+					787,
 					20,
 					48,
 					43,
@@ -396,6 +396,34 @@
 			AB15ECD010B4AC7000EEC11F /* PBXTextBookmark */ = AB15ECD010B4AC7000EEC11F /* PBXTextBookmark */;
 			AB15ECD110B4AC7000EEC11F /* PBXTextBookmark */ = AB15ECD110B4AC7000EEC11F /* PBXTextBookmark */;
 			AB15ECD210B4AC7000EEC11F /* PBXTextBookmark */ = AB15ECD210B4AC7000EEC11F /* PBXTextBookmark */;
+			AB15ECD610B4B17A00EEC11F /* PBXTextBookmark */ = AB15ECD610B4B17A00EEC11F /* PBXTextBookmark */;
+			AB15ECD710B4B17A00EEC11F /* PBXTextBookmark */ = AB15ECD710B4B17A00EEC11F /* PBXTextBookmark */;
+			AB15ECD810B4B17A00EEC11F /* PBXTextBookmark */ = AB15ECD810B4B17A00EEC11F /* PBXTextBookmark */;
+			AB15ECD910B4B17A00EEC11F /* PBXTextBookmark */ = AB15ECD910B4B17A00EEC11F /* PBXTextBookmark */;
+			AB15ECDA10B4B17A00EEC11F /* PBXTextBookmark */ = AB15ECDA10B4B17A00EEC11F /* PBXTextBookmark */;
+			AB15ECDC10B4B18000EEC11F /* PBXTextBookmark */ = AB15ECDC10B4B18000EEC11F /* PBXTextBookmark */;
+			AB15ECDD10B4B18000EEC11F /* XCBuildMessageTextBookmark */ = AB15ECDD10B4B18000EEC11F /* XCBuildMessageTextBookmark */;
+			AB15ECDE10B4B18000EEC11F /* PBXTextBookmark */ = AB15ECDE10B4B18000EEC11F /* PBXTextBookmark */;
+			AB15ECDF10B4B18500EEC11F /* PBXTextBookmark */ = AB15ECDF10B4B18500EEC11F /* PBXTextBookmark */;
+			AB15ECE010B4B18500EEC11F /* PBXTextBookmark */ = AB15ECE010B4B18500EEC11F /* PBXTextBookmark */;
+			AB15ECE510B4B1E200EEC11F /* PBXTextBookmark */ = AB15ECE510B4B1E200EEC11F /* PBXTextBookmark */;
+			AB15ECE610B4B1E200EEC11F /* PBXTextBookmark */ = AB15ECE610B4B1E200EEC11F /* PBXTextBookmark */;
+			AB15ECE710B4B1E200EEC11F /* PBXTextBookmark */ = AB15ECE710B4B1E200EEC11F /* PBXTextBookmark */;
+			AB15ECE810B4B1E200EEC11F /* PBXTextBookmark */ = AB15ECE810B4B1E200EEC11F /* PBXTextBookmark */;
+			AB15ECEC10B4B1FE00EEC11F /* PBXTextBookmark */ = AB15ECEC10B4B1FE00EEC11F /* PBXTextBookmark */;
+			AB15ECED10B4B1FE00EEC11F /* PBXTextBookmark */ = AB15ECED10B4B1FE00EEC11F /* PBXTextBookmark */;
+			AB15ECF110B4B21900EEC11F /* PBXTextBookmark */ = AB15ECF110B4B21900EEC11F /* PBXTextBookmark */;
+			AB15ECF210B4B21900EEC11F /* PBXTextBookmark */ = AB15ECF210B4B21900EEC11F /* PBXTextBookmark */;
+			AB15ECF610B4B24000EEC11F /* PBXTextBookmark */ = AB15ECF610B4B24000EEC11F /* PBXTextBookmark */;
+			AB15ECF710B4B24000EEC11F /* PBXTextBookmark */ = AB15ECF710B4B24000EEC11F /* PBXTextBookmark */;
+			AB15ECFB10B4B27300EEC11F /* PBXTextBookmark */ = AB15ECFB10B4B27300EEC11F /* PBXTextBookmark */;
+			AB15ECFC10B4B27300EEC11F /* PBXTextBookmark */ = AB15ECFC10B4B27300EEC11F /* PBXTextBookmark */;
+			AB15ED0010B4B29400EEC11F /* PBXTextBookmark */ = AB15ED0010B4B29400EEC11F /* PBXTextBookmark */;
+			AB15ED0110B4B29400EEC11F /* PBXTextBookmark */ = AB15ED0110B4B29400EEC11F /* PBXTextBookmark */;
+			AB15ED0210B4B29400EEC11F /* PBXTextBookmark */ = AB15ED0210B4B29400EEC11F /* PBXTextBookmark */;
+			AB15ED0310B4B29400EEC11F /* PBXTextBookmark */ = AB15ED0310B4B29400EEC11F /* PBXTextBookmark */;
+			AB15ED0710B4B2BB00EEC11F /* PBXTextBookmark */ = AB15ED0710B4B2BB00EEC11F /* PBXTextBookmark */;
+			AB15ED0810B4B2BB00EEC11F /* PBXTextBookmark */ = AB15ED0810B4B2BB00EEC11F /* PBXTextBookmark */;
 			AB2223FA10502E7D00A4255E = AB2223FA10502E7D00A4255E /* PBXTextBookmark */;
 			AB22259F105056A600A4255E = AB22259F105056A600A4255E /* PBXBookmark */;
 			AB236B4710516EFF001F1476 = AB236B4710516EFF001F1476 /* PBXTextBookmark */;
@@ -507,9 +535,9 @@
 	};
 	2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {867, 2548}}";
-			sepNavSelRange = "{4692, 0}";
-			sepNavVisRange = "{4341, 1326}";
+			sepNavIntBoundsRect = "{{0, 0}, {824, 2717}}";
+			sepNavSelRange = "{2292, 0}";
+			sepNavVisRange = "{2125, 1310}";
 		};
 	};
 	2B3D12D70F437D6E0067FD3A /* InventoryListViewController.h */ = {
@@ -521,9 +549,9 @@
 	};
 	2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {989, 2626}}";
-			sepNavSelRange = "{4670, 138}";
-			sepNavVisRange = "{3993, 1351}";
+			sepNavIntBoundsRect = "{{0, 0}, {740, 2743}}";
+			sepNavSelRange = "{1864, 0}";
+			sepNavVisRange = "{3634, 411}";
 		};
 	};
 	2B3D12EA0F4382070067FD3A /* LogoutViewController.h */ = {
@@ -669,9 +697,9 @@
 	};
 	A763B5230F4E283100FDCC55 /* MyCLController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1118, 832}}";
-			sepNavSelRange = "{156, 0}";
-			sepNavVisRange = "{0, 1758}";
+			sepNavIntBoundsRect = "{{0, 0}, {671, 936}}";
+			sepNavSelRange = "{2666, 0}";
+			sepNavVisRange = "{2251, 610}";
 		};
 	};
 	A763B5240F4E283100FDCC55 /* MyCLController.m */ = {
@@ -900,7 +928,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 156";
 		rLen = 0;
-		rLoc = 4809;
+		rLoc = 4807;
 		rType = 0;
 		vrLen = 1999;
 		vrLoc = 3439;
@@ -920,7 +948,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 142";
 		rLen = 0;
-		rLoc = 4420;
+		rLoc = 4418;
 		rType = 0;
 		vrLen = 1999;
 		vrLoc = 3439;
@@ -940,7 +968,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 140";
 		rLen = 0;
-		rLoc = 4357;
+		rLoc = 4355;
 		rType = 0;
 		vrLen = 1999;
 		vrLoc = 3439;
@@ -960,7 +988,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 140";
 		rLen = 0;
-		rLoc = 4357;
+		rLoc = 4355;
 		rType = 0;
 		vrLen = 1999;
 		vrLoc = 3439;
@@ -1090,7 +1118,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 156";
 		rLen = 0;
-		rLoc = 4809;
+		rLoc = 4807;
 		rType = 0;
 		vrLen = 1928;
 		vrLoc = 3440;
@@ -1180,7 +1208,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 156";
 		rLen = 0;
-		rLoc = 4809;
+		rLoc = 4807;
 		rType = 0;
 		vrLen = 1928;
 		vrLoc = 3439;
@@ -1190,7 +1218,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 149";
 		rLen = 0;
-		rLoc = 4766;
+		rLoc = 4764;
 		rType = 0;
 		vrLen = 1743;
 		vrLoc = 3268;
@@ -1210,7 +1238,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 148";
 		rLen = 0;
-		rLoc = 4765;
+		rLoc = 4763;
 		rType = 0;
 		vrLen = 1736;
 		vrLoc = 3268;
@@ -1230,7 +1258,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 140";
 		rLen = 0;
-		rLoc = 4357;
+		rLoc = 4355;
 		rType = 0;
 		vrLen = 1736;
 		vrLoc = 3268;
@@ -1240,7 +1268,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 140";
 		rLen = 0;
-		rLoc = 4357;
+		rLoc = 4355;
 		rType = 0;
 		vrLen = 1736;
 		vrLoc = 3268;
@@ -1270,7 +1298,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 154";
 		rLen = 0;
-		rLoc = 4917;
+		rLoc = 4915;
 		rType = 0;
 		vrLen = 942;
 		vrLoc = 4629;
@@ -1300,7 +1328,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 161";
 		rLen = 0;
-		rLoc = 4960;
+		rLoc = 4958;
 		rType = 0;
 		vrLen = 1270;
 		vrLoc = 4462;
@@ -1320,7 +1348,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 169";
 		rLen = 1;
-		rLoc = 5190;
+		rLoc = 5188;
 		rType = 0;
 		vrLen = 1744;
 		vrLoc = 4087;
@@ -1350,7 +1378,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 154";
 		rLen = 0;
-		rLoc = 4917;
+		rLoc = 4915;
 		rType = 0;
 		vrLen = 942;
 		vrLoc = 4629;
@@ -1360,7 +1388,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 154";
 		rLen = 0;
-		rLoc = 4917;
+		rLoc = 4915;
 		rType = 0;
 		vrLen = 996;
 		vrLoc = 4575;
@@ -1380,7 +1408,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1420,7 +1448,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1499,7 +1527,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1526,7 +1554,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 156";
 		rLen = 0;
-		rLoc = 4934;
+		rLoc = 4932;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 4245;
@@ -1536,7 +1564,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1546,7 +1574,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 156";
 		rLen = 0;
-		rLoc = 4934;
+		rLoc = 4932;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 4245;
@@ -1576,7 +1604,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1596,7 +1624,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1623,7 +1651,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 156";
 		rLen = 0;
-		rLoc = 4934;
+		rLoc = 4932;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 4245;
@@ -1633,7 +1661,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1643,7 +1671,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 156";
 		rLen = 0;
-		rLoc = 4934;
+		rLoc = 4932;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 4245;
@@ -1653,7 +1681,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1007;
 		vrLoc = 4575;
@@ -1663,7 +1691,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 156";
 		rLen = 0;
-		rLoc = 4934;
+		rLoc = 4932;
 		rType = 0;
 		vrLen = 1500;
 		vrLoc = 4245;
@@ -1673,7 +1701,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 153";
 		rLen = 0;
-		rLoc = 4895;
+		rLoc = 4893;
 		rType = 0;
 		vrLen = 1004;
 		vrLoc = 4575;
@@ -1683,7 +1711,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 167";
 		rLen = 0;
-		rLoc = 5112;
+		rLoc = 5110;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 4245;
@@ -1693,7 +1721,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 161";
 		rLen = 0;
-		rLoc = 5109;
+		rLoc = 5107;
 		rType = 0;
 		vrLen = 1371;
 		vrLoc = 4575;
@@ -1703,7 +1731,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 167";
 		rLen = 0;
-		rLoc = 5112;
+		rLoc = 5110;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 4245;
@@ -1753,7 +1781,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 161";
 		rLen = 0;
-		rLoc = 5109;
+		rLoc = 5107;
 		rType = 0;
 		vrLen = 1371;
 		vrLoc = 4575;
@@ -1773,7 +1801,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 155";
 		rLen = 0;
-		rLoc = 4933;
+		rLoc = 4931;
 		rType = 0;
 		vrLen = 1319;
 		vrLoc = 4310;
@@ -1793,7 +1821,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 155";
 		rLen = 0;
-		rLoc = 4933;
+		rLoc = 4931;
 		rType = 0;
 		vrLen = 1319;
 		vrLoc = 4310;
@@ -1813,7 +1841,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 147";
 		rLen = 0;
-		rLoc = 4661;
+		rLoc = 4659;
 		rType = 0;
 		vrLen = 1319;
 		vrLoc = 4310;
@@ -1833,7 +1861,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 152";
 		rLen = 0;
-		rLoc = 4809;
+		rLoc = 4807;
 		rType = 0;
 		vrLen = 1470;
 		vrLoc = 4224;
@@ -1850,9 +1878,9 @@
 	};
 	AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {867, 445}}";
+			sepNavIntBoundsRect = "{{0, 0}, {989, 364}}";
 			sepNavSelRange = "{574, 0}";
-			sepNavVisRange = "{0, 596}";
+			sepNavVisRange = "{79, 508}";
 		};
 	};
 	AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */ = {
@@ -1867,7 +1895,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 145";
 		rLen = 0;
-		rLoc = 4518;
+		rLoc = 4516;
 		rType = 0;
 		vrLen = 1472;
 		vrLoc = 4224;
@@ -1961,7 +1989,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 169";
 		rLen = 1;
-		rLoc = 5190;
+		rLoc = 5188;
 		rType = 0;
 		vrLen = 1142;
 		vrLoc = 4224;
@@ -1971,7 +1999,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 160";
 		rLen = 0;
-		rLoc = 5164;
+		rLoc = 5162;
 		rType = 0;
 		vrLen = 1051;
 		vrLoc = 4047;
@@ -2011,7 +2039,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 160";
 		rLen = 0;
-		rLoc = 5164;
+		rLoc = 5162;
 		rType = 0;
 		vrLen = 1051;
 		vrLoc = 4047;
@@ -2131,7 +2159,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 146";
 		rLen = 0;
-		rLoc = 4518;
+		rLoc = 4516;
 		rType = 0;
 		vrLen = 1250;
 		vrLoc = 4171;
@@ -2141,7 +2169,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 0;
-		rLoc = 4806;
+		rLoc = 4804;
 		rType = 0;
 		vrLen = 1221;
 		vrLoc = 3991;
@@ -2171,7 +2199,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 0;
-		rLoc = 4806;
+		rLoc = 4804;
 		rType = 0;
 		vrLen = 1221;
 		vrLoc = 3991;
@@ -2181,7 +2209,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 146";
 		rLen = 0;
-		rLoc = 4547;
+		rLoc = 4545;
 		rType = 0;
 		vrLen = 1266;
 		vrLoc = 3925;
@@ -2211,7 +2239,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 152";
 		rLen = 0;
-		rLoc = 4809;
+		rLoc = 4807;
 		rType = 0;
 		vrLen = 1642;
 		vrLoc = 3761;
@@ -2270,7 +2298,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 149";
 		rLen = 0;
-		rLoc = 4668;
+		rLoc = 4666;
 		rType = 0;
 		vrLen = 1266;
 		vrLoc = 3925;
@@ -2340,7 +2368,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 160";
 		rLen = 0;
-		rLoc = 5164;
+		rLoc = 5162;
 		rType = 0;
 		vrLen = 1110;
 		vrLoc = 3993;
@@ -2350,7 +2378,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 161";
 		rLen = 0;
-		rLoc = 5164;
+		rLoc = 5162;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2370,7 +2398,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 161";
 		rLen = 0;
-		rLoc = 5164;
+		rLoc = 5162;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2380,7 +2408,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 0;
-		rLoc = 4668;
+		rLoc = 4666;
 		rType = 0;
 		vrLen = 1270;
 		vrLoc = 3925;
@@ -2420,7 +2448,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 161";
 		rLen = 0;
-		rLoc = 5164;
+		rLoc = 5162;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2440,7 +2468,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 149";
 		rLen = 173;
-		rLoc = 4638;
+		rLoc = 4636;
 		rType = 0;
 		vrLen = 1358;
 		vrLoc = 3837;
@@ -2450,7 +2478,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 147";
 		rLen = 0;
-		rLoc = 4661;
+		rLoc = 4659;
 		rType = 0;
 		vrLen = 1302;
 		vrLoc = 4310;
@@ -2460,7 +2488,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 159";
 		rLen = 0;
-		rLoc = 5078;
+		rLoc = 5076;
 		rType = 0;
 		vrLen = 1145;
 		vrLoc = 4343;
@@ -2470,7 +2498,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 138;
-		rLoc = 4670;
+		rLoc = 4668;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2480,7 +2508,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4738;
+		rLoc = 4736;
 		rType = 0;
 		vrLen = 1148;
 		vrLoc = 4343;
@@ -2490,7 +2518,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 138;
-		rLoc = 4670;
+		rLoc = 4668;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2500,7 +2528,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4738;
+		rLoc = 4736;
 		rType = 0;
 		vrLen = 1150;
 		vrLoc = 4341;
@@ -2510,7 +2538,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 138;
-		rLoc = 4670;
+		rLoc = 4668;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2520,7 +2548,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4738;
+		rLoc = 4736;
 		rType = 0;
 		vrLen = 1150;
 		vrLoc = 4341;
@@ -2530,7 +2558,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 138;
-		rLoc = 4670;
+		rLoc = 4668;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2540,7 +2568,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1153;
 		vrLoc = 4341;
@@ -2550,7 +2578,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 138;
-		rLoc = 4670;
+		rLoc = 4668;
 		rType = 0;
 		vrLen = 1192;
 		vrLoc = 3993;
@@ -2560,7 +2588,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2570,7 +2598,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 153";
 		rLen = 0;
-		rLoc = 4811;
+		rLoc = 4809;
 		rType = 0;
 		vrLen = 1171;
 		vrLoc = 3993;
@@ -2600,7 +2628,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2620,7 +2648,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2650,7 +2678,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2670,7 +2698,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2710,7 +2738,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2730,7 +2758,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 150";
 		rLen = 0;
-		rLoc = 4770;
+		rLoc = 4768;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2750,7 +2778,7 @@
 		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
 		name = "QuestsViewController.m: 149";
 		rLen = 0;
-		rLoc = 4692;
+		rLoc = 4690;
 		rType = 0;
 		vrLen = 1326;
 		vrLoc = 4341;
@@ -2810,7 +2838,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 153";
 		rLen = 0;
-		rLoc = 4811;
+		rLoc = 4809;
 		rType = 0;
 		vrLen = 1764;
 		vrLoc = 3791;
@@ -2890,7 +2918,7 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 153";
 		rLen = 0;
-		rLoc = 4811;
+		rLoc = 4809;
 		rType = 0;
 		vrLen = 1282;
 		vrLoc = 3993;
@@ -2900,10 +2928,289 @@
 		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
 		name = "InventoryListViewController.m: 150";
 		rLen = 138;
-		rLoc = 4670;
+		rLoc = 4668;
 		rType = 0;
 		vrLen = 1351;
 		vrLoc = 3993;
+	};
+	AB15ECD610B4B17A00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB6285CB1097534700C340E2 /* GPSViewController.m */;
+		name = "GPSViewController.m: 167";
+		rLen = 0;
+		rLoc = 4567;
+		rType = 0;
+		vrLen = 735;
+		vrLoc = 9893;
+	};
+	AB15ECD710B4B17A00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */;
+		name = "AsyncImageView.h: 21";
+		rLen = 0;
+		rLoc = 574;
+		rType = 0;
+		vrLen = 508;
+		vrLoc = 79;
+	};
+	AB15ECD810B4B17A00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A763B5230F4E283100FDCC55 /* MyCLController.h */;
+		name = "MyCLController.h: 8";
+		rLen = 0;
+		rLoc = 156;
+		rType = 0;
+		vrLen = 698;
+		vrLoc = 0;
+	};
+	AB15ECD910B4B17A00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A763B5230F4E283100FDCC55 /* MyCLController.h */;
+		name = "MyCLController.h: 53";
+		rLen = 0;
+		rLoc = 2666;
+		rType = 0;
+		vrLen = 912;
+		vrLoc = 2251;
+	};
+	AB15ECDA10B4B17A00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 911;
+		vrLoc = 3637;
+	};
+	AB15ECDC10B4B18000EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */;
+		name = "AsyncImageView.m: 27";
+		rLen = 0;
+		rLoc = 957;
+		rType = 0;
+		vrLen = 957;
+		vrLoc = 0;
+	};
+	AB15ECDD10B4B18000EEC11F /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "'media' undeclared (first use in this function)";
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 154;
+		rType = 1;
+	};
+	AB15ECDE10B4B18000EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 147";
+		rLen = 0;
+		rLoc = 4625;
+		rType = 0;
+		vrLen = 1509;
+		vrLoc = 3835;
+	};
+	AB15ECDF10B4B18500EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A763B5230F4E283100FDCC55 /* MyCLController.h */;
+		name = "MyCLController.h: 53";
+		rLen = 0;
+		rLoc = 2666;
+		rType = 0;
+		vrLen = 912;
+		vrLoc = 2251;
+	};
+	AB15ECE010B4B18500EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 911;
+		vrLoc = 3637;
+	};
+	AB15ECE510B4B1E200EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A763B5230F4E283100FDCC55 /* MyCLController.h */;
+		name = "MyCLController.h: 53";
+		rLen = 0;
+		rLoc = 2666;
+		rType = 0;
+		vrLen = 610;
+		vrLoc = 2251;
+	};
+	AB15ECE610B4B1E200EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
+		name = "QuestsViewController.m: 149";
+		rLen = 0;
+		rLoc = 4690;
+		rType = 0;
+		vrLen = 712;
+		vrLoc = 4401;
+	};
+	AB15ECE710B4B1E200EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
+		name = "QuestsViewController.m: 81";
+		rLen = 0;
+		rLoc = 2358;
+		rType = 0;
+		vrLen = 1312;
+		vrLoc = 2125;
+	};
+	AB15ECE810B4B1E200EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 478;
+		vrLoc = 3637;
+	};
+	AB15ECEC10B4B1FE00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
+		name = "QuestsViewController.m: 81";
+		rLen = 0;
+		rLoc = 2358;
+		rType = 0;
+		vrLen = 1310;
+		vrLoc = 2125;
+	};
+	AB15ECED10B4B1FE00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 478;
+		vrLoc = 3637;
+	};
+	AB15ECF110B4B21900EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
+		name = "QuestsViewController.m: 81";
+		rLen = 0;
+		rLoc = 2358;
+		rType = 0;
+		vrLen = 1310;
+		vrLoc = 2125;
+	};
+	AB15ECF210B4B21900EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 478;
+		vrLoc = 3637;
+	};
+	AB15ECF610B4B24000EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
+		name = "QuestsViewController.m: 81";
+		rLen = 0;
+		rLoc = 2358;
+		rType = 0;
+		vrLen = 1310;
+		vrLoc = 2125;
+	};
+	AB15ECF710B4B24000EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 478;
+		vrLoc = 3637;
+	};
+	AB15ECFB10B4B27300EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
+		name = "QuestsViewController.m: 81";
+		rLen = 0;
+		rLoc = 2358;
+		rType = 0;
+		vrLen = 1310;
+		vrLoc = 2125;
+	};
+	AB15ECFC10B4B27300EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 478;
+		vrLoc = 3637;
+	};
+	AB15ED0010B4B29400EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */;
+		name = "QuestsViewController.m: 80";
+		rLen = 0;
+		rLoc = 2292;
+		rType = 0;
+		vrLen = 1310;
+		vrLoc = 2125;
+	};
+	AB15ED0110B4B29400EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 149";
+		rLen = 173;
+		rLoc = 4636;
+		rType = 0;
+		vrLen = 1683;
+		vrLoc = 3686;
+	};
+	AB15ED0210B4B29400EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 75";
+		rLen = 0;
+		rLoc = 2018;
+		rType = 0;
+		vrLen = 1460;
+		vrLoc = 1861;
+	};
+	AB15ED0310B4B29400EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 411;
+		vrLoc = 3634;
+	};
+	AB15ED0710B4B2BB00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 75";
+		rLen = 0;
+		rLoc = 2018;
+		rType = 0;
+		vrLen = 1460;
+		vrLoc = 1861;
+	};
+	AB15ED0810B4B2BB00EEC11F /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2B3D12D80F437D6E0067FD3A /* InventoryListViewController.m */;
+		name = "InventoryListViewController.m: 71";
+		rLen = 0;
+		rLoc = 1864;
+		rType = 0;
+		vrLen = 411;
+		vrLoc = 3634;
 	};
 	AB2223F310502CD800A4255E /* Quest.h */ = {
 		uiCtxt = {
@@ -3597,9 +3904,9 @@
 		path = /Users/djgagnon/Documents/Aris/svn/iPhoneClient/GPSViewController.m;
 		sourceTree = "<absolute>";
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1335, 4251}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1335, 4511}}";
 			sepNavSelRange = "{4567, 0}";
-			sepNavVisRange = "{9893, 1493}";
+			sepNavVisRange = "{9893, 735}";
 		};
 	};
 	AB62860A10975CD300C340E2 /* PBXTextBookmark */ = {
@@ -3977,7 +4284,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 280276076.208504;
+		modificationTime = 280277689.874029;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};

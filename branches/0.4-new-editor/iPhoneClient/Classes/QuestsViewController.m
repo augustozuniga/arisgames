@@ -78,7 +78,7 @@ static int const COMPLETED_SECTION = 1;
 
 - (UITableViewCell *) getCellContentView:(NSString *)cellIdentifier {
 	CGRect cellFrame = CGRectMake(0, 0, 300, 60);
-	CGRect iconFrame = CGRectMake(10, 10, 50, 50);
+	CGRect iconFrame = CGRectMake(5, 5, 50, 50);
 	CGRect label1Frame = CGRectMake(70, 10, 230, 25);
 	CGRect label2Frame = CGRectMake(70, 35, 230, 25);
 	UILabel *lblTemp;

@@ -824,6 +824,8 @@
 				2B3D17040F49C9920067FD3A /* Model */,
 				A763B5230F4E283100FDCC55 /* MyCLController.h */,
 				A763B5240F4E283100FDCC55 /* MyCLController.m */,
+				AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */,
+				AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */,
 				28AD73870D9D96C1002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				A7A172820F4F26A60017E865 /* Entitlements.plist */,
@@ -834,8 +836,6 @@
 				A7A1728B0F4F27120017E865 /* Default.png */,
 				A7A172940F4F273B0017E865 /* Icon.icns */,
 				A7A1728A0F4F27120017E865 /* Icon.png */,
-				AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */,
-				AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */,
 			);
 			name = "Core App";
 			sourceTree = "<group>";
