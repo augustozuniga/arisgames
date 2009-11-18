@@ -261,7 +261,7 @@ static const int kDefaultCapacity = 10;
 	//Call server service
 	NSArray *arguments = [NSArray arrayWithObjects: 
 						  [NSString stringWithFormat:@"%d",self.playerId],
-						  [NSString stringWithFormat:@"%d",playerId],
+						  [NSString stringWithFormat:@"%d",gameId],
 						  nil];
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"players" 
