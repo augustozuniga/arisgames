@@ -226,7 +226,7 @@ static const int kDefaultCapacity = 10;
 																	andServiceName:@"players" 
 																	 andMethodName:@"nodeViewed" 
 																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
+	[jsonConnection performAsynchronousRequestWithParser:nil]; 
 	
 	//Check for any updates to player state
 	[self fetchLocationList];
@@ -247,7 +247,7 @@ static const int kDefaultCapacity = 10;
 																	andServiceName:@"players" 
 																	 andMethodName:@"itemViewed" 
 																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
+	[jsonConnection performAsynchronousRequestWithParser:nil]; 
 	
 	//Check for any updates to player state
 	[self fetchLocationList];
@@ -267,7 +267,7 @@ static const int kDefaultCapacity = 10;
 																	andServiceName:@"players" 
 																	 andMethodName:@"updatePlayerLastGame" 
 																	  andArguments:arguments];
-	[jsonConnection performSynchronousRequest]; 
+	[jsonConnection performAsynchronousRequestWithParser:nil]; 
 }
 
 
