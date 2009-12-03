@@ -27,7 +27,6 @@
 
 -(void) refresh;
 -(void) zoomAndCenterMap;
--(void) refreshPlayerMarker;
 
 
 @property (nonatomic, retain) MKMapView *mapView;

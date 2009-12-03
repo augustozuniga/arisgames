@@ -9,6 +9,7 @@
 #import "AnnotationView.h"
 #import "ItemAnnotation.h"
 #import "Media.h"
+#import "NearbyObjectProtocol.h"
 
 
 @implementation AnnotationView
@@ -73,9 +74,25 @@
 		[iconView setFrame:imageViewFrame];
 		iconView.contentMode = UIViewContentModeScaleToFill;
 		[self addSubview:iconView];
-		AppModel *appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
-		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:annotation.iconMediaId]];
-		[iconView loadImageFromMedia:iconMedia];
+		
+		//Only load the media if it is > 0, otherwise, lets load a default
+		if (annotation.iconMediaId != 0) {
+			AppModel *appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
+			Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:annotation.iconMediaId]];
+			[iconView loadImageFromMedia:iconMedia];
+		}
+		else if (annotation.kind == NearbyObjectItem) iconView.image = [UIImage imageNamed:@"item.png"];
+		else if (annotation.kind == NearbyObjectNode) iconView.image = [UIImage imageNamed:@"page.png"];
+		else if (annotation.kind == NearbyObjectNPC) iconView.image = [UIImage imageNamed:@"person.png"];
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+				 
+		
 		self.opaque = NO;
 	}
 	return self;

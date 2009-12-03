@@ -55,15 +55,12 @@ extern NSDictionary *InventoryElements;
 @property(readwrite) int gameId;
 @property(copy, readwrite) NSMutableArray *gameList;	
 @property(copy, readwrite) NSMutableArray *locationList;
-@property(readwrite) NSInteger locationListHash;
 @property(copy, readwrite) NSMutableArray *playerList;
 @property(copy, readwrite) NSMutableDictionary *questList;
-@property(readwrite) NSInteger questListHash;
 @property(copy, readwrite) NSMutableDictionary *mediaList;
 @property(copy, readwrite) NSMutableArray *nearbyLocationsList;	
 @property(copy, readwrite) CLLocation *playerLocation;	
 @property(copy, readwrite) NSMutableArray *inventory;
-@property(readwrite) NSInteger inventoryHash;
 
 @property(retain) UIAlertView *networkAlert;
 

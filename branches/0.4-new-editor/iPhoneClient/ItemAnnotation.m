@@ -11,7 +11,7 @@
 
 @implementation ItemAnnotation
 
-@synthesize coordinate, title, subtitle, iconMediaId;
+@synthesize coordinate, title, subtitle, iconMediaId, kind;
 
 -(id)initWithCoordinate:(CLLocationCoordinate2D) c{
 	if (self == [super init]) {

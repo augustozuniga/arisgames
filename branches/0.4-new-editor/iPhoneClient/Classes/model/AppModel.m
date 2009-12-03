@@ -646,11 +646,12 @@ static const int kDefaultCapacity = 10;
 	
 	//Check for an error
 	//Compare this hash to the last one. If the same, stop hee
+
 	if (jsonResult.hash == locationListHash) {
 		NSLog(@"AppModel: Hash is same as last location list update, continue");
-		return nil;
+		return;
 	}
-	
+	 
 	//Save this hash for later comparisions
 	locationListHash = jsonResult.hash;
 	
@@ -737,7 +738,7 @@ static const int kDefaultCapacity = 10;
 	//Compare this hash to the last one. If the same, stop hee
 	if (jsonResult.hash == inventoryHash) {
 		NSLog(@"AppModel: Hash is same as last inventory listy update, continue");
-		return nil;
+		return;
 	}
 	
 	//Save this hash for later comparisions
@@ -788,7 +789,7 @@ static const int kDefaultCapacity = 10;
 
 
 
--(NSMutableDictionary *)parseQuestListFromJSON: (JSONResult *)jsonResult{
+-(void)parseQuestListFromJSON: (JSONResult *)jsonResult{
 
 	NSLog(@"AppModel: Parsing Quests");
 	
@@ -797,7 +798,7 @@ static const int kDefaultCapacity = 10;
 	//Compare this hash to the last one. If the same, stop here
 	if (jsonResult.hash == questListHash) {
 		NSLog(@"AppModel: Hash is same as last quest list update, continue");
-		return nil;
+		return;
 	}
 	
 	//Save this hash for later comparisions

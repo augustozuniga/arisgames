@@ -20,6 +20,7 @@
 
 @implementation GPSViewController
 
+@synthesize locations;
 @synthesize mapView;
 @synthesize autoCenter;
 @synthesize mapTypeButton;
@@ -197,11 +198,10 @@
 			anItem.title = location.name;
 			anItem.subtitle = [NSString stringWithFormat:@"%d",location.qty];
 			NSLog(@"***Item annotation title is %@; subtitle is %@.", anItem.title, anItem.subtitle);
-			if (location.iconMediaId != 0) { //look for info about image for icon, if we have one
-				anItem.iconMediaId = location.iconMediaId;
-			} else {
-				location.iconMediaId = 0;
-			}
+			
+			anItem.iconMediaId = location.iconMediaId; //if we have a custom icon
+			anItem.kind = location.kind; //if we want a default icon
+
 			[mapView addAnnotation:anItem];
 			if (!mapView) {
 				NSLog(@"Well there's your problem! mapview is null!");
@@ -320,7 +320,7 @@
 #pragma mark Views for annotations
 
 - (MKAnnotationView *)mapView:(MKMapView *)myMapView viewForAnnotation:(id <MKAnnotation>)annotation{
-	NSLog(@"*****In viewForAnnotation");
+	NSLog(@"GPSViewController:In viewForAnnotation");
 
 	
 	//Player
