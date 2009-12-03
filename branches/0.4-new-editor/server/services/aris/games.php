@@ -113,6 +113,7 @@ class Games extends Module
 			destroyable enum('0','1') NOT NULL default '0',
 			PRIMARY KEY  (item_id)
 			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+		NetDebug::trace($query);
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create items table');
 				
@@ -193,6 +194,7 @@ class Games extends Module
 			  require_answer_string varchar(50) default NULL,
 			  require_answer_correct_node_id int(10) unsigned NOT NULL default '0',
 			  media_id int(10) unsigned NOT NULL default '0',
+			  icon_media_id int(10) unsigned NOT NULL default '0',
 			  PRIMARY KEY  (node_id)
 			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
@@ -266,6 +268,30 @@ class Games extends Module
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');	
 		
 		
+		$query = "CREATE TABLE {$strShortName}_folders (
+			folder_id int(10) unsigned NOT NULL auto_increment,
+  			name varchar(50) collate utf8_unicode_ci NOT NULL,
+ 			parent_id int(11) NOT NULL default '0',
+  			previous_id int(11) NOT NULL default '0',
+  			PRIMARY KEY  (folder_id)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create folders table');	
+
+
+
+		$query = "CREATE TABLE {$strShortName}_folder_contents (
+  			folder_content_id int(10) unsigned NOT NULL auto_increment,
+  			folder_id int(10) unsigned NOT NULL default '0',
+  			content_type enum('Node','Item','Npc') collate utf8_unicode_ci NOT NULL default 'Node',
+  			content_id int(10) unsigned NOT NULL default '0',
+  			previous_id int(10) unsigned NOT NULL default '0',
+  			PRIMARY KEY  (folder_content_id)
+			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+		@mysql_query($query);
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create folder contents table: ' . mysql_error());	
+
+
 
 		return new returnData(0, $newGameID, NULL);
 
