@@ -51,7 +51,7 @@
 				break;
 			case NearbyObjectItem:
 				//NSLog(@"There's an item nearby.");
-				self.iconImage = [UIImage imageNamed:@"pickaxe.png"];
+				self.iconImage = [UIImage imageNamed:@"item.png"];
 				break;
 			case NearbyObjectNode:
 				//NSLog(@"There's a node nearby.");
@@ -133,7 +133,7 @@
 	point = CGPointMake(x, y);
 	[title drawAtPoint:point forWidth:(self.bounds.size.width - ICON_WIDTH - RIGHT_STRING_MARGIN) withFont:font fontSize:fontSize lineBreakMode:UILineBreakModeMiddleTruncation baselineAdjustment:UIBaselineAdjustmentAlignBaselines]; 
 	
-	//UIImage *iconImage = [UIImage imageNamed:@"pickaxe.png"];
+	//UIImage *iconImage = [UIImage imageNamed:@"item.png"];
 	CGFloat iconImageX = self.bounds.origin.x + 5.0;
 	CGFloat iconImageY = ((self.bounds.size.height - iconImage.size.height) / 2.0) + self.bounds.origin.y;
 	[self.iconImage drawAtPoint:(CGPointMake(iconImageX, iconImageY))];
