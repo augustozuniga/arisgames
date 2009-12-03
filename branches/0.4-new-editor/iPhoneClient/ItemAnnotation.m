@@ -17,6 +17,7 @@
 	if (self == [super init]) {
 		coordinate=c;
 	}
+	NSLog(@"Item annotation created");
 	return self;
 }
 

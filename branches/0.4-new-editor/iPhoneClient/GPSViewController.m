@@ -342,7 +342,8 @@
 	//Everything else
 	else {
 		NSLog(@"Returning an annotation View");
-		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
+		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
+		NSLog(@"Annotation title: %@",annotation.title);
 		return annotationView;
 	}
 }
