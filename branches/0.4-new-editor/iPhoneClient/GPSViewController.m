@@ -35,7 +35,14 @@
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		autoCenter = YES;
-				
+		
+		//Setup the Map
+		CGRect tableFrame;
+		tableFrame = CGRectMake(0,0,100,100);
+		
+		NSLog(@"GPSViewController: Mapview about to be inited.");
+		mapView = [[MKMapView alloc] initWithFrame:tableFrame];
+		
 		//register for notifications
 		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
 		[dispatcher addObserver:self selector:@selector(refresh) name:@"PlayerMoved" object:nil];
@@ -91,7 +98,8 @@
 							tableViewHeight);
 	
 	NSLog(@"GPSViewController: Mapview about to be inited.");
-	mapView = [[MKMapView alloc] initWithFrame:tableFrame];
+	//mapView = [[MKMapView alloc] initWithFrame:tableFrame];
+	[mapView setFrame:tableFrame];
 	MKCoordinateRegion region = mapView.region;
 	region.span.latitudeDelta=0.001;
 	region.span.longitudeDelta=0.001;
@@ -129,14 +137,18 @@
 
 // Updates the map to current data for player and locations from the server
 - (void) refresh {
-	NSLog(@"GPSViewController: refresh requested");	
+	if (mapView) {
+		NSLog(@"GPSViewController: refresh requested");	
 	
-	//Update the locations
-	[appModel fetchLocationList];
+		//Update the locations
+		[appModel fetchLocationList];
 	
-	//Zoom and Center
-	[self zoomAndCenterMap];
-
+		//Zoom and Center
+		[self zoomAndCenterMap];
+	} else {
+		NSLog(@"GPSViewController: refresh requested but ignored, as mapview is nil");	
+		
+	}
 }
 
 -(void) zoomAndCenterMap {
@@ -153,50 +165,65 @@
 
 
 - (void)refreshViewFromModel {
-	NSLog(@"GPSViewController: Refreshing view from model");
+	if (mapView) {
+		//only refresh if there's a mapview
+		NSLog(@"GPSViewController: Refreshing view from model");
 	
-	//Add a badge if this is NOT the first time data has been loaded
-	if (locations != nil) self.tabBarItem.badgeValue = @"!";
 	
-	//Blow away the old markers except for the player marker
-	NSEnumerator *existingAnnotationsEnumerator = [[[mapView annotations] copy] objectEnumerator];
-	NSObject <MKAnnotation> *annotation;
-	while (annotation = [existingAnnotationsEnumerator nextObject]) {
-		if (annotation != mapView.userLocation) [mapView removeAnnotation:annotation];
-	}
+		//Add a badge if this is NOT the first time data has been loaded
+		if (locations != nil) self.tabBarItem.badgeValue = @"!";
 	
-	locations = appModel.locationList;
-	
-	//Add the freshly loaded locations from the notification
-	for ( Location* location in locations ) {
-		NSLog(@"GPSViewController: Adding location annotation for:%@ id:%d", location.name, location.locationId);
-		if (location.hidden == YES) continue;
-		CLLocationCoordinate2D locationLatLong = location.location.coordinate;
-		
-		ItemAnnotation *anItem = [[ItemAnnotation alloc]initWithCoordinate:locationLatLong];
-		
-		anItem.title = location.name;
-		anItem.subtitle = [NSString stringWithFormat:@"%d",location.qty];
-		if (location.iconMediaId != 0) { //look for info about image for icon, if we have one
-			anItem.iconMediaId = location.iconMediaId;
-		} else {
-			location.iconMediaId = nil;
+		//Blow away the old markers except for the player marker
+		NSEnumerator *existingAnnotationsEnumerator = [[[mapView annotations] copy] objectEnumerator];
+		NSObject <MKAnnotation> *annotation;
+		while (annotation = [existingAnnotationsEnumerator nextObject]) {
+			if (annotation != mapView.userLocation) [mapView removeAnnotation:annotation];
 		}
-		[mapView addAnnotation:anItem];
-		[mapView selectAnnotation:anItem animated:YES];
-
-		[anItem release];
-	}
 	
-	//Add the freshly loaded players from the notification
-	for ( Player *player in appModel.playerList ) {
-		if (player.hidden == YES) continue;
-		CLLocationCoordinate2D locationLatLong = player.location.coordinate;
+		locations = appModel.locationList;
+	
+		//Add the freshly loaded locations from the notification
+		for ( Location* location in locations ) {
+			NSLog(@"GPSViewController: Adding location annotation for:%@ id:%d", location.name, location.locationId);
+			if (location.hidden == YES) 
+			{
+				NSLog(@"No I'm not, because this location is hidden.");
+				continue;
+			}
+			CLLocationCoordinate2D locationLatLong = location.location.coordinate;
+			
+			ItemAnnotation *anItem = [[ItemAnnotation alloc]initWithCoordinate:locationLatLong];
+			
+			anItem.title = location.name;
+			anItem.subtitle = [NSString stringWithFormat:@"%d",location.qty];
+			NSLog(@"***Item annotation title is %@; subtitle is %@.", anItem.title, anItem.subtitle);
+			if (location.iconMediaId != 0) { //look for info about image for icon, if we have one
+				anItem.iconMediaId = location.iconMediaId;
+			} else {
+				location.iconMediaId = 0;
+			}
+			[mapView addAnnotation:anItem];
+			if (!mapView) {
+				NSLog(@"Well there's your problem! mapview is null!");
+			}
+			NSLog(@"***Now there are %d annotations.", mapView.annotations.count);
+			//[mapView selectAnnotation:anItem animated:YES];
 
-		PlayerAnnotation *aPlayer = [[PlayerAnnotation alloc]initWithCoordinate:locationLatLong];
-		aPlayer.title = player.name;
-		[mapView addAnnotation:aPlayer];
-		[aPlayer release];
+			[anItem release];
+		}
+		
+		//Add the freshly loaded players from the notification
+		for ( Player *player in appModel.playerList ) {
+			if (player.hidden == YES) continue;
+			CLLocationCoordinate2D locationLatLong = player.location.coordinate;
+
+			PlayerAnnotation *aPlayer = [[PlayerAnnotation alloc]initWithCoordinate:locationLatLong];
+			aPlayer.title = player.name;
+			[mapView addAnnotation:aPlayer];
+			[aPlayer release];
+		} 
+	} else {
+		NSLog(@"GPSViewController: Refresh requested but ignored, as mapview is nil.");
 	}
 }
 
@@ -293,43 +320,29 @@
 #pragma mark Views for annotations
 
 - (MKAnnotationView *)mapView:(MKMapView *)myMapView viewForAnnotation:(id <MKAnnotation>)annotation{
+	NSLog(@"*****In viewForAnnotation");
 
 	
 	//Player
 	if (annotation == mapView.userLocation)
 	{
+		NSLog(@"User location, so we are leaving.");
 		 return nil; //Let it do it's own thing
 	}
 	
 	//Other Players
-	else if ([annotation isMemberOfClass:[PlayerAnnotation class]]) {
-				AnnotationView *playerAnnotationView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"OtherPlayerAnnotation"];
-				playerAnnotationView.image = [UIImage imageNamed:@"marker-other-player.png"];
-				return playerAnnotationView;	
+	if ([annotation isMemberOfClass:[PlayerAnnotation class]]) {
+		NSLog(@"other player annotation.");
+
+		AnnotationView *playerAnnotationView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"OtherPlayerAnnotation"];
+		playerAnnotationView.image = [UIImage imageNamed:@"marker-other-player.png"];
+		return playerAnnotationView;	
 	} 
 	
 	//Everything else
 	else {
-		Media *iconMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:[(ItemAnnotation *)annotation iconMediaId]]];
-		UIImage *myImage;
-		
+		NSLog(@"Returning an annotation View");
 		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:[NSString stringWithFormat:@"%@:%@",[annotation title], [annotation subtitle]]];
-		if (iconMedia != nil) {
-			NSLog(@"GPSViewController: %@ annotation has a custom icon",[(ItemAnnotation *)annotation title]);
-			if (iconMedia.image != nil ) {
-				NSLog(@"GPSViewController: icon media as already loaded data, reuse it.");
-				myImage = iconMedia.image;
-			}
-			else {
-				NSLog(@"GPSViewController: Begin loading annotation icon from URL: %@", iconMedia.url);
-				NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:iconMedia.url]];
-				NSLog(@"GPSViewController: icon loaded");
-				myImage = [UIImage imageWithData:imageData];
-			}
-		} else {
-			myImage = [UIImage imageNamed: @"pickaxe.png"];
-		}
-		annotationView.image = [self addTitle:annotation.title quantity:[annotation.subtitle intValue] toImage:myImage]; 	
 		return annotationView;
 	}
 }
