@@ -20,7 +20,7 @@
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
         self.title = @"Select Game";
-        self.tabBarItem.image = [UIImage imageNamed:@"Game.png"];
+        self.tabBarItem.image = [UIImage imageNamed:@"game.png"];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		//register for notifications

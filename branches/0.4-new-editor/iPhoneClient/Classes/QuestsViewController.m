@@ -27,7 +27,7 @@ static int const COMPLETED_SECTION = 1;
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
         self.title = @"Quests";
-        self.tabBarItem.image = [UIImage imageNamed:@"Quest.png"];
+        self.tabBarItem.image = [UIImage imageNamed:@"quest.png"];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		//register for notifications

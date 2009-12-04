@@ -18,7 +18,7 @@
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
         self.title = @"Logout";
-        self.tabBarItem.image = [UIImage imageNamed:@"Logout.png"];
+        self.tabBarItem.image = [UIImage imageNamed:@"logout.png"];
     }
     return self;
 }

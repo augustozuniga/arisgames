@@ -483,7 +483,7 @@ static const int kDefaultCapacity = 10;
 }
 
 - (void)forceUpdateOnNextLocationListFetch {
-	locationListHash = nil;
+	locationListHash = 0;
 }
 
 

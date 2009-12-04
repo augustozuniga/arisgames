@@ -32,7 +32,7 @@
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
         self.title = @"GPS";
-        self.tabBarItem.image = [UIImage imageNamed:@"GPS.png"];
+        self.tabBarItem.image = [UIImage imageNamed:@"gps.png"];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		autoCenter = YES;

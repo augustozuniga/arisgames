@@ -398,7 +398,7 @@
 		ABB925C110C857D800B09506 /* defaultAudioIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultAudioIcon.png; sourceTree = "<group>"; };
 		ABB925C210C857D800B09506 /* defaultImageIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultImageIcon.png; sourceTree = "<group>"; };
 		ABB925C310C857D800B09506 /* defaultVideoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultVideoIcon.png; sourceTree = "<group>"; };
-		ABB925C710C8581B00B09506 /* item.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = item.png; sourceTree = "<group>"; };
+		ABB925C710C8581B00B09506 /* item.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = item.png; sourceTree = "<group>"; };
 		ABB925C810C8581B00B09506 /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page.png; sourceTree = "<group>"; };
 		ABB925C910C8581B00B09506 /* npc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npc.png; sourceTree = "<group>"; };
 		ABB925D810C8585800B09506 /* QuestActiveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestActiveIcon.png; sourceTree = "<group>"; };
@@ -410,7 +410,7 @@
 		ABB925E410C858DF00B09506 /* inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inventory.png; sourceTree = "<group>"; };
 		ABB925E610C858F100B09506 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
 		ABB925E810C8590200B09506 /* qrscanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrscanner.png; sourceTree = "<group>"; };
-		ABB925EA10C8591200B09506 /* quest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quest.png; sourceTree = "<group>"; };
+		ABB925EA10C8591200B09506 /* quest.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = quest.png; sourceTree = "<group>"; };
 		ABBEBBAB104D7CC800AA7285 /* NodeOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeOption.h; sourceTree = "<group>"; };
 		ABBEBBAC104D7CC800AA7285 /* NodeOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeOption.m; sourceTree = "<group>"; };
 		ABBEBBC0104D7CF900AA7285 /* NodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeViewController.h; sourceTree = "<group>"; };

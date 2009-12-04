@@ -25,7 +25,7 @@
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
         self.title = @"Scanner";
-        self.tabBarItem.image = [UIImage imageNamed:@"QRScanner.png"];
+        self.tabBarItem.image = [UIImage imageNamed:@"qrscanner.png"];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
     }
     return self;

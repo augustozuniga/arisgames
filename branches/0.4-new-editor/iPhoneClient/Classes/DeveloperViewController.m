@@ -24,7 +24,7 @@
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
         self.title = @"Developer";
-        self.tabBarItem.image = [UIImage imageNamed:@"Developer.png"];
+        self.tabBarItem.image = [UIImage imageNamed:@"developer.png"];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		//register for notifications
