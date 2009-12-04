@@ -164,7 +164,7 @@
 		ABB925C610C857D800B09506 /* defaultVideoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C310C857D800B09506 /* defaultVideoIcon.png */; };
 		ABB925CA10C8581B00B09506 /* item.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C710C8581B00B09506 /* item.png */; };
 		ABB925CB10C8581B00B09506 /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C810C8581B00B09506 /* page.png */; };
-		ABB925CC10C8581B00B09506 /* person.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C910C8581B00B09506 /* person.png */; };
+		ABB925CC10C8581B00B09506 /* npc.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C910C8581B00B09506 /* npc.png */; };
 		ABB925DA10C8585800B09506 /* QuestActiveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925D810C8585800B09506 /* QuestActiveIcon.png */; };
 		ABB925DB10C8585800B09506 /* QuestCompleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925D910C8585800B09506 /* QuestCompleteIcon.png */; };
 		ABB925DD10C8587200B09506 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925DC10C8587200B09506 /* camera.png */; };
@@ -400,7 +400,7 @@
 		ABB925C310C857D800B09506 /* defaultVideoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultVideoIcon.png; sourceTree = "<group>"; };
 		ABB925C710C8581B00B09506 /* item.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = item.png; sourceTree = "<group>"; };
 		ABB925C810C8581B00B09506 /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page.png; sourceTree = "<group>"; };
-		ABB925C910C8581B00B09506 /* person.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person.png; sourceTree = "<group>"; };
+		ABB925C910C8581B00B09506 /* npc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npc.png; sourceTree = "<group>"; };
 		ABB925D810C8585800B09506 /* QuestActiveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestActiveIcon.png; sourceTree = "<group>"; };
 		ABB925D910C8585800B09506 /* QuestCompleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestCompleteIcon.png; sourceTree = "<group>"; };
 		ABB925DC10C8587200B09506 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
@@ -664,7 +664,7 @@
 			children = (
 				ABB925C710C8581B00B09506 /* item.png */,
 				ABB925C810C8581B00B09506 /* page.png */,
-				ABB925C910C8581B00B09506 /* person.png */,
+				ABB925C910C8581B00B09506 /* npc.png */,
 				A7FA0E7A0FC7048C00941493 /* IndicatorView.h */,
 				A7FA0E7B0FC7048C00941493 /* IndicatorView.m */,
 				A722CB5A0FBDFEA6009432DB /* NearbyObjectProtocol.h */,
@@ -996,7 +996,7 @@
 				ABB925C610C857D800B09506 /* defaultVideoIcon.png in Resources */,
 				ABB925CA10C8581B00B09506 /* item.png in Resources */,
 				ABB925CB10C8581B00B09506 /* page.png in Resources */,
-				ABB925CC10C8581B00B09506 /* person.png in Resources */,
+				ABB925CC10C8581B00B09506 /* npc.png in Resources */,
 				ABB925DA10C8585800B09506 /* QuestActiveIcon.png in Resources */,
 				ABB925DB10C8585800B09506 /* QuestCompleteIcon.png in Resources */,
 				ABB925DD10C8587200B09506 /* camera.png in Resources */,

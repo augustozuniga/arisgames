@@ -191,7 +191,7 @@
 			Annotation *annotation = [[Annotation alloc]initWithCoordinate:locationLatLong];
 			
 			annotation.title = location.name;
-			annotation.subtitle = [NSString stringWithFormat:@"%d",location.qty];
+			if (location.kind == NearbyObjectItem) annotation.subtitle = [NSString stringWithFormat:@"Quantity: %d",location.qty];
 			NSLog(@"***Item annotation title is %@; subtitle is %@.", annotation.title, annotation.subtitle);
 			
 			annotation.iconMediaId = location.iconMediaId; //if we have a custom icon

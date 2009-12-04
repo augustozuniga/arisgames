@@ -13,7 +13,8 @@
 #import "AsyncImageView.h"
 
 #define POINTER_LENGTH 30
-#define IMAGE_HEIGHT 50
+#define IMAGE_HEIGHT 30
+
 
 @interface AnnotationView : MKAnnotationView {
 	CGRect titleRect;

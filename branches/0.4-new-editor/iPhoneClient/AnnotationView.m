@@ -68,11 +68,10 @@
 		self.titleRect = localTitleRect;
 		self.subtitleRect = localSubtitleRect;
 		self.contentRect = localContentRect;
-//		[self setImageFromURL:annotation.imageURL];
 		iconView = [[AsyncImageView alloc] init];
 		CGRect imageViewFrame = CGRectMake(self.bounds.origin.x + 5.0, CGRectGetMaxY(self.contentRect)+POINTER_LENGTH, self.bounds.size.width - 10.0, IMAGE_HEIGHT);
 		[iconView setFrame:imageViewFrame];
-		iconView.contentMode = UIViewContentModeScaleToFill;
+		iconView.contentMode =  UIViewContentModeScaleAspectFit;
 		[self addSubview:iconView];
 		
 		//Only load the media if it is > 0, otherwise, lets load a default
@@ -83,7 +82,7 @@
 		}
 		else if (annotation.kind == NearbyObjectItem) iconView.image = [UIImage imageNamed:@"item.png"];
 		else if (annotation.kind == NearbyObjectNode) iconView.image = [UIImage imageNamed:@"page.png"];
-		else if (annotation.kind == NearbyObjectNPC) iconView.image = [UIImage imageNamed:@"person.png"];
+		else if (annotation.kind == NearbyObjectNPC) iconView.image = [UIImage imageNamed:@"npc.png"];
 		else if (annotation.kind == NearbyObjectPlayer) iconView.image = [UIImage imageNamed:@"player.png"];
 		self.opaque = NO;
 	}
