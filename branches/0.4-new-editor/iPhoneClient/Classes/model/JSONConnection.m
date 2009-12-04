@@ -120,9 +120,9 @@
 	
 	[asyncData appendData:data];
 
-	NSString* tempAsyncData = [[NSString alloc] initWithData:asyncData encoding:NSUTF8StringEncoding];
+	//NSString* tempAsyncData = [[NSString alloc] initWithData:asyncData encoding:NSUTF8StringEncoding];
 
-	NSLog(@"JSONConnection: Async Data is now: %@", tempAsyncData);
+	//NSLog(@"JSONConnection: Async Data is now: %@", tempAsyncData);
 
 	
 
@@ -148,8 +148,6 @@
 	//Get the JSONResult here
 	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:jsonString];
 	
-	NSLog(@"JSONConnection: JSON String: %@",jsonResult);
-
 	if (connection.parser) [appModel performSelector:connection.parser withObject:jsonResult];
 	
 	[asyncData release];

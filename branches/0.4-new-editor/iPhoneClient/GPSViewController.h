@@ -10,8 +10,7 @@
 #import "AppModel.h"
 #import "Location.h"
 #import <MapKit/MapKit.h>
-#import "PlayerAnnotation.h"
-#import "ItemAnnotation.h"
+#import "Annotation.h"
 
 
 
@@ -19,7 +18,6 @@
 	AppModel *appModel;
 	MKMapView *mapView;
 	NSArray *locations;
-	PlayerAnnotation *playerMarker;
 	BOOL autoCenter;
 	IBOutlet UIBarButtonItem *mapTypeButton;
 	IBOutlet UIBarButtonItem *playerTrackingButton;

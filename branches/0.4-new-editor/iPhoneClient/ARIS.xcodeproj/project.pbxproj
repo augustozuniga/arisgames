@@ -183,10 +183,9 @@
 		ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C621104F3863002EB824 /* NpcViewController.m */; };
 		ABDA40BD10506AF400823A94 /* GPS.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40AA10506AF400823A94 /* GPS.xib */; };
 		ABDA40BF10506AF400823A94 /* GPSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */; };
-		ABDA40C010506AF400823A94 /* PlayerAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40AF10506AF400823A94 /* PlayerAnnotation.m */; };
-		ABDA40C110506AF400823A94 /* ItemAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B110506AF400823A94 /* ItemAnnotation.m */; };
+		ABDA40C110506AF400823A94 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B110506AF400823A94 /* Annotation.m */; };
 		ABDA40C210506AF400823A94 /* AnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B310506AF400823A94 /* AnnotationView.m */; };
-		ABDA40C310506AF400823A94 /* marker-other-player.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B510506AF400823A94 /* marker-other-player.png */; };
+		ABDA40C310506AF400823A94 /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40B510506AF400823A94 /* player.png */; };
 		ABDA40DE10506CB300823A94 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA40DD10506CB300823A94 /* MapKit.framework */; };
 		D43717DF106D62BB0020C515 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = D43717DE106D62BB0020C515 /* Media.m */; };
 /* End PBXBuildFile section */
@@ -425,13 +424,11 @@
 		ABDA40AA10506AF400823A94 /* GPS.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPS.xib; sourceTree = "<group>"; };
 		ABDA40AC10506AF400823A94 /* GPSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSViewController.h; sourceTree = "<group>"; };
 		ABDA40AD10506AF400823A94 /* GPSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSViewController.m; sourceTree = "<group>"; };
-		ABDA40AE10506AF400823A94 /* PlayerAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerAnnotation.h; sourceTree = "<group>"; };
-		ABDA40AF10506AF400823A94 /* PlayerAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerAnnotation.m; sourceTree = "<group>"; };
-		ABDA40B010506AF400823A94 /* ItemAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemAnnotation.h; sourceTree = "<group>"; };
-		ABDA40B110506AF400823A94 /* ItemAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemAnnotation.m; sourceTree = "<group>"; };
+		ABDA40B010506AF400823A94 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annotation.h; sourceTree = "<group>"; };
+		ABDA40B110506AF400823A94 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotation.m; sourceTree = "<group>"; };
 		ABDA40B210506AF400823A94 /* AnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationView.h; sourceTree = "<group>"; };
 		ABDA40B310506AF400823A94 /* AnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationView.m; sourceTree = "<group>"; };
-		ABDA40B510506AF400823A94 /* marker-other-player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker-other-player.png"; sourceTree = "<group>"; };
+		ABDA40B510506AF400823A94 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
 		ABDA40DD10506CB300823A94 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D43717DD106D62BB0020C515 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
 		D43717DE106D62BB0020C515 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
@@ -884,15 +881,13 @@
 		ABDA40A910506AF400823A94 /* GPS */ = {
 			isa = PBXGroup;
 			children = (
-				ABDA40B510506AF400823A94 /* marker-other-player.png */,
+				ABDA40B510506AF400823A94 /* player.png */,
 				ABB925E210C858BB00B09506 /* gps.png */,
 				ABDA40AA10506AF400823A94 /* GPS.xib */,
 				ABDA40AC10506AF400823A94 /* GPSViewController.h */,
 				ABDA40AD10506AF400823A94 /* GPSViewController.m */,
-				ABDA40AE10506AF400823A94 /* PlayerAnnotation.h */,
-				ABDA40AF10506AF400823A94 /* PlayerAnnotation.m */,
-				ABDA40B010506AF400823A94 /* ItemAnnotation.h */,
-				ABDA40B110506AF400823A94 /* ItemAnnotation.m */,
+				ABDA40B010506AF400823A94 /* Annotation.h */,
+				ABDA40B110506AF400823A94 /* Annotation.m */,
 				ABDA40B210506AF400823A94 /* AnnotationView.h */,
 				ABDA40B310506AF400823A94 /* AnnotationView.m */,
 			);
@@ -995,7 +990,7 @@
 				ABBEBBC5104D7DAB00AA7285 /* Node.xib in Resources */,
 				ABD5C622104F3863002EB824 /* Npc.xib in Resources */,
 				ABDA40BD10506AF400823A94 /* GPS.xib in Resources */,
-				ABDA40C310506AF400823A94 /* marker-other-player.png in Resources */,
+				ABDA40C310506AF400823A94 /* player.png in Resources */,
 				ABB925C410C857D800B09506 /* defaultAudioIcon.png in Resources */,
 				ABB925C510C857D800B09506 /* defaultImageIcon.png in Resources */,
 				ABB925C610C857D800B09506 /* defaultVideoIcon.png in Resources */,
@@ -1104,8 +1099,7 @@
 				ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */,
 				AB2223F510502CD800A4255E /* Quest.m in Sources */,
 				ABDA40BF10506AF400823A94 /* GPSViewController.m in Sources */,
-				ABDA40C010506AF400823A94 /* PlayerAnnotation.m in Sources */,
-				ABDA40C110506AF400823A94 /* ItemAnnotation.m in Sources */,
+				ABDA40C110506AF400823A94 /* Annotation.m in Sources */,
 				ABDA40C210506AF400823A94 /* AnnotationView.m in Sources */,
 				D43717DF106D62BB0020C515 /* Media.m in Sources */,
 				AB9A7C1710AA173F002FD9BC /* ARISURLConnection.m in Sources */,

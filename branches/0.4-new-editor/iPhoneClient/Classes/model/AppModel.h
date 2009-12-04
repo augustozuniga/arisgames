@@ -78,6 +78,7 @@ extern NSDictionary *InventoryElements;
 
 - (void)fetchGameList;
 - (void)fetchLocationList;
+- (void)forceUpdateOnNextLocationListFetch;
 - (void)fetchMediaList;
 - (void)fetchInventory;
 - (void)fetchQuestList;

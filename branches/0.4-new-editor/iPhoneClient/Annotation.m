@@ -1,15 +1,15 @@
 //
-//  ItemAnnotation.m
+//  Annotation.m
 //  ARIS
 //
 //  Created by Brian Deith on 7/21/09.
 //  Copyright 2009 Brian Deith. All rights reserved.
 //
 
-#import "ItemAnnotation.h"
+#import "Annotation.h"
 
 
-@implementation ItemAnnotation
+@implementation Annotation
 
 @synthesize coordinate, title, subtitle, iconMediaId, kind;
 

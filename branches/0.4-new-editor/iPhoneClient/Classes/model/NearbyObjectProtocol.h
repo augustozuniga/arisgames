@@ -10,7 +10,8 @@ enum {
 	NearbyObjectNil			= 0,
 	NearbyObjectNPC			= 1,
 	NearbyObjectItem		= 2,
-	NearbyObjectNode		= 3
+	NearbyObjectNode		= 3,
+	NearbyObjectPlayer		= 4,
 };
 typedef UInt32 nearbyObjectKind;
 

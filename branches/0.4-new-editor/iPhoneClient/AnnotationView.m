@@ -7,7 +7,7 @@
 //
 
 #import "AnnotationView.h"
-#import "ItemAnnotation.h"
+#import "Annotation.h"
 #import "Media.h"
 #import "NearbyObjectProtocol.h"
 
@@ -22,7 +22,7 @@
 @synthesize icon;
 
 
-- (id)initWithAnnotation:(ItemAnnotation *)annotation reuseIdentifier:(NSString *)reuseIdentifier {
+- (id)initWithAnnotation:(Annotation *)annotation reuseIdentifier:(NSString *)reuseIdentifier {
 	UIFont *localTitleFont = [UIFont fontWithName:@"Arial" size:18];
 	UIFont *localSubtitleFont = [UIFont fontWithName:@"Arial" size:12];
 	CGRect localTitleRect;	//we use local copies until self is inited
@@ -84,15 +84,7 @@
 		else if (annotation.kind == NearbyObjectItem) iconView.image = [UIImage imageNamed:@"item.png"];
 		else if (annotation.kind == NearbyObjectNode) iconView.image = [UIImage imageNamed:@"page.png"];
 		else if (annotation.kind == NearbyObjectNPC) iconView.image = [UIImage imageNamed:@"person.png"];
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-				 
-		
+		else if (annotation.kind == NearbyObjectPlayer) iconView.image = [UIImage imageNamed:@"player.png"];
 		self.opaque = NO;
 	}
 	return self;
@@ -106,48 +98,6 @@
 	[iconView removeFromSuperview];
 	[super dealloc];
 }
-
-//- (void)setImageFromURL:(NSString *)imageURLString {
-//	NSURL *requestURL = [[NSURL alloc]initWithString:imageURLString];
-//	NSURLRequest *request = [NSURLRequest requestWithURL:requestURL
-//											 cachePolicy:NSURLRequestReturnCacheDataElseLoad
-//										 timeoutInterval:30];
-//	NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//	asyncData = [NSMutableData dataWithCapacity:1000];
-//	[asyncData retain];
-//	[urlConnection start];
-//	//set up indicators
-//	//[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-//	[asyncData appendData:data];
-//}
-//
-//- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//	//end the loading and spinner UI indicators
-//	//[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//	iconView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:asyncData]];
-//	//self.icon = [UIImage imageWithData:asyncData];
-//	CGRect imageViewFrame = CGRectMake(self.bounds.origin.x + 5.0, CGRectGetMaxY(self.contentRect)+POINTER_LENGTH, self.bounds.size.width - 10.0, IMAGE_HEIGHT);
-//	[iconView setFrame:imageViewFrame];
-//	iconView.contentMode = UIViewContentModeScaleToFill;
-//	[self addSubview:iconView];
-//	//[self setNeedsDisplay];
-//	
-//	[asyncData release];
-//	asyncData = nil;
-//}
-//
-//- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-//	
-//	//[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
-//	
-//	[asyncData release];
-//	asyncData = nil;
-//}
-
 
 
 - (void)drawRect:(CGRect)rect {

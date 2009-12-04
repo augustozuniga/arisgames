@@ -13,7 +13,7 @@
 #import "ARISAppDelegate.h"
 #import "AnnotationView.h"
 #import "Media.h"
-#import "ItemAnnotation.h"
+#import "Annotation.h"
 
 //static int DEFAULT_ZOOM = 16;
 //static float INITIAL_SPAN = 0.001;
@@ -36,13 +36,6 @@
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
 		
 		autoCenter = YES;
-		
-		//Setup the Map
-		CGRect tableFrame;
-		tableFrame = CGRectMake(0,0,100,100);
-		
-		NSLog(@"GPSViewController: Mapview about to be inited.");
-		mapView = [[MKMapView alloc] initWithFrame:tableFrame];
 		
 		//register for notifications
 		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
@@ -99,7 +92,7 @@
 							tableViewHeight);
 	
 	NSLog(@"GPSViewController: Mapview about to be inited.");
-	//mapView = [[MKMapView alloc] initWithFrame:tableFrame];
+	mapView = [[MKMapView alloc] initWithFrame:tableFrame];
 	[mapView setFrame:tableFrame];
 	MKCoordinateRegion region = mapView.region;
 	region.span.latitudeDelta=0.001;
@@ -118,6 +111,9 @@
 	
 	playerTrackingButton.target = self; 
 	playerTrackingButton.action = @selector(refreshButtonAction:);
+	
+	//Force an update of the locations
+	[appModel forceUpdateOnNextLocationListFetch];
 	
 	[self refresh];	
 	
@@ -141,7 +137,6 @@
 	if (mapView) {
 		NSLog(@"GPSViewController: refresh requested");	
 	
-		//Update the locations
 		[appModel fetchLocationList];
 	
 		//Zoom and Center
@@ -193,23 +188,23 @@
 			}
 			CLLocationCoordinate2D locationLatLong = location.location.coordinate;
 			
-			ItemAnnotation *anItem = [[ItemAnnotation alloc]initWithCoordinate:locationLatLong];
+			Annotation *annotation = [[Annotation alloc]initWithCoordinate:locationLatLong];
 			
-			anItem.title = location.name;
-			anItem.subtitle = [NSString stringWithFormat:@"%d",location.qty];
-			NSLog(@"***Item annotation title is %@; subtitle is %@.", anItem.title, anItem.subtitle);
+			annotation.title = location.name;
+			annotation.subtitle = [NSString stringWithFormat:@"%d",location.qty];
+			NSLog(@"***Item annotation title is %@; subtitle is %@.", annotation.title, annotation.subtitle);
 			
-			anItem.iconMediaId = location.iconMediaId; //if we have a custom icon
-			anItem.kind = location.kind; //if we want a default icon
+			annotation.iconMediaId = location.iconMediaId; //if we have a custom icon
+			annotation.kind = location.kind; //if we want a default icon
 
-			[mapView addAnnotation:anItem];
+			[mapView addAnnotation:annotation];
 			if (!mapView) {
 				NSLog(@"Well there's your problem! mapview is null!");
 			}
 			NSLog(@"***Now there are %d annotations.", mapView.annotations.count);
 			//[mapView selectAnnotation:anItem animated:YES];
 
-			[anItem release];
+			[annotation release];
 		}
 		
 		//Add the freshly loaded players from the notification
@@ -217,7 +212,7 @@
 			if (player.hidden == YES) continue;
 			CLLocationCoordinate2D locationLatLong = player.location.coordinate;
 
-			PlayerAnnotation *aPlayer = [[PlayerAnnotation alloc]initWithCoordinate:locationLatLong];
+			Annotation *aPlayer = [[Annotation alloc]initWithCoordinate:locationLatLong];
 			aPlayer.title = player.name;
 			[mapView addAnnotation:aPlayer];
 			[aPlayer release];
@@ -320,30 +315,31 @@
 #pragma mark Views for annotations
 
 - (MKAnnotationView *)mapView:(MKMapView *)myMapView viewForAnnotation:(id <MKAnnotation>)annotation{
-	NSLog(@"GPSViewController:In viewForAnnotation");
+	NSLog(@"GPSViewController: In viewForAnnotation");
 
 	
 	//Player
 	if (annotation == mapView.userLocation)
 	{
-		NSLog(@"User location, so we are leaving.");
+		NSLog(@"GPSViewController: Getting the annotation view for the user's location");
 		 return nil; //Let it do it's own thing
 	}
 	
 	//Other Players
-	if ([annotation isMemberOfClass:[PlayerAnnotation class]]) {
-		NSLog(@"other player annotation.");
+	/*
+	if ( annotation isMemberOfClass:[PlayerAnnotation class]]) {
+		NSLog(@"GPSViewController: Getting the annotation view for another player: %@", annotation.title);
 
 		AnnotationView *playerAnnotationView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"OtherPlayerAnnotation"];
 		playerAnnotationView.image = [UIImage imageNamed:@"marker-other-player.png"];
 		return playerAnnotationView;	
 	} 
+	 */
 	
 	//Everything else
 	else {
-		NSLog(@"Returning an annotation View");
+		NSLog(@"GPSViewController: Getting the annotation view for a game object: %@", annotation.title);
 		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
-		NSLog(@"Annotation title: %@",annotation.title);
 		return annotationView;
 	}
 }

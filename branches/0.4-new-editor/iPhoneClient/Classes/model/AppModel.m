@@ -482,6 +482,10 @@ static const int kDefaultCapacity = 10;
 	
 }
 
+- (void)forceUpdateOnNextLocationListFetch {
+	locationListHash = nil;
+}
+
 
 
 
@@ -736,12 +740,12 @@ static const int kDefaultCapacity = 10;
 	//Check for an error
 	
 	//Compare this hash to the last one. If the same, stop hee
-	/*
+	
 	if (jsonResult.hash == inventoryHash) {
 		NSLog(@"AppModel: Hash is same as last inventory listy update, continue");
 		return;
 	}
-	 */
+
 	
 	//Save this hash for later comparisions
 	inventoryHash = jsonResult.hash;
@@ -852,52 +856,6 @@ static const int kDefaultCapacity = 10;
 	NSNotification *notification = [NSNotification notificationWithName:@"ReceivedQuestList" object:nil];
 	[[NSNotificationCenter defaultCenter] postNotification:notification];
 	
-}
-
-
-#pragma mark Syncronizers
-
-- (NSMutableArray *)nearbyLocationsList {
-	NSMutableArray *result = nil;
-	@synchronized (nearbyLock) {
-		result = [nearbyLocationsList retain];
-	}
-	return result;
-}
-
-- (void)setNearbyLocationList:(NSMutableArray *)source {
-	@synchronized (nearbyLock) {
-		nearbyLocationsList = [source copy];
-	}
-}
-
-- (NSMutableArray *)locationList {
-	NSMutableArray *result = nil;
-	@synchronized (locationsLock) {
-		result = [locationList retain];
-	}
-	return result;
-}
-
-- (void)setLocationList:(NSMutableArray *)source {
-	@synchronized (locationsLock) {
-		locationList = [source copy];
-	}
-}
-
-
-- (NSMutableArray *)playerList {
-	NSMutableArray *result = nil;
-	@synchronized (locationsLock) {
-		result = [playerList retain];
-	}
-	return result;
-}
-
-- (void)setPlayerList:(NSMutableArray *)source {
-	@synchronized (locationsLock) {
-		playerList = [source copy];
-	}
 }
 
 @end

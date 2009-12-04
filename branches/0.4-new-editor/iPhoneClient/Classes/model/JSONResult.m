@@ -39,7 +39,8 @@
 	self.returnCodeDescription = [resultDictionary objectForKey:@"returnCodeDescription"];
 
 	NSObject *dataObject = [resultDictionary objectForKey:@"data"];
-	NSLog(@"PARSER data: %@", dataObject);
+	
+	//NSLog(@"PARSER data: %@", dataObject);
 	
 	self.data = [self parseJSONData:dataObject];
 		
