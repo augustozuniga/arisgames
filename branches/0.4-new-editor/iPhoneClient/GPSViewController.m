@@ -192,18 +192,16 @@
 			
 			annotation.title = location.name;
 			if (location.kind == NearbyObjectItem) annotation.subtitle = [NSString stringWithFormat:@"Quantity: %d",location.qty];
-			NSLog(@"***Item annotation title is %@; subtitle is %@.", annotation.title, annotation.subtitle);
+			NSLog(@"GPSViewController: Annotation title is %@; subtitle is %@.", annotation.title, annotation.subtitle);
 			
 			annotation.iconMediaId = location.iconMediaId; //if we have a custom icon
 			annotation.kind = location.kind; //if we want a default icon
 
 			[mapView addAnnotation:annotation];
 			if (!mapView) {
-				NSLog(@"Well there's your problem! mapview is null!");
+				NSLog(@"GPSViewController: Just added an annotation to a null mapview!");
 			}
-			NSLog(@"***Now there are %d annotations.", mapView.annotations.count);
-			//[mapView selectAnnotation:anItem animated:YES];
-
+			
 			[annotation release];
 		}
 		

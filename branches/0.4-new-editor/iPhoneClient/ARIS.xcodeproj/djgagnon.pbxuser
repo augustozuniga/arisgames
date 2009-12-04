@@ -90,7 +90,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					915,
+					897,
 					20,
 					48,
 					43,
@@ -319,6 +319,10 @@
 			AB6B76B710C98A5100275650 /* PBXTextBookmark */ = AB6B76B710C98A5100275650 /* PBXTextBookmark */;
 			AB6B76B910C98A7F00275650 /* PBXTextBookmark */ = AB6B76B910C98A7F00275650 /* PBXTextBookmark */;
 			AB6B76BA10C98A7F00275650 /* PBXTextBookmark */ = AB6B76BA10C98A7F00275650 /* PBXTextBookmark */;
+			AB6B76BF10C9C96100275650 /* PBXTextBookmark */ = AB6B76BF10C9C96100275650 /* PBXTextBookmark */;
+			AB6B76C010C9C96100275650 /* PBXTextBookmark */ = AB6B76C010C9C96100275650 /* PBXTextBookmark */;
+			AB6B76C410C9C98800275650 /* PBXTextBookmark */ = AB6B76C410C9C98800275650 /* PBXTextBookmark */;
+			AB6B76C510C9C98800275650 /* PBXTextBookmark */ = AB6B76C510C9C98800275650 /* PBXTextBookmark */;
 			AB8A40E3104C419200422773 = AB8A40E3104C419200422773 /* PBXTextBookmark */;
 			AB8A40E4104C419200422773 = AB8A40E4104C419200422773 /* PBXTextBookmark */;
 			AB8A4177104C54A800422773 = AB8A4177104C54A800422773 /* PBXTextBookmark */;
@@ -506,9 +510,9 @@
 	};
 	A722CB5A0FBDFEA6009432DB /* NearbyObjectProtocol.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1093, 325}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1075, 325}}";
 			sepNavSelRange = "{0, 41}";
-			sepNavVisRange = "{3, 339}";
+			sepNavVisRange = "{143, 291}";
 		};
 	};
 	A722E7130F57425B004B04D2 /* Location.h */ = {
@@ -1294,7 +1298,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 204";
 		rLen = 0;
-		rLoc = 5799;
+		rLoc = 5810;
 		rType = 0;
 		vrLen = 2338;
 		vrLoc = 4717;
@@ -1524,7 +1528,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 200";
 		rLen = 0;
-		rLoc = 5836;
+		rLoc = 5847;
 		rType = 0;
 		vrLen = 2210;
 		vrLoc = 4670;
@@ -1583,7 +1587,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 207";
 		rLen = 0;
-		rLoc = 6064;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 1604;
 		vrLoc = 4773;
@@ -1672,7 +1676,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 200";
 		rLen = 0;
-		rLoc = 5836;
+		rLoc = 5847;
 		rType = 0;
 		vrLen = 2239;
 		vrLoc = 9232;
@@ -1757,7 +1761,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 329;
+		rLoc = 327;
 		rType = 1;
 	};
 	AB6B767610C97FA200275650 /* PBXTextBookmark */ = {
@@ -1765,7 +1769,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 329";
 		rLen = 0;
-		rLoc = 10815;
+		rLoc = 10721;
 		rType = 0;
 		vrLen = 1363;
 		vrLoc = 10091;
@@ -1795,7 +1799,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 337";
 		rLen = 0;
-		rLoc = 11241;
+		rLoc = 11147;
 		rType = 0;
 		vrLen = 842;
 		vrLoc = 27;
@@ -1845,7 +1849,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 210";
 		rLen = 0;
-		rLoc = 6108;
+		rLoc = 6014;
 		rType = 0;
 		vrLen = 1297;
 		vrLoc = 5228;
@@ -1874,7 +1878,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 337";
 		rLen = 0;
-		rLoc = 11241;
+		rLoc = 11147;
 		rType = 0;
 		vrLen = 842;
 		vrLoc = 27;
@@ -2160,6 +2164,46 @@
 		rType = 0;
 		vrLen = 339;
 		vrLoc = 3;
+	};
+	AB6B76BF10C9C96100275650 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 193";
+		rLen = 19;
+		rLoc = 5405;
+		rType = 0;
+		vrLen = 1028;
+		vrLoc = 4900;
+	};
+	AB6B76C010C9C96100275650 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A722CB5A0FBDFEA6009432DB /* NearbyObjectProtocol.h */;
+		name = "NearbyObjectProtocol.h: 1";
+		rLen = 41;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 348;
+		vrLoc = 81;
+	};
+	AB6B76C410C9C98800275650 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 199";
+		rLen = 0;
+		rLoc = 5810;
+		rType = 0;
+		vrLen = 779;
+		vrLoc = 5209;
+	};
+	AB6B76C510C9C98800275650 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A722CB5A0FBDFEA6009432DB /* NearbyObjectProtocol.h */;
+		name = "NearbyObjectProtocol.h: 1";
+		rLen = 41;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 291;
+		vrLoc = 143;
 	};
 	AB8A40E3104C419200422773 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2553,7 +2597,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 203";
 		rLen = 0;
-		rLoc = 5799;
+		rLoc = 5810;
 		rType = 0;
 		vrLen = 1587;
 		vrLoc = 5260;
@@ -2761,9 +2805,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 281643603.980358;
+		modificationTime = 281659780.761437;
 		originalNumberOfMultipleMatches = 1;
-		state = 0;
+		state = 1;
 	};
 	ABD5C4E7104F1A0E002EB824 /* Npc.h */ = {
 		uiCtxt = {
@@ -2814,9 +2858,9 @@
 	};
 	ABDA40AD10506AF400823A94 /* GPSViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1093, 4745}}";
-			sepNavSelRange = "{5534, 0}";
-			sepNavVisRange = "{5112, 1695}";
+			sepNavIntBoundsRect = "{{0, 0}, {1075, 4446}}";
+			sepNavSelRange = "{5810, 0}";
+			sepNavVisRange = "{5209, 779}";
 		};
 	};
 	ABDA40AE10506AF400823A94 /* PlayerAnnotation.h */ = {
