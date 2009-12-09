@@ -26,7 +26,7 @@ static const int kDefaultCapacity = 10;
 @synthesize site, gameId, gameList, locationList, playerList;
 @synthesize playerLocation, inventory, questList, networkAlert, mediaList;
 
-@dynamic nearbyLocationsList;
+@synthesize nearbyLocationsList;
 
 #pragma mark Init/dealloc
 -(id)init {

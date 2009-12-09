@@ -22,6 +22,7 @@
 @synthesize numberOfOptions;
 @synthesize options;
 
+
 -(nearbyObjectKind) kind {
 	return NearbyObjectNPC;
 }

@@ -20,7 +20,7 @@
 	int	mediaId;
 	NSMutableArray *options;
 	NSInteger numberOfOptions;
-	
+	CLLocation *location;
 	BOOL forcedDisplay; //We only need this for the proto, might be good to define a new one
 }
 

@@ -6,6 +6,8 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
+
 enum {
 	NearbyObjectNil			= 0,
 	NearbyObjectNPC			= 1,
@@ -21,4 +23,6 @@ typedef UInt32 nearbyObjectKind;
 - (nearbyObjectKind)kind;
 - (BOOL)forcedDisplay;
 - (void)display;
+- (CLLocation *) location;
+
 @end

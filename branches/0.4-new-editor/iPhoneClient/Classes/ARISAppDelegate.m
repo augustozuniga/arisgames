@@ -48,6 +48,11 @@
 	[dispatcher addObserver:self selector:@selector(performLogout:) name:@"LogoutRequested" object:nil];
 	[dispatcher addObserver:self selector:@selector(displayNearbyObjects:) name:@"NearbyButtonTouched" object:nil];
 
+	//Setup ARView
+	ARViewViewControler *arViewController = [[[ARViewViewControler alloc] initWithNibName:@"ARView" bundle:nil] autorelease];
+	UINavigationController *arNavigationController = [[UINavigationController alloc] initWithRootViewController: arViewController];
+	arNavigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
+	
 	//Setup Tasks View
 	QuestsViewController *questsViewController = [[[QuestsViewController alloc] initWithNibName:@"Quests" bundle:nil] autorelease];
 	UINavigationController *questsNavigationController = [[UINavigationController alloc] initWithRootViewController: questsViewController];
@@ -104,6 +109,7 @@
 										questsNavigationController, 
 										gpsNavigationController,
 										inventoryNavigationController,
+										arNavigationController,
 										qrScannerNavigationController,
 										cameraNavigationController,
 										/* imNavigationController, */
