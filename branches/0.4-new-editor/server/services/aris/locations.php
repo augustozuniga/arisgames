@@ -34,7 +34,7 @@ class Locations extends Module
 		
 		$query = "SELECT * FROM {$prefix}_locations 
 				WHERE latitude != '' AND longitude != ''
-				AND (type != 'Item' OR (item_qty IS NULL OR item_qty > 0))
+				AND (type != 'Item' OR (item_qty IS NULL OR item_qty != 0))
 				";
 		$rsLocations = @mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
@@ -47,8 +47,10 @@ class Locations extends Module
 			if ($this->objectMeetsRequirements ($prefix, $intPlayerID, 'Location', $location->location_id)
 				AND
 				$this->objectMeetsRequirements ($prefix, $intPlayerID, $location->type, $location->type_id)
-				)
-				$arrayLocations[] = $location;
+				) {
+				
+					$arrayLocations[] = $location;
+			}
 		}
 		
 		return new returnData(0, $arrayLocations);
