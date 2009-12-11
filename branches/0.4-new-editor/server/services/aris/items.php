@@ -98,7 +98,7 @@ class Items extends Module
 		NetDebug::trace("createItem: Running a query = $query");	
 		
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error:" . mysql_error() . "while running query:" . $query);		
 		
 		return new returnData(0, mysql_insert_id());
 	}
@@ -125,7 +125,7 @@ class Items extends Module
 		//NetDebug::trace("createItem: Running a query = $query");	
 		
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error:" . mysql_error());
 		
 		$newItemID = mysql_insert_id();
 		Module::giveItemToPlayer($prefix, $newItemID, $intPlayerID); 
@@ -161,10 +161,10 @@ class Items extends Module
 		NetDebug::trace("updateNpc: Running a query = $query");	
 		
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
-		
-		if (mysql_affected_rows()) return new returnData(0, TRUE);
-		else return new returnData(0, FALSE);
+		if (mysql_error()) return new returnData(3, NULL, "SQL Error:" . mysql_error() . "while running query:" . $query);
+ 		
+		if (mysql_affected_rows()) return new returnData(0, TRUE, "Success Running:" . $query);
+		else return new returnData(0, FALSE, "Success Running:" . $query);
 		
 
 	}
