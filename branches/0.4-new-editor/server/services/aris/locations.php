@@ -91,6 +91,10 @@ class Locations extends Module
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+		
+		//Check the object Type is good or null
+		if ( !$this->isValidObjectType($intGameID, $strObjectType) or !strlen($strObjectType) > 0 )
+			return new returnData(4, NULL, "invalid object type");
 
 		$query = "INSERT INTO {$prefix}_locations 
 					(name, icon_media_id, latitude, longitude, error, 
@@ -128,7 +132,7 @@ class Locations extends Module
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 
 		//Check the object Type is good or null
-		if ( !$this->isValidObjectType($intGameID, $strObjectType) and strlen($strObjectType) >0 )
+		if ( !$this->isValidObjectType($intGameID, $strObjectType) or !strlen($strObjectType) > 0 )
 			return new returnData(4, NULL, "invalid object type");
 		
 		$query = "UPDATE {$prefix}_locations
