@@ -68,7 +68,7 @@ class EditorFoldersAndContent extends Module
 	
 	
 	/**
-     * Create or Update a Folder. Use 0 or null for NavigationFolderID and PreviousID to create a new record. If update, it will also update the sorting info
+     * Create or Update a Folder. Use 0 or null for FolderID to create a new record. If update, it will also update the sorting info
      * @returns the new folderID on insert	
      */
 	public function saveFolder($intGameID, $intFolderID, $strName, $intParentID, $intPreviousFolderID )
@@ -115,11 +115,11 @@ class EditorFoldersAndContent extends Module
 	}
 
 	/**
-     * Create or update content object to be displayed in navigation. Use 0 or null in intFolderContentID to create new.  If update, it will also update the sorting info
+     * Create or update content object to be displayed in navigation. Use 0 or null in intObjectContentID to create new.  If update, it will also update the sorting info
      * @returns the new folderContentID on insert
      */
-	public function saveContent($intGameID, $intFolderContentID, $intFolderID, 
-								$strContentType, $intContentID, $intPreviousContentID )
+	public function saveContent($intGameID, $intObjectContentID, $intFolderID, 
+								$strContentType, $intContentID, $intPreviousObjectContentID )
 	{
 		$prefix = $this->getPrefix($intGameID);
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
