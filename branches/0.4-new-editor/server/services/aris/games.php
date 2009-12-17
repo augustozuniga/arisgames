@@ -281,12 +281,12 @@ class Games extends Module
 
 
 		$query = "CREATE TABLE {$strShortName}_folder_contents (
-  			folder_content_id int(10) unsigned NOT NULL auto_increment,
+  			object_content_id int(10) unsigned NOT NULL auto_increment,
   			folder_id int(10) unsigned NOT NULL default '0',
   			content_type enum('Node','Item','Npc') collate utf8_unicode_ci NOT NULL default 'Node',
   			content_id int(10) unsigned NOT NULL default '0',
   			previous_id int(10) unsigned NOT NULL default '0',
-  			PRIMARY KEY  (folder_content_id)
+  			PRIMARY KEY  (object_content_id)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(6, NULL, 'cannot create folder contents table: ' . mysql_error());	

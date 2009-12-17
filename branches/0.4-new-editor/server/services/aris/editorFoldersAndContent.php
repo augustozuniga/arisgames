@@ -136,7 +136,7 @@ class EditorFoldersAndContent extends Module
 						content_type = '{$strContentType}',
 						content_id = '{$intContentID}'
 						WHERE 
-						folder_content_id = {$intObjectContentID}
+						object_content_id = {$intObjectContentID}
 						";
 						
 			NetDebug::trace($query);
@@ -194,7 +194,7 @@ class EditorFoldersAndContent extends Module
 
 		$this->spliceOut($prefix, self::EDITORCONTENT, $intContentID);
 		
-		$query = "DELETE FROM {$prefix}_folder_contents WHERE folder_content_id = {$intContentID}";
+		$query = "DELETE FROM {$prefix}_folder_contents WHERE object_content_id = {$intContentID}";
 		NetDebug::trace($query);
 		@mysql_query($query);
 		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
@@ -210,7 +210,7 @@ class EditorFoldersAndContent extends Module
 		if ($strFolderOrContent == self::EDITORCONTENT) { 
 			NetDebug::trace("Splice out some content");
 			$table = "folder_contents";
-			$idField ="folder_content_id";
+			$idField ="object_content_id";
 		}
 		else if ($strFolderOrContent == self::EDITORFOLDER) {
 			NetDebug::trace("Splice out a folder");
@@ -258,7 +258,7 @@ class EditorFoldersAndContent extends Module
 		if ($strFolderOrContent == self::EDITORCONTENT) { 
 			NetDebug::trace("Splice in some content");
 			$table = "folder_contents";
-			$idField ="folder_content_id";
+			$idField ="object_content_id";
 			$parentIDField = "folder_id";
 		}
 		else if ($strFolderOrContent == self::EDITORFOLDER) {
@@ -305,7 +305,7 @@ class EditorFoldersAndContent extends Module
 		if ($strFolderOrContent == self::EDITORCONTENT) { 
 			NetDebug::trace("Add some content");
 			$table = "folder_contents";
-			$idField ="folder_content_id";
+			$idField ="object_content_id";
 			$parentIDField = "folder_id";
 		}
 		else if ($strFolderOrContent == self::EDITORFOLDER) {
