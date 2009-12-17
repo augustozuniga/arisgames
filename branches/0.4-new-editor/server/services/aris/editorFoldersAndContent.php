@@ -136,7 +136,7 @@ class EditorFoldersAndContent extends Module
 						content_type = '{$strContentType}',
 						content_id = '{$intContentID}'
 						WHERE 
-						folder_content_id = {$intFolderContentID}
+						folder_content_id = {$intObjectContentID}
 						";
 						
 			NetDebug::trace($query);
