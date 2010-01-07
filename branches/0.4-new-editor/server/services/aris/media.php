@@ -41,6 +41,7 @@ class Media extends Module
 			$mediaItem['file_name'] = $mediaRow['file_name'];
 			$mediaItem['url_path'] = Config::gamedataWWWPath . "/{$prefix}/" . Config::gameMediaSubdir;
 			$mediaItem['type'] = $this->getMediaType($mediaRow['file_name']);
+			$mediaItem['is_default'] = $this->getMediaType($mediaRow['is_default']);
 			array_push($returnData->data, $mediaItem);
 		}
 		
@@ -89,8 +90,8 @@ class Media extends Module
 		if (!$prefix) return new returnData(1, NULL, "invalid game id");
 		            	
 		$query = "INSERT INTO {$prefix}_media 
-					(name, file_name)
-					VALUES ('{$strName}', '{$strFileName}')";
+					(name, file_name, is_default)
+					VALUES ('{$strName}', '{$strFileName}',0)";
 		
 		NetDebug::trace("Running a query = $query");	
 		

@@ -262,10 +262,11 @@ class Games extends Module
             media_id INT UNSIGNED NOT NULL AUTO_INCREMENT ,
             name VARCHAR( 255 ) NOT NULL,
             file_name VARCHAR( 255 ) NOT NULL,
+            is_default tinyint(1) default '0',
             PRIMARY KEY ( media_id )
             )ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
 		@mysql_query($query);
-		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');	
+		if (mysql_error()) return new returnData(6, NULL, 'cannot create media table');	
 		
 		
 		$query = "CREATE TABLE {$strShortName}_folders (
