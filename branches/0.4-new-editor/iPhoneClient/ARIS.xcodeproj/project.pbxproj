@@ -163,7 +163,6 @@
 		AB9A7C1710AA173F002FD9BC /* ARISURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AB9A7C1610AA173F002FD9BC /* ARISURLConnection.m */; };
 		ABA1046910CA0B2A008538D0 /* ARGeoCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA1046610CA0B2A008538D0 /* ARGeoCoordinate.m */; };
 		ABA1046A10CA0B2A008538D0 /* ARGeoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA1046810CA0B2A008538D0 /* ARGeoViewController.m */; };
-		ABA1049810CA0C6E008538D0 /* ARKitDemo_Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = ABCB3A5610CA092200F1444D /* ARKitDemo_Prefix.pch */; };
 		ABA1049910CA0C6E008538D0 /* ARCoordinate.h in Sources */ = {isa = PBXBuildFile; fileRef = AB6B774C10C9D64800275650 /* ARCoordinate.h */; };
 		ABA1049A10CA0C6E008538D0 /* ARCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6B774D10C9D64800275650 /* ARCoordinate.m */; };
 		ABA1049B10CA0C6E008538D0 /* ARViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = AB6B774E10C9D64800275650 /* ARViewController.h */; };
@@ -179,14 +178,11 @@
 		ABB925CA10C8581B00B09506 /* item.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C710C8581B00B09506 /* item.png */; };
 		ABB925CB10C8581B00B09506 /* page.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C810C8581B00B09506 /* page.png */; };
 		ABB925CC10C8581B00B09506 /* npc.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925C910C8581B00B09506 /* npc.png */; };
-		ABB925DA10C8585800B09506 /* QuestActiveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925D810C8585800B09506 /* QuestActiveIcon.png */; };
-		ABB925DB10C8585800B09506 /* QuestCompleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925D910C8585800B09506 /* QuestCompleteIcon.png */; };
 		ABB925DD10C8587200B09506 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925DC10C8587200B09506 /* camera.png */; };
 		ABB925DF10C8589100B09506 /* developer.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925DE10C8589100B09506 /* developer.png */; };
 		ABB925E110C858A600B09506 /* game.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925E010C858A600B09506 /* game.png */; };
 		ABB925E310C858BB00B09506 /* gps.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925E210C858BB00B09506 /* gps.png */; };
 		ABB925E510C858DF00B09506 /* inventory.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925E410C858DF00B09506 /* inventory.png */; };
-		ABB925E710C858F100B09506 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925E610C858F100B09506 /* logout.png */; };
 		ABB925E910C8590200B09506 /* qrscanner.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925E810C8590200B09506 /* qrscanner.png */; };
 		ABB925EB10C8591200B09506 /* quest.png in Resources */ = {isa = PBXBuildFile; fileRef = ABB925EA10C8591200B09506 /* quest.png */; };
 		ABBEBBAD104D7CC800AA7285 /* NodeOption.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBEBBAC104D7CC800AA7285 /* NodeOption.m */; };
@@ -195,6 +191,9 @@
 		ABD5C4E9104F1A0E002EB824 /* Npc.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C4E8104F1A0E002EB824 /* Npc.m */; };
 		ABD5C622104F3863002EB824 /* Npc.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABD5C61F104F3863002EB824 /* Npc.xib */; };
 		ABD5C623104F3863002EB824 /* NpcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABD5C621104F3863002EB824 /* NpcViewController.m */; };
+		ABD6226110D6FBB400D3B747 /* QuestActiveIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABD6225F10D6FBB400D3B747 /* QuestActiveIcon.png */; };
+		ABD6226210D6FBB400D3B747 /* QuestCompleteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = ABD6226010D6FBB400D3B747 /* QuestCompleteIcon.png */; };
+		ABD6226510D6FBCE00D3B747 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = ABD6226410D6FBCE00D3B747 /* logout.png */; };
 		ABDA40BD10506AF400823A94 /* GPS.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABDA40AA10506AF400823A94 /* GPS.xib */; };
 		ABDA40BF10506AF400823A94 /* GPSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */; };
 		ABDA40C110506AF400823A94 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA40B110506AF400823A94 /* Annotation.m */; };
@@ -429,14 +428,11 @@
 		ABB925C710C8581B00B09506 /* item.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = item.png; sourceTree = "<group>"; };
 		ABB925C810C8581B00B09506 /* page.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = page.png; sourceTree = "<group>"; };
 		ABB925C910C8581B00B09506 /* npc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npc.png; sourceTree = "<group>"; };
-		ABB925D810C8585800B09506 /* QuestActiveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestActiveIcon.png; sourceTree = "<group>"; };
-		ABB925D910C8585800B09506 /* QuestCompleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestCompleteIcon.png; sourceTree = "<group>"; };
 		ABB925DC10C8587200B09506 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		ABB925DE10C8589100B09506 /* developer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = developer.png; sourceTree = "<group>"; };
 		ABB925E010C858A600B09506 /* game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = game.png; sourceTree = "<group>"; };
 		ABB925E210C858BB00B09506 /* gps.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gps.png; sourceTree = "<group>"; };
 		ABB925E410C858DF00B09506 /* inventory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inventory.png; sourceTree = "<group>"; };
-		ABB925E610C858F100B09506 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
 		ABB925E810C8590200B09506 /* qrscanner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qrscanner.png; sourceTree = "<group>"; };
 		ABB925EA10C8591200B09506 /* quest.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = quest.png; sourceTree = "<group>"; };
 		ABBEBBAB104D7CC800AA7285 /* NodeOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeOption.h; sourceTree = "<group>"; };
@@ -444,12 +440,14 @@
 		ABBEBBC0104D7CF900AA7285 /* NodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeViewController.h; sourceTree = "<group>"; };
 		ABBEBBC1104D7CF900AA7285 /* NodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeViewController.m; sourceTree = "<group>"; };
 		ABBEBBC4104D7DAB00AA7285 /* Node.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Node.xib; sourceTree = "<group>"; };
-		ABCB3A5610CA092200F1444D /* ARKitDemo_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARKitDemo_Prefix.pch; sourceTree = "<group>"; };
 		ABD5C4E7104F1A0E002EB824 /* Npc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Npc.h; sourceTree = "<group>"; };
 		ABD5C4E8104F1A0E002EB824 /* Npc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Npc.m; sourceTree = "<group>"; };
 		ABD5C61F104F3863002EB824 /* Npc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Npc.xib; sourceTree = "<group>"; };
 		ABD5C620104F3863002EB824 /* NpcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NpcViewController.h; sourceTree = "<group>"; };
 		ABD5C621104F3863002EB824 /* NpcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NpcViewController.m; sourceTree = "<group>"; };
+		ABD6225F10D6FBB400D3B747 /* QuestActiveIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestActiveIcon.png; sourceTree = "<group>"; };
+		ABD6226010D6FBB400D3B747 /* QuestCompleteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QuestCompleteIcon.png; sourceTree = "<group>"; };
+		ABD6226410D6FBCE00D3B747 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
 		ABDA40AA10506AF400823A94 /* GPS.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GPS.xib; sourceTree = "<group>"; };
 		ABDA40AC10506AF400823A94 /* GPSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPSViewController.h; sourceTree = "<group>"; };
 		ABDA40AD10506AF400823A94 /* GPSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPSViewController.m; sourceTree = "<group>"; };
@@ -792,7 +790,7 @@
 		A7986D670F8FEC3900A5469F /* Logout */ = {
 			isa = PBXGroup;
 			children = (
-				ABB925E610C858F100B09506 /* logout.png */,
+				ABD6226410D6FBCE00D3B747 /* logout.png */,
 				2B3D12EA0F4382070067FD3A /* LogoutViewController.h */,
 				2B3D12EB0F4382070067FD3A /* LogoutViewController.m */,
 				2B3D12ED0F4382A00067FD3A /* Logout.xib */,
@@ -803,9 +801,9 @@
 		A7986D680F8FEC4900A5469F /* Quests */ = {
 			isa = PBXGroup;
 			children = (
+				ABD6225F10D6FBB400D3B747 /* QuestActiveIcon.png */,
+				ABD6226010D6FBB400D3B747 /* QuestCompleteIcon.png */,
 				ABB925EA10C8591200B09506 /* quest.png */,
-				ABB925D810C8585800B09506 /* QuestActiveIcon.png */,
-				ABB925D910C8585800B09506 /* QuestCompleteIcon.png */,
 				2B3D12CC0F437AC60067FD3A /* QuestsViewController.h */,
 				2B3D12CD0F437AC60067FD3A /* QuestsViewController.m */,
 				2B3D12CF0F437AF90067FD3A /* Quests.xib */,
@@ -905,7 +903,6 @@
 		AB6B774B10C9D64800275650 /* ARKIt */ = {
 			isa = PBXGroup;
 			children = (
-				ABCB3A5610CA092200F1444D /* ARKitDemo_Prefix.pch */,
 				AB6B774C10C9D64800275650 /* ARCoordinate.h */,
 				AB6B774D10C9D64800275650 /* ARCoordinate.m */,
 				AB6B774E10C9D64800275650 /* ARViewController.h */,
@@ -1057,17 +1054,17 @@
 				ABB925CA10C8581B00B09506 /* item.png in Resources */,
 				ABB925CB10C8581B00B09506 /* page.png in Resources */,
 				ABB925CC10C8581B00B09506 /* npc.png in Resources */,
-				ABB925DA10C8585800B09506 /* QuestActiveIcon.png in Resources */,
-				ABB925DB10C8585800B09506 /* QuestCompleteIcon.png in Resources */,
 				ABB925DD10C8587200B09506 /* camera.png in Resources */,
 				ABB925DF10C8589100B09506 /* developer.png in Resources */,
 				ABB925E110C858A600B09506 /* game.png in Resources */,
 				ABB925E310C858BB00B09506 /* gps.png in Resources */,
 				ABB925E510C858DF00B09506 /* inventory.png in Resources */,
-				ABB925E710C858F100B09506 /* logout.png in Resources */,
 				ABB925E910C8590200B09506 /* qrscanner.png in Resources */,
 				ABB925EB10C8591200B09506 /* quest.png in Resources */,
 				ABA104C710CA0E3E008538D0 /* ARView.xib in Resources */,
+				ABD6226110D6FBB400D3B747 /* QuestActiveIcon.png in Resources */,
+				ABD6226210D6FBB400D3B747 /* QuestCompleteIcon.png in Resources */,
+				ABD6226510D6FBCE00D3B747 /* logout.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1078,7 +1075,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABA1049810CA0C6E008538D0 /* ARKitDemo_Prefix.pch in Sources */,
 				ABA1049910CA0C6E008538D0 /* ARCoordinate.h in Sources */,
 				ABA1049A10CA0C6E008538D0 /* ARCoordinate.m in Sources */,
 				ABA1049B10CA0C6E008538D0 /* ARViewController.h in Sources */,

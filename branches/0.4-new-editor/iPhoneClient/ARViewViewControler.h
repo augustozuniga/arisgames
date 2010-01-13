@@ -16,6 +16,7 @@
 @interface ARViewViewControler : UIViewController <UIApplicationDelegate, ARViewDelegate>{
 	AppModel *appModel;	
 	NSMutableArray *locations;
+	ARGeoViewController *ARviewController;
 }
 
 @property(nonatomic, retain) NSMutableArray *locations;

@@ -31,12 +31,12 @@
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {	
 	
-	ARGeoViewController *viewController = [[ARGeoViewController alloc] init];
-	viewController.debugMode = NO;
-	viewController.delegate = self;
-	viewController.scaleViewsBasedOnDistance = NO;
-	viewController.minimumScaleFactor = .5;
-	viewController.rotateViewsBasedOnPerspective = NO;
+	ARviewController = [[ARGeoViewController alloc] init];
+	ARviewController.debugMode = NO;
+	ARviewController.delegate = self;
+	ARviewController.scaleViewsBasedOnDistance = NO;
+	ARviewController.minimumScaleFactor = .5;
+	ARviewController.rotateViewsBasedOnPerspective = NO;
 
 	
 	//Init with the nearby locations in the model
@@ -60,19 +60,39 @@
 	*/
 	
 	
-	[viewController addCoordinates:tempLocationArray];
-		
-	viewController.centerLocation = appModel.playerLocation;
+	[ARviewController addCoordinates:tempLocationArray];
 	
-	[viewController startListening];
+	ARviewController.centerLocation = appModel.playerLocation;
+	[ARviewController startListening];
 	
-	[[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] window] addSubview:viewController.view];
+	[[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] window] addSubview:ARviewController.view];
+	
+	//Add a close button
+	UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+	[closeButton setTitle:@"Close" forState:UIControlStateNormal];	
+	[closeButton addTarget:self action:@selector(closeButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+	closeButton.frame = CGRectMake(50, 50, 50, 50);
+	[ARviewController.view addSubview:closeButton];
+	
 	
     // Override point for customization after application launch
     [[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] window] makeKeyAndVisible];	
 	
+	
+	
 	[super viewDidLoad];
 	NSLog(@"ARView Loaded");
+}
+
+
+- (void)closeButtonTouched {
+	NSLog(@"ARViewViewController: close button pressed");
+	//[self dismissModalViewControllerAnimated:NO];
+	//[self.view removeFromSuperview];
+	//[self.cameraController dismissModalViewControllerAnimated:NO];
+	//[self release];
+	[ARviewController dismissModalViewControllerAnimated:NO]; //bad code
+
 }
 
 
@@ -94,20 +114,21 @@
 	
 	
 	
-	AsyncImageView *pointView = [[AsyncImageView alloc] initWithFrame:CGRectZero];
-	pointView.frame = CGRectMake((int)(BOX_WIDTH / 2.0 - 300 / 2.0), 20, 300, 300);
+	AsyncImageView *imageView = [[AsyncImageView alloc] initWithFrame:CGRectZero];
+	imageView.frame = CGRectMake((int)(BOX_WIDTH / 2.0 - 300 / 2.0), 20, 300, 300);
 	if (coordinate.mediaId != 0) {
-		 Media *pointMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:coordinate.mediaId]];
-		 [pointView loadImageFromMedia:pointMedia];
+		 Media *imageMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:coordinate.mediaId]];
+		 [imageView loadImageFromMedia:imageMedia];
 	}
-	else pointView.image = [UIImage imageNamed:@"location.png"];
+	else imageView.image = [UIImage imageNamed:@"location.png"];
 
+	//[imageView addTarget:self action:@selector(closeButtonTouched) forControlEvents:UIControlEventTouchUpInside];
 	
 	[tempView addSubview:titleLabel];
-	[tempView addSubview:pointView];
+	[tempView addSubview:imageView];
 	
 	[titleLabel release];
-	[pointView release];
+	[imageView release];
 	
 	return [tempView autorelease];
 }

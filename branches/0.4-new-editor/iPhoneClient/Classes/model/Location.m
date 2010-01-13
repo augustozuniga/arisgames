@@ -32,6 +32,7 @@
 	if ([self.objectType isEqualToString:@"Node"]) returnValue = NearbyObjectNode;
 	if ([self.objectType isEqualToString:@"Npc"]) returnValue = NearbyObjectNPC;
 	if ([self.objectType isEqualToString:@"Item"]) returnValue = NearbyObjectItem;
+	if ([self.objectType isEqualToString:@"Player"]) returnValue = NearbyObjectPlayer;
 	return returnValue;
 }
 

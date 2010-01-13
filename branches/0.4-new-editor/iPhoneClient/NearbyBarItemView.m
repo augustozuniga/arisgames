@@ -57,6 +57,10 @@
 				//NSLog(@"There's a node nearby.");
 				self.iconImage = [UIImage imageNamed:@"page.png"];
 				break;
+			case NearbyObjectPlayer:
+				//NSLog(@"There's a node nearby.");
+				self.iconImage = [UIImage imageNamed:@"player.png"];
+				break;
 		}
 		[self setNeedsDisplay];
 	}

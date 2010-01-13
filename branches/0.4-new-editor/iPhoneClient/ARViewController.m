@@ -98,8 +98,18 @@
 		
 		[ar_overlayView addSubview:ar_debugView];
 	}
+	
+
 		
 	self.view = ar_overlayView;
+	
+}
+
+- (void)closeButtonTouched {
+	//[self dismissModalViewControllerAnimated:NO];
+	//[self.view removeFromSuperview];
+	//[self.cameraController dismissModalViewControllerAnimated:NO];
+	//[self release];
 }
 
 - (void)setUpdateFrequency:(double)newUpdateFrequency {
@@ -454,18 +464,22 @@ NSComparisonResult LocationSortClosestFirst(ARCoordinate *s1, ARCoordinate *s2, 
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+	
+	/*
 	[ar_overlayView release];
 	ar_overlayView = nil;
+	 */
 }
 
 
 - (void)dealloc {
+	/*
 	[ar_debugView release];
-	
 	[ar_coordinateViews release];
 	[ar_coordinates release];
 	
     [super dealloc];
+	 */
 }
 
 @end

@@ -1,5 +1,5 @@
 <?php
-require("module.php");
+require_once("module.php");
 
 
 class Players extends Module
@@ -101,11 +101,15 @@ class Players extends Module
 		$query = "SELECT player_id, user_name, latitude, longitude FROM players 
 				WHERE last_game_id = '{$intGameID}' AND
 				player_id != '{$intPlayerID}'";
-		
-		//NetDebug::trace($query);
 
 		$rs = @mysql_query($query);
-		return new returnData(0, $rs);
+		
+		$array = array();
+		while ($object = mysql_fetch_object($rs)) {
+			$array[] = $object;
+		}
+		
+		return new returnData(0, $array);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 <?php
-require("module.php");
+require_once("module.php");
+require_once("players.php");
 
 
 class Locations extends Module
@@ -53,11 +54,40 @@ class Locations extends Module
 			}
 		}
 		
+		//Add the others players from this game, making them look like reqular locations
+		$playersJSON = Players::getOtherPlayersForGame($intGameID, $intPlayerID);
+		$playersArray = $playersJSON->data;
+		
+		foreach ($playersArray as $player) {
+			NetDebug::trace("adding player: " . $player->user_name );	
+			
+			$tmpPlayerObject = new stdClass();
+
+      		$tmpPlayerObject->name = $player->user_name;
+			$tmpPlayerObject->latitude = $player->latitude;
+      		$tmpPlayerObject->longitude = $player->longitude;
+      		$tmpPlayerObject->type_id = $player->player_id;
+      		
+      		$tmpPlayerObject->error = "5";
+      		$tmpPlayerObject->type = "Player";
+      		
+			$tmpPlayerObject->description = '';
+      		$tmpPlayerObject->force_view = "0";
+      		$tmpPlayerObject->hidden = "0";
+      		$tmpPlayerObject->icon_media_id = "0";
+      		$tmpPlayerObject->item_qty = "0";
+     		$tmpPlayerObject->location_id = "0";
+      		
+      		$arrayLocations[] = $tmpPlayerObject;
+      		NetDebug::trace("just adding player: " . $tmpPlayerObject->name );	
+
+		}
+
 		return new returnData(0, $arrayLocations);
+
 	}
 	
-	
-	
+
 	
 	/**
      * Fetch a specific location
