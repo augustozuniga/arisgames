@@ -18,9 +18,17 @@
 static NSString *const nearbyLock = @"nearbyLock";
 static NSString *const locationsLock = @"locationsLock";
 static const int kDefaultCapacity = 10;
+static const int kEmptyValue = -1;
+
+@interface AppModel()
+
+- (NSInteger) validIntForKey:(NSString *const)aKey inDictionary:(NSDictionary *const)aDictionary;
+- (id) validObjectForKey:(NSString *const)aKey inDictionary:(NSDictionary *const)aDictionary;
+
+@end
+
 
 @implementation AppModel
-
 @synthesize serverName, baseAppURL, jsonServerBaseURL, loggedIn;
 @synthesize username, password, playerId, currentModule;
 @synthesize site, gameId, gameList, locationList, playerList;
@@ -553,6 +561,17 @@ static const int kDefaultCapacity = 10;
 
 
 #pragma mark Parsers
+- (NSInteger) validIntForKey:(NSString *const)aKey inDictionary:(NSDictionary *const)aDictionary {
+	id theObject = [aDictionary valueForKey:aKey];
+	return [theObject respondsToSelector:@selector(intValue)]
+		? [theObject intValue] : kEmptyValue;
+}
+
+- (id) validObjectForKey:(NSString *const)aKey inDictionary:(NSDictionary *const)aDictionary {
+	id theObject = [aDictionary valueForKey:aKey];
+	return theObject == [NSNull null] ? nil : theObject;
+}
+
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
 	Item *item = [[Item alloc] init];
 	item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
@@ -569,11 +588,16 @@ static const int kDefaultCapacity = 10;
 
 -(Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary{
 	//Build the node
+	NSLog(@"%@", nodeDictionary);
 	Node *node = [[Node alloc] init];
 	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
-	node.mediaId = [[nodeDictionary valueForKey:@"media_id"] intValue];
+	NSLog(@"%@", [nodeDictionary valueForKey:@"media_id"]);
+	node.mediaId = [self validIntForKey:@"media_id" inDictionary:nodeDictionary];
+	node.answerString = [self validObjectForKey:@"require_answer_string" inDictionary:nodeDictionary];
+	node.nodeIfCorrect = [self validIntForKey:@"require_answer_correct_node_id" inDictionary:nodeDictionary];
+	node.nodeIfIncorrect = [self validIntForKey:@"require_answer_incorrect_node_id" inDictionary:nodeDictionary];
 	
 	//Add options here
 	int optionNodeId;

@@ -5,13 +5,13 @@
 //  Created by Kevin Harris on 5/11/09.
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
-
+#import "ARISAppDelegate.h"
+#import "AppModel.h"
+#import "DialogViewController.h"
+#import "Media.h"
 #import "NpcViewController.h"
 #import "NodeOption.h"
 #import "Node.h"
-#import "ARISAppDelegate.h"
-#import "AppModel.h"
-#import "Media.h"
 
 static NSString * const OPTION_CELL = @"option";
 
@@ -149,6 +149,8 @@ static NSString * const OPTION_CELL = @"option";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	return;
+	/*
 	NodeOption *selectedOption = [self.npc.options objectAtIndex:[indexPath row]];
 	NSLog(@"Displaying option ``%@''", selectedOption.text);
 	
@@ -156,8 +158,17 @@ static NSString * const OPTION_CELL = @"option";
 	
 	int newNodeId = selectedOption.nodeId;
 	Node *newNode = [appModel fetchNode:newNodeId];
-	[newNode display];
+	
 
+	//Create a reference to the delegate using the application singleton.
+	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
+	AppModel *appModel = appDelegate.appModel;
+	
+	DialogViewController *dialogViewController = [[DialogViewController alloc] initWithNibName:@"Dialog"
+																						bundle:[NSBundle mainBundle]];
+	[dialogViewController beginWithNPC:npc.npcId andNode:newNode];
+	[appDelegate displayNearbyObjectView:dialogViewController]; // Might need to swap these for the display to work correctly
+	 */
 }
 
 - (NSString *)tableView:(UITableView *)view titleForHeaderInSection:(NSInteger)section {

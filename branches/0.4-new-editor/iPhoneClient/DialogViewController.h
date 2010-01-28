@@ -1,0 +1,71 @@
+//
+//  aris_conversationViewController.h
+//  aris-conversation
+//
+//  Created by Kevin Harris on 09/11/17.
+//  Copyright Studio Tectorum 2009. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "SceneParser.h"
+
+@class AVAudioPlayer;
+@class Node;
+
+@interface DialogViewController : UIViewController<SceneParserDelegate, UIScrollViewDelegate, UITextFieldDelegate> {
+	UIImageView	*npcImage;
+	UIImageView	*pcImage;
+	UIWebView	*npcWebView;
+	UIWebView	*pcWebView;
+	UITableView	*pcTableView;
+	UITextField	*pcAnswerView;
+	UIScrollView *npcScrollView;
+	UIScrollView *pcScrollView;
+	UILabel		 *pcLabel;
+	
+	UIView	*mainView;
+	UIView	*npcView;
+	UIView	*pcView;
+	
+	UITableViewController	*pcTableViewController;
+	
+	NSString	*htmlTemplate;
+	NSString	*resourcePath;
+	
+	NSArray			*currentScript;
+	NSInteger		scriptIndex;
+	NSInteger		currentCharacter;
+	Scene			*cachedScene;
+
+	UIView			*cachedScrollView;
+	SceneParser		*parser;
+	
+	AVAudioPlayer	*bgPlayer;
+	AVAudioPlayer	*fgPlayer;
+	
+	Npc				*currentNpc;
+	Node			*currentNode;
+	NSMutableArray	*optionList;
+}
+
+@property(nonatomic, retain) IBOutlet UIImageView	*npcImage;
+@property(nonatomic, retain) IBOutlet UIImageView	*pcImage;
+@property(nonatomic, retain) IBOutlet UIWebView		*npcWebView;
+@property(nonatomic, retain) IBOutlet UIWebView		*pcWebView;
+@property(nonatomic, retain) IBOutlet UITableView	*pcTableView;
+@property(nonatomic, retain) IBOutlet UITextField	*pcAnswerView;
+@property(nonatomic, retain) IBOutlet UILabel		*pcLabel;
+
+@property(nonatomic, retain) IBOutlet UIScrollView	*npcScrollView;
+@property(nonatomic, retain) IBOutlet UIScrollView	*pcScrollView;
+
+@property(nonatomic, retain) IBOutlet UIView		*mainView;
+@property(nonatomic, retain) IBOutlet UIView		*npcView;
+@property(nonatomic, retain) IBOutlet UIView		*pcView;
+
+- (void) beginWithNPC:(Npc *)aNpc;
+- (void) continueScript;
+- (void) didFinishParsing;
+
+@end
+

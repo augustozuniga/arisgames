@@ -12,23 +12,13 @@
 #import "NodeViewController.h"
 
 @implementation Node
+@synthesize nodeId, name, text, mediaId, kind, forcedDisplay, numberOfOptions, options;
+@synthesize answerString, nodeIfCorrect, nodeIfIncorrect;
 
-@synthesize nodeId;
-@synthesize name;
-@synthesize text;
-@synthesize mediaId;
-@synthesize kind;
-@synthesize forcedDisplay;
-@synthesize numberOfOptions;
-@synthesize options;
+-(nearbyObjectKind) kind { return NearbyObjectNode; }
 
--(nearbyObjectKind) kind {
-	return NearbyObjectNode;
-}
-
-- (Node *)init {
-	self = [super init];
-    if (self) {
+- (Node *) init {
+    if (self = [super init]) {
 		kind = NearbyObjectNode;
 		options = [[NSMutableArray alloc] init];
     }

@@ -107,7 +107,7 @@ static NSString *const kBoundaryMagicString  = @"---------------------------1473
 	NSURLResponse *response;
 	NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
 	NSString *returnString = [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] autorelease];
-	NSLog([NSString stringWithFormat: @"Camera file posted. Result from Server: %@", returnString]);
+	NSLog(@"Camera file posted. Result from Server: %@", returnString);
 	
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [pool drain];

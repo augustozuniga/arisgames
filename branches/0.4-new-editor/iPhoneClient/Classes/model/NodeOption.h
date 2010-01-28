@@ -18,6 +18,6 @@
 @property(readwrite, assign) NSInteger nodeId;
 
 
--(NodeOption*) initWithText:(NSString *)text andNodeId: (int)nodeId;
+- (NodeOption *) initWithText:(NSString *)text andNodeId: (int)nodeId;
 
 @end

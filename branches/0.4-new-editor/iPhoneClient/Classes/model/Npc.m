@@ -6,9 +6,10 @@
 //  Copyright 2009 __MyCompanyName__. All rights reserved.
 //
 
-#import "Npc.h"
 #import "ARISAppDelegate.h"
 #import "AppModel.h"
+#import "DialogViewController.h"
+#import "Npc.h"
 #import "NpcViewController.h"
 
 @implementation Npc
@@ -47,6 +48,15 @@
 - (void) display{
 	NSLog(@"Npc: Display Self Requested");
 	
+	DialogViewController *dialogController = [[DialogViewController alloc] initWithNibName:@"Dialog"
+																					bundle:[NSBundle mainBundle]];
+	[dialogController beginWithNPC:self];
+	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
+	[appDelegate displayNearbyObjectView:dialogController];
+	/*
+	
+	
+	
 	//Create a reference to the delegate using the application singleton.
 	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
 	AppModel *appModel = appDelegate.appModel;
@@ -56,7 +66,7 @@
 	npcViewController.appModel = appModel;
 	
 	[appDelegate displayNearbyObjectView:npcViewController];
-	
+	*/
 }
 
 

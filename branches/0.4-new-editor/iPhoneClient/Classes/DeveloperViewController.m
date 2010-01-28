@@ -148,7 +148,7 @@
 	
 	if (tableView == locationTable) {
 		Location *selectedLocation = [locationTableData objectAtIndex:[indexPath row]];
-		NSLog([NSString stringWithFormat:@"DeveloperViewController: Location Selected. Forcing appModel to Latitude: %1.2f Longitude: %1.2f", selectedLocation.location.coordinate.latitude, selectedLocation.location.coordinate.longitude]);
+		NSLog(@"DeveloperViewController: Location Selected. Forcing appModel to Latitude: %1.2f Longitude: %1.2f", selectedLocation.location.coordinate.latitude, selectedLocation.location.coordinate.longitude);
 		appModel.playerLocation = [selectedLocation.location copy];
 		[appModel updateServerLocationAndfetchNearbyLocationList];
 	}

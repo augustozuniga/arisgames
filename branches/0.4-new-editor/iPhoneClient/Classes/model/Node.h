@@ -20,6 +20,10 @@
 	NSMutableArray		*options;
 	NSInteger			numberOfOptions;
 
+	NSString			*answerString;
+	NSInteger			nodeIfCorrect;
+	NSInteger			nodeIfIncorrect;
+	
 	BOOL forcedDisplay; //We only need this for the proto, might be good to define a new one
 }
 
@@ -31,6 +35,11 @@
 @property(readwrite, assign) int mediaId;
 @property(readonly) NSMutableArray *options;
 @property(readonly) NSInteger numberOfOptions;
+
+@property(readwrite, copy)		NSString	*answerString;
+@property(readwrite, assign)	NSInteger	nodeIfCorrect;
+@property(readwrite, assign)	NSInteger	nodeIfIncorrect;
+
 - (NSInteger) numberOfOptions;
 - (void) addOption: (NodeOption *)newOption;
 - (void) display;

@@ -203,11 +203,11 @@
 
 # pragma mark custom methods, notification handlers
 - (void)newError: (NSString *)text {
-	NSLog(text);
+	NSLog(@"%@", text);
 }
 
-- (void)displayNearbyObjectView:(UIViewController *)nearbyObjectViewController {	
-	nearbyObjectNavigationController = [[UINavigationController alloc] initWithRootViewController: nearbyObjectViewController];
+- (void)displayNearbyObjectView:(UIViewController *)nearbyObjectViewController {
+	nearbyObjectNavigationController = [[UINavigationController alloc] initWithRootViewController:nearbyObjectViewController];
 	nearbyObjectNavigationController.navigationBar.barStyle = UIBarStyleBlackOpaque;
 	
 	//Create a close button
@@ -228,7 +228,7 @@
 	
 	NSDictionary *userInfo = notification.userInfo;
 	
-	NSLog([NSString stringWithFormat:@"AppDelegate: Perform Login for: %@ Paswword: %@", [userInfo objectForKey:@"username"], [userInfo objectForKey:@"password"]] );
+	NSLog(@"AppDelegate: Perform Login for: %@ Paswword: %@", [userInfo objectForKey:@"username"], [userInfo objectForKey:@"password"]);
 	appModel.username = [userInfo objectForKey:@"username"];
 	appModel.password = [userInfo objectForKey:@"password"];
 
@@ -261,7 +261,7 @@
 	NSDictionary *userInfo = notification.userInfo;
 	Game *selectedGame = [userInfo objectForKey:@"game"];
 	
-	NSLog([NSString stringWithFormat:@"AppDelegate: Game Selected. '%@' game was selected using '%@' as it's site", selectedGame.name, selectedGame.site]);
+	NSLog(@"AppDelegate: Game Selected. '%@' game was selected using '%@' as it's site", selectedGame.name, selectedGame.site);
 
 	[gamePickerNavigationController.view removeFromSuperview];
 	

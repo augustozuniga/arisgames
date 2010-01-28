@@ -477,9 +477,8 @@ NSComparisonResult LocationSortClosestFirst(ARCoordinate *s1, ARCoordinate *s2, 
 	[ar_debugView release];
 	[ar_coordinateViews release];
 	[ar_coordinates release];
-	
+	*/
     [super dealloc];
-	 */
 }
 
 @end
