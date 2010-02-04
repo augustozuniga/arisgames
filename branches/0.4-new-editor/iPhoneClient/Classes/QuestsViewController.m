@@ -132,7 +132,6 @@ static int const COMPLETED_SECTION = 1;
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)nibTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {	
-	
 	//Get the cell definition
 	UITableViewCell *cell = [nibTableView dequeueReusableCellWithIdentifier:OPTION_CELL];	
 	if(cell == nil) cell = [self getCellContentView:OPTION_CELL];

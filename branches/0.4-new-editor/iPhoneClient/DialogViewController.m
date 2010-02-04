@@ -7,7 +7,9 @@
 //
 #import <AVFoundation/AVFoundation.h>
 #import "ARISAppDelegate.h"
+#import "AsyncImageView.h"
 #import "DialogViewController.h"
+#import "Media.h"
 #import "Node.h"
 #import "Scene.h"
 
@@ -18,6 +20,15 @@ NSString *const kOutAnimation = @"out";
 NSString *const kInAnimation = @"in";
 NSString *const kPcContinue = @"Tap to continue.";
 NSString *const kPcReview = @"Tap to review.";
+
+NSString *const kHtmlTemplate = 
+@"<html>"
+@"<head>"
+@"	<title>Aris</title>"
+@"	<link rel='stylesheet' type='text/css' href='aris.css' />"
+@"</head>"
+@"<body>%@</body>"
+@"</html>";
 
 
 @interface DialogViewController()
@@ -55,14 +66,8 @@ NSString *const kPcReview = @"Tap to review.";
 	assert(pcView && @"pcView not connected.");
 	
     [super viewDidLoad];
-	htmlTemplate = 
-	@"<html>"
-	@"<head>"
-	@"	<title>Aris</title>"
-	@"	<link rel='stylesheet' type='text/css' href='aris.css' />"
-	@"</head>"
-	@"<body>%@</body>"
-	@"</html>";
+	[self loadNPCImage:currentNpc.mediaId];
+	
 	resourcePath = [[NSString stringWithFormat:@"file:/%@//", [[[[NSBundle mainBundle] resourcePath]
 					 stringByReplacingOccurrencesOfString:@"/" withString:@"//"]
 					stringByReplacingOccurrencesOfString:@" " withString:@"%20"]] retain];
@@ -78,7 +83,7 @@ NSString *const kPcReview = @"Tap to review.";
 	[pcTableView setFrame:CGRectMake(0, 138, 320, 220)];
 
 	npcWebView.hidden = NO;
-	[npcWebView loadHTMLString:[NSString stringWithFormat:htmlTemplate, [currentNpc greeting]] 
+	[npcWebView loadHTMLString:[NSString stringWithFormat:kHtmlTemplate, [currentNpc greeting]] 
 					   baseURL:[NSURL URLWithString:resourcePath]];
 
 	pcAnswerView.delegate = self;
@@ -100,15 +105,6 @@ NSString *const kPcReview = @"Tap to review.";
 	@"<npc id='2' zoomX='150' zoomY='50' zoomWidth='100' zoomHeight='100'><![CDATA[<p><strong>OUCH!</strong></p><p>Ha ha ha!</p>]]></npc>"
 	@"</dialog>";
 */
-}
-- (void) beginWithNPC:(Npc *)aNpc {
-	currentNpc = [aNpc retain];
-	parser = [[SceneParser alloc] initWithDefaultNpcId:[aNpc mediaId]];
-	parser.delegate = self;
-
-	optionList = currentNpc.options;
-	assert(optionList == aNpc.options);
-	NSLog(@"OptionList: %@", optionList);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -138,6 +134,26 @@ NSString *const kPcReview = @"Tap to review.";
 	[pcAnswerView resignFirstResponder];
 	if (scriptIndex > [currentScript count]) scriptIndex = [currentScript count] - 1;
 	[self continueScript];
+}
+
+#pragma mark NPC Control
+- (void) beginWithNPC:(Npc *)aNpc {
+	currentNpc = [aNpc retain];
+	parser = [[SceneParser alloc] initWithDefaultNpcId:[aNpc mediaId]];
+	parser.delegate = self;
+	
+	optionList = currentNpc.options;
+	assert(optionList == aNpc.options);
+	NSLog(@"OptionList: %@", optionList);
+}
+
+- (void) loadNPCImage:(NSInteger)mediaId {
+	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
+	AppModel *appModel = appDelegate.appModel;
+	
+	Media *characterMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:mediaId]];
+	[npcImage loadImageFromMedia:characterMedia];
+	[npcImage setNeedsDisplay];
 }
 
 #pragma mark Script Control
@@ -180,7 +196,7 @@ NSString *const kPcReview = @"Tap to review.";
 		
 		cachedScrollView = pcImage;
 		[pcScrollView zoomToRect:[pcImage frame] animated:NO];
-		[pcWebView loadHTMLString:[NSString stringWithFormat:htmlTemplate, @""] 
+		[pcWebView loadHTMLString:[NSString stringWithFormat:kHtmlTemplate, @""] 
 								 baseURL:[NSURL URLWithString:resourcePath]];
 		
 		[self moveAllOutWithPostSelector:nil];
@@ -252,14 +268,14 @@ NSString *const kPcReview = @"Tap to review.";
 		characterScrollView = npcScrollView;
 		
 		// TODO: Grab the media from the media handler
-		[npcImage setImage:[UIImage imageNamed:@"defaultNpc.png"]];
+		[self loadNPCImage:cachedScene.characterId];
 		cachedScrollView = npcImage;
 	}
 	
 	isCurrentlyDisplayed = [characterWebView alpha] < 1;
 	NSLog(@"Character %d IsCurrentlyDisplayed: %d", currentCharacter, isCurrentlyDisplayed);
 	
-	[characterWebView loadHTMLString:[NSString stringWithFormat:htmlTemplate, cachedScene.text] 
+	[characterWebView loadHTMLString:[NSString stringWithFormat:kHtmlTemplate, cachedScene.text] 
 							 baseURL:[NSURL URLWithString:resourcePath]];
 	if (isCurrentlyDisplayed) {
 		[UIView beginAnimations:@"dialog" context:nil];

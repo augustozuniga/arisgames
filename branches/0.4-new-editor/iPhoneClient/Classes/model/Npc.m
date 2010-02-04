@@ -47,26 +47,11 @@
 
 - (void) display{
 	NSLog(@"Npc: Display Self Requested");
-	
 	DialogViewController *dialogController = [[DialogViewController alloc] initWithNibName:@"Dialog"
 																					bundle:[NSBundle mainBundle]];
 	[dialogController beginWithNPC:self];
 	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
 	[appDelegate displayNearbyObjectView:dialogController];
-	/*
-	
-	
-	
-	//Create a reference to the delegate using the application singleton.
-	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
-	AppModel *appModel = appDelegate.appModel;
-	
-	NpcViewController *npcViewController = [[NpcViewController alloc] initWithNibName:@"Npc" bundle: [NSBundle mainBundle]];
-	npcViewController.npc = self; //currentNode;
-	npcViewController.appModel = appModel;
-	
-	[appDelegate displayNearbyObjectView:npcViewController];
-	*/
 }
 
 

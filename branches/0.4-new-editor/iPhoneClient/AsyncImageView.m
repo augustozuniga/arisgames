@@ -12,12 +12,11 @@
 @implementation AsyncImageView
 
 - (void)loadImageFromMedia:(Media *) aMedia {
-	
 	media = aMedia;
 	
 	//check if the media already as the image, if so, just grab it
 	if (media.image) {
-		[self updateViewWithNewImage: media.image];
+		[self updateViewWithNewImage:media.image];
 		return;
 	}
 	
@@ -26,36 +25,29 @@
 	
 	//put a spinner in the view
 	UIActivityIndicatorView *spinner = 
-	[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
+	[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	[spinner startAnimating];
 	
 	spinner.center = self.center;
 	[self addSubview:spinner];
-	
-	
 	
 	if (connection!=nil) { [connection release]; }
     if (data!=nil) { [data release]; }
     NSURLRequest* request = [NSURLRequest requestWithURL:[[NSURL alloc]initWithString:media.url]
 											 cachePolicy:NSURLRequestUseProtocolCachePolicy
 										 timeoutInterval:60.0];
-    connection = [[NSURLConnection alloc]
-				  initWithRequest:request delegate:self];
-	
-	
+    connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
 }
 
 
 - (void)connection:(NSURLConnection *)theConnection didReceiveData:(NSData *)incrementalData {
     if (data==nil) {
-		data =
-		[[NSMutableData alloc] initWithCapacity:2048];
+		data = [[NSMutableData alloc] initWithCapacity:2048];
     }
     [data appendData:incrementalData];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection*)theConnection {
-	
 	//end the UI indicator
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	
@@ -73,11 +65,10 @@
 	//Save the image in the media
 	media.image = image;
 
-	[self updateViewWithNewImage: image];
+	[self updateViewWithNewImage:image];
 }
 
-
-- (void)updateViewWithNewImage: (UIImage*) image {
+- (void) updateViewWithNewImage:(UIImage*)image {
 	//clear out the subviews
     if ([[self subviews] count]>0) {
         [[[self subviews] objectAtIndex:0] removeFromSuperview];
@@ -91,12 +82,10 @@
 	
     [self addSubview:imageView];
     imageView.frame = self.bounds;
+	
     [imageView setNeedsLayout];
     [self setNeedsLayout];
-
 }
-
-
 
 - (UIImage*) getImage {
     UIImageView* iv = [[self subviews] objectAtIndex:0];

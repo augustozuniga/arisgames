@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "SceneParser.h"
 
+@class AsyncImageView;
 @class AVAudioPlayer;
 @class Node;
 
 @interface DialogViewController : UIViewController<SceneParserDelegate, UIScrollViewDelegate, UITextFieldDelegate> {
-	UIImageView	*npcImage;
+	AsyncImageView	*npcImage;
 	UIImageView	*pcImage;
 	UIWebView	*npcWebView;
 	UIWebView	*pcWebView;
@@ -28,8 +29,6 @@
 	UIView	*pcView;
 	
 	UITableViewController	*pcTableViewController;
-	
-	NSString	*htmlTemplate;
 	NSString	*resourcePath;
 	
 	NSArray			*currentScript;
@@ -64,6 +63,7 @@
 @property(nonatomic, retain) IBOutlet UIView		*pcView;
 
 - (void) beginWithNPC:(Npc *)aNpc;
+- (void) loadNPCImage:(NSInteger)mediaId;
 - (void) continueScript;
 - (void) didFinishParsing;
 
