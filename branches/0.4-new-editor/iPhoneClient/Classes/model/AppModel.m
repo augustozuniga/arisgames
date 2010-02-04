@@ -723,7 +723,6 @@ static const int kEmptyValue = -1;
 
 
 -(NSMutableDictionary *)parseMediaListFromArray: (NSArray *)mediaListArray{
-
 	NSMutableDictionary *tempMediaList = [[NSMutableDictionary alloc] init];
 	NSEnumerator *enumerator = [((NSArray *)mediaListArray) objectEnumerator];
 	NSDictionary *dict;

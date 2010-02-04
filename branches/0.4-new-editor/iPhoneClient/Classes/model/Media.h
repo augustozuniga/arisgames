@@ -8,16 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface Media : NSObject {
 	NSInteger	uid;
 	NSString	*url;
 	NSString	*type;
 	
 	//Image Specific Vars
-	UIImage		*image; //cache of the image data
-
-	
+	UIImage		*image; //cache of the image data	
 }
 
 @property(readonly) NSInteger	uid;

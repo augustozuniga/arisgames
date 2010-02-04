@@ -10,6 +10,7 @@
 #import "SceneParser.h"
 
 @class AsyncImageView;
+@class AudioStreamer;
 @class AVAudioPlayer;
 @class Node;
 
@@ -39,8 +40,8 @@
 	UIView			*cachedScrollView;
 	SceneParser		*parser;
 	
-	AVAudioPlayer	*bgPlayer;
-	AVAudioPlayer	*fgPlayer;
+	AudioStreamer	*bgPlayer;
+	AudioStreamer	*fgPlayer;
 	
 	Npc				*currentNpc;
 	Node			*currentNode;

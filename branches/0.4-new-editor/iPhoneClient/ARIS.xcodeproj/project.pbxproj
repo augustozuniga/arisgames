@@ -204,9 +204,10 @@
 		D424324E1107730E00E58147 /* SceneParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D424324C1107730E00E58147 /* SceneParser.m */; };
 		D42432631107735800E58147 /* DialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D42432621107735800E58147 /* DialogViewController.m */; };
 		D4243268110773EB00E58147 /* Dialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4243267110773EB00E58147 /* Dialog.xib */; };
-		D42432731107753F00E58147 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D42432721107753F00E58147 /* AVFoundation.framework */; };
 		D43717DF106D62BB0020C515 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = D43717DE106D62BB0020C515 /* Media.m */; };
 		D443855D1108B0100053E9FD /* aris.css in Resources */ = {isa = PBXBuildFile; fileRef = D443855C1108B0100053E9FD /* aris.css */; };
+		D4D366AC111B65E0009C4D00 /* AudioStreamer.m in Sources */ = {isa = PBXBuildFile; fileRef = D4D366AB111B65E0009C4D00 /* AudioStreamer.m */; };
+		D4D366DF111B6789009C4D00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D366DE111B6789009C4D00 /* CFNetwork.framework */; };
 		D4DE6B8B110A00D7008BFE38 /* defaultNpc.png in Resources */ = {isa = PBXBuildFile; fileRef = D4DE6B8A110A00D7008BFE38 /* defaultNpc.png */; };
 		D4DE6B8F110A044D008BFE38 /* defaultPlayer.png in Resources */ = {isa = PBXBuildFile; fileRef = D4DE6B8E110A044D008BFE38 /* defaultPlayer.png */; };
 /* End PBXBuildFile section */
@@ -472,10 +473,12 @@
 		D42432611107735800E58147 /* DialogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DialogViewController.h; sourceTree = "<group>"; };
 		D42432621107735800E58147 /* DialogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DialogViewController.m; sourceTree = "<group>"; };
 		D4243267110773EB00E58147 /* Dialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Dialog.xib; sourceTree = "<group>"; };
-		D42432721107753F00E58147 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D43717DD106D62BB0020C515 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
 		D43717DE106D62BB0020C515 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
 		D443855C1108B0100053E9FD /* aris.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = aris.css; sourceTree = "<group>"; };
+		D4D366AA111B65E0009C4D00 /* AudioStreamer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioStreamer.h; sourceTree = "<group>"; };
+		D4D366AB111B65E0009C4D00 /* AudioStreamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioStreamer.m; sourceTree = "<group>"; };
+		D4D366DE111B6789009C4D00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		D4DE6B8A110A00D7008BFE38 /* defaultNpc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultNpc.png; sourceTree = "<group>"; };
 		D4DE6B8E110A044D008BFE38 /* defaultPlayer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = defaultPlayer.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -495,7 +498,7 @@
 				A79202640F8E717C0049F990 /* MediaPlayer.framework in Frameworks */,
 				AB8A3CCE104936F500422773 /* libiconv.2.dylib in Frameworks */,
 				ABDA40DE10506CB300823A94 /* MapKit.framework in Frameworks */,
-				D42432731107753F00E58147 /* AVFoundation.framework in Frameworks */,
+				D4D366DF111B6789009C4D00 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +671,7 @@
 				A7986D650F8FEC1100A5469F /* Login */,
 				A7986D6B0F8FEC8800A5469F /* Generic Web View (compatability) */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				D4D366DE111B6789009C4D00 /* CFNetwork.framework */,
 			);
 			name = ARIS;
 			sourceTree = "<group>";
@@ -975,8 +979,9 @@
 		D42432501107734300E58147 /* Dialog */ = {
 			isa = PBXGroup;
 			children = (
-				D42432721107753F00E58147 /* AVFoundation.framework */,
 				D4243267110773EB00E58147 /* Dialog.xib */,
+				D4D366AA111B65E0009C4D00 /* AudioStreamer.h */,
+				D4D366AB111B65E0009C4D00 /* AudioStreamer.m */,
 				D42432611107735800E58147 /* DialogViewController.h */,
 				D42432621107735800E58147 /* DialogViewController.m */,
 				D42432491107730E00E58147 /* Scene.h */,
@@ -1220,6 +1225,7 @@
 				D424324D1107730E00E58147 /* Scene.m in Sources */,
 				D424324E1107730E00E58147 /* SceneParser.m in Sources */,
 				D42432631107735800E58147 /* DialogViewController.m in Sources */,
+				D4D366AC111B65E0009C4D00 /* AudioStreamer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

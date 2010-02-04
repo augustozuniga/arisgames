@@ -5,9 +5,9 @@
 //  Created by Kevin Harris on 09/11/17.
 //  Copyright Studio Tectorum 2009. All rights reserved.
 //
-#import <AVFoundation/AVFoundation.h>
 #import "ARISAppDelegate.h"
 #import "AsyncImageView.h"
+#import "AudioStreamer.h"
 #import "DialogViewController.h"
 #import "Media.h"
 #import "Node.h"
@@ -267,7 +267,6 @@ NSString *const kHtmlTemplate =
 		characterWebView = npcWebView;
 		characterScrollView = npcScrollView;
 		
-		// TODO: Grab the media from the media handler
 		[self loadNPCImage:cachedScene.characterId];
 		cachedScrollView = npcImage;
 	}
@@ -349,11 +348,15 @@ NSString *const kHtmlTemplate =
 
 #pragma mark Audio
 - (void) playSound:(int)soundId asBackground:(BOOL)yesOrNo {
-	NSString *soundFilePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"%d", soundId]
-															  ofType:@"mp3"];
-	if (!soundFilePath) return;
-	NSURL *url = [[NSURL alloc] initFileURLWithPath:soundFilePath];
-	AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
+	AppModel *appModel = appDelegate.appModel;
+	
+	Media *audioMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:soundId]];
+	
+	if (!audioMedia) return;
+	NSURL *url = [[NSURL alloc] initWithString:audioMedia.url];
+	AudioStreamer *player = [[AudioStreamer alloc] initWithURL:url];
+	NSLog(@"Opening audio URL %@", [url path]);
 	[url release];
 	
 	if (yesOrNo) {
@@ -363,7 +366,6 @@ NSString *const kHtmlTemplate =
 			bgPlayer = nil;
 		}
 		bgPlayer = player;
-		player.numberOfLoops = -1;	// infinite
 	}
 	else {
 		if (fgPlayer) {
@@ -373,7 +375,7 @@ NSString *const kHtmlTemplate =
 		}
 		fgPlayer = player;
 	}
-	[player play];
+	[player start];
 }
 
 #pragma mark Answer Checking
