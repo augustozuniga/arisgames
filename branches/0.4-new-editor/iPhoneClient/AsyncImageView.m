@@ -70,8 +70,8 @@
 
 - (void) updateViewWithNewImage:(UIImage*)image {
 	//clear out the subviews
-    if ([[self subviews] count]>0) {
-        [[[self subviews] objectAtIndex:0] removeFromSuperview];
+    while ([[self subviews] count] > 0) {
+		[[[self subviews] lastObject] removeFromSuperview];
     }
 	
 	//create the image view
