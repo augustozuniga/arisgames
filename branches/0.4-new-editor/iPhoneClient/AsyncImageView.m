@@ -69,6 +69,12 @@
 }
 
 - (void) updateViewWithNewImage:(UIImage*)image {
+	[UIView beginAnimations:@"async" context:nil];
+	[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+	[UIView setAnimationDuration:0.1];
+	self.alpha = 0;
+	[UIView commitAnimations];
+	
 	//clear out the subviews
     while ([[self subviews] count] > 0) {
 		[[[self subviews] lastObject] removeFromSuperview];
@@ -85,6 +91,11 @@
 	
     [imageView setNeedsLayout];
     [self setNeedsLayout];
+	[UIView beginAnimations:@"async" context:nil];
+	[UIView setAnimationCurve:UIViewAnimationCurveLinear];
+	[UIView setAnimationDuration:0.25];
+	self.alpha = 1.0;
+	[UIView commitAnimations];
 }
 
 - (UIImage*) getImage {

@@ -20,8 +20,6 @@
 - (UIImage*) getImage;
 - (void) updateViewWithNewImage:(UIImage*)image;
 
-
-
 @end
 
 

@@ -14,6 +14,8 @@ enum soundConstants {
 };
 
 @interface Scene : NSObject {
+	Boolean		isPc;
+	
 	NSString	*text;
 	int			characterId;
 	CGRect		zoomRect;
@@ -22,6 +24,7 @@ enum soundConstants {
 	int			fgSound;
 }
 
+@property(readonly) Boolean		isPc;
 @property(readonly)	NSString	*text;
 @property(readonly) int			characterId;
 @property(readonly) CGRect		zoomRect;
@@ -29,7 +32,11 @@ enum soundConstants {
 @property(readonly) int			fgSound;
 
 
-- (id) initWithText:(NSString *)aText andCharacter:(int)aCharacterId andZoom:(CGRect)aRect 
-	  withForeSound:(int)aFgSound andBackSound:(int)aBgSound;
+- (id) initWithText:(NSString *)aText 
+			andIsPc:(Boolean)isPcYorN
+	   andCharacter:(int)aCharacterId 
+			andZoom:(CGRect)aRect 
+	  withForeSound:(int)aFgSound 
+	   andBackSound:(int)aBgSound;
 
 @end

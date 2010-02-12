@@ -32,7 +32,8 @@ NSString *const kHtmlTemplate =
 
 
 @interface DialogViewController()
-
+- (void) loadCharacterImage:(NSInteger)mediaId withPriorId:(NSInteger *)priorId 
+					 inView:(AsyncImageView *)aView;
 - (void) movePcIn;
 - (void) moveNpcIn;
 - (void) moveAllOutWithPostSelector:(SEL)postSelector;
@@ -91,6 +92,7 @@ NSString *const kHtmlTemplate =
 	pcTableView.hidden = NO;
 	pcWebView.hidden = YES;
 	pcAnswerView.hidden = YES;
+	lastPcId = 0;
 	currentNode = nil;
 	[self moveNpcIn];	// Always start with the NPC Conversation list?
 	
@@ -147,13 +149,33 @@ NSString *const kHtmlTemplate =
 	NSLog(@"OptionList: %@", optionList);
 }
 
+- (void) loadPCImage:(NSInteger)mediaId {
+	if (mediaId > 0) {
+		pcImage.image = nil;
+		[self loadCharacterImage:mediaId withPriorId:&lastPcId inView:pcImage];
+	}
+	else if (lastPcId != 0) {
+		[pcImage updateViewWithNewImage:[UIImage imageNamed:@"defaultPlayer.png"]];
+		lastPcId = 0;
+	}
+}
+
 - (void) loadNPCImage:(NSInteger)mediaId {
+	[self loadCharacterImage:mediaId withPriorId:&lastNpcId inView:npcImage];
+}
+
+- (void) loadCharacterImage:(NSInteger)mediaId withPriorId:(NSInteger *)priorId 
+					 inView:(AsyncImageView *)aView 
+{
+	if (mediaId == *priorId) return;
+	
 	ARISAppDelegate *appDelegate = (ARISAppDelegate *) [[UIApplication sharedApplication] delegate];
 	AppModel *appModel = appDelegate.appModel;
 	
 	Media *characterMedia = [appModel.mediaList objectForKey:[NSNumber numberWithInt:mediaId]];
-	[npcImage loadImageFromMedia:characterMedia];
-	[npcImage setNeedsDisplay];
+	[aView loadImageFromMedia:characterMedia];
+	[aView setNeedsDisplay];
+	*priorId = mediaId;
 }
 
 #pragma mark Script Control
@@ -161,18 +183,6 @@ NSString *const kHtmlTemplate =
 	if (scriptIndex < [currentScript count]) {
 		Scene *currentScene = [currentScript objectAtIndex:scriptIndex];
 
-/*
-		if (currentScene.characterId == 0) {
-			[UIView beginAnimations:@"Display" context:nil];
-			pcTableView.alpha = 0;
-			pcTableView.hidden = YES;
-			pcWebView.alpha = 1;
-			pcWebView.hidden = NO;
-			pcAnswerView.alpha = 0;
-			pcAnswerView.hidden = YES;
-			[UIView commitAnimations];
-		}
- */
 		[self applyScene:currentScene];
 
 		currentCharacter = currentScene.characterId;
@@ -231,15 +241,8 @@ NSString *const kHtmlTemplate =
 		fgPlayer = nil;		
 	}
 	
-	
-	if (aScene.characterId == 0) {
-		characterWebView = pcWebView;
-		isCurrentlyDisplayed = currentCharacter == 0;
-	}
-	else {
-		characterWebView = npcWebView;
-		isCurrentlyDisplayed = currentCharacter == aScene.characterId;
-	}
+	characterWebView = aScene.isPc ? pcWebView : npcWebView;
+	isCurrentlyDisplayed = currentCharacter == aScene.characterId;
 	
 	if (isCurrentlyDisplayed) {
 		[UIView beginAnimations:@"dialog" context:nil];
@@ -258,9 +261,11 @@ NSString *const kHtmlTemplate =
 	UIScrollView *characterScrollView;
 	BOOL isCurrentlyDisplayed;
 	
-	if (cachedScene.characterId == 0) {
+	if (cachedScene.isPc) {
 		characterWebView = pcWebView;
 		characterScrollView = pcScrollView;
+		
+		[self loadPCImage:cachedScene.characterId];
 		cachedScrollView = pcImage;
 	}
 	else {
@@ -291,7 +296,7 @@ NSString *const kHtmlTemplate =
 	if (!isCurrentlyDisplayed) {
 		// This should share zoom code
 		[characterScrollView zoomToRect:cachedScene.zoomRect animated:NO];
-		if (cachedScene.characterId == 0) [self movePcIn];
+		if (cachedScene.isPc) [self movePcIn];
 		else [self moveNpcIn];
 	}
 	else {

@@ -576,6 +576,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>-1.CustomClassName</string>
 					<string>-2.CustomClassName</string>
+					<string>10.CustomClassName</string>
 					<string>10.IBPluginDependency</string>
 					<string>13.IBPluginDependency</string>
 					<string>15.IBPluginDependency</string>
@@ -598,6 +599,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>DialogViewController</string>
 					<string>UIResponder</string>
+					<string>AsyncImageView</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>

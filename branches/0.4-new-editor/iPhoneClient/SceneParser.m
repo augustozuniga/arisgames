@@ -8,6 +8,8 @@
 
 #import "SceneParser.h"
 
+const NSInteger kDefaultPc = 0;
+
 NSString *const kTagPc = @"pc";
 NSString *const kTagNpc = @"npc";
 NSString *const kTagId = @"id";
@@ -61,9 +63,16 @@ NSString *const kTagSoundFg = @"fgSound";
   qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict 
 {
 	NSLog(@"Started %@", elementName);
-	if ([elementName isEqualToString:kTagPc]) currentCharacterId = 0;
+	if ([elementName isEqualToString:kTagPc]) {
+		isPc = YES;
+		if ([[attributeDict objectForKey:kTagId] respondsToSelector:@selector(intValue)]) {
+			currentCharacterId = [[attributeDict objectForKey:kTagId] intValue];
+		}
+		else currentCharacterId = kDefaultPc;
+	}
 	else if ([elementName isEqualToString:kTagNpc]) {
-		if ([attributeDict objectForKey:kTagId] != nil) {
+		isPc = NO;
+		if ([[attributeDict objectForKey:kTagId] respondsToSelector:@selector(intValue)]) {
 			currentCharacterId = [[attributeDict objectForKey:kTagId] intValue];
 		}
 		else currentCharacterId = defaultNpcId;
@@ -95,6 +104,7 @@ NSString *const kTagSoundFg = @"fgSound";
 		|| [elementName isEqualToString:kTagNpc])
 	{
 		Scene *newScene = [[Scene alloc] initWithText:currentText
+											  andIsPc:isPc
 										 andCharacter:currentCharacterId
 											  andZoom:zoomRect
 										withForeSound:fgSound
@@ -124,6 +134,7 @@ NSString *const kTagSoundFg = @"fgSound";
 	if ([script count] == 0) {
 		// No parsing happened; use raw text.
 		Scene *defaultScene = [[Scene alloc] initWithText:sourceText
+												  andIsPc:NO
 											 andCharacter:defaultNpcId
 												  andZoom:CGRectMake(0, 0, 320, 460)
 											withForeSound:kEmptySound

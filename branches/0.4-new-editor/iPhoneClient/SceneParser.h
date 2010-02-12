@@ -15,6 +15,7 @@
 
 
 @interface SceneParser : NSObject {
+	Boolean			isPc;
 	NSInteger		currentCharacterId;
 	NSMutableString	*currentText;
 	NSInteger		defaultNpcId;

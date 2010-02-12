@@ -16,7 +16,7 @@
 
 @interface DialogViewController : UIViewController<SceneParserDelegate, UIScrollViewDelegate, UITextFieldDelegate> {
 	AsyncImageView	*npcImage;
-	UIImageView	*pcImage;
+	AsyncImageView	*pcImage;
 	UIWebView	*npcWebView;
 	UIWebView	*pcWebView;
 	UITableView	*pcTableView;
@@ -34,6 +34,8 @@
 	
 	NSArray			*currentScript;
 	NSInteger		scriptIndex;
+	NSInteger		lastPcId;
+	NSInteger		lastNpcId;
 	NSInteger		currentCharacter;
 	Scene			*cachedScene;
 
@@ -48,8 +50,8 @@
 	NSMutableArray	*optionList;
 }
 
-@property(nonatomic, retain) IBOutlet UIImageView	*npcImage;
-@property(nonatomic, retain) IBOutlet UIImageView	*pcImage;
+@property(nonatomic, retain) IBOutlet AsyncImageView	*npcImage;
+@property(nonatomic, retain) IBOutlet AsyncImageView	*pcImage;
 @property(nonatomic, retain) IBOutlet UIWebView		*npcWebView;
 @property(nonatomic, retain) IBOutlet UIWebView		*pcWebView;
 @property(nonatomic, retain) IBOutlet UITableView	*pcTableView;
@@ -64,6 +66,7 @@
 @property(nonatomic, retain) IBOutlet UIView		*pcView;
 
 - (void) beginWithNPC:(Npc *)aNpc;
+- (void) loadPCImage:(NSInteger)mediaId;
 - (void) loadNPCImage:(NSInteger)mediaId;
 - (void) continueScript;
 - (void) didFinishParsing;
