@@ -21,7 +21,7 @@
 {
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
-        self.title = @"AR View PT";
+        self.title = @"AR View - EXPERIMENTAL";
         self.tabBarItem.image = [UIImage imageNamed:@"camera.png"];
 		appModel = [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] appModel];
     }

@@ -109,8 +109,8 @@
 										questsNavigationController, 
 										gpsNavigationController,
 										inventoryNavigationController,
-										arNavigationController,
 										qrScannerNavigationController,
+										arNavigationController,
 										cameraNavigationController,
 										/* imNavigationController, */
 										gamePickerNavigationController,
