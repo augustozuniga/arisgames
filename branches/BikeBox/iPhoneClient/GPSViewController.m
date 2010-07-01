@@ -239,7 +239,7 @@
 			Annotation *annotation = [[Annotation alloc]initWithCoordinate:locationLatLong];
 			
 			annotation.title = location.name;
-			if (location.kind == NearbyObjectItem) annotation.subtitle = [NSString stringWithFormat:@"Quantity: %d",location.qty];
+			//if (location.kind == NearbyObjectItem) annotation.subtitle = [NSString stringWithFormat:@"Quantity: %d",location.qty];
 			NSLog(@"GPSViewController: Annotation title is %@; subtitle is %@.", annotation.title, annotation.subtitle);
 			
 			annotation.iconMediaId = location.iconMediaId; //if we have a custom icon
@@ -360,7 +360,7 @@
 //
 #pragma mark Views for annotations
 
-- (MKAnnotationView *)mapView:(MKMapView *)myMapView viewForAnnotation:(id <MKAnnotation>)annotation{
+- (MKAnnotationView *)mapView:(MKMapView *)myMapView viewForAnnotation:(Annotation*) annotation{
 	NSLog(@"GPSViewController: In viewForAnnotation");
 
 	
@@ -372,22 +372,21 @@
 	}
 	
 	//Other Players
-	/*
-	if ( annotation isMemberOfClass:[PlayerAnnotation class]]) {
+	if ([annotation kind] == NearbyObjectPlayer) {
 		NSLog(@"GPSViewController: Getting the annotation view for another player: %@", annotation.title);
 
-		AnnotationView *playerAnnotationView = [[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"OtherPlayerAnnotation"];
-		playerAnnotationView.image = [UIImage imageNamed:@"marker-other-player.png"];
+		MKAnnotationView *playerAnnotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"OtherPlayerAnnotation"];
+		playerAnnotationView.image = [UIImage imageNamed:@"player.png"];
+		playerAnnotationView.canShowCallout = YES;
 		return playerAnnotationView;	
 	} 
-	 */
-	
-	//Everything else
-	else {
-		NSLog(@"GPSViewController: Getting the annotation view for a game object: %@", annotation.title);
-		AnnotationView *annotationView=[[AnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:nil];
-		return annotationView;
-	}
+
+	MKAnnotationView *annotationView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"marker"];
+	annotationView.image = [UIImage imageNamed:@"item.png"];
+	annotationView.canShowCallout = YES;
+	return annotationView;
+
+
 }
 
 
