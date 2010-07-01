@@ -30,13 +30,15 @@
 	
 	//init app model
 	appModel = [[AppModel alloc] init];
-	
-	//Init keys in UserDefaults in case the user has not visited the ARIS Settings page
-	//To set these defaults, edit Settings.bundle->Root.plist 
-	[appModel initUserDefaults];
-	
-	//Load defaults from UserDefaults
-	[appModel loadUserDefaults];
+	appModel.baseAppURL = @"http://davembp.local/server/";
+	//appModel.baseAppURL = @"http://arisgames.org/stagingserver1/";
+
+	NSURL *url = [NSURL URLWithString:appModel.baseAppURL];
+	appModel.serverName = [NSString stringWithFormat:@"http://%@:%d", [url host], 
+					   ([url port] ? [[url port] intValue] : 80)];
+	appModel.jsonServerBaseURL = [NSString stringWithFormat:@"%@%@",
+							  appModel.baseAppURL, @"json.php/aris"];	
+	appModel.gameId = 188;//200 for BB on staging
 	[appModel retain];
 	
 	
@@ -83,8 +85,6 @@
 	loginViewController.view.frame = CGRectMake(0,20,320,460);
 	[loginViewController retain];
 
-	
-	appModel.gameId = 161;
 	gpsViewController.view.frame = CGRectMake(0,20,320,460);
 	[window addSubview:gpsViewController.view];
 
@@ -231,7 +231,6 @@
 	if(appModel.loggedIn) {
 		NSLog(@"AppDelegate: Login Success");
 		[loginViewController.view removeFromSuperview];
-		[appModel saveUserDefaults];
 		[appModel fetchMediaList];
 		[appModel fetchLocationList];
 	} 
@@ -250,18 +249,6 @@
 	
 }
 
-
-- (void)performLogout:(NSNotification *)notification {
-    NSLog(@"Performing Logout: Clearing NSUserDefaults and Displaying Login Screen");
-	
-	//Clear any user realated info in appModel (except server)
-	[appModel clearUserDefaults];
-	[appModel loadUserDefaults];
-	
-	//(re)load the login view
-	tabBarController.view.hidden = YES;
-	[window addSubview:loginViewController.view];
-}
 
 
 
@@ -307,7 +294,6 @@
 -(void) applicationWillTerminate:(UIApplication *)application {
 	NSLog(@"Begin Application Termination");
 	
-	[appModel saveUserDefaults];
 }
 
 - (void)dealloc {

@@ -59,112 +59,6 @@ static const int kEmptyValue = -1;
     [super dealloc];
 }
 
--(void)loadUserDefaults {
-	NSLog(@"Model: Loading User Defaults");
-	
-	//Load the base App URL
-	self.baseAppURL = [defaults stringForKey:@"baseAppURL"];
-	
-	//Make sure it has a trailing slash (needed in some places)
-	int length = [self.baseAppURL length];
-	unichar lastChar = [self.baseAppURL characterAtIndex:length-1];
-	NSString *lastCharString = [ NSString stringWithCharacters:&lastChar length:1 ];
-	if (![lastCharString isEqualToString:@"/"]) self.baseAppURL = [[NSString alloc] initWithFormat:@"%@/",self.baseAppURL];
-	
-	NSURL *url = [NSURL URLWithString:self.baseAppURL];
-	self.serverName = [NSString stringWithFormat:@"http://%@:%d", [url host], 
-					   ([url port] ? [[url port] intValue] : 80)];
-	
-	self.gameId = [defaults integerForKey:@"gameId"];
-	self.gamePcMediaId = [defaults integerForKey:@"gamePcMediaId"];
-	self.loggedIn = [defaults boolForKey:@"loggedIn"];
-	
-	if (loggedIn == YES) {
-		if (![baseAppURL isEqualToString:[defaults stringForKey:@"lastBaseAppURL"]]) {
-			self.loggedIn = NO;
-			NSLog(@"Model: Server URL changed since last execution. Throw out Defaults and use URL: '%@' Site: '%@' GameId: '%d'", baseAppURL, site, gameId);
-		}
-		else {
-			self.username = [defaults stringForKey:@"username"];
-			self.password = [defaults stringForKey:@"password"];
-			self.playerId = [defaults integerForKey:@"playerId"];
-			NSLog(@"Model: Defaults Found. Use URL: '%@' User: '%@' Password: '%@' PlayerId: '%d' GameId: '%d' Site: '%@'", 
-				  baseAppURL, username, password, playerId, gameId, site);
-		}
-	}
-	else NSLog(@"Model: Player was not logged in, Initing with Defaults");
-
-	
-	self.jsonServerBaseURL = [NSString stringWithFormat:@"%@%@",
-						 baseAppURL, @"json.php/aris"];
-	
-	NSLog(@"AppModel: jsonServerURL is %@",jsonServerBaseURL);
-}
-
-
--(void)clearUserDefaults {
-	NSLog(@"Model: Clearing User Defaults");
-	
-	[defaults removeObjectForKey:@"loggedIn"];	
-	[defaults removeObjectForKey:@"username"];
-	[defaults removeObjectForKey:@"password"];
-	[defaults removeObjectForKey:@"playerId"];
-	[defaults removeObjectForKey:@"gameId"];
-	[defaults removeObjectForKey:@"gamePcMediaId"];
-	
-	//Don't clear the baseAppURL
-}
-
--(void)saveUserDefaults {
-	NSLog(@"Model: Saving User Defaults");
-	
-	[defaults setBool:loggedIn forKey:@"loggedIn"];
-	[defaults setObject:username forKey:@"username"];
-	[defaults setObject:password forKey:@"password"];
-	[defaults setInteger:playerId forKey:@"playerId"];
-	[defaults setInteger:gameId forKey:@"gameId"];
-	[defaults setInteger:gamePcMediaId forKey:@"gamePcMediaId"];
-	[defaults setObject:baseAppURL forKey:@"lastBaseAppURL"];
-	[defaults setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"] forKey:@"appVerison"];
-	[defaults setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"] forKey:@"buildNum"];
-
-}
-
--(void)initUserDefaults {	
-	
-	//Load the settings bundle data into an array
-	NSString *pathStr = [[NSBundle mainBundle] bundlePath];
-	NSString *settingsBundlePath = [pathStr stringByAppendingPathComponent:@"Settings.bundle"];
-	NSString *finalPath = [settingsBundlePath stringByAppendingPathComponent:@"Root.plist"];
-	NSDictionary *settingsDict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
-	NSArray *prefSpecifierArray = [settingsDict objectForKey:@"PreferenceSpecifiers"];
-	
-	//Find the Defaults
-	NSString *baseAppURLDefault;
-	NSDictionary *prefItem;
-	for (prefItem in prefSpecifierArray)
-	{
-		NSString *keyValueStr = [prefItem objectForKey:@"Key"];
-		id defaultValue = [prefItem objectForKey:@"DefaultValue"];
-		
-		if ([keyValueStr isEqualToString:@"baseAppURL"])
-		{
-			baseAppURLDefault = defaultValue;
-		}
-		//More defaults would go here
-	}
-	
-	// since no default values have been set (i.e. no preferences file created), create it here
-	NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys: 
-								 baseAppURLDefault,  @"baseAppURL", 
-								 nil];
-	
-	[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
-	[[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
-
 
 #pragma mark Communication with Server
 - (BOOL)login {
@@ -462,7 +356,7 @@ static const int kEmptyValue = -1;
 						  nil];
 	JSONConnection *jsonConnection = [[JSONConnection alloc]initWithArisJSONServer:self.jsonServerBaseURL 
 																	andServiceName:@"items" 
-																	 andMethodName:@"createItemAndGiveToPlayer" 
+																	 andMethodName:@"createItemAndPlaceOnMap" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
 

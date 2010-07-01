@@ -74,7 +74,12 @@
     NSLog(@"GPSViewController: Recieved a Nearby Locations List Notification");
 	NSArray *nearbyLocations = notification.object;
 	
-	if ([nearbyLocations count] == 0) { 
+	bool nearbyLocationsThatAreNotPlayersExist = NO;
+	for (NSObject <NearbyObjectProtocol> *curLocation in nearbyLocations) {
+		if ([curLocation kind] != NearbyObjectPlayer) nearbyLocationsThatAreNotPlayersExist = YES;
+	}
+	
+	if (!nearbyLocationsThatAreNotPlayersExist) { 
 		NSLog(@"GPSViewController: No nearby Locations");
 		mainButton.title = @"Record";
 		somethingNearby = NO;
@@ -159,14 +164,12 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-	[appModel updateServerMapViewed];
-	
+	NSLog(@"GPSVC viewDidAppear: Refreshing");
 	[self refresh];		
 	
 	//remove any existing badge
 	self.tabBarItem.badgeValue = nil;
 	
-	NSLog(@"GPSViewController: view did appear");
 }
 
 

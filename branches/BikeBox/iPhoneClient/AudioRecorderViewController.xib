@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="25"/>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -60,7 +60,7 @@
 					<object class="IBUIButton" id="885407954">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{32, 390}, {256, 50}}</string>
+						<string key="NSFrame">{{32, 332}, {256, 50}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<object class="NSColor" key="IBUIBackgroundColor" id="42687970">
 							<int key="NSColorSpace">3</int>
@@ -77,14 +77,14 @@
 							<int key="NSfFlags">16</int>
 						</object>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Save</string>
+						<string key="IBUINormalTitle">Upload to Bike Box</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="696196319">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
 						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC4wMTk2MDc4NDM4MyAwLjYxOTYwNzg2NTggMC45NDExNzY1MzM3AA</bytes>
 						</object>
 						<object class="NSColor" key="IBUINormalTitleShadowColor" id="697169979">
 							<int key="NSColorSpace">3</int>
@@ -107,15 +107,15 @@
 						<string key="IBUINormalTitle">Record</string>
 						<reference key="IBUIHighlightedTitleColor" ref="696196319"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC4wMTk2MDc4NDM4MyAwLjYxOTYwNzg2NTggMC45NDExNzY1MzM3AA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="697169979"/>
 					</object>
 					<object class="IBUIButton" id="29781883">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{32, 332}, {256, 50}}</string>
+						<string key="NSFrame">{{32, 390}, {256, 50}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="IBUIBackgroundColor" ref="42687970"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -125,11 +125,11 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<reference key="IBUIFont" ref="943948428"/>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Play</string>
+						<string key="IBUINormalTitle">Back</string>
 						<reference key="IBUIHighlightedTitleColor" ref="696196319"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4xOTYwNzg0MzE0IDAuMzA5ODAzOTIxNiAwLjUyMTU2ODYyNzUAA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC4wMTk2MDc4NDM4MyAwLjYxOTYwNzg2NTggMC45NDExNzY1MzM3AA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="697169979"/>
 					</object>
@@ -158,12 +158,20 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">recordOrStop:</string>
+						<string key="label">recordStopOrPlayButtonAction:</string>
 						<reference key="source" ref="826807175"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">20</int>
+					<int key="connectionID">27</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">recordStopOrPlayButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="826807175"/>
+					</object>
+					<int key="connectionID">28</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -171,41 +179,33 @@
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="885407954"/>
 					</object>
-					<int key="connectionID">21</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">playOrPauseButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="29781883"/>
-					</object>
-					<int key="connectionID">22</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">recordOrStopButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="826807175"/>
-					</object>
-					<int key="connectionID">23</int>
+					<int key="connectionID">29</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">upload:</string>
+						<string key="label">uploadButtonAction:</string>
 						<reference key="source" ref="885407954"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">24</int>
+					<int key="connectionID">30</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">backButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="29781883"/>
+					</object>
+					<int key="connectionID">31</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">playOrPause:</string>
+						<string key="label">backButtonAction:</string>
 						<reference key="source" ref="29781883"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">26</int>
+					<int key="connectionID">32</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -234,9 +234,9 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="835209662"/>
+							<reference ref="826807175"/>
 							<reference ref="885407954"/>
 							<reference ref="29781883"/>
-							<reference ref="826807175"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -301,7 +301,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">26</int>
+			<int key="maxID">32</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -313,9 +313,9 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>playOrPause:</string>
-							<string>recordOrStop:</string>
-							<string>upload:</string>
+							<string>backButtonAction:</string>
+							<string>recordStopOrPlayButtonAction:</string>
+							<string>uploadButtonAction:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -328,22 +328,22 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>playOrPause:</string>
-							<string>recordOrStop:</string>
-							<string>upload:</string>
+							<string>backButtonAction:</string>
+							<string>recordStopOrPlayButtonAction:</string>
+							<string>uploadButtonAction:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
-								<string key="name">playOrPause:</string>
+								<string key="name">backButtonAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">recordOrStop:</string>
+								<string key="name">recordStopOrPlayButtonAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">upload:</string>
+								<string key="name">uploadButtonAction:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
@@ -352,8 +352,8 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>playOrPauseButton</string>
-							<string>recordOrStopButton</string>
+							<string>backButton</string>
+							<string>recordStopOrPlayButton</string>
 							<string>uploadButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -367,18 +367,18 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>playOrPauseButton</string>
-							<string>recordOrStopButton</string>
+							<string>backButton</string>
+							<string>recordStopOrPlayButton</string>
 							<string>uploadButton</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
-								<string key="name">playOrPauseButton</string>
+								<string key="name">backButton</string>
 								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">recordOrStopButton</string>
+								<string key="name">recordStopOrPlayButton</string>
 								<string key="candidateClassName">UIButton</string>
 							</object>
 							<object class="IBToOneOutletInfo">

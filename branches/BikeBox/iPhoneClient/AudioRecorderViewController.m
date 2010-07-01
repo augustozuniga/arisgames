@@ -10,6 +10,7 @@
 #import "ARISAppDelegate.h"
 #import "TitleAndDecriptionFormViewController.h";
 
+
 @implementation AudioRecorderViewController
 @synthesize soundFileURL;
 @synthesize soundRecorder;
@@ -59,24 +60,9 @@
     [[AVAudioSession sharedInstance] setActive: NO error: nil];
 	[[AVAudioSession sharedInstance] setDelegate: self];
 	
-    recording = NO;
-    playing = NO;
-	
-	[playOrPauseButton setAlpha:0.7];
-	[playOrPauseButton setEnabled:NO];
-	[uploadButton setAlpha:0.7];
-	[uploadButton setEnabled:NO];
+	mode = kAudioRecorderStarting; 
+	[self updateButtonsForCurrentMode];
 }
-
-
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -95,108 +81,156 @@
     [super dealloc];
 }
 
-- (IBAction)playOrPause:(id)sender {
-	NSLog(@"AudioRecorder: Play/Pause Button selected");
-	// if already playing, then pause
-    if (playing) {
-        [playOrPauseButton setTitle: @"Play" forState: UIControlStateHighlighted];
-        [playOrPauseButton setTitle: @"Play" forState: UIControlStateNormal];
-        
-		playing = NO;
-		[self.soundPlayer stop];
-		[[AVAudioSession sharedInstance] setActive: NO error: nil];
-		
-		// if stopped or paused, start playing
-    } else {
-		[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];
-		[[AVAudioSession sharedInstance] setActive: YES error: nil];
-
-		if (nil == self.soundPlayer) {
-			NSError *error;
-			AVAudioPlayer *newPlayer =[[AVAudioPlayer alloc] initWithContentsOfURL:self.soundFileURL error: &error];
-			self.soundPlayer = newPlayer;
-			[newPlayer release];
-			[self.soundPlayer prepareToPlay];
-			[self.soundPlayer setDelegate: self];
-		}	
-		playing = YES;
-		[playOrPauseButton setTitle: @"Pause" forState: UIControlStateHighlighted];
-        [playOrPauseButton setTitle: @"Pause" forState: UIControlStateNormal];
-        [self.soundPlayer play];
-
-    }
-	
-}
-
-
-- (IBAction) recordOrStop: (id) sender {
-	
-	if (recording) {
-		
-		[soundRecorder stop];
-		[[AVAudioSession sharedInstance] setActive: NO error: nil];
-		NSLog(@"Recording stopped.");
-		recording = NO;
-		self.soundRecorder = nil;
-		
-		[recordOrStopButton setTitle: @"Record" forState:UIControlStateNormal];
-		[recordOrStopButton setTitle: @"Record" forState:UIControlStateHighlighted];
-		
-	} else {
-		
-		[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryRecord error: nil];
-		[[AVAudioSession sharedInstance] setActive: YES error: nil];
-
-		NSDictionary *recordSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
-							[NSNumber numberWithInt:kAudioFormatAppleIMA4],AVFormatIDKey,
-							  [NSNumber numberWithInt:16000.0],AVSampleRateKey,
-							  [NSNumber numberWithInt: 1],AVNumberOfChannelsKey,
-							  nil];
-		
-		
-		AVAudioRecorder *newRecorder = [[AVAudioRecorder alloc] initWithURL: soundFileURL settings: recordSettings error: nil];
-		[recordSettings release];
-		self.soundRecorder = newRecorder;
-		[newRecorder release];
-		
-		soundRecorder.delegate = self;
-		[soundRecorder setMeteringEnabled:YES];
-		[soundRecorder prepareToRecord];
-		
-		
-		BOOL audioHWAvailable = [[AVAudioSession sharedInstance] inputIsAvailable];
-		if (! audioHWAvailable) {
-			UIAlertView *cantRecordAlert =
-			[[UIAlertView alloc] initWithTitle: @"Warning"
-									   message: @"Audio input hardware not available"
-									  delegate: nil
-							 cancelButtonTitle:@"OK"
-							 otherButtonTitles:nil];
-			[cantRecordAlert show];
-			[cantRecordAlert release]; 
-			return;
-		}
-		
-		[soundRecorder record];
-		
-		self.meter.alpha = 1.0; 
-		self.meterUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 
-																 target:self 
-															   selector:@selector(updateMeter) 
-															   userInfo:nil 
-																repeats:YES];
-		NSLog(@"Recording.");
-		[recordOrStopButton setTitle: @"Stop" forState: UIControlStateNormal];
-		[recordOrStopButton setTitle: @"Stop" forState: UIControlStateHighlighted];
-		
-		[playOrPauseButton setAlpha:0.7];
-		[playOrPauseButton setEnabled:NO];
-		[uploadButton setAlpha:0.7];
-		[uploadButton setEnabled:NO];
-		
-		recording = YES;
+- (void)updateButtonsForCurrentMode{
+	switch (mode) {
+		case kAudioRecorderStarting:
+			[recordStopOrPlayButton setTitle: @"Record" forState: UIControlStateNormal];
+			[recordStopOrPlayButton setTitle: @"Record" forState: UIControlStateHighlighted];			
+			uploadButton.hidden = YES;
+			backButton.hidden = NO;
+			break;
+		case kAudioRecorderRecording:
+			[recordStopOrPlayButton setTitle: @"Stop" forState: UIControlStateNormal];
+			[recordStopOrPlayButton setTitle: @"Stop" forState: UIControlStateHighlighted];			
+			uploadButton.hidden = YES;
+			backButton.hidden = YES;
+			break;
+		case kAudioRecorderRecordingComplete:
+			[recordStopOrPlayButton setTitle: @"Play" forState: UIControlStateNormal];
+			[recordStopOrPlayButton setTitle: @"Play" forState: UIControlStateHighlighted];			
+			uploadButton.hidden = NO;
+			backButton.hidden = NO;
+			break;
+		case kAudioRecorderPlaying:
+			[recordStopOrPlayButton setTitle: @"Stop" forState: UIControlStateNormal];
+			[recordStopOrPlayButton setTitle: @"Stop" forState: UIControlStateHighlighted];			
+			uploadButton.hidden = YES;
+			backButton.hidden = YES;
+			break;
+		default:
+			break;
 	}
 }
+
+- (IBAction) recordStopOrPlayButtonAction: (id) sender{
+	
+	NSLog(@"AudioRecorder: Record/Play/Stop Button selected");
+
+	switch (mode) {
+		case kAudioRecorderStarting:
+			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryRecord error: nil];
+			[[AVAudioSession sharedInstance] setActive: YES error: nil];
+			
+			NSDictionary *recordSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
+											[NSNumber numberWithInt:kAudioFormatAppleIMA4],AVFormatIDKey,
+											[NSNumber numberWithInt:16000.0],AVSampleRateKey,
+											[NSNumber numberWithInt: 1],AVNumberOfChannelsKey,
+											nil];
+			
+			AVAudioRecorder *newRecorder = [[AVAudioRecorder alloc] initWithURL: soundFileURL settings: recordSettings error: nil];
+			[recordSettings release];
+			self.soundRecorder = newRecorder;
+			[newRecorder release];
+			
+			soundRecorder.delegate = self;
+			[soundRecorder setMeteringEnabled:YES];
+			[soundRecorder prepareToRecord];
+			
+			
+			BOOL audioHWAvailable = [[AVAudioSession sharedInstance] inputIsAvailable];
+			if (! audioHWAvailable) {
+				UIAlertView *cantRecordAlert =
+				[[UIAlertView alloc] initWithTitle: @"Warning"
+										   message: @"Audio input hardware not available"
+										  delegate: nil
+								 cancelButtonTitle:@"OK"
+								 otherButtonTitles:nil];
+				[cantRecordAlert show];
+				[cantRecordAlert release]; 
+				return;
+			}
+			
+			[soundRecorder record];
+			
+			self.meter.alpha = 1.0; 
+			self.meterUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 
+																	 target:self 
+																   selector:@selector(updateMeter) 
+																   userInfo:nil 
+																	repeats:YES];
+			NSLog(@"Recording.");
+			mode = kAudioRecorderRecording;
+			[self updateButtonsForCurrentMode];						
+			break;
+			
+		case kAudioRecorderPlaying:
+			[self.soundPlayer stop];
+			[[AVAudioSession sharedInstance] setActive: NO error: nil];
+			mode = kAudioRecorderRecordingComplete;
+			[self updateButtonsForCurrentMode];
+			break;	
+			
+		case kAudioRecorderRecordingComplete:
+			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];
+			[[AVAudioSession sharedInstance] setActive: YES error: nil];
+			
+			if (nil == self.soundPlayer) {
+				NSError *error;
+				AVAudioPlayer *newPlayer =[[AVAudioPlayer alloc] initWithContentsOfURL:self.soundFileURL error: &error];
+				self.soundPlayer = newPlayer;
+				[newPlayer release];
+				[self.soundPlayer prepareToPlay];
+				[self.soundPlayer setDelegate: self];
+			}	
+
+			mode = kAudioRecorderPlaying;
+			[self updateButtonsForCurrentMode];
+
+			[self.soundPlayer play];
+			break;
+			
+		case kAudioRecorderRecording:
+			[soundRecorder stop];
+			[[AVAudioSession sharedInstance] setActive: NO error: nil];
+			self.soundRecorder = nil;
+			mode = kAudioRecorderRecordingComplete;			
+			[self updateButtonsForCurrentMode];
+			break;	
+			
+		default:
+			break;
+	}
+        
+}
+
+
+- (IBAction) uploadButtonAction: (id) sender{
+	self.audioData = [NSData dataWithContentsOfURL:soundFileURL];
+	TitleAndDecriptionFormViewController *titleAndDescForm = [[TitleAndDecriptionFormViewController alloc] 
+															  initWithNibName:@"TitleAndDecriptionFormViewController" bundle:nil];
+	titleAndDescForm.delegate = self;
+	[self.view addSubview:titleAndDescForm.view];
+}	
+
+- (void)titleAndDescriptionFormDidFinish:(TitleAndDecriptionFormViewController*)titleAndDescForm{
+	NSLog(@"CameraVC: Back from form");
+	[titleAndDescForm.view removeFromSuperview];
+	
+	
+	[appModel createItemAndGiveToPlayerFromFileData:self.audioData 
+										   fileName:@"audio.caf" 
+											  title:titleAndDescForm.titleField.text 
+										description:titleAndDescForm.descriptionField.text];
+	
+	[self dismissModalViewControllerAnimated:YES];
+	[self.view removeFromSuperview];
+}
+
+- (IBAction) backButtonAction: (id) sender{
+	[self dismissModalViewControllerAnimated:YES];
+	[self.view removeFromSuperview];
+}
+
 
 
 - (void)updateMeter {
@@ -215,82 +249,36 @@
 }
 
 
-- (IBAction)upload:(id)sender {
-	NSLog(@"AudioRecorder:Upload Button Pressed");
-	// if playing, then pause
-    if (playing) {
-        [playOrPauseButton setTitle: @"Play" forState: UIControlStateHighlighted];
-        [playOrPauseButton setTitle: @"Play" forState: UIControlStateNormal];
-        [self.soundPlayer pause];
-		playing = NO;
-	}
-	
-	if (recording) {
-		[soundRecorder stop];
-		[[AVAudioSession sharedInstance] setActive: NO error: nil];
-		NSLog(@"Recording stopped.");
-		recording = NO;
-		self.soundRecorder = nil;
-		
-		[recordOrStopButton setTitle: @"Record" forState:UIControlStateNormal];
-		[recordOrStopButton setTitle: @"Record" forState:UIControlStateHighlighted];
-	
-	}
-	
-	
-
-	self.audioData = [NSData dataWithContentsOfURL:soundFileURL];
-	
-	TitleAndDecriptionFormViewController *titleAndDescForm = [[TitleAndDecriptionFormViewController alloc] 
-															  initWithNibName:@"TitleAndDecriptionFormViewController" bundle:nil];
-	titleAndDescForm.delegate = self;
-	[self.view addSubview:titleAndDescForm.view];
-}
-
-
-- (void)titleAndDescriptionFormDidFinish:(TitleAndDecriptionFormViewController*)titleAndDescForm{
-	NSLog(@"CameraVC: Back from form");
-	[titleAndDescForm.view removeFromSuperview];
-	
-	
-	[appModel createItemAndGiveToPlayerFromFileData:self.audioData 
-										   fileName:@"audio.caf" 
-											  title:titleAndDescForm.titleField.text 
-										description:titleAndDescForm.descriptionField.text];
-	
-	
-}
 
 
 
 #pragma mark Audio Recorder Delegate Metods
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
-	recording = NO;
+	NSLog(@"audioRecorderDidFinishRecording");
 	[[AVAudioSession sharedInstance] setActive: NO error: nil];
 	[self.meterUpdateTimer invalidate];
 	[self.meter updateLevel:0];
 	self.meter.alpha = 0.0; 
 
+	mode = kAudioRecorderRecordingComplete;
+	[self updateButtonsForCurrentMode];
 	
-	[recordOrStopButton setTitle: @"Record" forState:UIControlStateNormal];
-	[recordOrStopButton setTitle: @"Record" forState:UIControlStateHighlighted];
-	
-	[playOrPauseButton setAlpha:1.0];
-	[playOrPauseButton setEnabled:YES];
-	[uploadButton setAlpha:1.0];
-	[uploadButton setEnabled:YES];
 
 }
 
 #pragma mark Audio Player Delegate Methods
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+	NSLog(@"audioPlayerDidFinishPlaying");
 	[[AVAudioSession sharedInstance] setActive: NO error: nil];
-	playing = NO;
-	[playOrPauseButton setTitle: @"Play" forState: UIControlStateHighlighted];
-	[playOrPauseButton setTitle: @"Play" forState: UIControlStateNormal];
+	[recordStopOrPlayButton setTitle: @"Play" forState: UIControlStateHighlighted];
+	[recordStopOrPlayButton setTitle: @"Play" forState: UIControlStateNormal];
 	soundPlayer = nil;
+
+	mode = kAudioRecorderRecordingComplete;
+	[self updateButtonsForCurrentMode];
+
 }
 
 - (void)audioPlayerDecodeErrorDidOccur:(AVAudioPlayer *)player error:(NSError *)error {
