@@ -193,26 +193,6 @@
 	[window addSubview:nearbyObjectViewController.view];
 }
 
-- (void)displayClosestObjectView {
-	double bestDist;
-	bestDist = INFINITY;
-	double curDist;
-	Location *bestLocation;
-
-	//Get the closest location
-	for (Location *curLocation in appModel.locationList) {
-		curDist = [curLocation.location getDistanceFrom:appModel.playerLocation];
-		NSLog(@"GPSViewController: Current Dist: %f", curDist);
-		if ( curDist < bestDist) {
-			NSLog(@"GPSViewController: This was a best, store", curDist);
-			bestDist = curDist;
-			bestLocation = curLocation;
-		}
-	}
-	
-	[bestLocation display];
-
-}
 
 
 

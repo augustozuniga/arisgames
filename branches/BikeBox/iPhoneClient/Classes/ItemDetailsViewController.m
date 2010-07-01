@@ -106,13 +106,7 @@ NSString *const kItemDetailsDescriptionHtmlTemplate =
 	[super viewDidLoad];
 }
 
-- (void)movieFinishedCallback:(NSNotification*) aNotification
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self
-													name:MPMoviePlayerPlaybackDidFinishNotification
-												  object:mMoviePlayer];
-	[self dismissMoviePlayerViewControllerAnimated];
-}
+
 
 - (IBAction)dropButtonTouchAction: (id) sender{
 	NSLog(@"ItemDetailsVC: Drop Button Pressed");

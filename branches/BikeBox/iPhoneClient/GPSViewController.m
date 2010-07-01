@@ -58,7 +58,7 @@
 	if (somethingNearby) {
 		NSLog(@"GPSViewController: Display the closest object");
 		ARISAppDelegate *appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
-		[appDelegate displayClosestObjectView];
+		[mMoviePlayer play];
 	}
 	else {
 		NSLog(@"GPSViewController: Launch the recorder");
@@ -69,6 +69,46 @@
 	}
 
 }
+
+- (void)displayClosestObjectView {
+	double bestDist;
+	bestDist = INFINITY;
+	double curDist;
+	Location *bestLocation;
+	
+	//Get the closest location
+	for (Location *curLocation in appModel.locationList) {
+		if (curLocation.kind == NearbyObjectPlayer) continue;
+		curDist = [curLocation.location getDistanceFrom:appModel.playerLocation];
+		NSLog(@"GPSViewController: Current Dist: %f", curDist);
+		if ( curDist < bestDist) {
+			NSLog(@"GPSViewController: This was a best, store", curDist);
+			bestDist = curDist;
+			bestLocation = curLocation;
+		}
+	}
+	
+	if (bestLocation.kind == NearbyObjectItem) {
+		Item *item = [appModel fetchItem:bestLocation.objectId]; 
+		int mediaId = item.mediaId;
+		Media *media = [appModel mediaForMediaId:mediaId];
+		[mMoviePlayer setContentURL:[NSURL URLWithString:media.url]]; 
+		[mMoviePlayer prepareToPlay];
+		mMoviePlayer.view.hidden = NO;
+	}		
+	
+	
+}
+
+- (void)movieFinishedCallback:(NSNotification*) aNotification
+{
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:MPMoviePlayerPlaybackDidFinishNotification
+												  object:mMoviePlayer];
+	[self dismissMoviePlayerViewControllerAnimated];
+}
+
+
 
 - (void)processNearbyLocationsList:(NSNotification *)notification {
     NSLog(@"GPSViewController: Recieved a Nearby Locations List Notification");
@@ -83,6 +123,8 @@
 		NSLog(@"GPSViewController: No nearby Locations");
 		mainButton.title = @"Record";
 		somethingNearby = NO;
+		mMoviePlayer.view.hidden = YES;
+
 		return;
 	}
 	
@@ -92,6 +134,9 @@
 		ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 		[appDelegate playAudioAlert:@"nearbyObject" shouldVibrate:YES];
 		somethingNearby = YES;
+		
+		[self displayClosestObjectView];
+
 		return;
 	}
 	
@@ -149,12 +194,15 @@
 	[mapView setDelegate:self]; //View will request annotation views from us
 	NSLog(@"GPSViewController: Mapview inited and added to view");
 	
-	
-	//Setup the buttons
-
-	
 	//Force an update of the locations
 	[appModel forceUpdateOnNextLocationListFetch];
+	
+	//Create movie player object
+	mMoviePlayer = [[MPMoviePlayerController alloc] init];
+	[mMoviePlayer setFullscreen:NO]; 
+	[mMoviePlayer.view setFrame:CGRectMake(0, 400, 320, 20)];
+	[self.view addSubview:mMoviePlayer.view];
+
 	
 	[self refresh];	
 	

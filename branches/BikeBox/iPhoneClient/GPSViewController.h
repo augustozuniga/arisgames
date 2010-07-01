@@ -12,6 +12,7 @@
 #import <MapKit/MapKit.h>
 #import "Annotation.h"
 #import "ARISMoviePlayerViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 
 
@@ -26,7 +27,7 @@
 	IBOutlet UIBarButtonItem *mainButton;
 	BOOL silenceNextServerUpdate;
 	
-	ARISMoviePlayerViewController *mMoviePlayer; //only used if item is a video
+	MPMoviePlayerController *mMoviePlayer; //only used if item is a video
 
 
 }
