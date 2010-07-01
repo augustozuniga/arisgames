@@ -55,6 +55,18 @@
 		
 - (IBAction)mainButtonTouchAction{
 	NSLog(@"GPSViewController: Main Button Touched");
+	if (somethingNearby) {
+		NSLog(@"GPSViewController: Display the closest object");
+		ARISAppDelegate *appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
+		[appDelegate displayClosestObjectView];
+	}
+	else {
+		NSLog(@"GPSViewController: Launch the recorder");
+		//launch the recorder
+		AudioRecorderViewController *audioRecorderVC = [[AudioRecorderViewController alloc] initWithNibName:@"AudioRecorderViewController" bundle:nil];
+		[self.view addSubview:audioRecorderVC.view];
+	}
+
 }
 
 - (void)processNearbyLocationsList:(NSNotification *)notification {
@@ -64,6 +76,7 @@
 	if ([nearbyLocations count] == 0) { 
 		NSLog(@"GPSViewController: No nearby Locations");
 		mainButton.title = @"Record";
+		somethingNearby = NO;
 		return;
 	}
 	
@@ -72,6 +85,7 @@
 		mainButton.title = @"Play";
 		ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 		[appDelegate playAudioAlert:@"nearbyObject" shouldVibrate:YES];
+		somethingNearby = YES;
 		return;
 	}
 	

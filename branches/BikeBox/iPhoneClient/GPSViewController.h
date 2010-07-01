@@ -11,6 +11,8 @@
 #import "Location.h"
 #import <MapKit/MapKit.h>
 #import "Annotation.h"
+#import "ARISMoviePlayerViewController.h"
+
 
 
 
@@ -18,9 +20,14 @@
 	AppModel *appModel;
 	NSArray *locations;
 	BOOL autoCenter;
+	BOOL somethingNearby;
+
 	IBOutlet MKMapView *mapView;
 	IBOutlet UIBarButtonItem *mainButton;
 	BOOL silenceNextServerUpdate;
+	
+	ARISMoviePlayerViewController *mMoviePlayer; //only used if item is a video
+
 
 }
 

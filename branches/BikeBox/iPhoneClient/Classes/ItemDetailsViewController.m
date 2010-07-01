@@ -187,6 +187,7 @@ NSString *const kItemDetailsDescriptionHtmlTemplate =
 	
 	[self.navigationController popToRootViewControllerAnimated:YES];
 	[self dismissModalViewControllerAnimated:YES];
+	[self.navigationController.view removeFromSuperview];
 	
 }
 

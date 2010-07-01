@@ -23,6 +23,6 @@ typedef UInt32 nearbyObjectKind;
 - (nearbyObjectKind)kind;
 - (BOOL)forcedDisplay;
 - (void)display;
-//- (CLLocation *) location;
+- (CLLocation *) location;
 
 @end
