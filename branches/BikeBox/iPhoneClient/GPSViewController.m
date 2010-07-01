@@ -65,6 +65,7 @@
 		//launch the recorder
 		AudioRecorderViewController *audioRecorderVC = [[AudioRecorderViewController alloc] initWithNibName:@"AudioRecorderViewController" bundle:nil];
 		[self.view addSubview:audioRecorderVC.view];
+		//[self presentModalViewController:audioRecorderVC animated:NO];
 	}
 
 }

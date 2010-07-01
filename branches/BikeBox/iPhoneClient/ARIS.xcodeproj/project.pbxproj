@@ -179,6 +179,7 @@
 		AB549EE31047007B00A901EF /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AB549EDC1047007B00A901EF /* SBJsonParser.m */; };
 		AB549EE41047007B00A901EF /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = AB549EDE1047007B00A901EF /* SBJsonWriter.m */; };
 		AB54A0BA1047301E00A901EF /* JSONResult.m in Sources */ = {isa = PBXBuildFile; fileRef = AB54A0B91047301E00A901EF /* JSONResult.m */; };
+		AB573CF811DC66D50060CC63 /* microphoneBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = AB573CF711DC66D50060CC63 /* microphoneBackground.png */; };
 		AB64848F118783BB00261315 /* error.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB64848E118783BB00261315 /* error.wav */; };
 		AB6484971187842B00261315 /* ticktick.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB6484961187842B00261315 /* ticktick.wav */; };
 		AB6484B51187860E00261315 /* drop.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB6484B41187860E00261315 /* drop.wav */; };
@@ -472,6 +473,7 @@
 		AB549EDE1047007B00A901EF /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		AB54A0B81047301E00A901EF /* JSONResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONResult.h; sourceTree = "<group>"; };
 		AB54A0B91047301E00A901EF /* JSONResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONResult.m; sourceTree = "<group>"; };
+		AB573CF711DC66D50060CC63 /* microphoneBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microphoneBackground.png; sourceTree = "<group>"; };
 		AB64848E118783BB00261315 /* error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = error.wav; sourceTree = "<group>"; };
 		AB6484961187842B00261315 /* ticktick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ticktick.wav; sourceTree = "<group>"; };
 		AB6484B41187860E00261315 /* drop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drop.wav; sourceTree = "<group>"; };
@@ -991,6 +993,7 @@
 		AB0DE7FE11559CCA00A6EC3E /* Audio Recorder */ = {
 			isa = PBXGroup;
 			children = (
+				AB573CF711DC66D50060CC63 /* microphoneBackground.png */,
 				AB39C81F117E4009007AD31F /* microphone.png */,
 				AB0DE7FF11559CF000A6EC3E /* AudioRecorderViewController.h */,
 				AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */,
@@ -1287,6 +1290,7 @@
 				AB6484B51187860E00261315 /* drop.wav in Resources */,
 				AB946BCA11DBE55D0050F8F9 /* Default.png in Resources */,
 				AB946BFC11DBE9140050F8F9 /* title.png in Resources */,
+				AB573CF811DC66D50060CC63 /* microphoneBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -282,13 +284,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>90</integer>
-									<integer>86</integer>
+									<integer>120</integer>
+									<integer>115</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1467}, {281, 684}}</string>
+							<string>{{0, 1467}, {281, 653}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -300,7 +302,7 @@
 					<key>GeometryConfiguration</key>
 					<dict>
 						<key>Frame</key>
-						<string>{{0, 0}, {298, 702}}</string>
+						<string>{{0, 0}, {298, 671}}</string>
 						<key>GroupTreeTableConfiguration</key>
 						<array>
 							<string>SCMStatusColumn</string>
@@ -309,7 +311,7 @@
 							<real>259</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>1 114 1439 743 0 0 1440 878 </string>
+						<string>1 145 1130 712 0 0 1440 878 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -320,14 +322,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>GPSViewController.m</string>
+								<string>microphoneBackground.png</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -335,11 +335,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>GPSViewController.m</string>
+										<string>microphoneBackground.png</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>AB573CEF11DC65630060CC63</string>
+										<string>AB573D1211DC67950060CC63</string>
 										<key>history</key>
 										<array>
 											<string>ABBEBCDD104DDCDB00AA7285</string>
@@ -390,7 +390,6 @@
 											<string>ABF4A44C11698A240043EB1C</string>
 											<string>ABF4A44D11698A240043EB1C</string>
 											<string>ABF4A4E21169939D0043EB1C</string>
-											<string>ABC3994E116B8E0B002185D4</string>
 											<string>ABC39951116B8E0B002185D4</string>
 											<string>ABC399E2116BA2F4002185D4</string>
 											<string>ABC399F4116BA53F002185D4</string>
@@ -484,7 +483,9 @@
 											<string>AB573CCC11DC64760060CC63</string>
 											<string>AB573CCD11DC64760060CC63</string>
 											<string>AB573CCE11DC64760060CC63</string>
-											<string>AB573CDE11DC64F90060CC63</string>
+											<string>AB573CF311DC669C0060CC63</string>
+											<string>AB573CFE11DC67540060CC63</string>
+											<string>AB573CFF11DC67540060CC63</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -496,14 +497,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1136, 387}}</string>
+								<string>{{0, 0}, {827, 356}}</string>
 								<key>RubberWindowFrame</key>
-								<string>1 114 1439 743 0 0 1440 878 </string>
+								<string>1 145 1130 712 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>387pt</string>
+							<string>356pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -523,7 +524,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>AB573CF011DC65630060CC63</string>
+										<string>AB573D1311DC67950060CC63</string>
 										<key>history</key>
 										<array>
 											<string>ABBEBCDD104DDCDB00AA7285</string>
@@ -680,9 +681,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 392}, {1136, 305}}</string>
+								<string>{{0, 361}, {827, 305}}</string>
 								<key>RubberWindowFrame</key>
-								<string>1 114 1439 743 0 0 1440 878 </string>
+								<string>1 145 1130 712 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -700,9 +701,9 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 702}, {1136, 0}}</string>
+								<string>{{0, 671}, {827, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>1 114 1439 743 0 0 1440 878 </string>
+								<string>1 145 1130 712 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -711,7 +712,7 @@
 						</dict>
 					</array>
 					<key>Proportion</key>
-					<string>1136pt</string>
+					<string>827pt</string>
 				</dict>
 			</array>
 			<key>Name</key>
@@ -866,16 +867,16 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>AB573CF111DC65630060CC63</string>
+		<string>AB573D1411DC67950060CC63</string>
 		<string>AB573BE511DC4D2F0060CC63</string>
 		<string>AB573BDD11DC4D140060CC63</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>AB4B1043103D02990061AD3D</string>
 		<string>/Users/djgagnon/Documents/Aris/Bike Box Client/ARIS.xcodeproj</string>
+		<string>AB4B1043103D02990061AD3D</string>
 	</array>
 	<key>WindowString</key>
-	<string>1 114 1439 743 0 0 1440 878 </string>
+	<string>1 145 1130 712 0 0 1440 878 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
