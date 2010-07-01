@@ -16,24 +16,22 @@
 
 @interface GPSViewController : UIViewController <MKMapViewDelegate> {
 	AppModel *appModel;
-	MKMapView *mapView;
 	NSArray *locations;
 	BOOL autoCenter;
-	IBOutlet UIBarButtonItem *mapTypeButton;
-	IBOutlet UIBarButtonItem *playerTrackingButton;
+	IBOutlet MKMapView *mapView;
+	IBOutlet UIBarButtonItem *mainButton;
 	BOOL silenceNextServerUpdate;
 
 }
 
 -(void) refresh;
 -(void) zoomAndCenterMap;
+- (IBAction)mainButtonTouchAction;
 
-
-@property (nonatomic, retain) MKMapView *mapView;
-@property (nonatomic, retain) NSArray *locations;
 
 @property BOOL autoCenter;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *mapTypeButton;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *playerTrackingButton;
+@property (nonatomic, retain) NSArray *locations;
+@property (nonatomic, retain) IBOutlet MKMapView *mapView;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *mainButton;
 
 @end

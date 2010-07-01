@@ -24,8 +24,8 @@
 @synthesize locations;
 @synthesize mapView;
 @synthesize autoCenter;
-@synthesize mapTypeButton;
-@synthesize playerTrackingButton;
+@synthesize mainButton;
+
 
 //Override init for passing title and icon to tab bar
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
@@ -42,6 +42,7 @@
 		NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
 		[dispatcher addObserver:self selector:@selector(refresh) name:@"PlayerMoved" object:nil];
 		[dispatcher addObserver:self selector:@selector(refreshViewFromModel) name:@"ReceivedLocationList" object:nil];
+		[dispatcher addObserver:self selector:@selector(processNearbyLocationsList:) name:@"ReceivedNearbyLocationList" object:nil];
 		[dispatcher addObserver:self selector:@selector(silenceNextUpdate) name:@"SilentNextUpdate" object:nil];		
 	}
 	
@@ -52,6 +53,32 @@
 	silenceNextServerUpdate = YES;
 }
 		
+- (IBAction)mainButtonTouchAction{
+	NSLog(@"GPSViewController: Main Button Touched");
+}
+
+- (void)processNearbyLocationsList:(NSNotification *)notification {
+    NSLog(@"GPSViewController: Recieved a Nearby Locations List Notification");
+	NSArray *nearbyLocations = notification.object;
+	
+	if ([nearbyLocations count] == 0) { 
+		NSLog(@"GPSViewController: No nearby Locations");
+		mainButton.title = @"Record";
+		return;
+	}
+	
+	else {
+		NSLog(@"GPSViewController: Atleast one nearby Location");
+		mainButton.title = @"Play";
+		ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
+		[appDelegate playAudioAlert:@"nearbyObject" shouldVibrate:YES];
+		return;
+	}
+	
+}
+
+
+
 - (IBAction)changeMapType: (id) sender {
 	ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate playAudioAlert:@"ticktick" shouldVibrate:NO];
@@ -91,18 +118,8 @@
 	
 	NSLog(@"Begin Loading GPS View");
 
-	//Setup the Map
-	CGFloat tableViewHeight = 325; //416-44; // todo: get this from const
-	CGRect mainViewBounds = self.view.bounds;
-	CGRect tableFrame;
-	tableFrame = CGRectMake(CGRectGetMinX(mainViewBounds),
-							CGRectGetMinY(mainViewBounds),
-							CGRectGetWidth(mainViewBounds),
-							tableViewHeight);
-	
+	//Setup the Map	
 	NSLog(@"GPSViewController: Mapview about to be inited.");
-	mapView = [[MKMapView alloc] initWithFrame:tableFrame];
-	[mapView setFrame:tableFrame];
 	MKCoordinateRegion region = mapView.region;
 	region.span.latitudeDelta=0.001;
 	region.span.longitudeDelta=0.001;
@@ -110,16 +127,11 @@
 	[mapView regionThatFits:region];
 	mapView.showsUserLocation = YES;
 	[mapView setDelegate:self]; //View will request annotation views from us
-	[self.view addSubview:mapView];
 	NSLog(@"GPSViewController: Mapview inited and added to view");
 	
 	
 	//Setup the buttons
-	mapTypeButton.target = self; 
-	mapTypeButton.action = @selector(changeMapType:);
-	
-	playerTrackingButton.target = self; 
-	playerTrackingButton.action = @selector(refreshButtonAction:);
+
 	
 	//Force an update of the locations
 	[appModel forceUpdateOnNextLocationListFetch];

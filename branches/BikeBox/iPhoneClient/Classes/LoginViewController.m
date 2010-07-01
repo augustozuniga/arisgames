@@ -23,7 +23,7 @@
 {
     self = [super initWithNibName:nibName bundle:nibBundle];
     if (self) {
-        self.title = @"Login to ARIS";
+        self.title = @"Login to Bike Box";
     }
     return self;
 }
@@ -77,13 +77,14 @@
 	[password resignFirstResponder];
 }
 
+
 -(IBAction)newUserButtonTouched: (id) sender{
 	NSLog(@"Login: New User Button Touched");
 	SelfRegistrationViewController *selfRegistrationViewController = [[SelfRegistrationViewController alloc] 
 															initWithNibName:@"SelfRegistration" bundle:[NSBundle mainBundle]];
 	
 	//Put the view on the screen
-	[[self navigationController] pushViewController:selfRegistrationViewController animated:YES];
+	[self presentModalViewController:selfRegistrationViewController animated:YES];
 	
 }
 

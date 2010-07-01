@@ -48,7 +48,7 @@
 }
 
 - (IBAction)cancelButtonTouched: (id) sender{
-	[self.navigationController popToRootViewControllerAnimated:YES];
+	[self dismissModalViewControllerAnimated:YES];
 }
 
 -(void)submitRegistration {
@@ -64,7 +64,7 @@
 													   delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];	
 		[alert release];
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self dismissModalViewControllerAnimated:YES];
 	}
 	else {
 		NSLog(@"SelfRegistration: Unsuccessfull registration attempt, check network before giving an alert");
