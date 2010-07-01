@@ -45,9 +45,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	meter = [[AudioMeter alloc]initWithFrame:CGRectMake(32, 20, 320-64, 160)];
+	meter = [[AudioMeter alloc]initWithFrame:CGRectMake(0, 0, 320, 220)];
 	meter.alpha = 0.0;
 	[self.view addSubview:meter];
+	
+	UIImageView* mic = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"microphoneForeground.png"]];
+	[self.view addSubview:mic];
+	
 	
 	NSString *tempDir = NSTemporaryDirectory ();
     NSString *soundFilePath =[tempDir stringByAppendingString: @"sound.caf"];

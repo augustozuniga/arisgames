@@ -22,11 +22,11 @@
 - (id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         
-		self.backgroundColor = [UIColor blackColor];
+		self.backgroundColor = [UIColor clearColor];
 		self.numberofBars = 20;
 		self.spacingBetweenBars = 1;
 		self.activeColor = [UIColor blueColor];
-		self.inactiveColor = [UIColor grayColor];
+		self.inactiveColor = [UIColor clearColor];
 		
 		
 		//Create a view for each bar

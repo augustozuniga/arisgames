@@ -116,7 +116,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					750,
+					586,
 					20,
 					48,
 					43,
@@ -525,6 +525,19 @@
 			AB573E4411DD30B70060CC63 /* PBXTextBookmark */ = AB573E4411DD30B70060CC63 /* PBXTextBookmark */;
 			AB573E4511DD30B70060CC63 /* PBXTextBookmark */ = AB573E4511DD30B70060CC63 /* PBXTextBookmark */;
 			AB573E4611DD30B70060CC63 /* PBXTextBookmark */ = AB573E4611DD30B70060CC63 /* PBXTextBookmark */;
+			AB573E4C11DD38F80060CC63 /* PBXTextBookmark */ = AB573E4C11DD38F80060CC63 /* PBXTextBookmark */;
+			AB573E4D11DD38F80060CC63 /* PBXTextBookmark */ = AB573E4D11DD38F80060CC63 /* PBXTextBookmark */;
+			AB573E4E11DD38F80060CC63 /* PBXTextBookmark */ = AB573E4E11DD38F80060CC63 /* PBXTextBookmark */;
+			AB573E4F11DD38F80060CC63 /* PBXTextBookmark */ = AB573E4F11DD38F80060CC63 /* PBXTextBookmark */;
+			AB573E5011DD38F80060CC63 /* PBXTextBookmark */ = AB573E5011DD38F80060CC63 /* PBXTextBookmark */;
+			AB573E5211DD392B0060CC63 /* PBXTextBookmark */ = AB573E5211DD392B0060CC63 /* PBXTextBookmark */;
+			AB573E5311DD392B0060CC63 /* PBXTextBookmark */ = AB573E5311DD392B0060CC63 /* PBXTextBookmark */;
+			AB573E5811DD3DA70060CC63 /* PBXTextBookmark */ = AB573E5811DD3DA70060CC63 /* PBXTextBookmark */;
+			AB573E5911DD3DA70060CC63 /* PBXTextBookmark */ = AB573E5911DD3DA70060CC63 /* PBXTextBookmark */;
+			AB573E5A11DD3DA70060CC63 /* PBXBookmark */ = AB573E5A11DD3DA70060CC63 /* PBXBookmark */;
+			AB573E5B11DD3DA70060CC63 /* PBXTextBookmark */ = AB573E5B11DD3DA70060CC63 /* PBXTextBookmark */;
+			AB573E5C11DD3DA70060CC63 /* PBXTextBookmark */ = AB573E5C11DD3DA70060CC63 /* PBXTextBookmark */;
+			AB573E5D11DD3DA70060CC63 /* PBXTextBookmark */ = AB573E5D11DD3DA70060CC63 /* PBXTextBookmark */;
 			AB5BA535118CC60700E5FF00 = AB5BA535118CC60700E5FF00 /* PBXTextBookmark */;
 			AB5F570B11627E2500506AAF = AB5F570B11627E2500506AAF /* PBXTextBookmark */;
 			AB5F570D11627E2500506AAF = AB5F570D11627E2500506AAF /* PBXTextBookmark */;
@@ -877,9 +890,9 @@
 	};
 	A7C1F5FC0FC070690045F15D /* NearbyBar.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {928, 4927}}";
+			sepNavIntBoundsRect = "{{0, 0}, {764, 4927}}";
 			sepNavSelRange = "{4908, 0}";
-			sepNavVisRange = "{4718, 539}";
+			sepNavVisRange = "{4740, 565}";
 		};
 	};
 	A7C1F5FD0FC070690045F15D /* NearbyBarItemView.h */ = {
@@ -1037,9 +1050,9 @@
 	};
 	AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {929, 3731}}";
-			sepNavSelRange = "{1934, 0}";
-			sepNavVisRange = "{3329, 1058}";
+			sepNavIntBoundsRect = "{{0, 0}, {764, 3822}}";
+			sepNavSelRange = "{1323, 0}";
+			sepNavVisRange = "{1008, 1062}";
 		};
 	};
 	AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */ = {
@@ -1478,7 +1491,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 157";
 		rLen = 0;
-		rLoc = 7344;
+		rLoc = 7477;
 		rType = 0;
 		vrLen = 1359;
 		vrLoc = 4669;
@@ -1879,7 +1892,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 94";
 		rLen = 15;
-		rLoc = 2239;
+		rLoc = 2372;
 		rType = 0;
 		vrLen = 886;
 		vrLoc = 2217;
@@ -3083,7 +3096,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 94";
 		rLen = 15;
-		rLoc = 2239;
+		rLoc = 2372;
 		rType = 0;
 		vrLen = 537;
 		vrLoc = 2371;
@@ -3093,7 +3106,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 132";
 		rLen = 0;
-		rLoc = 7344;
+		rLoc = 7477;
 		rType = 0;
 		vrLen = 410;
 		vrLoc = 3820;
@@ -3163,7 +3176,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 239";
 		rLen = 0;
-		rLoc = 7965;
+		rLoc = 8098;
 		rType = 0;
 		vrLen = 1332;
 		vrLoc = 6937;
@@ -3183,7 +3196,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 212";
 		rLen = 0;
-		rLoc = 7340;
+		rLoc = 7473;
 		rType = 0;
 		vrLen = 1399;
 		vrLoc = 5990;
@@ -3213,7 +3226,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 267";
 		rLen = 0;
-		rLoc = 8241;
+		rLoc = 8374;
 		rType = 0;
 		vrLen = 1245;
 		vrLoc = 7621;
@@ -3223,7 +3236,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 275";
 		rLen = 0;
-		rLoc = 8416;
+		rLoc = 8549;
 		rType = 0;
 		vrLen = 1176;
 		vrLoc = 7811;
@@ -3253,7 +3266,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 275";
 		rLen = 0;
-		rLoc = 8416;
+		rLoc = 8549;
 		rType = 0;
 		vrLen = 1176;
 		vrLoc = 7811;
@@ -3263,7 +3276,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 275";
 		rLen = 0;
-		rLoc = 8416;
+		rLoc = 8549;
 		rType = 0;
 		vrLen = 1176;
 		vrLoc = 7811;
@@ -3293,7 +3306,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 89";
 		rLen = 0;
-		rLoc = 2282;
+		rLoc = 2415;
 		rType = 0;
 		vrLen = 1392;
 		vrLoc = 2140;
@@ -3303,7 +3316,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 64";
 		rLen = 0;
-		rLoc = 1934;
+		rLoc = 2067;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 1239;
@@ -3323,7 +3336,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 64";
 		rLen = 0;
-		rLoc = 1934;
+		rLoc = 2067;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 1239;
@@ -3433,7 +3446,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 80";
 		rLen = 15;
-		rLoc = 2239;
+		rLoc = 2372;
 		rType = 0;
 		vrLen = 1294;
 		vrLoc = 2065;
@@ -3443,7 +3456,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 226";
 		rLen = 0;
-		rLoc = 7211;
+		rLoc = 7344;
 		rType = 0;
 		vrLen = 1156;
 		vrLoc = 6314;
@@ -3463,7 +3476,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 135;
 		vrLoc = 6314;
@@ -3503,7 +3516,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 135;
 		vrLoc = 6314;
@@ -3523,7 +3536,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 135;
 		vrLoc = 6314;
@@ -3543,7 +3556,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 26;
 		vrLoc = 6314;
@@ -3573,7 +3586,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 135;
 		vrLoc = 6314;
@@ -3603,7 +3616,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 26;
 		vrLoc = 6314;
@@ -3643,7 +3656,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 72;
 		vrLoc = 6314;
@@ -3683,7 +3696,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 223";
 		rLen = 0;
-		rLoc = 7127;
+		rLoc = 7260;
 		rType = 0;
 		vrLen = 72;
 		vrLoc = 6314;
@@ -3733,7 +3746,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 205";
 		rLen = 0;
-		rLoc = 6338;
+		rLoc = 6471;
 		rType = 0;
 		vrLen = 816;
 		vrLoc = 6314;
@@ -4103,7 +4116,7 @@
 		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
 		name = "AudioRecorderViewController.m: 64";
 		rLen = 0;
-		rLoc = 1934;
+		rLoc = 2067;
 		rType = 0;
 		vrLen = 1058;
 		vrLoc = 3329;
@@ -4223,7 +4236,7 @@
 		fRef = ABC399CE116B9EBC002185D4 /* AudioMeter.m */;
 		name = "AudioMeter.m: 40";
 		rLen = 0;
-		rLoc = 964;
+		rLoc = 965;
 		rType = 0;
 		vrLen = 1002;
 		vrLoc = 521;
@@ -4233,10 +4246,134 @@
 		fRef = ABC399CE116B9EBC002185D4 /* AudioMeter.m */;
 		name = "AudioMeter.m: 40";
 		rLen = 0;
-		rLoc = 964;
+		rLoc = 965;
 		rType = 0;
 		vrLen = 1107;
 		vrLoc = 189;
+	};
+	AB573E4C11DD38F80060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A7C1F5FC0FC070690045F15D /* NearbyBar.m */;
+		name = "NearbyBar.m: 166";
+		rLen = 0;
+		rLoc = 4908;
+		rType = 0;
+		vrLen = 565;
+		vrLoc = 4740;
+	};
+	AB573E4D11DD38F80060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABC399CD116B9EBC002185D4 /* AudioMeter.h */;
+		name = "AudioMeter.h: 25";
+		rLen = 0;
+		rLoc = 560;
+		rType = 0;
+		vrLen = 567;
+		vrLoc = 0;
+	};
+	AB573E4E11DD38F80060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABC399CE116B9EBC002185D4 /* AudioMeter.m */;
+		name = "AudioMeter.m: 40";
+		rLen = 0;
+		rLoc = 965;
+		rType = 0;
+		vrLen = 1007;
+		vrLoc = 321;
+	};
+	AB573E4F11DD38F80060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
+		name = "AudioRecorderViewController.m: 64";
+		rLen = 0;
+		rLoc = 2067;
+		rType = 0;
+		vrLen = 1058;
+		vrLoc = 3329;
+	};
+	AB573E5011DD38F80060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
+		name = "AudioRecorderViewController.m: 53";
+		rLen = 0;
+		rLoc = 1523;
+		rType = 0;
+		vrLen = 1065;
+		vrLoc = 1004;
+	};
+	AB573E5211DD392B0060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A7C1F5FC0FC070690045F15D /* NearbyBar.m */;
+		name = "NearbyBar.m: 166";
+		rLen = 0;
+		rLoc = 4908;
+		rType = 0;
+		vrLen = 617;
+		vrLoc = 4740;
+	};
+	AB573E5311DD392B0060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
+		name = "AudioRecorderViewController.m: 48";
+		rLen = 0;
+		rLoc = 1323;
+		rType = 0;
+		vrLen = 1066;
+		vrLoc = 1004;
+	};
+	AB573E5811DD3DA70060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A7C1F5FC0FC070690045F15D /* NearbyBar.m */;
+		name = "NearbyBar.m: 166";
+		rLen = 0;
+		rLoc = 4908;
+		rType = 0;
+		vrLen = 565;
+		vrLoc = 4740;
+	};
+	AB573E5911DD3DA70060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB0DE80011559CF000A6EC3E /* AudioRecorderViewController.m */;
+		name = "AudioRecorderViewController.m: 48";
+		rLen = 0;
+		rLoc = 1323;
+		rType = 0;
+		vrLen = 1062;
+		vrLoc = 1008;
+	};
+	AB573E5A11DD3DA70060CC63 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = AB573E4811DD38EC0060CC63 /* microphoneForeground.png */;
+	};
+	AB573E5B11DD3DA70060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABC399CD116B9EBC002185D4 /* AudioMeter.h */;
+		name = "AudioMeter.h: 25";
+		rLen = 0;
+		rLoc = 560;
+		rType = 0;
+		vrLen = 567;
+		vrLoc = 0;
+	};
+	AB573E5C11DD3DA70060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABC399CE116B9EBC002185D4 /* AudioMeter.m */;
+		name = "AudioMeter.m: 40";
+		rLen = 0;
+		rLoc = 965;
+		rType = 0;
+		vrLen = 1007;
+		vrLoc = 321;
+	};
+	AB573E5D11DD3DA70060CC63 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABC399CE116B9EBC002185D4 /* AudioMeter.m */;
+		name = "AudioMeter.m: 25";
+		rLen = 0;
+		rLoc = 461;
+		rType = 0;
+		vrLen = 1010;
+		vrLoc = 323;
 	};
 	AB5BA535118CC60700E5FF00 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -4622,7 +4759,7 @@
 		ignoreCount = 0;
 		lineNumber = 106;
 		location = ARIS;
-		modificationTime = 299708489.670653;
+		modificationTime = 299711849.225312;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4817,7 +4954,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 43;
-		modificationTime = 299708598.517196;
+		modificationTime = 299711908.488344;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4834,22 +4971,22 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 21;
-		modificationTime = 299708598.517152;
+		modificationTime = 299711908.4883;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
 	ABC399CD116B9EBC002185D4 /* AudioMeter.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {928, 424}}";
+			sepNavIntBoundsRect = "{{0, 0}, {764, 424}}";
 			sepNavSelRange = "{560, 0}";
 			sepNavVisRange = "{0, 567}";
 		};
 	};
 	ABC399CE116B9EBC002185D4 /* AudioMeter.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {928, 1014}}";
-			sepNavSelRange = "{964, 0}";
-			sepNavVisRange = "{189, 1107}";
+			sepNavIntBoundsRect = "{{0, 0}, {775, 1001}}";
+			sepNavSelRange = "{461, 0}";
+			sepNavVisRange = "{323, 1010}";
 		};
 	};
 	ABC399E2116BA2F4002185D4 /* PBXTextBookmark */ = {
@@ -4917,7 +5054,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 78;
-		modificationTime = 299708598.517183;
+		modificationTime = 299711908.488329;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -4964,9 +5101,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 299708598.517211;
+		modificationTime = 299711908.488358;
 		originalNumberOfMultipleMatches = 1;
-		state = 0;
+		state = 1;
 	};
 	ABCC038811DC38D60080FC8B /* PBXBookmark */ = {
 		isa = PBXBookmark;
@@ -5041,7 +5178,7 @@
 		fRef = ABC399CE116B9EBC002185D4 /* AudioMeter.m */;
 		name = "AudioMeter.m: 40";
 		rLen = 0;
-		rLoc = 964;
+		rLoc = 965;
 		rType = 0;
 		vrLen = 1398;
 		vrLoc = 161;
