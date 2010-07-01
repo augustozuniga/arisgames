@@ -22,9 +22,7 @@
 @implementation GPSViewController
 
 @synthesize locations;
-@synthesize mapView;
 @synthesize autoCenter;
-@synthesize mainButton;
 
 
 //Override init for passing title and icon to tab bar
@@ -121,7 +119,9 @@
 	
 	if (!nearbyLocationsThatAreNotPlayersExist) { 
 		NSLog(@"GPSViewController: No nearby Locations");
-		mainButton.title = @"Record";
+		[mainButton setTitle: @"Record" forState: UIControlStateNormal];
+		[mainButton setTitle: @"Record" forState: UIControlStateHighlighted];	
+
 		somethingNearby = NO;
 		mMoviePlayer.view.hidden = YES;
 
@@ -130,7 +130,9 @@
 	
 	else {
 		NSLog(@"GPSViewController: Atleast one nearby Location");
-		mainButton.title = @"Play";
+		[mainButton setTitle: @"Play" forState: UIControlStateNormal];
+		[mainButton setTitle: @"Play" forState: UIControlStateHighlighted];	
+
 		ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 		[appDelegate playAudioAlert:@"nearbyObject" shouldVibrate:YES];
 		somethingNearby = YES;
@@ -200,7 +202,7 @@
 	//Create movie player object
 	mMoviePlayer = [[MPMoviePlayerController alloc] init];
 	[mMoviePlayer setFullscreen:NO]; 
-	[mMoviePlayer.view setFrame:CGRectMake(0, 400, 320, 20)];
+	[mMoviePlayer.view setFrame:CGRectMake(0, 370, 320, 20)];
 	[self.view addSubview:mMoviePlayer.view];
 
 	

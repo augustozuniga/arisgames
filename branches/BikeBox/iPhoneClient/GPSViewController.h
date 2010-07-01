@@ -24,7 +24,7 @@
 	BOOL somethingNearby;
 
 	IBOutlet MKMapView *mapView;
-	IBOutlet UIBarButtonItem *mainButton;
+	IBOutlet UIButton *mainButton;
 	BOOL silenceNextServerUpdate;
 	
 	MPMoviePlayerController *mMoviePlayer; //only used if item is a video
@@ -39,7 +39,5 @@
 
 @property BOOL autoCenter;
 @property (nonatomic, retain) NSArray *locations;
-@property (nonatomic, retain) IBOutlet MKMapView *mapView;
-@property (nonatomic, retain) IBOutlet UIBarButtonItem *mainButton;
 
 @end

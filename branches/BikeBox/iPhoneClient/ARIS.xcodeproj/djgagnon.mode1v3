@@ -282,13 +282,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>97</integer>
+									<integer>96</integer>
 									<integer>93</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1445}, {281, 714}}</string>
+							<string>{{0, 1546}, {281, 714}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -339,7 +339,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>AB573F5211DD534A0060CC63</string>
+										<string>AB573F7511DD55950060CC63</string>
 										<key>history</key>
 										<array>
 											<string>ABBEBCDD104DDCDB00AA7285</string>
@@ -485,8 +485,8 @@
 											<string>AB573EC411DD493A0060CC63</string>
 											<string>AB573EE911DD4D000060CC63</string>
 											<string>AB573EEA11DD4D000060CC63</string>
-											<string>AB573EF711DD4D2A0060CC63</string>
-											<string>AB573EF811DD4D2A0060CC63</string>
+											<string>AB573F6311DD54E90060CC63</string>
+											<string>AB573F6411DD54E90060CC63</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -525,7 +525,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>AB573F5311DD534A0060CC63</string>
+										<string>AB573F7611DD55950060CC63</string>
 										<key>history</key>
 										<array>
 											<string>ABBEBCDD104DDCDB00AA7285</string>
@@ -870,13 +870,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>AB573F5411DD534A0060CC63</string>
+		<string>AB573F7711DD55950060CC63</string>
 		<string>AB573BE511DC4D2F0060CC63</string>
 		<string>AB573BDD11DC4D140060CC63</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>AB4B1043103D02990061AD3D</string>
 		<string>1C530D57069F1CE1000CFCEE</string>
+		<string>AB4B1043103D02990061AD3D</string>
 		<string>/Users/djgagnon/Documents/Aris/Bike Box Client/ARIS.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -896,6 +896,8 @@
 					<key>Dock</key>
 					<array>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -910,7 +912,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1280, 384}}</string>
 								<key>RubberWindowFrame</key>
-								<string>142 122 1280 676 0 0 1440 878 </string>
+								<string>160 89 1280 676 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -918,8 +920,6 @@
 							<string>384pt</string>
 						</dict>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -936,7 +936,7 @@
 								<key>Frame</key>
 								<string>{{0, 389}, {1280, 246}}</string>
 								<key>RubberWindowFrame</key>
-								<string>142 122 1280 676 0 0 1440 878 </string>
+								<string>160 89 1280 676 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -966,11 +966,11 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.buildV3</string>
 			<key>WindowString</key>
-			<string>142 122 1280 676 0 0 1440 878 </string>
+			<string>160 89 1280 676 0 0 1440 878 </string>
 			<key>WindowToolGUID</key>
 			<string>AB4B1043103D02990061AD3D</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>
