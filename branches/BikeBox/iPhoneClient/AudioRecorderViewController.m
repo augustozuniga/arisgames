@@ -122,8 +122,8 @@
 
 	switch (mode) {
 		case kAudioRecorderStarting:
-			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryRecord error: nil];
-			[[AVAudioSession sharedInstance] setActive: YES error: nil];
+			NSLog(@"AudioRecorder: Record/Play/Stop Button selected");
+
 			
 			NSDictionary *recordSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
 											[NSNumber numberWithInt:kAudioFormatAppleIMA4],AVFormatIDKey,
@@ -169,7 +169,6 @@
 			
 		case kAudioRecorderPlaying:
 			[self.soundPlayer stop];
-			[[AVAudioSession sharedInstance] setActive: NO error: nil];
 			mode = kAudioRecorderRecordingComplete;
 			[self updateButtonsForCurrentMode];
 			break;	
@@ -195,7 +194,6 @@
 			
 		case kAudioRecorderRecording:
 			[soundRecorder stop];
-			[[AVAudioSession sharedInstance] setActive: NO error: nil];
 			self.soundRecorder = nil;
 			mode = kAudioRecorderRecordingComplete;			
 			[self updateButtonsForCurrentMode];
@@ -210,6 +208,8 @@
 
 - (IBAction) uploadButtonAction: (id) sender{
 	self.audioData = [NSData dataWithContentsOfURL:soundFileURL];
+	self.soundRecorder = nil;
+
 	TitleAndDecriptionFormViewController *titleAndDescForm = [[TitleAndDecriptionFormViewController alloc] 
 															  initWithNibName:@"TitleAndDecriptionFormViewController" bundle:nil];
 	titleAndDescForm.delegate = self;
@@ -231,6 +231,8 @@
 }
 
 - (IBAction) backButtonAction: (id) sender{
+	self.soundRecorder = nil;
+	
 	[self dismissModalViewControllerAnimated:YES];
 	[self.view removeFromSuperview];
 }
@@ -260,7 +262,6 @@
 
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
 	NSLog(@"audioRecorderDidFinishRecording");
-	[[AVAudioSession sharedInstance] setActive: NO error: nil];
 	[self.meterUpdateTimer invalidate];
 	[self.meter updateLevel:0];
 	self.meter.alpha = 0.0; 
@@ -275,7 +276,6 @@
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
 	NSLog(@"audioPlayerDidFinishPlaying");
-	[[AVAudioSession sharedInstance] setActive: NO error: nil];
 	[recordStopOrPlayButton setTitle: @"Play" forState: UIControlStateHighlighted];
 	[recordStopOrPlayButton setTitle: @"Play" forState: UIControlStateNormal];
 	soundPlayer = nil;
