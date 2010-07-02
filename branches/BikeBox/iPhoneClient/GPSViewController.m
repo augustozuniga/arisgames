@@ -41,7 +41,9 @@
 		[dispatcher addObserver:self selector:@selector(refresh) name:@"PlayerMoved" object:nil];
 		[dispatcher addObserver:self selector:@selector(refreshViewFromModel) name:@"ReceivedLocationList" object:nil];
 		[dispatcher addObserver:self selector:@selector(processNearbyLocationsList:) name:@"ReceivedNearbyLocationList" object:nil];
-		[dispatcher addObserver:self selector:@selector(silenceNextUpdate) name:@"SilentNextUpdate" object:nil];		
+		[dispatcher addObserver:self selector:@selector(silenceNextUpdate) name:@"SilentNextUpdate" object:nil];
+		[dispatcher addObserver:self selector:@selector(movieFinishedPreloading:) name:MPMoviePlayerContentPreloadDidFinishNotification object:nil];
+		[dispatcher addObserver:self selector:@selector(movieFinishedPlayback:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
 	}
 	
     return self;
@@ -55,7 +57,6 @@
 	NSLog(@"GPSViewController: Main Button Touched");
 	if (somethingNearby) {
 		NSLog(@"GPSViewController: Display the closest object");
-		ARISAppDelegate *appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 		[mMoviePlayer play];
 	}
 	else {
@@ -63,7 +64,6 @@
 		//launch the recorder
 		AudioRecorderViewController *audioRecorderVC = [[AudioRecorderViewController alloc] initWithNibName:@"AudioRecorderViewController" bundle:nil];
 		[self.view addSubview:audioRecorderVC.view];
-		//[self presentModalViewController:audioRecorderVC animated:NO];
 	}
 
 }
@@ -96,15 +96,17 @@
 		lastNearbyLocation = nil;
 		
 		somethingNearby = NO;
-		mMoviePlayer.view.hidden = YES;
-
+		
+		[spinner stopAnimating];
+		[spinner removeFromSuperview];
+		mainButton.enabled = YES;
+	
 		return;
 	}
 	
 	else {
 		NSLog(@"GPSViewController: Atleast one nearby Location");
-		[mainButton setTitle: @"Play" forState: UIControlStateNormal];
-		[mainButton setTitle: @"Play" forState: UIControlStateHighlighted];	
+				
 		somethingNearby = YES;
 		
 		double bestDist = INFINITY;
@@ -143,9 +145,26 @@
 			}
 			
 			Media *media = [appModel mediaForMediaId:mediaId];
-			[mMoviePlayer setContentURL:[NSURL URLWithString:media.url]]; 
-			[mMoviePlayer prepareToPlay];
-			mMoviePlayer.view.hidden = NO;
+			
+			//Create movie player object
+			if (mMoviePlayer) [mMoviePlayer release];
+			mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:media.url]];
+			
+			if ([mMoviePlayer respondsToSelector:@selector(view)]) {
+				[mMoviePlayer setFullscreen:NO]; 
+				[mMoviePlayer.view setFrame:CGRectMake(0, 370, 320, 20)];
+				mMoviePlayer.view.hidden = YES;
+				[mMoviePlayer prepareToPlay];
+				[self.view addSubview:mMoviePlayer.view];
+			}
+			
+			[mainButton setTitle: @"Preparing to Play" forState: UIControlStateNormal];
+			[mainButton setTitle: @"Preparing to Play" forState: UIControlStateHighlighted];	
+			mainButton.enabled = NO;
+			[mainButton addSubview:spinner];
+			spinner.frame = CGRectMake(40, 8, 20, 20);
+			[spinner startAnimating];			
+
 		}	
 
 		return;
@@ -208,13 +227,8 @@
 	//Force an update of the locations
 	[appModel forceUpdateOnNextLocationListFetch];
 	
-	//Create movie player object
-	mMoviePlayer = [[MPMoviePlayerController alloc] init];
-	[mMoviePlayer setFullscreen:NO]; 
-	[mMoviePlayer.view setFrame:CGRectMake(0, 370, 320, 20)];
-	[self.view addSubview:mMoviePlayer.view];
+	spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 
-	
 	[self refresh];	
 	
 	
@@ -337,6 +351,29 @@
 	[appModel release];
     [super dealloc];
 }
+
+-(void)movieFinishedPreloading:(NSNotification*)notification
+{
+	NSLog(@"Preloading Complete");
+	[mainButton setTitle: @"Play" forState: UIControlStateNormal];
+	[mainButton setTitle: @"Play" forState: UIControlStateHighlighted];
+	[spinner stopAnimating];
+	[spinner removeFromSuperview];
+	mainButton.enabled = YES;
+	
+	
+
+}
+
+-(void)movieFinishedPlayback:(NSNotification*)notification
+{
+	NSLog(@"Playback Complete");
+	//if ([mMoviePlayer respondsToSelector:@selector(view)]) [mMoviePlayer.view removeFromSuperview];
+
+}
+
+
+
 
 -(UIImage *)addTitle:(NSString *)imageTitle quantity:(int)quantity toImage:(UIImage *)img {
 	
