@@ -163,10 +163,13 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];  
 
 	
-	SystemSoundID alert;  
-	NSURL* url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:wavFileName ofType:@"wav"]];
-	AudioServicesCreateSystemSoundID((CFURLRef)url, &alert);  
-	AudioServicesPlaySystemSound (alert);
+	AVAudioPlayer *player;
+	NSString *soundPath = [[NSBundle mainBundle] pathForResource:wavFileName ofType:@"wav"];
+	player =[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath: soundPath] error:nil];
+	player.volume = 1.0;
+	player.numberOfLoops = 0;
+	[player prepareToPlay];
+	[player play];
 				  
 	[pool release];
 }

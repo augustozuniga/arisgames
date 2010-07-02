@@ -61,7 +61,6 @@
     [newURL release];
 	
 	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayAndRecord error: nil];
-    [[AVAudioSession sharedInstance] setActive: NO error: nil];
 	[[AVAudioSession sharedInstance] setDelegate: self];
 	
 	mode = kAudioRecorderStarting; 

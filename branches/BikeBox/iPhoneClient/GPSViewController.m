@@ -86,7 +86,7 @@
 		}
 	}
 	
-	if (bestLocation.kind == NearbyObjectItem) {
+	if (bestLocation != lastNearbyLocation && (bestLocation.kind == NearbyObjectItem || bestLocation.kind == NearbyObjectNode)) {
 		Item *item = [appModel fetchItem:bestLocation.objectId]; 
 		int mediaId = item.mediaId;
 		Media *media = [appModel mediaForMediaId:mediaId];
@@ -122,6 +122,8 @@
 		[mainButton setTitle: @"Record" forState: UIControlStateNormal];
 		[mainButton setTitle: @"Record" forState: UIControlStateHighlighted];	
 
+		lastNearbyLocation = nil;
+		
 		somethingNearby = NO;
 		mMoviePlayer.view.hidden = YES;
 
@@ -134,7 +136,7 @@
 		[mainButton setTitle: @"Play" forState: UIControlStateHighlighted];	
 
 		ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
-		[appDelegate playAudioAlert:@"nearbyObject" shouldVibrate:YES];
+		[appDelegate playAudioAlert:@"bikeBell" shouldVibrate:YES];
 		somethingNearby = YES;
 		
 		[self displayClosestObjectView];

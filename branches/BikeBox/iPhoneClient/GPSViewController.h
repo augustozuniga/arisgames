@@ -28,6 +28,7 @@
 	BOOL silenceNextServerUpdate;
 	
 	MPMoviePlayerController *mMoviePlayer; //only used if item is a video
+	Location *lastNearbyLocation;
 
 
 }
