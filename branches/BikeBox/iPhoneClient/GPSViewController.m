@@ -68,35 +68,6 @@
 
 }
 
-- (void)displayClosestObjectView {
-	double bestDist;
-	bestDist = INFINITY;
-	double curDist;
-	Location *bestLocation;
-	
-	//Get the closest location
-	for (Location *curLocation in appModel.locationList) {
-		if (curLocation.kind == NearbyObjectPlayer) continue;
-		curDist = [curLocation.location getDistanceFrom:appModel.playerLocation];
-		NSLog(@"GPSViewController: Current Dist: %f", curDist);
-		if ( curDist < bestDist) {
-			NSLog(@"GPSViewController: This was a best, store", curDist);
-			bestDist = curDist;
-			bestLocation = curLocation;
-		}
-	}
-	
-	if (bestLocation != lastNearbyLocation && (bestLocation.kind == NearbyObjectItem || bestLocation.kind == NearbyObjectNode)) {
-		Item *item = [appModel fetchItem:bestLocation.objectId]; 
-		int mediaId = item.mediaId;
-		Media *media = [appModel mediaForMediaId:mediaId];
-		[mMoviePlayer setContentURL:[NSURL URLWithString:media.url]]; 
-		[mMoviePlayer prepareToPlay];
-		mMoviePlayer.view.hidden = NO;
-	}		
-	
-	
-}
 
 - (void)movieFinishedCallback:(NSNotification*) aNotification
 {
@@ -134,12 +105,48 @@
 		NSLog(@"GPSViewController: Atleast one nearby Location");
 		[mainButton setTitle: @"Play" forState: UIControlStateNormal];
 		[mainButton setTitle: @"Play" forState: UIControlStateHighlighted];	
-
-		ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
-		[appDelegate playAudioAlert:@"bikeBell" shouldVibrate:YES];
 		somethingNearby = YES;
 		
-		[self displayClosestObjectView];
+		double bestDist = INFINITY;
+		Location *bestLocation;
+		
+		//Get the closest location
+		for (Location *curLocation in appModel.locationList) {
+			if (curLocation.kind == NearbyObjectPlayer) continue;
+			double curDist = [curLocation.location getDistanceFrom:appModel.playerLocation];
+			if ( curDist < bestDist) {
+				bestDist = curDist;
+				bestLocation = curLocation;
+			}
+		}
+		
+		if (bestLocation.locationId != lastNearbyLocation.locationId) {
+			lastNearbyLocation = bestLocation;
+			ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
+			[appDelegate playAudioAlert:@"bikeBell" shouldVibrate:YES];
+			
+			int mediaId;
+			
+			switch (bestLocation.kind) {
+				case NearbyObjectItem:
+					NSLog(@"It was an Item");
+					Item *item = [appModel fetchItem:bestLocation.objectId]; 
+					mediaId = item.mediaId;
+					break;
+				case NearbyObjectNode:
+					NSLog(@"It was a Node");
+					Node *node = [appModel fetchNode:bestLocation.objectId]; 
+					mediaId = node.mediaId;
+					break;	
+				default:
+					break;
+			}
+			
+			Media *media = [appModel mediaForMediaId:mediaId];
+			[mMoviePlayer setContentURL:[NSURL URLWithString:media.url]]; 
+			[mMoviePlayer prepareToPlay];
+			mMoviePlayer.view.hidden = NO;
+		}	
 
 		return;
 	}
