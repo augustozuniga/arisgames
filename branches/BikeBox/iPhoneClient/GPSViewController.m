@@ -57,6 +57,8 @@
 	NSLog(@"GPSViewController: Main Button Touched");
 	if (somethingNearby) {
 		NSLog(@"GPSViewController: Display the closest object");
+		if ([mMoviePlayer respondsToSelector:@selector(view)]) mMoviePlayer.view.hidden = NO;
+		mainButton.hidden = YES;
 		[mMoviePlayer play];
 	}
 	else {
@@ -96,6 +98,7 @@
 		lastNearbyLocation = nil;
 		
 		somethingNearby = NO;
+		if ([mMoviePlayer respondsToSelector:@selector(view)]) [mMoviePlayer.view removeFromSuperview];
 		
 		[spinner stopAnimating];
 		[spinner removeFromSuperview];
@@ -123,7 +126,7 @@
 		}
 		
 		if (bestLocation.locationId != lastNearbyLocation.locationId) {
-			lastNearbyLocation = bestLocation;
+			lastNearbyLocation = bestLocation;			
 			ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 			[appDelegate playAudioAlert:@"bikeBell" shouldVibrate:YES];
 			
@@ -147,14 +150,18 @@
 			Media *media = [appModel mediaForMediaId:mediaId];
 			
 			//Create movie player object
-			if (mMoviePlayer) [mMoviePlayer release];
+			if (mMoviePlayer) {
+				if ([mMoviePlayer respondsToSelector:@selector(view)]) [mMoviePlayer.view removeFromSuperview];
+				[mMoviePlayer release];
+			}
+			
 			mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:media.url]];
 			
 			if ([mMoviePlayer respondsToSelector:@selector(view)]) {
 				[mMoviePlayer setFullscreen:NO]; 
-				[mMoviePlayer.view setFrame:CGRectMake(0, 370, 320, 20)];
-				mMoviePlayer.view.hidden = YES;
+				[mMoviePlayer.view setFrame:CGRectMake(10, 415, 300, 20)];
 				[mMoviePlayer prepareToPlay];
+				mMoviePlayer.view.hidden = YES;
 				[self.view addSubview:mMoviePlayer.view];
 			}
 			
@@ -368,7 +375,8 @@
 -(void)movieFinishedPlayback:(NSNotification*)notification
 {
 	NSLog(@"Playback Complete");
-	//if ([mMoviePlayer respondsToSelector:@selector(view)]) [mMoviePlayer.view removeFromSuperview];
+	if ([mMoviePlayer respondsToSelector:@selector(view)]) mMoviePlayer.view.hidden = YES;
+	mainButton.hidden = NO;
 
 }
 

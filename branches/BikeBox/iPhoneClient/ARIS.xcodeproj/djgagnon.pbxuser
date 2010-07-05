@@ -54,9 +54,9 @@
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeArchitecturePreference = armv6;
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = "Enterprise Distribution";
 		activeExecutable = AB4B1015103CF1360061AD3D /* ARIS */;
-		activeSDKPreference = iphoneos4.0;
+		activeSDKPreference = iphonesimulator4.0;
 		activeTarget = 1D6058900D05DD3D006BFB54 /* ARIS */;
 		addToTargets = (
 			1D6058900D05DD3D006BFB54 /* ARIS */,
@@ -434,6 +434,17 @@
 			ABB3F86911DE76BB00563E3E /* PBXTextBookmark */ = ABB3F86911DE76BB00563E3E /* PBXTextBookmark */;
 			ABB3F86A11DE76BB00563E3E /* PBXTextBookmark */ = ABB3F86A11DE76BB00563E3E /* PBXTextBookmark */;
 			ABB3F86B11DE76BB00563E3E /* PlistBookmark */ = ABB3F86B11DE76BB00563E3E /* PlistBookmark */;
+			ABB3F88811E21C5400563E3E /* PlistBookmark */ = ABB3F88811E21C5400563E3E /* PlistBookmark */;
+			ABB3F88911E21C5400563E3E /* PBXTextBookmark */ = ABB3F88911E21C5400563E3E /* PBXTextBookmark */;
+			ABB3F88A11E21C5400563E3E /* PBXTextBookmark */ = ABB3F88A11E21C5400563E3E /* PBXTextBookmark */;
+			ABB3F88B11E21C5400563E3E /* PBXTextBookmark */ = ABB3F88B11E21C5400563E3E /* PBXTextBookmark */;
+			ABB3F88C11E21C5400563E3E /* PBXTextBookmark */ = ABB3F88C11E21C5400563E3E /* PBXTextBookmark */;
+			ABB3F89011E21C8400563E3E /* PBXTextBookmark */ = ABB3F89011E21C8400563E3E /* PBXTextBookmark */;
+			ABB3F89411E21CA000563E3E /* PBXTextBookmark */ = ABB3F89411E21CA000563E3E /* PBXTextBookmark */;
+			ABB3F89811E21CC000563E3E /* PBXTextBookmark */ = ABB3F89811E21CC000563E3E /* PBXTextBookmark */;
+			ABB3F89C11E21CD200563E3E /* PBXTextBookmark */ = ABB3F89C11E21CD200563E3E /* PBXTextBookmark */;
+			ABB3F8A011E21CF400563E3E /* PBXTextBookmark */ = ABB3F8A011E21CF400563E3E /* PBXTextBookmark */;
+			ABB3F8A211E21D1500563E3E /* PBXTextBookmark */ = ABB3F8A211E21D1500563E3E /* PBXTextBookmark */;
 			ABB925F010C8591F00B09506 = ABB925F010C8591F00B09506 /* PBXBookmark */;
 			ABB9261E10C85AB000B09506 = ABB9261E10C85AB000B09506 /* PBXBookmark */;
 			ABB9262510C85AB000B09506 = ABB9262510C85AB000B09506 /* PBXBookmark */;
@@ -893,16 +904,16 @@
 	};
 	AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {877, 496}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1038, 584}}";
 			sepNavSelRange = "{512, 0}";
 			sepNavVisRange = "{0, 643}";
 		};
 	};
 	AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1080, 1638}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1038, 1586}}";
 			sepNavSelRange = "{78, 0}";
-			sepNavVisRange = "{0, 142}";
+			sepNavVisRange = "{0, 1301}";
 		};
 	};
 	AB17FFF31163BD3B00459B48 /* PBXTextBookmark */ = {
@@ -1864,7 +1875,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 192";
 		rLen = 0;
-		rLoc = 7001;
+		rLoc = 7333;
 		rType = 0;
 		vrLen = 899;
 		vrLoc = 5343;
@@ -2178,7 +2189,7 @@
 		ignoreCount = 0;
 		lineNumber = 106;
 		location = ARIS;
-		modificationTime = 299792559.463787;
+		modificationTime = 300031220.929889;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2321,7 +2332,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 126";
 		rLen = 0;
-		rLoc = 3294;
+		rLoc = 3409;
 		rType = 0;
 		vrLen = 1518;
 		vrLoc = 3133;
@@ -2391,7 +2402,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 122";
 		rLen = 6;
-		rLoc = 3149;
+		rLoc = 3264;
 		rType = 0;
 		vrLen = 1424;
 		vrLoc = 3448;
@@ -2401,7 +2412,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 111";
 		rLen = 0;
-		rLoc = 3558;
+		rLoc = 3771;
 		rType = 0;
 		vrLen = 1459;
 		vrLoc = 3012;
@@ -2411,7 +2422,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 136";
 		rLen = 0;
-		rLoc = 4449;
+		rLoc = 4665;
 		rType = 0;
 		vrLen = 1289;
 		vrLoc = 3578;
@@ -2421,7 +2432,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 124";
 		rLen = 0;
-		rLoc = 4015;
+		rLoc = 4231;
 		rType = 0;
 		vrLen = 1381;
 		vrLoc = 3152;
@@ -2542,7 +2553,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 124";
 		rLen = 0;
-		rLoc = 4015;
+		rLoc = 4231;
 		rType = 0;
 		vrLen = 588;
 		vrLoc = 3635;
@@ -2552,7 +2563,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 212";
 		rLen = 0;
-		rLoc = 7088;
+		rLoc = 7420;
 		rType = 0;
 		vrLen = 1332;
 		vrLoc = 5484;
@@ -2562,7 +2573,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 218";
 		rLen = 0;
-		rLoc = 7088;
+		rLoc = 7420;
 		rType = 0;
 		vrLen = 561;
 		vrLoc = 6314;
@@ -2572,7 +2583,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 217";
 		rLen = 0;
-		rLoc = 7088;
+		rLoc = 7420;
 		rType = 0;
 		vrLen = 645;
 		vrLoc = 6067;
@@ -2613,7 +2624,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 218";
 		rLen = 0;
-		rLoc = 7088;
+		rLoc = 7420;
 		rType = 0;
 		vrLen = 1250;
 		vrLoc = 5913;
@@ -2644,7 +2655,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 218";
 		rLen = 0;
-		rLoc = 7088;
+		rLoc = 7420;
 		rType = 0;
 		vrLen = 1213;
 		vrLoc = 6017;
@@ -2675,7 +2686,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 215";
 		rLen = 0;
-		rLoc = 7088;
+		rLoc = 7420;
 		rType = 0;
 		vrLen = 1213;
 		vrLoc = 6017;
@@ -2746,7 +2757,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 215";
 		rLen = 0;
-		rLoc = 7088;
+		rLoc = 7420;
 		rType = 0;
 		vrLen = 1213;
 		vrLoc = 6017;
@@ -2756,7 +2767,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 149";
 		rLen = 0;
-		rLoc = 5426;
+		rLoc = 5758;
 		rType = 0;
 		vrLen = 1228;
 		vrLoc = 3646;
@@ -2787,7 +2798,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 149";
 		rLen = 0;
-		rLoc = 5426;
+		rLoc = 5758;
 		rType = 0;
 		vrLen = 1278;
 		vrLoc = 3079;
@@ -2848,7 +2859,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 149";
 		rLen = 0;
-		rLoc = 5426;
+		rLoc = 5758;
 		rType = 0;
 		vrLen = 1278;
 		vrLoc = 3079;
@@ -2858,7 +2869,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 149";
 		rLen = 0;
-		rLoc = 5425;
+		rLoc = 5757;
 		rType = 0;
 		vrLen = 1518;
 		vrLoc = 407;
@@ -2939,7 +2950,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 349";
 		rLen = 0;
-		rLoc = 10952;
+		rLoc = 11284;
 		rType = 0;
 		vrLen = 1061;
 		vrLoc = 10245;
@@ -3011,7 +3022,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 70";
 		rLen = 0;
-		rLoc = 2323;
+		rLoc = 2438;
 		rType = 0;
 		vrLen = 1421;
 		vrLoc = 1802;
@@ -3021,7 +3032,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 115";
 		rLen = 0;
-		rLoc = 3497;
+		rLoc = 3710;
 		rType = 0;
 		vrLen = 1268;
 		vrLoc = 3379;
@@ -3052,7 +3063,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 365";
 		rLen = 0;
-		rLoc = 11183;
+		rLoc = 11515;
 		rType = 0;
 		vrLen = 1048;
 		vrLoc = 10362;
@@ -3083,7 +3094,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 365";
 		rLen = 0;
-		rLoc = 11183;
+		rLoc = 11515;
 		rType = 0;
 		vrLen = 917;
 		vrLoc = 10611;
@@ -3114,7 +3125,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 169";
 		rLen = 0;
-		rLoc = 5426;
+		rLoc = 5758;
 		rType = 0;
 		vrLen = 1164;
 		vrLoc = 4826;
@@ -3145,7 +3156,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 169";
 		rLen = 0;
-		rLoc = 5426;
+		rLoc = 5758;
 		rType = 0;
 		vrLen = 1164;
 		vrLoc = 4826;
@@ -3176,7 +3187,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 213";
 		rLen = 19;
-		rLoc = 6477;
+		rLoc = 6809;
 		rType = 0;
 		vrLen = 1110;
 		vrLoc = 6296;
@@ -3237,7 +3248,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 213";
 		rLen = 19;
-		rLoc = 6477;
+		rLoc = 6809;
 		rType = 0;
 		vrLen = 1181;
 		vrLoc = 6269;
@@ -3247,7 +3258,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 128";
 		rLen = 0;
-		rLoc = 3978;
+		rLoc = 4191;
 		rType = 0;
 		vrLen = 1264;
 		vrLoc = 3526;
@@ -3278,7 +3289,7 @@
 		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
 		name = "GPSViewController.m: 160";
 		rLen = 0;
-		rLoc = 5110;
+		rLoc = 5442;
 		rType = 0;
 		vrLen = 1187;
 		vrLoc = 4460;
@@ -3303,6 +3314,117 @@
 		name = "/Users/djgagnon/Documents/Aris/Bike Box Client/Info.plist";
 		rLen = 0;
 		rLoc = 9223372036854775807;
+	};
+	ABB3F88811E21C5400563E3E /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/djgagnon/Documents/Aris/Bike Box Client/Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	ABB3F88911E21C5400563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB15EC1410B49F8A00EEC11F /* AsyncImageView.m */;
+		name = "AsyncImageView.m: 5";
+		rLen = 0;
+		rLoc = 78;
+		rType = 0;
+		vrLen = 1301;
+		vrLoc = 0;
+	};
+	ABB3F88A11E21C5400563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB15EC1310B49F8A00EEC11F /* AsyncImageView.h */;
+		name = "AsyncImageView.h: 16";
+		rLen = 0;
+		rLoc = 512;
+		rType = 0;
+		vrLen = 643;
+		vrLoc = 0;
+	};
+	ABB3F88B11E21C5400563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 100";
+		rLen = 0;
+		rLoc = 3532;
+		rType = 0;
+		vrLen = 1252;
+		vrLoc = 2751;
+	};
+	ABB3F88C11E21C5400563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 61";
+		rLen = 0;
+		rLoc = 2130;
+		rType = 0;
+		vrLen = 1594;
+		vrLoc = 1373;
+	};
+	ABB3F89011E21C8400563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 162";
+		rLen = 0;
+		rLoc = 5314;
+		rType = 0;
+		vrLen = 1217;
+		vrLoc = 5021;
+	};
+	ABB3F89411E21CA000563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 162";
+		rLen = 0;
+		rLoc = 5318;
+		rType = 0;
+		vrLen = 1235;
+		vrLoc = 5049;
+	};
+	ABB3F89811E21CC000563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 162";
+		rLen = 0;
+		rLoc = 5309;
+		rType = 0;
+		vrLen = 1283;
+		vrLoc = 5058;
+	};
+	ABB3F89C11E21CD200563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 162";
+		rLen = 0;
+		rLoc = 5309;
+		rType = 0;
+		vrLen = 1332;
+		vrLoc = 5166;
+	};
+	ABB3F8A011E21CF400563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 162";
+		rLen = 0;
+		rLoc = 5314;
+		rType = 0;
+		vrLen = 1238;
+		vrLoc = 5264;
+	};
+	ABB3F8A211E21D1500563E3E /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ABDA40AD10506AF400823A94 /* GPSViewController.m */;
+		name = "GPSViewController.m: 162";
+		rLen = 0;
+		rLoc = 5314;
+		rType = 0;
+		vrLen = 1238;
+		vrLoc = 5264;
 	};
 	ABB925E210C858BB00B09506 /* gps.png */ = {
 		uiCtxt = {
@@ -3388,7 +3510,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 43;
-		modificationTime = 299792559.03521;
+		modificationTime = 300031220.929772;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -3405,7 +3527,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 21;
-		modificationTime = 299792559.035282;
+		modificationTime = 300031220.929812;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -3478,7 +3600,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 78;
-		modificationTime = 299792559.035366;
+		modificationTime = 300031220.929837;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -3525,7 +3647,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 299792559.035129;
+		modificationTime = 300031220.9297;
 		originalNumberOfMultipleMatches = 1;
 		state = 0;
 	};
@@ -3605,14 +3727,14 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1038, 663}}";
 			sepNavSelRange = "{595, 23}";
-			sepNavVisRange = "{0, 0}";
+			sepNavVisRange = "{739, 164}";
 		};
 	};
 	ABDA40AD10506AF400823A94 /* GPSViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1038, 6513}}";
-			sepNavSelRange = "{5309, 0}";
-			sepNavVisRange = "{4460, 1187}";
+			sepNavIntBoundsRect = "{{0, 0}, {1038, 6682}}";
+			sepNavSelRange = "{5314, 0}";
+			sepNavVisRange = "{5264, 1238}";
 			sepNavWindowFrame = "{{0, 33}, {1440, 845}}";
 		};
 	};
