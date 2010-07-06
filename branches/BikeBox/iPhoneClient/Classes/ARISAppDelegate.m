@@ -212,6 +212,7 @@
 	if(appModel.loggedIn) {
 		NSLog(@"AppDelegate: Login Success");
 		[loginViewController.view removeFromSuperview];
+		[appModel updateServerGameSelected];
 		[appModel fetchMediaList];
 		[appModel fetchLocationList];
 	} 

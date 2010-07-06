@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -284,13 +286,13 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>108</integer>
-									<integer>104</integer>
+									<integer>77</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1573}, {281, 669}}</string>
+							<string>{{0, 1110}, {281, 669}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -322,8 +324,6 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -341,7 +341,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>ABB3F8A211E21D1500563E3E</string>
+										<string>ABB3F8CE11E2D37400563E3E</string>
 										<key>history</key>
 										<array>
 											<string>ABBEBCDD104DDCDB00AA7285</string>
@@ -482,12 +482,12 @@
 											<string>ABB3F75A11DDA4B700563E3E</string>
 											<string>ABB3F75D11DDA4B700563E3E</string>
 											<string>ABB3F78611DDB01400563E3E</string>
-											<string>ABB3F7DD11DE3F4D00563E3E</string>
 											<string>ABB3F85E11DE666300563E3E</string>
 											<string>ABB3F88811E21C5400563E3E</string>
 											<string>ABB3F88911E21C5400563E3E</string>
 											<string>ABB3F88A11E21C5400563E3E</string>
-											<string>ABB3F88B11E21C5400563E3E</string>
+											<string>ABB3F8C211E21FC600563E3E</string>
+											<string>ABB3F8C311E21FC600563E3E</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -683,9 +683,10 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>ABB3F8A111E21CF400563E3E</string>
+		<string>ABB3F8C811E21FDD00563E3E</string>
 		<string>ABB3F73C11DD975700563E3E</string>
 		<string>ABB3F73711DD95B600563E3E</string>
+		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>AB4B1043103D02990061AD3D</string>
 		<string>/Users/djgagnon/Documents/Aris/Bike Box Client/ARIS.xcodeproj</string>
@@ -1060,7 +1061,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
