@@ -60,7 +60,6 @@
     self.soundFileURL = newURL;
     [newURL release];
 	
-	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayAndRecord error: nil];
 	[[AVAudioSession sharedInstance] setDelegate: self];
 	
 	mode = kAudioRecorderStarting; 
@@ -123,11 +122,13 @@
 		case kAudioRecorderStarting:
 			NSLog(@"AudioRecorder: Record/Play/Stop Button selected");
 
-			
+			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryRecord error: nil];	
+
 			NSDictionary *recordSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
 											[NSNumber numberWithInt:kAudioFormatAppleIMA4],AVFormatIDKey,
 											[NSNumber numberWithInt:16000.0],AVSampleRateKey,
 											[NSNumber numberWithInt: 1],AVNumberOfChannelsKey,
+											[NSNumber numberWithInt: AVAudioQualityMin],AVSampleRateConverterAudioQualityKey,
 											nil];
 			
 			AVAudioRecorder *newRecorder = [[AVAudioRecorder alloc] initWithURL: soundFileURL settings: recordSettings error: nil];
@@ -173,7 +174,8 @@
 			break;	
 			
 		case kAudioRecorderRecordingComplete:
-			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];
+			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];	
+
 			[[AVAudioSession sharedInstance] setActive: YES error: nil];
 			
 			if (nil == self.soundPlayer) {
@@ -192,6 +194,8 @@
 			break;
 			
 		case kAudioRecorderRecording:
+			[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];	
+
 			[soundRecorder stop];
 			self.soundRecorder = nil;
 			mode = kAudioRecorderRecordingComplete;			

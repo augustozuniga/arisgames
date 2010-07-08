@@ -44,6 +44,9 @@
 		[dispatcher addObserver:self selector:@selector(silenceNextUpdate) name:@"SilentNextUpdate" object:nil];
 		[dispatcher addObserver:self selector:@selector(movieFinishedPreloading:) name:MPMoviePlayerContentPreloadDidFinishNotification object:nil];
 		[dispatcher addObserver:self selector:@selector(movieFinishedPlayback:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+		
+		//create a time for automatic map refresh
+		NSTimer *refreshTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(refresh) userInfo:nil repeats:YES];
 	}
 	
     return self;
