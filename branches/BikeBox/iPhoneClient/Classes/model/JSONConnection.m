@@ -160,8 +160,10 @@
 	
 	//Get the JSONResult here
 	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:jsonString];
+	[jsonString release];
 	
 	if (connection.parser) [appModel performSelector:connection.parser withObject:jsonResult];
+	
 	[jsonResult release];
 	
 	[asyncData release];
