@@ -393,6 +393,11 @@
 			ABA5EAA811F94CA000F7FFA5 /* PBXTextBookmark */ = ABA5EAA811F94CA000F7FFA5 /* PBXTextBookmark */;
 			ABA5EAAD11F94CBC00F7FFA5 /* PBXTextBookmark */ = ABA5EAAD11F94CBC00F7FFA5 /* PBXTextBookmark */;
 			ABA5EAB511F94CF400F7FFA5 /* PBXTextBookmark */ = ABA5EAB511F94CF400F7FFA5 /* PBXTextBookmark */;
+			ABA5EAB711F94D1400F7FFA5 /* XCBuildMessageTextBookmark */ = ABA5EAB711F94D1400F7FFA5 /* XCBuildMessageTextBookmark */;
+			ABA5EAB811F94D1400F7FFA5 /* PBXTextBookmark */ = ABA5EAB811F94D1400F7FFA5 /* PBXTextBookmark */;
+			ABA5EABB11F94D1700F7FFA5 /* PBXTextBookmark */ = ABA5EABB11F94D1700F7FFA5 /* PBXTextBookmark */;
+			ABA5EAC411F94D3E00F7FFA5 /* PBXTextBookmark */ = ABA5EAC411F94D3E00F7FFA5 /* PBXTextBookmark */;
+			ABA5EAC611F94D4B00F7FFA5 /* PBXTextBookmark */ = ABA5EAC611F94D4B00F7FFA5 /* PBXTextBookmark */;
 			ABB3F73211DD95B600563E3E = ABB3F73211DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F73311DD95B600563E3E = ABB3F73311DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F75A11DDA4B700563E3E = ABB3F75A11DDA4B700563E3E /* PBXTextBookmark */;
@@ -1119,9 +1124,9 @@
 	};
 	AB3E113E10486A5500A9034C /* JSONConnection.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {941, 2262}}";
-			sepNavSelRange = "{3286, 0}";
-			sepNavVisRange = "{3185, 1449}";
+			sepNavIntBoundsRect = "{{0, 0}, {941, 2314}}";
+			sepNavSelRange = "{3925, 0}";
+			sepNavVisRange = "{3352, 1380}";
 		};
 	};
 	AB3F4E6C10CCC17400E6C9D7 /* NearbyObjectARCoordinate.h */ = {
@@ -2109,7 +2114,7 @@
 		ignoreCount = 0;
 		lineNumber = 106;
 		location = ARIS;
-		modificationTime = 301550781.749109;
+		modificationTime = 301550911.458924;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2374,7 +2379,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5970;
+		rLoc = 5996;
 		rType = 0;
 		vrLen = 1812;
 		vrLoc = 2018;
@@ -2384,7 +2389,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5970;
+		rLoc = 5996;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2394,7 +2399,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5970;
+		rLoc = 5996;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2404,7 +2409,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5970;
+		rLoc = 5996;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2414,7 +2419,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5970;
+		rLoc = 5996;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2443,7 +2448,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5970;
+		rLoc = 5996;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2453,7 +2458,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 177";
 		rLen = 0;
-		rLoc = 5970;
+		rLoc = 5996;
 		rType = 0;
 		vrLen = 1878;
 		vrLoc = 1515;
@@ -2612,7 +2617,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 113";
 		rLen = 0;
-		rLoc = 3901;
+		rLoc = 3927;
 		rType = 0;
 		vrLen = 1702;
 		vrLoc = 2748;
@@ -2643,7 +2648,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 163;
+		rLoc = 164;
 		rType = 1;
 	};
 	ABA5EA9B11F94C4700F7FFA5 /* PBXTextBookmark */ = {
@@ -2651,7 +2656,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 164";
 		rLen = 0;
-		rLoc = 5507;
+		rLoc = 5533;
 		rType = 0;
 		vrLen = 1108;
 		vrLoc = 4945;
@@ -2705,6 +2710,55 @@
 		rType = 0;
 		vrLen = 1449;
 		vrLoc = 3185;
+	};
+	ABA5EAB711F94D1400F7FFA5 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Potential leak of an object allocated on line 159";
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 164;
+		rType = 1;
+	};
+	ABA5EAB811F94D1400F7FFA5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		name = "JSONConnection.m: 158";
+		rLen = 0;
+		rLoc = 5338;
+		rType = 0;
+		vrLen = 998;
+		vrLoc = 4972;
+	};
+	ABA5EABB11F94D1700F7FFA5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		name = "JSONConnection.m: 98";
+		rLen = 0;
+		rLoc = 3286;
+		rType = 0;
+		vrLen = 1449;
+		vrLoc = 3185;
+	};
+	ABA5EAC411F94D3E00F7FFA5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		name = "JSONConnection.m: 113";
+		rLen = 0;
+		rLoc = 3925;
+		rType = 0;
+		vrLen = 1366;
+		vrLoc = 3416;
+	};
+	ABA5EAC611F94D4B00F7FFA5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		name = "JSONConnection.m: 113";
+		rLen = 0;
+		rLoc = 3925;
+		rType = 0;
+		vrLen = 1380;
+		vrLoc = 3352;
 	};
 	ABB3F73211DD95B600563E3E /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2790,7 +2844,7 @@
 		ignoreCount = 0;
 		lineNumber = 337;
 		location = ARIS;
-		modificationTime = 301550781.74914;
+		modificationTime = 301550911.458959;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2874,9 +2928,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 43;
-		modificationTime = 301550833.385728;
+		modificationTime = 301550911.458854;
 		originalNumberOfMultipleMatches = 1;
-		state = 1;
+		state = 0;
 	};
 	ABC399B0116B9209002185D4 /* AudioMeterViewController.m:21 */ = {
 		isa = PBXFileBreakpoint;
@@ -2891,9 +2945,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 21;
-		modificationTime = 301550833.385742;
+		modificationTime = 301550911.458868;
 		originalNumberOfMultipleMatches = 1;
-		state = 1;
+		state = 0;
 	};
 	ABC399CD116B9EBC002185D4 /* AudioMeter.h */ = {
 		uiCtxt = {
@@ -2964,9 +3018,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 78;
-		modificationTime = 301550833.385757;
+		modificationTime = 301550911.458916;
 		originalNumberOfMultipleMatches = 1;
-		state = 1;
+		state = 0;
 	};
 	ABC39B22116BD28F002185D4 /* TitleAndDecriptionFormViewController.h */ = {
 		uiCtxt = {
@@ -3011,9 +3065,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 301550833.385702;
+		modificationTime = 301550911.458482;
 		originalNumberOfMultipleMatches = 1;
-		state = 1;
+		state = 0;
 	};
 	ABCC03CB11DC3F820080FC8B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
