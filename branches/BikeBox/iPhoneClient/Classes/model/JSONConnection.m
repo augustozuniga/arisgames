@@ -113,6 +113,7 @@
 	[urlConnection release];
 	
 	NSLog(@"JSONConnection: Begining Async request.  %@", requestString);
+	[requestString release];
 
 }
 

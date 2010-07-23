@@ -398,6 +398,7 @@
 			ABA5EABB11F94D1700F7FFA5 /* PBXTextBookmark */ = ABA5EABB11F94D1700F7FFA5 /* PBXTextBookmark */;
 			ABA5EAC411F94D3E00F7FFA5 /* PBXTextBookmark */ = ABA5EAC411F94D3E00F7FFA5 /* PBXTextBookmark */;
 			ABA5EAC611F94D4B00F7FFA5 /* PBXTextBookmark */ = ABA5EAC611F94D4B00F7FFA5 /* PBXTextBookmark */;
+			ABA5EACD11F94D7400F7FFA5 /* PBXTextBookmark */ = ABA5EACD11F94D7400F7FFA5 /* PBXTextBookmark */;
 			ABB3F73211DD95B600563E3E = ABB3F73211DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F73311DD95B600563E3E = ABB3F73311DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F75A11DDA4B700563E3E = ABB3F75A11DDA4B700563E3E /* PBXTextBookmark */;
@@ -1124,9 +1125,9 @@
 	};
 	AB3E113E10486A5500A9034C /* JSONConnection.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {941, 2314}}";
-			sepNavSelRange = "{3925, 0}";
-			sepNavVisRange = "{3352, 1380}";
+			sepNavIntBoundsRect = "{{0, 0}, {941, 2262}}";
+			sepNavSelRange = "{4024, 0}";
+			sepNavVisRange = "{2936, 1572}";
 		};
 	};
 	AB3F4E6C10CCC17400E6C9D7 /* NearbyObjectARCoordinate.h */ = {
@@ -2379,7 +2380,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5996;
+		rLoc = 6022;
 		rType = 0;
 		vrLen = 1812;
 		vrLoc = 2018;
@@ -2389,7 +2390,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5996;
+		rLoc = 6022;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2399,7 +2400,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5996;
+		rLoc = 6022;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2409,7 +2410,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5996;
+		rLoc = 6022;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2419,7 +2420,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5996;
+		rLoc = 6022;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2448,7 +2449,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5996;
+		rLoc = 6022;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2458,7 +2459,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 177";
 		rLen = 0;
-		rLoc = 5996;
+		rLoc = 6022;
 		rType = 0;
 		vrLen = 1878;
 		vrLoc = 1515;
@@ -2648,7 +2649,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 164;
+		rLoc = 165;
 		rType = 1;
 	};
 	ABA5EA9B11F94C4700F7FFA5 /* PBXTextBookmark */ = {
@@ -2656,7 +2657,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 164";
 		rLen = 0;
-		rLoc = 5533;
+		rLoc = 5559;
 		rType = 0;
 		vrLen = 1108;
 		vrLoc = 4945;
@@ -2717,7 +2718,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 164;
+		rLoc = 165;
 		rType = 1;
 	};
 	ABA5EAB811F94D1400F7FFA5 /* PBXTextBookmark */ = {
@@ -2725,7 +2726,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 158";
 		rLen = 0;
-		rLoc = 5338;
+		rLoc = 5364;
 		rType = 0;
 		vrLen = 998;
 		vrLoc = 4972;
@@ -2759,6 +2760,16 @@
 		rType = 0;
 		vrLen = 1380;
 		vrLoc = 3352;
+	};
+	ABA5EACD11F94D7400F7FFA5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		name = "JSONConnection.m: 116";
+		rLen = 0;
+		rLoc = 4024;
+		rType = 0;
+		vrLen = 1572;
+		vrLoc = 2936;
 	};
 	ABB3F73211DD95B600563E3E /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2928,9 +2939,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 43;
-		modificationTime = 301550911.458854;
+		modificationTime = 301550961.10217;
 		originalNumberOfMultipleMatches = 1;
-		state = 0;
+		state = 1;
 	};
 	ABC399B0116B9209002185D4 /* AudioMeterViewController.m:21 */ = {
 		isa = PBXFileBreakpoint;
@@ -2945,9 +2956,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 21;
-		modificationTime = 301550911.458868;
+		modificationTime = 301550961.102186;
 		originalNumberOfMultipleMatches = 1;
-		state = 0;
+		state = 1;
 	};
 	ABC399CD116B9EBC002185D4 /* AudioMeter.h */ = {
 		uiCtxt = {
@@ -3018,9 +3029,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 78;
-		modificationTime = 301550911.458916;
+		modificationTime = 301550961.1022;
 		originalNumberOfMultipleMatches = 1;
-		state = 0;
+		state = 1;
 	};
 	ABC39B22116BD28F002185D4 /* TitleAndDecriptionFormViewController.h */ = {
 		uiCtxt = {
@@ -3065,9 +3076,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 301550911.458482;
+		modificationTime = 301550961.102128;
 		originalNumberOfMultipleMatches = 1;
-		state = 0;
+		state = 1;
 	};
 	ABCC03CB11DC3F820080FC8B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
