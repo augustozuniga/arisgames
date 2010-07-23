@@ -46,7 +46,7 @@
 		[dispatcher addObserver:self selector:@selector(movieFinishedPlayback:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
 		
 		//create a time for automatic map refresh
-		NSTimer *refreshTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(refresh) userInfo:nil repeats:YES];
+		NSTimer *refreshTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refresh) userInfo:nil repeats:YES];
 	}
 	
     return self;
@@ -293,10 +293,6 @@
 		//Add a badge if this is NOT the first time data has been loaded
 		if (silenceNextServerUpdate == NO) {
 			self.tabBarItem.badgeValue = @"!";
-			
-			ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
-			//[appDelegate playAudioAlert:@"mapChange" shouldVibrate:YES]; //this is a little annoying becasue it happens even when players move
-			
 		}
 		else silenceNextServerUpdate = NO;
 	

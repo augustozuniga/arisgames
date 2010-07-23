@@ -33,7 +33,7 @@
 
 - (JSONResult*) performSynchronousRequest{
 	//Build the base URL string
-	NSMutableString *requestString = [[NSMutableString alloc] initWithFormat:@"%@.%@.%@", 
+	NSMutableString *requestString = [NSMutableString stringWithFormat:@"%@.%@.%@", 
 							   self.jsonServerBaseURL, self.serviceName, self.methodName];
 	
 	//Add the Arguments
@@ -47,7 +47,7 @@
 	NSLog(@"JSONConnection: JSON URL for sync request is : %@", requestString);
 	
 	//Convert into a NSURLRequest
-	NSURL *requestURL = [[NSURL alloc]initWithString:requestString];
+	NSURL *requestURL = [NSURL URLWithString:requestString];
 	NSURLRequest *requestURLRequest = [NSURLRequest requestWithURL:requestURL
 													   cachePolicy:NSURLRequestReturnCacheDataElseLoad
 												   timeoutInterval:60];
@@ -75,7 +75,7 @@
 	NSString *jsonString = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
 	
 	//Get the JSONResult here
-	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:jsonString];
+	JSONResult *jsonResult = [[[JSONResult alloc] initWithJSONString:jsonString] autorelease];
 	
 	return jsonResult;
 }
@@ -98,6 +98,7 @@
 	NSURLRequest *request = [NSURLRequest requestWithURL:requestURL
 													   cachePolicy:NSURLRequestReturnCacheDataElseLoad
 												   timeoutInterval:60];
+	[requestURL release];
 	
 	//set up indicators
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;

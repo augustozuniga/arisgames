@@ -70,6 +70,7 @@ static const int kEmptyValue = -1;
 																	andArguments:arguments]; 
 
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest];
+	[jsonConnection release];
 	
 	if (!jsonResult) {
 		self.loggedIn = NO;
@@ -102,6 +103,8 @@ static const int kEmptyValue = -1;
 																	   andArguments:arguments]; 
 	
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest];
+	[jsonConnection release];
+
 	
 	if (!jsonResult) {
 		NSLog(@"AppModel registerNewUser: No result Data, return");
@@ -136,7 +139,7 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"nodeViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
-
+	[jsonConnection release];
 }
 
 - (void)updateServerItemViewed: (int)itemId {
@@ -153,7 +156,7 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"itemViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
-
+	[jsonConnection release];
 }
 
 - (void)updateServerNpcViewed: (int)npcId {
@@ -169,6 +172,7 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"npcViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
+	[jsonConnection release];
 }
 
 
@@ -185,6 +189,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"updatePlayerLastGame" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:nil]; 
+	[jsonConnection release];
+
 }
 
 - (void)updateServerMapViewed{
@@ -200,6 +206,7 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"mapViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:nil]; 
+	[jsonConnection release];
 }
 
 - (void)updateServerQuestsViewed{
@@ -215,6 +222,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"questsViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:nil]; 
+	[jsonConnection release];
+
 }
 
 - (void)updateServerInventoryViewed{
@@ -230,6 +239,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"inventoryViewed" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:nil]; 
+	[jsonConnection release];
+
 }
 
 - (void)startOverGame{
@@ -245,6 +256,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"startOverGameForPlayer" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(parseStartOverFromJSON:)]; 
+	[jsonConnection release];
+
 }
 
 
@@ -262,6 +275,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"pickupItemFromLocation" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
+	[jsonConnection release];
+
 }
 
 - (void)updateServerDropItemHere: (int)itemId {
@@ -279,6 +294,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"dropItem" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
+	[jsonConnection release];
+
 }
 
 - (void)updateServerDestroyItem: (int)itemId {
@@ -294,14 +311,16 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"destroyItem" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
+	[jsonConnection release];
+
 }
 
 - (void)createItemAndGiveToPlayerFromFileData:(NSData *)fileData fileName:(NSString *)fileName 
 										title:(NSString *)title description:(NSString*)description {
 
 	// setting up the request object now
-	NSString *urlString = [[NSString alloc] initWithFormat:@"%@services/aris/uploadHandler.php",self.baseAppURL];
-	NSURL *url = [[NSURL alloc] initWithString:urlString];
+	NSString *urlString = [NSString stringWithFormat:@"%@services/aris/uploadHandler.php",self.baseAppURL];
+	NSURL *url = [NSURL URLWithString:urlString];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	request.timeOutSeconds = 60;
 	
@@ -359,6 +378,7 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"createItemAndPlaceOnMap" 
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(fetchAllLists)]; 
+	[jsonConnection release];
 
 }
 
@@ -401,7 +421,8 @@ static const int kEmptyValue = -1;
 																	  andMethodName:@"updatePlayerLocation" 
 																	   andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:nil]; 
-	
+	[jsonConnection release];
+
 	
 	//Rebuild nearbyLocationList
 	//We could just do this in the getter
@@ -438,7 +459,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:aMethod
 																	  andArguments:arguments];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	
+	[jsonConnection release];
+
 	if (!jsonResult) {
 		NSLog(@"\tFailed.");
 		return nil;
@@ -557,6 +579,7 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"getLocationsForPlayer"
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(parseLocationListFromJSON:)]; 
+	[jsonConnection release];
 	
 }
 
@@ -576,6 +599,8 @@ static const int kEmptyValue = -1;
 																	 andMethodName:@"getItemsForPlayer"
 																	  andArguments:arguments];
 	[jsonConnection performAsynchronousRequestWithParser:@selector(parseInventoryFromJSON:)]; 
+	[jsonConnection release];
+
 }
 
 
@@ -593,7 +618,8 @@ static const int kEmptyValue = -1;
 																	  andArguments:arguments];
 	
 	[jsonConnection performAsynchronousRequestWithParser:@selector(parseQuestListFromJSON:)]; 	
-	
+	[jsonConnection release];
+
 }
 
 
@@ -610,7 +636,7 @@ static const int kEmptyValue = -1;
 }
 
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
-	Item *item = [[Item alloc] init];
+	Item *item = [[[Item alloc] init] autorelease];
 	item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
 	item.name = [itemDictionary valueForKey:@"name"];
 	item.description = [itemDictionary valueForKey:@"description"];
@@ -626,7 +652,7 @@ static const int kEmptyValue = -1;
 -(Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary{
 	//Build the node
 	NSLog(@"%@", nodeDictionary);
-	Node *node = [[Node alloc] init];
+	Node *node = [[[Node alloc] init] autorelease];
 	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
@@ -646,25 +672,29 @@ static const int kEmptyValue = -1;
 		text = [nodeDictionary valueForKey:@"opt1_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[node addOption:option];
+		[option release];
 	}
 	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt2_node_id"] intValue] > 0) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt2_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[node addOption:option];
+		[option release];
 	}
 	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt3_node_id"] intValue] > 0) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt3_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt3_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[node addOption:option];
+		[option release];
+
 	}
 	
 	return node;	
 }
 
 -(Npc *)parseNpcFromDictionary: (NSDictionary *)npcDictionary {
-	Npc *npc = [[Npc alloc] init];
+	Npc *npc = [[[Npc alloc] init] autorelease];
 	npc.npcId = [[npcDictionary valueForKey:@"npc_id"] intValue];
 	npc.name = [npcDictionary valueForKey:@"name"];
 	npc.greeting = [npcDictionary valueForKey:@"text"];
@@ -680,12 +710,13 @@ static const int kEmptyValue = -1;
 		NSString *text = [conversationDictionary valueForKey:@"text"]; 
 		NodeOption *option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId];
 		[npc addOption:option];
+		[option release];
 	}
 	return npc;	
 }
 
 -(NSArray *)parseGameListFromArray: (NSArray *)gameListArray{
-	NSMutableArray *tempGameList = [[NSMutableArray alloc] init];
+	NSMutableArray *tempGameList = [[[NSMutableArray alloc] init] autorelease];
 	
 	NSEnumerator *gameListEnumerator = [gameListArray objectEnumerator];	
 	NSDictionary *gameDictionary;
@@ -717,6 +748,7 @@ static const int kEmptyValue = -1;
 		
 		NSLog(@"Model: Adding Game: %@", game.name);
 		[tempGameList addObject:game]; 
+		[game release];
 	}
 
 	
@@ -767,7 +799,10 @@ static const int kEmptyValue = -1;
 		[location release];
 	}
 	
+	if (self.locationList) [self.locationList release];
+
 	self.locationList = tempLocationsList;
+	[tempLocationsList release];
 	
 	//Tell everyone
 	NSLog(@"AppModel: Finished fetching locations from server, model updated");
@@ -784,7 +819,7 @@ static const int kEmptyValue = -1;
 
 
 -(NSMutableDictionary *)parseMediaListFromArray: (NSArray *)mediaListArray{
-	NSMutableDictionary *tempMediaList = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *tempMediaList = [[[NSMutableDictionary alloc] init] autorelease];
 	NSEnumerator *enumerator = [((NSArray *)mediaListArray) objectEnumerator];
 	NSDictionary *dict;
 	while (dict = [enumerator nextObject]) {
@@ -877,6 +912,7 @@ static const int kEmptyValue = -1;
 												   longitude:[longitude doubleValue]];
 	
 	self.playerLocation = [location copy];
+	[location release];
 	//[appModel updateServerLocationAndfetchNearbyLocationList];
 	
 	NSString *type = [qrCodeObjectDictionary valueForKey:@"type"];
@@ -929,6 +965,7 @@ static const int kEmptyValue = -1;
 		quest.description = [activeQuest objectForKey:@"description"];
 		quest.iconMediaId = [[activeQuest objectForKey:@"icon_media_id"] intValue];
 		[activeQuestObjects addObject:quest];
+		[quest release];
 	}
 
 	//parse out the completed quests into quest objects	
@@ -944,12 +981,15 @@ static const int kEmptyValue = -1;
 		quest.description = [completedQuest objectForKey:@"text_when_complete"];
 		quest.iconMediaId = [[completedQuest objectForKey:@"icon_media_id"] intValue];
 		[completedQuestObjects addObject:quest];
+		[quest release];
 	}
 
 	//Package the two object arrays in a Dictionary
 	NSMutableDictionary *tmpQuestList = [[NSMutableDictionary alloc] init];
 	[tmpQuestList setObject:activeQuestObjects forKey:@"active"];
 	[tmpQuestList setObject:completedQuestObjects forKey:@"completed"];
+	[activeQuestObjects release];
+	[completedQuestObjects release];
 	
 	self.questList = tmpQuestList;
 	

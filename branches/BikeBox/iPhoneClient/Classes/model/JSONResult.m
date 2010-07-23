@@ -77,7 +77,7 @@
 	NSArray *columnsArray = [dataDictionary objectForKey:@"columns"];
 	NSArray *rowsArray = [dataDictionary objectForKey:@"rows"];
 	NSEnumerator *rowsEnumerator = [rowsArray objectEnumerator];
-	NSMutableArray *dictionaryArray = [[NSMutableArray alloc] init];
+	NSMutableArray *dictionaryArray = [[[NSMutableArray alloc] init] autorelease];
 	
 	//add each row as a dictionary to the dictionaryArray 
 	NSArray *rowArray;
