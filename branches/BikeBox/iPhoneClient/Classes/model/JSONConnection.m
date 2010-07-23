@@ -76,6 +76,7 @@
 	
 	//Get the JSONResult here
 	JSONResult *jsonResult = [[[JSONResult alloc] initWithJSONString:jsonString] autorelease];
+	[jsonString release];
 	
 	return jsonResult;
 }
@@ -109,7 +110,7 @@
 	asyncData = [NSMutableData dataWithCapacity:1000];
 	[asyncData retain];
 	[urlConnection start];
-	
+	[urlConnection release];
 	NSLog(@"JSONConnection: Begining Async request.  %@", requestString);
 
 }
