@@ -1593,7 +1593,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = ARIS;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E05A2F1A-52DD-4F77-8464-B55B9BDAD0AB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D14C3F02-C8B2-42ED-B71D-FC92CB362494";
 				SDKROOT = iphoneos4.0;
 			};
 			name = "Enterprise Distribution";

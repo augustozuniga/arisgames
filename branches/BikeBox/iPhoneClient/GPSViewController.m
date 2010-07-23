@@ -46,7 +46,7 @@
 		[dispatcher addObserver:self selector:@selector(movieFinishedPlayback:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
 		
 		//create a time for automatic map refresh
-		NSTimer *refreshTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refresh) userInfo:nil repeats:YES];
+		NSTimer *refreshTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(refresh) userInfo:nil repeats:YES];
 	}
 	
     return self;
