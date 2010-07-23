@@ -159,6 +159,7 @@
 	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:jsonString];
 	
 	if (connection.parser) [appModel performSelector:connection.parser withObject:jsonResult];
+	[jsonResult release];
 	
 	[asyncData release];
 }

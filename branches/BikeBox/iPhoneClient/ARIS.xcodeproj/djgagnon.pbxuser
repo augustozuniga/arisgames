@@ -392,6 +392,7 @@
 			ABA5EAA311F94C8400F7FFA5 /* PBXTextBookmark */ = ABA5EAA311F94C8400F7FFA5 /* PBXTextBookmark */;
 			ABA5EAA811F94CA000F7FFA5 /* PBXTextBookmark */ = ABA5EAA811F94CA000F7FFA5 /* PBXTextBookmark */;
 			ABA5EAAD11F94CBC00F7FFA5 /* PBXTextBookmark */ = ABA5EAAD11F94CBC00F7FFA5 /* PBXTextBookmark */;
+			ABA5EAB511F94CF400F7FFA5 /* PBXTextBookmark */ = ABA5EAB511F94CF400F7FFA5 /* PBXTextBookmark */;
 			ABB3F73211DD95B600563E3E = ABB3F73211DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F73311DD95B600563E3E = ABB3F73311DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F75A11DDA4B700563E3E = ABB3F75A11DDA4B700563E3E /* PBXTextBookmark */;
@@ -1118,9 +1119,9 @@
 	};
 	AB3E113E10486A5500A9034C /* JSONConnection.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {941, 2236}}";
+			sepNavIntBoundsRect = "{{0, 0}, {941, 2262}}";
 			sepNavSelRange = "{3286, 0}";
-			sepNavVisRange = "{3107, 1524}";
+			sepNavVisRange = "{3185, 1449}";
 		};
 	};
 	AB3F4E6C10CCC17400E6C9D7 /* NearbyObjectARCoordinate.h */ = {
@@ -2108,7 +2109,7 @@
 		ignoreCount = 0;
 		lineNumber = 106;
 		location = ARIS;
-		modificationTime = 301550753.19251;
+		modificationTime = 301550781.749109;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2373,7 +2374,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 1812;
 		vrLoc = 2018;
@@ -2383,7 +2384,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2393,7 +2394,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2403,7 +2404,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2413,7 +2414,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2442,7 +2443,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2452,7 +2453,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 177";
 		rLen = 0;
-		rLoc = 5947;
+		rLoc = 5970;
 		rType = 0;
 		vrLen = 1878;
 		vrLoc = 1515;
@@ -2642,7 +2643,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 162;
+		rLoc = 163;
 		rType = 1;
 	};
 	ABA5EA9B11F94C4700F7FFA5 /* PBXTextBookmark */ = {
@@ -2650,7 +2651,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 164";
 		rLen = 0;
-		rLoc = 5484;
+		rLoc = 5507;
 		rType = 0;
 		vrLen = 1108;
 		vrLoc = 4945;
@@ -2694,6 +2695,16 @@
 		rType = 0;
 		vrLen = 1524;
 		vrLoc = 3107;
+	};
+	ABA5EAB511F94CF400F7FFA5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		name = "JSONConnection.m: 98";
+		rLen = 0;
+		rLoc = 3286;
+		rType = 0;
+		vrLen = 1449;
+		vrLoc = 3185;
 	};
 	ABB3F73211DD95B600563E3E /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2779,7 +2790,7 @@
 		ignoreCount = 0;
 		lineNumber = 337;
 		location = ARIS;
-		modificationTime = 301550753.192527;
+		modificationTime = 301550781.74914;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2863,7 +2874,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 43;
-		modificationTime = 301550778.470966;
+		modificationTime = 301550833.385728;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2880,7 +2891,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 21;
-		modificationTime = 301550778.470979;
+		modificationTime = 301550833.385742;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2953,7 +2964,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 78;
-		modificationTime = 301550778.470993;
+		modificationTime = 301550833.385757;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -3000,9 +3011,9 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 301550778.470943;
+		modificationTime = 301550833.385702;
 		originalNumberOfMultipleMatches = 1;
-		state = 0;
+		state = 1;
 	};
 	ABCC03CB11DC3F820080FC8B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
