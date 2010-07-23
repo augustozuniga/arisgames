@@ -334,7 +334,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>ABA5EA8611F94B7E00F7FFA5</string>
+										<string>ABA5EAAD11F94CBC00F7FFA5</string>
 										<key>history</key>
 										<array>
 											<string>ABBEBCDD104DDCDB00AA7285</string>
@@ -685,13 +685,13 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>ABA5EA8711F94B7E00F7FFA5</string>
+		<string>ABA5EAAE11F94CBC00F7FFA5</string>
 		<string>ABA5E9E911F9469300F7FFA5</string>
 		<string>ABA5E9EA11F9469300F7FFA5</string>
 		<string>1C78EAAD065D492600B07095</string>
 		<string>1CD10A99069EF8BA00B06720</string>
-		<string>AB4B1043103D02990061AD3D</string>
 		<string>/Users/djgagnon/Documents/Aris/Bike Box Client/ARIS.xcodeproj</string>
+		<string>AB4B1043103D02990061AD3D</string>
 	</array>
 	<key>WindowString</key>
 	<string>5 92 1305 786 0 0 1440 878 </string>
@@ -726,7 +726,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1280, 384}}</string>
 								<key>RubberWindowFrame</key>
-								<string>82 113 1280 676 0 0 1440 878 </string>
+								<string>63 120 1280 676 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -750,7 +750,7 @@
 								<key>Frame</key>
 								<string>{{0, 389}, {1280, 246}}</string>
 								<key>RubberWindowFrame</key>
-								<string>82 113 1280 676 0 0 1440 878 </string>
+								<string>63 120 1280 676 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -780,11 +780,11 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.buildV3</string>
 			<key>WindowString</key>
-			<string>82 113 1280 676 0 0 1440 878 </string>
+			<string>63 120 1280 676 0 0 1440 878 </string>
 			<key>WindowToolGUID</key>
 			<string>AB4B1043103D02990061AD3D</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>FirstTimeWindowDisplayed</key>

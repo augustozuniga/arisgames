@@ -110,7 +110,7 @@
 	asyncData = [NSMutableData dataWithCapacity:1000];
 	[asyncData retain];
 	[urlConnection start];
-	[urlConnection release];
+	
 	NSLog(@"JSONConnection: Begining Async request.  %@", requestString);
 
 }
