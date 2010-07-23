@@ -147,6 +147,8 @@
 - (void)connectionDidFinishLoading:(ARISURLConnection *)connection {
 	NSLog(@"JSONConnection: Finished Loading Data");
 	
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	
 	//end the loading and spinner UI indicators
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	//[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] removeWaitingIndicator];
@@ -167,6 +169,8 @@
 	[jsonResult release];
 	
 	[asyncData release];
+	
+	[pool release];
 }
 
 - (void)connection:(ARISURLConnection *)connection didFailWithError:(NSError *)error {
@@ -177,6 +181,16 @@
 	[(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] showNetworkAlert];	
 	
 	[asyncData release];
+}
+
+
+- (void)dealloc {
+	[jsonServerBaseURL release];
+	[serviceName release];
+	[methodName release];
+	[arguments release];
+	
+    [super dealloc];
 }
 
 

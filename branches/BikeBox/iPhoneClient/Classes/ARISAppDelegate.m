@@ -85,6 +85,7 @@
 
 	gpsViewController.view.frame = CGRectMake(0,20,320,460);
 	[window addSubview:gpsViewController.view];
+	[gpsViewController release];
 
 
 	
@@ -164,6 +165,7 @@
 	AVAudioPlayer *player;
 	NSString *soundPath = [[NSBundle mainBundle] pathForResource:wavFileName ofType:@"wav"];
 	player =[[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath: soundPath] error:nil];
+	[soundPath release];
 	player.volume = 1.0;
 	player.numberOfLoops = 0;
 	[player prepareToPlay];

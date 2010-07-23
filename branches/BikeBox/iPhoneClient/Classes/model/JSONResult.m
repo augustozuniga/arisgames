@@ -21,6 +21,9 @@
 
 - (JSONResult*)initWithJSONString:(NSString *)JSONString{
 	
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+
+	
 	//Calculate the hash
 	hash = [JSONString hash];
 	
@@ -48,7 +51,7 @@
 	}
 	else NSLog(@"JSONResult: The return code was NOT 0, do not parse out the data. Return Code Description: %@",self.returnCodeDescription);
 
-		
+	[pool release];	
 	return self;
 }
 
@@ -87,7 +90,12 @@
 }
 
 
-
+- (void)dealloc {
+	[returnCodeDescription release];
+	[data release];
+	
+    [super dealloc];
+}
 
 
 

@@ -800,7 +800,6 @@ static const int kEmptyValue = -1;
 	}
 	
 	if (self.locationList) [self.locationList release];
-
 	self.locationList = tempLocationsList;
 	[tempLocationsList release];
 	
