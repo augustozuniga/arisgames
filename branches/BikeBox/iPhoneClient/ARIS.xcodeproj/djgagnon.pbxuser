@@ -399,6 +399,7 @@
 			ABA5EAC411F94D3E00F7FFA5 /* PBXTextBookmark */ = ABA5EAC411F94D3E00F7FFA5 /* PBXTextBookmark */;
 			ABA5EAC611F94D4B00F7FFA5 /* PBXTextBookmark */ = ABA5EAC611F94D4B00F7FFA5 /* PBXTextBookmark */;
 			ABA5EACD11F94D7400F7FFA5 /* PBXTextBookmark */ = ABA5EACD11F94D7400F7FFA5 /* PBXTextBookmark */;
+			ABA5EAD511F94DA700F7FFA5 /* PBXTextBookmark */ = ABA5EAD511F94DA700F7FFA5 /* PBXTextBookmark */;
 			ABB3F73211DD95B600563E3E = ABB3F73211DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F73311DD95B600563E3E = ABB3F73311DD95B600563E3E /* PBXTextBookmark */;
 			ABB3F75A11DDA4B700563E3E = ABB3F75A11DDA4B700563E3E /* PBXTextBookmark */;
@@ -1125,9 +1126,9 @@
 	};
 	AB3E113E10486A5500A9034C /* JSONConnection.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {941, 2262}}";
-			sepNavSelRange = "{4024, 0}";
-			sepNavVisRange = "{2936, 1572}";
+			sepNavIntBoundsRect = "{{0, 0}, {941, 2275}}";
+			sepNavSelRange = "{4496, 0}";
+			sepNavVisRange = "{3675, 1367}";
 		};
 	};
 	AB3F4E6C10CCC17400E6C9D7 /* NearbyObjectARCoordinate.h */ = {
@@ -2115,7 +2116,7 @@
 		ignoreCount = 0;
 		lineNumber = 106;
 		location = ARIS;
-		modificationTime = 301550911.458924;
+		modificationTime = 301550965.385439;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2380,7 +2381,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 6022;
+		rLoc = 6043;
 		rType = 0;
 		vrLen = 1812;
 		vrLoc = 2018;
@@ -2390,7 +2391,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 6022;
+		rLoc = 6043;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2400,7 +2401,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 6022;
+		rLoc = 6043;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2410,7 +2411,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 6022;
+		rLoc = 6043;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2420,7 +2421,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 6022;
+		rLoc = 6043;
 		rType = 0;
 		vrLen = 968;
 		vrLoc = 1757;
@@ -2449,7 +2450,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 176";
 		rLen = 0;
-		rLoc = 6022;
+		rLoc = 6043;
 		rType = 0;
 		vrLen = 1763;
 		vrLoc = 2093;
@@ -2459,7 +2460,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 177";
 		rLen = 0;
-		rLoc = 6022;
+		rLoc = 6043;
 		rType = 0;
 		vrLen = 1878;
 		vrLoc = 1515;
@@ -2649,7 +2650,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 165;
+		rLoc = 166;
 		rType = 1;
 	};
 	ABA5EA9B11F94C4700F7FFA5 /* PBXTextBookmark */ = {
@@ -2657,7 +2658,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 164";
 		rLen = 0;
-		rLoc = 5559;
+		rLoc = 5580;
 		rType = 0;
 		vrLen = 1108;
 		vrLoc = 4945;
@@ -2718,7 +2719,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		fallbackIsa = XCBuildMessageTextBookmark;
 		rLen = 1;
-		rLoc = 165;
+		rLoc = 166;
 		rType = 1;
 	};
 	ABA5EAB811F94D1400F7FFA5 /* PBXTextBookmark */ = {
@@ -2726,7 +2727,7 @@
 		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
 		name = "JSONConnection.m: 158";
 		rLen = 0;
-		rLoc = 5364;
+		rLoc = 5385;
 		rType = 0;
 		vrLen = 998;
 		vrLoc = 4972;
@@ -2770,6 +2771,16 @@
 		rType = 0;
 		vrLen = 1572;
 		vrLoc = 2936;
+	};
+	ABA5EAD511F94DA700F7FFA5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = AB3E113E10486A5500A9034C /* JSONConnection.m */;
+		name = "JSONConnection.m: 132";
+		rLen = 0;
+		rLoc = 4496;
+		rType = 0;
+		vrLen = 1367;
+		vrLoc = 3675;
 	};
 	ABB3F73211DD95B600563E3E /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -2855,7 +2866,7 @@
 		ignoreCount = 0;
 		lineNumber = 337;
 		location = ARIS;
-		modificationTime = 301550911.458959;
+		modificationTime = 301550965.385488;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2939,7 +2950,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 43;
-		modificationTime = 301550961.10217;
+		modificationTime = 301551012.56426;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -2956,7 +2967,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 21;
-		modificationTime = 301550961.102186;
+		modificationTime = 301551012.564273;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -3029,7 +3040,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 78;
-		modificationTime = 301550961.1022;
+		modificationTime = 301551012.564289;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};
@@ -3076,7 +3087,7 @@
 		hitCount = 0;
 		ignoreCount = 0;
 		lineNumber = 34;
-		modificationTime = 301550961.102128;
+		modificationTime = 301551012.564231;
 		originalNumberOfMultipleMatches = 1;
 		state = 1;
 	};

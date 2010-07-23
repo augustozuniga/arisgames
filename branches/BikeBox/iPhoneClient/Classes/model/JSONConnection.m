@@ -129,6 +129,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	NSString* tempData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	NSLog(@"JSONConnection: Recieved Data: %@", tempData);
+	[tempData release];
 	
 	[asyncData appendData:data];
 
