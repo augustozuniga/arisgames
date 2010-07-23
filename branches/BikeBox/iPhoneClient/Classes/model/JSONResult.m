@@ -62,14 +62,6 @@
 	
 	//Check if this dictionary contains a rows/cols pair or is just an object
 	if (!([dataDictionary objectForKey:@"columns"] && [dataDictionary objectForKey:@"rows"])) {
-		//If any of the fields in this dictionary are also dictionaries, we need to parse them as well
-		NSEnumerator *dictionaryEnumerator = [dataDictionary objectEnumerator];
-		NSObject *objectInDictionary;
-		while (objectInDictionary = [dictionaryEnumerator nextObject]) {	
-			//parse it
-			objectInDictionary = [self parseJSONData:objectInDictionary];
-		}
-	
 		return dataDictionary;
 	}
 
