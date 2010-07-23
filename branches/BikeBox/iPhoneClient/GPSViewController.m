@@ -129,7 +129,9 @@
 		}
 		
 		if (bestLocation.locationId != lastNearbyLocation.locationId) {
-			lastNearbyLocation = bestLocation;			
+			[lastNearbyLocation release];
+			lastNearbyLocation = bestLocation;
+			[lastNearbyLocation retain];
 			ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 			[appDelegate playAudioAlert:@"bikeBell" shouldVibrate:YES];
 			
