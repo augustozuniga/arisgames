@@ -50,7 +50,7 @@
 	//connection = YES; //For debugging locally
 	if (!connection) {
 		NSLog(@"AppDelegate: Internet Connection Failed");
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No connection to the Internet" message: @"Please connect to the internet and restart Bike Box" delegate: self cancelButtonTitle: nil otherButtonTitles: nil];
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"No connection to the Internet" message: @"Please connect to the internet and restart Love Box" delegate: self cancelButtonTitle: nil otherButtonTitles: nil];
 		[alert show];
 		[alert release];
 		return;
