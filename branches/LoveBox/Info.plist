@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildNumber</key>
-	<string>1335:1338M</string>
+	<string>1339M</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
@@ -12,8 +12,11 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
-	<key>CFBundleIconFile</key>
-	<string>Icon</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Icon.png</string>
+		<string>Icon72.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
 	<string>org.arisgames.lovebox</string>
 	<key>CFBundleInfoDictionaryVersion</key>

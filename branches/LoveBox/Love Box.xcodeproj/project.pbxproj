@@ -184,6 +184,8 @@
 		AB64848F118783BB00261315 /* error.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB64848E118783BB00261315 /* error.wav */; };
 		AB6484971187842B00261315 /* ticktick.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB6484961187842B00261315 /* ticktick.wav */; };
 		AB6484B51187860E00261315 /* drop.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB6484B41187860E00261315 /* drop.wav */; };
+		AB65BFEF1253F2DF0002373C /* Icon.Icon in Resources */ = {isa = PBXBuildFile; fileRef = AB65BFEC1253F2DE0002373C /* Icon.Icon */; };
+		AB65BFF11253F2DF0002373C /* Icon72.png in Resources */ = {isa = PBXBuildFile; fileRef = AB65BFEE1253F2DF0002373C /* Icon72.png */; };
 		AB6B775E10C9D6C900275650 /* ARViewViewControler.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6B775D10C9D6C900275650 /* ARViewViewControler.m */; };
 		AB7FB978115DBF1500DB81A6 /* clickToPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7FB977115DBF1500DB81A6 /* clickToPlay.png */; };
 		AB8A3CCE104936F500422773 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8A3CCD104936F500422773 /* libiconv.2.dylib */; };
@@ -480,6 +482,8 @@
 		AB64848E118783BB00261315 /* error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = error.wav; sourceTree = "<group>"; };
 		AB6484961187842B00261315 /* ticktick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ticktick.wav; sourceTree = "<group>"; };
 		AB6484B41187860E00261315 /* drop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = drop.wav; sourceTree = "<group>"; };
+		AB65BFEC1253F2DE0002373C /* Icon.Icon */ = {isa = PBXFileReference; lastKnownFileType = file; path = Icon.Icon; sourceTree = "<group>"; };
+		AB65BFEE1253F2DF0002373C /* Icon72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon72.png; sourceTree = "<group>"; };
 		AB6B775410C9D64800275650 /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
 		AB6B775C10C9D6C900275650 /* ARViewViewControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARViewViewControler.h; sourceTree = "<group>"; };
 		AB6B775D10C9D6C900275650 /* ARViewViewControler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARViewViewControler.m; sourceTree = "<group>"; };
@@ -943,6 +947,8 @@
 		A7986D6A0F8FEC7200A5469F /* Core App */ = {
 			isa = PBXGroup;
 			children = (
+				AB65BFEC1253F2DE0002373C /* Icon.Icon */,
+				AB65BFEE1253F2DF0002373C /* Icon72.png */,
 				ABF4A3AC116847E40043EB1C /* SystemConfiguration.framework */,
 				D4D366DE111B6789009C4D00 /* CFNetwork.framework */,
 				AB0DE80C11559D1200A6EC3E /* CoreAudio.framework */,
@@ -1306,6 +1312,8 @@
 				AB573E4911DD38EC0060CC63 /* microphoneForeground.png in Resources */,
 				ABB3F75711DDA01E00563E3E /* bikeBell.wav in Resources */,
 				AB2165ED125104AC003B546C /* whistle.wav in Resources */,
+				AB65BFEF1253F2DF0002373C /* Icon.Icon in Resources */,
+				AB65BFF11253F2DF0002373C /* Icon72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1534,6 +1542,7 @@
 				PRODUCT_NAME = "Love Box";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1606,6 +1615,7 @@
 				PRODUCT_NAME = "Love Box";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Enterprise Distribution";
 		};
@@ -1657,6 +1667,7 @@
 				PRODUCT_NAME = "Love Box";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E41AE15B-2679-46CD-9155-FF0C95409795";
 				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "AppStore Distribution";
 		};
