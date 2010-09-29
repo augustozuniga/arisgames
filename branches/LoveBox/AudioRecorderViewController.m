@@ -229,7 +229,7 @@
 											  title:titleAndDescForm.titleField.text 
 										description:titleAndDescForm.descriptionField.text];
 	
-	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryAmbient error: nil];
+	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];	
 	[self dismissModalViewControllerAnimated:YES];
 	[self.view removeFromSuperview];
 }
@@ -237,7 +237,7 @@
 - (IBAction) backButtonAction: (id) sender{
 	self.soundRecorder = nil;
 	
-	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryAmbient error: nil];
+	[[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: nil];	
 	[self dismissModalViewControllerAnimated:YES];
 	[self.view removeFromSuperview];
 }
