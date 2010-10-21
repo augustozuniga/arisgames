@@ -1,0 +1,11 @@
+#summary The communication architecture of the ARIS client, server and authoring tool
+
+= Introduction =
+
+ARIS is actually a collection of 3 pieces of software that work together. 
+
+= Details =
+
+  * *The Server* stores the database in a set of MySQL Tables for all ARIS games, authors and players. It uses a library called AMFPHP to provide AMF and JSON access to a set of services for the client and author to interface with.
+  * *The iPhone Client* is where the games are actually played and it talkes with the server to download game information and update the player's actions/state.
+  * *The Authoring Tool* is built in FLEX 3.5 and provides authors with an interface to create and modify games on ARIS.
