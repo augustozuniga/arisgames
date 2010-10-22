@@ -1,3 +1,8 @@
 #summary What isn't working for you? What should we build next?
 
+ARIS is powered by the designers that are using it! 
+
+Ideas added here will be worked into the actual development queues for the [http://www.pivotaltracker.com/projects/90924 editor] and [http://www.pivotaltracker.com/projects/29384 client/server software]. 
+
+
 <wiki:gadget url="http://www.google.com/moderator/static/moderator-embed-gadget.xml"  height="700" width="1000" up_url="http://www.google.com/moderator/#15/e=36451&t=36451.41" up_sort="HOT" up_hl="en" />
