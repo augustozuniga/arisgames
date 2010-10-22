@@ -74,21 +74,35 @@
 	else if ([item.type isEqualToString: @"AV"]) {
 		NSLog(@"ItemDetailsViewController:  Video Layout Selected");
 
-		//Create movie player object
-		mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:mediaURL]];
+		
 		
 		// Register to receive a notifications
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePreloadDidFinish:) name:MPMoviePlayerContentPreloadDidFinishNotification object:nil];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayBackDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:mMoviePlayer];
 		
+		
+		
+		
+		
+		/*
+		//Create movie player object
+		mMoviePlayer = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:mediaURL]];
+		
 		//Configure Movie Player
 		mMoviePlayer.scalingMode = MPMovieScalingModeFill; // Movie scaling mode can be one of: MPMovieScalingModeNone, MPMovieScalingModeAspectFit,MPMovieScalingModeAspectFill, MPMovieScalingModeFill.
 		mMoviePlayer.movieControlMode = MPMovieControlModeDefault; //Movie control mode can be one of: MPMovieControlModeDefault, MPMovieControlModeVolumeOnly, MPMovieControlModeHidden.
 		mMoviePlayer.backgroundColor = [UIColor blackColor];
+		*/
 		
-		//Add a button
-		UIButton *button = [[UIButton buttonWithType:UIButtonTypeCustom] 
-							initWithFrame:CGRectMake(120, 60, 80, 80)];
+		
+		//Create movie player object
+		mMoviePlayer = [[ARISMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:mediaURL]];
+		[mMoviePlayer shouldAutorotateToInterfaceOrientation:YES];
+		
+		[mMoviePlayer.moviePlayer prepareToPlay];	
+		
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button setFrame:CGRectMake(120, 60, 80, 80)];
 		[button addTarget:self action:@selector(playMovie:) forControlEvents:UIControlEventTouchUpInside];
 		[button setImage:[UIImage imageNamed:@"playArrow.png"] forState:UIControlStateNormal];
 		[scrollView addSubview:button];		
@@ -185,7 +199,10 @@
 }
 
 -(IBAction)playMovie:(id)sender {
-    [mMoviePlayer play];
+    NSLog(@"ItemDetailsVC: Play Movie");
+	//[mMoviePlayer play];
+	[self presentMoviePlayerViewControllerAnimated:mMoviePlayer];
+
 }
 
 - (IBAction)pickupButtonTouchAction: (id) sender{

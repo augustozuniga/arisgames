@@ -9,13 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "model/AppModel.h";
 #import "Item.h";
-#import <MediaPlayer/MediaPlayer.h>
+//#import <MediaPlayer/MediaPlayer.h>
+#import "ARISMoviePlayerViewController.h"
+
 
 
 @interface ItemDetailsViewController : UIViewController {
 	AppModel *appModel;
 	Item *item;
-	MPMoviePlayerController *mMoviePlayer; //only used if item is a video
+	MPMoviePlayerViewController *mMoviePlayer; //only used if item is a video
 	bool inInventory;
 	//IBOutlet UITextView *descriptionView;
 	IBOutlet UIButton *dropButton;

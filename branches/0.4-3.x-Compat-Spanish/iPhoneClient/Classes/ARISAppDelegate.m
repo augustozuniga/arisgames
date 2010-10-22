@@ -230,9 +230,39 @@
 	if(loginSuccessful) {
 		NSLog(@"AppDelegate: Login Success");
 		[loginViewNavigationController.view removeFromSuperview];
-		[appModel fetchGameList];
-		[window addSubview:gamePickerNavigationController.view];
-		gamePickerViewController.view.frame = [UIScreen mainScreen].applicationFrame;
+		//[appModel fetchGameList];
+		//[window addSubview:gamePickerNavigationController.view];
+		//gamePickerViewController.view.frame = [UIScreen mainScreen].applicationFrame;
+		
+		
+		//Set the model to this game
+		appModel.site = @"fam";
+		
+		//Notify the Server
+		NSLog(@"AppDelegate: Game Selected. Notifying Server");
+		NSURLRequest *request = [appModel getURLForModule:@"RESTSelectGame&event=setGame"];	
+		[appModel fetchURLData:request];
+		
+		//Set tabBar to the first item
+		tabBarController.selectedIndex = 0;
+		
+		//Display the tabBar (and it's content)
+		tabBarController.view.hidden = NO;
+		
+		//Get the visible view controller and make sure it's model has been set
+		UIViewController *viewController = [tabBarController selectedViewController];
+		UIViewController *visibleViewController;
+		if ([viewController isKindOfClass:[UINavigationController class]]) {
+			UINavigationController *navigationController = (UINavigationController*) viewController;
+			visibleViewController = [navigationController visibleViewController];
+			[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
+		}
+		else {
+			visibleViewController = viewController;
+			[visibleViewController performSelector:@selector(setModel:) withObject:appModel];
+		}
+		[appModel updateServerLocationAndfetchNearbyLocationList];
+		
 
 	} else {
 		NSLog(@"AppDelegate: Login Failed");

@@ -168,6 +168,7 @@
 		A7F0EE610F71D0C5008F7BAD /* GenericWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F0EE600F71D0C5008F7BAD /* GenericWebViewController.m */; };
 		A7F73FD50FB248DF0044B85A /* XMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F73FD40FB248DF0044B85A /* XMLParserDelegate.m */; };
 		A7FA0E7C0FC7048C00941493 /* IndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7FA0E7B0FC7048C00941493 /* IndicatorView.m */; };
+		ABCE8803121350840012C322 /* ARISMoviePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCE8802121350840012C322 /* ARISMoviePlayerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -380,6 +381,8 @@
 		A7F73FD40FB248DF0044B85A /* XMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParserDelegate.m; sourceTree = "<group>"; };
 		A7FA0E7A0FC7048C00941493 /* IndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndicatorView.h; sourceTree = "<group>"; };
 		A7FA0E7B0FC7048C00941493 /* IndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndicatorView.m; sourceTree = "<group>"; };
+		ABCE8801121350840012C322 /* ARISMoviePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARISMoviePlayerViewController.h; sourceTree = "<group>"; };
+		ABCE8802121350840012C322 /* ARISMoviePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARISMoviePlayerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -770,6 +773,8 @@
 				A7A1728B0F4F27120017E865 /* Default.png */,
 				A7A172940F4F273B0017E865 /* Icon.icns */,
 				A7A1728A0F4F27120017E865 /* Icon.png */,
+				ABCE8801121350840012C322 /* ARISMoviePlayerViewController.h */,
+				ABCE8802121350840012C322 /* ARISMoviePlayerViewController.m */,
 			);
 			name = "Core App";
 			sourceTree = "<group>";
@@ -975,6 +980,7 @@
 				A7FA0E7C0FC7048C00941493 /* IndicatorView.m in Sources */,
 				A79830140FCB1CD700C1C2E7 /* WaitingIndicatorViewController.m in Sources */,
 				A7E32E9E0FD1CEFD0058EDB7 /* Player.m in Sources */,
+				ABCE8803121350840012C322 /* ARISMoviePlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1052,6 +1058,7 @@
 				GCC_PREFIX_HEADER = ARIS_Prefix.pch;
 				HEADER_SEARCH_PATHS = "Classes/map/MapView/**";
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/map/MapView/build/Debug-iphonesimulator\"",
@@ -1066,6 +1073,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = ARIS;
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -1095,12 +1103,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = iphoneos2.2.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos4.0;
 			};
 			name = Distribution;
 		};
@@ -1116,6 +1125,7 @@
 				GCC_PREFIX_HEADER = ARIS_Prefix.pch;
 				HEADER_SEARCH_PATHS = "Classes/map/MapView/**";
 				INFOPLIST_FILE = Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Classes/map/MapView/build/Debug-iphonesimulator\"",
@@ -1128,7 +1138,8 @@
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
 				PRODUCT_NAME = ARIS;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E05A2F1A-52DD-4F77-8464-B55B9BDAD0AB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D14C3F02-C8B2-42ED-B71D-FC92CB362494";
+				SDKROOT = iphoneos4.0;
 			};
 			name = Distribution;
 		};
