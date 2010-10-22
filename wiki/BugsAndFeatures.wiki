@@ -1,0 +1,3 @@
+#summary What isn't working for you? What should we build next?
+
+<wiki:gadget url="http://www.google.com/moderator/static/moderator-embed-gadget.xml"  height="700" width="1000" up_url="http://www.google.com/moderator/#15/e=36451&t=36451.41" up_sort="HOT" up_hl="en" />
