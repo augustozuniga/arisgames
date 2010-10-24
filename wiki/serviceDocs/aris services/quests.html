@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+<link rel="start" href="../../overview-summary.html">
+
+<title>Quests (ARIS Server)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//quests.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">ARIS Services\\Quests</div>
+<a href="../../source/quests.php.html#line5" class="location">quests.php at line 5</a>
+
+<h1>Class Quests</h1>
+
+<pre class="tree"><a href="../../aris services//module.html">Module</a><br>    └─<strong>Quests</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public  class <strong>Quests</strong><br>extends <a href="../../aris services//module.html">Module</a>
+
+</p>
+
+<hr>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#createQuest()">createQuest</a>(mixed intGameID, mixed strName, mixed strIncompleteDescription, mixed strCompleteDescription, mixed intIconMediaID)</p><p class="description">Create an Event</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#deleteQuest()">deleteQuest</a>(mixed intGameID, mixed intQuestID)</p><p class="description">Delete an Event</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getQuest()">getQuest</a>(mixed intGameID, mixed intQuestID)</p><p class="description">Fetch a specific event</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getQuests()">getQuests</a>(mixed intGameID)</p><p class="description">Fetch all Quests</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getQuestsForPlayer()">getQuestsForPlayer</a>(mixed intGameID, mixed intPlayerID)</p><p class="description">Fetch all Quests for a paticular player</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#updateQuest()">updateQuest</a>(mixed intGameID, mixed intQuestID, mixed strName, mixed strIncompleteDescription, mixed strCompleteDescription, mixed intIconMediaID)</p><p class="description">Update a specific Event</p></td>
+</tr>
+</table>
+
+<table class="inherit">
+<tr><th colspan="2">Methods inherited from ARIS Services\\Module</th></tr>
+<tr><td><a href="../../aris services//module.html#__construct()">__construct</a>, <a href="../../aris services//module.html#adjustQtyForPlayerItem()">adjustQtyForPlayerItem</a>, <a href="../../aris services//module.html#appendLog()">appendLog</a>, <a href="../../aris services//module.html#applyPlayerStateChanges()">applyPlayerStateChanges</a>, <a href="../../aris services//module.html#decrementItemQtyAtLocation()">decrementItemQtyAtLocation</a>, <a href="../../aris services//module.html#getGameIdFromPrefix()">getGameIdFromPrefix</a>, <a href="../../aris services//module.html#getItemIconMediaId()">getItemIconMediaId</a>, <a href="../../aris services//module.html#getItemName()">getItemName</a>, <a href="../../aris services//module.html#getPrefix()">getPrefix</a>, <a href="../../aris services//module.html#giveItemToPlayer()">giveItemToPlayer</a>, <a href="../../aris services//module.html#giveItemToWorld()">giveItemToWorld</a>, <a href="../../aris services//module.html#itemQtyInPlayerInventory()">itemQtyInPlayerInventory</a>, <a href="../../aris services//module.html#metersBetweenLatLngs()">metersBetweenLatLngs</a>, <a href="../../aris services//module.html#objectMeetsRequirements()">objectMeetsRequirements</a>, <a href="../../aris services//module.html#playerHasItem()">playerHasItem</a>, <a href="../../aris services//module.html#playerHasLog()">playerHasLog</a>, <a href="../../aris services//module.html#playerHasUploadedMediaItemWithinDistence()">playerHasUploadedMediaItemWithinDistence</a>, <a href="../../aris services//module.html#recordExists()">recordExists</a>, <a href="../../aris services//module.html#removeItemFromAllPlayerInventories()">removeItemFromAllPlayerInventories</a>, <a href="../../aris services//module.html#takeItemFromPlayer()">takeItemFromPlayer</a></td></tr></table>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../source/quests.php.html#line99" class="location">quests.php at line 99</a>
+
+<h3 id="createQuest()">createQuest</h3>
+<code class="signature">public  void <strong>createQuest</strong>(mixed intGameID, mixed strName, mixed strIncompleteDescription, mixed strCompleteDescription, mixed intIconMediaID)</code>
+<div class="details">
+<p>Create an Event</p><dl>
+<dt>Returns:</dt>
+<dd>the new eventID on success</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/quests.php.html#line153" class="location">quests.php at line 153</a>
+
+<h3 id="deleteQuest()">deleteQuest</h3>
+<code class="signature">public  void <strong>deleteQuest</strong>(mixed intGameID, mixed intQuestID)</code>
+<div class="details">
+<p>Delete an Event</p><dl>
+<dt>Returns:</dt>
+<dd>true if delete was done, false if no changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/quests.php.html#line77" class="location">quests.php at line 77</a>
+
+<h3 id="getQuest()">getQuest</h3>
+<code class="signature">public  void <strong>getQuest</strong>(mixed intGameID, mixed intQuestID)</code>
+<div class="details">
+<p>Fetch a specific event</p><dl>
+<dt>Returns:</dt>
+<dd>a single event</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/quests.php.html#line12" class="location">quests.php at line 12</a>
+
+<h3 id="getQuests()">getQuests</h3>
+<code class="signature">public  void <strong>getQuests</strong>(mixed intGameID)</code>
+<div class="details">
+<p>Fetch all Quests</p><dl>
+<dt>Returns:</dt>
+<dd>the quests</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/quests.php.html#line32" class="location">quests.php at line 32</a>
+
+<h3 id="getQuestsForPlayer()">getQuestsForPlayer</h3>
+<code class="signature">public  void <strong>getQuestsForPlayer</strong>(mixed intGameID, mixed intPlayerID)</code>
+<div class="details">
+<p>Fetch all Quests for a paticular player</p><dl>
+<dt>Returns:</dt>
+<dd>a returnData object with two arrays, active and completed</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/quests.php.html#line125" class="location">quests.php at line 125</a>
+
+<h3 id="updateQuest()">updateQuest</h3>
+<code class="signature">public  void <strong>updateQuest</strong>(mixed intGameID, mixed intQuestID, mixed strName, mixed strIncompleteDescription, mixed strCompleteDescription, mixed intIconMediaID)</code>
+<div class="details">
+<p>Update a specific Event</p><dl>
+<dt>Returns:</dt>
+<dd>true if edit was done, false if no changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//quests.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

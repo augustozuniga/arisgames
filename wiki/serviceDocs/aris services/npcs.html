@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+<link rel="start" href="../../overview-summary.html">
+
+<title>Npcs (ARIS Server)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//npcs.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">ARIS Services\\Npcs</div>
+<a href="../../source/npcs.php.html#line8" class="location">npcs.php at line 8</a>
+
+<h1>Class Npcs</h1>
+
+<pre class="tree"><a href="../../aris services//module.html">Module</a><br>    └─<strong>Npcs</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public  class <strong>Npcs</strong><br>extends <a href="../../aris services//module.html">Module</a>
+
+</p>
+
+<hr>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#createConversation()">createConversation</a>(mixed intGameID, mixed intNpcID, mixed intNodeID, mixed strText)</p><p class="description">Create a conversation option for the NPC to link to a node</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#createNpc()">createNpc</a>(mixed intGameID, mixed strName, mixed strDescription, mixed strGreeting, mixed intMediaID, mixed intIconMediaID)</p><p class="description">Create a NPC</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#deleteConversation()">deleteConversation</a>(mixed intGameID, mixed intConverationID)</p><p class="description">Delete a specific NPC Conversation option</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#deleteNpc()">deleteNpc</a>(mixed intGameID, mixed intNpcID)</p><p class="description">Delete a specific NPC</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getConversations()">getConversations</a>(mixed intGameID, mixed intNpcID)</p><p class="description">Fetch the conversations for a given NPC</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getConversationsForPlayer()">getConversationsForPlayer</a>(mixed intGameID, mixed intNpcID, mixed intPlayerID)</p><p class="description">Fetch the conversations for a given NPC</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getNpc()">getNpc</a>(mixed intGameID, mixed intNpcID)</p><p class="description">Fetch a specific npc</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getNpcConversationsForPlayerAfterViewingNode()">getNpcConversationsForPlayerAfterViewingNode</a>(mixed intGameID, mixed intNpcID, mixed intPlayerID, mixed intNodeID)</p><p class="description">Fetch the conversation options from a paticular npc for a player, after viewing a node</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getNpcWithConversationsForPlayer()">getNpcWithConversationsForPlayer</a>(mixed intGameID, mixed intNpcID, mixed intPlayerID)</p><p class="description">Fetch a specific npc with the conversation options that meet the requirements</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getNpcs()">getNpcs</a>(mixed intGameID)</p><p class="description">Fetch all Npcs</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getReferrers()">getReferrers</a>(mixed intGameID, mixed intNpcID)</p><p class="description">Get a list of objects that refer to the specified npc</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#updateConversation()">updateConversation</a>(mixed intGameID, mixed intConverationID, mixed intNewNPC, mixed intNewNode, mixed strNewText)</p><p class="description">Update Conversation</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#updateNpc()">updateNpc</a>(mixed intGameID, mixed intNpcID, mixed strName, mixed strDescription, mixed strGreeting, mixed intMediaID, mixed intIconMediaID)</p><p class="description">Update a specific NPC</p></td>
+</tr>
+</table>
+
+<table class="inherit">
+<tr><th colspan="2">Methods inherited from ARIS Services\\Module</th></tr>
+<tr><td><a href="../../aris services//module.html#__construct()">__construct</a>, <a href="../../aris services//module.html#adjustQtyForPlayerItem()">adjustQtyForPlayerItem</a>, <a href="../../aris services//module.html#appendLog()">appendLog</a>, <a href="../../aris services//module.html#applyPlayerStateChanges()">applyPlayerStateChanges</a>, <a href="../../aris services//module.html#decrementItemQtyAtLocation()">decrementItemQtyAtLocation</a>, <a href="../../aris services//module.html#getGameIdFromPrefix()">getGameIdFromPrefix</a>, <a href="../../aris services//module.html#getItemIconMediaId()">getItemIconMediaId</a>, <a href="../../aris services//module.html#getItemName()">getItemName</a>, <a href="../../aris services//module.html#getPrefix()">getPrefix</a>, <a href="../../aris services//module.html#giveItemToPlayer()">giveItemToPlayer</a>, <a href="../../aris services//module.html#giveItemToWorld()">giveItemToWorld</a>, <a href="../../aris services//module.html#itemQtyInPlayerInventory()">itemQtyInPlayerInventory</a>, <a href="../../aris services//module.html#metersBetweenLatLngs()">metersBetweenLatLngs</a>, <a href="../../aris services//module.html#objectMeetsRequirements()">objectMeetsRequirements</a>, <a href="../../aris services//module.html#playerHasItem()">playerHasItem</a>, <a href="../../aris services//module.html#playerHasLog()">playerHasLog</a>, <a href="../../aris services//module.html#playerHasUploadedMediaItemWithinDistence()">playerHasUploadedMediaItemWithinDistence</a>, <a href="../../aris services//module.html#recordExists()">recordExists</a>, <a href="../../aris services//module.html#removeItemFromAllPlayerInventories()">removeItemFromAllPlayerInventories</a>, <a href="../../aris services//module.html#takeItemFromPlayer()">takeItemFromPlayer</a></td></tr></table>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../source/npcs.php.html#line176" class="location">npcs.php at line 176</a>
+
+<h3 id="createConversation()">createConversation</h3>
+<code class="signature">public  void <strong>createConversation</strong>(mixed intGameID, mixed intNpcID, mixed intNodeID, mixed strText)</code>
+<div class="details">
+<p>Create a conversation option for the NPC to link to a node</p><dl>
+<dt>Returns:</dt>
+<dd>the new conversationID on success</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line99" class="location">npcs.php at line 99</a>
+
+<h3 id="createNpc()">createNpc</h3>
+<code class="signature">public  void <strong>createNpc</strong>(mixed intGameID, mixed strName, mixed strDescription, mixed strGreeting, mixed intMediaID, mixed intIconMediaID)</code>
+<div class="details">
+<p>Create a NPC</p><dl>
+<dt>Returns:</dt>
+<dd>the new npcID on success</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line296" class="location">npcs.php at line 296</a>
+
+<h3 id="deleteConversation()">deleteConversation</h3>
+<code class="signature">public  void <strong>deleteConversation</strong>(mixed intGameID, mixed intConverationID)</code>
+<div class="details">
+<p>Delete a specific NPC Conversation option</p><dl>
+<dt>Returns:</dt>
+<dd>true on success</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line152" class="location">npcs.php at line 152</a>
+
+<h3 id="deleteNpc()">deleteNpc</h3>
+<code class="signature">public  void <strong>deleteNpc</strong>(mixed intGameID, mixed intNpcID)</code>
+<div class="details">
+<p>Delete a specific NPC</p><dl>
+<dt>Returns:</dt>
+<dd>a single node</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line201" class="location">npcs.php at line 201</a>
+
+<h3 id="getConversations()">getConversations</h3>
+<code class="signature">public  void <strong>getConversations</strong>(mixed intGameID, mixed intNpcID)</code>
+<div class="details">
+<p>Fetch the conversations for a given NPC</p><dl>
+<dt>Returns:</dt>
+<dd>a recordset of conversations</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line221" class="location">npcs.php at line 221</a>
+
+<h3 id="getConversationsForPlayer()">getConversationsForPlayer</h3>
+<code class="signature">public  void <strong>getConversationsForPlayer</strong>(mixed intGameID, mixed intNpcID, mixed intPlayerID)</code>
+<div class="details">
+<p>Fetch the conversations for a given NPC</p><dl>
+<dt>Returns:</dt>
+<dd>a recordset of conversations</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line34" class="location">npcs.php at line 34</a>
+
+<h3 id="getNpc()">getNpc</h3>
+<code class="signature">public  void <strong>getNpc</strong>(mixed intGameID, mixed intNpcID)</code>
+<div class="details">
+<p>Fetch a specific npc</p><dl>
+<dt>Returns:</dt>
+<dd>a single npc</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line82" class="location">npcs.php at line 82</a>
+
+<h3 id="getNpcConversationsForPlayerAfterViewingNode()">getNpcConversationsForPlayerAfterViewingNode</h3>
+<code class="signature">public  void <strong>getNpcConversationsForPlayerAfterViewingNode</strong>(mixed intGameID, mixed intNpcID, mixed intPlayerID, mixed intNodeID)</code>
+<div class="details">
+<p>Fetch the conversation options from a paticular npc for a player, after viewing a node</p><dl>
+<dt>Returns:</dt>
+<dd>nm array of conversaion options</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line56" class="location">npcs.php at line 56</a>
+
+<h3 id="getNpcWithConversationsForPlayer()">getNpcWithConversationsForPlayer</h3>
+<code class="signature">public  void <strong>getNpcWithConversationsForPlayer</strong>(mixed intGameID, mixed intNpcID, mixed intPlayerID)</code>
+<div class="details">
+<p>Fetch a specific npc with the conversation options that meet the requirements</p><dl>
+<dt>Returns:</dt>
+<dd>a single npc</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line15" class="location">npcs.php at line 15</a>
+
+<h3 id="getNpcs()">getNpcs</h3>
+<code class="signature">public  void <strong>getNpcs</strong>(mixed intGameID)</code>
+<div class="details">
+<p>Fetch all Npcs</p><dl>
+<dt>Returns:</dt>
+<dd>the npc rs</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line271" class="location">npcs.php at line 271</a>
+
+<h3 id="getReferrers()">getReferrers</h3>
+<code class="signature">public  void <strong>getReferrers</strong>(mixed intGameID, mixed intNpcID)</code>
+<div class="details">
+<p>Get a list of objects that refer to the specified npc</p><dl>
+<dt>Returns:</dt>
+<dd>a list of object types and ids</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line249" class="location">npcs.php at line 249</a>
+
+<h3 id="updateConversation()">updateConversation</h3>
+<code class="signature">public  void <strong>updateConversation</strong>(mixed intGameID, mixed intConverationID, mixed intNewNPC, mixed intNewNode, mixed strNewText)</code>
+<div class="details">
+<p>Update Conversation</p><dl>
+<dt>Returns:</dt>
+<dd>true if a record was updated, false if no changes were made (could be becasue conversation id is invalid)</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/npcs.php.html#line125" class="location">npcs.php at line 125</a>
+
+<h3 id="updateNpc()">updateNpc</h3>
+<code class="signature">public  void <strong>updateNpc</strong>(mixed intGameID, mixed intNpcID, mixed strName, mixed strDescription, mixed strGreeting, mixed intMediaID, mixed intIconMediaID)</code>
+<div class="details">
+<p>Update a specific NPC</p><dl>
+<dt>Returns:</dt>
+<dd>true if a record was updated, false if it was not</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//npcs.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

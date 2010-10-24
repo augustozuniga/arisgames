@@ -1,0 +1,250 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+<link rel="start" href="../../overview-summary.html">
+
+<title>QRCodes (ARIS Server)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//qrcodes.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">ARIS Services\\QRCodes</div>
+<a href="../../source/qrcodes.php.html#line8" class="location">qrcodes.php at line 8</a>
+
+<h1>Class QRCodes</h1>
+
+<pre class="tree"><a href="../../aris services//module.html">Module</a><br>    └─<strong>QRCodes</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public  class <strong>QRCodes</strong><br>extends <a href="../../aris services//module.html">Module</a>
+
+</p>
+
+<hr>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#contentTypeOptions()">contentTypeOptions</a>(mixed intGameID)</p><p class="description">Fetch the valid content types from the requirements table</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#createQRCode()">createQRCode</a>(mixed intGameID, mixed strLinkType, mixed intLinkID, str strCode)</p><p class="description">Create a QR Code
+If no code is provided, a random 4 digit number will be generated</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#deleteQRCode()">deleteQRCode</a>(mixed intGameID, mixed intQRCodeID)</p><p class="description">Delete a QR Code</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#deleteQRCodeCodesForLink()">deleteQRCodeCodesForLink</a>(mixed intGameID, mixed strLinkType, mixed intLinkID)</p><p class="description">Delete all QR Codes that link to a specified object</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getQRCode()">getQRCode</a>(mixed intGameID, mixed intQRCodeID)</p><p class="description">Fetch a specific event</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getQRCodeObjectForPlayer()">getQRCodeObjectForPlayer</a>(mixed intGameID, mixed strCode, mixed intPlayerID)</p><p class="description">Fetch a QRCode object</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getQRCodePackageURL()">getQRCodePackageURL</a>(mixed intGameID)</p><p class="description">Download QR Code Package</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getQRCodes()">getQRCodes</a>(mixed intGameID)</p><p class="description">Fetch all Events</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#updateQRCode()">updateQRCode</a>(mixed intGameID, mixed intQRCodeID, mixed strLinkType, mixed intLinkID, mixed strCode)</p><p class="description">Update a QR Code</p></td>
+</tr>
+</table>
+
+<table class="inherit">
+<tr><th colspan="2">Methods inherited from ARIS Services\\Module</th></tr>
+<tr><td><a href="../../aris services//module.html#__construct()">__construct</a>, <a href="../../aris services//module.html#adjustQtyForPlayerItem()">adjustQtyForPlayerItem</a>, <a href="../../aris services//module.html#appendLog()">appendLog</a>, <a href="../../aris services//module.html#applyPlayerStateChanges()">applyPlayerStateChanges</a>, <a href="../../aris services//module.html#decrementItemQtyAtLocation()">decrementItemQtyAtLocation</a>, <a href="../../aris services//module.html#getGameIdFromPrefix()">getGameIdFromPrefix</a>, <a href="../../aris services//module.html#getItemIconMediaId()">getItemIconMediaId</a>, <a href="../../aris services//module.html#getItemName()">getItemName</a>, <a href="../../aris services//module.html#getPrefix()">getPrefix</a>, <a href="../../aris services//module.html#giveItemToPlayer()">giveItemToPlayer</a>, <a href="../../aris services//module.html#giveItemToWorld()">giveItemToWorld</a>, <a href="../../aris services//module.html#itemQtyInPlayerInventory()">itemQtyInPlayerInventory</a>, <a href="../../aris services//module.html#metersBetweenLatLngs()">metersBetweenLatLngs</a>, <a href="../../aris services//module.html#objectMeetsRequirements()">objectMeetsRequirements</a>, <a href="../../aris services//module.html#playerHasItem()">playerHasItem</a>, <a href="../../aris services//module.html#playerHasLog()">playerHasLog</a>, <a href="../../aris services//module.html#playerHasUploadedMediaItemWithinDistence()">playerHasUploadedMediaItemWithinDistence</a>, <a href="../../aris services//module.html#recordExists()">recordExists</a>, <a href="../../aris services//module.html#removeItemFromAllPlayerInventories()">removeItemFromAllPlayerInventories</a>, <a href="../../aris services//module.html#takeItemFromPlayer()">takeItemFromPlayer</a></td></tr></table>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../source/qrcodes.php.html#line333" class="location">qrcodes.php at line 333</a>
+
+<h3 id="contentTypeOptions()">contentTypeOptions</h3>
+<code class="signature">public  void <strong>contentTypeOptions</strong>(mixed intGameID)</code>
+<div class="details">
+<p>Fetch the valid content types from the requirements table</p><dl>
+<dt>Returns:</dt>
+<dd>an array of strings</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line232" class="location">qrcodes.php at line 232</a>
+
+<h3 id="createQRCode()">createQRCode</h3>
+<code class="signature">public  void <strong>createQRCode</strong>(mixed intGameID, mixed strLinkType, mixed intLinkID, str strCode)</code>
+<div class="details">
+<p>Create a QR Code
+If no code is provided, a random 4 digit number will be generated</p><dl>
+<dt>Returns:</dt>
+<dd>the new QR Code ID on success.</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line289" class="location">qrcodes.php at line 289</a>
+
+<h3 id="deleteQRCode()">deleteQRCode</h3>
+<code class="signature">public  void <strong>deleteQRCode</strong>(mixed intGameID, mixed intQRCodeID)</code>
+<div class="details">
+<p>Delete a QR Code</p><dl>
+<dt>Returns:</dt>
+<dd>true if delete was done, false if no changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line311" class="location">qrcodes.php at line 311</a>
+
+<h3 id="deleteQRCodeCodesForLink()">deleteQRCodeCodesForLink</h3>
+<code class="signature">public  void <strong>deleteQRCodeCodesForLink</strong>(mixed intGameID, mixed strLinkType, mixed intLinkID)</code>
+<div class="details">
+<p>Delete all QR Codes that link to a specified object</p><dl>
+<dt>Returns:</dt>
+<dd>true if delete was done, false if no changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line36" class="location">qrcodes.php at line 36</a>
+
+<h3 id="getQRCode()">getQRCode</h3>
+<code class="signature">public  void <strong>getQRCode</strong>(mixed intGameID, mixed intQRCodeID)</code>
+<div class="details">
+<p>Fetch a specific event</p><dl>
+<dt>Returns:</dt>
+<dd>a single event</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line151" class="location">qrcodes.php at line 151</a>
+
+<h3 id="getQRCodeObjectForPlayer()">getQRCodeObjectForPlayer</h3>
+<code class="signature">public  void <strong>getQRCodeObjectForPlayer</strong>(mixed intGameID, mixed strCode, mixed intPlayerID)</code>
+<div class="details">
+<p>Fetch a QRCode object</p><dl>
+<dt>Returns:</dt>
+<dd>a 0 with an NPC, Node or Item in addition to the latitute and longitude in the data, 2 for an invalid code, 4 for reqs not met or 5 for a data error</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line58" class="location">qrcodes.php at line 58</a>
+
+<h3 id="getQRCodePackageURL()">getQRCodePackageURL</h3>
+<code class="signature">public  void <strong>getQRCodePackageURL</strong>(mixed intGameID)</code>
+<div class="details">
+<p>Download QR Code Package</p><dl>
+<dt>Returns:</dt>
+<dd>the URL of the file to download</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line15" class="location">qrcodes.php at line 15</a>
+
+<h3 id="getQRCodes()">getQRCodes</h3>
+<code class="signature">public  void <strong>getQRCodes</strong>(mixed intGameID)</code>
+<div class="details">
+<p>Fetch all Events</p><dl>
+<dt>Returns:</dt>
+<dd>the events</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/qrcodes.php.html#line263" class="location">qrcodes.php at line 263</a>
+
+<h3 id="updateQRCode()">updateQRCode</h3>
+<code class="signature">public  void <strong>updateQRCode</strong>(mixed intGameID, mixed intQRCodeID, mixed strLinkType, mixed intLinkID, mixed strCode)</code>
+<div class="details">
+<p>Update a QR Code</p><dl>
+<dt>Returns:</dt>
+<dd>true if edit was done, false if no changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//qrcodes.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

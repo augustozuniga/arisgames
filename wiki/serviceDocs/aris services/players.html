@@ -1,0 +1,380 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+<link rel="start" href="../../overview-summary.html">
+
+<title>Players (ARIS Server)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//players.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">ARIS Services\\Players</div>
+<a href="../../source/players.php.html#line5" class="location">players.php at line 5</a>
+
+<h1>Class Players</h1>
+
+<pre class="tree"><a href="../../aris services//module.html">Module</a><br>    └─<strong>Players</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public  class <strong>Players</strong><br>extends <a href="../../aris services//module.html">Module</a>
+
+</p>
+
+<hr>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#createPlayer()">createPlayer</a>(mixed strNewUserName, mixed strPassword, mixed strFirstName, mixed strLastName, mixed strEmail)</p><p class="description">Create a new Player</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#destroyItem()">destroyItem</a>(mixed intGameID, mixed intPlayerID, mixed intItemID, int qty)</p><p class="description">Removes an Item from the players Inventory</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#dropItem()">dropItem</a>(mixed intGameID, mixed intPlayerID, mixed intItemID, mixed floatLat, mixed floatLong, int qty)</p><p class="description">Removes an Item from the players Inventory and Places it on the map</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getOtherPlayersForGame()">getOtherPlayersForGame</a>(mixed intGameID, mixed intPlayerID)</p><p class="description">getOtherPlayersForGame</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getPlayers()">getPlayers</a>()</p><p class="description">getPlayers</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getPlayersForGame()">getPlayersForGame</a>(mixed intGameID)</p><p class="description">getPlayersForGame</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#inventoryViewed()">inventoryViewed</a>(mixed intGameID, mixed intPlayerID)</p><p class="description">Log that player viewed the inventory</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#itemViewed()">itemViewed</a>(mixed intGameID, mixed intPlayerID, mixed intItemID)</p><p class="description">Player Viewed an Item, exectute it's actions</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#login()">login</a>(mixed strUser, mixed strPassword)</p><p class="description">Login</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#mapViewed()">mapViewed</a>(mixed intGameID, mixed intPlayerID)</p><p class="description">Log that player viewed the map</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#nodeViewed()">nodeViewed</a>(mixed intGameID, mixed intPlayerID, mixed intNodeID)</p><p class="description">Player Viewed a Node, exectute it's actions</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#npcViewed()">npcViewed</a>(mixed intGameID, mixed intPlayerID, mixed intNpcID)</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#pickupItemFromLocation()">pickupItemFromLocation</a>(mixed intGameID, mixed intPlayerID, mixed intItemID, mixed intLocationID, int qty)</p><p class="description">Removes an Item from the Map and Gives it to the Player</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#questsViewed()">questsViewed</a>(mixed intGameID, mixed intPlayerID)</p><p class="description">Log that player viewed the quests</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#startOverGameForPlayer()">startOverGameForPlayer</a>(mixed intGameID, mixed intPlayerID)</p><p class="description">Start Over a Game for a Player by deleting all items and logs</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#updatePlayerLastGame()">updatePlayerLastGame</a>(mixed intPlayerID, mixed intGameID)</p><p class="description">updates the player's last game</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#updatePlayerLocation()">updatePlayerLocation</a>(mixed intPlayerID, mixed intGameID, mixed floatLat, mixed floatLong)</p><p class="description">updates the lat/long for the player record</p></td>
+</tr>
+</table>
+
+<table class="inherit">
+<tr><th colspan="2">Methods inherited from ARIS Services\\Module</th></tr>
+<tr><td><a href="../../aris services//module.html#__construct()">__construct</a>, <a href="../../aris services//module.html#adjustQtyForPlayerItem()">adjustQtyForPlayerItem</a>, <a href="../../aris services//module.html#appendLog()">appendLog</a>, <a href="../../aris services//module.html#applyPlayerStateChanges()">applyPlayerStateChanges</a>, <a href="../../aris services//module.html#decrementItemQtyAtLocation()">decrementItemQtyAtLocation</a>, <a href="../../aris services//module.html#getGameIdFromPrefix()">getGameIdFromPrefix</a>, <a href="../../aris services//module.html#getItemIconMediaId()">getItemIconMediaId</a>, <a href="../../aris services//module.html#getItemName()">getItemName</a>, <a href="../../aris services//module.html#getPrefix()">getPrefix</a>, <a href="../../aris services//module.html#giveItemToPlayer()">giveItemToPlayer</a>, <a href="../../aris services//module.html#giveItemToWorld()">giveItemToWorld</a>, <a href="../../aris services//module.html#itemQtyInPlayerInventory()">itemQtyInPlayerInventory</a>, <a href="../../aris services//module.html#metersBetweenLatLngs()">metersBetweenLatLngs</a>, <a href="../../aris services//module.html#objectMeetsRequirements()">objectMeetsRequirements</a>, <a href="../../aris services//module.html#playerHasItem()">playerHasItem</a>, <a href="../../aris services//module.html#playerHasLog()">playerHasLog</a>, <a href="../../aris services//module.html#playerHasUploadedMediaItemWithinDistence()">playerHasUploadedMediaItemWithinDistence</a>, <a href="../../aris services//module.html#recordExists()">recordExists</a>, <a href="../../aris services//module.html#removeItemFromAllPlayerInventories()">removeItemFromAllPlayerInventories</a>, <a href="../../aris services//module.html#takeItemFromPlayer()">takeItemFromPlayer</a></td></tr></table>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../source/players.php.html#line12" class="location">players.php at line 12</a>
+
+<h3 id="createPlayer()">createPlayer</h3>
+<code class="signature">public  void <strong>createPlayer</strong>(mixed strNewUserName, mixed strPassword, mixed strFirstName, mixed strLastName, mixed strEmail)</code>
+<div class="details">
+<p>Create a new Player</p><dl>
+<dt>Returns:</dt>
+<dd>player id</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line284" class="location">players.php at line 284</a>
+
+<h3 id="destroyItem()">destroyItem</h3>
+<code class="signature">public  void <strong>destroyItem</strong>(mixed intGameID, mixed intPlayerID, mixed intItemID, int qty)</code>
+<div class="details">
+<p>Removes an Item from the players Inventory</p><dl>
+<dt>Returns:</dt>
+<dd>returnData with data=true if changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line267" class="location">players.php at line 267</a>
+
+<h3 id="dropItem()">dropItem</h3>
+<code class="signature">public  void <strong>dropItem</strong>(mixed intGameID, mixed intPlayerID, mixed intItemID, mixed floatLat, mixed floatLong, int qty)</code>
+<div class="details">
+<p>Removes an Item from the players Inventory and Places it on the map</p><dl>
+<dt>Returns:</dt>
+<dd>returnData with data=true if changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line107" class="location">players.php at line 107</a>
+
+<h3 id="getOtherPlayersForGame()">getOtherPlayersForGame</h3>
+<code class="signature">public  void <strong>getOtherPlayersForGame</strong>(mixed intGameID, mixed intPlayerID)</code>
+<div class="details">
+<p>getOtherPlayersForGame</p><dl>
+<dt>Returns:</dt>
+<dd>players with this game id</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line79" class="location">players.php at line 79</a>
+
+<h3 id="getPlayers()">getPlayers</h3>
+<code class="signature">public  void <strong>getPlayers</strong>()</code>
+<div class="details">
+<p>getPlayers</p><dl>
+<dt>Returns:</dt>
+<dd>all ARIS players</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line93" class="location">players.php at line 93</a>
+
+<h3 id="getPlayersForGame()">getPlayersForGame</h3>
+<code class="signature">public  void <strong>getPlayersForGame</strong>(mixed intGameID)</code>
+<div class="details">
+<p>getPlayersForGame</p><dl>
+<dt>Returns:</dt>
+<dd>players with this game id</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line323" class="location">players.php at line 323</a>
+
+<h3 id="inventoryViewed()">inventoryViewed</h3>
+<code class="signature">public  void <strong>inventoryViewed</strong>(mixed intGameID, mixed intPlayerID)</code>
+<div class="details">
+<p>Log that player viewed the inventory</p><dl>
+<dt>Returns:</dt>
+<dd>Always returns 0</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line215" class="location">players.php at line 215</a>
+
+<h3 id="itemViewed()">itemViewed</h3>
+<code class="signature">public  void <strong>itemViewed</strong>(mixed intGameID, mixed intPlayerID, mixed intItemID)</code>
+<div class="details">
+<p>Player Viewed an Item, exectute it's actions</p><dl>
+<dt>Returns:</dt>
+<dd>returnData with data=true if a player state change was made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line39" class="location">players.php at line 39</a>
+
+<h3 id="login()">login</h3>
+<code class="signature">public  void <strong>login</strong>(mixed strUser, mixed strPassword)</code>
+<div class="details">
+<p>Login</p><dl>
+<dt>Returns:</dt>
+<dd>0 with player id for success, 4 for failure</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line301" class="location">players.php at line 301</a>
+
+<h3 id="mapViewed()">mapViewed</h3>
+<code class="signature">public  void <strong>mapViewed</strong>(mixed intGameID, mixed intPlayerID)</code>
+<div class="details">
+<p>Log that player viewed the map</p><dl>
+<dt>Returns:</dt>
+<dd>Always returns 0</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line199" class="location">players.php at line 199</a>
+
+<h3 id="nodeViewed()">nodeViewed</h3>
+<code class="signature">public  void <strong>nodeViewed</strong>(mixed intGameID, mixed intPlayerID, mixed intNodeID)</code>
+<div class="details">
+<p>Player Viewed a Node, exectute it's actions</p><dl>
+<dt>Returns:</dt>
+<dd>returnData with data=true if a player state change was made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line226" class="location">players.php at line 226</a>
+
+<h3 id="npcViewed()">npcViewed</h3>
+<code class="signature">public  void <strong>npcViewed</strong>(mixed intGameID, mixed intPlayerID, mixed intNpcID)</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line242" class="location">players.php at line 242</a>
+
+<h3 id="pickupItemFromLocation()">pickupItemFromLocation</h3>
+<code class="signature">public  void <strong>pickupItemFromLocation</strong>(mixed intGameID, mixed intPlayerID, mixed intItemID, mixed intLocationID, int qty)</code>
+<div class="details">
+<p>Removes an Item from the Map and Gives it to the Player</p><dl>
+<dt>Returns:</dt>
+<dd>returnData with data=true if changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line312" class="location">players.php at line 312</a>
+
+<h3 id="questsViewed()">questsViewed</h3>
+<code class="signature">public  void <strong>questsViewed</strong>(mixed intGameID, mixed intPlayerID)</code>
+<div class="details">
+<p>Log that player viewed the quests</p><dl>
+<dt>Returns:</dt>
+<dd>Always returns 0</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line150" class="location">players.php at line 150</a>
+
+<h3 id="startOverGameForPlayer()">startOverGameForPlayer</h3>
+<code class="signature">public  void <strong>startOverGameForPlayer</strong>(mixed intGameID, mixed intPlayerID)</code>
+<div class="details">
+<p>Start Over a Game for a Player by deleting all items and logs</p><dl>
+<dt>Returns:</dt>
+<dd>returnData with data=true if changes were made</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line62" class="location">players.php at line 62</a>
+
+<h3 id="updatePlayerLastGame()">updatePlayerLastGame</h3>
+<code class="signature">public  void <strong>updatePlayerLastGame</strong>(mixed intPlayerID, mixed intGameID)</code>
+<div class="details">
+<p>updates the player's last game</p><dl>
+<dt>Returns:</dt>
+<dd>a returnData object, result code 0 on success</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/players.php.html#line175" class="location">players.php at line 175</a>
+
+<h3 id="updatePlayerLocation()">updatePlayerLocation</h3>
+<code class="signature">public  void <strong>updatePlayerLocation</strong>(mixed intPlayerID, mixed intGameID, mixed floatLat, mixed floatLong)</code>
+<div class="details">
+<p>updates the lat/long for the player record</p><dl>
+<dt>Returns:</dt>
+<dd>players with this game id</dd>
+</dl>
+</div>
+
+<hr>
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//players.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

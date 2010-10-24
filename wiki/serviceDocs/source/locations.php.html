@@ -1,0 +1,383 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>locations.php (ARIS Server)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/locations.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>locations.php</h1>
+<hr>
+
+<a name="line1"></a><pre><?php
+<a name="line2"></a>require_once("module.php");
+<a name="line3"></a>require_once("players.php");
+<a name="line4"></a>require_once("qrcodes.php");
+<a name="line5"></a>
+<a name="line6"></a>
+<a name="line7"></a>class Locations extends Module
+<a name="line8"></a>{
+<a name="line9"></a>
+<a name="line10"></a>	/**
+<a name="line11"></a>     * Fetch all Locations
+<a name="line12"></a>     * @returns the locations rs
+<a name="line13"></a>     */
+<a name="line14"></a>	public function getLocations($intGameID)
+<a name="line15"></a>	{
+<a name="line16"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line17"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line18"></a>		
+<a name="line19"></a>		
+<a name="line20"></a>		$query = "SELECT * FROM {$prefix}_locations";
+<a name="line21"></a>		$rsResult = @mysql_query($query);
+<a name="line22"></a>		
+<a name="line23"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line24"></a>		return new returnData(0, $rsResult);	
+<a name="line25"></a>	}
+<a name="line26"></a>	
+<a name="line27"></a>	
+<a name="line28"></a>	/**
+<a name="line29"></a>     * Fetch all locations for a given player
+<a name="line30"></a>     * @returns the locations that meet requirements and have a qty > 0
+<a name="line31"></a>     */
+<a name="line32"></a>	public function getLocationsForPlayer($intGameID, $intPlayerID)
+<a name="line33"></a>	{
+<a name="line34"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line35"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line36"></a>		
+<a name="line37"></a>		$query = "SELECT * FROM {$prefix}_locations 
+<a name="line38"></a>				WHERE latitude != '' AND longitude != ''
+<a name="line39"></a>				AND (type != 'Item' OR (item_qty IS NULL OR item_qty != 0))
+<a name="line40"></a>				";
+<a name="line41"></a>		$rsLocations = @mysql_query($query);
+<a name="line42"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line43"></a>		
+<a name="line44"></a>		$arrayLocations = array();
+<a name="line45"></a>		
+<a name="line46"></a>		while ($location = mysql_fetch_object($rsLocations)) {			
+<a name="line47"></a>			//If location and object it links to meet requirments, add it to the array
+<a name="line48"></a>			NetDebug::trace('Location ' . $location->location_id . ' Found. Checking Reqs');	
+<a name="line49"></a>
+<a name="line50"></a>			if ($this->objectMeetsRequirements ($prefix, $intPlayerID, 'Location', $location->location_id)
+<a name="line51"></a>				AND
+<a name="line52"></a>				$this->objectMeetsRequirements ($prefix, $intPlayerID, $location->type, $location->type_id)) {
+<a name="line53"></a>				
+<a name="line54"></a>					$arrayLocations[] = $location;
+<a name="line55"></a>					NetDebug::trace('Reqs Met. Adding to Result');	
+<a name="line56"></a>
+<a name="line57"></a>			}
+<a name="line58"></a>			else NetDebug::trace('Reqs Failed. Moving On');	
+<a name="line59"></a>		}
+<a name="line60"></a>		
+<a name="line61"></a>		//Add the others players from this game, making them look like reqular locations
+<a name="line62"></a>		$playersJSON = Players::getOtherPlayersForGame($intGameID, $intPlayerID);
+<a name="line63"></a>		$playersArray = $playersJSON->data;
+<a name="line64"></a>		
+<a name="line65"></a>		foreach ($playersArray as $player) {
+<a name="line66"></a>			NetDebug::trace("adding player: " . $player->user_name );	
+<a name="line67"></a>			
+<a name="line68"></a>			$tmpPlayerObject = new stdClass();
+<a name="line69"></a>
+<a name="line70"></a>      		$tmpPlayerObject->name = $player->user_name;
+<a name="line71"></a>			$tmpPlayerObject->latitude = $player->latitude;
+<a name="line72"></a>      		$tmpPlayerObject->longitude = $player->longitude;
+<a name="line73"></a>      		$tmpPlayerObject->type_id = $player->player_id;
+<a name="line74"></a>      		
+<a name="line75"></a>      		$tmpPlayerObject->error = "5";
+<a name="line76"></a>      		$tmpPlayerObject->type = "Player";
+<a name="line77"></a>      		
+<a name="line78"></a>			$tmpPlayerObject->description = '';
+<a name="line79"></a>      		$tmpPlayerObject->force_view = "0";
+<a name="line80"></a>      		$tmpPlayerObject->hidden = "0";
+<a name="line81"></a>      		$tmpPlayerObject->icon_media_id = "0";
+<a name="line82"></a>      		$tmpPlayerObject->item_qty = "0";
+<a name="line83"></a>     		$tmpPlayerObject->location_id = "0";
+<a name="line84"></a>      		
+<a name="line85"></a>      		$arrayLocations[] = $tmpPlayerObject;
+<a name="line86"></a>      		NetDebug::trace("just adding player: " . $tmpPlayerObject->name );	
+<a name="line87"></a>
+<a name="line88"></a>		}
+<a name="line89"></a>
+<a name="line90"></a>		return new returnData(0, $arrayLocations);
+<a name="line91"></a>
+<a name="line92"></a>	}
+<a name="line93"></a>	
+<a name="line94"></a>
+<a name="line95"></a>	
+<a name="line96"></a>	/**
+<a name="line97"></a>     * Fetch a specific location
+<a name="line98"></a>     * @returns a single location
+<a name="line99"></a>     */
+<a name="line100"></a>	public function getLocation($intGameID, $intLocationID)
+<a name="line101"></a>	{
+<a name="line102"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line103"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line104"></a>
+<a name="line105"></a>		$query = "SELECT * FROM {$prefix}_locations WHERE location_id = {$intLocationID} LIMIT 1";
+<a name="line106"></a>	
+<a name="line107"></a>		$rsResult = @mysql_query($query);
+<a name="line108"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line109"></a>		$location = mysql_fetch_object($rsResult);
+<a name="line110"></a>		if (!$location) return new returnData(2, NULL, "No matching location");
+<a name="line111"></a>		return new returnData(0, $location);
+<a name="line112"></a>	}
+<a name="line113"></a>		
+<a name="line114"></a>	
+<a name="line115"></a>	
+<a name="line116"></a>	
+<a name="line117"></a>	/**
+<a name="line118"></a>     * Places a location placeholder on the map which links to an aris game object type and id
+<a name="line119"></a>     * @returns the new locationID on success
+<a name="line120"></a>     */
+<a name="line121"></a>	public function createLocation($intGameID, $strLocationName, $intIconMediaID, 
+<a name="line122"></a>								$dblLatitude, $dblLongitude, $dblError,
+<a name="line123"></a>								$strObjectType, $intObjectID,
+<a name="line124"></a>								$intQuantity, $boolHidden, $boolForceView, $boolAllowQuickTravel) {
+<a name="line125"></a>														
+<a name="line126"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line127"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line128"></a>		if (!$intQuantity) $intQuantity = 1;
+<a name="line129"></a>		if (!$boolAllowQuickTravel) $boolAllowQuickTravel = 0;
+<a name="line130"></a>		
+<a name="line131"></a>		$strLocationName = addslashes($strLocationName);
+<a name="line132"></a>		if ($dblError < 5) $dblError = 25;
+<a name="line133"></a>		
+<a name="line134"></a>		//Check the object Type is good or null
+<a name="line135"></a>		if ( !Locations::isValidObjectType($intGameID, $strObjectType) or !strlen($strObjectType) > 0 )
+<a name="line136"></a>			return new returnData(4, NULL, "invalid object type");
+<a name="line137"></a>
+<a name="line138"></a>		$query = "INSERT INTO {$prefix}_locations 
+<a name="line139"></a>					(name, icon_media_id, latitude, longitude, error, 
+<a name="line140"></a>					type, type_id, item_qty, hidden, force_view, allow_quick_travel)
+<a name="line141"></a>					VALUES ('{$strLocationName}', '{$intIconMediaID}',
+<a name="line142"></a>							'{$dblLatitude}','{$dblLongitude}','{$dblError}',
+<a name="line143"></a>							'{$strObjectType}','{$intObjectID}','{$intQuantity}',
+<a name="line144"></a>							'{$boolHidden}','{$boolForceView}', '{$boolAllowQuickTravel}')";
+<a name="line145"></a>		
+<a name="line146"></a>		NetDebug::trace("createLocation: Running a query = $query");	
+<a name="line147"></a>	
+<a name="line148"></a>		@mysql_query($query);
+<a name="line149"></a>		
+<a name="line150"></a>		if (mysql_error()) {
+<a name="line151"></a>			NetDebug::trace("createLocation: SQL Error = " . mysql_error());
+<a name="line152"></a>			return new returnData(3, NULL, "SQL Error");
+<a name="line153"></a>		}
+<a name="line154"></a>		
+<a name="line155"></a>		$newId = mysql_insert_id();
+<a name="line156"></a>		//Create a coresponding QR Code
+<a name="line157"></a>		QRCodes::createQRCode($intGameID, "Location", $newId);
+<a name="line158"></a>
+<a name="line159"></a>		return new returnData(0, $newId);
+<a name="line160"></a>
+<a name="line161"></a>	}
+<a name="line162"></a>
+<a name="line163"></a>
+<a name="line164"></a>
+<a name="line165"></a>
+<a name="line166"></a>	/**
+<a name="line167"></a>     * Updates the attributes of a Location
+<a name="line168"></a>     * @returns true if a record was modified, false if no changes were required (could be from not matching the location id)
+<a name="line169"></a>     */
+<a name="line170"></a>	public function updateLocation($intGameID, $intLocationID, $strLocationName, $intIconMediaID, 
+<a name="line171"></a>								$dblLatitude, $dblLongitude, $dblError,
+<a name="line172"></a>								$strObjectType, $intObjectID,
+<a name="line173"></a>								$intQuantity, $boolHidden, $boolForceView, $boolAllowQuickTravel = 0)
+<a name="line174"></a>	{
+<a name="line175"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line176"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line177"></a>
+<a name="line178"></a>		$strLocationName = addslashes($strLocationName);
+<a name="line179"></a>		if ($dblError < 5) $dblError = 25;
+<a name="line180"></a>
+<a name="line181"></a>		//Check the object Type is good or null
+<a name="line182"></a>		if ( !$this->isValidObjectType($intGameID, $strObjectType) or !strlen($strObjectType) > 0 )
+<a name="line183"></a>			return new returnData(4, NULL, "invalid object type");
+<a name="line184"></a>		
+<a name="line185"></a>		$query = "UPDATE {$prefix}_locations
+<a name="line186"></a>				SET 
+<a name="line187"></a>				name = '{$strLocationName}',
+<a name="line188"></a>				icon_media_id = '{$intIconMediaID}', 
+<a name="line189"></a>				latitude = '{$dblLatitude}', 
+<a name="line190"></a>				longitude = '{$dblLongitude}', 
+<a name="line191"></a>				error = '{$dblError}',
+<a name="line192"></a>				type = '{$strObjectType}',
+<a name="line193"></a>				type_id = '{$intObjectID}',
+<a name="line194"></a>				item_qty = '{$intQuantity}',
+<a name="line195"></a>				hidden = '{$boolHidden}',
+<a name="line196"></a>				force_view = '{$boolForceView}',
+<a name="line197"></a>				allow_quick_travel = '{$boolAllowQuickTravel}'
+<a name="line198"></a>				WHERE location_id = '{$intLocationID}'";
+<a name="line199"></a>		
+<a name="line200"></a>		NetDebug::trace("updateLocation: Query: $query");		
+<a name="line201"></a>		
+<a name="line202"></a>		@mysql_query($query);
+<a name="line203"></a>		if (mysql_error()) {
+<a name="line204"></a>			NetDebug::trace("MySQL Error:" . mysql_error());
+<a name="line205"></a>			return new returnData(3, NULL, "SQL Error");		
+<a name="line206"></a>		}
+<a name="line207"></a>		
+<a name="line208"></a>		if (mysql_affected_rows()) {
+<a name="line209"></a>			return new returnData(0, TRUE);
+<a name="line210"></a>		}
+<a name="line211"></a>		else {
+<a name="line212"></a>			return new returnData(0, FALSE);
+<a name="line213"></a>		}
+<a name="line214"></a>		
+<a name="line215"></a>	}	
+<a name="line216"></a>
+<a name="line217"></a>	/**
+<a name="line218"></a>     * Deletes a Location
+<a name="line219"></a>     * @returns true if a location was deleted, false if no changes were required (could be from not matching the location id)
+<a name="line220"></a>     */
+<a name="line221"></a>	public function deleteLocation($intGameID, $intLocationId)
+<a name="line222"></a>	{
+<a name="line223"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line224"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line225"></a>
+<a name="line226"></a>		//Lookup the name of the item
+<a name="line227"></a>		$query = "DELETE FROM {$prefix}_locations 
+<a name="line228"></a>				WHERE location_id = '{$intLocationId}'";
+<a name="line229"></a>		NetDebug::trace("deleteLocation: Query: $query");		
+<a name="line230"></a>		
+<a name="line231"></a>		@mysql_query($query);
+<a name="line232"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line233"></a>		
+<a name="line234"></a>		//Delete any QR Codes that point here
+<a name="line235"></a>		QRCodes::deleteQRCodeCodesForLink($intGameID, "Location", $intLocationId);
+<a name="line236"></a>		
+<a name="line237"></a>		
+<a name="line238"></a>		if (mysql_affected_rows()) {
+<a name="line239"></a>			return new returnData(0, TRUE);
+<a name="line240"></a>		}
+<a name="line241"></a>		else {
+<a name="line242"></a>			return new returnData(0, FALSE);
+<a name="line243"></a>		}	
+<a name="line244"></a>	}
+<a name="line245"></a>	
+<a name="line246"></a>	public function deleteLocationsForObject($intGameID, $strObjectType, $intObjectId)
+<a name="line247"></a>	{
+<a name="line248"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line249"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line250"></a>
+<a name="line251"></a>		//Check the object Type is good or null
+<a name="line252"></a>		if ( !Locations::isValidObjectType($intGameID, $strObjectType) or !strlen($strObjectType) > 0 )
+<a name="line253"></a>			return new returnData(4, NULL, "invalid object type");
+<a name="line254"></a>			
+<a name="line255"></a>		//Delete the Locations and related QR Codes
+<a name="line256"></a>		$query = "DELETE {$prefix}_locations,{$prefix}_qrcodes 
+<a name="line257"></a>			FROM {$prefix}_locations OUTER JOIN {$prefix}_qrcodes
+<a name="line258"></a>			WHERE 
+<a name="line259"></a>			{$prefix}_qrcodes.link_type='Location' AND 
+<a name="line260"></a>			{$prefix}_locations.location_id={$prefix}_qrcodes.link_id AND
+<a name="line261"></a>			{$prefix}_locations.type = '{$strObjectType}' AND
+<a name="line262"></a>			{$prefix}_locations.type_id = '{$intObjectId}'";
+<a name="line263"></a>
+<a name="line264"></a>		NetDebug::trace("Query: $query");		
+<a name="line265"></a>		
+<a name="line266"></a>		@mysql_query($query);
+<a name="line267"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line268"></a>		
+<a name="line269"></a>			
+<a name="line270"></a>		if (mysql_affected_rows()) {
+<a name="line271"></a>			return new returnData(0, TRUE);
+<a name="line272"></a>		}
+<a name="line273"></a>		else {
+<a name="line274"></a>			return new returnData(0, FALSE);
+<a name="line275"></a>		}	
+<a name="line276"></a>	}	
+<a name="line277"></a>	
+<a name="line278"></a>	
+<a name="line279"></a>	/**
+<a name="line280"></a>     * Fetch the valid content types from the requirements table
+<a name="line281"></a>     * @returns an array of strings
+<a name="line282"></a>     */
+<a name="line283"></a>	public function objectTypeOptions($intGameID){	
+<a name="line284"></a>		$options = Locations::lookupObjectTypeOptionsFromSQL($intGameID);
+<a name="line285"></a>		if (!$options) return new returnData(1, NULL, "invalid game id");
+<a name="line286"></a>		return new returnData(0, $options);
+<a name="line287"></a>	}
+<a name="line288"></a>	
+<a name="line289"></a>	
+<a name="line290"></a>	/**
+<a name="line291"></a>     * Check if a content type is valid
+<a name="line292"></a>     * @returns TRUE if valid
+<a name="line293"></a>     */
+<a name="line294"></a>	private function isValidObjectType($intGameID, $strObjectType) {
+<a name="line295"></a>		$validTypes = Locations::lookupObjectTypeOptionsFromSQL($intGameID);
+<a name="line296"></a>		return in_array($strObjectType, $validTypes);
+<a name="line297"></a>	}
+<a name="line298"></a>	
+<a name="line299"></a>	
+<a name="line300"></a>	/**
+<a name="line301"></a>     * Fetch the valid requirement types from the requirements table
+<a name="line302"></a>     * @returns an array of strings
+<a name="line303"></a>     */
+<a name="line304"></a>	private function lookupObjectTypeOptionsFromSQL($intGameID){
+<a name="line305"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line306"></a>		if (!$prefix) return FALSE;
+<a name="line307"></a>		
+<a name="line308"></a>		$query = "SHOW COLUMNS FROM {$prefix}_locations LIKE 'type'";
+<a name="line309"></a>		$result = mysql_query( $query );
+<a name="line310"></a>		$row = mysql_fetch_array( $result , MYSQL_NUM );
+<a name="line311"></a>		$regex = "/'(.*?)'/";
+<a name="line312"></a>		preg_match_all( $regex , $row[1], $enum_array );
+<a name="line313"></a>		$enum_fields = $enum_array[1];
+<a name="line314"></a>		return( $enum_fields );
+<a name="line315"></a>	}	
+<a name="line316"></a>	
+<a name="line317"></a>	
+<a name="line318"></a>
+<a name="line319"></a>	
+<a name="line320"></a>	
+<a name="line321"></a>	
+<a name="line322"></a>	
+<a name="line323"></a>}</pre>
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/locations.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

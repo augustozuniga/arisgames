@@ -1,0 +1,577 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>module.php (ARIS Server)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/module.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>module.php</h1>
+<hr>
+
+<a name="line1"></a><pre><?php
+<a name="line2"></a>require_once('config.class.php');
+<a name="line3"></a>require_once('returnData.class.php');
+<a name="line4"></a>
+<a name="line5"></a>abstract class Module
+<a name="line6"></a>{
+<a name="line7"></a>	//constants for player_log table enums
+<a name="line8"></a>	const kLOG_LOGIN = 'LOGIN';
+<a name="line9"></a>	const kLOG_MOVE = 'MOVE';
+<a name="line10"></a>	const kLOG_PICKUP_ITEM = 'PICKUP_ITEM';
+<a name="line11"></a>	const kLOG_DROP_ITEM = 'DROP_ITEM';
+<a name="line12"></a>	const kLOG_DESTROY_ITEM = 'DESTROY_ITEM';
+<a name="line13"></a>	const kLOG_VIEW_ITEM = 'VIEW_ITEM';
+<a name="line14"></a>	const kLOG_VIEW_NODE = 'VIEW_NODE';
+<a name="line15"></a>	const kLOG_VIEW_NPC = 'VIEW_NPC';
+<a name="line16"></a>	const kLOG_VIEW_MAP = 'VIEW_MAP';
+<a name="line17"></a>	const kLOG_VIEW_QUESTS = 'VIEW_QUESTS';
+<a name="line18"></a>	const kLOG_VIEW_INVENTORY = 'VIEW_INVENTORY';
+<a name="line19"></a>	const kLOG_ENTER_QRCODE = 'ENTER_QRCODE';
+<a name="line20"></a>	const kLOG_UPLOAD_MEDIA_ITEM = 'UPLOAD_MEDIA_ITEM';
+<a name="line21"></a>	
+<a name="line22"></a>	//constants for gameID_requirements table enums
+<a name="line23"></a>	const kREQ_PLAYER_HAS_ITEM = 'PLAYER_HAS_ITEM';
+<a name="line24"></a>	const kREQ_PLAYER_DOES_NOT_HAVE_ITEM = 'PLAYER_DOES_NOT_HAVE_ITEM';
+<a name="line25"></a>	const kREQ_PLAYER_VIEWED_ITEM = 'PLAYER_VIEWED_ITEM';
+<a name="line26"></a>	const kREQ_PLAYER_HAS_NOT_VIEWED_ITEM = 'PLAYER_HAS_NOT_VIEWED_ITEM';
+<a name="line27"></a>	const kREQ_PLAYER_VIEWED_NODE = 'PLAYER_VIEWED_NODE';
+<a name="line28"></a>	const kREQ_PLAYER_HAS_NOT_VIEWED_NODE = 'PLAYER_HAS_NOT_VIEWED_NODE';
+<a name="line29"></a>	const kREQ_PLAYER_VIEWED_NPC = 'PLAYER_VIEWED_NPC';
+<a name="line30"></a>	const kREQ_PLAYER_HAS_NOT_VIEWED_NPC = 'PLAYER_HAS_NOT_VIEWED_NPC';
+<a name="line31"></a>	const kREQ_PLAYER_HAS_UPLOADED_MEDIA_ITEM = 'PLAYER_HAS_UPLOADED_MEDIA_ITEM';
+<a name="line32"></a>	const kREQ_PLAYER_HAS_COMPLETED_QUEST = 'PLAYER_HAS_COMPLETED_QUEST';
+<a name="line33"></a>	
+<a name="line34"></a>	const kRESULT_DISPLAY_NODE = 'Node';
+<a name="line35"></a>	const kRESULT_DISPLAY_QUEST = 'QuestDisplay';
+<a name="line36"></a>	const kRESULT_COMPLETE_QUEST = 'QuestComplete';
+<a name="line37"></a>	const kRESULT_DISPLAY_LOCATION = 'Location';
+<a name="line38"></a>
+<a name="line39"></a>	//constants for player_state_changes table enums
+<a name="line40"></a>	const kPSC_GIVE_ITEM = 'GIVE_ITEM';
+<a name="line41"></a>	const kPSC_TAKE_ITEM = 'TAKE_ITEM';	
+<a name="line42"></a>	
+<a name="line43"></a>
+<a name="line44"></a>	
+<a name="line45"></a>	public function Module()
+<a name="line46"></a>	{
+<a name="line47"></a>		$this->conn = mysql_connect(Config::dbHost, Config::dbUser, Config::dbPass);
+<a name="line48"></a>      	mysql_select_db (Config::dbSchema);
+<a name="line49"></a>      	mysql_query("set names utf8");
+<a name="line50"></a>		mysql_query("set charset set utf8");
+<a name="line51"></a>	}	
+<a name="line52"></a>	
+<a name="line53"></a>	/**
+<a name="line54"></a>     * Fetch the prefix of a game
+<a name="line55"></a>     * @returns a prefix string without the trailing _
+<a name="line56"></a>     */
+<a name="line57"></a>	public function getPrefix($intGameID) {	
+<a name="line58"></a>		//Lookup game information
+<a name="line59"></a>		$query = "SELECT * FROM games WHERE game_id = '{$intGameID}'";
+<a name="line60"></a>		NetDebug::trace($query);
+<a name="line61"></a>		$rsResult = @mysql_query($query);
+<a name="line62"></a>		if (mysql_num_rows($rsResult) < 1) return FALSE;
+<a name="line63"></a>		$gameRecord = mysql_fetch_array($rsResult);
+<a name="line64"></a>		return substr($gameRecord['prefix'],0,strlen($row['prefix'])-1);
+<a name="line65"></a>		
+<a name="line66"></a>	}
+<a name="line67"></a>	
+<a name="line68"></a>	/**
+<a name="line69"></a>     * Fetch the GameID from a prefix
+<a name="line70"></a>     * @returns a gameID int
+<a name="line71"></a>     */
+<a name="line72"></a>	public function getGameIdFromPrefix($strPrefix) {	
+<a name="line73"></a>		//Lookup game information
+<a name="line74"></a>		$query = "SELECT * FROM games WHERE prefix= '{$strPrefix}_'";
+<a name="line75"></a>		$rsResult = @mysql_query($query);
+<a name="line76"></a>		if (mysql_num_rows($rsResult) < 1) return FALSE;
+<a name="line77"></a>		$gameRecord = mysql_fetch_array($rsResult);
+<a name="line78"></a>		return $gameRecord['game_id'];
+<a name="line79"></a>		
+<a name="line80"></a>	}	
+<a name="line81"></a>	
+<a name="line82"></a>	
+<a name="line83"></a>	
+<a name="line84"></a>    /**
+<a name="line85"></a>     * Adds the specified item to the specified player.
+<a name="line86"></a>     */
+<a name="line87"></a>     protected function giveItemToPlayer($strGamePrefix, $intItemID, $intPlayerID, $qtyToGive=1) {
+<a name="line88"></a>		Module::adjustQtyForPlayerItem($strGamePrefix, $intItemID, $intPlayerID, $qtyToGive);
+<a name="line89"></a>    }
+<a name="line90"></a>	
+<a name="line91"></a>	
+<a name="line92"></a>	/**
+<a name="line93"></a>     * Removes the specified item from the user.
+<a name="line94"></a>     */ 
+<a name="line95"></a>    protected function takeItemFromPlayer($strGamePrefix, $intItemID, $intPlayerID, $qtyToTake=1) {
+<a name="line96"></a>		Module::adjustQtyForPlayerItem($strGamePrefix, $intItemID, $intPlayerID, -$qtyToTake);
+<a name="line97"></a>    }
+<a name="line98"></a> 
+<a name="line99"></a>
+<a name="line100"></a>     protected function removeItemFromAllPlayerInventories($strGamePrefix, $intItemID ) {
+<a name="line101"></a>		$query = "DELETE FROM {$strGamePrefix}_player_items 
+<a name="line102"></a>					WHERE item_id = $intItemID";
+<a name="line103"></a>    	$result = @mysql_query($query);
+<a name="line104"></a>    	NetDebug::trace($query . mysql_error());    
+<a name="line105"></a>    }
+<a name="line106"></a> 
+<a name="line107"></a>    /**
+<a name="line108"></a>    * Updates the qty a player has of an item
+<a name="line109"></a>    */ 
+<a name="line110"></a>    protected function adjustQtyForPlayerItem($strGamePrefix, $intItemID, $intPlayerID, $amountOfAdjustment) {
+<a name="line111"></a>		
+<a name="line112"></a>		//Get any existing record
+<a name="line113"></a>		$query = "SELECT * FROM {$strGamePrefix}_player_items 
+<a name="line114"></a>					WHERE player_id = $intPlayerID AND item_id = $intItemID LIMIT 1";
+<a name="line115"></a>    	$result = @mysql_query($query);
+<a name="line116"></a>    	NetDebug::trace($query . mysql_error());
+<a name="line117"></a>
+<a name="line118"></a>    	if ($existingPlayerItem = @mysql_fetch_object($result)) {
+<a name="line119"></a>    		NetDebug::trace("We have an existing record for that player and item");
+<a name="line120"></a>
+<a name="line121"></a> 			//Check if this change will make the qty go to < 1, if so delete the record
+<a name="line122"></a> 			$newQty = $existingPlayerItem->qty + $amountOfAdjustment;
+<a name="line123"></a> 			if ($newQty < 1) {
+<a name="line124"></a> 				NetDebug::trace("Adjustment would result in a qty of $newQty so delete the record");
+<a name="line125"></a> 				$query = "DELETE FROM {$strGamePrefix}_player_items 
+<a name="line126"></a>					WHERE player_id = $intPlayerID AND item_id = $intItemID";
+<a name="line127"></a>    			NetDebug::trace($query);
+<a name="line128"></a>    			@mysql_query($query);
+<a name="line129"></a>    		}
+<a name="line130"></a>    		else {
+<a name="line131"></a> 				//Update the qty
+<a name="line132"></a> 				NetDebug::trace("Updating Qty to $newQty");
+<a name="line133"></a> 				$query = "UPDATE {$strGamePrefix}_player_items 
+<a name="line134"></a> 							SET qty = $newQty
+<a name="line135"></a>							WHERE player_id = $intPlayerID AND item_id = $intItemID";
+<a name="line136"></a>    			NetDebug::trace($query);
+<a name="line137"></a>    			@mysql_query($query);
+<a name="line138"></a> 			}
+<a name="line139"></a>    	}
+<a name="line140"></a>    	else if ($amountOfAdjustment > 0) {
+<a name="line141"></a>    		//Create a record
+<a name="line142"></a>    		NetDebug::trace("Creating a new player_item record");
+<a name="line143"></a>
+<a name="line144"></a>    		$query = "INSERT INTO {$strGamePrefix}_player_items 
+<a name="line145"></a>										  (player_id, item_id, qty) VALUES ($intPlayerID, $intItemID, $amountOfAdjustment)
+<a name="line146"></a>										  ON duplicate KEY UPDATE item_id = $intItemID";
+<a name="line147"></a>			NetDebug::trace($query);
+<a name="line148"></a>			@mysql_query($query);
+<a name="line149"></a>    	}
+<a name="line150"></a>    	else NetDebug::trace("Decrementing the qty of an item the player does not have. Ignored.");
+<a name="line151"></a>    	
+<a name="line152"></a>    }
+<a name="line153"></a>    
+<a name="line154"></a>	
+<a name="line155"></a>	/**
+<a name="line156"></a>     * Decrement the item_qty at the specified location by the specified amount, default of 1
+<a name="line157"></a>     */ 
+<a name="line158"></a>    protected function decrementItemQtyAtLocation($strGamePrefix, $intLocationID, $intQty = 1) {
+<a name="line159"></a>   		//If this location has a null item_qty, decrementing it will still be a null
+<a name="line160"></a>		$query = "UPDATE {$strGamePrefix}_locations 
+<a name="line161"></a>					SET item_qty = item_qty-{$intQty}
+<a name="line162"></a>					WHERE location_id = '{$intLocationID}' AND item_qty > 0";
+<a name="line163"></a>   		NetDebug::trace($query);	
+<a name="line164"></a>    	@mysql_query($query);    	
+<a name="line165"></a>	}
+<a name="line166"></a>	
+<a name="line167"></a>	
+<a name="line168"></a>	/**
+<a name="line169"></a>     * Adds an item to Locations at the specified latitude, longitude
+<a name="line170"></a>     */ 
+<a name="line171"></a>    protected function giveItemToWorld($strGamePrefix, $intItemID, $floatLat, $floatLong, $intQty = 1) {
+<a name="line172"></a>		//Find any items on the map nearby
+<a name="line173"></a>		$clumpingRangeInMeters = 10;
+<a name="line174"></a>		
+<a name="line175"></a>		$query = "SELECT *,((ACOS(SIN($floatLat * PI() / 180) * SIN(latitude * PI() / 180) + 
+<a name="line176"></a>					COS($floatLat * PI() / 180) * COS(latitude * PI() / 180) * 
+<a name="line177"></a>					COS(($floatLong - longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) * 1609.344
+<a name="line178"></a>				AS `distance` FROM `{$strGamePrefix}_locations` HAVING `distance`<= {$clumpingRangeInMeters} ORDER BY `distance` ASC"; 	
+<a name="line179"></a>    	$result = @mysql_query($query);
+<a name="line180"></a>    	NetDebug::trace($query . mysql_error());  
+<a name="line181"></a>    	
+<a name="line182"></a>    	if ($closestLocationWithinClumpingRange = @mysql_fetch_object($result)) {
+<a name="line183"></a>    		//We have a match
+<a name="line184"></a>    		NetDebug::trace("An item exists nearby, adding to that location");   	
+<a name="line185"></a>
+<a name="line186"></a>    		$query = "UPDATE {$strGamePrefix}_locations
+<a name="line187"></a>    				SET item_qty = item_qty + {$intQty}";
+<a name="line188"></a>			NetDebug::trace($query);   	
+<a name="line189"></a>			@mysql_query($query);
+<a name="line190"></a>    	}
+<a name="line191"></a>		else {
+<a name="line192"></a>			NetDebug::trace("No item exists nearby, creating a new location");   	
+<a name="line193"></a>
+<a name="line194"></a>			$itemName = $this->getItemName($strGamePrefix, $intItemID);
+<a name="line195"></a>			$error = 100; //Use 100 meters
+<a name="line196"></a>			$icon_media_id = $this->getItemIconMediaId($strGamePrefix, $intItemID); //Set the map icon = the item's icon
+<a name="line197"></a>			
+<a name="line198"></a>			$query = "INSERT INTO {$strGamePrefix}_locations (name, type, type_id, icon_media_id, latitude, longitude, error, item_qty)
+<a name="line199"></a>											  VALUES ('{$itemName}','Item','{$intItemID}', '{$icon_media_id}', '{$floatLat}','{$floatLong}', '{$error}','{$intQty}')";
+<a name="line200"></a>			NetDebug::trace($query);   	
+<a name="line201"></a>			@mysql_query($query);
+<a name="line202"></a>    	}
+<a name="line203"></a>    }
+<a name="line204"></a>	
+<a name="line205"></a>	protected function metersBetweenLatLngs($lat1, $lon1, $lat2, $lon2) { 
+<a name="line206"></a>
+<a name="line207"></a>		$theta = $lon1 - $lon2; 
+<a name="line208"></a>		$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta)); 
+<a name="line209"></a>		$dist = acos($dist); 
+<a name="line210"></a>		$dist = rad2deg($dist); 
+<a name="line211"></a>		$miles = $dist * 60 * 1.1515;
+<a name="line212"></a>	 	$unit = strtoupper($unit);
+<a name="line213"></a>		return ($miles * 1609.344); //convert to meters
+<a name="line214"></a>	}
+<a name="line215"></a>	
+<a name="line216"></a>    
+<a name="line217"></a>    /**
+<a name="line218"></a>    * Checks if a record Exists
+<a name="line219"></a>    **/
+<a name="line220"></a>    protected function recordExists($strPrefix, $strTable, $intRecordID){
+<a name="line221"></a>    	$key = substr($strTable, 0, strlen($strTable)-1);
+<a name="line222"></a>    	$query = "SELECT * FROM {$strPrefix}_{$strTable} WHERE {$key} = $intRecordID";
+<a name="line223"></a>    	$rsResult = @mysql_query($query);
+<a name="line224"></a>		if (mysql_error()) return FALSE;
+<a name="line225"></a>		if (mysql_num_rows($rsResult) < 1) return FALSE;
+<a name="line226"></a>		return true;
+<a name="line227"></a>    }
+<a name="line228"></a>	
+<a name="line229"></a>	/**
+<a name="line230"></a>    * Looks up an item name
+<a name="line231"></a>    **/
+<a name="line232"></a>    protected function getItemName($strPrefix, $intItemID){
+<a name="line233"></a>    	$query = "SELECT name FROM {$strPrefix}_items WHERE item_id = $intItemID";
+<a name="line234"></a>    	$rsResult = @mysql_query($query);		
+<a name="line235"></a>		$row = @mysql_fetch_array($rsResult);	
+<a name="line236"></a>		return $row['name'];
+<a name="line237"></a>    }
+<a name="line238"></a>    
+<a name="line239"></a> 	/**
+<a name="line240"></a>    * Looks up an item icon media id
+<a name="line241"></a>    **/
+<a name="line242"></a>    protected function getItemIconMediaId($strPrefix, $intItemID){
+<a name="line243"></a>    	$query = "SELECT name FROM {$strPrefix}_items WHERE item_id = $intItemID";
+<a name="line244"></a>    	$rsResult = @mysql_query($query);		
+<a name="line245"></a>		$row = @mysql_fetch_array($rsResult);	
+<a name="line246"></a>		return $row['icon_media_id'];
+<a name="line247"></a>    }   
+<a name="line248"></a>		
+<a name="line249"></a>	/** 
+<a name="line250"></a>	 * playerHasLog
+<a name="line251"></a>	 *
+<a name="line252"></a>     * Checks if the specified user has the specified log event in the game
+<a name="line253"></a>	 *
+<a name="line254"></a>     * @return boolean
+<a name="line255"></a>     */
+<a name="line256"></a>    protected function playerHasLog($strPrefix, $intPlayerID, $strEventType, $strEventDetail) {
+<a name="line257"></a>		
+<a name="line258"></a>		$intGameID = Module::getGameIdFromPrefix($strPrefix);
+<a name="line259"></a>
+<a name="line260"></a>		$query = "SELECT * FROM player_log 
+<a name="line261"></a>					WHERE player_id = '{$intPlayerID}' AND
+<a name="line262"></a>						game_id = '{$intGameID}' AND
+<a name="line263"></a>						event_type = '{$strEventType}' AND
+<a name="line264"></a>						event_detail_1 = '{$strEventDetail}' AND
+<a name="line265"></a>						deleted = 0";
+<a name="line266"></a>		NetDebug::trace($query);
+<a name="line267"></a>		
+<a name="line268"></a>		$rsResult = @mysql_query($query);
+<a name="line269"></a>		
+<a name="line270"></a>		if (mysql_num_rows($rsResult) > 0) return true;
+<a name="line271"></a>		else return false;
+<a name="line272"></a>    }
+<a name="line273"></a>    
+<a name="line274"></a>
+<a name="line275"></a>	/** 
+<a name="line276"></a>	 * playerHasItem
+<a name="line277"></a>	 *
+<a name="line278"></a>     * Checks if the specified user has the specified item in the specified game.
+<a name="line279"></a>     * @return boolean
+<a name="line280"></a>     */
+<a name="line281"></a>    protected function playerHasItem($intGameID, $intPlayerID, $intItemID) {
+<a name="line282"></a>    	$prefix = $this->getPrefix($intGameID);
+<a name="line283"></a>		if (!$prefix) return FALSE;
+<a name="line284"></a>    
+<a name="line285"></a>		$query = "SELECT * FROM {$prefix}_player_items 
+<a name="line286"></a>									  WHERE player_id = '{$intPlayerID}' 
+<a name="line287"></a>									  AND item_id = '{$intItemID}'";
+<a name="line288"></a>		
+<a name="line289"></a>		$rsResult = @mysql_query($query);
+<a name="line290"></a>		
+<a name="line291"></a>		if (mysql_num_rows($rsResult) > 0) return true;
+<a name="line292"></a>		else return false;
+<a name="line293"></a>    }		
+<a name="line294"></a>    
+<a name="line295"></a>    
+<a name="line296"></a>	/** 
+<a name="line297"></a>	 * itemQtyInPlayerInventory
+<a name="line298"></a>	 *
+<a name="line299"></a>     * Checks if the specified user has the specified item in the specified game.
+<a name="line300"></a>     * @return qty a player has of a given item
+<a name="line301"></a>     */
+<a name="line302"></a>    protected function itemQtyInPlayerInventory($intGameID, $intPlayerID, $intItemID) {
+<a name="line303"></a>    	$prefix = $this->getPrefix($intGameID);
+<a name="line304"></a>		if (!$prefix) return FALSE;
+<a name="line305"></a>    
+<a name="line306"></a>		$query = "SELECT * FROM {$prefix}_player_items 
+<a name="line307"></a>									  WHERE player_id = '{$intPlayerID}' 
+<a name="line308"></a>									  AND item_id = '{$intItemID}'";
+<a name="line309"></a>		
+<a name="line310"></a>		$rsResult = @mysql_query($query);
+<a name="line311"></a>		$playerItem = mysql_fetch_object($rsResult);
+<a name="line312"></a>		
+<a name="line313"></a>		return $playerItem->qty;
+<a name="line314"></a>    }	    
+<a name="line315"></a>    
+<a name="line316"></a>	/** 
+<a name="line317"></a>	 * playerHasUploadedMedia
+<a name="line318"></a>	 *
+<a name="line319"></a>     * Checks if the specified user has uploaded media near the specified location.
+<a name="line320"></a>     * @return boolean
+<a name="line321"></a>     */
+<a name="line322"></a>    protected function playerHasUploadedMediaItemWithinDistence($intGameID, $intPlayerID, $dblLatitude, $dblLongitude, $dblDistenceInMeters) {
+<a name="line323"></a>    	$prefix = $this->getPrefix($intGameID);
+<a name="line324"></a>		if (!$prefix) return FALSE;
+<a name="line325"></a>
+<a name="line326"></a>		$query = "SELECT {$prefix}_items.*
+<a name="line327"></a>					FROM player_log, {$prefix}_items
+<a name="line328"></a>					WHERE 
+<a name="line329"></a>						player_log.player_id = '{$intPlayerID}' AND
+<a name="line330"></a>						player_log.game_id = '{$intGameID}' AND
+<a name="line331"></a>						player_log.event_type = '". Module::kLOG_UPLOAD_MEDIA_ITEM ."' AND
+<a name="line332"></a>						player_log.event_detail_1 = {$prefix}_items.item_id AND
+<a name="line333"></a>						
+<a name="line334"></a>						(((acos(sin(({$dblLatitude}*pi()/180)) * sin((origin_latitude*pi()/180))+cos(({$dblLatitude}*pi()/180)) * 
+<a name="line335"></a>						cos((origin_latitude*pi()/180)) * 
+<a name="line336"></a>						cos((({$dblLongitude} - origin_longitude)*pi()/180))))*180/pi())*60*1.1515*1.609344*1000) < {$dblDistenceInMeters}";						
+<a name="line337"></a>						
+<a name="line338"></a>		NetDebug::trace($query);
+<a name="line339"></a>		$rsResult = @mysql_query($query);
+<a name="line340"></a>		if (@mysql_num_rows($rsResult) > 0) return true;
+<a name="line341"></a>		else return false;
+<a name="line342"></a>
+<a name="line343"></a>    }	    
+<a name="line344"></a>    
+<a name="line345"></a>	/** 
+<a name="line346"></a>	 * objectMeetsRequirements
+<a name="line347"></a>	 *
+<a name="line348"></a>     * Checks all requirements for the specified object for the specified user
+<a name="line349"></a>     * @return boolean
+<a name="line350"></a>     */	
+<a name="line351"></a>	protected function objectMeetsRequirements ($strPrefix, $intPlayerID, $strObjectType, $intObjectID) {		
+<a name="line352"></a>		NetDebug::trace("Checking Requirements for {$strObjectType}:{$intObjectID} for playerID:$intPlayerID in gameID:$strPrefix");
+<a name="line353"></a>
+<a name="line354"></a>		//Fetch the requirements
+<a name="line355"></a>		$query = "SELECT * FROM {$strPrefix}_requirements 
+<a name="line356"></a>					WHERE content_type = '{$strObjectType}' AND content_id = '{$intObjectID}'";
+<a name="line357"></a>		$rsRequirments = @mysql_query($query);
+<a name="line358"></a>		
+<a name="line359"></a>		$andsMet = FALSE;
+<a name="line360"></a>		$requirementsExist = FALSE;
+<a name="line361"></a>		while ($requirement = mysql_fetch_array($rsRequirments)) {
+<a name="line362"></a>			$requirementsExist = TRUE;
+<a name="line363"></a>			NetDebug::trace("Requirement for {$strObjectType}:{$intObjectID} is {$requirement['requirement']}:{$requirement['requirement_detail_1']}");
+<a name="line364"></a>			//Check the requirement
+<a name="line365"></a>			
+<a name="line366"></a>			$requirementMet = FALSE;
+<a name="line367"></a>			
+<a name="line368"></a>			switch ($requirement['requirement']) {
+<a name="line369"></a>				//Log related
+<a name="line370"></a>				case Module::kREQ_PLAYER_VIEWED_ITEM:
+<a name="line371"></a>					$requirementMet = Module::playerHasLog($strPrefix, $intPlayerID, Module::kLOG_VIEW_ITEM, 
+<a name="line372"></a>						$requirement['requirement_detail_1']);
+<a name="line373"></a>					break;
+<a name="line374"></a>				case Module::kREQ_PLAYER_HAS_NOT_VIEWED_ITEM:
+<a name="line375"></a>					$requirementMet = !Module::playerHasLog($strPrefix, $intPlayerID, Module::kLOG_VIEW_ITEM, 
+<a name="line376"></a>						$requirement['requirement_detail_1']);
+<a name="line377"></a>					break;
+<a name="line378"></a>				case Module::kREQ_PLAYER_VIEWED_NODE:
+<a name="line379"></a>					$requirementMet = Module::playerHasLog($strPrefix, $intPlayerID, Module::kLOG_VIEW_NODE, 
+<a name="line380"></a>						$requirement['requirement_detail_1']);
+<a name="line381"></a>					break;
+<a name="line382"></a>				case Module::kREQ_PLAYER_HAS_NOT_VIEWED_NODE:
+<a name="line383"></a>					$requirementMet =  !Module::playerHasLog($strPrefix, $intPlayerID, Module::kLOG_VIEW_NODE, 
+<a name="line384"></a>						$requirement['requirement_detail_1']);
+<a name="line385"></a>					break;
+<a name="line386"></a>				case Module::kREQ_PLAYER_VIEWED_NPC:
+<a name="line387"></a>					$requirementMet = Module::playerHasLog($strPrefix, $intPlayerID, Module::kLOG_VIEW_NPC, 
+<a name="line388"></a>						$requirement['requirement_detail_1']);
+<a name="line389"></a>					break;
+<a name="line390"></a>				case Module::kREQ_PLAYER_HAS_NOT_VIEWED_NPC:
+<a name="line391"></a>					$requirementMet = !Module::playerHasLog($strPrefix, $intPlayerID, Module::kLOG_VIEW_NPC, 
+<a name="line392"></a>						$requirement['requirement_detail_1']);
+<a name="line393"></a>					break;					
+<a name="line394"></a>				//Inventory related	
+<a name="line395"></a>				case Module::kREQ_PLAYER_HAS_ITEM:
+<a name="line396"></a>					$requirementMet = Module::playerHasItem($strPrefix, $intPlayerID, 
+<a name="line397"></a>						$requirement['requirement_detail_1']);
+<a name="line398"></a>					break;
+<a name="line399"></a>				case Module::kREQ_PLAYER_DOES_NOT_HAVE_ITEM:
+<a name="line400"></a>					$requirementMet = !Module::playerHasItem($strPrefix, $intPlayerID, 
+<a name="line401"></a>						$requirement['requirement_detail_1']);
+<a name="line402"></a>					break;
+<a name="line403"></a>				//Data Collection
+<a name="line404"></a>				case Module::kREQ_PLAYER_HAS_UPLOADED_MEDIA_ITEM:
+<a name="line405"></a>					$requirementMet = Module::playerHasUploadedMediaItemWithinDistence($strPrefix, $intPlayerID, 
+<a name="line406"></a>						$requirement['requirement_detail_1'], $requirement['requirement_detail_2'], 
+<a name="line407"></a>						$requirement['requirement_detail_3']);
+<a name="line408"></a>					break;
+<a name="line409"></a>				case Module::kREQ_PLAYER_HAS_COMPLETED_QUEST:
+<a name="line410"></a>					$requirementMet = Module::objectMeetsRequirements ($strPrefix, $intPlayerID, Module::kRESULT_COMPLETE_QUEST, 
+<a name="line411"></a>						$requirement['requirement_detail_1']);
+<a name="line412"></a>					break;	
+<a name="line413"></a>			}//switch
+<a name="line414"></a>			if ($requirement['boolean_operator'] == "AND" && $requirementMet == FALSE) {
+<a name="line415"></a>				NetDebug::trace("An AND requirement was not met. Requirements Failed.");
+<a name="line416"></a>				return FALSE;
+<a name="line417"></a>			}
+<a name="line418"></a>
+<a name="line419"></a>			if ($requirement['boolean_operator'] == "AND" && $requirementMet == TRUE) {
+<a name="line420"></a>				NetDebug::trace("An AND requirement was met. Remembering");
+<a name="line421"></a>				$andsMet = TRUE;
+<a name="line422"></a>			}
+<a name="line423"></a>			
+<a name="line424"></a>			if ($requirement['boolean_operator'] == "OR" && $requirementMet == TRUE){
+<a name="line425"></a>				NetDebug::trace("An OR requirement was met. Requirements Passed.");
+<a name="line426"></a>				return TRUE;
+<a name="line427"></a>			}
+<a name="line428"></a>			
+<a name="line429"></a>			if ($requirement['boolean_operator'] == "AND" && $requirementMet == FALSE) $requirementsMet = FALSE;
+<a name="line430"></a>
+<a name="line431"></a>		}//while
+<a name="line432"></a>		NetDebug::trace("At the end of all the requirements for this object and any AND were passed, no ORs were passed.");
+<a name="line433"></a>		//So no ORs were met, and possibly all ands were met
+<a name="line434"></a>		if (!$requirementsExist) {
+<a name="line435"></a>			NetDebug::trace("No requirements exist. Requirements Passed.");
+<a name="line436"></a>			return TRUE;
+<a name="line437"></a>		}
+<a name="line438"></a>		if ($andsMet) {
+<a name="line439"></a>			NetDebug::trace("All AND requirements exist. Requirements Passed.");
+<a name="line440"></a>			return TRUE;
+<a name="line441"></a>		}
+<a name="line442"></a>		else {
+<a name="line443"></a>			NetDebug::trace("At end. Requirements Not Passed.");			
+<a name="line444"></a>			return FALSE;
+<a name="line445"></a>		}
+<a name="line446"></a>	}	
+<a name="line447"></a>	
+<a name="line448"></a>	
+<a name="line449"></a>	/** 
+<a name="line450"></a>	 * applyPlayerStateChanges
+<a name="line451"></a>	 *
+<a name="line452"></a>     * Applies any state changes for the given object
+<a name="line453"></a>     * @return boolean. True if a change was made, false otherwise
+<a name="line454"></a>     */	
+<a name="line455"></a>	protected function applyPlayerStateChanges($strPrefix, $intPlayerID, $strEventType, $strEventDetail) {	
+<a name="line456"></a>		
+<a name="line457"></a>		$changeMade = FALSE;
+<a name="line458"></a>		
+<a name="line459"></a>		//Fetch the state changes
+<a name="line460"></a>		$query = "SELECT * FROM {$strPrefix}_player_state_changes 
+<a name="line461"></a>									  WHERE event_type = '{$strEventType}'
+<a name="line462"></a>									  AND event_detail = '{$strEventDetail}'";
+<a name="line463"></a>		NetDebug::trace($query);
+<a name="line464"></a>
+<a name="line465"></a>		$rsStateChanges = @mysql_query($query);
+<a name="line466"></a>		
+<a name="line467"></a>		while ($stateChange = mysql_fetch_array($rsStateChanges)) {
+<a name="line468"></a>			NetDebug::trace("State Change Found");
+<a name="line469"></a>
+<a name="line470"></a>			//Check the requirement
+<a name="line471"></a>			switch ($stateChange['action']) {
+<a name="line472"></a>				case Module::kPSC_GIVE_ITEM:
+<a name="line473"></a>					//echo 'Running a GIVE_ITEM';
+<a name="line474"></a>					Module::giveItemToPlayer($strPrefix, $stateChange['action_detail'], $intPlayerID,$stateChange['action_amount']);
+<a name="line475"></a>					$changeMade = TRUE;
+<a name="line476"></a>					break;
+<a name="line477"></a>				case Module::kPSC_TAKE_ITEM:
+<a name="line478"></a>					//echo 'Running a TAKE_ITEM';
+<a name="line479"></a>					Module::takeItemFromPlayer($strPrefix, $stateChange['action_detail'], $intPlayerID,$stateChange['action_amount']);
+<a name="line480"></a>					$changeMade = TRUE;
+<a name="line481"></a>					break;
+<a name="line482"></a>			}
+<a name="line483"></a>		}//stateChanges loop
+<a name="line484"></a>		
+<a name="line485"></a>		return $changeMade;
+<a name="line486"></a>	}
+<a name="line487"></a>		
+<a name="line488"></a>	/**
+<a name="line489"></a>     * Add a row to the player log
+<a name="line490"></a>     * @returns true on success
+<a name="line491"></a>     */
+<a name="line492"></a>	protected function appendLog($intPlayerID, $intGameID, $strEventType, $strEventDetail1=null, $strEventDetail2=null)
+<a name="line493"></a>	{
+<a name="line494"></a>			
+<a name="line495"></a>		$query = "INSERT INTO player_log 
+<a name="line496"></a>					(player_id, game_id, event_type, event_detail_1,event_detail_2) 
+<a name="line497"></a>				  VALUES 
+<a name="line498"></a>				  	({$intPlayerID},{$intGameID},'{$strEventType}','{$strEventDetail1}','{$strEventDetail2}')";
+<a name="line499"></a>		
+<a name="line500"></a>		@mysql_query($query);
+<a name="line501"></a>		
+<a name="line502"></a>		NetDebug::trace($query);
+<a name="line503"></a>
+<a name="line504"></a>		
+<a name="line505"></a>		if (mysql_error()) {
+<a name="line506"></a>			NetDebug::trace(mysql_error());
+<a name="line507"></a>			return false;
+<a name="line508"></a>		}
+<a name="line509"></a>		
+<a name="line510"></a>		else return true;
+<a name="line511"></a>	}		
+<a name="line512"></a>	
+<a name="line513"></a>	
+<a name="line514"></a>	
+<a name="line515"></a>	
+<a name="line516"></a>	
+<a name="line517"></a>}</pre>
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/module.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

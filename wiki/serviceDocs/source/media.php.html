@@ -1,0 +1,311 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>media.php (ARIS Server)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/media.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>media.php</h1>
+<hr>
+
+<a name="line1"></a><pre><?php
+<a name="line2"></a>require_once("module.php");
+<a name="line3"></a>
+<a name="line4"></a>
+<a name="line5"></a>class Media extends Module
+<a name="line6"></a>{
+<a name="line7"></a>	
+<a name="line8"></a>	const MEDIA_IMAGE = 'Image';
+<a name="line9"></a>	const MEDIA_ICON = 'Icon';
+<a name="line10"></a>	const MEDIA_VIDEO = 'Video';
+<a name="line11"></a>	const MEDIA_AUDIO = 'Audio';
+<a name="line12"></a>	protected $validImageAndIconTypes = array('jpg','png');
+<a name="line13"></a>	protected $validAudioTypes = array('mp3','m4a','caf');
+<a name="line14"></a>	protected $validVideoTypes = array('mp4','m4v','3gp');
+<a name="line15"></a>	
+<a name="line16"></a>	
+<a name="line17"></a>	/**
+<a name="line18"></a>     * Fetch all Media
+<a name="line19"></a>     * @returns the media
+<a name="line20"></a>     */
+<a name="line21"></a>	public function getMedia($intGameID)
+<a name="line22"></a>	{
+<a name="line23"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line24"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line25"></a>
+<a name="line26"></a>		$query = "SELECT * FROM media WHERE game_id = {$prefix} or game_id = 0";
+<a name="line27"></a>		NetDebug::trace($query);
+<a name="line28"></a>
+<a name="line29"></a>		
+<a name="line30"></a>		$rsResult = @mysql_query($query);
+<a name="line31"></a>		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+<a name="line32"></a>		
+<a name="line33"></a>		$returnData = new returnData(0, array());
+<a name="line34"></a>		
+<a name="line35"></a>		//Calculate the media types
+<a name="line36"></a>		while ($mediaRow = mysql_fetch_array($rsResult)) {
+<a name="line37"></a>
+<a name="line38"></a>			$mediaItem = array();
+<a name="line39"></a>			$mediaItem['media_id'] = $mediaRow['media_id'];
+<a name="line40"></a>			$mediaItem['name'] = $mediaRow['name'];
+<a name="line41"></a>			$mediaItem['file_name'] = $mediaRow['file_name'];
+<a name="line42"></a>
+<a name="line43"></a>			$mediaItem['url_path'] = Config::gamedataWWWPath . "/{$mediaRow['game_id']}/" . Config::gameMediaSubdir;
+<a name="line44"></a>			
+<a name="line45"></a>			if ($mediaRow['is_icon'] == '1') $mediaItem['type'] = self::MEDIA_ICON;
+<a name="line46"></a>			else $mediaItem['type'] = $this->getMediaType($mediaRow['file_name']);
+<a name="line47"></a>			
+<a name="line48"></a>			if ($mediaRow['game_id'] == 0) $mediaItem['is_default'] = 1;
+<a name="line49"></a>			else $mediaItem['is_default'] = 0;
+<a name="line50"></a>			
+<a name="line51"></a>			array_push($returnData->data, $mediaItem);
+<a name="line52"></a>		}
+<a name="line53"></a>		
+<a name="line54"></a>		NetDebug::trace($rsResult);
+<a name="line55"></a>
+<a name="line56"></a>		return $returnData;
+<a name="line57"></a>	}
+<a name="line58"></a>	
+<a name="line59"></a>	/**
+<a name="line60"></a>     * Fetch one Media Item
+<a name="line61"></a>     * @returns the media item
+<a name="line62"></a>     */
+<a name="line63"></a>	public function getMediaObject($intGameID, $intMediaID)
+<a name="line64"></a>	{
+<a name="line65"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line66"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line67"></a>
+<a name="line68"></a>		$query = "SELECT * FROM media WHERE game_id = {$prefix} AND media_id = {$intMediaID} LIMIT 1";
+<a name="line69"></a>		NetDebug::trace($query);
+<a name="line70"></a>		$rsResult = @mysql_query($query);
+<a name="line71"></a>		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+<a name="line72"></a>		
+<a name="line73"></a>		$mediaRow = mysql_fetch_array($rsResult);
+<a name="line74"></a>		if (!$mediaRow) {
+<a name="line75"></a>			NetDebug::trace("No matching media id within the game, checking for a default");
+<a name="line76"></a>			$query = "SELECT * FROM media WHERE game_id = 0 AND media_id = {$intMediaID} LIMIT 1";
+<a name="line77"></a>			NetDebug::trace($query);
+<a name="line78"></a>			$rsResult = @mysql_query($query);
+<a name="line79"></a>			if (mysql_error()) return new returnData(1, NULL, "SQL Error");	
+<a name="line80"></a>			$mediaRow = mysql_fetch_array($rsResult);
+<a name="line81"></a>			if (!$mediaRow) return new returnData(2, NULL, "No matching media for game");
+<a name="line82"></a>		}
+<a name="line83"></a>
+<a name="line84"></a>		$mediaItem = array();
+<a name="line85"></a>		$mediaItem['media_id'] = $mediaRow['media_id'];
+<a name="line86"></a>		$mediaItem['name'] = $mediaRow['name'];
+<a name="line87"></a>		$mediaItem['file_name'] = $mediaRow['file_name'];
+<a name="line88"></a>
+<a name="line89"></a>		$mediaItem['url_path'] = Config::gamedataWWWPath . "/{$mediaRow['game_id']}/" . Config::gameMediaSubdir;
+<a name="line90"></a>			
+<a name="line91"></a>		if ($mediaRow['is_icon'] == '1') $mediaItem['type'] = self::MEDIA_ICON;
+<a name="line92"></a>		else $mediaItem['type'] = Media::getMediaType($mediaRow['file_name']);
+<a name="line93"></a>			
+<a name="line94"></a>		if ($mediaRow['game_id'] == 0) $mediaItem['is_default'] = 1;
+<a name="line95"></a>		else $mediaItem['is_default'] = 0;
+<a name="line96"></a>		
+<a name="line97"></a>
+<a name="line98"></a>		return new returnData(0, $mediaItem);
+<a name="line99"></a>	}	
+<a name="line100"></a>	
+<a name="line101"></a>	
+<a name="line102"></a>	/**
+<a name="line103"></a>     * Fetch the valid file extensions
+<a name="line104"></a>     * @returns the extensions
+<a name="line105"></a>     */
+<a name="line106"></a>	public function getValidAudioExtensions()
+<a name="line107"></a>	{
+<a name="line108"></a>		return new returnData(0, $this->validAudioTypes);
+<a name="line109"></a>	}
+<a name="line110"></a>	
+<a name="line111"></a>	/**
+<a name="line112"></a>     * Fetch the valid file extensions
+<a name="line113"></a>     * @returns the extensions
+<a name="line114"></a>     */
+<a name="line115"></a>	public function getValidVideoExtensions()
+<a name="line116"></a>	{
+<a name="line117"></a>		return new returnData(0, $this->validVideoTypes);
+<a name="line118"></a>	}
+<a name="line119"></a>
+<a name="line120"></a>	/**
+<a name="line121"></a>     * Fetch the valid file extensions
+<a name="line122"></a>     * @returns the extensions
+<a name="line123"></a>     */
+<a name="line124"></a>	public function getValidImageAndIconExtensions()
+<a name="line125"></a>	{
+<a name="line126"></a>		return new returnData(0, $this->validImageAndIconTypes);
+<a name="line127"></a>	}
+<a name="line128"></a>
+<a name="line129"></a>		
+<a name="line130"></a>	
+<a name="line131"></a>	/**
+<a name="line132"></a>     * Create a media record
+<a name="line133"></a>     * @returns the new mediaID on success
+<a name="line134"></a>     */
+<a name="line135"></a>	public function createMedia($intGameID, $strName, $strFileName, $boolIsIcon)
+<a name="line136"></a>	{
+<a name="line137"></a>		
+<a name="line138"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line139"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line140"></a>		
+<a name="line141"></a>		$strName = addslashes($strName);
+<a name="line142"></a>		
+<a name="line143"></a>		if ($boolIsIcon && $this->getMediaType($strFileName) != self::MEDIA_IMAGE)
+<a name="line144"></a>			return new returnData(4, NULL, "Icons must have a valid Image file extension");
+<a name="line145"></a>		            	
+<a name="line146"></a>		$query = "INSERT INTO media 
+<a name="line147"></a>					(game_id, name, file_name, is_icon)
+<a name="line148"></a>					VALUES ('{$intGameID}','{$strName}', '{$strFileName}',{$boolIsIcon})";
+<a name="line149"></a>		
+<a name="line150"></a>		NetDebug::trace("Running a query = $query");	
+<a name="line151"></a>		
+<a name="line152"></a>		@mysql_query($query);
+<a name="line153"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line154"></a>		
+<a name="line155"></a>		return new returnData(0, mysql_insert_id());
+<a name="line156"></a>	}
+<a name="line157"></a>
+<a name="line158"></a>	
+<a name="line159"></a>	
+<a name="line160"></a>	/**
+<a name="line161"></a>     * Update a specific Media
+<a name="line162"></a>     * @returns true if edit was done, false if no changes were made
+<a name="line163"></a>     */
+<a name="line164"></a>	public function renameMedia($intGameID, $intMediaID, $strName)
+<a name="line165"></a>	{
+<a name="line166"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line167"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line168"></a>
+<a name="line169"></a>		$strName = addslashes($strName);
+<a name="line170"></a>
+<a name="line171"></a>		//Update this record
+<a name="line172"></a>		$query = "UPDATE media 
+<a name="line173"></a>					SET name = '{$strName}' 
+<a name="line174"></a>					WHERE media_id = '{$intMediaID}' and game_id = '{$intGameID}'";
+<a name="line175"></a>		
+<a name="line176"></a>		NetDebug::trace("updateNpc: Running a query = $query");	
+<a name="line177"></a>		
+<a name="line178"></a>		@mysql_query($query);
+<a name="line179"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line180"></a>		
+<a name="line181"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line182"></a>		else return new returnData(0, FALSE);	
+<a name="line183"></a>	}
+<a name="line184"></a>		
+<a name="line185"></a>	
+<a name="line186"></a>	/**
+<a name="line187"></a>     * Delete a Media Item
+<a name="line188"></a>     * @returns true if delete was done, false if no changes were made
+<a name="line189"></a>     */
+<a name="line190"></a>	public function deleteMedia($intGameID, $intMediaID)
+<a name="line191"></a>	{
+<a name="line192"></a>		
+<a name="line193"></a>		$query = "SELECT * FROM media 
+<a name="line194"></a>					WHERE media_id = {$intMediaID} and game_id = {$intGameID}";
+<a name="line195"></a>		$rsResult = @mysql_query($query);
+<a name="line196"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error:". mysql_error());
+<a name="line197"></a>		
+<a name="line198"></a>		$mediaRow = mysql_fetch_array($rsResult);
+<a name="line199"></a>		if ($mediaRow === FALSE) return new returnData(2, NULL, "Invalid Media Record");
+<a name="line200"></a>
+<a name="line201"></a>		//Delete the Record
+<a name="line202"></a>		$query = "DELETE FROM media 
+<a name="line203"></a>					WHERE media_id = {$intMediaID} and game_id = {$intGameID}";
+<a name="line204"></a>		
+<a name="line205"></a>		$rsResult = @mysql_query($query);
+<a name="line206"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error:" . mysql_error());
+<a name="line207"></a>
+<a name="line208"></a>		//Delete the file		
+<a name="line209"></a>		$fileToDelete = Config::gamedataFSPath . "/{$intGameID}/" . $mediaRow['file_name'];
+<a name="line210"></a>		if (!@unlink($fileToDelete)) 
+<a name="line211"></a>			return new returnData(4, NULL, "Record Deleted but file was not: $fileToDelete");
+<a name="line212"></a>		
+<a name="line213"></a>		//Done
+<a name="line214"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line215"></a>		else return new returnData(0, FALSE);	
+<a name="line216"></a>
+<a name="line217"></a>		
+<a name="line218"></a>	}	
+<a name="line219"></a>	
+<a name="line220"></a>	
+<a name="line221"></a>	/**
+<a name="line222"></a>	* @returns path to the media directory on the file system
+<a name="line223"></a>	*/
+<a name="line224"></a>	public function getMediaDirectory($gameID){
+<a name="line225"></a>		return new returnData(0, Config::gamedataFSPath . "/{$gameID}/" . Config::gameMediaSubdir);
+<a name="line226"></a>	}
+<a name="line227"></a>	
+<a name="line228"></a>	/**
+<a name="line229"></a>	* @returns path to the media directory URL
+<a name="line230"></a>	*/
+<a name="line231"></a>	public function getMediaDirectoryURL($gameID){
+<a name="line232"></a>		return new returnData(0, Config::gamedataFSPath . "/{$gameID}/". Config::gameMediaSubdir);
+<a name="line233"></a>	}	
+<a name="line234"></a>
+<a name="line235"></a>	/**
+<a name="line236"></a>     * Determine the Item Type
+<a name="line237"></a>     * @returns "Audio", "Video" or "Image"
+<a name="line238"></a>     */
+<a name="line239"></a>	public function getMediaType($strMediaFileName) {
+<a name="line240"></a>		$mediaParts = pathinfo($strMediaFileName);
+<a name="line241"></a> 		$mediaExtension = $mediaParts['extension'];
+<a name="line242"></a> 		
+<a name="line243"></a> 		if (in_array($mediaExtension, $this->validImageAndIconTypes )) return Media::MEDIA_IMAGE;
+<a name="line244"></a> 		else if (in_array($mediaExtension, $this->validAudioTypes )) return Media::MEDIA_AUDIO;
+<a name="line245"></a>		else if (in_array($mediaExtension, $this->validVideoTypes )) return Media::MEDIA_VIDEO;
+<a name="line246"></a> 		
+<a name="line247"></a> 		return '';
+<a name="line248"></a> 	}	
+<a name="line249"></a>	
+<a name="line250"></a>}
+<a name="line251"></a>?></pre>
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/media.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

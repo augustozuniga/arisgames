@@ -1,0 +1,384 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>npcs.php (ARIS Server)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/npcs.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>npcs.php</h1>
+<hr>
+
+<a name="line1"></a><pre><?php
+<a name="line2"></a>require_once("module.php");
+<a name="line3"></a>require_once("players.php");
+<a name="line4"></a>require_once("locations.php");
+<a name="line5"></a>require_once("requirements.php");
+<a name="line6"></a>require_once("playerStateChanges.php");
+<a name="line7"></a>
+<a name="line8"></a>class Npcs extends Module
+<a name="line9"></a>{
+<a name="line10"></a>	
+<a name="line11"></a>	/**
+<a name="line12"></a>     * Fetch all Npcs
+<a name="line13"></a>     * @returns the npc rs
+<a name="line14"></a>     */
+<a name="line15"></a>	public function getNpcs($intGameID)
+<a name="line16"></a>	{
+<a name="line17"></a>		
+<a name="line18"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line19"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line20"></a>		
+<a name="line21"></a>		$query = "SELECT * FROM {$prefix}_npcs";
+<a name="line22"></a>		
+<a name="line23"></a>		$rsResult = @mysql_query($query);
+<a name="line24"></a>		
+<a name="line25"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line26"></a>		return new returnData(0, $rsResult);	
+<a name="line27"></a>		
+<a name="line28"></a>	}
+<a name="line29"></a>	
+<a name="line30"></a>	/**
+<a name="line31"></a>     * Fetch a specific npc
+<a name="line32"></a>     * @returns a single npc
+<a name="line33"></a>     */
+<a name="line34"></a>	public function getNpc($intGameID, $intNpcID)
+<a name="line35"></a>	{
+<a name="line36"></a>		
+<a name="line37"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line38"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line39"></a>		
+<a name="line40"></a>		$query = "SELECT * FROM {$prefix}_npcs WHERE npc_id = {$intNpcID} LIMIT 1";
+<a name="line41"></a>		
+<a name="line42"></a>		$rsResult = @mysql_query($query);
+<a name="line43"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line44"></a>
+<a name="line45"></a>		$npc = @mysql_fetch_object($rsResult);
+<a name="line46"></a>		if (!$npc) return new returnData(2, NULL, "invalid npc id");
+<a name="line47"></a>				
+<a name="line48"></a>		return new returnData(0, $npc);		
+<a name="line49"></a>	}
+<a name="line50"></a>
+<a name="line51"></a>
+<a name="line52"></a>	/**
+<a name="line53"></a>     * Fetch a specific npc with the conversation options that meet the requirements
+<a name="line54"></a>     * @returns a single npc
+<a name="line55"></a>     */
+<a name="line56"></a>	public function getNpcWithConversationsForPlayer($intGameID, $intNpcID, $intPlayerID)
+<a name="line57"></a>	{
+<a name="line58"></a>		
+<a name="line59"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line60"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line61"></a>		
+<a name="line62"></a>		//get the npc
+<a name="line63"></a>		$npcReturnData = Npcs::getNpc($intGameID, $intNpcID);
+<a name="line64"></a>		if ($npcReturnData->returnCode > 0) return $npcReturnData;
+<a name="line65"></a>		$npc = $npcReturnData->data;
+<a name="line66"></a>		
+<a name="line67"></a>		//get the options for this npc and player
+<a name="line68"></a>		$conversationsReturnData = Npcs::getConversationsForPlayer($intGameID, $intNpcID, $intPlayerID);
+<a name="line69"></a>		if ($npcReturnData->returnCode > 0) return $optionsReturnData;
+<a name="line70"></a>		$conversationsArray = $conversationsReturnData->data;
+<a name="line71"></a>
+<a name="line72"></a>		$npc->conversationOptions = $conversationsArray;
+<a name="line73"></a>		
+<a name="line74"></a>		return new returnData(0, $npc);
+<a name="line75"></a>		
+<a name="line76"></a>	}
+<a name="line77"></a>	
+<a name="line78"></a>	/**
+<a name="line79"></a>     * Fetch the conversation options from a paticular npc for a player, after viewing a node 
+<a name="line80"></a>     * @returns nm array of conversaion options
+<a name="line81"></a>     */
+<a name="line82"></a>	public function getNpcConversationsForPlayerAfterViewingNode($intGameID, $intNpcID, $intPlayerID, $intNodeID)
+<a name="line83"></a>	{	
+<a name="line84"></a>		//update the player log
+<a name="line85"></a>		Players::nodeViewed($intGameID, $intPlayerID, $intNodeID);
+<a name="line86"></a>
+<a name="line87"></a>		//get the options for this npc and player
+<a name="line88"></a>		$conversationsReturnData = Npcs::getConversationsForPlayer($intGameID, $intNpcID, $intPlayerID);
+<a name="line89"></a>		if ($npcReturnData->returnCode > 0) return $optionsReturnData;
+<a name="line90"></a>		$conversationsArray = $conversationsReturnData->data;
+<a name="line91"></a>		
+<a name="line92"></a>		return new returnData(0, $conversationsArray);	
+<a name="line93"></a>	}
+<a name="line94"></a>
+<a name="line95"></a>	/**
+<a name="line96"></a>     * Create a NPC
+<a name="line97"></a>     * @returns the new npcID on success
+<a name="line98"></a>     */
+<a name="line99"></a>	public function createNpc($intGameID, $strName, $strDescription, $strGreeting, $intMediaID, $intIconMediaID)
+<a name="line100"></a>	{
+<a name="line101"></a>		
+<a name="line102"></a>		$strName = addslashes($strName);	
+<a name="line103"></a>		$strDescription = addslashes($strDescription);	
+<a name="line104"></a>		$strGreeting = addslashes($strGreeting);	
+<a name="line105"></a>			
+<a name="line106"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line107"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line108"></a>		
+<a name="line109"></a>		$query = "INSERT INTO {$prefix}_npcs 
+<a name="line110"></a>					(name, description, text, media_id, icon_media_id)
+<a name="line111"></a>					VALUES ('{$strName}', '{$strDescription}', '{$strGreeting}','{$intMediaID}','{$intIconMediaID}')";
+<a name="line112"></a>		
+<a name="line113"></a>		NetDebug::trace("createNpc: Running a query = $query");	
+<a name="line114"></a>		
+<a name="line115"></a>		@mysql_query($query);
+<a name="line116"></a>		
+<a name="line117"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line118"></a>		return new returnData(0, mysql_insert_id());		
+<a name="line119"></a>	}
+<a name="line120"></a>
+<a name="line121"></a>	
+<a name="line122"></a>	
+<a name="line123"></a>	/**
+<a name="line124"></a>     * Update a specific NPC
+<a name="line125"></a>     * @returns true if a record was updated, false if it was not
+<a name="line126"></a>     */
+<a name="line127"></a>	public function updateNpc($intGameID, $intNpcID, 
+<a name="line128"></a>								$strName, $strDescription, $strGreeting, $intMediaID, $intIconMediaID)
+<a name="line129"></a>	{
+<a name="line130"></a>		
+<a name="line131"></a>		$strName = addslashes($strName);	
+<a name="line132"></a>		$strDescription = addslashes($strDescription);	
+<a name="line133"></a>		$strGreeting = addslashes($strGreeting);			
+<a name="line134"></a>		
+<a name="line135"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line136"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+<a name="line137"></a>		
+<a name="line138"></a>		$query = "UPDATE {$prefix}_npcs 
+<a name="line139"></a>					SET name = '{$strName}', description = '{$strDescription}',
+<a name="line140"></a>					text = '{$strGreeting}', media_id = '{$intMediaID}', icon_media_id = '{$intIconMediaID}'
+<a name="line141"></a>					WHERE npc_id = '{$intNpcID}'";
+<a name="line142"></a>		
+<a name="line143"></a>		NetDebug::trace("updateNpc: Running a query = $query");	
+<a name="line144"></a>		
+<a name="line145"></a>		@mysql_query($query);
+<a name="line146"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error:" . mysql_error() . "while running query:" . $query);	
+<a name="line147"></a>	
+<a name="line148"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE, "Success Running:" . $query);
+<a name="line149"></a>		else return new returnData(0, FALSE, "Success Running:" . $query);
+<a name="line150"></a>
+<a name="line151"></a>	}
+<a name="line152"></a>	
+<a name="line153"></a>	
+<a name="line154"></a>	/**
+<a name="line155"></a>     * Delete a specific NPC
+<a name="line156"></a>     * @returns a single node
+<a name="line157"></a>     */
+<a name="line158"></a>	public function deleteNpc($intGameID, $intNpcID)
+<a name="line159"></a>	{
+<a name="line160"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line161"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+<a name="line162"></a>		
+<a name="line163"></a>		Locations::deleteLocationsForObject($intGameID, 'Npc', $intNpcID);
+<a name="line164"></a>		Requirements::deleteRequirementsForRequirementObject($intGameID, 'Npc', $intNpcID);
+<a name="line165"></a>		PlayerStateChanges::deletePlayerStateChangesThatRefrenceObject($intGameID, 'Npc', $intNpcID);
+<a name="line166"></a>		
+<a name="line167"></a>		$query = "DELETE FROM {$prefix}_npcs WHERE npc_id = {$intNpcID}";
+<a name="line168"></a>		
+<a name="line169"></a>		$rsResult = @mysql_query($query);
+<a name="line170"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line171"></a>		
+<a name="line172"></a>		if (mysql_affected_rows()) return new returnData(0);
+<a name="line173"></a>		else return new returnData(2, 'invalid npc id');
+<a name="line174"></a>		
+<a name="line175"></a>	}	
+<a name="line176"></a>	
+<a name="line177"></a>
+<a name="line178"></a>	/**
+<a name="line179"></a>     * Create a conversation option for the NPC to link to a node
+<a name="line180"></a>     * @returns the new conversationID on success
+<a name="line181"></a>     */
+<a name="line182"></a>	public function createConversation($intGameID, $intNpcID, $intNodeID, $strText)
+<a name="line183"></a>	{
+<a name="line184"></a>		$strText = addslashes($strText);	
+<a name="line185"></a>		
+<a name="line186"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line187"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+<a name="line188"></a>		
+<a name="line189"></a>		$query = "INSERT INTO {$prefix}_npc_conversations 
+<a name="line190"></a>					(npc_id, node_id, text)
+<a name="line191"></a>					VALUES ('{$intNpcID}', '{$intNodeID}', '{$strText}')";
+<a name="line192"></a>		
+<a name="line193"></a>		NetDebug::trace("createConversation: Running a query = $query");	
+<a name="line194"></a>		
+<a name="line195"></a>		@mysql_query($query);
+<a name="line196"></a>		
+<a name="line197"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line198"></a>		
+<a name="line199"></a>		return new returnData(0, mysql_insert_id());		
+<a name="line200"></a>	}
+<a name="line201"></a>	
+<a name="line202"></a>	
+<a name="line203"></a>	
+<a name="line204"></a>	
+<a name="line205"></a>	/**
+<a name="line206"></a>     * Fetch the conversations for a given NPC
+<a name="line207"></a>     * @returns a recordset of conversations
+<a name="line208"></a>     */
+<a name="line209"></a>	public function getConversations($intGameID, $intNpcID) {
+<a name="line210"></a>		
+<a name="line211"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line212"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+<a name="line213"></a>		
+<a name="line214"></a>		$query = "SELECT * FROM {$prefix}_npc_conversations WHERE npc_id = '{$intNpcID}'";
+<a name="line215"></a>		
+<a name="line216"></a>		NetDebug::trace("getConversations: Running a query = $query");	
+<a name="line217"></a>
+<a name="line218"></a>		$rsResult = @mysql_query($query);
+<a name="line219"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line220"></a>
+<a name="line221"></a>		return new returnData(0, $rsResult);		
+<a name="line222"></a>		
+<a name="line223"></a>	}	
+<a name="line224"></a>	
+<a name="line225"></a>	/**
+<a name="line226"></a>     * Fetch the conversations for a given NPC
+<a name="line227"></a>     * @returns a recordset of conversations
+<a name="line228"></a>     */
+<a name="line229"></a>	public function getConversationsForPlayer($intGameID, $intNpcID, $intPlayerID) {
+<a name="line230"></a>		
+<a name="line231"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line232"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+<a name="line233"></a>		
+<a name="line234"></a>		NetDebug::trace("getConversationsForPlayer beginning");	
+<a name="line235"></a>		
+<a name="line236"></a>		$conversationsReturnData= Npcs::getConversations($intGameID, $intNpcID);	
+<a name="line237"></a>		$conversations = $conversationsReturnData->data;
+<a name="line238"></a>
+<a name="line239"></a>		
+<a name="line240"></a>		$conversationsWithRequirementsMet = array();
+<a name="line241"></a>		
+<a name="line242"></a>		while ($conversation = mysql_fetch_array($conversations)) {
+<a name="line243"></a>			NetDebug::trace("Testing Conversation {$conversation['conversation_id']}");	
+<a name="line244"></a>
+<a name="line245"></a>    		if (Module::objectMeetsRequirements ($prefix, $intPlayerID, 'Node',  $conversation['node_id']) ) 
+<a name="line246"></a>				$conversationsWithRequirementsMet[] = $conversation;
+<a name="line247"></a>		}
+<a name="line248"></a>		
+<a name="line249"></a>		return new returnData(0, $conversationsWithRequirementsMet);
+<a name="line250"></a>
+<a name="line251"></a>	}	
+<a name="line252"></a>	
+<a name="line253"></a>	/**
+<a name="line254"></a>     * Update Conversation
+<a name="line255"></a>     * @returns true if a record was updated, false if no changes were made (could be becasue conversation id is invalid)
+<a name="line256"></a>     */
+<a name="line257"></a>	public function updateConversation($intGameID, $intConverationID, $intNewNPC, $intNewNode, $strNewText)
+<a name="line258"></a>	{
+<a name="line259"></a>		$strText = addslashes($strText);	
+<a name="line260"></a>		
+<a name="line261"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line262"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line263"></a>		
+<a name="line264"></a>		$query = "UPDATE {$prefix}_npc_conversations 
+<a name="line265"></a>		SET npc_id = '{$intNewNPC}', node_id = '{$intNewNode}', text = '{$strNewText}'
+<a name="line266"></a>		WHERE conversation_id = {$intConverationID}";
+<a name="line267"></a>		
+<a name="line268"></a>		$rsResult = @mysql_query($query);
+<a name="line269"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line270"></a>	
+<a name="line271"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line272"></a>		else return new returnData(0, FALSE);
+<a name="line273"></a>		
+<a name="line274"></a>	}	
+<a name="line275"></a>	
+<a name="line276"></a>
+<a name="line277"></a>	/**
+<a name="line278"></a>     * Get a list of objects that refer to the specified npc
+<a name="line279"></a>     * @returns a list of object types and ids
+<a name="line280"></a>     */
+<a name="line281"></a>	public function getReferrers($intGameID, $intNpcID)
+<a name="line282"></a>	{
+<a name="line283"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line284"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line285"></a>
+<a name="line286"></a>		//Find locations
+<a name="line287"></a>		$query = "SELECT location_id FROM {$prefix}_locations WHERE 
+<a name="line288"></a>					type  = 'Npc' and type_id = {$intNpcID}";
+<a name="line289"></a>		$rsLocations = @mysql_query($query);
+<a name="line290"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error in Locations query");
+<a name="line291"></a>				
+<a name="line292"></a>		$referrers = array();
+<a name="line293"></a>		while ($row = mysql_fetch_array($rsLocations)){
+<a name="line294"></a>			$referrers[] = array('type'=>'Location', 'id' => $row['location_id']);
+<a name="line295"></a>		}
+<a name="line296"></a>
+<a name="line297"></a>		
+<a name="line298"></a>		return new returnData(0,$referrers);
+<a name="line299"></a>	}	
+<a name="line300"></a>	
+<a name="line301"></a>	
+<a name="line302"></a>
+<a name="line303"></a>	/**
+<a name="line304"></a>     * Delete a specific NPC Conversation option
+<a name="line305"></a>     * @returns true on success
+<a name="line306"></a>     */
+<a name="line307"></a>	public function deleteConversation($intGameID, $intConverationID)
+<a name="line308"></a>	{
+<a name="line309"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line310"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line311"></a>		
+<a name="line312"></a>		$query = "DELETE FROM {$prefix}_npc_conversations WHERE conversation_id = {$intConverationID}";
+<a name="line313"></a>		
+<a name="line314"></a>		$rsResult = @mysql_query($query);
+<a name="line315"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line316"></a>		
+<a name="line317"></a>		if (mysql_affected_rows()) return new returnData(0);
+<a name="line318"></a>		else return new returnData(2, 'invalid conversation id');
+<a name="line319"></a>		
+<a name="line320"></a>	}	
+<a name="line321"></a>
+<a name="line322"></a>	
+<a name="line323"></a>	
+<a name="line324"></a>}</pre>
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/npcs.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

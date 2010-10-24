@@ -1,0 +1,751 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css">
+<link rel="start" href="../../overview-summary.html">
+
+<title>Module (ARIS Server)</title>
+
+</head>
+<body id="definition" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//module.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<div class="qualifiedName">ARIS Services\\Module</div>
+<a href="../../source/module.php.html#line5" class="location">module.php at line 5</a>
+
+<h1>Class Module</h1>
+
+<pre class="tree"><strong>Module</strong><br /></pre>
+
+<hr>
+
+<p class="signature">public abstract  class <strong>Module</strong></p>
+
+<hr>
+
+<table id="summary_field">
+<tr><th colspan="2">Constant Summary</th></tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_DESTROY_ITEM">kLOG_DESTROY_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_DROP_ITEM">kLOG_DROP_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_ENTER_QRCODE">kLOG_ENTER_QRCODE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_LOGIN">kLOG_LOGIN</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_MOVE">kLOG_MOVE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_PICKUP_ITEM">kLOG_PICKUP_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_UPLOAD_MEDIA_ITEM">kLOG_UPLOAD_MEDIA_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_VIEW_INVENTORY">kLOG_VIEW_INVENTORY</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_VIEW_ITEM">kLOG_VIEW_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_VIEW_MAP">kLOG_VIEW_MAP</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_VIEW_NODE">kLOG_VIEW_NODE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_VIEW_NPC">kLOG_VIEW_NPC</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kLOG_VIEW_QUESTS">kLOG_VIEW_QUESTS</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kPSC_GIVE_ITEM">kPSC_GIVE_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kPSC_TAKE_ITEM">kPSC_TAKE_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_DOES_NOT_HAVE_ITEM">kREQ_PLAYER_DOES_NOT_HAVE_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_HAS_COMPLETED_QUEST">kREQ_PLAYER_HAS_COMPLETED_QUEST</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_HAS_ITEM">kREQ_PLAYER_HAS_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_HAS_NOT_VIEWED_ITEM">kREQ_PLAYER_HAS_NOT_VIEWED_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_HAS_NOT_VIEWED_NODE">kREQ_PLAYER_HAS_NOT_VIEWED_NODE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_HAS_NOT_VIEWED_NPC">kREQ_PLAYER_HAS_NOT_VIEWED_NPC</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_HAS_UPLOADED_MEDIA_ITEM">kREQ_PLAYER_HAS_UPLOADED_MEDIA_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_VIEWED_ITEM">kREQ_PLAYER_VIEWED_ITEM</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_VIEWED_NODE">kREQ_PLAYER_VIEWED_NODE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kREQ_PLAYER_VIEWED_NPC">kREQ_PLAYER_VIEWED_NPC</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kRESULT_COMPLETE_QUEST">kRESULT_COMPLETE_QUEST</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kRESULT_DISPLAY_LOCATION">kRESULT_DISPLAY_LOCATION</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kRESULT_DISPLAY_NODE">kRESULT_DISPLAY_NODE</a></p></td>
+</tr>
+<tr>
+<td class="type">final static  str</td>
+<td class="description"><p class="name"><a href="#kRESULT_DISPLAY_QUEST">kRESULT_DISPLAY_QUEST</a></p></td>
+</tr>
+</table>
+
+<table id="summary_method">
+<tr><th colspan="2">Method Summary</th></tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#__construct()">__construct</a>()</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#adjustQtyForPlayerItem()">adjustQtyForPlayerItem</a>(mixed strGamePrefix, mixed intItemID, mixed intPlayerID, mixed amountOfAdjustment)</p><p class="description">Updates the qty a player has of an item</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#appendLog()">appendLog</a>(mixed intPlayerID, mixed intGameID, mixed strEventType, mixed strEventDetail1, mixed strEventDetail2)</p><p class="description">Add a row to the player log</p></td>
+</tr>
+<tr>
+<td class="type">protected  boolean.</td>
+<td class="description"><p class="name"><a href="#applyPlayerStateChanges()">applyPlayerStateChanges</a>(mixed strPrefix, mixed intPlayerID, mixed strEventType, mixed strEventDetail)</p><p class="description">applyPlayerStateChangesApplies any state changes for the given object</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#decrementItemQtyAtLocation()">decrementItemQtyAtLocation</a>(mixed strGamePrefix, mixed intLocationID, int intQty)</p><p class="description">Decrement the item_qty at the specified location by the specified amount, default of 1</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getGameIdFromPrefix()">getGameIdFromPrefix</a>(mixed strPrefix)</p><p class="description">Fetch the GameID from a prefix</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#getItemIconMediaId()">getItemIconMediaId</a>(mixed strPrefix, mixed intItemID)</p><p class="description">Looks up an item icon media id</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#getItemName()">getItemName</a>(mixed strPrefix, mixed intItemID)</p><p class="description">Looks up an item name</p></td>
+</tr>
+<tr>
+<td class="type"> void</td>
+<td class="description"><p class="name"><a href="#getPrefix()">getPrefix</a>(mixed intGameID)</p><p class="description">Fetch the prefix of a game</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#giveItemToPlayer()">giveItemToPlayer</a>(mixed strGamePrefix, mixed intItemID, mixed intPlayerID, int qtyToGive)</p><p class="description">Adds the specified item to the specified player.</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#giveItemToWorld()">giveItemToWorld</a>(mixed strGamePrefix, mixed intItemID, mixed floatLat, mixed floatLong, int intQty)</p><p class="description">Adds an item to Locations at the specified latitude, longitude</p></td>
+</tr>
+<tr>
+<td class="type">protected  qty</td>
+<td class="description"><p class="name"><a href="#itemQtyInPlayerInventory()">itemQtyInPlayerInventory</a>(mixed intGameID, mixed intPlayerID, mixed intItemID)</p><p class="description">itemQtyInPlayerInventoryChecks if the specified user has the specified item in the specified game.</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#metersBetweenLatLngs()">metersBetweenLatLngs</a>(mixed lat1, mixed lon1, mixed lat2, mixed lon2)</p></td>
+</tr>
+<tr>
+<td class="type">protected  boolean</td>
+<td class="description"><p class="name"><a href="#objectMeetsRequirements()">objectMeetsRequirements</a>(mixed strPrefix, mixed intPlayerID, mixed strObjectType, mixed intObjectID)</p><p class="description">objectMeetsRequirementsChecks all requirements for the specified object for the specified user</p></td>
+</tr>
+<tr>
+<td class="type">protected  boolean</td>
+<td class="description"><p class="name"><a href="#playerHasItem()">playerHasItem</a>(mixed intGameID, mixed intPlayerID, mixed intItemID)</p><p class="description">playerHasItemChecks if the specified user has the specified item in the specified game.</p></td>
+</tr>
+<tr>
+<td class="type">protected  boolean</td>
+<td class="description"><p class="name"><a href="#playerHasLog()">playerHasLog</a>(mixed strPrefix, mixed intPlayerID, mixed strEventType, mixed strEventDetail)</p><p class="description">playerHasLogChecks if the specified user has the specified log event in the game</p></td>
+</tr>
+<tr>
+<td class="type">protected  boolean</td>
+<td class="description"><p class="name"><a href="#playerHasUploadedMediaItemWithinDistence()">playerHasUploadedMediaItemWithinDistence</a>(mixed intGameID, mixed intPlayerID, mixed dblLatitude, mixed dblLongitude, mixed dblDistenceInMeters)</p><p class="description">playerHasUploadedMediaChecks if the specified user has uploaded media near the specified location.</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#recordExists()">recordExists</a>(mixed strPrefix, mixed strTable, mixed intRecordID)</p><p class="description">Checks if a record Exists</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#removeItemFromAllPlayerInventories()">removeItemFromAllPlayerInventories</a>(mixed strGamePrefix, mixed intItemID)</p></td>
+</tr>
+<tr>
+<td class="type">protected  void</td>
+<td class="description"><p class="name"><a href="#takeItemFromPlayer()">takeItemFromPlayer</a>(mixed strGamePrefix, mixed intItemID, mixed intPlayerID, int qtyToTake)</p><p class="description">Removes the specified item from the user.</p></td>
+</tr>
+</table>
+
+<h2 id="detail_field">Constant Detail</h2>
+<a href="../../source/module.php.html#line12" class="location">module.php at line 12</a>
+
+<h3 id="kLOG_DESTROY_ITEM">kLOG_DESTROY_ITEM</h3>
+<code class="signature">public final static  str <strong>kLOG_DESTROY_ITEM</strong> = 'DESTROY_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line11" class="location">module.php at line 11</a>
+
+<h3 id="kLOG_DROP_ITEM">kLOG_DROP_ITEM</h3>
+<code class="signature">public final static  str <strong>kLOG_DROP_ITEM</strong> = 'DROP_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line19" class="location">module.php at line 19</a>
+
+<h3 id="kLOG_ENTER_QRCODE">kLOG_ENTER_QRCODE</h3>
+<code class="signature">public final static  str <strong>kLOG_ENTER_QRCODE</strong> = 'ENTER_QRCODE'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line8" class="location">module.php at line 8</a>
+
+<h3 id="kLOG_LOGIN">kLOG_LOGIN</h3>
+<code class="signature">public final static  str <strong>kLOG_LOGIN</strong> = 'LOGIN'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line9" class="location">module.php at line 9</a>
+
+<h3 id="kLOG_MOVE">kLOG_MOVE</h3>
+<code class="signature">public final static  str <strong>kLOG_MOVE</strong> = 'MOVE'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line10" class="location">module.php at line 10</a>
+
+<h3 id="kLOG_PICKUP_ITEM">kLOG_PICKUP_ITEM</h3>
+<code class="signature">public final static  str <strong>kLOG_PICKUP_ITEM</strong> = 'PICKUP_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line20" class="location">module.php at line 20</a>
+
+<h3 id="kLOG_UPLOAD_MEDIA_ITEM">kLOG_UPLOAD_MEDIA_ITEM</h3>
+<code class="signature">public final static  str <strong>kLOG_UPLOAD_MEDIA_ITEM</strong> = 'UPLOAD_MEDIA_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line18" class="location">module.php at line 18</a>
+
+<h3 id="kLOG_VIEW_INVENTORY">kLOG_VIEW_INVENTORY</h3>
+<code class="signature">public final static  str <strong>kLOG_VIEW_INVENTORY</strong> = 'VIEW_INVENTORY'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line13" class="location">module.php at line 13</a>
+
+<h3 id="kLOG_VIEW_ITEM">kLOG_VIEW_ITEM</h3>
+<code class="signature">public final static  str <strong>kLOG_VIEW_ITEM</strong> = 'VIEW_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line16" class="location">module.php at line 16</a>
+
+<h3 id="kLOG_VIEW_MAP">kLOG_VIEW_MAP</h3>
+<code class="signature">public final static  str <strong>kLOG_VIEW_MAP</strong> = 'VIEW_MAP'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line14" class="location">module.php at line 14</a>
+
+<h3 id="kLOG_VIEW_NODE">kLOG_VIEW_NODE</h3>
+<code class="signature">public final static  str <strong>kLOG_VIEW_NODE</strong> = 'VIEW_NODE'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line15" class="location">module.php at line 15</a>
+
+<h3 id="kLOG_VIEW_NPC">kLOG_VIEW_NPC</h3>
+<code class="signature">public final static  str <strong>kLOG_VIEW_NPC</strong> = 'VIEW_NPC'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line17" class="location">module.php at line 17</a>
+
+<h3 id="kLOG_VIEW_QUESTS">kLOG_VIEW_QUESTS</h3>
+<code class="signature">public final static  str <strong>kLOG_VIEW_QUESTS</strong> = 'VIEW_QUESTS'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line40" class="location">module.php at line 40</a>
+
+<h3 id="kPSC_GIVE_ITEM">kPSC_GIVE_ITEM</h3>
+<code class="signature">public final static  str <strong>kPSC_GIVE_ITEM</strong> = 'GIVE_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line41" class="location">module.php at line 41</a>
+
+<h3 id="kPSC_TAKE_ITEM">kPSC_TAKE_ITEM</h3>
+<code class="signature">public final static  str <strong>kPSC_TAKE_ITEM</strong> = 'TAKE_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line24" class="location">module.php at line 24</a>
+
+<h3 id="kREQ_PLAYER_DOES_NOT_HAVE_ITEM">kREQ_PLAYER_DOES_NOT_HAVE_ITEM</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_DOES_NOT_HAVE_ITEM</strong> = 'PLAYER_DOES_NOT_HAVE_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line32" class="location">module.php at line 32</a>
+
+<h3 id="kREQ_PLAYER_HAS_COMPLETED_QUEST">kREQ_PLAYER_HAS_COMPLETED_QUEST</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_HAS_COMPLETED_QUEST</strong> = 'PLAYER_HAS_COMPLETED_QUEST'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line23" class="location">module.php at line 23</a>
+
+<h3 id="kREQ_PLAYER_HAS_ITEM">kREQ_PLAYER_HAS_ITEM</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_HAS_ITEM</strong> = 'PLAYER_HAS_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line26" class="location">module.php at line 26</a>
+
+<h3 id="kREQ_PLAYER_HAS_NOT_VIEWED_ITEM">kREQ_PLAYER_HAS_NOT_VIEWED_ITEM</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_HAS_NOT_VIEWED_ITEM</strong> = 'PLAYER_HAS_NOT_VIEWED_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line28" class="location">module.php at line 28</a>
+
+<h3 id="kREQ_PLAYER_HAS_NOT_VIEWED_NODE">kREQ_PLAYER_HAS_NOT_VIEWED_NODE</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_HAS_NOT_VIEWED_NODE</strong> = 'PLAYER_HAS_NOT_VIEWED_NODE'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line30" class="location">module.php at line 30</a>
+
+<h3 id="kREQ_PLAYER_HAS_NOT_VIEWED_NPC">kREQ_PLAYER_HAS_NOT_VIEWED_NPC</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_HAS_NOT_VIEWED_NPC</strong> = 'PLAYER_HAS_NOT_VIEWED_NPC'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line31" class="location">module.php at line 31</a>
+
+<h3 id="kREQ_PLAYER_HAS_UPLOADED_MEDIA_ITEM">kREQ_PLAYER_HAS_UPLOADED_MEDIA_ITEM</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_HAS_UPLOADED_MEDIA_ITEM</strong> = 'PLAYER_HAS_UPLOADED_MEDIA_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line25" class="location">module.php at line 25</a>
+
+<h3 id="kREQ_PLAYER_VIEWED_ITEM">kREQ_PLAYER_VIEWED_ITEM</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_VIEWED_ITEM</strong> = 'PLAYER_VIEWED_ITEM'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line27" class="location">module.php at line 27</a>
+
+<h3 id="kREQ_PLAYER_VIEWED_NODE">kREQ_PLAYER_VIEWED_NODE</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_VIEWED_NODE</strong> = 'PLAYER_VIEWED_NODE'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line29" class="location">module.php at line 29</a>
+
+<h3 id="kREQ_PLAYER_VIEWED_NPC">kREQ_PLAYER_VIEWED_NPC</h3>
+<code class="signature">public final static  str <strong>kREQ_PLAYER_VIEWED_NPC</strong> = 'PLAYER_VIEWED_NPC'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line36" class="location">module.php at line 36</a>
+
+<h3 id="kRESULT_COMPLETE_QUEST">kRESULT_COMPLETE_QUEST</h3>
+<code class="signature">public final static  str <strong>kRESULT_COMPLETE_QUEST</strong> = 'QuestComplete'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line37" class="location">module.php at line 37</a>
+
+<h3 id="kRESULT_DISPLAY_LOCATION">kRESULT_DISPLAY_LOCATION</h3>
+<code class="signature">public final static  str <strong>kRESULT_DISPLAY_LOCATION</strong> = 'Location'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line34" class="location">module.php at line 34</a>
+
+<h3 id="kRESULT_DISPLAY_NODE">kRESULT_DISPLAY_NODE</h3>
+<code class="signature">public final static  str <strong>kRESULT_DISPLAY_NODE</strong> = 'Node'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line35" class="location">module.php at line 35</a>
+
+<h3 id="kRESULT_DISPLAY_QUEST">kRESULT_DISPLAY_QUEST</h3>
+<code class="signature">public final static  str <strong>kRESULT_DISPLAY_QUEST</strong> = 'QuestDisplay'</code>
+<div class="details">
+</div>
+
+<hr>
+
+<h2 id="detail_method">Method Detail</h2>
+<a href="../../source/module.php.html#line45" class="location">module.php at line 45</a>
+
+<h3 id="__construct()">__construct</h3>
+<code class="signature">public  void <strong>__construct</strong>()</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line109" class="location">module.php at line 109</a>
+
+<h3 id="adjustQtyForPlayerItem()">adjustQtyForPlayerItem</h3>
+<code class="signature">protected  void <strong>adjustQtyForPlayerItem</strong>(mixed strGamePrefix, mixed intItemID, mixed intPlayerID, mixed amountOfAdjustment)</code>
+<div class="details">
+<p>Updates the qty a player has of an item</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line456" class="location">module.php at line 456</a>
+
+<h3 id="appendLog()">appendLog</h3>
+<code class="signature">protected  void <strong>appendLog</strong>(mixed intPlayerID, mixed intGameID, mixed strEventType, mixed strEventDetail1, mixed strEventDetail2)</code>
+<div class="details">
+<p>Add a row to the player log</p><dl>
+<dt>Returns:</dt>
+<dd>true on success</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line421" class="location">module.php at line 421</a>
+
+<h3 id="applyPlayerStateChanges()">applyPlayerStateChanges</h3>
+<code class="signature">protected  boolean. <strong>applyPlayerStateChanges</strong>(mixed strPrefix, mixed intPlayerID, mixed strEventType, mixed strEventDetail)</code>
+<div class="details">
+<p>applyPlayerStateChanges</p><p>Applies any state changes for the given object</p><dl>
+<dt>Returns:</dt>
+<dd>True if a change was made, false otherwise</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line151" class="location">module.php at line 151</a>
+
+<h3 id="decrementItemQtyAtLocation()">decrementItemQtyAtLocation</h3>
+<code class="signature">protected  void <strong>decrementItemQtyAtLocation</strong>(mixed strGamePrefix, mixed intLocationID, int intQty)</code>
+<div class="details">
+<p>Decrement the item_qty at the specified location by the specified amount, default of 1</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line72" class="location">module.php at line 72</a>
+
+<h3 id="getGameIdFromPrefix()">getGameIdFromPrefix</h3>
+<code class="signature">public  void <strong>getGameIdFromPrefix</strong>(mixed strPrefix)</code>
+<div class="details">
+<p>Fetch the GameID from a prefix</p><dl>
+<dt>Returns:</dt>
+<dd>a gameID int</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line228" class="location">module.php at line 228</a>
+
+<h3 id="getItemIconMediaId()">getItemIconMediaId</h3>
+<code class="signature">protected  void <strong>getItemIconMediaId</strong>(mixed strPrefix, mixed intItemID)</code>
+<div class="details">
+<p>Looks up an item icon media id</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line218" class="location">module.php at line 218</a>
+
+<h3 id="getItemName()">getItemName</h3>
+<code class="signature">protected  void <strong>getItemName</strong>(mixed strPrefix, mixed intItemID)</code>
+<div class="details">
+<p>Looks up an item name</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line57" class="location">module.php at line 57</a>
+
+<h3 id="getPrefix()">getPrefix</h3>
+<code class="signature">public  void <strong>getPrefix</strong>(mixed intGameID)</code>
+<div class="details">
+<p>Fetch the prefix of a game</p><dl>
+<dt>Returns:</dt>
+<dd>a prefix string without the trailing _</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line87" class="location">module.php at line 87</a>
+
+<h3 id="giveItemToPlayer()">giveItemToPlayer</h3>
+<code class="signature">protected  void <strong>giveItemToPlayer</strong>(mixed strGamePrefix, mixed intItemID, mixed intPlayerID, int qtyToGive)</code>
+<div class="details">
+<p>Adds the specified item to the specified player.</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line162" class="location">module.php at line 162</a>
+
+<h3 id="giveItemToWorld()">giveItemToWorld</h3>
+<code class="signature">protected  void <strong>giveItemToWorld</strong>(mixed strGamePrefix, mixed intItemID, mixed floatLat, mixed floatLong, int intQty)</code>
+<div class="details">
+<p>Adds an item to Locations at the specified latitude, longitude</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line281" class="location">module.php at line 281</a>
+
+<h3 id="itemQtyInPlayerInventory()">itemQtyInPlayerInventory</h3>
+<code class="signature">protected  qty <strong>itemQtyInPlayerInventory</strong>(mixed intGameID, mixed intPlayerID, mixed intItemID)</code>
+<div class="details">
+<p>itemQtyInPlayerInventory</p><p>Checks if the specified user has the specified item in the specified game.</p><dl>
+<dt>Returns:</dt>
+<dd>a player has of a given item</dd>
+</dl>
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line191" class="location">module.php at line 191</a>
+
+<h3 id="metersBetweenLatLngs()">metersBetweenLatLngs</h3>
+<code class="signature">protected  void <strong>metersBetweenLatLngs</strong>(mixed lat1, mixed lon1, mixed lat2, mixed lon2)</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line318" class="location">module.php at line 318</a>
+
+<h3 id="objectMeetsRequirements()">objectMeetsRequirements</h3>
+<code class="signature">protected  boolean <strong>objectMeetsRequirements</strong>(mixed strPrefix, mixed intPlayerID, mixed strObjectType, mixed intObjectID)</code>
+<div class="details">
+<p>objectMeetsRequirements</p><p>Checks all requirements for the specified object for the specified user</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line262" class="location">module.php at line 262</a>
+
+<h3 id="playerHasItem()">playerHasItem</h3>
+<code class="signature">protected  boolean <strong>playerHasItem</strong>(mixed intGameID, mixed intPlayerID, mixed intItemID)</code>
+<div class="details">
+<p>playerHasItem</p><p>Checks if the specified user has the specified item in the specified game.</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line242" class="location">module.php at line 242</a>
+
+<h3 id="playerHasLog()">playerHasLog</h3>
+<code class="signature">protected  boolean <strong>playerHasLog</strong>(mixed strPrefix, mixed intPlayerID, mixed strEventType, mixed strEventDetail)</code>
+<div class="details">
+<p>playerHasLog</p><p>Checks if the specified user has the specified log event in the game</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line299" class="location">module.php at line 299</a>
+
+<h3 id="playerHasUploadedMediaItemWithinDistence()">playerHasUploadedMediaItemWithinDistence</h3>
+<code class="signature">protected  boolean <strong>playerHasUploadedMediaItemWithinDistence</strong>(mixed intGameID, mixed intPlayerID, mixed dblLatitude, mixed dblLongitude, mixed dblDistenceInMeters)</code>
+<div class="details">
+<p>playerHasUploadedMedia</p><p>Checks if the specified user has uploaded media near the specified location.</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line206" class="location">module.php at line 206</a>
+
+<h3 id="recordExists()">recordExists</h3>
+<code class="signature">protected  void <strong>recordExists</strong>(mixed strPrefix, mixed strTable, mixed intRecordID)</code>
+<div class="details">
+<p>Checks if a record Exists</p></div>
+
+<hr>
+
+<a href="../../source/module.php.html#line100" class="location">module.php at line 100</a>
+
+<h3 id="removeItemFromAllPlayerInventories()">removeItemFromAllPlayerInventories</h3>
+<code class="signature">protected  void <strong>removeItemFromAllPlayerInventories</strong>(mixed strGamePrefix, mixed intItemID)</code>
+<div class="details">
+</div>
+
+<hr>
+
+<a href="../../source/module.php.html#line95" class="location">module.php at line 95</a>
+
+<h3 id="takeItemFromPlayer()">takeItemFromPlayer</h3>
+<code class="signature">protected  void <strong>takeItemFromPlayer</strong>(mixed strGamePrefix, mixed intItemID, mixed intPlayerID, int qtyToTake)</code>
+<div class="details">
+<p>Removes the specified item from the user.</p></div>
+
+<hr>
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../../overview-summary.html">Overview</a></li>
+<li><a href="../../aris services//package-summary.html">Package</a></li>
+<li class="active">Class</li>
+<li><a href="../../aris services//package-tree.html">Tree</a></li>
+<li><a href="../../overview-files.html">Files</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../todo-list.html">Todo</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../../index.html" target="_top">Frames</a>
+<a href="../../aris services//module.html" target="_top">No frames</a>
+</div>
+<div class="small_links">
+Summary: <a href="#summary_field">Field</a> | <a href="#summary_method">Method</a> | <a href="#summary_constr">Constr</a>
+Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> | <a href="#summary_constr">Constr</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,784 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>games.php (ARIS Server)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/games.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>games.php</h1>
+<hr>
+
+<a name="line1"></a><pre><?php
+<a name="line2"></a>require_once("module.php");
+<a name="line3"></a>require_once("media.php");
+<a name="line4"></a>
+<a name="line5"></a>class Games extends Module
+<a name="line6"></a>{	
+<a name="line7"></a>	
+<a name="line8"></a>	/**
+<a name="line9"></a>     * Fetch all games
+<a name="line10"></a>     * @returns Object Recordset for each Game.
+<a name="line11"></a>     */
+<a name="line12"></a>	public function getGames()
+<a name="line13"></a>	{
+<a name="line14"></a>	    $query = "SELECT * FROM games";
+<a name="line15"></a>		$rs = @mysql_query($query);
+<a name="line16"></a>		if (mysql_error())  return new returnData(3, NULL, 'SQL error');
+<a name="line17"></a>		return new returnData(0, $rs, NULL);		
+<a name="line18"></a>	}
+<a name="line19"></a>
+<a name="line20"></a>	/**
+<a name="line21"></a>     * Fetch one game
+<a name="line22"></a>     * @returns Object Recordset for each Game.
+<a name="line23"></a>     */
+<a name="line24"></a>	public function getGame($intGameID)
+<a name="line25"></a>	{
+<a name="line26"></a>	    $query = "SELECT * FROM games WHERE game_id = {$intGameID} LIMIT 1";
+<a name="line27"></a>		$rs = @mysql_query($query);
+<a name="line28"></a>		if (mysql_error())  return new returnData(3, NULL, 'SQL error');
+<a name="line29"></a>
+<a name="line30"></a>		$game = @mysql_fetch_object($rs);
+<a name="line31"></a>		if (!$game) return new returnData(2, NULL, "invalid game id");
+<a name="line32"></a>		
+<a name="line33"></a>		return new returnData(0, $game);
+<a name="line34"></a>
+<a name="line35"></a>	}
+<a name="line36"></a>
+<a name="line37"></a>
+<a name="line38"></a>	/**
+<a name="line39"></a>     * Fetch all games with distences from the current location
+<a name="line40"></a>     * @returns Object Recordset for each Game.
+<a name="line41"></a>     */
+<a name="line42"></a>	public function getGamesWithDetails()
+<a name="line43"></a>	{
+<a name="line44"></a>	    $query = "SELECT games.* 
+<a name="line45"></a>	    			FROM games";
+<a name="line46"></a>		$gamesRs = @mysql_query($query);
+<a name="line47"></a>		NetDebug::trace(mysql_error());
+<a name="line48"></a>
+<a name="line49"></a>		$games = array();
+<a name="line50"></a>		
+<a name="line51"></a>		
+<a name="line52"></a>		while ($game = @mysql_fetch_object($gamesRs)) {
+<a name="line53"></a>			
+<a name="line54"></a>			NetDebug::trace("Starting GameID: {$game->game_id}");
+<a name="line55"></a>	
+<a name="line56"></a>			//Calculate the centroid of the locations for this game
+<a name="line57"></a>			$query = "SELECT * 
+<a name="line58"></a>	    			FROM {$game->prefix}locations";
+<a name="line59"></a>			$locationsRs = @mysql_query($query);
+<a name="line60"></a>			NetDebug::trace(mysql_error());
+<a name="line61"></a>
+<a name="line62"></a>			$latAve = 0;
+<a name="line63"></a>			$longAve = 0;
+<a name="line64"></a>			$latTotal = 0;
+<a name="line65"></a>			$longTotal = 0;
+<a name="line66"></a>			
+<a name="line67"></a>			
+<a name="line68"></a>			while ($location = @mysql_fetch_array($locationsRs)) {
+<a name="line69"></a>				$latTotal += $location['latitude'];
+<a name="line70"></a>				$longTotal += $location['longitude'];
+<a name="line71"></a>			}
+<a name="line72"></a>			
+<a name="line73"></a>			if (@mysql_num_rows($locationsRs) < 1) {
+<a name="line74"></a>				NetDebug::trace("GameID {$game->game_id} Has no locations, skip");
+<a name="line75"></a>				continue;
+<a name="line76"></a>			}
+<a name="line77"></a>			NetDebug::trace("GameID {$game->game_id} Has ". mysql_num_rows($locationsRs) . "locations, calc the center of them");
+<a name="line78"></a>
+<a name="line79"></a>			
+<a name="line80"></a>			$latAve = $latTotal/@mysql_num_rows($locationsRs);
+<a name="line81"></a>			$longAve = $longTotal/@mysql_num_rows($locationsRs);
+<a name="line82"></a>			NetDebug::trace("GameID {$game->game_id} has average position of ({$latTotal}, {$longTotal})");
+<a name="line83"></a>			$game->latitude = $latAve;
+<a name="line84"></a>			$game->longitude = $longAve;
+<a name="line85"></a>			
+<a name="line86"></a>			//Calculate the editors
+<a name="line87"></a>			$query = "SELECT editors.* FROM editors, game_editors
+<a name="line88"></a>	    			WHERE game_editors.editor_id = editors.editor_id
+<a name="line89"></a>	    			AND game_editors.game_id = {$game->game_id}";
+<a name="line90"></a>			$editorsRs = @mysql_query($query);
+<a name="line91"></a>			
+<a name="line92"></a>			$editor = @mysql_fetch_array($editorsRs);
+<a name="line93"></a>			$editorsString = $editor['name'];
+<a name="line94"></a>			while ($editor = @mysql_fetch_array($editorsRs)) {
+<a name="line95"></a>				$editorsString .= ', ' . $editor['name'];
+<a name="line96"></a>			}
+<a name="line97"></a>			
+<a name="line98"></a>			NetDebug::trace("GameID {$game->game_id} has editors: {$editorsString}");
+<a name="line99"></a>			$game->editors = $editorsString;
+<a name="line100"></a>			
+<a name="line101"></a>			//Number of Players
+<a name="line102"></a>			$query = "SELECT * FROM players
+<a name="line103"></a>					WHERE last_game_id = {$game->game_id}";
+<a name="line104"></a>			$playersRs = @mysql_query($query);
+<a name="line105"></a>			$game->numPlayers = @mysql_num_rows($playersRs);
+<a name="line106"></a>	
+<a name="line107"></a>			$games[] = $game;
+<a name="line108"></a>		}
+<a name="line109"></a>
+<a name="line110"></a>		return new returnData(0, $games, NULL);		
+<a name="line111"></a>	}	
+<a name="line112"></a>		
+<a name="line113"></a>	
+<a name="line114"></a>	/**
+<a name="line115"></a>     * Fetch the games an editor may edit
+<a name="line116"></a>     * @returns Object Recordset for each Game.
+<a name="line117"></a>     */
+<a name="line118"></a>	public function getGamesForEditor($intEditorID)
+<a name="line119"></a>	{
+<a name="line120"></a>		$query = "SELECT super_admin FROM editors 
+<a name="line121"></a>				WHERE editor_id = '$intEditorID' LIMIT 1";
+<a name="line122"></a>		$editor = mysql_fetch_array(mysql_query($query));
+<a name="line123"></a>		
+<a name="line124"></a>		if ($editor['super_admin'] == 1)  {
+<a name="line125"></a>		       NetDebug::trace("getGames: User is super admin, load all games");
+<a name="line126"></a>		       $query = "SELECT * FROM games";
+<a name="line127"></a>		       NetDebug::trace($query);
+<a name="line128"></a>
+<a name="line129"></a>        }
+<a name="line130"></a>        else {
+<a name="line131"></a>            NetDebug::trace("getGames: User is NOT a super admin");
+<a name="line132"></a>
+<a name="line133"></a>			$query = "SELECT g.* from games g, game_editors ge 
+<a name="line134"></a>						WHERE g.game_id = ge.game_id AND ge.editor_id = '$intEditorID'";
+<a name="line135"></a>
+<a name="line136"></a>			NetDebug::trace($query);
+<a name="line137"></a>	    }
+<a name="line138"></a>		
+<a name="line139"></a>		$rs = @mysql_query($query);
+<a name="line140"></a>		if (mysql_error())  return new returnData(3, NULL, 'SQL error');
+<a name="line141"></a>
+<a name="line142"></a>		return new returnData(0, $rs, NULL);		
+<a name="line143"></a>
+<a name="line144"></a>	}
+<a name="line145"></a>	
+<a name="line146"></a>	
+<a name="line147"></a>	/**
+<a name="line148"></a>     * Create a new game
+<a name="line149"></a>     * @returns an integer of the newly created game_id
+<a name="line150"></a>     */	
+<a name="line151"></a>	public function createGame($intEditorID, $strFullName, $strDescription, $intPCMediaID=0, 
+<a name="line152"></a>								$intIconMediaID=0, $boolAllowPlayerCreatedLocations=0)
+<a name="line153"></a>	{
+<a name="line154"></a>
+<a name="line155"></a>		$strFullName = addslashes($strFullName);	
+<a name="line156"></a>		$strDescription = addslashes($strDescription);
+<a name="line157"></a>        
+<a name="line158"></a>                
+<a name="line159"></a>		//Check if a game with this name has already been created
+<a name="line160"></a>		$query = "SELECT * FROM games WHERE name = '{$strFullName}'";
+<a name="line161"></a>		NetDebug::trace($query);
+<a name="line162"></a>		if (mysql_num_rows(mysql_query($query)) > 0) 
+<a name="line163"></a>		    return new returnData(4, NULL, 'duplicate name');
+<a name="line164"></a>		
+<a name="line165"></a>		
+<a name="line166"></a>		//Create the game record in SQL
+<a name="line167"></a>		$query = "INSERT INTO games (name, description,pc_media_id,icon_media_id,allow_player_created_locations)
+<a name="line168"></a>					VALUES ('{$strFullName}','{$strDescription}','{$intPCMediaID}','{$intIconMediaID}','{$boolAllowPlayerCreatedLocations}')";
+<a name="line169"></a>		@mysql_query($query);
+<a name="line170"></a>		if (mysql_error())  return new returnData(6, NULL, 'cannot create game record');
+<a name="line171"></a>		$newGameID = mysql_insert_id();
+<a name="line172"></a>	    $strShortName = mysql_insert_id();
+<a name="line173"></a>	
+<a name="line174"></a>	
+<a name="line175"></a>	    //HACK: We should change the engine to look at the game_id, but for now we will just set the
+<a name="line176"></a>	    //short name to the new game id
+<a name="line177"></a>	    $query = "UPDATE games SET prefix = '{$strShortName}_' WHERE game_id = '{$newGameID}'";
+<a name="line178"></a>		@mysql_query($query);
+<a name="line179"></a>		if (mysql_error())  return new returnData(6, NULL, 'cannot update game record');
+<a name="line180"></a>		
+<a name="line181"></a>	
+<a name="line182"></a>		//Make the creator an editor of the game
+<a name="line183"></a>		$query = "INSERT INTO game_editors (game_id,editor_id) VALUES ('{$newGameID}','{$intEditorID}')";
+<a name="line184"></a>		@mysql_query($query);
+<a name="line185"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create game_editors record');
+<a name="line186"></a>		
+<a name="line187"></a>			
+<a name="line188"></a>		//Create the SQL tables
+<a name="line189"></a>
+<a name="line190"></a>		$query = "CREATE TABLE {$strShortName}_items (
+<a name="line191"></a>			item_id int(11) unsigned NOT NULL auto_increment,
+<a name="line192"></a>			name varchar(255) NOT NULL,
+<a name="line193"></a>			description text NOT NULL,
+<a name="line194"></a>			icon_media_id int(10) unsigned NOT NULL default '0',
+<a name="line195"></a>			media_id int(10) unsigned NOT NULL default '0',
+<a name="line196"></a>			dropable enum('0','1') NOT NULL default '0',
+<a name="line197"></a>			destroyable enum('0','1') NOT NULL default '0',
+<a name="line198"></a>			max_qty_in_inventory INT NOT NULL DEFAULT  '-1' COMMENT  '-1 for infinite, 0 if it can''t be picked up',
+<a name="line199"></a>			creator_player_id int(10) unsigned NOT NULL default '0',
+<a name="line200"></a>  			origin_latitude double NOT NULL default '0',
+<a name="line201"></a>  			origin_longitude double NOT NULL default '0',
+<a name="line202"></a>  			origin_timestamp timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+<a name="line203"></a>			PRIMARY KEY  (item_id)
+<a name="line204"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line205"></a>		NetDebug::trace($query);
+<a name="line206"></a>		@mysql_query($query);
+<a name="line207"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create items table' . mysql_error());
+<a name="line208"></a>				
+<a name="line209"></a>		
+<a name="line210"></a>		$query = "CREATE TABLE {$strShortName}_player_state_changes (
+<a name="line211"></a>			id int(10) unsigned NOT NULL auto_increment,
+<a name="line212"></a>			event_type enum('VIEW_ITEM', 'VIEW_NODE', 'VIEW_NPC' ) NOT NULL,
+<a name="line213"></a>			event_detail INT UNSIGNED NOT NULL,
+<a name="line214"></a>			action enum('GIVE_ITEM','TAKE_ITEM') NOT NULL,
+<a name="line215"></a>			action_detail int(10) unsigned NOT NULL,
+<a name="line216"></a>			action_amount INT NOT NULL DEFAULT  '1',
+<a name="line217"></a>			PRIMARY KEY  (id),
+<a name="line218"></a>			KEY `action_amount` (`action_amount`),
+<a name="line219"></a>  			KEY `event_lookup` (`event_type`,`event_detail`)
+<a name="line220"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line221"></a>		@mysql_query($query);
+<a name="line222"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_state_changes table' . mysql_error());
+<a name="line223"></a>		
+<a name="line224"></a>		
+<a name="line225"></a>		
+<a name="line226"></a>		$query = "CREATE TABLE {$strShortName}_requirements (
+<a name="line227"></a>			requirement_id int(11) NOT NULL auto_increment,
+<a name="line228"></a>			content_type enum('Node','QuestDisplay','QuestComplete','Location') NOT NULL,
+<a name="line229"></a>			content_id int(10) unsigned NOT NULL,
+<a name="line230"></a>			requirement enum( 'PLAYER_HAS_ITEM', 'PLAYER_DOES_NOT_HAVE_ITEM', 'PLAYER_VIEWED_ITEM',
+<a name="line231"></a>							'PLAYER_HAS_NOT_VIEWED_ITEM', 'PLAYER_VIEWED_NODE', 'PLAYER_HAS_NOT_VIEWED_NODE',
+<a name="line232"></a>							'PLAYER_VIEWED_NPC', 'PLAYER_HAS_NOT_VIEWED_NPC', 
+<a name="line233"></a>							'PLAYER_HAS_UPLOADED_MEDIA_ITEM',  'PLAYER_HAS_COMPLETED_QUEST'  ) NOT NULL,
+<a name="line234"></a>			requirement_detail_1 VARCHAR(30) NULL,
+<a name="line235"></a>			requirement_detail_2 VARCHAR(30) NULL,
+<a name="line236"></a>			requirement_detail_3 VARCHAR(30) NULL,
+<a name="line237"></a>			PRIMARY KEY  (requirement_id)
+<a name="line238"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line239"></a>		@mysql_query($query);
+<a name="line240"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create requirments table');
+<a name="line241"></a>		
+<a name="line242"></a>	
+<a name="line243"></a>		$query = "CREATE TABLE {$strShortName}_locations (
+<a name="line244"></a>	  		location_id int(11) NOT NULL auto_increment,
+<a name="line245"></a>			name varchar(255) NOT NULL,
+<a name="line246"></a>			description tinytext NOT NULL,
+<a name="line247"></a>			latitude double NOT NULL default '43.0746561',
+<a name="line248"></a>			longitude double NOT NULL default '-89.384422',
+<a name="line249"></a>			error double NOT NULL default '5',
+<a name="line250"></a>			type enum('Node','Event','Item','Npc') NOT NULL DEFAULT 'Node',
+<a name="line251"></a>			type_id int(11) NOT NULL,
+<a name="line252"></a>			icon_media_id int(10) unsigned NOT NULL default '0',
+<a name="line253"></a>			item_qty int(11) NOT NULL default '0' COMMENT  '-1 for infinite. Only effective for items',
+<a name="line254"></a>			hidden enum('0','1') NOT NULL default '0',
+<a name="line255"></a>			force_view enum('0','1') NOT NULL default '0',
+<a name="line256"></a>			allow_quick_travel enum('0','1') NOT NULL default '0',
+<a name="line257"></a>			PRIMARY KEY  (location_id)
+<a name="line258"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line259"></a>		NetDebug::trace($query);	
+<a name="line260"></a>		@mysql_query($query);
+<a name="line261"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create locations table: ' . mysql_error());
+<a name="line262"></a>	
+<a name="line263"></a>		$query = "CREATE TABLE {$strShortName}_quests (
+<a name="line264"></a>			 quest_id int(11) unsigned NOT NULL auto_increment,
+<a name="line265"></a>			 name tinytext NOT NULL,
+<a name="line266"></a>			 description text NOT NULL,
+<a name="line267"></a>			 text_when_complete tinytext NOT NULL COMMENT 'This is the txt that displays on the completed quests screen',
+<a name="line268"></a>			 icon_media_id int(10) unsigned NOT NULL default '0',
+<a name="line269"></a>			 PRIMARY KEY  (quest_id)
+<a name="line270"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line271"></a>		@mysql_query($query);
+<a name="line272"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create quests table');
+<a name="line273"></a>		
+<a name="line274"></a>		$query = "CREATE TABLE {$strShortName}_nodes (
+<a name="line275"></a>			  node_id int(11) unsigned NOT NULL auto_increment,
+<a name="line276"></a>			  title varchar(255) NOT NULL,
+<a name="line277"></a>			  text text NOT NULL,
+<a name="line278"></a>			  opt1_text varchar(100) default NULL,
+<a name="line279"></a>			  opt1_node_id int(11) unsigned NOT NULL default '0',
+<a name="line280"></a>			  opt2_text varchar(100) default NULL,
+<a name="line281"></a>			  opt2_node_id int(11) unsigned NOT NULL default '0',
+<a name="line282"></a>			  opt3_text varchar(100) default NULL,
+<a name="line283"></a>			  opt3_node_id int(11) unsigned NOT NULL default '0',
+<a name="line284"></a>			  require_answer_incorrect_node_id int(11) unsigned NOT NULL default '0',
+<a name="line285"></a>			  require_answer_string varchar(50) default NULL,
+<a name="line286"></a>			  require_answer_correct_node_id int(10) unsigned NOT NULL default '0',
+<a name="line287"></a>			  media_id int(10) unsigned NOT NULL default '0',
+<a name="line288"></a>			  icon_media_id int(10) unsigned NOT NULL default '0',
+<a name="line289"></a>			  PRIMARY KEY  (node_id)
+<a name="line290"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line291"></a>		@mysql_query($query);
+<a name="line292"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create nodes table');
+<a name="line293"></a>		
+<a name="line294"></a>		$query = "CREATE TABLE {$strShortName}_npc_conversations (
+<a name="line295"></a>			conversation_id int(11) NOT NULL auto_increment,
+<a name="line296"></a>			npc_id int(10) unsigned NOT NULL default '0',
+<a name="line297"></a>			node_id int(10) unsigned NOT NULL default '0',
+<a name="line298"></a>			text tinytext NOT NULL,
+<a name="line299"></a>			PRIMARY KEY  (conversation_id)
+<a name="line300"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line301"></a>		@mysql_query($query);
+<a name="line302"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create conversations table');
+<a name="line303"></a>		
+<a name="line304"></a>	
+<a name="line305"></a>		$query = "CREATE TABLE {$strShortName}_npcs (
+<a name="line306"></a>			npc_id int(10) unsigned NOT NULL auto_increment,
+<a name="line307"></a>			name varchar(255) NOT NULL default '',
+<a name="line308"></a>			description tinytext NOT NULL,
+<a name="line309"></a>			text tinytext NOT NULL,
+<a name="line310"></a>			media_id int(10) unsigned NOT NULL default '0',
+<a name="line311"></a>			icon_media_id int(10) unsigned NOT NULL default '0',
+<a name="line312"></a>			PRIMARY KEY  (npc_id)
+<a name="line313"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line314"></a>		@mysql_query($query);
+<a name="line315"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create npcs table');
+<a name="line316"></a>		
+<a name="line317"></a>	
+<a name="line318"></a>		$query = "CREATE TABLE {$strShortName}_player_items (
+<a name="line319"></a> 			`id` int(11) NOT NULL auto_increment,
+<a name="line320"></a>  			`player_id` int(11) unsigned NOT NULL default '0',
+<a name="line321"></a>  			`item_id` int(11) unsigned NOT NULL default '0',
+<a name="line322"></a>  			`qty` int(11) NOT NULL default '0',
+<a name="line323"></a>  			`timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP,
+<a name="line324"></a>  			PRIMARY KEY  (`id`),
+<a name="line325"></a>  			UNIQUE KEY `unique` (`player_id`,`item_id`),
+<a name="line326"></a>  			KEY `player_id` (`player_id`),
+<a name="line327"></a>  			KEY `item_id` (`item_id`),
+<a name="line328"></a>  			KEY `qty` (`qty`)
+<a name="line329"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line330"></a>		@mysql_query($query);
+<a name="line331"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create player_items table');
+<a name="line332"></a>		
+<a name="line333"></a>	
+<a name="line334"></a>		$query = "CREATE TABLE {$strShortName}_qrcodes (
+<a name="line335"></a>			qrcode_id int(11) NOT NULL auto_increment,
+<a name="line336"></a>  			link_type enum('Location') NOT NULL default 'Location',
+<a name="line337"></a>  			link_id int(11) NOT NULL,
+<a name="line338"></a>  			code varchar(255) NOT NULL,
+<a name="line339"></a>  			PRIMARY KEY  (qrcode_id),
+<a name="line340"></a>  			UNIQUE KEY `code` (`code`)
+<a name="line341"></a>			)ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;";
+<a name="line342"></a>		@mysql_query($query);
+<a name="line343"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create qrcodes table');							
+<a name="line344"></a>		
+<a name="line345"></a>		$query = "CREATE TABLE {$strShortName}_folders (
+<a name="line346"></a>			folder_id int(10) unsigned NOT NULL auto_increment,
+<a name="line347"></a>  			name varchar(50) collate utf8_unicode_ci NOT NULL,
+<a name="line348"></a> 			parent_id int(11) NOT NULL default '0',
+<a name="line349"></a>  			previous_id int(11) NOT NULL default '0',
+<a name="line350"></a>  			PRIMARY KEY  (folder_id)
+<a name="line351"></a>			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+<a name="line352"></a>		@mysql_query($query);
+<a name="line353"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create folders table');	
+<a name="line354"></a>
+<a name="line355"></a>
+<a name="line356"></a>
+<a name="line357"></a>		$query = "CREATE TABLE {$strShortName}_folder_contents (
+<a name="line358"></a>  			object_content_id int(10) unsigned NOT NULL auto_increment,
+<a name="line359"></a>  			folder_id int(10) unsigned NOT NULL default '0',
+<a name="line360"></a>  			content_type enum('Node','Item','Npc') collate utf8_unicode_ci NOT NULL default 'Node',
+<a name="line361"></a>  			content_id int(10) unsigned NOT NULL default '0',
+<a name="line362"></a>  			previous_id int(10) unsigned NOT NULL default '0',
+<a name="line363"></a>  			PRIMARY KEY  (object_content_id)
+<a name="line364"></a>			) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+<a name="line365"></a>		@mysql_query($query);
+<a name="line366"></a>		if (mysql_error()) return new returnData(6, NULL, 'cannot create folder contents table: ' . mysql_error());	
+<a name="line367"></a>
+<a name="line368"></a>		$media = new Media();
+<a name="line369"></a>		$returnObject = $media->getMediaDirectory($newGameID);
+<a name="line370"></a>		$newGameDirectory = $returnObject->data;
+<a name="line371"></a>		
+<a name="line372"></a>		 mkdir($newGameDirectory,0777);
+<a name="line373"></a>
+<a name="line374"></a>		return new returnData(0, $newGameID, NULL);
+<a name="line375"></a>
+<a name="line376"></a>		
+<a name="line377"></a>	}
+<a name="line378"></a>	
+<a name="line379"></a>	/**
+<a name="line380"></a>     * Updates a game's information
+<a name="line381"></a>     * @returns true if a record was updated, false otherwise
+<a name="line382"></a>     */	
+<a name="line383"></a>	public function updateGame($intGameID, $strNewName, $strNewDescription, $intPCMediaID=0, $intIconMediaID=0, $boolAllowPlayerCreatedLocations=0)
+<a name="line384"></a>	{
+<a name="line385"></a>		$strNewGameName = addslashes($strNewGameName);	
+<a name="line386"></a>	
+<a name="line387"></a>		$query = "UPDATE games 
+<a name="line388"></a>				SET name = '{$strNewName}',
+<a name="line389"></a>				description = '{$strNewDescription}',
+<a name="line390"></a>				pc_media_id = '{$intPCMediaID}',
+<a name="line391"></a>				icon_media_id = '{$intIconMediaID}',
+<a name="line392"></a>				allow_player_created_locations = '{$boolAllowPlayerCreatedLocations}'
+<a name="line393"></a>				WHERE game_id = {$intGameID}";
+<a name="line394"></a>		mysql_query($query);
+<a name="line395"></a>		if (mysql_error()) return new returnData(3, false, "SQL Error");
+<a name="line396"></a>		
+<a name="line397"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line398"></a>		else return new returnData(0, FALSE);		
+<a name="line399"></a>	}		
+<a name="line400"></a>	
+<a name="line401"></a>	
+<a name="line402"></a>	/**
+<a name="line403"></a>     * Updates a game's Player Character Media
+<a name="line404"></a>     * @returns true if a record was updated, false otherwise
+<a name="line405"></a>     */	
+<a name="line406"></a>	public function setPCMediaID($intGameID, $intPCMediaID)
+<a name="line407"></a>	{
+<a name="line408"></a>	
+<a name="line409"></a>		$query = "UPDATE games 
+<a name="line410"></a>				SET pc_media_id = '{$intPCMediaID}'
+<a name="line411"></a>				WHERE game_id = {$intGameID}";
+<a name="line412"></a>		mysql_query($query);
+<a name="line413"></a>		if (mysql_error()) return new returnData(3, false, "SQL Error");
+<a name="line414"></a>		
+<a name="line415"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line416"></a>		else return new returnData(0, FALSE);		
+<a name="line417"></a>	}			
+<a name="line418"></a>	
+<a name="line419"></a>	
+<a name="line420"></a>	/**
+<a name="line421"></a>     * Updates all game databases using upgradeGameDatabase
+<a name="line422"></a>     */	
+<a name="line423"></a>	public function upgradeGameDatabases() 
+<a name="line424"></a>	{		
+<a name="line425"></a>		$query = "SELECT * FROM games";
+<a name="line426"></a>		$rs = @mysql_query($query);
+<a name="line427"></a>		if (mysql_error())  return new returnData(3, NULL, 'SQL error');
+<a name="line428"></a>		
+<a name="line429"></a>		while ($game = mysql_fetch_object($rs)) {
+<a name="line430"></a>			NetDebug::trace("Upgrade Game: {$game->game_id}");
+<a name="line431"></a>			$upgradeResult = Games::upgradeGameDatabase($game->game_id);
+<a name="line432"></a>		}
+<a name="line433"></a>		
+<a name="line434"></a>		return new returnData(0, FALSE);
+<a name="line435"></a>	}
+<a name="line436"></a>	
+<a name="line437"></a>	
+<a name="line438"></a>	
+<a name="line439"></a>	
+<a name="line440"></a>	
+<a name="line441"></a>	/**
+<a name="line442"></a>     * Updates a game's database to the most current version
+<a name="line443"></a>     */	
+<a name="line444"></a>	public function upgradeGameDatabase($intGameID)
+<a name="line445"></a>	{	
+<a name="line446"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line447"></a>
+<a name="line448"></a>
+<a name="line449"></a>		$query = "ALTER TABLE  {$prefix}_locations ADD allow_quick_travel enum('0','1') NOT NULL default '0'";
+<a name="line450"></a>		mysql_query($query);
+<a name="line451"></a>		NetDebug::trace("$query" . ":" . mysql_error());
+<a name="line452"></a>		
+<a name="line453"></a>		$query = "ALTER TABLE  `{$prefix}_requirements` ADD  `boolean_operator` ENUM(  'AND',  'OR' ) NOT NULL DEFAULT  'AND' AFTER  `requirement`,
+<a name="line454"></a>					ADD INDEX (  `boolean_operator` )";
+<a name="line455"></a>		mysql_query($query);
+<a name="line456"></a>		NetDebug::trace("$query" . ":" . mysql_error());
+<a name="line457"></a>		
+<a name="line458"></a>		$query = "ALTER TABLE  `{$prefix}_player_items` ADD  `qty` INT NOT NULL DEFAULT  '0' AFTER  `item_id` ,
+<a name="line459"></a>					ADD INDEX (  `qty` )";
+<a name="line460"></a>		mysql_query($query);
+<a name="line461"></a>		NetDebug::trace("$query" . ":" . mysql_error());
+<a name="line462"></a>		
+<a name="line463"></a>		
+<a name="line464"></a>		$query = "ALTER TABLE  `{$prefix}_player_state_changes` ADD  `action_amount` INT NOT NULL DEFAULT  '1',
+<a name="line465"></a>					ADD INDEX (  `action_amount` )";
+<a name="line466"></a>		mysql_query($query);
+<a name="line467"></a>		NetDebug::trace("$query" . ":" . mysql_error());
+<a name="line468"></a>				
+<a name="line469"></a>		$query = "ALTER TABLE  `{$prefix}_player_state_changes` CHANGE  `event_detail`  `event_detail` INT UNSIGNED NOT NULL";
+<a name="line470"></a>		mysql_query($query);
+<a name="line471"></a>		NetDebug::trace("$query" . ":" . mysql_error());
+<a name="line472"></a>
+<a name="line473"></a>		$query = "ALTER TABLE {$prefix}_player_state_changes ADD INDEX  event_lookup ( event_type , event_detail )";
+<a name="line474"></a>		mysql_query($query);
+<a name="line475"></a>		NetDebug::trace("$query" . ":" . mysql_error());
+<a name="line476"></a>
+<a name="line477"></a>		$query = "ALTER TABLE  `{$prefix}_items` ADD  `max_qty_in_inventory` INT NOT NULL DEFAULT  '-1' COMMENT  '-1 for infinite, 0 if it can''t be picked up' AFTER  `destroyable`";
+<a name="line478"></a>		mysql_query($query);
+<a name="line479"></a>		NetDebug::trace("$query" . ":" . mysql_error());
+<a name="line480"></a>
+<a name="line481"></a>		
+<a name="line482"></a>
+<a name="line483"></a>
+<a name="line484"></a>		
+<a name="line485"></a>		
+<a name="line486"></a>	
+<a name="line487"></a>	}
+<a name="line488"></a>	
+<a name="line489"></a>	/**
+<a name="line490"></a>     * Sets a game's name
+<a name="line491"></a>     * @returns true if a record was updated, false otherwise
+<a name="line492"></a>     */	
+<a name="line493"></a>	public function setGameName($intGameID, $strNewName)
+<a name="line494"></a>	{
+<a name="line495"></a>	    $returnData = new returnData(0, mysql_query($query), NULL);
+<a name="line496"></a>
+<a name="line497"></a>		$strNewGameName = addslashes($strNewGameName);	
+<a name="line498"></a>	
+<a name="line499"></a>		$query = "UPDATE games SET name = '{$strNewName}' WHERE game_id = {$intGameID}";
+<a name="line500"></a>		mysql_query($query);
+<a name="line501"></a>		if (mysql_error()) return new returnData(3, false, "SQL Error");
+<a name="line502"></a>		
+<a name="line503"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line504"></a>		else return new returnData(0, FALSE);		
+<a name="line505"></a>		
+<a name="line506"></a>	}		
+<a name="line507"></a>	
+<a name="line508"></a>	
+<a name="line509"></a>	
+<a name="line510"></a>	/**
+<a name="line511"></a>     * Copy a game to a new game
+<a name="line512"></a>     * Not yet implemented
+<a name="line513"></a>     * @returns true on success
+<a name="line514"></a>     */	
+<a name="line515"></a>	public function copyGame($intSourceGameID, $strNewShortName, $strNewFullName)
+<a name="line516"></a>	{
+<a name="line517"></a>	    return new returnData(1, NULL, "Copy Game Not Implemented on Server");
+<a name="line518"></a>	}	
+<a name="line519"></a>	
+<a name="line520"></a>	
+<a name="line521"></a>	
+<a name="line522"></a>	
+<a name="line523"></a>	/**
+<a name="line524"></a>     * Create a new game
+<a name="line525"></a>     * @returns returnCode = 0 on success
+<a name="line526"></a>     */	
+<a name="line527"></a>	public function deleteGame($intGameID)
+<a name="line528"></a>	{
+<a name="line529"></a>		$returnData = new returnData(0, NULL, NULL);
+<a name="line530"></a>		
+<a name="line531"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line532"></a>		if (!$prefix) return new returnData(1, NULL, "game does not exist");
+<a name="line533"></a>	
+<a name="line534"></a>		//Delete the files
+<a name="line535"></a>		$command = 'rm -rf '. Config::gamedataFSPath . "/{$prefix}";
+<a name="line536"></a>		NetDebug::trace("deleteFiles command: $command");		
+<a name="line537"></a>
+<a name="line538"></a>		exec($command, $output, $return);
+<a name="line539"></a>		if ($return) return new returnData(4, NULL, "unable to delete game directory");
+<a name="line540"></a>		
+<a name="line541"></a>		//Delete the editor_games record
+<a name="line542"></a>		$query = "DELETE FROM game_editors WHERE game_id IN (SELECT game_id FROM games WHERE prefix = '{$prefix}_')";
+<a name="line543"></a>		NetDebug::trace($query);
+<a name="line544"></a>		@mysql_query($query);
+<a name="line545"></a>		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+<a name="line546"></a>		
+<a name="line547"></a>		//Fetch the table names for this game
+<a name="line548"></a>		$query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA='" . Config::dbSchema . "' AND TABLE_NAME LIKE '{$prefix}_%'";
+<a name="line549"></a>		NetDebug::trace($query);
+<a name="line550"></a>		$result = mysql_query($query);
+<a name="line551"></a>		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+<a name="line552"></a>
+<a name="line553"></a>		//Delete any media records
+<a name="line554"></a>		$query = "DELETE FROM media WHERE game_id = '{$intGameID}'";
+<a name="line555"></a>		NetDebug::trace($query);
+<a name="line556"></a>		@mysql_query($query);
+<a name="line557"></a>		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+<a name="line558"></a>		
+<a name="line559"></a>		//Delete all tables for this game
+<a name="line560"></a>		while ($table = mysql_fetch_array($result)) {
+<a name="line561"></a>			 $query = "DROP TABLE {$table['TABLE_NAME']}";
+<a name="line562"></a>			 NetDebug::trace($query);
+<a name="line563"></a>			 mysql_query($query);
+<a name="line564"></a>			 if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+<a name="line565"></a>		}
+<a name="line566"></a>		
+<a name="line567"></a>		//Delete the game record
+<a name="line568"></a>		$query = "DELETE FROM games WHERE prefix = '{$prefix}_'";
+<a name="line569"></a>		NetDebug::trace($query);
+<a name="line570"></a>		@mysql_query($query);
+<a name="line571"></a>		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');	
+<a name="line572"></a>		
+<a name="line573"></a>		return new returnData(0);	
+<a name="line574"></a>	}	
+<a name="line575"></a>	
+<a name="line576"></a>	
+<a name="line577"></a>	
+<a name="line578"></a>	
+<a name="line579"></a>	
+<a name="line580"></a>	/**
+<a name="line581"></a>     * Creates a game archive package
+<a name="line582"></a>     * @returns the path to the file
+<a name="line583"></a>     */		
+<a name="line584"></a>	public function backupGame($intGameID)
+<a name="line585"></a>	{
+<a name="line586"></a>	
+<a name="line587"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line588"></a>	    if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line589"></a>
+<a name="line590"></a>		
+<a name="line591"></a>		$tmpDir = "{$prefix}_backup_" . date('Y_m_d');
+<a name="line592"></a>		
+<a name="line593"></a>		
+<a name="line594"></a>		//Delete a previous backup with the same name
+<a name="line595"></a>		$rmCommand = "rm -rf ". Config::gamedataFSPath . "/backups/{$tmpDir}";
+<a name="line596"></a>		exec($rmCommand, $output, $return);
+<a name="line597"></a>		if ($return) return new returnData(5, NULL, "cannot remove existing backup, check file permissions");
+<a name="line598"></a>		
+<a name="line599"></a>		//Set up a tmp directory
+<a name="line600"></a>		$mkdirCommand = "mkdir ". Config::gamedataFSPath . "/backups/{$tmpDir}";
+<a name="line601"></a>		exec($mkdirCommand, $output, $return);
+<a name="line602"></a>		if ($return) return new returnData(5, NULL, "cannot create backup dir, check file permissions");
+<a name="line603"></a>	
+<a name="line604"></a>	
+<a name="line605"></a>		//Create SQL File
+<a name="line606"></a>		$sqlFile = 'database.sql';
+<a name="line607"></a>		
+<a name="line608"></a>		$getTablesCommand = Config::mysqlBinPath . "/mysql --user=" . Config::dbUser . " --password=". Config::dbPass ." -B --skip-column-names INFORMATION_SCHEMA -e \"SELECT TABLE_NAME FROM TABLES WHERE TABLE_SCHEMA='" .  Config::dbSchema . "' AND TABLE_NAME LIKE '{$prefix}_%'\"";
+<a name="line609"></a>		
+<a name="line610"></a>		exec($getTablesCommand, $output, $return);
+<a name="line611"></a>		
+<a name="line612"></a>		if ($output == 127) return new returnData(6, NULL, "cannot get tables, check mysql bin path in config");
+<a name="line613"></a>		
+<a name="line614"></a>		$tables = '';
+<a name="line615"></a>		foreach ($output as $table) {
+<a name="line616"></a>			$tables .= $table;
+<a name="line617"></a>			$tables .= ' ';
+<a name="line618"></a>		}
+<a name="line619"></a>	
+<a name="line620"></a>		
+<a name="line621"></a>		$createSQLCommand = Config::mysqlBinPath ."/mysqldump -u " . Config::dbUser . " --password=" . Config::dbPass . " " . Config::dbSchema . " $tables > ". Config::gamedataFSPath . "/Backups/{$tmpDir}/{$sqlFile}";
+<a name="line622"></a>		//echo "<p>Running: $createSQLCommand </p>";
+<a name="line623"></a>		exec($createSQLCommand, $output, $return);
+<a name="line624"></a>		if ($return) return new returnData(6, NULL, "cannot create SQL, check mysql bin path in config");
+<a name="line625"></a>		
+<a name="line626"></a>		
+<a name="line627"></a>		$copyCommand = "cp -R ". Config::gamedataFSPath . "/{$prefix} ". Config::gamedataFSPath . "/backups/{$tmpDir}/{$prefix}";
+<a name="line628"></a>		//echo "<p>Running: $copyCommand </p>";
+<a name="line629"></a>		exec($copyCommand, $output, $return);
+<a name="line630"></a>		if ($return) return new returnData(5, NULL, "cannot copy game dir to backup dir, check file permissions");
+<a name="line631"></a>		
+<a name="line632"></a>		
+<a name="line633"></a>		//Zip up the whole directory
+<a name="line634"></a>		$zipFile = "{$prefix}_backup_" . date('Y_m_d') . ".tar";
+<a name="line635"></a>		$newWd = Config::gamedataFSPath . "/backups";
+<a name="line636"></a>		chdir($newWd);
+<a name="line637"></a>		$createZipCommand = "tar -cf ". Config::gamedataFSPath . "/backups/{$zipFile} {$tmpDir}/";
+<a name="line638"></a>		exec($createZipCommand, $output, $return);
+<a name="line639"></a>		if ($return) return new returnData(7, NULL, "cannot compress backup dir, check that tar command is avaialbe");
+<a name="line640"></a>		
+<a name="line641"></a>		//Delete the Temp
+<a name="line642"></a>		$rmCommand = "rm -rf ". Config::gamedataFSPath . "/backups/{$tmpDir}";
+<a name="line643"></a>		exec($rmCommand, $output, $return);
+<a name="line644"></a>		if ($return) return new returnData(5, NULL, "cannot delete backup dir, check file permissions");
+<a name="line645"></a>				
+<a name="line646"></a>		return new returnData(0, Config::gamedataWWWPath . "/backups/{$zipFile}");		
+<a name="line647"></a>	}	
+<a name="line648"></a>	
+<a name="line649"></a>	
+<a name="line650"></a>	
+<a name="line651"></a>	/**
+<a name="line652"></a>     * Restore a game from a file
+<a name="line653"></a>     * Not yet implemented
+<a name="line654"></a>     * @returns the game ID of the newly created game
+<a name="line655"></a>     */		
+<a name="line656"></a>	public function restoreGame($file)
+<a name="line657"></a>	{
+<a name="line658"></a>	    return new returnData(4, NULL, "restore Game Not Implemented on Server");
+<a name="line659"></a>
+<a name="line660"></a>	}
+<a name="line661"></a>	
+<a name="line662"></a>	
+<a name="line663"></a>	/**
+<a name="line664"></a>     * Retrieve all editors
+<a name="line665"></a>     *
+<a name="line666"></a>     * @returns a recordset of the editor records
+<a name="line667"></a>     */		
+<a name="line668"></a>	public function getEditors()
+<a name="line669"></a>	{
+<a name="line670"></a>		$query = "SELECT * FROM editors";
+<a name="line671"></a>		$rsResult = @mysql_query($query);
+<a name="line672"></a>		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
+<a name="line673"></a>		return new returnData(0, $rsResult);
+<a name="line674"></a>	}
+<a name="line675"></a>
+<a name="line676"></a>	
+<a name="line677"></a>	/**
+<a name="line678"></a>     * Retrieve editors of a specifc game
+<a name="line679"></a>     *
+<a name="line680"></a>     * @returns a recordset of the editor records
+<a name="line681"></a>     */	
+<a name="line682"></a>	public function getGameEditors($intGameID)
+<a name="line683"></a>	{
+<a name="line684"></a>		$query = "SELECT * FROM editors LEFT JOIN game_editors ON (editors.editor_id = game_editors.editor_id) WHERE editor_id = {$intGameID}";
+<a name="line685"></a>		$rsResult = mysql_query($query);
+<a name="line686"></a>		if (mysql_error()) return new returnData(3, NULL, 'SQL Error');
+<a name="line687"></a>		return new returnData(0, $rsResult);
+<a name="line688"></a>	}
+<a name="line689"></a>	
+<a name="line690"></a>	
+<a name="line691"></a>	/**
+<a name="line692"></a>     * Add an editor to a game
+<a name="line693"></a>     *
+<a name="line694"></a>     * @returns true or an error string
+<a name="line695"></a>     */	
+<a name="line696"></a>	public function addEditorToGame($intEditorID, $intGameID)
+<a name="line697"></a>	{
+<a name="line698"></a>		$query = "INSERT INTO game_editors (editor_id, game_id) VALUES ('{$intEditorID}','{$intGameID}')";
+<a name="line699"></a>		$rsResult = @mysql_query($query);
+<a name="line700"></a>		
+<a name="line701"></a>		if (mysql_errno() == 1062) return new returnData(4, NULL, 'duplicate');
+<a name="line702"></a>		if (mysql_error()) return new returnData(3, NULL, 'sql error');
+<a name="line703"></a>		
+<a name="line704"></a>		return new returnData(0);	
+<a name="line705"></a>	}	
+<a name="line706"></a>	
+<a name="line707"></a>	/**
+<a name="line708"></a>     * Remove an editor from a game
+<a name="line709"></a>     *
+<a name="line710"></a>     * @returns true or an error string
+<a name="line711"></a>     */		
+<a name="line712"></a>	public function removeEditorFromGame($intEditorID, $intGameID)
+<a name="line713"></a>	{
+<a name="line714"></a>		$query = "DELETE FROM game_editors WHERE editor_id = '{$intEditorID}' AND game_id = '{$intGameID}'";
+<a name="line715"></a>		$rsResult = mysql_query($query);
+<a name="line716"></a>		if (mysql_error()) return new returnData(1, NULL, 'SQL Error');
+<a name="line717"></a>		
+<a name="line718"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line719"></a>        else return new returnData(0, FALSE);
+<a name="line720"></a>	}
+<a name="line721"></a>
+<a name="line722"></a>	
+<a name="line723"></a>}
+<a name="line724"></a>?></pre>
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/games.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>

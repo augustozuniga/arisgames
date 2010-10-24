@@ -1,0 +1,442 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
+<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+
+<link rel="stylesheet" type="text/css" href="../stylesheet.css">
+<link rel="start" href="../overview-summary.html">
+
+<title>qrcodes.php (ARIS Server)</title>
+
+</head>
+<body id="file" onload="parent.document.title=document.title;">
+
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/qrcodes.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<h1>qrcodes.php</h1>
+<hr>
+
+<a name="line1"></a><pre><?php
+<a name="line2"></a>require_once('locations.php');
+<a name="line3"></a>require_once('nodes.php');
+<a name="line4"></a>require_once('npcs.php');
+<a name="line5"></a>require_once('items.php');
+<a name="line6"></a>require_once("module.php");
+<a name="line7"></a>
+<a name="line8"></a>class QRCodes extends Module
+<a name="line9"></a>{
+<a name="line10"></a>
+<a name="line11"></a>	/**
+<a name="line12"></a>     * Fetch all Events
+<a name="line13"></a>     * @returns the events
+<a name="line14"></a>     */
+<a name="line15"></a>	public function getQRCodes($intGameID)
+<a name="line16"></a>	{
+<a name="line17"></a>		
+<a name="line18"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line19"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line20"></a>
+<a name="line21"></a>		
+<a name="line22"></a>		$query = "SELECT * FROM {$prefix}_qrcodes";
+<a name="line23"></a>		NetDebug::trace($query);
+<a name="line24"></a>
+<a name="line25"></a>		
+<a name="line26"></a>		$rsResult = @mysql_query($query);
+<a name="line27"></a>		
+<a name="line28"></a>		if (mysql_error()) return new returnData(1, NULL, "SQL Error");
+<a name="line29"></a>		return new returnData(0, $rsResult);
+<a name="line30"></a>	}
+<a name="line31"></a>	
+<a name="line32"></a>	/**
+<a name="line33"></a>     * Fetch a specific event
+<a name="line34"></a>     * @returns a single event
+<a name="line35"></a>     */
+<a name="line36"></a>	public function getQRCode($intGameID, $intQRCodeID)
+<a name="line37"></a>	{
+<a name="line38"></a>		
+<a name="line39"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line40"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line41"></a>
+<a name="line42"></a>		$query = "SELECT * FROM {$prefix}_qrcodes WHERE qrcode_id = {$intQRCodeID} LIMIT 1";
+<a name="line43"></a>		
+<a name="line44"></a>		$rsResult = @mysql_query($query);
+<a name="line45"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line46"></a>		
+<a name="line47"></a>		$event = @mysql_fetch_object($rsResult);
+<a name="line48"></a>		if (!$event) return new returnData(2, NULL, "invalid QRCode id");
+<a name="line49"></a>		
+<a name="line50"></a>		return new returnData(0, $event);
+<a name="line51"></a>		
+<a name="line52"></a>	}
+<a name="line53"></a>	
+<a name="line54"></a>	/**
+<a name="line55"></a>	 * Download QR Code Package
+<a name="line56"></a>	 * @returns the URL of the file to download
+<a name="line57"></a>	 */
+<a name="line58"></a>	 public function getQRCodePackageURL($intGameID)
+<a name="line59"></a>	 {
+<a name="line60"></a>	 	$prefix = $this->getPrefix($intGameID);
+<a name="line61"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line62"></a>
+<a name="line63"></a>		$query = "SELECT * FROM {$prefix}_qrcodes";
+<a name="line64"></a>		
+<a name="line65"></a>		$rsResult = @mysql_query($query);
+<a name="line66"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line67"></a>		
+<a name="line68"></a>		//Set up a tmp directory
+<a name="line69"></a>		$relDir = "{$prefix}_qrcodes_" . date('Y_m_d_h_i_s');
+<a name="line70"></a>		$tmpDir = Config::gamedataFSPath . "/backups/{$relDir}";
+<a name="line71"></a>		$command = "mkdir {$tmpDir}";
+<a name="line72"></a>		NetDebug::trace($command);
+<a name="line73"></a>		exec($command, $output, $return);
+<a name="line74"></a>		if ($return) return new returnData(4, NULL, "cannot create backup dir, check file permissions");
+<a name="line75"></a>		
+<a name="line76"></a>		//Get all the images
+<a name="line77"></a>		while ($qrCode = mysql_fetch_object($rsResult)) {
+<a name="line78"></a>			//Look up the item to get a good file name
+<a name="line79"></a>			$fileNameType = '';
+<a name="line80"></a>			$fileNameId = '';
+<a name="line81"></a>			$fileNameName = '';
+<a name="line82"></a>			NetDebug::trace("QR Code Type:" . $qrCode->link_type);
+<a name="line83"></a>
+<a name="line84"></a>			switch ($qrCode->link_type) {
+<a name="line85"></a>				case 'Location':
+<a name="line86"></a>					NetDebug::trace("It is Location " . $qrCode->link_id);
+<a name="line87"></a>					$fileNameType = "Location";
+<a name="line88"></a>					$fileNameId = $qrCode->link_id;
+<a name="line89"></a>					
+<a name="line90"></a>					$locationReturnData = Locations::getLocation($intGameID, $qrCode->link_id);
+<a name="line91"></a>					$location = $locationReturnData->data;				
+<a name="line92"></a>					NetDebug::trace("Location Found. Type:" . $location->type .". Look up the Object" );
+<a name="line93"></a>					switch ($location->type) {
+<a name="line94"></a>						case 'Npc': 
+<a name="line95"></a>							NetDebug::trace("It is an NPC");
+<a name="line96"></a>							$object = Npcs::getNpc($intGameID, $location->type_id);
+<a name="line97"></a>							$fileNameName = $object->data->name;
+<a name="line98"></a>							break;
+<a name="line99"></a>						case 'Node': 
+<a name="line100"></a>							NetDebug::trace("It is an NPC");
+<a name="line101"></a>							$object = Nodes::getNode($intGameID, $location->type_id);
+<a name="line102"></a>							$fileNameName = $object->data->title;
+<a name="line103"></a>							break;
+<a name="line104"></a>						case 'Item':
+<a name="line105"></a>							NetDebug::trace("It is an Item");
+<a name="line106"></a>							$object = Items::getItem($intGameID, $location->type_id);
+<a name="line107"></a>							$fileNameName = $object->data->name;
+<a name="line108"></a>							break;	
+<a name="line109"></a>					}
+<a name="line110"></a>	
+<a name="line111"></a>					break;
+<a name="line112"></a>				
+<a name="line113"></a>				default:
+<a name="line114"></a>					$returnResult = new returnData(5, NULL, "Invalid QR Code Found.");
+<a name="line115"></a>			}
+<a name="line116"></a>	
+<a name="line117"></a>			$fileName = "{$fileNameType}{$fileNameId}-{$fileNameName}.jpg";
+<a name="line118"></a>			NetDebug::trace("The file name will be {$fileName}");
+<a name="line119"></a>			
+<a name="line120"></a>			$command = "curl -s -o /{$tmpDir}/{$fileName} 'http://chart.apis.google.com/chart?chs=300x300&cht=qr&choe=UTF-8&chl={$qrCode->code}'";
+<a name="line121"></a>			exec($command, $output, $return);
+<a name="line122"></a>			NetDebug::trace($command);
+<a name="line123"></a>			if ($return) return new returnData(4, NULL, "cannot download and save qr code image, check file permissions and url in console");
+<a name="line124"></a>		}
+<a name="line125"></a>		
+<a name="line126"></a>		//Zip up the whole directory
+<a name="line127"></a>		$zipFileName = "aris_qr_codes.tar";
+<a name="line128"></a>		$cwd = Config::gamedataFSPath . "/backups";
+<a name="line129"></a>		chdir($cwd);
+<a name="line130"></a>		NetDebug::trace("cd $cwd");
+<a name="line131"></a>
+<a name="line132"></a>		$command = "tar -cf {$zipFileName} {$relDir}/";
+<a name="line133"></a>		exec($command, $output, $return);
+<a name="line134"></a>		NetDebug::trace($command);
+<a name="line135"></a>		if ($return) return new returnData(5, NULL, "cannot compress backup dir, check that tar command is availabe.");
+<a name="line136"></a>		
+<a name="line137"></a>		//Delete the Temp
+<a name="line138"></a>		/*
+<a name="line139"></a>		$rmCommand = "rm -rf {$tmpDir}";
+<a name="line140"></a>		exec($rmCommand, $output, $return);
+<a name="line141"></a>		if ($return) return new returnData(5, NULL, "cannot delete backup dir, check file permissions");
+<a name="line142"></a>		*/
+<a name="line143"></a>		
+<a name="line144"></a>		return new returnData(0, Config::gamedataWWWPath . "/backups/{$zipFileName}");		
+<a name="line145"></a>	 }
+<a name="line146"></a>	
+<a name="line147"></a>	/**
+<a name="line148"></a>     * Fetch a QRCode object
+<a name="line149"></a>     * @returns a 0 with an NPC, Node or Item in addition to the latitute and longitude in the data, 2 for an invalid code, 4 for reqs not met or 5 for a data error
+<a name="line150"></a>     */
+<a name="line151"></a>	public function getQRCodeObjectForPlayer($intGameID, $strCode, $intPlayerID)
+<a name="line152"></a>	{
+<a name="line153"></a>		
+<a name="line154"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line155"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line156"></a>		
+<a name="line157"></a>		$query = "SELECT * FROM {$prefix}_qrcodes WHERE code = '{$strCode}' LIMIT 1";
+<a name="line158"></a>		
+<a name="line159"></a>		$rsResult = @mysql_query($query);
+<a name="line160"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error: ". mysql_error());
+<a name="line161"></a>		
+<a name="line162"></a>		$qrcode = @mysql_fetch_object($rsResult);
+<a name="line163"></a>		
+<a name="line164"></a>		//Check for a valid QR Code
+<a name="line165"></a>		if (!$qrcode) { 
+<a name="line166"></a>			Module::appendLog($intPlayerID, $intGameID, Module::kLOG_ENTER_QRCODE, $strCode, 'INVALID');
+<a name="line167"></a>			return new returnData(2, NULL, "invalid QRCode code");
+<a name="line168"></a>		}
+<a name="line169"></a>			
+<a name="line170"></a>		
+<a name="line171"></a>		//Check the requirements of the QR Code's link object
+<a name="line172"></a>		if (!$this->objectMeetsRequirements ($prefix, $intPlayerID, $qrcode->link_type, $qrcode->link_id)) {
+<a name="line173"></a>			Module::appendLog($intPlayerID, $intGameID, Module::kLOG_ENTER_QRCODE, $strCode, 'REQS_OR_QTY_NOT_MET');
+<a name="line174"></a>			return new returnData(4, NULL, "QRCode requirements not met");
+<a name="line175"></a>		}
+<a name="line176"></a>		
+<a name="line177"></a>		Module::appendLog($intPlayerID, $intGameID, Module::kLOG_ENTER_QRCODE, $strCode, 'SUCCESSFUL');
+<a name="line178"></a>
+<a name="line179"></a>		//Get the data
+<a name="line180"></a>		switch ($qrcode->link_type) {
+<a name="line181"></a>			case 'Location':
+<a name="line182"></a>				NetDebug::trace("It is Location " . $qrcode->link_id);
+<a name="line183"></a>				$locationReturnData = Locations::getLocation($intGameID, $qrcode->link_id);
+<a name="line184"></a>				$location = $locationReturnData->data;
+<a name="line185"></a>				if (!$location) return new returnData(5, NULL, "bad link in qr code, no matching location found");
+<a name="line186"></a>				
+<a name="line187"></a>				NetDebug::trace("Location Found. Type:" . $location->type .". Look up the Object" );
+<a name="line188"></a>				switch ($location->type) {
+<a name="line189"></a>					case 'Npc': 
+<a name="line190"></a>						NetDebug::trace("It is an NPC");
+<a name="line191"></a>						$returnResult = Npcs::getNpcWithConversationsForPlayer($intGameID, $location->type_id, $intPlayerID);
+<a name="line192"></a>						$returnResult->data->type = "Npc";
+<a name="line193"></a>						break;
+<a name="line194"></a>					case 'Node': 
+<a name="line195"></a>						NetDebug::trace("It is an NPC");
+<a name="line196"></a>						$returnResult = Nodes::getNode($intGameID, $location->type_id);
+<a name="line197"></a>						$returnResult->data->type = "Node";
+<a name="line198"></a>						break;
+<a name="line199"></a>					case 'Item':
+<a name="line200"></a>						NetDebug::trace("It is an Item");
+<a name="line201"></a>						
+<a name="line202"></a>						//Check Item Quantity
+<a name="line203"></a>						if ($location->item_qty == 0) return new returnData(4, NULL, "Item Quantity is 0");
+<a name="line204"></a>
+<a name="line205"></a>						$returnResult = Items::getItem($intGameID, $location->type_id);
+<a name="line206"></a>						$returnResult->data->type = "Item";
+<a name="line207"></a>						break;	
+<a name="line208"></a>					default:
+<a name="line209"></a>						$returnResult = new returnData(5, NULL, "Invalid Location Record. type not recognized");
+<a name="line210"></a>				}
+<a name="line211"></a>				
+<a name="line212"></a>				//No matter the object type, tack on the position
+<a name="line213"></a>				$returnResult->data->latitude = $location->latitude;
+<a name="line214"></a>				$returnResult->data->longitude = $location->longitude;
+<a name="line215"></a>				break;
+<a name="line216"></a>			
+<a name="line217"></a>			default:
+<a name="line218"></a>				$returnResult = new returnData(5, NULL, "Invalid QR Code Record. link_type not recognized");
+<a name="line219"></a>		}
+<a name="line220"></a>		
+<a name="line221"></a>		return $returnResult;
+<a name="line222"></a>		
+<a name="line223"></a>	}
+<a name="line224"></a>	
+<a name="line225"></a>
+<a name="line226"></a>	
+<a name="line227"></a>	/**
+<a name="line228"></a>     * Create a QR Code
+<a name="line229"></a>     * If no code is provided, a random 4 digit number will be generated
+<a name="line230"></a>     * @returns the new QR Code ID on success.
+<a name="line231"></a>     */
+<a name="line232"></a>	public function createQRCode($intGameID, $strLinkType, $intLinkID, $strCode = '')
+<a name="line233"></a>	{
+<a name="line234"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line235"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line236"></a>
+<a name="line237"></a>		if (!QRCodes::isValidObjectType($intGameID, $strLinkType)) return new returnData(4, NULL, "Invalid link type");
+<a name="line238"></a>
+<a name="line239"></a>		//generate a random code if one is not provided
+<a name="line240"></a>		if (strlen($strCode) < 1) {
+<a name="line241"></a>			$charSet = "123456789";
+<a name="line242"></a>			$strCode = '';
+<a name="line243"></a>			for ($i=0; $i<4; $i++) $strCode .= substr($charSet,rand(0,strlen(charSet)-1),1);
+<a name="line244"></a>			NetDebug::trace("New Code was Created: " . $strCode);	
+<a name="line245"></a>		}
+<a name="line246"></a>		
+<a name="line247"></a>		$query = "INSERT INTO {$prefix}_qrcodes 
+<a name="line248"></a>					(link_type, link_id, code)
+<a name="line249"></a>					VALUES ('{$strLinkType}','{$intLinkID}','{$strCode}')";
+<a name="line250"></a>		
+<a name="line251"></a>		NetDebug::trace("Running a query = $query");	
+<a name="line252"></a>		
+<a name="line253"></a>		@mysql_query($query);
+<a name="line254"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error: ". mysql_error());
+<a name="line255"></a>		
+<a name="line256"></a>		return new returnData(0, mysql_insert_id());
+<a name="line257"></a>	}
+<a name="line258"></a>
+<a name="line259"></a>	
+<a name="line260"></a>	
+<a name="line261"></a>	/**
+<a name="line262"></a>     * Update a QR Code
+<a name="line263"></a>     * @returns true if edit was done, false if no changes were made
+<a name="line264"></a>     */
+<a name="line265"></a>	public function updateQRCode($intGameID, $intQRCodeID, $strLinkType, $intLinkID, $strCode)
+<a name="line266"></a>	{
+<a name="line267"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line268"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");
+<a name="line269"></a>
+<a name="line270"></a>		if (!$this->isValidObjectType($intGameID, $strLinkType)) return new returnData(4, NULL, "Invalid link type");
+<a name="line271"></a>
+<a name="line272"></a>
+<a name="line273"></a>		$query = "UPDATE {$prefix}_qrcodes
+<a name="line274"></a>					SET 
+<a name="line275"></a>					link_type = '{$strLinkType}',
+<a name="line276"></a>					link_id = '{$intLinkID}',
+<a name="line277"></a>					code = '{$strCode}'
+<a name="line278"></a>					WHERE qrcode_id = '{$intQRCodeID}'";
+<a name="line279"></a>		
+<a name="line280"></a>		NetDebug::trace("Running a query = $query");	
+<a name="line281"></a>		
+<a name="line282"></a>		@mysql_query($query);
+<a name="line283"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line284"></a>		
+<a name="line285"></a>		if (mysql_affected_rows()) return new returnData(0, TRUE);
+<a name="line286"></a>		else return new returnData(0, FALSE);
+<a name="line287"></a>		
+<a name="line288"></a>
+<a name="line289"></a>	}
+<a name="line290"></a>			
+<a name="line291"></a>	
+<a name="line292"></a>	/**
+<a name="line293"></a>     * Delete a QR Code
+<a name="line294"></a>     * @returns true if delete was done, false if no changes were made
+<a name="line295"></a>     */
+<a name="line296"></a>	public function deleteQRCode($intGameID, $intQRCodeID)
+<a name="line297"></a>	{
+<a name="line298"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line299"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+<a name="line300"></a>		
+<a name="line301"></a>		$query = "DELETE FROM {$prefix}_qrcodes WHERE qrcode_id = {$intQRCodeID}";
+<a name="line302"></a>		
+<a name="line303"></a>		$rsResult = @mysql_query($query);
+<a name="line304"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line305"></a>		
+<a name="line306"></a>		if (mysql_affected_rows()) {
+<a name="line307"></a>			return new returnData(0, TRUE);
+<a name="line308"></a>		}
+<a name="line309"></a>		else {
+<a name="line310"></a>			return new returnData(2, NULL, 'invalid qrcode id');
+<a name="line311"></a>		}
+<a name="line312"></a>	}	
+<a name="line313"></a>	
+<a name="line314"></a>	/**
+<a name="line315"></a>     * Delete all QR Codes that link to a specified object
+<a name="line316"></a>     * @returns true if delete was done, false if no changes were made
+<a name="line317"></a>     */
+<a name="line318"></a>	public function deleteQRCodeCodesForLink($intGameID, $strLinkType, $intLinkID)
+<a name="line319"></a>	{
+<a name="line320"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line321"></a>		if (!$prefix) return new returnData(1, NULL, "invalid game id");		
+<a name="line322"></a>		
+<a name="line323"></a>		$query = "DELETE FROM {$prefix}_qrcodes WHERE 
+<a name="line324"></a>			link_type = '{$strLinkType}' AND link_id = '{$intLinkID}'";
+<a name="line325"></a>		
+<a name="line326"></a>		$rsResult = @mysql_query($query);
+<a name="line327"></a>		if (mysql_error()) return new returnData(3, NULL, "SQL Error");
+<a name="line328"></a>		
+<a name="line329"></a>		if (mysql_affected_rows()) {
+<a name="line330"></a>			return new returnData(0, TRUE);
+<a name="line331"></a>		}
+<a name="line332"></a>		else {
+<a name="line333"></a>			return new returnData(0, FALSE);
+<a name="line334"></a>		}
+<a name="line335"></a>	}		
+<a name="line336"></a>	
+<a name="line337"></a>	/**
+<a name="line338"></a>     * Fetch the valid content types from the requirements table
+<a name="line339"></a>     * @returns an array of strings
+<a name="line340"></a>     */
+<a name="line341"></a>	public function contentTypeOptions($intGameID){	
+<a name="line342"></a>		$options = $this->lookupContentTypeOptionsFromSQL($intGameID);
+<a name="line343"></a>		if (!$options) return new returnData(1, NULL, "invalid game id");
+<a name="line344"></a>		return new returnData(0, $options);
+<a name="line345"></a>	}	
+<a name="line346"></a>	
+<a name="line347"></a>	
+<a name="line348"></a>	/**
+<a name="line349"></a>     * Fetch the valid content types from the requirements table
+<a name="line350"></a>     * @returns an array of strings
+<a name="line351"></a>     */
+<a name="line352"></a>	private function lookupContentTypeOptionsFromSQL($intGameID){
+<a name="line353"></a>		$prefix = $this->getPrefix($intGameID);
+<a name="line354"></a>		if (!$prefix) return FALSE;
+<a name="line355"></a>		
+<a name="line356"></a>		$query = "SHOW COLUMNS FROM {$prefix}_qrcodes LIKE 'link_type'";
+<a name="line357"></a>		NetDebug::trace($query);
+<a name="line358"></a>		
+<a name="line359"></a>		$result = @mysql_query( $query );
+<a name="line360"></a>		$row = @mysql_fetch_array( $result , MYSQL_NUM );
+<a name="line361"></a>		$regex = "/'(.*?)'/";
+<a name="line362"></a>		preg_match_all( $regex , $row[1], $enum_array );
+<a name="line363"></a>		$enum_fields = $enum_array[1];
+<a name="line364"></a>		return( $enum_fields );
+<a name="line365"></a>	}
+<a name="line366"></a>
+<a name="line367"></a>	
+<a name="line368"></a>	
+<a name="line369"></a>	/**
+<a name="line370"></a>     * Check if a content type is valid
+<a name="line371"></a>     * @returns TRUE if valid
+<a name="line372"></a>     */
+<a name="line373"></a>	private function isValidObjectType($intGameID, $strObjectType) {
+<a name="line374"></a>		$validTypes = QRCodes::lookupContentTypeOptionsFromSQL($intGameID);
+<a name="line375"></a>		return in_array($strObjectType, $validTypes);
+<a name="line376"></a>	}
+<a name="line377"></a>
+<a name="line378"></a>
+<a name="line379"></a>		
+<a name="line380"></a>	
+<a name="line381"></a>	
+<a name="line382"></a>}</pre>
+<div class="header">
+<h1>ARIS Server</h1>
+<ul>
+<li><a href="../overview-summary.html">Overview</a></li>
+<li>Package</li><li>Class</li><li>Tree</li><li><a href="../overview-files.html">Files</a></li>
+<li><a href="../deprecated-list.html">Deprecated</a></li>
+<li><a href="../todo-list.html">Todo</a></li>
+<li><a href="../index-all.html">Index</a></li>
+</ul>
+</div>
+
+<div class="small_links">
+<a href="../index.html" target="_top">Frames</a>
+<a href="../source/qrcodes.php.html" target="_top">No frames</a>
+</div>
+<hr>
+
+<p id="footer">This document was generated by <a href="http://peej.github.com/phpdoctor/">PHPDoctor: The PHP Documentation Creator</a></p>
+
+</body>
+
+</html>
