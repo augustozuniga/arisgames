@@ -4,17 +4,17 @@
 
 Requirements Table
 
-|| requirement || requirement_detail_1 || requirement_detail_2 || requirement_detail_3 ||
-|| PLAYER_HAS_ITEM || the item_id || || ||
-|| PLAYER_DOES_NOT_HAVE_ITEM  || the item_id || || ||
-|| PLAYER_VIEWED_ITEM  || the item_id || || ||
-|| PLAYER_HAS_NOT_VIEWED_ITEM || the item_id || || ||
-|| PLAYER_VIEWED_NODE || the node_id || || ||
-|| PLAYER_HAS_NOT_VIEWED_NODE || the node_id || || ||
-|| PLAYER_VIEWED_NPC || the npc_id || || ||
-|| PLAYER_HAS_NOT_VIEWED_NPC || the npc_id || || ||
-|| PLAYER_HAS_UPLOADED_MEDIA_ITEM || latitude || longitude || range (in meters) ||
-|| PLAYER_HAS_COMPLETED_QUEST || the quest_id || || ||
+|| English Statement || requirement || requirement_detail_1 || requirement_detail_2 || requirement_detail_3 ||
+|| Player has at least 10 of item 7 || PLAYER_HAS_ITEM || the item_id || minimum qty to qualify || ||
+|| Player has more than 20 of item 7 || PLAYER_DOES_NOT_HAVE_ITEM  || the item_id || minimum qty to qualify || ||
+|| Player has looked at the details page of item 6 at least once || PLAYER_VIEWED_ITEM  || the item_id || || ||
+|| Player has never looked at the details page of item 4 || PLAYER_HAS_NOT_VIEWED_ITEM || the item_id || || ||
+|| Player has seen plaque 4 at least once; Player has completed the script of node 8 at least once || PLAYER_VIEWED_NODE || the node_id || || ||
+|| Player has never seen plaque 4; Player has never completed the script of node 8 || PLAYER_HAS_NOT_VIEWED_NODE || the node_id || || ||
+|| Player has seen the greeting of npc 7 at least once || PLAYER_VIEWED_NPC || the npc_id || || ||
+|| Player has never seen the greeting of npc 7|| PLAYER_HAS_NOT_VIEWED_NPC || the npc_id || || ||
+|| Player has taken a picture, recorded a vide or recorded audio within 10 meters of a position || PLAYER_HAS_UPLOADED_MEDIA_ITEM || latitude || longitude || range (in meters) ||
+|| The players actions have completed all the requirements for completing quest 8 || PLAYER_HAS_COMPLETED_QUEST || the quest_id || || ||
 
 
 = JSON/AMF Services Primer=
