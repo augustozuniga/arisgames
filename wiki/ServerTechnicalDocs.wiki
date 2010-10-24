@@ -13,7 +13,7 @@ Requirements Table
 || PLAYER_HAS_NOT_VIEWED_NODE || the node_id || || ||
 || PLAYER_VIEWED_NPC || the npc_id || || ||
 || PLAYER_HAS_NOT_VIEWED_NPC || the npc_id || || ||
-|| PLAYER_HAS_UPLOADED_MEDIA_ITEM || the item_id || || ||
+|| PLAYER_HAS_UPLOADED_MEDIA_ITEM || latitude || longitude || range (in meters) ||
 || PLAYER_HAS_COMPLETED_QUEST || the quest_id || || ||
 
 
