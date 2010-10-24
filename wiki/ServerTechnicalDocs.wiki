@@ -2,9 +2,12 @@
 
 = Database Structure =
 
-Add your content here.
-
+Coming Soon.
 
 = JSON/AMF Services =
 
-Add your content here.  
+ARIS uses [http://amfphp.sourceforge.net/ AMFPHP] for a simple PHP/MySQL development environment that provides JSON, AMF, REST and RPC web services. 
+
+While many of the directories within the server folder ar AMFPHP related, ARIS services reside within the server/services/aris directory. 
+
+A description of each service can be found in the [http://arisgames.googlecode.com/svn/wiki/serviceDocs/index.html ARIS Services documentation]
