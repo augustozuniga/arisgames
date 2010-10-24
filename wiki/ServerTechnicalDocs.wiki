@@ -4,10 +4,40 @@
 
 Coming Soon.
 
-= JSON/AMF Services =
+= JSON/AMF Services Primer=
 
-ARIS uses [http://amfphp.sourceforge.net/ AMFPHP] for a simple PHP/MySQL development environment that provides JSON, AMF, REST and RPC web services. 
+ARIS uses [http://amfphp.sourceforge.net/ AMFPHP] for a simple PHP/MySQL development environment that provides JSON, AMF, REST and RPC web services. A set of php objects exist at [server/services/aris] and are translated into web services by AMFPHP. 
 
-While many of the directories within the server folder ar AMFPHP related, ARIS services reside within the server/services/aris directory. 
+For example, server/services/aris/items.php contains the Items object. In this object various methods exist for creating, searching, modifying items in an ARIS game. One method is called getItem($gameId, $itemId) and is designed to retrieve information about a specific item, provided the game id and item id.
+
+This method can then be called in a couple ways.
+
+In the FLEX editor, the RemoteObject class will do the work for you provided you set up your services-config.xml file to use http://your_aris_server/gateway.php as the endpoint uri for the amfphp destination. (See editor/services-config.xml)
+
+{{{
+itemServer = new RemoteObject();
+itemServer.source = "aris.items"; //all service names have the aris. prefix
+itemServer.destination = "amfphp";
+itemServer.showBusyCursor = true;
+
+var l:Object;
+l = itemServer.getItem(gid, id);
+l.addResponder(resp);
+
+}}}
+
+For the iPhone client we use the JSON protocol instead. For JSON, simply load the http result from accessing a specially formed URL. In the example below, notice that the arguments for getItem() are simply added in using slashes.
+
+
+* http://your_aris_server/json.php/aris.items.getItem/150/23 *
+
+
+
+AMFPHP also provides a service browser for debugging. This is always found at the 
+
+* http://your_aris_server/browser *
+
+
+= Exhaustive List of all ARIS services =
 
 A description of each service can be found in the [http://arisgames.googlecode.com/svn/wiki/serviceDocs/index.html ARIS Services documentation]
