@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Storyboards and Screen Mockups of the Authoring tool
 
 = Introduction =
 
