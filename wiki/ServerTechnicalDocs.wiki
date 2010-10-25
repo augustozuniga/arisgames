@@ -2,11 +2,11 @@
 
 = Database Structure =
 
-Requirements Table
+== Requirements Table ==
 
 || English Statement || requirement || requirement_detail_1 || requirement_detail_2 || requirement_detail_3 ||
-|| Player has at least 10 of item 7 || PLAYER_HAS_ITEM || the item_id || minimum qty to qualify || ||
-|| Player has more than 20 of item 7 || PLAYER_DOES_NOT_HAVE_ITEM  || the item_id || minimum qty to qualify || ||
+|| Player has at least 1 of item 7 || PLAYER_HAS_ITEM || the item_id || minimum qty to qualify || ||
+|| Player has less than 1 of item 7 || PLAYER_DOES_NOT_HAVE_ITEM  || the item_id || minimum qty to qualify || ||
 || Player has looked at the details page of item 6 at least once || PLAYER_VIEWED_ITEM  || the item_id || || ||
 || Player has never looked at the details page of item 4 || PLAYER_HAS_NOT_VIEWED_ITEM || the item_id || || ||
 || Player has seen plaque 4 at least once; Player has completed the script of node 8 at least once || PLAYER_VIEWED_NODE || the node_id || || ||
