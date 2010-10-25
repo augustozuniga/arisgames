@@ -25,15 +25,21 @@ These are the design mockups for the next iteration of the ARIS authoring tool. 
   * Within the map window, when an object is double-clicked then the Placemark Editor appears (convention similar to double-clicking markers in Google Maps).
   * If the player selects "new" character/plaque/item within the map area, then the object icon appears on the map and the left-hand organizer at the same time.
 
-== Place mark Editor ==
+== Quest Map ==
 
-[http://arisgames.googlecode.com/svn/wiki/editorMockups/placemark.png]
+[http://arisgames.googlecode.com/svn/wiki/editorMockups/quest_map.png]
 
- * The object editor appears when users double click on an object (character, item or plaque) within the map window.
- * The user can author the name and description of the object within text boxes.
- * The user can choose the quantity for items (not for characters or plaques). For example, an item of 10 gold coins could be authored.
- * The user can choose to "hide" the object from the player's view (but in play, the object could be triggered if the player was in proximity)
- * The user can choose to put requirements around the object, giving it prerequisites.
+ * On the client, the quests display as a simple list on the ARIS starting tab. Quests direct players what to do next and act as a log for what they have already done. For example, a quest might tell the player to find a character, then change to completed once that character has been found. 
+During authoring, the tree view of quests will help the author to record their direction and visualize the timeline of the story. 
+ * Quests aren't necessarily linear. These quests may not be completed in order by a future player. Only the requirements dictate the secuence. 
+ * There will likely be more than one quest. 
+ * Quests can be "active" but not complete. 
+ * Completing one quest means that one is completed and another becomes simultaneously active. 
+ * The first quest node is typically a "Welcome" node, containing introductory text. The last node is an "end" node. 
+ * Clicking on a quest node opens/zooms in on a node and text editing space is viewed. The user can author: an icon, a title, description when active, and description when complete. 
+ * This should support rich text (Bold, italic, large and small). 
+ * Two square nodes, connected, appear first time quests are opened for a game. A welcome/start node and an end node. 
+ * Every node has an "add quest" button on the bottom. 
 
 == NPC Map ==
 
@@ -49,7 +55,6 @@ These are the design mockups for the next iteration of the ARIS authoring tool. 
 == Script Editor ==
 
 [http://arisgames.googlecode.com/svn/wiki/editorMockups/script.png]
-
 
 == Plaque Screen ==
 
@@ -67,26 +72,22 @@ These are the design mockups for the next iteration of the ARIS authoring tool. 
   * If the user clicks in the "text" area of the editor, a blinking cursor will appear, indicating that the user can type in text.
   * Users can also determine whether the items will be droppable or destroyable by future players. Users click the "done" button to return to the map editor.
 
-== Quest Map ==
-
-[http://arisgames.googlecode.com/svn/wiki/editorMockups/quest_map.png]
-
- * On the client, the quests display as a simple list on the ARIS starting tab. Quests direct players what to do next and act as a log for what they have already done. For example, a quest might tell the player to find a character, then change to completed once that character has been found. 
-During authoring, the tree view of quests will help the author to record their direction and visualize the timeline of the story. 
- * Quests aren't necessarily linear. These quests may not be completed in order by a future player. Only the requirements dictate the secuence. 
- * There will likely be more than one quest. 
- * Quests can be "active" but not complete. 
- * Completing one quest means that one is completed and another becomes simultaneously active. 
- * The first quest node is typically a "Welcome" node, containing introductory text. The last node is an "end" node. 
- * Clicking on a quest node opens/zooms in on a node and text editing space is viewed. The user can author: an icon, a title, description when active, and description when complete. 
- * This should support rich text (Bold, italic, large and small). 
- * Two square nodes, connected, appear first time quests are opened for a game. A welcome/start node and an end node. 
- * Every node has an "add quest" button on the bottom. 
 
 == Quest Editor ==
 
 [http://arisgames.googlecode.com/svn/wiki/editorMockups/quest.png]
 
+
+
+== Place mark Editor ==
+
+[http://arisgames.googlecode.com/svn/wiki/editorMockups/placemark.png]
+
+ * The object editor appears when users double click on an object (character, item or plaque) within the map window.
+ * The user can author the name and description of the object within text boxes.
+ * The user can choose the quantity for items (not for characters or plaques). For example, an item of 10 gold coins could be authored.
+ * The user can choose to "hide" the object from the player's view (but in play, the object could be triggered if the player was in proximity)
+ * The user can choose to put requirements around the object, giving it prerequisites.
 
 == Media Picker / Icon Picker ==
 
@@ -110,10 +111,14 @@ During authoring, the tree view of quests will help the author to record their d
   * Users can delete any requirement at any time.
   * Requirement sets use the AND operator by default. For example, player has seen item: key AND has talked with npc:joe
 
+== Giving / Taking Items ==
+
+[http://arisgames.googlecode.com/svn/wiki/editorMockups/give_take_items.png]
+
 
 == Game Editing Permissions ==
 
-[http://arisgames.googlecode.com/svn/wiki/editorMockups/plaque.png]
+[http://arisgames.googlecode.com/svn/wiki/editorMockups/permissions.png]
 
   * The user can view authors granted permission to edit the game.
   * The user can select users to add to the game, and click the arrow to finish.
