@@ -1,0 +1,45 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+These are the design mockups for the next iteration of the ARIS authoring tool. They were made using the Balsalmic tool.
+
+== Main Screen ==
+
+[http://arisgames.googlecode.com/svn/wiki/editorMockups/main.png]
+
+  * This is the layout for the main screen, the user's "homebase". Notice the main toolbar at the top of the window, which will be persistent.
+
+  * The left hand column-window organizer is an area which allows users to create new objects (plaques, characters and items).
+
+  * Users can create these objects by clicking the "new object" button, and the object will appear. in the organizer column.
+
+  * Users may drag and drop the objects into the map. 
+
+  * Selecting an NPC or the Quests Button will replace the Google Map with the Conversation Map or the Quest Map
+
+  * Selecting an Item, Plaque from the Objects Pallet, A script from the Conversation Map or a Quest from the Quest Map will pull out a object detail editor
+
+== Map Screen ==
+
+== Place mark Editor ==
+
+== NPC Map ==
+
+== Script Editor ==
+
+== Plaque Screen ==
+
+== Item Screen ==
+
+== Quest Map ==
+
+== Quest Editor ==
+
+== Media Picker / Icon Picker ==
+
+== Requirements Selection ==
+
+== Game Editing Permissions ==
+
+== Game Backup / Restore ==
