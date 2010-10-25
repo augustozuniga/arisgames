@@ -41,16 +41,46 @@ For the iPhone client we use the JSON protocol instead. For JSON, simply load th
 
 
 
-
-
-
-
-
-
-
 = Database Structure =
 
-== Requirements Table ==
+The database structure for ARIS should be self explanatory given you know a few details:
+
+== The Tables ==
+
+  * Each game has it's own set of tables which all start with 'gameId' as a prefix
+    * items
+    * locations - geograph placements of nodes (called plaques in editor), items and npcs (called characters in editor)
+    * nodes - either a simple piece of media with text if linked to from a conversation, or a whole script if from an npc_converstion
+    * npcs
+    * player_items
+    * npc_conversations - links npcs with nodes to create a hub and spoke conversation system
+    * player_state_changes - used by nodes, items, npcs to modify player attributes or inventory
+    * qr_codes - link to locations for when the "decoder" is used in the app
+    * quests
+    * requirements - criteria for when nodes, locations and quests are available in terms of records found in the player_log.
+    * folders - used only by the editor for organizing the object pallet
+    * folder_contents - used only by the editor for organizing the object pallet
+  * The server instance also has a few tables that are used across all games
+    * players
+    * editors
+    * games
+    * game_editors
+    * player_log - many requests to the server will generate a log that is recorded here. This is paired with the requirements table to make decisions about what game objects/states are available
+
+== Data Linking ==
+
+In ARIS, many tables use a loose linking system that you will become very accustomed with. For example, locations can link to nodes, items of npcs. This is accomplished by two filelds, type and type_id.
+
+  * type is an enum('Node','Item','Npc') and determines which table the location is referring to.
+  * type_id is the id within that table
+
+== Special Columns ==
+
+In both the requirements table and the player_log table certian columns have different meanings depending on another column. For example in requirements, if the requirement column = 'PLAYER_HAS_ITEM' the requirement_details_1 column will be used to identify the item_id within the items table that the player must have.
+
+Following are the definitions for those two tables.
+
+=== Requirements Table ===
 
 || English Statement || requirement || requirement_detail_1 || requirement_detail_2 || requirement_detail_3 ||
 || Player has at least 1 of item 7 || PLAYER_HAS_ITEM || the item_id || minimum qty to qualify || ||
