@@ -1,29 +1,22 @@
 #summary Technical Documentation for the ARIS Server
 
-= Database Structure =
-
-== Requirements Table ==
-
-|| English Statement || requirement || requirement_detail_1 || requirement_detail_2 || requirement_detail_3 ||
-|| Player has at least 1 of item 7 || PLAYER_HAS_ITEM || the item_id || minimum qty to qualify || ||
-|| Player has less than 1 of item 7 || PLAYER_DOES_NOT_HAVE_ITEM  || the item_id || minimum qty to qualify || ||
-|| Player has looked at the details page of item 6 at least once || PLAYER_VIEWED_ITEM  || the item_id || || ||
-|| Player has never looked at the details page of item 4 || PLAYER_HAS_NOT_VIEWED_ITEM || the item_id || || ||
-|| Player has seen plaque 4 at least once; Player has completed the script of node 8 at least once || PLAYER_VIEWED_NODE || the node_id || || ||
-|| Player has never seen plaque 4; Player has never completed the script of node 8 || PLAYER_HAS_NOT_VIEWED_NODE || the node_id || || ||
-|| Player has seen the greeting of npc 7 at least once || PLAYER_VIEWED_NPC || the npc_id || || ||
-|| Player has never seen the greeting of npc 7|| PLAYER_HAS_NOT_VIEWED_NPC || the npc_id || || ||
-|| Player has taken a picture, recorded a vide or recorded audio within 10 meters of a position || PLAYER_HAS_UPLOADED_MEDIA_ITEM || latitude || longitude || range (in meters) ||
-|| The players actions have completed all the requirements for completing quest 8 || PLAYER_HAS_COMPLETED_QUEST || the quest_id || || ||
-
-
-= JSON/AMF Services Primer=
+= ARIS Server as a collection of Web Services=
 
 ARIS uses [http://amfphp.sourceforge.net/ AMFPHP] for a simple PHP/MySQL development environment that provides JSON, AMF, REST and RPC web services. A set of php objects exist at [server/services/aris] and are translated into web services by AMFPHP. 
 
 For example, server/services/aris/items.php contains the Items object. In this object various methods exist for creating, searching, modifying items in an ARIS game. One method is called getItem($gameId, $itemId) and is designed to retrieve information about a specific item, provided the game id and item id.
 
-This method can then be called in a couple ways.
+A description of each service provided can be found in the [http://arisgames.googlecode.com/svn/wiki/serviceDocs/index.html ARIS Services documentation]
+
+These methods can then be used in a number of ways.
+
+== Service Browsing ==
+
+AMFPHP provides a service browser for debugging and trying things out. This is always found at the 
+
+* http://your_aris_server/browser *
+
+== AMF ==
 
 In the FLEX editor, the RemoteObject class will do the work for you provided you set up your services-config.xml file to use http://your_aris_server/gateway.php as the endpoint uri for the amfphp destination. (See editor/services-config.xml)
 
@@ -39,18 +32,34 @@ l.addResponder(resp);
 
 }}}
 
-For the iPhone client we use the JSON protocol instead. For JSON, simply load the http result from accessing a specially formed URL. In the example below, notice that the arguments for getItem() are simply added in using slashes.
+== JSON ==
 
+For the iPhone client we use the JSON protocol instead. For JSON, simply load the http result from accessing a specially formed URL. In the example below, notice that the arguments for getItem() are simply added in using slashes.
 
 * http://your_aris_server/json.php/aris.items.getItem/150/23 *
 
 
 
-AMFPHP also provides a service browser for debugging. This is always found at the 
-
-* http://your_aris_server/browser *
 
 
-= Exhaustive List of all ARIS services =
 
-A description of each service can be found in the [http://arisgames.googlecode.com/svn/wiki/serviceDocs/index.html ARIS Services documentation]
+
+
+
+
+
+= Database Structure =
+
+== Requirements Table ==
+
+|| English Statement || requirement || requirement_detail_1 || requirement_detail_2 || requirement_detail_3 ||
+|| Player has at least 1 of item 7 || PLAYER_HAS_ITEM || the item_id || minimum qty to qualify || ||
+|| Player has less than 1 of item 7 || PLAYER_DOES_NOT_HAVE_ITEM  || the item_id || minimum qty to qualify || ||
+|| Player has looked at the details page of item 6 at least once || PLAYER_VIEWED_ITEM  || the item_id || || ||
+|| Player has never looked at the details page of item 4 || PLAYER_HAS_NOT_VIEWED_ITEM || the item_id || || ||
+|| Player has seen plaque 4 at least once; Player has completed the script of node 8 at least once || PLAYER_VIEWED_NODE || the node_id || || ||
+|| Player has never seen plaque 4; Player has never completed the script of node 8 || PLAYER_HAS_NOT_VIEWED_NODE || the node_id || || ||
+|| Player has seen the greeting of npc 7 at least once || PLAYER_VIEWED_NPC || the npc_id || || ||
+|| Player has never seen the greeting of npc 7|| PLAYER_HAS_NOT_VIEWED_NPC || the npc_id || || ||
+|| Player has taken a picture, recorded a vide or recorded audio within 10 meters of a position || PLAYER_HAS_UPLOADED_MEDIA_ITEM || latitude || longitude || range (in meters) ||
+|| The players actions have completed all the requirements for completing quest 8 || PLAYER_HAS_COMPLETED_QUEST || the quest_id || || ||
