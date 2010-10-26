@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+<meta name="when" content="Tue, 26 Oct 2010 20:34:02 +0000">
 
 <link rel="stylesheet" type="text/css" href="../../stylesheet.css">
 <link rel="start" href="../../overview-summary.html">
@@ -78,8 +78,8 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 <td class="description"><p class="name"><a href="#getLocations()">getLocations</a>(mixed intGameID)</p><p class="description">Fetch all Locations</p></td>
 </tr>
 <tr>
-<td class="type"> void</td>
-<td class="description"><p class="name"><a href="#getLocationsForPlayer()">getLocationsForPlayer</a>(mixed intGameID, mixed intPlayerID)</p><p class="description">Fetch all locations for a given player</p></td>
+<td class="type"> returnData</td>
+<td class="description"><p class="name"><a href="#getLocationsForPlayer()">getLocationsForPlayer</a>(integer intGameID, integer intPlayerID)</p><p class="description">Fetch locations with fulfilled requirements and other player positions</p></td>
 </tr>
 <tr>
 <td class="type"> void</td>
@@ -96,7 +96,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 <tr><td><a href="../../aris services//module.html#__construct()">__construct</a>, <a href="../../aris services//module.html#adjustQtyForPlayerItem()">adjustQtyForPlayerItem</a>, <a href="../../aris services//module.html#appendLog()">appendLog</a>, <a href="../../aris services//module.html#applyPlayerStateChanges()">applyPlayerStateChanges</a>, <a href="../../aris services//module.html#decrementItemQtyAtLocation()">decrementItemQtyAtLocation</a>, <a href="../../aris services//module.html#getGameIdFromPrefix()">getGameIdFromPrefix</a>, <a href="../../aris services//module.html#getItemIconMediaId()">getItemIconMediaId</a>, <a href="../../aris services//module.html#getItemName()">getItemName</a>, <a href="../../aris services//module.html#getPrefix()">getPrefix</a>, <a href="../../aris services//module.html#giveItemToPlayer()">giveItemToPlayer</a>, <a href="../../aris services//module.html#giveItemToWorld()">giveItemToWorld</a>, <a href="../../aris services//module.html#itemQtyInPlayerInventory()">itemQtyInPlayerInventory</a>, <a href="../../aris services//module.html#metersBetweenLatLngs()">metersBetweenLatLngs</a>, <a href="../../aris services//module.html#objectMeetsRequirements()">objectMeetsRequirements</a>, <a href="../../aris services//module.html#playerHasItem()">playerHasItem</a>, <a href="../../aris services//module.html#playerHasLog()">playerHasLog</a>, <a href="../../aris services//module.html#playerHasUploadedMediaItemWithinDistence()">playerHasUploadedMediaItemWithinDistence</a>, <a href="../../aris services//module.html#recordExists()">recordExists</a>, <a href="../../aris services//module.html#removeItemFromAllPlayerInventories()">removeItemFromAllPlayerInventories</a>, <a href="../../aris services//module.html#takeItemFromPlayer()">takeItemFromPlayer</a></td></tr></table>
 
 <h2 id="detail_method">Method Detail</h2>
-<a href="../../source/locations.php.html#line118" class="location">locations.php at line 118</a>
+<a href="../../source/locations.php.html#line148" class="location">locations.php at line 148</a>
 
 <h3 id="createLocation()">createLocation</h3>
 <code class="signature">public  void <strong>createLocation</strong>(mixed intGameID, mixed strLocationName, mixed intIconMediaID, mixed dblLatitude, mixed dblLongitude, mixed dblError, mixed strObjectType, mixed intObjectID, mixed intQuantity, mixed boolHidden, mixed boolForceView, mixed boolAllowQuickTravel)</code>
@@ -109,7 +109,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/locations.php.html#line193" class="location">locations.php at line 193</a>
+<a href="../../source/locations.php.html#line223" class="location">locations.php at line 223</a>
 
 <h3 id="deleteLocation()">deleteLocation</h3>
 <code class="signature">public  void <strong>deleteLocation</strong>(mixed intGameID, mixed intLocationId)</code>
@@ -122,7 +122,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/locations.php.html#line217" class="location">locations.php at line 217</a>
+<a href="../../source/locations.php.html#line247" class="location">locations.php at line 247</a>
 
 <h3 id="deleteLocationsForObject()">deleteLocationsForObject</h3>
 <code class="signature">public  void <strong>deleteLocationsForObject</strong>(mixed intGameID, mixed strObjectType, mixed intObjectId)</code>
@@ -131,7 +131,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/locations.php.html#line97" class="location">locations.php at line 97</a>
+<a href="../../source/locations.php.html#line127" class="location">locations.php at line 127</a>
 
 <h3 id="getLocation()">getLocation</h3>
 <code class="signature">public  void <strong>getLocation</strong>(mixed intGameID, mixed intLocationID)</code>
@@ -157,20 +157,25 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/locations.php.html#line32" class="location">locations.php at line 32</a>
+<a href="../../source/locations.php.html#line37" class="location">locations.php at line 37</a>
 
 <h3 id="getLocationsForPlayer()">getLocationsForPlayer</h3>
-<code class="signature">public  void <strong>getLocationsForPlayer</strong>(mixed intGameID, mixed intPlayerID)</code>
+<code class="signature">public  returnData <strong>getLocationsForPlayer</strong>(integer intGameID, integer intPlayerID)</code>
 <div class="details">
-<p>Fetch all locations for a given player</p><dl>
+<p>Fetch locations with fulfilled requirements and other player positions</p><dl>
+<dt>Parameters:</dt>
+<dd>intGameID - The game identifier</dd>
+<dd>intPlayerID - The player identifier</dd>
 <dt>Returns:</dt>
-<dd>the locations that meet requirements and have a qty > 0</dd>
+<dd>a returnData object containing an array of locations.</dd>
+<dt>See Also:</dt>
+<dd>returnData</dd>
 </dl>
 </div>
 
 <hr>
 
-<a href="../../source/locations.php.html#line248" class="location">locations.php at line 248</a>
+<a href="../../source/locations.php.html#line278" class="location">locations.php at line 278</a>
 
 <h3 id="objectTypeOptions()">objectTypeOptions</h3>
 <code class="signature">public  void <strong>objectTypeOptions</strong>(mixed intGameID)</code>
@@ -183,7 +188,7 @@ Detail: <a href="#detail_field">Field</a> | <a href="#detail_method">Method</a> 
 
 <hr>
 
-<a href="../../source/locations.php.html#line158" class="location">locations.php at line 158</a>
+<a href="../../source/locations.php.html#line188" class="location">locations.php at line 188</a>
 
 <h3 id="updateLocation()">updateLocation</h3>
 <code class="signature">public  void <strong>updateLocation</strong>(mixed intGameID, mixed intLocationID, mixed strLocationName, mixed intIconMediaID, mixed dblLatitude, mixed dblLongitude, mixed dblError, mixed strObjectType, mixed intObjectID, mixed intQuantity, mixed boolHidden, mixed boolForceView, int boolAllowQuickTravel)</code>

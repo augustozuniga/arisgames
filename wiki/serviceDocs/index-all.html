@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="generator" content="PHPDoctor 2RC4 (http://peej.github.com/phpdoctor/)">
-<meta name="when" content="Sun, 24 Oct 2010 02:44:09 +0000">
+<meta name="when" content="Tue, 26 Oct 2010 20:56:17 +0000">
 
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 <link rel="start" href="overview-summary.html">
@@ -111,7 +111,7 @@ Not yet implemented</dd>
 <dd>Create an item, simultaneously creating media from a file and a location.
 </dd>
 <dt><a href="aris services//locations.html#createLocation()">createLocation()</a> - Method in class <a href="aris services//locations.html">ARIS Services\\Locations</a></dt>
-<dd>Places a location placeholder on the map which links to an aris game object type and id</dd>
+<dd>Creates a location that points to a given object</dd>
 <dt><a href="aris services//media.html#createMedia()">createMedia()</a> - Method in class <a href="aris services//media.html">ARIS Services\\Media</a></dt>
 <dd>Create a media record</dd>
 <dt><a href="aris services//nodes.html#createNode()">createNode()</a> - Method in class <a href="aris services//nodes.html">ARIS Services\\Nodes</a></dt>
@@ -150,6 +150,7 @@ are updated to remove any refrence to the deleted item.</dd>
 <dt><a href="aris services//locations.html#deleteLocation()">deleteLocation()</a> - Method in class <a href="aris services//locations.html">ARIS Services\\Locations</a></dt>
 <dd>Deletes a Location</dd>
 <dt><a href="aris services//locations.html#deleteLocationsForObject()">deleteLocationsForObject()</a> - Method in class <a href="aris services//locations.html">ARIS Services\\Locations</a></dt>
+<dd>Deletes all locations that refer to the given object</dd>
 <dt><a href="aris services//media.html#deleteMedia()">deleteMedia()</a> - Method in class <a href="aris services//media.html">ARIS Services\\Media</a></dt>
 <dd>Delete a Media Item</dd>
 <dt><a href="aris services//nodes.html#deleteNode()">deleteNode()</a> - Method in class <a href="aris services//nodes.html">ARIS Services\\Nodes</a></dt>
@@ -227,9 +228,9 @@ are updated to remove any refrence to the deleted item.</dd>
 <dt><a href="aris services//locations.html#getLocation()">getLocation()</a> - Method in class <a href="aris services//locations.html">ARIS Services\\Locations</a></dt>
 <dd>Fetch a specific location</dd>
 <dt><a href="aris services//locations.html#getLocations()">getLocations()</a> - Method in class <a href="aris services//locations.html">ARIS Services\\Locations</a></dt>
-<dd>Fetch all Locations</dd>
+<dd>Fetch all location in a game</dd>
 <dt><a href="aris services//locations.html#getLocationsForPlayer()">getLocationsForPlayer()</a> - Method in class <a href="aris services//locations.html">ARIS Services\\Locations</a></dt>
-<dd>Fetch all locations for a given player</dd>
+<dd>Fetch locations with fulfilled requirements and other player positions</dd>
 <dt><a href="aris services//media.html#getMedia()">getMedia()</a> - Method in class <a href="aris services//media.html">ARIS Services\\Media</a></dt>
 <dd>Fetch all Media</dd>
 <dt><a href="aris services//media.html#getMediaDirectory()">getMediaDirectory()</a> - Method in class <a href="aris services//media.html">ARIS Services\\Media</a></dt>
@@ -354,7 +355,7 @@ Checks if the specified user has the specified item in the specified game.</dd>
 
 Checks all requirements for the specified object for the specified user</dd>
 <dt><a href="aris services//locations.html#objectTypeOptions()">objectTypeOptions()</a> - Method in class <a href="aris services//locations.html">ARIS Services\\Locations</a></dt>
-<dd>Fetch the valid content types from the requirements table</dd>
+<dd>Fetch the valid content types for use in other location operations</dd>
 </dl>
 <h1 id="letterP">P</h1>
 <dl>
