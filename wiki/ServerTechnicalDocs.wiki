@@ -69,16 +69,16 @@ The database structure for ARIS should be self explanatory given you know a few 
 
 == Data Linking ==
 
-In ARIS, many tables use a loose linking system that you will become very accustomed with. For example, locations can link to nodes, items of npcs. This is accomplished by two filelds, type and type_id.
+In ARIS, many tables use a loose linking system that you will become very accustomed with. For example, a single location can reference and link to a node, item or npc. This is accomplished by two filelds, type and type_id.
 
   * type is an enum('Node','Item','Npc') and determines which table the location is referring to.
   * type_id is the id within that table
 
 == Special Columns ==
 
-In both the requirements table and the player_log table certian columns have different meanings depending on another column. For example in requirements, if the requirement column = 'PLAYER_HAS_ITEM' the requirement_details_1 column will be used to identify the item_id within the items table that the player must have.
+In both the requirements table and the player_log table, certain columns have different meanings depending on another column. For example, in requirements, if the requirement column = 'PLAYER_HAS_ITEM' the requirement_details_1 column will be used to identify the item_id within the items table that the player must have.
 
-Following are the definitions for those two tables.
+Following are the definitions of those two tables' dynamic columns.
 
 === Requirements Table ===
 
