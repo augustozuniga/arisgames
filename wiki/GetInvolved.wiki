@@ -1,0 +1,39 @@
+#summary There are a number of specific ways to get involved with development. Here are some of them.
+
+= How do I help? =
+
+As the ARIS project matures, I believe it's success will be determined by the quality and diversity of it's contributors. 
+
+If you think this project is cool we could really use your help! Here are some specific ways:
+
+== Development == 
+Goto the [http://www.pivotaltracker.com/projects/90924 Editor Tracker]  or  [http://www.pivotaltracker.com/projects/29384 Client/Server Tracker], pick an item from the current or Backlog queue and do it!
+
+Since this is open source, the other option is to do whatever the heck you want and share it back if it generalizes in any way.
+
+Once you have something that you want to share back with the repository, email the aris developer group with a patch. A great guide to making patches is at [http://stephenjungels.com/jungels.net/articles/diff-patch-ten-minutes.html Ten Minute Guide to diff and patch]. After a few of these we will get you commit access to the svn repo. 
+
+== Document ==
+Help document the code that already exists by adding javaDoc code directly in the source files or editing these wiki pages
+
+== Testing ==
+If you offer to beta test releases, I'll email you with testing copies of new releases for feedback.
+
+
+
+= Management Philosophy =
+
+Since ARIS is an authoring tool we have not only end users, but game designers to serve. As all developers know, it is easy to spend a lot of time on things that matter very little.
+
+If we are going to be successful we need to be listening to the designers. So the first step was to establish an easy way for them to post their ideas and vote the most wanted fixes and features to the top. 
+
+This list is at [http://www.google.com/moderator/#15/e=36451&t=36451.41&f=36451.a2bf1 ARIS Bug Reports and Feature Requests]
+
+This list will be reviewed and the most timely and feasible items are moved to the queues for the [http://www.pivotaltracker.com/projects/90924 Editor] and the [http://www.pivotaltracker.com/projects/29384 Client/Server] on pivotal tracker. For now, I'm the main person doing this but I hope that at some point we will have a better management strategy. 
+
+Criteria I'm using:
+
+  * Does the feature/bug report help a live, right now project?
+  * Is it interesting?
+  * Is it critical?
+  * Will it benefit a large number of people? 
