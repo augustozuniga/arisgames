@@ -1,0 +1,11 @@
+#summary The sizes and specs for using media in ARIS
+
+NPC Media Size: 320x416px
+
+Plaques: 320x320
+
+Items Image Media Size: 320x416
+
+Map Icon Media Size: 30x30
+
+Lists (Inventory, Quests, etc) Icon Media Size: 48x48
