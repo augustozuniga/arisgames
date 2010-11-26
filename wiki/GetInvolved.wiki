@@ -16,6 +16,12 @@ If you think this project is cool we could really use your help! Here are some s
 == Document ==
 Help document the code that already exists by adding javaDoc code directly in the source files or editing these wiki pages
 
+== Design ==
+Do you have some ideas on how the interface could be improved? Draw them up and share them with us. We always need new storyboard ideas!
+
+== Collect ==
+ARIS authors need a growing collection of stock media to get them started. If you have skills in photoshop, iMove, Audacity, etc we could use your help to collect stock images for items (320x320), npcs (320x480), icons (30x30), video (480x320 h264) and audio (mp3).
+
 == Testing ==
 If you offer to beta test releases, I'll email you with testing copies of new releases for feedback.
 
