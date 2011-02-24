@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<v:ItemEditorCharacterView xmlns:mx="http://www.adobe.com/2006/mxml"
+                                  xmlns:main="org.arisgames.editor.*"
+                                  xmlns:v="org.arisgames.editor.view.*"
+                                  xmlns:c="org.arisgames.editor.components.*"
+                                  title="Character Editor"
+                                  paddingTop="10"
+                                  paddingLeft="10"
+                                  paddingRight="10"
+                                  paddingBottom="10"
+								  >
+
+	<mx:VBox>
+		<mx:FormItem label="Character Name"/>
+		<mx:TextInput id="theName" width="200"/>
+	</mx:VBox>
+    <mx:HBox id="hbox">
+        <c:ItemEditorMediaDisplayMX id="mediaDisplay"/>
+    	<mx:Form>
+			<mx:VBox>
+				<mx:FormItem label="Greeting"/>
+				<mx:TextArea id="greeting" width="185" height="70"/>
+			</mx:VBox>
+			<mx:VBox>
+				<mx:FormItem label="Developer Notes"/>
+				<mx:TextArea id="description" width="185" height="70"/>
+			</mx:VBox>
+		</mx:Form>
+	</mx:HBox>
+	
+	
+	<mx:DataGrid id="dg" width="415" rowCount="10" dataProvider="{conversations}" editable="true"  draggableColumns="false">
+		<mx:columns>
+			<!--<mx:DataGridColumn dataField="questId" headerText="Id" editable="false" width="50"/>-->
+			<mx:DataGridColumn dataField="linkText" headerText="Option" editable="true" width="80"/>
+			<mx:DataGridColumn dataField="scriptText" headerText="Script" editable="true"/>
+			<mx:DataGridColumn headerText="Requires" editable="false" width="65">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Button label="+" click="outerDocument.handleConversationRequirementsButton(event)" />
+					</mx:Component>	
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="Exchange" editable="false" width="65">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:Button label="+" click="outerDocument.handleConversationPlayerStateChangesButton(event)" />
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+			<mx:DataGridColumn headerText="Delete" editable="false" width="55">
+				<mx:itemRenderer>
+					<mx:Component>
+						<mx:LinkButton label="X" click="outerDocument.handleDeleteButtonClick(event)" />
+					</mx:Component>
+				</mx:itemRenderer>
+			</mx:DataGridColumn>
+		</mx:columns>
+	</mx:DataGrid>
+	
+	<mx:ControlBar width="100%" horizontalAlign="right">
+		<mx:Button id = "addConversationButton" label="+"/>
+	</mx:ControlBar>	
+	
+    <mx:ControlBar id="folderControlBar">
+        <mx:Spacer width="100%" id="spacer"/>
+        <mx:Button id="cancelButton" label="Cancel"/>
+        <mx:Button id="saveButton" label="Save And Close"/>
+    </mx:ControlBar>
+
+    <mx:StringValidator id="v1" source="{theName}" property="text" minLength="1" maxLength="50" required="true"/>
+    <mx:StringValidator id="v2" source="{description}" property="text" minLength="1" maxLength="16384" required="false"/>
+    <mx:StringValidator id="v3" source="{greeting}" property="text" minLength="1" maxLength="16384" required="false"/>
+
+</v:ItemEditorCharacterView>
