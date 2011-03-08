@@ -1,0 +1,53 @@
+package org.arisgames.editor.data
+{
+import org.arisgames.editor.util.AppUtils;
+
+[Bindable]
+public class PlaceMark
+{
+    public var id:Number;
+    public var latitude:Number;
+    public var longitude:Number;
+    public var contentType:Number;
+    public var contentId:Number;
+    public var name:String;
+    public var description:String;
+    public var quantity:Number;
+    public var errorRange:Number;
+    public var hidden:Boolean = false;
+    public var forcedView:Boolean = false;
+	public var quickTravel:Boolean = false;	
+	public var qrCode:String;
+
+
+    /**
+     * Constructor
+     */
+    public function PlaceMark()
+    {
+        super();
+        name = "PlaceMark At " + new Date().toString();
+		
+		//Generate a random qr code
+		var a:String = "123456789";
+		var alphabet:Array = a.split("");
+		qrCode = "";
+		for (var i:Number = 0; i < 4; i++){
+			qrCode += alphabet[Math.floor(Math.random() * alphabet.length)];
+		}
+		
+		quantity = 1;
+
+    }
+
+    public function getContentTypeForPublicDisplayAsString():String
+    {
+        return AppUtils.getContentTypeForAppViewAsString(contentType);
+    }
+
+    public function getContentTypeForDataBaseAsString():String
+    {
+        return AppUtils.getContentTypeForDatabaseAsString(contentType);
+    }
+}
+}
