@@ -107,7 +107,7 @@
         <bgPattern>topOnly</bgPattern>
       </controlProperties>
     </control>
-    <control controlID="29" controlTypeID="com.balsamiq.mockups::PointyButton" x="721" y="655" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="22" locked="false" isInGroup="-1">
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::PointyButton" x="605" y="655" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="22" locked="false" isInGroup="-1">
       <controlProperties>
         <direction>left</direction>
         <text>Untitled%20Note</text>
@@ -149,7 +149,7 @@
         <text>I%20noticed%20that%20....</text>
       </controlProperties>
     </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::Arrow" x="233" y="590" w="670" h="259" measuredW="150" measuredH="100" zOrder="31" locked="false" isInGroup="-1">
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Arrow" x="233" y="589" w="670" h="259" measuredW="150" measuredH="100" zOrder="31" locked="false" isInGroup="-1">
       <controlProperties>
         <backgroundAlpha>0.25</backgroundAlpha>
         <leftArrow>false</leftArrow>
@@ -235,11 +235,16 @@
         <icon>CheckMarkIcon%7Csmall</icon>
       </controlProperties>
     </control>
-    <control controlID="52" controlTypeID="com.balsamiq.mockups::Arrow" x="198" y="641" w="720" h="223" measuredW="150" measuredH="100" zOrder="44" locked="false" isInGroup="-1">
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::PointyButton" x="895" y="654" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="44" locked="false" isInGroup="-1">
       <controlProperties>
-        <backgroundAlpha>0.25</backgroundAlpha>
-        <leftArrow>false</leftArrow>
-        <text>Touch</text>
+        <direction>left</direction>
+        <text>Untitled%20Note</text>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::PointyButton" x="605" y="122" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="45" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>Untitled%20Note</text>
       </controlProperties>
     </control>
   </controls>
