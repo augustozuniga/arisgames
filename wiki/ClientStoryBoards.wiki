@@ -21,4 +21,10 @@
 
 = Note Viewer =
 
+[http://arisgames.googlecode.com/svn/wiki/clientMockups/NoteViewer.png]
+
+
 = Comments =
+
+
+[http://arisgames.googlecode.com/svn/wiki/clientMockups/NoteComments.png]
