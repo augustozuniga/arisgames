@@ -247,5 +247,10 @@
         <text>Untitled%20Note</text>
       </controlProperties>
     </control>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::StickyNote" x="374" y="356" w="-1" h="-1" measuredW="109" measuredH="123" zOrder="46" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Play%20Audio%20Inline%20with%20default%20Apple%20player</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>

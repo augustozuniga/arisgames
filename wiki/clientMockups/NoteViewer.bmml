@@ -1,0 +1,101 @@
+<mockup version="1.0" skin="sketch" measuredW="517" measuredH="564" mockupW="445" mockupH="510">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="72" y="54" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bgPattern>topBlueBottom</bgPattern>
+        <bgTransparent>true</bgTransparent>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::PointyButton" x="104" y="160" w="-1" h="-1" measuredW="76" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>Notebook</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="180" y="162" w="-1" h="-1" measuredW="97" measuredH="24" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <size>16</size>
+        <text>Untitled%20Note</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Icon" x="197" y="446" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <icon>AddCommentIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Icon" x="275" y="446" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>15658734</color>
+        <icon>ThumbsUpIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Icon" x="110" y="446" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <icon>JumpOutIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::PointyButton" x="280" y="159" w="-1" h="-1" measuredW="42" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>2848996</color>
+        <direction>center</direction>
+        <text>Edit</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Icon" x="178" y="397" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <icon>VolumeIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Icon" x="139" y="397" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <icon>CameraIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Icon" x="218" y="397" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <icon>VolumeIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Icon" x="258" y="397" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <icon>VolumeIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Image" x="98" y="193" w="224" h="253" measuredW="77" measuredH="79" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Image%2C%20Video%2C%20Text%2C%20Audio</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="286" y="459" w="-1" h="-1" measuredW="17" measuredH="17" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <size>10</size>
+        <text>13</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::Label" x="207" y="450" w="-1" h="-1" measuredW="13" measuredH="17" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <size>10</size>
+        <text>3</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::StickyNote" x="354" y="160" w="163" h="123" measuredW="109" measuredH="123" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Edit%20will%20appear%20only%20if%20the%20current%20user%20owns%20the%20note</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::StickyNote" x="360" y="400" w="157" h="151" measuredW="109" measuredH="123" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Previews%20of%20video%20and%20Images%20will%20display%20below.%20A%20horizontal%20swipe%20will%20also%20navigate%20to%20other%20note%20componants</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,78 @@
+<mockup version="1.0" skin="sketch" measuredW="720" measuredH="583" mockupW="658" mockupH="510">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="62" y="73" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bgPattern>topOnly</bgPattern>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::PointyButton" x="91" y="180" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>Untitled%20Note</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="191" y="182" w="-1" h="-1" measuredW="82" measuredH="24" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <size>16</size>
+        <text>Comments</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="101" y="257" w="-1" h="-1" measuredW="44" measuredH="17" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>djgagnon</text>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::PointyButton" x="97" y="222" w="212" h="-1" measuredW="120" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>13576743</color>
+        <direction>center</direction>
+        <text>New%20Comment%20+</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="101" y="274" w="156" h="56" measuredW="417" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>13</size>
+        <text>It%20will%20save%20a%20whole%20lot%20of%20hassle%20if%20note%20comments%20are%20only%20multiline%20text.%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Icon" x="264" y="264" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>3355443</color>
+        <icon>ThumbsUpIcon%7Cmedium</icon>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="273" y="277" w="-1" h="-1" measuredW="18" measuredH="17" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>13</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::iPhone" x="438" y="73" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bgPattern>topOnly</bgPattern>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::PointyButton" x="467" y="180" w="-1" h="-1" measuredW="85" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>Comments</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="567" y="182" w="-1" h="-1" measuredW="112" measuredH="24" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>16777215</color>
+        <size>16</size>
+        <text>New%20Comment</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="474" y="222" w="205" h="123" measuredW="417" measuredH="21" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>13</size>
+        <text>It%20will%20save%20a%20whole%20lot%20of%20hassle%20if%20note%20comments%20are%20only%20multiline%20text.%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::iPhoneKeyboard" x="465" y="341" w="-1" h="-1" measuredW="227" measuredH="160" zOrder="12" locked="false" isInGroup="-1"/>
+  </controls>
+</mockup>
