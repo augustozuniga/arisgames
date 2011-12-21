@@ -103,5 +103,11 @@
         <icon>VolumeIcon%7Cmedium</icon>
       </controlProperties>
     </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Label" x="177" y="202" w="66" h="21" measuredW="31" measuredH="21" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <align>center</align>
+        <text>Title</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>

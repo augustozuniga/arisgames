@@ -51,14 +51,14 @@
         <text>Game%20Tags</text>
       </controlProperties>
     </control>
-    <control controlID="128" controlTypeID="com.balsamiq.mockups::Label" x="925" y="331" w="-1" h="-1" measuredW="92" measuredH="24" zOrder="29" locked="false" isInGroup="-1">
+    <control controlID="128" controlTypeID="com.balsamiq.mockups::Label" x="925" y="329" w="-1" h="-1" measuredW="92" measuredH="24" zOrder="29" locked="false" isInGroup="-1">
       <controlProperties>
         <bold>true</bold>
         <size>16</size>
         <text>Player%20Tags</text>
       </controlProperties>
     </control>
-    <control controlID="129" controlTypeID="com.balsamiq.mockups::iPhoneMenu" x="922" y="355" w="-1" h="-1" measuredW="215" measuredH="97" zOrder="30" locked="false" isInGroup="-1">
+    <control controlID="129" controlTypeID="com.balsamiq.mockups::iPhoneMenu" x="922" y="395" w="-1" h="-1" measuredW="215" measuredH="97" zOrder="30" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Subkulture%20%281%20Note%29%0ASocioEconomic%20%282%20Notes%29%0ARace%20%282%20notes%29</text>
       </controlProperties>
@@ -185,9 +185,9 @@
         <text>Mine</text>
       </controlProperties>
     </control>
-    <control controlID="150" controlTypeID="com.balsamiq.mockups::Label" x="148" y="202" w="-1" h="-1" measuredW="38" measuredH="21" zOrder="20" locked="false" isInGroup="-1">
+    <control controlID="150" controlTypeID="com.balsamiq.mockups::Label" x="144" y="202" w="-1" h="-1" measuredW="48" measuredH="21" zOrder="20" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Public</text>
+        <text>Shared</text>
       </controlProperties>
     </control>
     <control controlID="151" controlTypeID="com.balsamiq.mockups::Label" x="203" y="202" w="-1" h="-1" measuredW="48" measuredH="21" zOrder="21" locked="false" isInGroup="-1">
@@ -448,6 +448,17 @@
           </groupChildrenDescriptors>
         </control>
       </groupChildrenDescriptors>
+    </control>
+    <control controlID="157" controlTypeID="com.balsamiq.mockups::iPhoneMenu" x="923" y="353" w="-1" h="-1" measuredW="215" measuredH="39" zOrder="36" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Create%20New%20Tag</text>
+      </controlProperties>
+    </control>
+    <control controlID="158" controlTypeID="com.balsamiq.mockups::PointyButton" x="1069" y="358" w="-1" h="-1" measuredW="63" measuredH="27" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>center</direction>
+        <text>Create</text>
+      </controlProperties>
     </control>
   </controls>
 </mockup>
