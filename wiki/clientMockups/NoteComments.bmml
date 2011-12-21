@@ -98,9 +98,9 @@
         <text>Untitled%20Note</text>
       </controlProperties>
     </control>
-    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="509" y="848" w="-1" h="-1" measuredW="155" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="488" y="842" w="-1" h="-1" measuredW="198" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Full%20Screen%20Image%20/%20Video</text>
+        <text>Full%20Screen%20Image%20/%20Video%20Viewer</text>
       </controlProperties>
     </control>
     <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="572" y="707" w="-1" h="-1" measuredW="132" measuredH="24" zOrder="19" locked="false" isInGroup="-1">
@@ -131,6 +131,11 @@
       <controlProperties>
         <direction>center</direction>
         <text>Create</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::StickyNote" x="228" y="479" w="177" h="167" measuredW="109" measuredH="123" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Clicking%20the%20thumbs%20up%20will%20incement%20the%20number%20and%20highlight%20the%20icon.%20Clicking%20it%20again%20will%20reverse%20the%20action.</text>
       </controlProperties>
     </control>
   </controls>
