@@ -1,5 +1,9 @@
 #summary Design Mockups of the ARIS Mobile Client
 
+= Player Tab =
+
+[http://arisgames.googlecode.com/svn/wiki/clientMockups/PlayerAndGroups.png]
+
 = Notebook Tab =
 
 [http://arisgames.googlecode.com/svn/wiki/clientMockups/NotebookHomeScreen.png]
