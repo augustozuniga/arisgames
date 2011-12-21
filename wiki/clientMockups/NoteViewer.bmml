@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="517" measuredH="564" mockupW="445" mockupH="510">
+<mockup version="1.0" skin="sketch" measuredW="565" measuredH="564" mockupW="493" mockupH="510">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="72" y="54" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="-1">
       <controlProperties>
@@ -92,9 +92,9 @@
         <text>Edit%20will%20appear%20only%20if%20the%20current%20user%20owns%20the%20note</text>
       </controlProperties>
     </control>
-    <control controlID="17" controlTypeID="com.balsamiq.mockups::StickyNote" x="360" y="400" w="157" h="151" measuredW="109" measuredH="123" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::StickyNote" x="360" y="400" w="205" h="151" measuredW="109" measuredH="123" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Previews%20of%20video%20and%20Images%20will%20display%20below.%20A%20horizontal%20swipe%20will%20also%20navigate%20to%20other%20note%20componants</text>
+        <text>Previews%20of%20video%20and%20Images%20will%20display%20below.%20A%20horizontal%20swipe%20will%20navigate%20to%20other%20note%20componants.%20If%20only%20one%20componant%20exists%2C%20do%20not%20show%20the%20previews</text>
       </controlProperties>
     </control>
     <control controlID="18" controlTypeID="com.balsamiq.mockups::Icon" x="301" y="397" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="16" locked="false" isInGroup="-1">
