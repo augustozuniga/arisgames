@@ -73,7 +73,7 @@
         <text>Image%2C%20Video%2C%20Text%2C%20Audio</text>
       </controlProperties>
     </control>
-    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="286" y="459" w="-1" h="-1" measuredW="17" measuredH="17" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::Label" x="286" y="459" w="-1" h="-1" measuredW="18" measuredH="17" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
         <color>16777215</color>
         <size>10</size>
@@ -95,6 +95,12 @@
     <control controlID="17" controlTypeID="com.balsamiq.mockups::StickyNote" x="360" y="400" w="157" h="151" measuredW="109" measuredH="123" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Previews%20of%20video%20and%20Images%20will%20display%20below.%20A%20horizontal%20swipe%20will%20also%20navigate%20to%20other%20note%20componants</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Icon" x="301" y="397" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <borderStyle>square</borderStyle>
+        <icon>VolumeIcon%7Cmedium</icon>
       </controlProperties>
     </control>
   </controls>
