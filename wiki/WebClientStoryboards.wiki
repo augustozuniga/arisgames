@@ -1,0 +1,5 @@
+#summary Web Access to player features
+
+= Notebook =
+
+[http://arisgames.googlecode.com/svn/wiki/webClient/notebook.png]
