@@ -1,141 +1,177 @@
-<mockup version="1.0" skin="sketch" measuredW="912" measuredH="1108" mockupW="850" mockupH="1035">
+<mockup version="1.0" skin="sketch" measuredW="1549" measuredH="583" mockupW="1428" mockupH="536">
   <controls>
-    <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="62" y="73" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="-1">
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Arrow" x="803" y="222" w="272" h="94" measuredW="150" measuredH="100" zOrder="2" locked="false" isInGroup="-1">
       <controlProperties>
-        <bgPattern>topOnly</bgPattern>
-      </controlProperties>
-    </control>
-    <control controlID="1" controlTypeID="com.balsamiq.mockups::PointyButton" x="91" y="180" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>left</direction>
-        <text>Untitled%20Note</text>
-      </controlProperties>
-    </control>
-    <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="191" y="182" w="-1" h="-1" measuredW="82" measuredH="24" zOrder="2" locked="false" isInGroup="-1">
-      <controlProperties>
-        <color>16777215</color>
-        <size>16</size>
-        <text>Comments</text>
-      </controlProperties>
-    </control>
-    <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="101" y="257" w="-1" h="-1" measuredW="44" measuredH="17" zOrder="3" locked="false" isInGroup="-1">
-      <controlProperties>
-        <size>10</size>
-        <text>djgagnon</text>
-      </controlProperties>
-    </control>
-    <control controlID="4" controlTypeID="com.balsamiq.mockups::PointyButton" x="97" y="222" w="212" h="-1" measuredW="120" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
-      <controlProperties>
-        <color>13576743</color>
-        <direction>center</direction>
-        <text>New%20Comment%20+</text>
-      </controlProperties>
-    </control>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="101" y="274" w="156" h="56" measuredW="417" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
-      <controlProperties>
-        <size>13</size>
-        <text>It%20will%20save%20a%20whole%20lot%20of%20hassle%20if%20note%20comments%20are%20only%20multiline%20text.%20</text>
-      </controlProperties>
-    </control>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::Icon" x="264" y="264" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="6" locked="false" isInGroup="-1">
-      <controlProperties>
-        <color>3355443</color>
-        <icon>ThumbsUpIcon%7Cmedium</icon>
-      </controlProperties>
-    </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="273" y="277" w="-1" h="-1" measuredW="18" measuredH="17" zOrder="7" locked="false" isInGroup="-1">
-      <controlProperties>
-        <size>10</size>
-        <text>13</text>
-      </controlProperties>
-    </control>
-    <control controlID="11" controlTypeID="com.balsamiq.mockups::iPhone" x="438" y="73" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="8" locked="false" isInGroup="-1">
-      <controlProperties>
-        <bgPattern>topOnly</bgPattern>
-      </controlProperties>
-    </control>
-    <control controlID="12" controlTypeID="com.balsamiq.mockups::PointyButton" x="467" y="180" w="-1" h="-1" measuredW="85" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>left</direction>
-        <text>Comments</text>
-      </controlProperties>
-    </control>
-    <control controlID="16" controlTypeID="com.balsamiq.mockups::Label" x="474" y="222" w="205" h="123" measuredW="417" measuredH="21" zOrder="10" locked="false" isInGroup="-1">
-      <controlProperties>
-        <size>13</size>
-        <text>It%20will%20save%20a%20whole%20lot%20of%20hassle%20if%20note%20comments%20are%20only%20multiline%20text.%20</text>
-      </controlProperties>
-    </control>
-    <control controlID="19" controlTypeID="com.balsamiq.mockups::iPhoneKeyboard" x="465" y="341" w="-1" h="-1" measuredW="227" measuredH="160" zOrder="11" locked="false" isInGroup="-1"/>
-    <control controlID="20" controlTypeID="com.balsamiq.mockups::Icon" x="648" y="306" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="12" locked="false" isInGroup="-1">
-      <controlProperties>
-        <icon>CameraIcon%7Csmall</icon>
-      </controlProperties>
-    </control>
-    <control controlID="21" controlTypeID="com.balsamiq.mockups::Icon" x="624" y="306" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="13" locked="false" isInGroup="-1">
-      <controlProperties>
-        <icon>VolumeIcon%7Csmall</icon>
-      </controlProperties>
-    </control>
-    <control controlID="22" controlTypeID="com.balsamiq.mockups::Icon" x="101" y="330" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="14" locked="false" isInGroup="-1">
-      <controlProperties>
-        <icon>VolumeIcon%7Csmall</icon>
-      </controlProperties>
-    </control>
-    <control controlID="23" controlTypeID="com.balsamiq.mockups::Icon" x="134" y="330" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="15" locked="false" isInGroup="-1">
-      <controlProperties>
-        <icon>CameraIcon%7Csmall</icon>
-      </controlProperties>
-    </control>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::iPhone" x="446" y="598" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="16" locked="false" isInGroup="-1">
-      <controlProperties>
-        <bgPattern>topOnly</bgPattern>
-      </controlProperties>
-    </control>
-    <control controlID="25" controlTypeID="com.balsamiq.mockups::PointyButton" x="474" y="704" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="17" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>left</direction>
-        <text>Untitled%20Note</text>
-      </controlProperties>
-    </control>
-    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="488" y="842" w="-1" h="-1" measuredW="198" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Full%20Screen%20Image%20/%20Video%20Viewer</text>
-      </controlProperties>
-    </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Label" x="572" y="707" w="-1" h="-1" measuredW="132" measuredH="24" zOrder="19" locked="false" isInGroup="-1">
-      <controlProperties>
-        <color>16777215</color>
-        <size>16</size>
-        <text>1-12-2012%20Reco...</text>
-      </controlProperties>
-    </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::Arrow" x="160" y="345" w="440" h="447" measuredW="150" measuredH="100" zOrder="20" locked="false" isInGroup="-1">
-      <controlProperties>
+        <backgroundAlpha>0.5</backgroundAlpha>
         <leftArrow>false</leftArrow>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="29" controlTypeID="com.balsamiq.mockups::Arrow" x="263" y="233" w="316" h="94" measuredW="150" measuredH="100" zOrder="21" locked="false" isInGroup="-1">
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::StickyNote" x="1372" y="264" w="177" h="167" measuredW="109" measuredH="123" zOrder="3" locked="false" isInGroup="-1">
       <controlProperties>
-        <leftArrow>false</leftArrow>
-        <text/>
+        <text>Clicking%20the%20Speaker%20or%20Camera%20allows%20for%20the%20player%20to%20attach%20one%20of%20each%2C%20using%20the%20same%20screens%20as%20when%20editing%20a%20note</text>
       </controlProperties>
     </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::StickyNote" x="735" y="274" w="177" h="167" measuredW="109" measuredH="123" zOrder="22" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Clicking%20the%20Speaker%20or%20Camera%20allows%20for%20the%20player%20to%20attach%20one%20of%20each%2C%20using%20the%20standard%20camera/recorder%20view%20controllers</text>
-      </controlProperties>
-    </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::PointyButton" x="620" y="179" w="-1" h="-1" measuredW="63" measuredH="27" zOrder="23" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>center</direction>
-        <text>Create</text>
-      </controlProperties>
-    </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::StickyNote" x="228" y="479" w="177" h="167" measuredW="109" measuredH="123" zOrder="24" locked="false" isInGroup="-1">
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::StickyNote" x="877" y="331" w="177" h="167" measuredW="109" measuredH="123" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Clicking%20the%20thumbs%20up%20will%20incement%20the%20number%20and%20highlight%20the%20icon.%20Clicking%20it%20again%20will%20reverse%20the%20action.</text>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="__group__" x="1075" y="73" w="282" h="510" measuredW="282" measuredH="510" zOrder="4" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="0" y="0" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="34">
+          <controlProperties>
+            <bgPattern>topOnly</bgPattern>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::PointyButton" x="29" y="107" w="-1" h="-1" measuredW="85" measuredH="27" zOrder="1" locked="false" isInGroup="34">
+          <controlProperties>
+            <direction>left</direction>
+            <text>Comments</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="36" y="149" w="205" h="123" measuredW="417" measuredH="21" zOrder="2" locked="false" isInGroup="34">
+          <controlProperties>
+            <size>13</size>
+            <text>It%20will%20save%20a%20whole%20lot%20of%20hassle%20if%20note%20comments%20are%20only%20multiline%20text.%20</text>
+          </controlProperties>
+        </control>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::iPhoneKeyboard" x="27" y="268" w="-1" h="-1" measuredW="227" measuredH="160" zOrder="3" locked="false" isInGroup="34"/>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::Icon" x="210" y="233" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="4" locked="false" isInGroup="34">
+          <controlProperties>
+            <icon>CameraIcon%7Csmall</icon>
+          </controlProperties>
+        </control>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Icon" x="186" y="233" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="5" locked="false" isInGroup="34">
+          <controlProperties>
+            <icon>VolumeIcon%7Csmall</icon>
+          </controlProperties>
+        </control>
+        <control controlID="6" controlTypeID="com.balsamiq.mockups::PointyButton" x="182" y="106" w="-1" h="-1" measuredW="63" measuredH="27" zOrder="6" locked="false" isInGroup="34">
+          <controlProperties>
+            <direction>center</direction>
+            <text>Create</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="35" controlTypeID="__group__" x="580" y="62" w="282" h="510" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="0" y="0" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="35">
+          <controlProperties>
+            <bgPattern>topOnly</bgPattern>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::PointyButton" x="29" y="107" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="1" locked="false" isInGroup="35">
+          <controlProperties>
+            <direction>left</direction>
+            <text>Untitled%20Note</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="129" y="109" w="-1" h="-1" measuredW="82" measuredH="24" zOrder="2" locked="false" isInGroup="35">
+          <controlProperties>
+            <color>16777215</color>
+            <size>16</size>
+            <text>Comments</text>
+          </controlProperties>
+        </control>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="39" y="184" w="-1" h="-1" measuredW="44" measuredH="17" zOrder="3" locked="false" isInGroup="35">
+          <controlProperties>
+            <size>10</size>
+            <text>djgagnon</text>
+          </controlProperties>
+        </control>
+        <control controlID="4" controlTypeID="com.balsamiq.mockups::PointyButton" x="35" y="149" w="212" h="-1" measuredW="120" measuredH="27" zOrder="4" locked="false" isInGroup="35">
+          <controlProperties>
+            <color>13576743</color>
+            <direction>center</direction>
+            <text>New%20Comment%20+</text>
+          </controlProperties>
+        </control>
+        <control controlID="5" controlTypeID="com.balsamiq.mockups::Label" x="39" y="201" w="156" h="56" measuredW="417" measuredH="21" zOrder="5" locked="false" isInGroup="35">
+          <controlProperties>
+            <size>13</size>
+            <text>It%20will%20save%20a%20whole%20lot%20of%20hassle%20if%20note%20comments%20are%20only%20multiline%20text.%20</text>
+          </controlProperties>
+        </control>
+        <control controlID="6" controlTypeID="com.balsamiq.mockups::Icon" x="202" y="191" w="-1" h="-1" measuredW="32" measuredH="32" zOrder="6" locked="false" isInGroup="35">
+          <controlProperties>
+            <color>3355443</color>
+            <icon>ThumbsUpIcon%7Cmedium</icon>
+          </controlProperties>
+        </control>
+        <control controlID="7" controlTypeID="com.balsamiq.mockups::Label" x="211" y="204" w="-1" h="-1" measuredW="18" measuredH="17" zOrder="7" locked="false" isInGroup="35">
+          <controlProperties>
+            <size>10</size>
+            <text>13</text>
+          </controlProperties>
+        </control>
+        <control controlID="8" controlTypeID="com.balsamiq.mockups::Icon" x="39" y="257" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="8" locked="false" isInGroup="35">
+          <controlProperties>
+            <icon>VolumeIcon%7Csmall</icon>
+          </controlProperties>
+        </control>
+        <control controlID="9" controlTypeID="com.balsamiq.mockups::Icon" x="72" y="257" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="9" locked="false" isInGroup="35">
+          <controlProperties>
+            <icon>CameraIcon%7Csmall</icon>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="36" controlTypeID="__group__" x="121" y="62" w="282" h="510" measuredW="282" measuredH="510" zOrder="1" locked="false" isInGroup="-1">
+      <groupChildrenDescriptors>
+        <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="0" y="0" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="false" isInGroup="36">
+          <controlProperties>
+            <bgPattern>topOnly</bgPattern>
+          </controlProperties>
+        </control>
+        <control controlID="1" controlTypeID="com.balsamiq.mockups::PointyButton" x="28" y="106" w="-1" h="-1" measuredW="96" measuredH="27" zOrder="1" locked="false" isInGroup="36">
+          <controlProperties>
+            <direction>left</direction>
+            <text>Untitled%20Note</text>
+          </controlProperties>
+        </control>
+        <control controlID="2" controlTypeID="com.balsamiq.mockups::Label" x="42" y="244" w="-1" h="-1" measuredW="198" measuredH="21" zOrder="2" locked="false" isInGroup="36">
+          <controlProperties>
+            <text>Full%20Screen%20Image%20/%20Video%20Viewer</text>
+          </controlProperties>
+        </control>
+        <control controlID="3" controlTypeID="com.balsamiq.mockups::Label" x="126" y="109" w="-1" h="-1" measuredW="132" measuredH="24" zOrder="3" locked="false" isInGroup="36">
+          <controlProperties>
+            <color>16777215</color>
+            <size>16</size>
+            <text>1-12-2012%20Reco...</text>
+          </controlProperties>
+        </control>
+      </groupChildrenDescriptors>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Arrow" x="403" y="331" w="256" h="62" measuredW="150" measuredH="100" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.5</backgroundAlpha>
+        <direction>bottom</direction>
+        <leftArrow>true</leftArrow>
+        <rightArrow>false</rightArrow>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::VolumeSlider" x="424" y="206" w="119" h="-1" measuredW="72" measuredH="16" zOrder="7" locked="false" isInGroup="-1"/>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Icon" x="549" y="206" w="-1" h="-1" measuredW="16" measuredH="16" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <icon>XIcon%7Cxsmall</icon>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Arrow" x="516" y="222" w="112" h="108" measuredW="150" measuredH="100" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>0.5</backgroundAlpha>
+        <direction>top</direction>
+        <leftArrow>true</leftArrow>
+        <rightArrow>false</rightArrow>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::StickyNote" x="409" y="47" w="162" h="134" measuredW="109" measuredH="123" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Clicking%20a%20speaker%20will%20display%20the%20standard%20apple%20audio%20player%20for%20the%20duration%20of%20the%20clip</text>
       </controlProperties>
     </control>
   </controls>

@@ -34,9 +34,9 @@
         <text>Notebook</text>
       </controlProperties>
     </control>
-    <control controlID="125" controlTypeID="com.balsamiq.mockups::StickyNote" x="536" y="419" w="-1" h="-1" measuredW="109" measuredH="123" zOrder="26" locked="false" isInGroup="-1">
+    <control controlID="125" controlTypeID="com.balsamiq.mockups::StickyNote" x="536" y="419" w="140" h="123" measuredW="109" measuredH="123" zOrder="26" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Mine%2C%20Public%20and%20Popular%20View</text>
+        <text>Mine%2C%20Public%2C%20Popular%20View%20and%20Tags%20View%20after%20a%20selection%20has%20been%20made</text>
       </controlProperties>
     </control>
     <control controlID="126" controlTypeID="com.balsamiq.mockups::iPhoneMenu" x="921" y="219" w="-1" h="-1" measuredW="215" measuredH="97" zOrder="27" locked="false" isInGroup="-1">
