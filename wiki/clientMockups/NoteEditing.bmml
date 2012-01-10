@@ -40,7 +40,7 @@
     </control>
     <control controlID="90" controlTypeID="com.balsamiq.mockups::StickyNote" x="1083" y="673" w="164" h="128" measuredW="109" measuredH="123" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Touching%20the%20title%20of%20an%20image%2C%20video%20or%20audio%20will%20change%20the%20title%20into%20a%20text%20box%20to%20change%20the%20name</text>
+        <text>Hold%20Touching%20the%20title%20of%20an%20image%2C%20video%20or%20audio%20will%20change%20the%20title%20into%20a%20text%20box%20to%20change%20the%20name%0A%20%0AStandard%20Touch%20will%20open%20that%20item</text>
       </controlProperties>
     </control>
     <control controlID="92" controlTypeID="__group__" x="195" y="1474" w="349" h="510" measuredW="349" measuredH="510" zOrder="2" locked="false" isInGroup="-1">
