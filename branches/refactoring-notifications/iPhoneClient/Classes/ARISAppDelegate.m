@@ -263,6 +263,9 @@ BOOL isShowingNotification;
         [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
         [UIView setAnimationDuration:.5];
             NSLog(@"TabBC frame BEFORE origin: %f tabShowY %d",self.tabBarController.view.frame.origin.y,tabShowY);
+            if(self.tabBarController.modalViewController){
+                self.tabBarController.modalViewController.view.frame = CGRectMake(self.tabBarController.modalViewController.view.frame.origin.x,40+[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-20, self.tabBarController.modalViewController.view.frame.size.width, 440-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+20); 
+            }
         self.tabBarController.view.frame = CGRectMake(self.tabBarController.view.frame.origin.x,40+[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-tabShowY, self.tabBarController.view.frame.size.width, 440-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY); 
             [self.titleLabel setFrame:CGRectMake(0,[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y, 320, 20)];
             [self.descLabel setFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y +20, 320, 15)];
@@ -279,7 +282,7 @@ BOOL isShowingNotification;
             titleLabel.alpha = 1.0;
             descLabel.alpha = 1.0;
         }completion:^(BOOL finished){
-            [UIView animateWithDuration:1.5 delay:1.5 options:UIViewAnimationCurveEaseIn animations:^{
+            [UIView animateWithDuration:1.5 delay:0.0 options:UIViewAnimationCurveEaseIn animations:^{
                 titleLabel.alpha = 0.0;
                 descLabel.alpha = 0.0;
             }completion:^(BOOL finished){
@@ -299,6 +302,9 @@ BOOL isShowingNotification;
     if(!tabBarController.view.hidden){
     [UIView animateWithDuration:.5 delay:0.0 options:UIViewAnimationCurveEaseIn animations:^{
         if(self.tabBarController.view.frame.size.height !=  480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY){
+            if(self.tabBarController.modalViewController){
+                self.tabBarController.modalViewController.view.frame = CGRectMake(self.tabBarController.modalViewController.view.frame.origin.x, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-20, self.tabBarController.modalViewController.view.frame.size.width, 480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+20);             }
+
         self.tabBarController.view.frame = CGRectMake(self.tabBarController.view.frame.origin.x, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-tabShowY, self.tabBarController.view.frame.size.width, 480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY); 
         [self.titleLabel setFrame:CGRectMake(0, -20, 320, 20)];
         [self.descLabel setFrame:CGRectMake(0, -20, 320, 15)];
