@@ -19,7 +19,6 @@
 #import "DataCollectionViewController.h"
 
 BOOL isShowingNotification;
-int tabShowY,tabHideY;
 @implementation ARISAppDelegate
 
 @synthesize window;
@@ -33,7 +32,7 @@ int tabShowY,tabHideY;
 @synthesize networkAlert,serverAlert;
 @synthesize tutorialViewController;
 @synthesize modalPresent,notificationCount;
-@synthesize titleLabel,descLabel,notifArray;
+@synthesize titleLabel,descLabel,notifArray,tabShowY;
 
 
 //@synthesize toolbarViewController;
@@ -51,7 +50,6 @@ int tabShowY,tabHideY;
 	//Load defaults from UserDefaults
 	[[AppModel sharedAppModel] loadUserDefaults];
    
-	tabHideY = 0;
     tabShowY = 20;
     //Log the current Language
 	NSArray *languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
@@ -260,18 +258,17 @@ int tabShowY,tabHideY;
     
     if([self.notifArray count]>0){
         isShowingNotification = YES;
-        tabHideY = 0;
         if(self.tabBarController.view.frame.size.height != 440-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY){//lower frame into position if its not already there
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
         [UIView setAnimationDuration:.5];
-            NSLog(@"TabBC frame BEFORE origin: %f",self.tabBarController.view.frame.origin.y);
+            NSLog(@"TabBC frame BEFORE origin: %f tabShowY %d",self.tabBarController.view.frame.origin.y,tabShowY);
         self.tabBarController.view.frame = CGRectMake(self.tabBarController.view.frame.origin.x,40+[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-tabShowY, self.tabBarController.view.frame.size.width, 440-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY); 
             [self.titleLabel setFrame:CGRectMake(0,[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y, 320, 20)];
             [self.descLabel setFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y +20, 320, 15)];
         [UIView commitAnimations];
         }
-        NSLog(@"TabBC frame AFTER origin: %f",self.tabBarController.view.frame.origin.y);
+        NSLog(@"TabBC frame AFTER origin: %f tabShowY %d",self.tabBarController.view.frame.origin.y,tabShowY);
 
         titleLabel.alpha = 0.0;
         descLabel.alpha = 0.0;
@@ -299,7 +296,7 @@ int tabShowY,tabHideY;
 
 -(void)hideNotifications{
     
-    
+    if(!tabBarController.view.hidden){
     [UIView animateWithDuration:.5 delay:0.0 options:UIViewAnimationCurveEaseIn animations:^{
         if(self.tabBarController.view.frame.size.height !=  480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY){
         self.tabBarController.view.frame = CGRectMake(self.tabBarController.view.frame.origin.x, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-tabShowY, self.tabBarController.view.frame.size.width, 480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY); 
@@ -308,8 +305,8 @@ int tabShowY,tabHideY;
         }
     }completion:^(BOOL finished){
         isShowingNotification = NO;
-        tabShowY = 0;
     }];
+    }
     
     
 }
@@ -909,7 +906,8 @@ int tabShowY,tabHideY;
 	}
 
     if(isShowingNotification){
-        tabHideY = 0;
+        tabShowY = 0;
+
         self.tabBarController.view.frame = CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+40, 320, 420);
     }
 }

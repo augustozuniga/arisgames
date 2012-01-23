@@ -66,8 +66,10 @@
     UILabel *titleLabel;
     UILabel *descLabel;
 NSMutableArray *notifArray;
-}
+    int tabShowY;
 
+}
+@property(readwrite,assign)int tabShowY;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
 @property (nonatomic, retain) UIViewController *defaultViewControllerForMainTabBar;
