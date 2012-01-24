@@ -250,28 +250,34 @@ BOOL isShowingNotification;
         self.gameSelectionTabBarController.view.hidden = NO;
     }
 	//self.waitingIndicatorView = [[WaitingIndicatorView alloc] init];
-    [self showNotifications];
 
 }
 
 -(void)showNotifications{
     
+    NSLog(@"AppDelegate: showNotifications");
+    
     if([self.notifArray count]>0){
-        isShowingNotification = YES;
-        if(self.tabBarController.view.frame.size.height != 440-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY){//lower frame into position if its not already there
+        NSLog(@"AppDelegate: showNotifications: We have something to display");
+        if(!isShowingNotification){//lower frame into position if its not already there
+            isShowingNotification = YES;
+
         [UIView beginAnimations:nil context:nil];
         [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
         [UIView setAnimationDuration:.5];
+            NSLog(@"AppDelegate: showNotifications: Begin Resizing");
             NSLog(@"TabBC frame BEFORE origin: %f tabShowY %d",self.tabBarController.view.frame.origin.y,tabShowY);
             if(self.tabBarController.modalViewController){
                 self.tabBarController.modalViewController.view.frame = CGRectMake(self.tabBarController.modalViewController.view.frame.origin.x,40+[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-20, self.tabBarController.modalViewController.view.frame.size.width, 440-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+20); 
             }
+           
         self.tabBarController.view.frame = CGRectMake(self.tabBarController.view.frame.origin.x,40+[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-tabShowY, self.tabBarController.view.frame.size.width, 440-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY); 
             [self.titleLabel setFrame:CGRectMake(0,[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y, 320, 20)];
             [self.descLabel setFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y +20, 320, 15)];
         [UIView commitAnimations];
         }
         NSLog(@"TabBC frame AFTER origin: %f tabShowY %d",self.tabBarController.view.frame.origin.y,tabShowY);
+        NSLog(@"AppDelegate: showNotifications: Set Text and Init alpha");
 
         titleLabel.alpha = 0.0;
         descLabel.alpha = 0.0;
@@ -279,17 +285,23 @@ BOOL isShowingNotification;
         descLabel.text = [[notifArray objectAtIndex:0] objectForKey:@"prompt"];
         
         [UIView animateWithDuration:1.5 delay:0.0 options:UIViewAnimationCurveEaseIn animations:^{
+            NSLog(@"AppDelegate: showNotifications: Begin Fade in");
             titleLabel.alpha = 1.0;
             descLabel.alpha = 1.0;
         }completion:^(BOOL finished){
+            if(finished){
+                NSLog(@"AppDelegate: showNotifications: Fade in Complete, Begin Fade Out");
             [UIView animateWithDuration:1.5 delay:0.0 options:UIViewAnimationCurveEaseIn animations:^{
                 titleLabel.alpha = 0.0;
                 descLabel.alpha = 0.0;
             }completion:^(BOOL finished){
-                if([notifArray count] > 0)
-                [self.notifArray removeObjectAtIndex:0];
-                [self showNotifications];
+                if(finished){
+                    NSLog(@"AppDelegate: showNotifications: Fade Out Complete, Pop and Start over");
+                    if([notifArray count] > 0) [self.notifArray removeObjectAtIndex:0];
+                    [self showNotifications];
+                }
             }];
+            }
         }];
             }
     else{
@@ -301,11 +313,12 @@ BOOL isShowingNotification;
     
     if(!tabBarController.view.hidden){
     [UIView animateWithDuration:.5 delay:0.0 options:UIViewAnimationCurveEaseIn animations:^{
-        if(self.tabBarController.view.frame.size.height !=  480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY){
+        if(isShowingNotification){
             if(self.tabBarController.modalViewController){
                 self.tabBarController.modalViewController.view.frame = CGRectMake(self.tabBarController.modalViewController.view.frame.origin.x, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-20, self.tabBarController.modalViewController.view.frame.size.width, 480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+20);             }
-
+            
         self.tabBarController.view.frame = CGRectMake(self.tabBarController.view.frame.origin.x, [UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y-tabShowY, self.tabBarController.view.frame.size.width, 480-[UIApplication sharedApplication].statusBarFrame.size.height+[UIApplication sharedApplication].statusBarFrame.origin.y+tabShowY); 
+            
         [self.titleLabel setFrame:CGRectMake(0, -20, 320, 20)];
         [self.descLabel setFrame:CGRectMake(0, -20, 320, 15)];
         }
@@ -826,7 +839,6 @@ BOOL isShowingNotification;
 	//Display
 
     [self.tabBarController presentModalViewController:self.nearbyObjectNavigationController animated:NO];
-    
     [nearbyObjectNavigationController release];
 }
 
