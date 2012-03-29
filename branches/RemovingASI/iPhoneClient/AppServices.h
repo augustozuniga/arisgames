@@ -21,7 +21,6 @@
 #import "JSONConnection.h"
 #import "JSONResult.h"
 #import "JSON.h"
-#import "ASIFormDataRequest.h"
 #import "ARISAppDelegate.h"
 #import "Comment.h"
 #import "Note.h"
@@ -122,8 +121,8 @@ extern NSString *const kARISServerServicePackage;
 - (void)updateCommentWithId: (int)noteId andTitle:(NSString *)title andRefresh:(BOOL)refresh;
 - (void)likeNote:(int)noteId;
 -(void)unLikeNote:(int)noteId;
-- (void)uploadNoteContentRequestFinished:(ASIFormDataRequest *)request;
-- (void)uploadNoteRequestFailed:(ASIHTTPRequest *)request;
+- (void)uploadNoteContentRequestFinished:(NSURLRequest *)request;
+- (void)uploadNoteRequestFailed:(NSURLRequest *)request;
 - (void)updateServerWithPlayerLocation;
 - (void)updateServerNodeViewed: (int)nodeId;
 - (void)updateServerItemViewed: (int)itemId;

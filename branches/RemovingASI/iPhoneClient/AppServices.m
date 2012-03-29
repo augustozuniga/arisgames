@@ -355,6 +355,7 @@ NSString *const kARISServerServicePackage = @"v1";
     
 }
 
+/*
 - (void)uploadImageForMatching:(NSData *)fileData{
 
    	// setting up the request object now
@@ -375,6 +376,7 @@ NSString *const kARISServerServicePackage = @"v1";
 	[request setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
 	[request startAsynchronous];
 }
+*/
 
 -(void)createItemAndPlaceOnMap:(Item *)item {
     NSLog(@"AppModel: Creating Note: %@",item.name);
@@ -402,6 +404,7 @@ NSString *const kARISServerServicePackage = @"v1";
     
 }
 
+/*
 - (void)createItemAndPlaceOnMapFromFileData:(NSData *)fileData fileName:(NSString *)fileName 
 										title:(NSString *)title description:(NSString*)description {
     
@@ -428,7 +431,7 @@ NSString *const kARISServerServicePackage = @"v1";
 	[request setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
 	[request startAsynchronous];
 }
-
+*/
 
 -(void)createItemAndGivetoPlayer:(Item *)item {
     NSLog(@"AppModel: Creating Note: %@",item.name);
@@ -673,6 +676,7 @@ NSString *const kARISServerServicePackage = @"v1";
 
 
 -(void) uploadContentToNoteWithFileURL:(NSURL *)fileURL name:(NSString *)name noteId:(int) noteId type: (NSString *)type{
+/*
     NSURL *url = [[AppModel sharedAppModel].serverURL URLByAppendingPathComponent:[NSString stringWithFormat: @"services/%@/uploadHandler.php",kARISServerServicePackage]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
 	request.timeOutSeconds = 300;
@@ -705,7 +709,7 @@ NSString *const kARISServerServicePackage = @"v1";
 	[request setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
 
 	[request startAsynchronous];
-
+*/
 
 }
 -(void)fetchPlayerNoteListAsync{
@@ -714,8 +718,9 @@ NSString *const kARISServerServicePackage = @"v1";
     else
     [self fetchPlayerNoteListAsynchronously:YES];
 }
-- (void)uploadNoteContentRequestFinished:(ASIFormDataRequest *)request
-{
+/*
+- (void)uploadNoteContentRequestFinished:(ASIFormDataRequest *)request {
+
     NSString *response = [request responseString];
     
 	NSLog(@"Model: Upload Note Content Request Finished. Response: %@", response);
@@ -753,7 +758,6 @@ NSString *const kARISServerServicePackage = @"v1";
     [AppModel sharedAppModel].isGameNoteList = NO;
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchPlayerNoteListAsync)]; 
 	[jsonConnection release];
-    
 }
 
 - (void)uploadNoteRequestFailed:(ASIHTTPRequest *)request
@@ -770,11 +774,13 @@ NSString *const kARISServerServicePackage = @"v1";
 	//if (description == NULL) description = @"filename"; 
 
     [[AppModel sharedAppModel].uploadManager contentFailedUploading];
-       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NewNoteListReady" object:nil]];  }
+       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NewNoteListReady" object:nil]];  
+ }
+ */
 
 - (void)createItemAndGiveToPlayerFromFileData:(NSData *)fileData fileName:(NSString *)fileName 
 										title:(NSString *)title description:(NSString*)description {
-    
+/*
 	// setting up the request object now
     NSURL *url = [[AppModel sharedAppModel].serverURL URLByAppendingPathComponent:[NSString stringWithFormat: @"services/%@/uploadHandler.php",kARISServerServicePackage]];
 	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
@@ -797,7 +803,9 @@ NSString *const kARISServerServicePackage = @"v1";
 	[appDelegate showNewWaitingIndicator:@"Uploading" displayProgressBar:YES];
 	[request setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
 	[request startAsynchronous];
+*/
 }
+
 -(void)updateNoteWithNoteId:(int)noteId title:(NSString *)title publicToMap:(BOOL)publicToMap publicToList:(BOOL)publicToList{
     NSLog(@"Model: Updating Note");
 	
@@ -878,6 +886,7 @@ NSString *const kARISServerServicePackage = @"v1";
 
 }
 
+/*
 - (void)uploadImageForMatchingRequestFinished:(ASIFormDataRequest *)request
 {
 	ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -1015,7 +1024,7 @@ NSString *const kARISServerServicePackage = @"v1";
 	[alert show];
 	[alert release];
 }
-
+*/
 
 
 - (void)updateServerWithPlayerLocation {
