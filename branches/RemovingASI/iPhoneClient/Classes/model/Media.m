@@ -22,8 +22,8 @@ NSString *const kMediaTypeAudio = @"Audio";
 	
 	if (self = [super init]) {
 		uid = anId;
-		url = [aUrl retain];
-		type = [aType retain];
+		url = aUrl;
+		type = aType;
 	}
 	
     NSNotificationCenter *dispatcher = [NSNotificationCenter defaultCenter];
@@ -37,18 +37,13 @@ NSString *const kMediaTypeAudio = @"Audio";
 - (void)didReceiveMemoryWarning {
     if (image) {
         NSLog(@"Media: Low Memory Warning - Throwing out Cached Media");
-        [image release];
         image = nil;
     }
 }
 
 
 - (void)dealloc {
-	[url release];
-	[type release];
-	[image release];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super dealloc];
 }
 
 @end

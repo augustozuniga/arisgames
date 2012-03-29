@@ -47,7 +47,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                 andUserInfo:nil]; 
     
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseLoginResponseFromJSON:)]; 
-	[jsonConnection release];
 	
 }
 -(void)setShowPlayerOnMap{
@@ -59,7 +58,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                 andUserInfo:nil]; 
     
 	[jsonConnection performAsynchronousRequestWithHandler:nil]; 
-	[jsonConnection release];
 }
 - (void)registerNewUser:(NSString*)userName password:(NSString*)pass 
 			  firstName:(NSString*)firstName lastName:(NSString*)lastName email:(NSString*)email {
@@ -73,7 +71,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                 andUserInfo:nil]; 
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseSelfRegistrationResponseFromJSON:)]; 
-	[jsonConnection release];
 	
 }
 
@@ -91,7 +88,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; 
-	[jsonConnection release];
 }
 
 - (void)updateServerWebPageViewed: (int)webPageId {
@@ -109,7 +105,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; 
-	[jsonConnection release];
     
 }
 - (void)updateServerPanoramicViewed: (int)panoramicId {
@@ -127,7 +122,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; 
-	[jsonConnection release];
     
 }
 
@@ -146,7 +140,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; 
-	[jsonConnection release];
     
 }
 
@@ -164,7 +157,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; 
-	[jsonConnection release];
     
 }
 
@@ -183,7 +175,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:nil]; 
-	[jsonConnection release];
     
 }
 
@@ -201,7 +192,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:nil];
-	[jsonConnection release];
     
 }
 
@@ -219,7 +209,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:nil]; 
-	[jsonConnection release];
     
 }
 
@@ -237,7 +226,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:nil]; 
-	[jsonConnection release];
     
 }
 
@@ -267,7 +255,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                       andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:
      @selector(parseStartOverFromJSON:)]; 
-	[jsonConnection release];
     
     [(ARISAppDelegate *)[[UIApplication sharedApplication] delegate] returnToHomeView];
     
@@ -291,7 +278,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
 	[self forceUpdateOnNextLocationListFetch];
-	[jsonConnection release];
 	
 }
 
@@ -313,7 +299,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
 	[self forceUpdateOnNextLocationListFetch];
-	[jsonConnection release];
     
 }
 - (void)updateServerDropNoteHere: (int)noteId atCoordinate: (CLLocationCoordinate2D) coordinate{
@@ -333,7 +318,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
 	[self forceUpdateOnNextLocationListFetch];
-	[jsonConnection release];
     
 }
 - (void)updateServerDestroyItem: (int)itemId qty:(int)qty {
@@ -351,7 +335,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
-	[jsonConnection release];
     
 }
 
@@ -400,7 +383,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; 
-	[jsonConnection release];
     
 }
 
@@ -455,7 +437,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; 
-	[jsonConnection release];
 
 }
 -(void)updateCommentWithId:(int)noteId andTitle:(NSString *)title andRefresh:(BOOL)refresh{
@@ -477,7 +458,6 @@ NSString *const kARISServerServicePackage = @"v1";
 
         else
 	[jsonConnection performAsynchronousRequestWithHandler:nil]; 
-	[jsonConnection release];
 	
 }
 -(void)likeNote:(int)noteId{
@@ -492,7 +472,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments
                                                                andUserInfo:nil];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	[jsonConnection release];
 
 }
 -(void)unLikeNote:(int)noteId{
@@ -508,7 +487,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	[jsonConnection release];
 }
 
 -(int)addCommentToNoteWithId:(int)noteId andTitle:(NSString *)title{
@@ -527,7 +505,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	[jsonConnection release];
 	
 	
 	if (!jsonResult) {
@@ -551,7 +528,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	[jsonConnection release];
 	
 	
 	if (!jsonResult) {
@@ -588,7 +564,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:userInfo];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(contentAddedToNoteWithText:)]; 
-	[jsonConnection release];
 }
 
 
@@ -607,7 +582,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(sendNotificationToNoteViewer)]; 
-	[jsonConnection release];
     }
 
 }
@@ -629,7 +603,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
     [jsonConnection performAsynchronousRequestWithHandler:nil]; 
-	[jsonConnection release];
 	
 }
 
@@ -649,7 +622,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(sendNotificationToNotebookViewer)]; 
-	[jsonConnection release];
     }
     else{
         NSLog(@"Tried deleting note 0 and that's a no-no!");
@@ -821,7 +793,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
-	[jsonConnection release];
 
 }
 - (void)updateNoteContent:(int)contentId title:(NSString *)text;
@@ -838,7 +809,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
-	[jsonConnection release];
     
 }
 
@@ -855,7 +825,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
-	[jsonConnection release];
     
 }
 -(void)updateItem:(Item *)item {
@@ -882,7 +851,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(fetchAllPlayerLists)]; //This is a cheat to make sure that the fetch Happens After 
-	[jsonConnection release];
 
 }
 
@@ -1054,7 +1022,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                andArguments:arguments 
                                                                 andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseUpdateServerWithPlayerLocationFromJSON:)]; 
-	[jsonConnection release];
 	
 }
 
@@ -1082,7 +1049,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments 
                                                                andUserInfo:nil];
 	JSONResult *jsonResult = [jsonConnection performSynchronousRequest]; 
-	[jsonConnection release];
 	
 	
 	if (!jsonResult) {
@@ -1180,10 +1146,7 @@ NSString *const kARISServerServicePackage = @"v1";
 	NSMutableDictionary *tmpQuestList = [[NSMutableDictionary alloc] init];
 	[tmpQuestList setObject:activeQuestObjects forKey:@"active"];
 	[tmpQuestList setObject:completedQuestObjects forKey:@"completed"];
-	[activeQuestObjects release];
-	[completedQuestObjects release];
 	[AppModel sharedAppModel].questList = tmpQuestList;
-	[tmpQuestList release];
     
 	
 	[AppModel sharedAppModel].inventory = [[NSMutableDictionary alloc] initWithCapacity:10];
@@ -1208,7 +1171,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"getTabBarItemsForGame"
                                                               andArguments:arguments andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameTabListFromJSON:)]; 
-	[jsonConnection release];
 
 }
 
@@ -1229,7 +1191,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"getQRCodeNearbyObjectForPlayer"
                                                               andArguments:arguments andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseQRCodeObjectFromJSON:)]; 
-	[jsonConnection release];
 	
 }	
 
@@ -1246,7 +1207,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"getNpcConversationsForPlayerAfterViewingNode"
                                                               andArguments:arguments andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseConversationNodeOptionsFromJSON:)]; 
-	[jsonConnection release];
     
 }
 
@@ -1262,7 +1222,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	if (YesForAsyncOrNoForSync){
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameNpcListFromJSON:)]; 
-		[jsonConnection release];
 	}
 	else [self parseGameNpcListFromJSON: [jsonConnection performSynchronousRequest]];
     
@@ -1285,7 +1244,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	if (YesForAsyncOrNoForSync){
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameNoteListFromJSON:)]; 
-		[jsonConnection release];
 	}
 	else [self parseGameNoteListFromJSON: [jsonConnection performSynchronousRequest]];
     
@@ -1309,7 +1267,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	if (YesForAsyncOrNoForSync){
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parsePlayerNoteListFromJSON:)]; 
-		[jsonConnection release];
 	}
 	else [self parsePlayerNoteListFromJSON: [jsonConnection performSynchronousRequest]];
     
@@ -1327,7 +1284,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	if (YesForAsyncOrNoForSync){
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameWebPageListFromJSON:)]; 
-		[jsonConnection release];
 	}
 	else [self parseGameWebPageListFromJSON: [jsonConnection performSynchronousRequest]];
     
@@ -1346,7 +1302,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	
 	if (YesForAsyncOrNoForSync){
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameMediaListFromJSON:)];
-		[jsonConnection release];
 	}
 	else [self parseGameMediaListFromJSON: [jsonConnection performSynchronousRequest]];
 }
@@ -1363,7 +1318,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	
 	if (YesForAsyncOrNoForSync){
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGamePanoramicListFromJSON:)];
-		[jsonConnection release];
 	}
 	else [self parseGamePanoramicListFromJSON: [jsonConnection performSynchronousRequest]];
 }
@@ -1380,7 +1334,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	if (YesForAsyncOrNoForSync) {
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameItemListFromJSON:)]; 
-		[jsonConnection release];
 	}
 	else [self parseGameItemListFromJSON: [jsonConnection performSynchronousRequest]];
 	
@@ -1399,7 +1352,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	if (YesForAsyncOrNoForSync) {
 		[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameNodeListFromJSON:)]; 
-		[jsonConnection release];
 	}
     
 	else {
@@ -1419,7 +1371,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"getAllTagsInGame"
                                                               andArguments:arguments andUserInfo:nil];
     [jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameTagsListFromJSON:)]; 
-	[jsonConnection release];		
 }
 -(void)parseGameTagsListFromJSON:(JSONResult *)jsonResult{
     NSLog(@"AppModel: parseGameTagListFromJSON Beginning");		
@@ -1438,7 +1389,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
     
 	[AppModel sharedAppModel].gameTagList = tempTagsList;
-	[tempTagsList release];
     
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NewNoteListReady" object:nil]];	
     
@@ -1454,7 +1404,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"addTagToNote"
                                                               andArguments:arguments andUserInfo:nil];
     [jsonConnection performAsynchronousRequestWithHandler:@selector(sendNotificationToNotebookViewer)]; 
-	[jsonConnection release];		
 
 }
 
@@ -1468,7 +1417,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"deleteTagFromNote"
                                                               andArguments:arguments andUserInfo:nil];
     [jsonConnection performAsynchronousRequestWithHandler:@selector(sendNotificationToNotebookViewer)]; 
-	[jsonConnection release];		
 
 }
 
@@ -1497,7 +1445,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"getLocationsForPlayer"
                                                               andArguments:arguments andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseLocationListFromJSON:)]; 
-	[jsonConnection release];
 	
 }
 
@@ -1525,7 +1472,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                              andMethodName:@"getItemsForPlayer"
                                                               andArguments:arguments andUserInfo:nil];
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseInventoryFromJSON:)]; 
-	[jsonConnection release];
 	
 }
 
@@ -1554,7 +1500,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameListFromJSON:)]; 
-	[jsonConnection release];
 }
 
 
@@ -1587,7 +1532,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameListFromJSON:)]; 
-	[jsonConnection release];
 }
 
 
@@ -1616,7 +1560,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseQuestListFromJSON:)]; 
-	[jsonConnection release];
 	
 }
 
@@ -1646,7 +1589,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameListFromJSON:)]; 
-	[jsonConnection release];
 }
 
 
@@ -1677,7 +1619,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseGameListFromJSON:)]; 
-	[jsonConnection release];
 }
 
 
@@ -1705,7 +1646,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                               andArguments:arguments andUserInfo:nil];
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseRecentGameListFromJSON:)]; 
-	[jsonConnection release];
 }
 
 
@@ -1722,7 +1662,7 @@ NSString *const kARISServerServicePackage = @"v1";
 }
 
 -(Item *)parseItemFromDictionary: (NSDictionary *)itemDictionary{	
-	Item *item = [[[Item alloc] init] autorelease];
+	Item *item = [[Item alloc] init];
 	item.itemId = [[itemDictionary valueForKey:@"item_id"] intValue];
 	item.name = [itemDictionary valueForKey:@"name"];
 	item.description = [itemDictionary valueForKey:@"description"];
@@ -1743,7 +1683,7 @@ NSString *const kARISServerServicePackage = @"v1";
 -(Node *)parseNodeFromDictionary: (NSDictionary *)nodeDictionary{
 	//Build the node
 	NSLog(@"%@", nodeDictionary);
-	Node *node = [[[Node alloc] init] autorelease];
+	Node *node = [[Node alloc] init];
 	node.nodeId = [[nodeDictionary valueForKey:@"node_id"] intValue];
 	node.name = [nodeDictionary valueForKey:@"title"];
 	node.text = [nodeDictionary valueForKey:@"text"];
@@ -1764,28 +1704,25 @@ NSString *const kARISServerServicePackage = @"v1";
 		text = [nodeDictionary valueForKey:@"opt1_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId andHasViewed:NO];
 		[node addOption:option];
-		[option release];
 	}
 	if ([nodeDictionary valueForKey:@"opt2_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt2_node_id"] intValue] > 0) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt2_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt2_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId andHasViewed:NO];
 		[node addOption:option];
-		[option release];
 	}
 	if ([nodeDictionary valueForKey:@"opt3_node_id"] != [NSNull null] && [[nodeDictionary valueForKey:@"opt3_node_id"] intValue] > 0) {
 		optionNodeId = [[nodeDictionary valueForKey:@"opt3_node_id"] intValue];
 		text = [nodeDictionary valueForKey:@"opt3_text"]; 
 		option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId andHasViewed:NO];
 		[node addOption:option];
-		[option release];
 	}
 	
 	
 	return node;	
 }
 -(Note *)parseNoteFromDictionary: (NSDictionary *)noteDictionary {
-	Note *aNote = [[[Note alloc] init] autorelease];
+	Note *aNote = [[Note alloc] init];
 	aNote.noteId = [[noteDictionary valueForKey:@"note_id"] intValue];
 	aNote.title = [noteDictionary valueForKey:@"title"];
 	aNote.text = [noteDictionary valueForKey:@"text"];    
@@ -1834,8 +1771,8 @@ NSString *const kARISServerServicePackage = @"v1";
         [aNote.tags addObject:tag];
     }
 	NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"noteId"
-                                                  ascending:NO] autorelease];
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"noteId"
+                                                  ascending:NO];
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
     aNote.comments = [[aNote.comments sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
@@ -1843,7 +1780,7 @@ NSString *const kARISServerServicePackage = @"v1";
 }
 
 -(Npc *)parseNpcFromDictionary: (NSDictionary *)npcDictionary {
-	Npc *npc = [[[Npc alloc] init] autorelease];
+	Npc *npc = [[Npc alloc] init];
 	npc.npcId = [[npcDictionary valueForKey:@"npc_id"] intValue];
 	npc.name = [npcDictionary valueForKey:@"name"];
 	npc.greeting = [npcDictionary valueForKey:@"text"];
@@ -1859,14 +1796,14 @@ NSString *const kARISServerServicePackage = @"v1";
 }
 
 - (Tab *)parseTabFromDictionary:(NSDictionary *)tabDictionary{
-    Tab *tab = [[[Tab alloc] init] autorelease];
+    Tab *tab = [[Tab alloc] init];
     tab.tabName = [tabDictionary valueForKey:@"tab"];
     tab.tabIndex = [[tabDictionary valueForKey:@"tab_index"] intValue];
     return tab;
 }
 
 -(WebPage *)parseWebPageFromDictionary: (NSDictionary *)webPageDictionary {
-	WebPage *webPage = [[[WebPage alloc] init] autorelease];
+	WebPage *webPage = [[WebPage alloc] init];
 	webPage.webPageId = [[webPageDictionary valueForKey:@"web_page_id"] intValue];
 	webPage.name = [webPageDictionary valueForKey:@"name"];
 	webPage.url = [webPageDictionary valueForKey:@"url"];    
@@ -1876,7 +1813,7 @@ NSString *const kARISServerServicePackage = @"v1";
 }
 
 -(Panoramic *)parsePanoramicFromDictionary: (NSDictionary *)panoramicDictionary {
-	Panoramic *pan = [[[Panoramic alloc] init] autorelease];
+	Panoramic *pan = [[Panoramic alloc] init];
     pan.panoramicId  = [[panoramicDictionary valueForKey:@"aug_bubble_id"] intValue];
     pan.name = [panoramicDictionary valueForKey:@"name"];
 	pan.description = [panoramicDictionary valueForKey:@"description"];    
@@ -1913,11 +1850,9 @@ NSString *const kARISServerServicePackage = @"v1";
         if ([currentPanMediaDictionary objectForKey:@"media_id"] != [NSNull null] && [[currentPanMediaDictionary objectForKey:@"media_id"] intValue] > 0)
             pm.mediaId = [[currentPanMediaDictionary objectForKey:@"media_id"] intValue];
 		[media addObject:pm];
-		[pm release];
 	}
     
     pan.media = [NSArray arrayWithArray: media];
-    [media release];
 
 	return pan;	
 }
@@ -1980,7 +1915,6 @@ NSString *const kARISServerServicePackage = @"v1";
 
 	[AppModel sharedAppModel].playerNoteList = tempNoteList;
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NewNoteListReady" object:nil]];
-	[tempNoteList release];
     NSLog(@"DONE Parsing Player Note List");
     self.currentlyFetchingPlayerNoteList = NO;
 
@@ -2004,7 +1938,6 @@ NSString *const kARISServerServicePackage = @"v1";
         BOOL hasViewed = [[conversationDictionary valueForKey:@"has_viewed"] boolValue];
 		NodeOption *option = [[NodeOption alloc] initWithText:text andNodeId: optionNodeId andHasViewed:hasViewed];
 		[conversationNodeOptions addObject:option];
-		[option release];
 	}
 	
 	//return conversationNodeOptions;
@@ -2055,7 +1988,7 @@ NSString *const kARISServerServicePackage = @"v1";
 
 - (Game *)parseGame:(NSDictionary *)gameSource {
     //create a new game
-    Game *game = [[[Game alloc] init]autorelease];
+    Game *game = [[Game alloc] init];
     
     game.gameId = [[gameSource valueForKey:@"game_id"] intValue];
     //NSLog(@"AppModel: Parsing Game: %d", game.gameId);		
@@ -2089,8 +2022,8 @@ NSString *const kARISServerServicePackage = @"v1";
     NSString *latitude = [gameSource valueForKey:@"latitude"];
     NSString *longitude = [gameSource valueForKey:@"longitude"];
     if ((NSNull *)latitude != [NSNull null] && (NSNull *)longitude != [NSNull null] )
-        game.location = [[[CLLocation alloc] initWithLatitude:[latitude doubleValue]
-                                                    longitude:[longitude doubleValue]] autorelease];
+        game.location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue]
+                                                    longitude:[longitude doubleValue]];
     else game.location = [[CLLocation alloc] init];
     
     game.authors = [gameSource valueForKey:@"editors"];
@@ -2163,7 +2096,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
     
 	[AppModel sharedAppModel].gameList = tempGameList;
-	[tempGameList release];
     
     NSLog(@"AppModel: parseGameListFromJSON Complete, sending notification");
     
@@ -2190,7 +2122,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
     
 	[AppModel sharedAppModel].recentGameList = tempGameList;
-	[tempGameList release];
     
     NSLog(@"AppModel: parseGameListFromJSON Complete, sending notification");
     
@@ -2212,7 +2143,6 @@ NSString *const kARISServerServicePackage = @"v1";
                                                                andArguments:arguments andUserInfo:nil]; 
 	
 	[jsonConnection performAsynchronousRequestWithHandler:@selector(parseSaveCommentResponseFromJSON:)]; 
-	[jsonConnection release];
 	
 }
 
@@ -2264,11 +2194,9 @@ NSString *const kARISServerServicePackage = @"v1";
 			  location.name, location.objectType, location.objectId, 
 			  location.hidden, location.forcedDisplay, location.allowsQuickTravel, location.qty);
 		[tempLocationsList addObject:location];
-		[location release];
 	}
 	
 	[AppModel sharedAppModel].locationList = tempLocationsList;
-	[tempLocationsList release];
 	
 	//Tell everyone
 	NSLog(@"AppServices: Finished fetching locations from server, model updated");
@@ -2287,7 +2215,6 @@ NSString *const kARISServerServicePackage = @"v1";
     CLLocation *tmpLocation = [[CLLocation alloc] initWithLatitude:[[locationDictionary valueForKey:@"latitude"] doubleValue]
                                                          longitude:[[locationDictionary valueForKey:@"longitude"] doubleValue]];
     location.location = tmpLocation;
-    [tmpLocation release];
     location.error = [[locationDictionary valueForKey:@"error"] doubleValue];
     location.objectType = [locationDictionary valueForKey:@"type"];
     location.objectId = [[locationDictionary valueForKey:@"type_id"] intValue];
@@ -2337,11 +2264,9 @@ NSString *const kARISServerServicePackage = @"v1";
 		
 		Media *media = [[Media alloc] initWithId:uid andUrl:[NSURL URLWithString: fullUrl] ofType:type];
 		[tempMediaList setObject:media forKey:[NSNumber numberWithInt:uid]];
-		[media release];
 	}
 	
 	[AppModel sharedAppModel].gameMediaList = tempMediaList;
-	[tempMediaList release];
 }
 
 
@@ -2359,7 +2284,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
 	
 	[AppModel sharedAppModel].gameItemList = tempItemList;
-	[tempItemList release];
 }
 
 
@@ -2376,7 +2300,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
 	
 	[AppModel sharedAppModel].gameNodeList = tempNodeList;
-	[tempNodeList release];
 }
 
 -(void)parseGameTabListFromJSON: (JSONResult *)jsonResult{
@@ -2410,7 +2333,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
 	
 	[AppModel sharedAppModel].gameNpcList = tempNpcList;
-	[tempNpcList release];
 }
 
 -(void)parseGameWebPageListFromJSON: (JSONResult *)jsonResult{
@@ -2426,7 +2348,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
 	
 	[AppModel sharedAppModel].gameWebPageList = tempWebPageList;
-	[tempWebPageList release];
 }
 -(void)parseGamePanoramicListFromJSON: (JSONResult *)jsonResult{
 	NSArray *panListArray = (NSArray *)jsonResult.data;
@@ -2441,7 +2362,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	}
 	
 	[AppModel sharedAppModel].gamePanoramicList = tempPanoramicList;
-	[tempPanoramicList release];
 }
 
 
@@ -2493,15 +2413,12 @@ NSString *const kARISServerServicePackage = @"v1";
 		NSLog(@"Model: Adding Item: %@", item.name);
         if(item.isAttribute)[tempAttributes setObject:item forKey:[NSString stringWithFormat:@"%d",item.itemId]]; 
             else [tempInventory setObject:item forKey:[NSString stringWithFormat:@"%d",item.itemId]]; 
-		[item release];
 	}
     
     
         
 	[AppModel sharedAppModel].inventory = tempInventory;
     [AppModel sharedAppModel].attributes = tempAttributes;
-    [tempAttributes release];
-	[tempInventory release];
 	
 	NSLog(@"AppModel: Finished fetching inventory from server, model updated");
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NewInventoryReady" object:nil]];
@@ -2599,7 +2516,6 @@ NSString *const kARISServerServicePackage = @"v1";
 		quest.description = [activeQuest objectForKey:@"description"];
 		quest.iconMediaId = [[activeQuest objectForKey:@"icon_media_id"] intValue];
 		[activeQuestObjects addObject:quest];
-		[quest release];
 	}
     
 	//parse out the completed quests into quest objects	
@@ -2615,7 +2531,6 @@ NSString *const kARISServerServicePackage = @"v1";
 		quest.description = [completedQuest objectForKey:@"text_when_complete"];
 		quest.iconMediaId = [[completedQuest objectForKey:@"icon_media_id"] intValue];
 		[completedQuestObjects addObject:quest];
-		[quest release];
 	}
   
 
@@ -2633,9 +2548,6 @@ NSString *const kARISServerServicePackage = @"v1";
 	if ((NSNull *)totalQuests != [NSNull null]) [AppModel sharedAppModel].currentGame.totalQuests = [totalQuests intValue];
 	else [AppModel sharedAppModel].currentGame.totalQuests = 1;
 	
-	[activeQuestObjects release];
-	[completedQuestObjects release];
-	[tmpQuestList release];
     
 	//Sound the alarm
 	NSLog(@"AppModel: Finished fetching quests from server, model updated");

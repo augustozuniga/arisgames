@@ -160,7 +160,6 @@
 	spinner.center = self.center;
 	[self addSubview:spinner];
 	
-	if (connection!=nil) { [connection release]; }
     //if (data!=nil) { [self.data release]; }
 	NSLog(@"AsyncImageView: Loading Image at %@",self.media.url);
     NSURLRequest *request = [NSURLRequest requestWithURL:self.media.url
@@ -187,14 +186,14 @@
     }
     
 	//throw out the connection
-    [self.connection release];
+    self.connection;
     self.connection=nil;
 	
 	//turn the data into an image
 	UIImage* image = [UIImage imageWithData:data];
 	
 	//throw out the data
-	[self.data release];
+	self.data;
     self.data=nil;
 	
 	//Save the image in the media
@@ -237,13 +236,9 @@
 
 - (void)dealloc {
     NSLog(@"AsyncMediaImageView: Dealloc");
-    [super dealloc];
     if(connection){
     [connection cancel];
-    [connection release];
     }
-    if(data)
-    [data release];
     if(mMoviePlayer)
     [mMoviePlayer.moviePlayer cancelAllThumbnailImageRequests];
     [[NSNotificationCenter defaultCenter] removeObserver:self];

@@ -136,9 +136,7 @@
 	UIActivityIndicatorView *activityIndicator = 
 	[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
-	[activityIndicator release];
 	[[self navigationItem] setRightBarButtonItem:barButton];
-	[barButton release];
 	[activityIndicator startAnimating];
 
 
@@ -191,7 +189,7 @@
 	static NSString *CellIdentifier = @"Cell";
     
     if([self.gameList count] == 0){
-        UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.textLabel.text = @"No Games Found";
         cell.detailTextLabel.text = @"You should make one at arisgames.org!";
         return cell;
@@ -226,7 +224,6 @@
         
         
 
-		[temporaryController release];
     }
 	Game *currentGame = [self.gameList objectAtIndex:indexPath.row];
 
@@ -250,7 +247,6 @@
         else{
         currentGame.iconMedia = iconMedia;
         [iconView loadImageFromMedia:iconMedia];
-        [iconMedia release];
         }
     }
 
@@ -264,7 +260,6 @@
     
     [cell.iconView addSubview: iconView];
    
-    [iconView release];
     return cell;
 }
 
@@ -293,7 +288,6 @@
 	GameDetails *gameDetailsVC = [[GameDetails alloc]initWithNibName:@"GameDetails" bundle:nil];
 	gameDetailsVC.game = selectedGame;
 	[self.navigationController pushViewController:gameDetailsVC animated:YES];
-	[gameDetailsVC release];	
 		
 }
 
@@ -304,7 +298,6 @@
 	GameDetails *gameDetailsVC = [[GameDetails alloc]initWithNibName:@"GameDetails" bundle:nil];
 	gameDetailsVC.game = selectedGame;
 	[self.navigationController pushViewController:gameDetailsVC animated:YES];
-	[gameDetailsVC release];	
 }
 
 -(CGFloat)tableView:(UITableView *)aTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -354,11 +347,6 @@
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-    [gameIcons release];
-    [gameTable release];
-    [gameList release];
-    [refreshButton release];
-    [super dealloc];
 }
 
 

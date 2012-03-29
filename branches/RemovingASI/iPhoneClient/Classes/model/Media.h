@@ -22,8 +22,8 @@ extern NSString *const kMediaTypeAudio;
 
 @property(readonly) NSInteger	uid;
 @property(readonly)	NSURL	*url;
-@property(nonatomic, retain) NSString	*type;
-@property(nonatomic, retain) UIImage	*image;
+@property(nonatomic) NSString	*type;
+@property(nonatomic) UIImage	*image;
 
 
 - (id) initWithId:(NSInteger)anId andUrl:(NSURL *)aUrl ofType:(NSString *)aType;

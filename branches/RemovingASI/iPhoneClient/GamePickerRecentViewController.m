@@ -40,12 +40,6 @@
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [gameList release];
-    [refreshButton release];
-    [distanceControl release];
-    [locationalControl release];
-	[gameTable release];
-    [super dealloc];
 }
 
 
@@ -96,9 +90,7 @@
 	UIActivityIndicatorView *activityIndicator = 
 	[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
-	[activityIndicator release];
 	[[self navigationItem] setRightBarButtonItem:barButton];
-	[barButton release];
 	[activityIndicator startAnimating];
 }
 
@@ -160,7 +152,6 @@
         [cell.starView setStarImage:[UIImage imageNamed:@"small-star-hot.png"]
                            forState:kSCRatingViewUserSelected];
 
-		[temporaryController release];
     }
 	
 	Game *currentGame = [self.gameList objectAtIndex:indexPath.row];
@@ -185,7 +176,6 @@
         else{
             currentGame.iconMedia = iconMedia;
             [iconView loadImageFromMedia:iconMedia];
-            [iconMedia release];
         }
     }    
     
@@ -199,7 +189,6 @@
     
     [cell.iconView addSubview: iconView];
     
-    [iconView release];
     
     return cell;
 }
@@ -228,7 +217,6 @@
 	GameDetails *gameDetailsVC = [[GameDetails alloc]initWithNibName:@"GameDetails" bundle:nil];
 	gameDetailsVC.game = selectedGame;
 	[self.navigationController pushViewController:gameDetailsVC animated:YES];
-	[gameDetailsVC release];	
     
 }
 
@@ -239,7 +227,6 @@
 	GameDetails *gameDetailsVC = [[GameDetails alloc]initWithNibName:@"GameDetails" bundle:nil];
 	gameDetailsVC.game = selectedGame;
 	[self.navigationController pushViewController:gameDetailsVC animated:YES];
-	[gameDetailsVC release];	
 }
 
 -(CGFloat)tableView:(UITableView *)aTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
