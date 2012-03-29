@@ -662,7 +662,7 @@ didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         else if([noteC.getType isEqualToString:kNoteContentTypeVideo] || [noteC.getType isEqualToString:kNoteContentTypeAudio]){
             //Create movie player object
-            ARISMoviePlayerViewController *mMoviePlayer = [[ARISMoviePlayerViewController alloc] initWithContentURL:noteC.getMedia.url];
+            ARISMoviePlayerViewController *mMoviePlayer = [[ARISMoviePlayerViewController alloc] initWithContentURL:[NSURL URLWithString:noteC.getMedia.url]];
             mMoviePlayer.moviePlayer.shouldAutoplay = YES;
             [self presentMoviePlayerViewControllerAnimated:mMoviePlayer];
             [mMoviePlayer release];
