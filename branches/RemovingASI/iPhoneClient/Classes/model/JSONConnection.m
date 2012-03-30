@@ -73,7 +73,7 @@
 		return nil;		
 	}				
     
-    [response release];
+    //[response release];
     [error release];
     
 	NSString *resultString = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
