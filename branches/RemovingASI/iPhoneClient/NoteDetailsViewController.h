@@ -14,7 +14,7 @@
 @interface NoteDetailsViewController : UIViewController <UIScrollViewDelegate> {
     IBOutlet UIScrollView *scrollView;
     IBOutlet UIPageControl *pageControl;
-    id __unsafe_unretained delegate;
+    id delegate;
     int pageNumber;
     int numPages;
    // UIButton *mediaPlaybackButton;
@@ -25,14 +25,14 @@
     Note *note;
     IBOutlet UIBarButtonItem *likeButton;
 }
-@property(nonatomic) IBOutlet UIBarButtonItem *likeButton;;
-@property(nonatomic, unsafe_unretained) id delegate;
-@property(nonatomic) IBOutlet UIScrollView *scrollView;
-@property(nonatomic) IBOutlet UIPageControl *pageControl;
-@property(nonatomic) IBOutlet UILabel *commentLabel;
-@property(nonatomic) IBOutlet UILabel *likeLabel;
+@property(nonatomic, retain) IBOutlet UIBarButtonItem *likeButton;;
+@property(nonatomic, assign) id delegate;
+@property(nonatomic, retain) IBOutlet UIScrollView *scrollView;
+@property(nonatomic, retain) IBOutlet UIPageControl *pageControl;
+@property(nonatomic, retain) IBOutlet UILabel *commentLabel;
+@property(nonatomic, retain) IBOutlet UILabel *likeLabel;
 
-@property(nonatomic)Note *note;
+@property(nonatomic,retain)Note *note;
 - (IBAction)saveButtonTouchAction;
 - (IBAction)changePage:(id) sender;
 - (void)loadNewPageWithContent:(NoteContent<NoteContentProtocol> *)content;

@@ -80,6 +80,7 @@
 	
 	
 	[super viewDidLoad];
+    [tempLocationArray release];
 	NSLog(@"ARView Loaded");
 }
 
@@ -125,8 +126,10 @@
 	[tempView addSubview:titleLabel];
 	[tempView addSubview:imageView];
 	
+	[titleLabel release];
+	[imageView release];
 	
-	return tempView;
+	return [tempView autorelease];
 }
 
 - (void)refresh {
@@ -147,6 +150,9 @@
 }
 
 
+- (void)dealloc {
+    [super dealloc];
+}
 
 
 @end

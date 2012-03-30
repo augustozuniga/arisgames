@@ -46,7 +46,7 @@
 	
 	newCoordinate.title = @"";
 	
-	return newCoordinate;
+	return [newCoordinate autorelease];
 }
 
 + (ARGeoCoordinate *)coordinateWithLocation:(CLLocation *)location fromOrigin:(CLLocation *)origin {

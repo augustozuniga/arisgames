@@ -137,5 +137,10 @@ is an NSString.
     return -1;
 }
 
+-(void)dealloc{
+    [super dealloc];
+    [media release];
+
+}
 
 @end

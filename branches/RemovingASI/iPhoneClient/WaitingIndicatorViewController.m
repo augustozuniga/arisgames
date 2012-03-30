@@ -40,6 +40,7 @@
 
 - (void)dealloc {
 	NSLog(@"Waiting Indicator: Dealloc");
+    [super dealloc];
 }
 
 

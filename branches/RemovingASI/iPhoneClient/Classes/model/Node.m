@@ -39,6 +39,7 @@
 	nodeViewController.node = self; //currentNode;
 	
 	[appDelegate displayNearbyObjectView:nodeViewController];
+	[nodeViewController release];
 }
 
 - (NSInteger) numberOfOptions {
@@ -50,6 +51,13 @@
 }
 
 
+- (void) dealloc {
+	[name release];
+	[text release];
+	[options release];
+	[answerString release];
+	[super dealloc];
+}
  
 
 

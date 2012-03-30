@@ -44,5 +44,10 @@
     // Configure the view for the selected state.
 }
 
+- (void)dealloc {
+    [ratingView release];
+    [reviewsLabel release];
+    [super dealloc];
+}
 
 @end

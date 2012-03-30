@@ -18,7 +18,7 @@
 	ARGeoViewController *ARviewController;
 }
 
-@property(nonatomic) NSMutableArray *locations;
+@property(nonatomic, retain) NSMutableArray *locations;
 
 - (UIView *)viewForCoordinate:(NearbyObjectARCoordinate *)coordinate;
 - (void) refresh;

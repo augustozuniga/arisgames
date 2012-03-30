@@ -33,14 +33,19 @@
 
 - (void)dealloc
 {
+    [panoramic release];
     
     [plView.motionManager stopGyroUpdates];
     plView.isGyroEnabled = NO;
     [plView removeFromSuperview];
     [plView stopAnimation];
     [plView removeAllTextures];
+    [plView release];
     
+    [imagePickerController release];
+    [media release];
     
+    [super dealloc];
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,6 +121,7 @@
             lbl.font = [UIFont systemFontOfSize:10];
             lbl.backgroundColor = [UIColor clearColor];
             [self.view addSubview:lbl];
+            [lbl release];
             
 Media *panoMedia = [[AppModel sharedAppModel] mediaForMediaId: [[self.panoramic.media objectAtIndex:x] mediaId]]; 
           self.panoramic.textureArray = [self.panoramic.textureArray arrayByAddingObject:panoMedia];
@@ -228,6 +234,7 @@ Media *panoMedia = [[AppModel sharedAppModel] mediaForMediaId: [[self.panoramic.
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
 	
 		
+	if (connection!=nil) { [connection release]; }
     NSURLRequest* request = [NSURLRequest requestWithURL:aMedia.url
 											 cachePolicy:NSURLRequestUseProtocolCachePolicy
 										 timeoutInterval:60.0];
@@ -246,7 +253,7 @@ Media *panoMedia = [[AppModel sharedAppModel] mediaForMediaId: [[self.panoramic.
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 	
 	//throw out the connection
-    self.connection;
+    [self.connection release];
     self.connection=nil;
 	
 	//turn the data into an image
@@ -261,12 +268,12 @@ Media *panoMedia = [[AppModel sharedAppModel] mediaForMediaId: [[self.panoramic.
     }
     
 	//throw out the data
-	self.data;
+	[self.data release];
     self.data=nil;
 	
 	//Save the image in the media
 	self.media.image = image;
-	self.media.image;
+	[self.media.image retain];
     [self showPanoView];
 	
 	}

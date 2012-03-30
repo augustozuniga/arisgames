@@ -36,13 +36,13 @@
 	id<SceneParserDelegate> delegate;
 }
 
-@property (nonatomic) NSMutableString *currentText;
-@property (nonatomic) NSMutableArray *script;
-@property (nonatomic) NSString *sourceText;
-@property (nonatomic) NSString *exitToTabWithTitle;
-@property (nonatomic) NSString *exitToType;
+@property (nonatomic, retain) NSMutableString *currentText;
+@property (nonatomic, retain) NSMutableArray *script;
+@property (nonatomic, retain) NSString *sourceText;
+@property (nonatomic, retain) NSString *exitToTabWithTitle;
+@property (nonatomic, retain) NSString *exitToType;
 
-@property (readwrite) id<SceneParserDelegate> delegate;
+@property (readwrite, retain) id<SceneParserDelegate> delegate;
 
 
 

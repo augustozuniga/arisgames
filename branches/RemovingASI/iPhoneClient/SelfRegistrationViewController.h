@@ -20,9 +20,9 @@
 	
 }
 
-@property (nonatomic) IBOutlet UITextField *userName;
-@property (nonatomic) IBOutlet UITextField *password;
-@property (nonatomic) IBOutlet UITextField *email;
+@property (nonatomic, retain) IBOutlet UITextField *userName;
+@property (nonatomic, retain) IBOutlet UITextField *password;
+@property (nonatomic, retain) IBOutlet UITextField *email;
 
 
 -(IBAction)submitButtonTouched: (id) sender;

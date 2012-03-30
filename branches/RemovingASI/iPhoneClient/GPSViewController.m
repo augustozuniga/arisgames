@@ -121,6 +121,7 @@ static float INITIAL_SPAN = 0.001;
     NoteEditorViewController *noteVC = [[NoteEditorViewController alloc] initWithNibName:@"NoteEditorViewController" bundle:nil];
     noteVC.delegate = self;
     [self.navigationController pushViewController:noteVC animated:YES];
+    [noteVC release];
 }
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
@@ -235,7 +236,9 @@ static float INITIAL_SPAN = 0.001;
 	UIActivityIndicatorView *activityIndicator = 
 	[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+	[activityIndicator release];
 	[[self navigationItem] setRightBarButtonItem:barButton];
+	[barButton release];
 	[activityIndicator startAnimating];
 }
 
@@ -328,6 +331,7 @@ static float INITIAL_SPAN = 0.001;
 				NSLog(@"GPSViewController: Just added an annotation to a null mapview!");
 			}
 			
+			[annotation release];
             
 		}
 		
@@ -339,6 +343,7 @@ static float INITIAL_SPAN = 0.001;
 			Annotation *aPlayer = [[Annotation alloc]initWithCoordinate:locationLatLong];
 			aPlayer.title = player.name;
 			[mapView addAnnotation:aPlayer];
+			[aPlayer release];
 		} 
         
 	}
@@ -359,11 +364,14 @@ static float INITIAL_SPAN = 0.001;
     while (annotation = [existingAnnotationsEnumerator nextObject]) {
         if (annotation != mapView.userLocation) [mapView removeAnnotation:annotation];
     }
+    [existingAnnotationsEnumerator release];
 }
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
+    [mapView release];
+    [super dealloc];
 }
 
 -(UIImage *)addTitle:(NSString *)imageTitle quantity:(int)quantity toImage:(UIImage *)img {

@@ -66,6 +66,7 @@
                                                         message:@"Either this name has been taken or you didn't fill out all the required information."
 													   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
 		[alert show];	
+		[alert release];
 	}	
 	
 	[userName becomeFirstResponder];
@@ -81,6 +82,7 @@
                                                     message:@"Your new User was Created. Please login."
 												   delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
 	[alert show];	
+	[alert release];
 
 	[userName resignFirstResponder];
 	[password resignFirstResponder];
@@ -113,6 +115,7 @@
 - (void)dealloc {
     
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
 }
 
 

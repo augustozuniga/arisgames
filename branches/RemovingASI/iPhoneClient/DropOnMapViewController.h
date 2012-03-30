@@ -28,7 +28,7 @@
 	NSTimer *refreshTimer;
     int noteId;
     DDAnnotation *myAnnotation;
-    NoteEditorViewController *__unsafe_unretained delegate;
+    NoteEditorViewController *delegate;
     Note *note;
 }
 
@@ -40,18 +40,18 @@
 - (IBAction)dropButtonAction: (id) sender;
 - (IBAction)pickupButtonAction: (id) sender;
 
-@property (nonatomic) MKMapView *mapView;
-@property (nonatomic) NSArray *locations;
-@property (nonatomic) DDAnnotation *myAnnotation;
+@property (nonatomic, retain) MKMapView *mapView;
+@property (nonatomic, retain) NSArray *locations;
+@property (nonatomic, retain) DDAnnotation *myAnnotation;
 @property(readwrite,assign)int noteId;
-@property(nonatomic) Note *note;
+@property(nonatomic, retain) Note *note;
 
 @property BOOL tracking;
 
-@property(readwrite,unsafe_unretained)id delegate;
-@property (nonatomic) IBOutlet UIBarButtonItem *mapTypeButton;
-@property (nonatomic) IBOutlet UIBarButtonItem *dropButton;
-@property (nonatomic) IBOutlet UIBarButtonItem *pickupButton;
-@property (nonatomic) IBOutlet UIToolbar *toolBar;
+@property(readwrite,assign)id delegate;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *mapTypeButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *dropButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *pickupButton;
+@property (nonatomic, retain) IBOutlet UIToolbar *toolBar;
 
 @end

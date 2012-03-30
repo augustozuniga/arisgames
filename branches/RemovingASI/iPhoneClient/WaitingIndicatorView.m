@@ -43,6 +43,7 @@
         [super addSubview:indicator];
         indicator.center = CGPointMake(142,73);//CGPointMake(super.bounds.size.width / 2, super.bounds.size.height - 40); didn't work
         NSLog(@"WaitingIndicatorView: show: center at %f, %f", indicator.center.x, indicator.center.y );
+        [indicator release];
     }
 }
 
@@ -50,6 +51,10 @@
 	[super dismissWithClickedButtonIndex:0 animated:YES];
 }
 
+- (void)dealloc {
+    [super dealloc];
+    if (progressView) [progressView release];
+}
 
 
 @end

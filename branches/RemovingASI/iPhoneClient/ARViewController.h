@@ -27,9 +27,9 @@
 	
 	UIImagePickerController *cameraController;
 	
-	NSObject<ARViewDelegate> *__unsafe_unretained delegate;
-	NSObject<CLLocationManagerDelegate> *__unsafe_unretained locationDelegate;
-	NSObject<UIAccelerometerDelegate> *__unsafe_unretained accelerometerDelegate;
+	NSObject<ARViewDelegate> *delegate;
+	NSObject<CLLocationManagerDelegate> *locationDelegate;
+	NSObject<UIAccelerometerDelegate> *accelerometerDelegate;
 	
 	BOOL scaleViewsBasedOnDistance;
 	double maximumScaleDistance;
@@ -89,15 +89,15 @@
 
 - (BOOL)viewportContainsCoordinate:(ARCoordinate *)coordinate;
 
-@property (nonatomic) UIImagePickerController *cameraController;
+@property (nonatomic, retain) UIImagePickerController *cameraController;
 
-@property (nonatomic, unsafe_unretained) NSObject<ARViewDelegate> *delegate;
-@property (nonatomic, unsafe_unretained) NSObject<CLLocationManagerDelegate> *locationDelegate;
-@property (nonatomic, unsafe_unretained) NSObject<UIAccelerometerDelegate> *accelerometerDelegate;
+@property (nonatomic, assign) NSObject<ARViewDelegate> *delegate;
+@property (nonatomic, assign) NSObject<CLLocationManagerDelegate> *locationDelegate;
+@property (nonatomic, assign) NSObject<UIAccelerometerDelegate> *accelerometerDelegate;
 
-@property  ARCoordinate *centerCoordinate;
+@property (retain) ARCoordinate *centerCoordinate;
 
-@property (nonatomic) UIAccelerometer *accelerometerManager;
-@property (nonatomic) CLLocationManager *locationManager;
+@property (nonatomic, retain) UIAccelerometer *accelerometerManager;
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 @end

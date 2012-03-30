@@ -23,6 +23,11 @@
     }
     return self;	
 }
+- (void) dealloc {
+	[name release];
+	[description release];
+	[super dealloc];
+}
 
 
 @end

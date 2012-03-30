@@ -14,7 +14,7 @@
     int tabIndex;
 }
 
-@property(nonatomic)NSString *tabName;
+@property(nonatomic,retain)NSString *tabName;
 @property(readwrite,assign)int tabIndex;
 
 @end

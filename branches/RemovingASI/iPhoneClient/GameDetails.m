@@ -57,7 +57,7 @@ NSString *const kGameDetailsHtmlTemplate =
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         // Custom initialization
-        self.mediaImageView = [[AsyncMediaImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)];
+        self.mediaImageView = [[[AsyncMediaImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 200)] autorelease];
         self.splashMedia = [[Media alloc] init];
         self.descriptionIndexPath = [[NSIndexPath alloc] init];
     }
@@ -124,14 +124,15 @@ NSString *const kGameDetailsHtmlTemplate =
  shouldStartLoadWithRequest:(NSURLRequest *)request  
  navigationType:(UIWebViewNavigationType)navigationType; {  
  
- NSURL *requestURL = [ request URL ];  
+ NSURL *requestURL = [ [ request URL ] retain ];  
  // Check to see what protocol/scheme the requested URL is.  
  if ( ( [ [ requestURL scheme ] isEqualToString: @"http" ]  
  || [ [ requestURL scheme ] isEqualToString: @"https" ] )  
  && ( navigationType == UIWebViewNavigationTypeLinkClicked ) ) {  
- return ![ [ UIApplication sharedApplication ] openURL: requestURL ];  
+ return ![ [ UIApplication sharedApplication ] openURL: [ requestURL autorelease ] ];  
  }  
  // Auto release  
+ [ requestURL release ];  
  // If request url is something other than http or https it will open  
  // in UIWebView. You could also check for the other following  
  // protocols: tel, mailto and sms  
@@ -188,8 +189,8 @@ NSString *const kGameDetailsHtmlTemplate =
     UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
 		// Create a temporary UIViewController to instantiate the custom cell.
-		UITableViewCell *tempCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault 
-                                                           reuseIdentifier:CellIdentifier];
+		UITableViewCell *tempCell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault 
+                                                           reuseIdentifier:CellIdentifier] autorelease];
         cell = tempCell;
     }
 	
@@ -213,6 +214,7 @@ NSString *const kGameDetailsHtmlTemplate =
 		// Grab a pointer to the custom cell
 		cell = (RatingCell *)temporaryController.view;
 		// Release the temporary UIViewController.
+		[temporaryController release];
         RatingCell *ratingCell = (RatingCell *)cell;
         ratingCell.ratingView.rating = self.game.rating;
         ratingCell.reviewsLabel.text = [NSString stringWithFormat:@"%d Reviews",self.game.numReviews];
@@ -261,6 +263,7 @@ NSString *const kGameDetailsHtmlTemplate =
         commentsViewController *commentsVC = [[commentsViewController alloc]initWithNibName:@"commentsView" bundle:nil];
         commentsVC.game = self.game;
         [self.navigationController pushViewController:commentsVC animated:YES];
+        [commentsVC release];
     }
     else if  (indexPath.section == 1 && indexPath.row == 0) {
         NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.game
@@ -317,6 +320,18 @@ NSString *const kGameDetailsHtmlTemplate =
 }
 
 
+- (void)dealloc {
+    [descriptionWebView release];
+    [game release];
+    [authorsLabel release];
+    [descriptionLabel release];
+    [locationLabel release];
+    [scrollView release];
+    [contentView release];
+    [tableView release];
+    [segmentedControl release];
+    [super dealloc];
+}
 
 
 @end

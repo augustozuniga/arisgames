@@ -15,7 +15,7 @@
 	CLLocation *geoLocation;
 }
 
-@property (nonatomic) CLLocation *geoLocation;
+@property (nonatomic, retain) CLLocation *geoLocation;
 
 
 - (float)angleFromCoordinate:(CLLocationCoordinate2D)first toCoordinate:(CLLocationCoordinate2D)second;

@@ -86,7 +86,7 @@
 	UILabel *lblTemp;
 	UIImageView *iconViewTemp;
 	
-	UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CellFrame reuseIdentifier:cellIdentifier];
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame reuseIdentifier:cellIdentifier] autorelease];
 	
 	//Setup Cell
 	UIView *transparentBackground = [[UIView alloc] initWithFrame:CGRectZero];
@@ -99,6 +99,7 @@
 	//lblTemp.textColor = [UIColor whiteColor];
 	lblTemp.backgroundColor = [UIColor clearColor];
 	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
 	
 	//Initialize Label with tag 2.
 	lblTemp = [[UILabel alloc] initWithFrame:Label2Frame];
@@ -107,12 +108,14 @@
 	lblTemp.textColor = [UIColor darkGrayColor];
 	lblTemp.backgroundColor = [UIColor clearColor];
 	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
 	
 	//Init Icon with tag 3
 	iconViewTemp = [[AsyncMediaImageView alloc] initWithFrame:IconFrame];
 	iconViewTemp.tag = 3;
 	iconViewTemp.backgroundColor = [UIColor clearColor]; 
 	[cell.contentView addSubview:iconViewTemp];
+	[iconViewTemp release];
 
     
 	return cell;
@@ -209,4 +212,7 @@
     // Release anything that's not essential, such as cached data
 }
 
-@end
+- (void)dealloc {
+    [iconCache release];
+    [super dealloc];
+}@end

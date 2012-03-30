@@ -55,7 +55,7 @@
 	CLLocationManager *locationManager;
 }
 
-@property (nonatomic) CLLocationManager *locationManager;
+@property (nonatomic, retain) CLLocationManager *locationManager;
 
 + (id)sharedMyCLController;
 

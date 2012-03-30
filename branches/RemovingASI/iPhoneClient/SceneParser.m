@@ -53,13 +53,22 @@ NSString *const kTagItem = @"item";
 	return self;
 }
 
+- (void) dealloc {
+	[script release];
+	[sourceText release];
+	[currentText release];
+	[parser release];
+    [exitToTabWithTitle release];
+	[super dealloc];
+}
 
 #pragma mark XML Parsing
 - (void) parseText:(NSString *)text {
-	self.sourceText = text;
+	self.sourceText = [text retain];
 	[script removeAllObjects];
 	
 	NSData *data = [text dataUsingEncoding:NSUTF8StringEncoding];
+	[parser release];
 	parser = [[NSXMLParser alloc] initWithData:data];
 	parser.delegate = self;
 	
@@ -180,6 +189,7 @@ else if ([elementName isEqualToString:kTagItem]) {
                                             webpageId:webId plaqueId:plaqueId itemId:itemId]; 
 
 		[self.script addObject:newScene];
+		[newScene release];
         panoId = 0;
         videoId = 0;
         webId = 0;
@@ -198,6 +208,7 @@ else if ([elementName isEqualToString:kTagItem]) {
 	NSString *text = [[NSString alloc] initWithData:CDATABlock
 										   encoding:NSUTF8StringEncoding];
 	[self.currentText appendString:text];
+	[text release];
 }
 
 - (void) parserDidEndDocument:(NSXMLParser *)parser {
@@ -215,9 +226,10 @@ else if ([elementName isEqualToString:kTagItem]) {
                     videoId:0 panoramicId:0 webpageId:0 plaqueId:0 itemId:0];        
 		
 		[self.script addObject:s];
+		[s release];
 	}
 	
-	self.sourceText;
+	[self.sourceText release];
 	self.sourceText = nil;
 	
 	NSLog(@"SceneParser: didFinishParsing");

@@ -41,6 +41,14 @@
 }
 
 
+- (void)dealloc {
+	[name release];
+	[description release];
+	[authors release];
+    [comments release];
+	[location release];	
+    [super dealloc];
+}
 
 - (NSComparisonResult)compareDistanceFromPlayer:(Game*)otherGame{
 	if (self.distanceFromPlayer < otherGame.distanceFromPlayer) return NSOrderedAscending;

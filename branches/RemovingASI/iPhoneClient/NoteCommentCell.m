@@ -111,6 +111,19 @@
     // Configure the view for the selected state.
 }
 
+- (void)dealloc
+{
+    [super dealloc];
+    [titleLabel release];
+    [mediaIcon4 release];
+    [mediaIcon3 release];
+    [mediaIcon2 release];
+    [userLabel release];
+    [likeLabel release];
+    [likesButton release];
+    //[note release];
+    //[likeLabel release];
+}
 
 
 

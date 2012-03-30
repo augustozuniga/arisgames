@@ -10,4 +10,8 @@
 
 @implementation TagCell
 @synthesize nameLabel;
+-(void)dealloc{
+    [super dealloc];
+    [nameLabel release];
+}
 @end

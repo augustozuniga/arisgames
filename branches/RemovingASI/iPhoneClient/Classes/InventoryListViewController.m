@@ -102,7 +102,9 @@
 	UIActivityIndicatorView *activityIndicator = 
 	[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+	[activityIndicator release];
 	[[self navigationItem] setRightBarButtonItem:barButton];
+	[barButton release];
 	[activityIndicator startAnimating];
 }
 
@@ -198,8 +200,8 @@
 	
 	if (silenceNextServerUpdateCount>0) silenceNextServerUpdateCount--;
     NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"hasViewed"
-                                                  ascending:YES];
+    sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"hasViewed"
+                                                  ascending:YES] autorelease];
     NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     self.inventory = [self.inventory sortedArrayUsingDescriptors:sortDescriptors];
 
@@ -215,7 +217,7 @@
 	UILabel *lblTemp;
 	UIImageView *iconViewTemp;
 	
-	UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CellFrame reuseIdentifier:cellIdentifier];
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithFrame:CellFrame reuseIdentifier:cellIdentifier] autorelease];
 	
 	//Setup Cell
 	UIView *transparentBackground = [[UIView alloc] initWithFrame:CGRectZero];
@@ -228,6 +230,7 @@
 	//lblTemp.textColor = [UIColor whiteColor];
 	lblTemp.backgroundColor = [UIColor clearColor];
 	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
 	
 	//Initialize Label with tag 2.
 	lblTemp = [[UILabel alloc] initWithFrame:Label2Frame];
@@ -236,12 +239,14 @@
 	lblTemp.textColor = [UIColor darkGrayColor];
 	lblTemp.backgroundColor = [UIColor clearColor];
 	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
 	
 	//Init Icon with tag 3
 	iconViewTemp = [[AsyncMediaImageView alloc] initWithFrame:IconFrame];
 	iconViewTemp.tag = 3;
 	iconViewTemp.backgroundColor = [UIColor clearColor]; 
 	[cell.contentView addSubview:iconViewTemp];
+	[iconViewTemp release];
 
     //Init Icon with tag 4
     lblTemp = [[UILabel alloc] initWithFrame:Label3Frame];
@@ -251,6 +256,7 @@
 	lblTemp.backgroundColor = [UIColor clearColor];
     //lblTemp.textAlignment = UITextAlignmentRight;
 	[cell.contentView addSubview:lblTemp];
+	[lblTemp release];
     
 	return cell;
 }
@@ -378,6 +384,7 @@
 	//Put the view on the screen
 	[[self navigationController] pushViewController:itemDetailsViewController animated:YES];
 	
+	[itemDetailsViewController release];
 	
 }
 
@@ -389,5 +396,10 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [iconCache release];
+    [mediaCache release];
+    [capBar release];
+    [capLabel release];
+    [super dealloc];
 }
 @end

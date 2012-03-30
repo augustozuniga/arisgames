@@ -26,9 +26,9 @@
     BOOL isLink;
 }
 @property(readwrite, assign) BOOL isLink;
-@property(nonatomic) NSMutableArray *quests;
-@property(nonatomic) NSMutableArray *questCells;
-@property(nonatomic) UISegmentedControl *activeQuestsSwitch;
+@property(nonatomic, retain) NSMutableArray *quests;
+@property(nonatomic, retain) NSMutableArray *questCells;
+@property(nonatomic, retain) UISegmentedControl *activeQuestsSwitch;
 @property(readwrite, assign) int activeSort;
 
 - (void)refresh;

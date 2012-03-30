@@ -53,7 +53,7 @@
 @property (readwrite, assign) BOOL destroyable;
 @property (readwrite, assign) BOOL isAttribute;
 
-@property (nonatomic) NSString *url;
+@property (nonatomic, retain) NSString *url;
 
 
 - (void) display;

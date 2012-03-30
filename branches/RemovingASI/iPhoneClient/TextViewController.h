@@ -16,17 +16,17 @@
     int noteId;
     BOOL editMode;
     BOOL previewMode;
-    id __unsafe_unretained backView;
-    id __unsafe_unretained editView;
+    id backView;
+    id editView;
     int contentId;
     int index;
 }
-@property(nonatomic) IBOutlet UITextView *textBox;
-@property(nonatomic) IBOutlet UIButton *keyboardButton;
-@property(nonatomic, unsafe_unretained) id backView;
-@property(nonatomic, unsafe_unretained) id editView;
+@property(nonatomic,retain) IBOutlet UITextView *textBox;
+@property(nonatomic, retain) IBOutlet UIButton *keyboardButton;
+@property(nonatomic, assign) id backView;
+@property(nonatomic, assign) id editView;
 
-@property(nonatomic)NSString *textToDisplay;
+@property(nonatomic,retain)NSString *textToDisplay;
 @property(readwrite, assign) int noteId;
 @property(readwrite, assign) int contentId;
 @property(readwrite,assign)int index;

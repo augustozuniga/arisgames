@@ -54,6 +54,10 @@
 }
 
 - (void) dealloc {
+    [super dealloc];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+	[type release];
+	[text release];
+    [title release];
 }
 @end

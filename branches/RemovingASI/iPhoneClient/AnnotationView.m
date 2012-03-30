@@ -92,8 +92,12 @@
 }
 
 - (void)dealloc {
+	titleFont = nil;
+	subtitleFont = nil;
 	asyncData= nil;
+	icon = nil;
 	[iconView removeFromSuperview];
+	[super dealloc];
 }
 
 

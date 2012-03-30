@@ -17,6 +17,7 @@
 -(void)awakeFromNib{
     UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(holdTextBox:)];
     [holdLbl addGestureRecognizer:gesture];
+    [gesture release];
     [self.titleLbl setUserInteractionEnabled:NO];
     
 }
@@ -117,6 +118,21 @@
 
 -(void)dealloc{
     NSLog(@"NoteContentCell: Dealloc");
+    [super dealloc];
+    if(titleLbl)
+    [titleLbl release];
+    if(detailLbl)
+    [detailLbl release];
+    if(imageView)
+    [imageView release];
+    if(holdLbl)
+    [holdLbl release];
+    if(content)
+    [content release];
+    if(retryButton)
+    [retryButton release];
+    if(spinner)
+    [spinner release];
    
     
 }

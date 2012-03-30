@@ -73,11 +73,14 @@
 		return nil;		
 	}				
     
+    [response release];
+    [error release];
     
 	NSString *resultString = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
 	
 	//Get the JSONResult here
-	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:resultString andUserData:self.userInfo];
+	JSONResult *jsonResult = [[[JSONResult alloc] initWithJSONString:resultString andUserData:self.userInfo] autorelease];
+	[resultString release];
 	
 	return jsonResult;
 }
@@ -124,6 +127,7 @@
 	
 	//Get the JSONResult here
 	JSONResult *jsonResult = [[JSONResult alloc] initWithJSONString:jsonString andUserData:[self userInfo]];
+	[jsonString release];
 	
 	SEL parser = NSSelectorFromString(self.handler);   
     
@@ -131,6 +135,7 @@
 		[[AppServices sharedAppServices] performSelector:parser withObject:jsonResult];
 	}
 	
+	[jsonResult release];
 
 }
 
@@ -151,8 +156,15 @@
 
 
 - (void)dealloc {
+	[jsonServerURL release];
+	[serviceName release];
+	[methodName release];
+	[arguments release];
+	[asyncData release];
+    [completeRequestURL release];
     if (connection) [connection cancel];
     
+    [super dealloc];
 }
  
 @end

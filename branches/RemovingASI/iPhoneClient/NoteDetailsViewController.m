@@ -42,9 +42,22 @@
 - (void)dealloc
 {
     NSLog(@"NoteDetailsVC: Dealloc");
+    [super dealloc];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     //scrollView.delegate = nil;
+    if(scrollView)
+    [scrollView release];
+    if(pageControl)
+    [pageControl release];
+    if(note)
+    [note release];
+    if(commentLabel)
+    [commentLabel release];
+    if (likeLabel) 
+    [likeLabel release];
+    if(likeButton)
+    [likeButton release];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,10 +92,12 @@
     if (self.note.creatorId == [AppModel sharedAppModel].playerId) {
         UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleDone target:self action:@selector(editButtonTouched)];
         [self.navigationItem setRightBarButtonItem:editButton];
+        [editButton release];
     }
     if([self.delegate isKindOfClass:[Note class]]){
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonTouch)];
         [self.navigationItem setLeftBarButtonItem:backButton];
+        [backButton release];
     }
     
     self.pageControl.currentPage = 0;
@@ -96,8 +111,9 @@
 -(void)editButtonTouched{
     NoteEditorViewController *noteVC = [[NoteEditorViewController alloc] initWithNibName:@"NoteEditorViewController" bundle:nil];
     noteVC.note = self.note;
-    noteVC.delegate = self;
+    noteVC.delegate = [self retain];
     [self.navigationController pushViewController:noteVC animated:YES];
+    [noteVC release];
     
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -173,7 +189,7 @@
 -(void)showComments{
     NoteCommentViewController *noteCommentVC = [[NoteCommentViewController alloc]initWithNibName:@"NoteCommentViewController" bundle:nil];
     noteCommentVC.parentNote = self.note;
-    noteCommentVC.delegate = self;
+    noteCommentVC.delegate = [self retain];
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:.5];
     
@@ -181,6 +197,7 @@
                            forView:self.navigationController.view cache:YES];
     [self.navigationController pushViewController:noteCommentVC animated:NO];
     [UIView commitAnimations]; 
+    [noteCommentVC release];
     
 }
 - (void)scrollViewDidScroll:(UIScrollView *)sender {
@@ -210,6 +227,7 @@
             controller.title = self.note.title;
             controller.view.frame = frame;
             [scrollView addSubview:controller.view];
+            [controller release];
             
         }
         else if([content.getType isEqualToString:kNoteContentTypePhoto]){
@@ -217,6 +235,7 @@
             AsyncMediaImageView *controller = [[AsyncMediaImageView alloc] initWithFrame:frame andMedia:content.getMedia];
             
             [scrollView addSubview:controller];
+            [controller release];
             
         }
         else if([content.getType isEqualToString:kNoteContentTypeAudio] || [content.getType isEqualToString:kNoteContentTypeVideo]){
@@ -225,6 +244,7 @@
             
             [scrollView addSubview:mediaButton];
             
+            [mediaButton release];
             
         }
     }

@@ -247,6 +247,16 @@ NSString *const kDialogHtmlTemplate =
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+	[currentNpc release];
+	[currentNode release];
+	[parser release];
+	[currentScript release];
+	[resourcePath release];
+	[pcTableViewController release];
+    [cachedScene release];
+    [pcWebView release];
+    [npcWebView release];
+    [super dealloc];
 }
 
 
@@ -266,7 +276,9 @@ NSString *const kDialogHtmlTemplate =
 }
 
 - (void) beginWithNPC:(Npc *)aNpc {
+	if (currentNpc) [currentNpc release];
 	currentNpc = aNpc;
+	[currentNpc retain];
 		
 	parser = [[SceneParser alloc] initWithDefaultNpcId:[aNpc mediaId]];
 	parser.delegate = self;
@@ -308,6 +320,7 @@ NSString *const kDialogHtmlTemplate =
             mMoviePlayer.moviePlayer.shouldAutoplay = NO;
             [mMoviePlayer.moviePlayer prepareToPlay];		
             [self presentMoviePlayerViewControllerAnimated:mMoviePlayer];
+            [mMoviePlayer release];
         }
         else if(currentScene.panoId !=0) {
           Panoramic *pano = [[AppModel sharedAppModel] panoramicForPanoramicId:currentScene.panoId];
@@ -315,6 +328,7 @@ NSString *const kDialogHtmlTemplate =
             panoramicViewController.panoramic = pano;
             
             [self.navigationController pushViewController:panoramicViewController animated:YES];
+            [panoramicViewController release];
         }
         else if(currentScene.webId != 0) {
        
@@ -322,16 +336,19 @@ NSString *const kDialogHtmlTemplate =
             webPageViewController.webPage = [[AppModel sharedAppModel] webPageForWebPageID:currentScene.webId];
             webPageViewController.delegate = self;
             [self.navigationController pushViewController:webPageViewController animated:YES];
+            [webPageViewController release];
         }
         else if(currentScene.plaqueId != 0){
             NodeViewController *nodeVC = [[NodeViewController alloc]initWithNibName:@"Node" bundle:[NSBundle mainBundle]];
             nodeVC.node = [[AppModel sharedAppModel] nodeForNodeId:currentScene.plaqueId];
             [self.navigationController pushViewController:nodeVC animated:YES];
+            [nodeVC release];
         }
         else if(currentScene.itemId != 0){
             ItemDetailsViewController *itemVC = [[ItemDetailsViewController alloc]initWithNibName:@"ItemDetailsView" bundle:[NSBundle mainBundle]];
             itemVC.item = [[AppModel sharedAppModel] itemForItemId:currentScene.itemId];
             [self.navigationController pushViewController:itemVC animated:YES];
+            [itemVC release];           
         }
         
         [self applyScene:currentScene];
@@ -369,6 +386,7 @@ NSString *const kDialogHtmlTemplate =
                 NodeViewController *nodeVC = [[NodeViewController alloc]initWithNibName:@"Node" bundle:[NSBundle mainBundle]];
                 nodeVC.node = [[AppModel sharedAppModel] nodeForNodeId:[cachedScene.exitToTabWithTitle intValue]];
                 [appDelegate displayNearbyObjectView:nodeVC];
+                [nodeVC release];
      
             }
             else if([cachedScene.exitToType isEqualToString:@"webpage"]){
@@ -377,22 +395,26 @@ NSString *const kDialogHtmlTemplate =
                 webPageViewController.delegate = self;
                 [appDelegate displayNearbyObjectView:webPageViewController];
                 
+                [webPageViewController release];
             }
             else if([cachedScene.exitToType isEqualToString:@"item"]){
                 ItemDetailsViewController *itemVC = [[ItemDetailsViewController alloc]initWithNibName:@"ItemDetailsView" bundle:[NSBundle mainBundle]];
                 itemVC.item = [[AppModel sharedAppModel] itemForItemId:[cachedScene.exitToTabWithTitle intValue]];                
                 [appDelegate displayNearbyObjectView:itemVC];
+                [itemVC release];      
             }
             else if([cachedScene.exitToType isEqualToString:@"character"]){
                 DialogViewController *dialogVC = [[DialogViewController alloc] initWithNibName:@"Dialog" bundle:[NSBundle mainBundle]];
                 [dialogVC beginWithNPC:[[AppModel sharedAppModel] npcForNpcId:[cachedScene.exitToTabWithTitle intValue]]];
                 [appDelegate displayNearbyObjectView:dialogVC];
+                [dialogVC release];
             }
             else if([cachedScene.exitToType isEqualToString:@"panoramic"]){
                 Panoramic *pano = [[AppModel sharedAppModel] panoramicForPanoramicId:[cachedScene.exitToTabWithTitle intValue]];
                 PanoramicViewController *panoramicViewController = [[PanoramicViewController alloc] initWithNibName:@"PanoramicViewController" bundle: [NSBundle mainBundle]];    
                 panoramicViewController.panoramic = pano;
                 [appDelegate displayNearbyObjectView:panoramicViewController];
+                [panoramicViewController release];
             }
         }
         else{
@@ -497,11 +519,12 @@ NSString *const kDialogHtmlTemplate =
 		NSLog(@"DialogViewController: Player options exist or no closing script exists, put them on the screen");
 
         NSSortDescriptor *sortDescriptor;
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"hasViewed"
-                                                      ascending:YES];
+        sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"hasViewed"
+                                                      ascending:YES] autorelease];
         NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
         
         optionList = [options sortedArrayUsingDescriptors:sortDescriptors];
+		[optionList retain];
 		[pcTableView reloadData];
 	}
 }
@@ -535,7 +558,7 @@ NSString *const kDialogHtmlTemplate =
 	UIScrollView *characterImageScrollView;
 	
 	BOOL isCurrentlyDisplayed;
-	cachedScene = aScene;
+	cachedScene = [aScene retain];
 	
     characterView = aScene.isPc ? pcView : npcView;
 	characterWebView = aScene.isPc ? pcWebView : npcWebView;
@@ -778,7 +801,10 @@ NSString *const kDialogHtmlTemplate =
 
 	// TODO: This might need to check for answer string
     
+	if (currentNode) [currentNode release];
 	currentNode = newNode;
+	[currentNode retain];
+	[newNode release];
 	
 	[parser parseText:newNode.text];
 	
@@ -799,8 +825,8 @@ NSString *const kDialogHtmlTemplate =
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	UITableViewCell *cell = [pcTableView dequeueReusableCellWithIdentifier:@"Dialog"];
 	if (!cell) {
-		cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, 0, 0)
-									   reuseIdentifier:@"Dialog"];
+		cell = [[[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, 0, 0)
+									   reuseIdentifier:@"Dialog"] autorelease];
 	}
 	
 	if (indexPath.section == 0) {
@@ -862,7 +888,9 @@ NSString *const kDialogHtmlTemplate =
 		
 	Node *newNode = [[AppModel sharedAppModel] nodeForNodeId:selectedOption.nodeId];
 
+	if (currentNode) [currentNode release];
 	currentNode = newNode;
+	[currentNode retain];
     if(newNode.text.length == 0){
         [self continueScript];
         return;

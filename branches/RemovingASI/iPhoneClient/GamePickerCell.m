@@ -35,6 +35,15 @@
     // Configure the view for the selected state.
 }
 
+- (void)dealloc {
+	[titleLabel release];
+	[distanceLabel release];
+	[authorLabel release];
+	[numReviewsLabel release];
+	[iconView release];
+	[starView release];
+    [super dealloc];
+}
 
 
 @end
