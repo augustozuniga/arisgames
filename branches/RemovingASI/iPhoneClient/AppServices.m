@@ -1113,8 +1113,10 @@ NSString *const kARISServerServicePackage = @"v1";
 	NSLog(@"AppModel: resetAllGameLists");
     
 	//Clear them out
-	[AppModel sharedAppModel].gameItemList = [[NSMutableDictionary alloc] 
-                         initWithCapacity:0];
+    NSMutableDictionary *emptyGameList = [[NSMutableDictionary alloc] initWithCapacity:0];
+	[AppModel sharedAppModel].gameItemList = emptyGameList;
+    
+    
 	[AppModel sharedAppModel].gameNodeList = [[NSMutableDictionary alloc] 
                          initWithCapacity:0];
     [AppModel sharedAppModel].gameNpcList = [[NSMutableDictionary alloc] 
