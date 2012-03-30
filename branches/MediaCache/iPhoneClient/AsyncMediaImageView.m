@@ -80,8 +80,8 @@
             }
             else if ([media.type isEqualToString:kMediaTypeAudio]){
                 NSLog(@"AsyncMediaImageView: Loading the standard audio image");
-                media.image = [UIImage imageNamed:@"microphoneBackground.jpg"];
-                [self updateViewWithNewImage:self.media.image];
+                media.image = UIImageJPEGRepresentation([UIImage imageNamed:@"microphoneBackground.jpg"], 1.0);
+                [self updateViewWithNewImage:[UIImage imageNamed:@"microphoneBackground.jpg"]];
                 self.loaded = YES;
             }
         }
