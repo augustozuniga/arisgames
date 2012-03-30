@@ -27,8 +27,10 @@
 #import "NoteContent.h"
 #import <MapKit/MapKit.h>
 #import "Tag.h"
+#import "ARISUploader.h"
 
-@interface AppServices : NSObject {
+
+@interface AppServices : NSObject <ARISUploaderDelegateProtocol> {
     //Fetcher Flags
     BOOL currentlyFetchingLocationList,currentlyFetchingGameNoteList,currentlyFetchingPlayerNoteList;
     BOOL currentlyFetchingInventory;
