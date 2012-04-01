@@ -13,13 +13,12 @@
 
 
 static NSString * const BOUNDRY = @"0xKhTmLbOuNdArY";
-static NSString * const FORM_FLE_INPUT = @"file";
 
 @interface ARISUploader (Private)
 
-- (NSURLRequest *)postRequestWithURL: (NSURL *)url
-                             boundry: (NSString *)boundry
-                                data: (NSData *)data;
+- (NSURLRequest *)postRequestWithURL: (NSURL *)url 
+                             boundry: (NSString *)boundry 
+                             fileUrl: (NSURL *)aFileURLtoUpload;
 - (NSData *)compress: (NSData *)data;
 - (void)uploadSucceeded: (BOOL)success;
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection;
@@ -50,33 +49,10 @@ static NSString * const FORM_FLE_INPUT = @"file";
 
 - (void)upload
 {
-    NSData *data = [NSData dataWithContentsOfURL:urlToUpload];
-    
-    if (!data) {
-        [self uploadSucceeded:NO];
-        return;
-    }
-    if ([data length] == 0) {
-        // There's no data, treat this the same as no file.
-        [self uploadSucceeded:YES];
-        return;
-    }
-    
-    NSData *compressedData = [self compress:data];
-    
-    if (!compressedData || [compressedData length] == 0) {
-        [self uploadSucceeded:NO];
-        return;
-    }
-    /*
-    NSURLRequest *urlRequest = [self postRequestWithURL:serverURL
-                                                boundry:BOUNDRY
-                                                   data:compressedData];
-     */
     
     NSURLRequest *urlRequest = [self postRequestWithURL:serverURL
                                                 boundry:BOUNDRY
-                                                   data:data];
+                                                   fileUrl:urlToUpload];
     if (!urlRequest) {
         [self uploadSucceeded:NO];
         return;
@@ -115,7 +91,7 @@ static NSString * const FORM_FLE_INPUT = @"file";
 
 - (NSURLRequest *)postRequestWithURL: (NSURL *)url 
                              boundry: (NSString *)boundry 
-                                data: (NSData *)data 
+                                fileUrl: (NSURL *)aFileURLtoUpload 
 {
     // from http://www.cocoadev.com/index.pl?HTTPFileUpload
     NSMutableURLRequest *urlRequest =
@@ -125,6 +101,7 @@ static NSString * const FORM_FLE_INPUT = @"file";
      [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundry]
       forHTTPHeaderField:@"Content-Type"];
     
+    NSData *data = [NSData dataWithContentsOfURL:aFileURLtoUpload];
     NSMutableData *postData = [NSMutableData dataWithCapacity:[data length] + 512];
     [postData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundry] dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -133,9 +110,8 @@ static NSString * const FORM_FLE_INPUT = @"file";
                            [AppModel sharedAppModel].currentGame.gameId] dataUsingEncoding:NSUTF8StringEncoding]];
 	[postData appendData:[[NSString stringWithFormat:@"--%@\r\n",boundry] dataUsingEncoding:NSUTF8StringEncoding]];
 		    
-    //The actual file
-    
-	[postData appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"file\"; filename=\"ipodfile.caf\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    //The actual file        
+	[postData appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"ipodfile.%@\"\r\n",aFileURLtoUpload.pathExtension] dataUsingEncoding:NSUTF8StringEncoding]];
 	[postData appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 	[postData appendData:[NSData dataWithData:data]];
 	[postData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundry] dataUsingEncoding:NSUTF8StringEncoding]];
