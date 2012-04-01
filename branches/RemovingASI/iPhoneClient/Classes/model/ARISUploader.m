@@ -68,10 +68,15 @@ static NSString * const FORM_FLE_INPUT = @"file";
         [self uploadSucceeded:NO];
         return;
     }
-    
+    /*
     NSURLRequest *urlRequest = [self postRequestWithURL:serverURL
                                                 boundry:BOUNDRY
                                                    data:compressedData];
+     */
+    
+    NSURLRequest *urlRequest = [self postRequestWithURL:serverURL
+                                                boundry:BOUNDRY
+                                                   data:data];
     if (!urlRequest) {
         [self uploadSucceeded:NO];
         return;
@@ -127,15 +132,15 @@ static NSString * const FORM_FLE_INPUT = @"file";
 	[postData appendData:[[NSString stringWithFormat:@"\r\n%d\r\n", 
                            [AppModel sharedAppModel].currentGame.gameId] dataUsingEncoding:NSUTF8StringEncoding]];
 	[postData appendData:[[NSString stringWithFormat:@"--%@\r\n",boundry] dataUsingEncoding:NSUTF8StringEncoding]];
-	
-	[postData appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"file\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[postData appendData:[[NSString stringWithFormat:@"\r\n%@\r\n", @"test.bin"] dataUsingEncoding:NSUTF8StringEncoding]];
-	[postData appendData:[[NSString stringWithFormat:@"--%@\r\n",boundry] dataUsingEncoding:NSUTF8StringEncoding]];
-	    
+		    
     //The actual file
-    [postData appendData: [[NSString stringWithFormat: @"Content-Disposition: form-data; name=\"%@\"; filename=\"test.bin\"\r\n\r\n",FORM_FLE_INPUT] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postData appendData:data];
-    [postData appendData: [[NSString stringWithFormat:@"\r\n--%@--\r\n", boundry] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+	[postData appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"file\"; filename=\"ipodfile.caf\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[postData appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[postData appendData:[NSData dataWithData:data]];
+	[postData appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundry] dataUsingEncoding:NSUTF8StringEncoding]];
+	
+    
     
     [urlRequest setHTTPBody:postData];
     return urlRequest;
