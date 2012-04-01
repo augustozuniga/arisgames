@@ -645,44 +645,27 @@ NSString *const kARISServerServicePackage = @"v1";
 }
 
 
-
-
-
 -(void) uploadContentToNoteWithFileURL:(NSURL *)fileURL name:(NSString *)name noteId:(int) noteId type: (NSString *)type{
-/*
-    NSURL *url = [[AppModel sharedAppModel].serverURL URLByAppendingPathComponent:[NSString stringWithFormat: @"services/%@/uploadHandler.php",kARISServerServicePackage]];
-	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	request.timeOutSeconds = 300;
-	
- 	[request setPostValue:[NSString stringWithFormat:@"%d", [AppModel sharedAppModel].currentGame.gameId] forKey:@"gameID"];
-    [request setFile:[fileURL relativePath] forKey:@"file"];
     
-    //[urlAsString release];
-	[request setDidFinishSelector:@selector(uploadNoteContentRequestFinished: )];
-	[request setDidFailSelector:@selector(uploadNoteRequestFailed:)];
-	[request setDelegate:self];
+    ARISUploader *uploader = [[ARISUploader alloc]initWithURLToUpload:fileURL delegate:self doneSelector:@selector(noteContentUploadDidfinish: ) errorSelector:@selector(uploadNoteContentDidFail:)];
 
+        NSNumber *nId = [[NSNumber alloc]initWithInt:noteId];
     
-    NSNumber *nId = [[NSNumber alloc]initWithInt:noteId];
-    //NSNumber *contentCount = [[NSNumber alloc]initWithInt:([[(Note *)[[AppModel sharedAppModel].playerNoteList objectForKey:[NSNumber numberWithInt:noteId]] contents] count]-1)];
-	//We need these after the upload is complete to create the item on the server
-	NSMutableDictionary *userInfo = [[NSMutableDictionary alloc]initWithObjectsAndKeys:name, @"title", nId, @"noteId", nil];
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc]initWithCapacity:4];                                     
     [userInfo setValue:name forKey:@"title"];
     [userInfo setValue:nId forKey:@"noteId"];
     [userInfo setValue:type forKey: @"type"];
     [userInfo setValue:fileURL forKey:@"url"];
-	[request setUserInfo:userInfo];
+	[uploader setUserInfo:userInfo];
 	
 	NSLog(@"Model: Uploading File. gameID:%d title:%@ noteId:%d",[AppModel sharedAppModel].currentGame.gameId,name,noteId);
 	
 	ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
-	//[appDelegate showNewWaitingIndicator:@"Uploading" displayProgressBar:YES];
-   // [appDelegate showNewWaitingIndicator:@"Uploading" displayProgressBar:YES];
+    //[appDelegate showNewWaitingIndicator:@"Uploading" displayProgressBar:YES];
+	//[request setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
 
-	[request setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
+	[uploader upload];
 
-	[request startAsynchronous];
-*/
 }
 -(void)fetchPlayerNoteListAsync{
     if([AppModel sharedAppModel].isGameNoteList)
@@ -691,9 +674,9 @@ NSString *const kARISServerServicePackage = @"v1";
     [self fetchPlayerNoteListAsynchronously:YES];
 }
 
-- (void)uploader:(ARISUploader *)uploader DidfinishWithResponse: (NSString*)response {
+- (void)noteContentUploadDidfinish:(ARISUploader*)uploader {
 
-	NSLog(@"Model: Upload Note Content Request Finished. Response: %@", response);
+	NSLog(@"Model: Upload Note Content Request Finished. Response: %@", [uploader responseString]);
 	
 	NSString *title = [[uploader userInfo] objectForKey:@"title"];
 	//NSString *description = [[request userInfo] objectForKey:@"description"];
@@ -734,7 +717,8 @@ NSString *const kARISServerServicePackage = @"v1";
 	[jsonConnection release];
 }
 
-- (void)uploader:(ARISUploader *)uploader DidFailWithError: (NSError*)error{
+- (void)uploadNoteContentDidFail:(ARISUploader *)uploader {
+    NSError *error = uploader.error;
 	NSLog(@"Model: uploadRequestFailed: %@",[error localizedDescription]);
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Upload Failed" message: @"A network error occured while uploading the file" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	

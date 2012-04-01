@@ -30,7 +30,7 @@
 #import "ARISUploader.h"
 
 
-@interface AppServices : NSObject <ARISUploaderDelegateProtocol> {
+@interface AppServices : NSObject {
     //Fetcher Flags
     BOOL currentlyFetchingLocationList,currentlyFetchingGameNoteList,currentlyFetchingPlayerNoteList;
     BOOL currentlyFetchingInventory;

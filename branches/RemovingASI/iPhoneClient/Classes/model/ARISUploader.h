@@ -12,17 +12,27 @@
 
 
 @interface ARISUploader : NSObject {
-    NSURL* url;
+    NSURL* urlToUpload;
+    NSURL *serverURL;
     NSDictionary *userInfo;
-    NSString *responseString; //Ressponse send from the server on complete or error
-    NSError *error; //Our error code if there was an error or nil
+    id delegate;
+    SEL doneSelector;
+    SEL errorSelector;
+    
+    
+    BOOL uploadDidSucceed;
+    NSString *responseString;
+    NSError *error;
+
+
 }
 
+- (id)initWithURLToUpload:(NSURL*) urlToUpload delegate:(id)delegate 
+             doneSelector: (SEL)doneSelector errorSelector: (SEL)errorSelector;
+- (void)upload;
 
-@end
+@property(nonatomic,retain) NSDictionary *userInfo;
+@property(nonatomic,retain) NSString *responseString;
+@property(nonatomic,retain) NSError *error;
 
-@protocol ARISUploaderDelegateProtocol <NSObject>
-@required
-- (void)uploader:(ARISUploader *)uploader DidfinishWithResponse: (NSString*)response;
-- (void)uploader:(ARISUploader *)uploader DidFailWithError: (NSError*)error;
 @end
