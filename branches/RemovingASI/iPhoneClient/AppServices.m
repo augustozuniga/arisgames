@@ -356,29 +356,6 @@ NSString *const kARISServerServicePackage = @"v1";
     
 }
 
-/*
-- (void)uploadImageForMatching:(NSData *)fileData{
-
-   	// setting up the request object now
-	    NSURL *url = [[AppModel sharedAppModel].serverURL URLByAppendingPathComponent:[NSString stringWithFormat: @"services/%@/uploadHandler.php",kARISServerServicePackage]];	ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-	request.timeOutSeconds = 60;
-	
- 	[request setPostValue:[NSString stringWithFormat:@"%d", [AppModel sharedAppModel].currentGame.gameId] forKey:@"gameID"];	 
-	[request setPostValue:@"upload.png" forKey:@"fileName"];
-	[request setData:fileData forKey:@"file"];
-	[request setDidFinishSelector:@selector(uploadImageForMatchingRequestFinished:)];
-	[request setDidFailSelector:@selector(uploadRequestFailed:)];
-	[request setDelegate:self];
-		
-	NSLog(@"Model: Uploading File. gameID:%d",[AppModel sharedAppModel].currentGame.gameId);
-	
-	ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate showNewWaitingIndicator:@"Uploading" displayProgressBar:YES];
-	[request setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
-	[request startAsynchronous];
-}
-*/
-
 -(void)createItemAndPlaceOnMap:(Item *)item {
     NSLog(@"AppModel: Creating Note: %@",item.name);
 	
@@ -630,14 +607,9 @@ NSString *const kARISServerServicePackage = @"v1";
 
 }
 
-
-
-
 -(void)sendNotificationToNoteViewer{
             [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NewContentListReady" object:nil]];
 }
-
-
 
 
 -(void)sendNotificationToNotebookViewer{
@@ -814,19 +786,35 @@ NSString *const kARISServerServicePackage = @"v1";
 
 }
 
-/*
-- (void)uploadImageForMatchingRequestFinished:(ASIFormDataRequest *)request
+
+
+- (void)uploadImageForMatching:(NSURL *)fileURL{
+    
+    ARISUploader *uploader = [[ARISUploader alloc]initWithURLToUpload:fileURL delegate:self doneSelector:@selector(uploadImageForMatchingDidFinish: ) errorSelector:@selector(uploadImageForMatchingDidFail:)];
+    
+    NSLog(@"Model: Uploading File. gameID:%d",[AppModel sharedAppModel].currentGame.gameId);
+    
+    ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate showNewWaitingIndicator:@"Uploading" displayProgressBar:YES];
+    //[uplaoder setUploadProgressDelegate:appDelegate.waitingIndicator.progressView];
+    [uploader upload];
+}
+
+
+
+
+- (void)uploadImageForMatchingDidFinish:(ARISUploader *)uploader
 {
 	ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate removeNewWaitingIndicator];
     
     [appDelegate showNewWaitingIndicator:@"Decoding Image" displayProgressBar:NO];
 	
-	NSString *response = [request responseString];
+	NSString *response = [uploader responseString];
     
 	NSLog(@"Model: uploadImageForMatchingRequestFinished: Upload Media Request Finished. Response: %@", response);
         
-	NSString *newFileName = [request responseString];
+	NSString *newFileName = [uploader responseString];
     
 	NSLog(@"AppModel: uploadImageForMatchingRequestFinished: Trying to Match:%@",newFileName);
 	
@@ -847,18 +835,18 @@ NSString *const kARISServerServicePackage = @"v1";
 }
 
 
-- (void)uploadRequestFailed:(ASIHTTPRequest *)request
+- (void)uploadImageForMatchingDidFail:(ARISUploader *)uploader
 {
 	ARISAppDelegate* appDelegate = (ARISAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate removeNewWaitingIndicator];
-	NSError *error = [request error];
+	NSError *error = [uploader error];
 	NSLog(@"Model: uploadRequestFailed: %@",[error localizedDescription]);
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Upload Failed" message: @"An network error occured while uploading the file" delegate: self cancelButtonTitle: @"Ok" otherButtonTitles: nil];
 	
 	[alert show];
 	[alert release];
 }
-*/
+
 
 
 - (void)updateServerWithPlayerLocation {
