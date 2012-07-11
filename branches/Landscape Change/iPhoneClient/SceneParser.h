@@ -1,0 +1,51 @@
+//
+//  SceneParser.h
+//  aris-conversation
+//
+//  Created by Kevin Harris on 09/12/01.
+//  Copyright 2009 Studio Tectorum. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import "Scene.h"
+
+@protocol SceneParserDelegate
+- (void) didFinishParsing;
+@end
+
+
+@interface SceneParser : NSObject <NSXMLParserDelegate> {
+	Boolean			isPc;
+	NSInteger		currentCharacterId;
+	NSMutableString *currentText;
+	NSMutableArray	*script;
+	NSString		*sourceText;
+	CGRect			imageRect;
+	float			resizeTime;
+    NSString        *exitToTabWithTitle;
+    NSString        *exitToType;
+    int             videoId;
+    int             panoId;
+    int             webId;
+    int             plaqueId;
+    int             itemId;
+    int             mediaId;
+    NSXMLParser		*parser;
+	id<SceneParserDelegate> delegate;
+}
+
+@property (nonatomic) NSMutableString *currentText;
+@property (nonatomic) NSMutableArray *script;
+@property (nonatomic) NSString *sourceText;
+@property (nonatomic) NSString *exitToTabWithTitle;
+@property (nonatomic) NSString *exitToType;
+
+@property (readwrite) id<SceneParserDelegate> delegate;
+
+
+
+- (id) initWithDefaultNpcId;
+
+- (void) parseText:(NSString *)text;
+
+@end
